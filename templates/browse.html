@@ -1682,117 +1682,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/23/contents/enacted">Supply and Appropriation (Main Estimates)
-										Act 2024</a></td>
-								<td><a href="/ukpga/2024/23/contents/enacted">2024 c. 23</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/22/contents">Leasehold and Freehold Reform Act 2024</a></td>
-								<td><a href="/ukpga/2024/22/contents">2024 c. 22</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/21/contents">Victims and Prisoners Act 2024</a></td>
-								<td><a href="/ukpga/2024/21/contents">2024 c. 21</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/20/contents">Zoological Society of London (Leases) Act 2024</a>
+							{% for doc in documents %}
+							<tr {% if not forloop.counter|divisibleby:2 %} class="oddRow" {% endif %}>
+								<td>
+									<a href="/{{ doc.id }}">{{ doc.title }}</a>
 								</td>
-								<td><a href="/ukpga/2024/20/contents">2024 c. 20</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/19/contents">British Nationality (Irish Citizens) Act 2024</a>
+								<td>
+									<a href="/{{ doc.id }}">{{ doc.year }} c. {{ doc.number }}</a>
 								</td>
-								<td><a href="/ukpga/2024/19/contents">2024 c. 19</a></td>
 								<td>UK Public General Acts</td>
 							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/18/contents">Building Societies Act 1986 (Amendment) Act
-										2024</a></td>
-								<td><a href="/ukpga/2024/18/contents">2024 c. 18</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/17/contents">Paternity Leave (Bereavement) Act 2024</a></td>
-								<td><a href="/ukpga/2024/17/contents">2024 c. 17</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/16/contents">Pet Abduction Act 2024</a></td>
-								<td><a href="/ukpga/2024/16/contents">2024 c. 16</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/15/contents">Media Act 2024</a></td>
-								<td><a href="/ukpga/2024/15/contents">2024 c. 15</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/14/contents">Post Office (Horizon System) Offences Act 2024</a>
-								</td>
-								<td><a href="/ukpga/2024/14/contents">2024 c. 14</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/13/contents">Digital Markets, Competition and Consumers Act
-										2024</a></td>
-								<td><a href="/ukpga/2024/13/contents">2024 c. 13</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/12/contents">Finance (No. 2) Act 2024</a></td>
-								<td><a href="/ukpga/2024/12/contents">2024 c. 12</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/11/contents">Animal Welfare (Livestock Exports) Act 2024</a>
-								</td>
-								<td><a href="/ukpga/2024/11/contents">2024 c. 11</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/10/contents">Automated Vehicles Act 2024</a></td>
-								<td><a href="/ukpga/2024/10/contents">2024 c. 10</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/9/contents">Investigatory Powers (Amendment) Act 2024</a></td>
-								<td><a href="/ukpga/2024/9/contents">2024 c. 9</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/8/contents">Safety of Rwanda (Asylum and Immigration) Act
-										2024</a></td>
-								<td><a href="/ukpga/2024/8/contents">2024 c. 8</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/7/contents">Pedicabs (London) Act 2024</a></td>
-								<td><a href="/ukpga/2024/7/contents">2024 c. 7</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/6/contents">Trade (Comprehensive and Progressive Agreement for
-										Trans-Pacific Partnership) Act 2024</a></td>
-								<td><a href="/ukpga/2024/6/contents">2024 c. 6</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr class="oddRow">
-								<td><a href="/ukpga/2024/5/contents">National Insurance Contributions (Reduction in
-										Rates) Act 2024</a></td>
-								<td><a href="/ukpga/2024/5/contents">2024 c. 5</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
-							<tr>
-								<td><a href="/ukpga/2024/4/contents">Supply and Appropriation (Anticipation and
-										Adjustments) Act 2024</a></td>
-								<td><a href="/ukpga/2024/4/contents">2024 c. 4</a></td>
-								<td>UK Public General Acts</td>
-							</tr>
+							{% endfor %}
 						</tbody>
 					</table>
 				</div>
