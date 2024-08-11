@@ -16,11 +16,7 @@
 	<link rel="apple-touch-icon" href="https://www.legislation.gov.uk/images/chrome/apple-touch-icons/apple-touch-icon.png" />
 	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/view/minpagination.js"></script>
 	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/view/timeline.css" type="text/css" />
-	<style type="text/css">
-		#timeline #timelineData {
-			width: 805em
-		}
-	</style>
+	{{ timeline_style|safe }}
 	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/advancedsearch/jquery-ui.css" type="text/css" />
 	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/jquery-ui-1.8.24.custom.min.js"></script>
 	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/view/jquery.ui.slider.min.js"></script>
@@ -62,7 +58,6 @@
 			}
 		}
 		addGtm(window, document, 'script', 'dataLayer', 'GTM-TWB7339');
-
 		$('body').live('cookie.preferences.saved.banner', function () {
 			addGtm(window, document, 'script', 'dataLayer', 'GTM-TWB7339');
 		});
