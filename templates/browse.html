@@ -75,26 +75,8 @@
 		<li><a href="#primaryNav">Skip to navigation</a></li>
 	</ul>
 	<div id="layout1">
-		<div id="header">
-			<h2><a href="/">legislation.gov.uk<span class="english"></span></a></h2><span class="natArch"><a
-					href="http://www.nationalarchives.gov.uk"><span class="backgroundImage"></span><span
-						class="accessibleText">http://www.nationalarchives.gov.uk</span></a></span>
-			<ul id="secondaryNav">
-				<li><a class="langaugeSwitch" href="/cy/ukpga">Cymraeg</a></li>
-			</ul>
-		</div>
-		<div id="primaryNav">
-			<div class="navLayout">
-				<ul>
-					<li class="link1"><a href="/"><span>Home</span></a></li>
-					<li class="link2"><a href="/browse"><span>Explore our Collections</span></a></li>
-					<li class="link3"><a href="/new"><span>New Legislation</span></a></li>
-					<li class="link4"><a href="/help"><span>Help and Guidance</span></a></li>
-					<li class="link5"><a href="/changes"><span>Changes to Legislation</span></a></li>
-					<li id="quickSearch" class="en"><a href="#contentSearch"><span>Search Legislation</span></a></li>
-				</ul>
-			</div>
-		</div>
+		{% include "top_banner.html" %}
+		{% include "main_nav.html" %}
 		<div id="background"></div>
 		<div id="layout2">
 			{% include "search.html" %}
