@@ -1,0 +1,63 @@
+<form id="contentSearch" method="get" action="/search" class="contentSearch">
+    <h2>Search Legislation</h2>
+    <div class="title"><label for="title">Title: <em>(or keywords in the title)</em></label><input
+            type="text" id="title" name="title" /></div>
+    <div class="year"><label for="year">Year:</label><input type="text" id="year" name="year" /></div>
+    <div class="number"><label for="number">Number:</label><input type="text" id="number" name="number" />
+    </div>
+    <div class="type"><label for="type">Type:</label><select name="type" id="type">
+            <option value="primary+secondary" selected="selected">All UK Legislation (excluding originating
+                from the EU)</option>
+            <option disabled="disabled">--------------------------------------------</option>
+            <option value="all">All Legislation (including originating from the EU)</option>
+            <option disabled="disabled">--------------------------------------------</option>
+            <option value="primary">All Primary Legislation</option>
+            <option value="ukpga">    UK Public General Acts</option>
+            <option value="ukla">    UK Local Acts</option>
+            <option value="ukppa">    UK Private and Personal Acts</option>
+            <option value="asp">    Acts of the Scottish Parliament</option>
+            <option value="asc">    Acts of Senedd Cymru</option>
+            <option value="anaw">    Acts of the National Assembly for Wales</option>
+            <option value="mwa">    Measures of the National Assembly for Wales</option>
+            <option value="ukcm">    Church Measures</option>
+            <option value="nia">    Acts of the Northern Ireland Assembly</option>
+            <option value="aosp">    Acts of the Old Scottish Parliament</option>
+            <option value="aep">    Acts of the English Parliament</option>
+            <option value="aip">    Acts of the Old Irish Parliament</option>
+            <option value="apgb">    Acts of the Parliament of Great Britain</option>
+            <option value="gbla">    Local Acts of the Parliament of Great Britain</option>
+            <option value="gbppa">    Private and Personal Acts of the Parliament of Great Britain</option>
+            <option value="nisi">    Northern Ireland Orders in Council</option>
+            <option value="mnia">    Measures of the Northern Ireland Assembly</option>
+            <option value="apni">    Acts of the Northern Ireland Parliament</option>
+            <option disabled="disabled">--------------------------------------------</option>
+            <option value="secondary">All Secondary Legislation</option>
+            <option value="uksi">    UK Statutory Instruments</option>
+            <option value="wsi">    Wales Statutory Instruments</option>
+            <option value="ssi">    Scottish Statutory Instruments</option>
+            <option value="nisr">    Northern Ireland Statutory Rules</option>
+            <option value="ukci">    Church Instruments</option>
+            <option value="ukmd">    UK Ministerial Directions</option>
+            <option value="ukmo">    UK Ministerial Orders</option>
+            <option value="uksro">    UK Statutory Rules and Orders</option>
+            <option value="nisro">    Northern Ireland Statutory Rules and Orders</option>
+            <option disabled="disabled">--------------------------------------------</option>
+            <option value="eu-origin">All Legislation originating from the EU</option>
+            <option value="eur">    Regulations originating from the EU</option>
+            <option value="eudn">    Decisions originating from the EU</option>
+            <option value="eudr">    Directives originating from the EU</option>
+            <option value="eut">    European Union Treaties</option>
+            <option disabled="disabled">--------------------------------------------</option>
+            <option value="draft">All Draft Legislation</option>
+            <option value="ukdsi">    UK Draft Statutory Instruments</option>
+            <option value="sdsi">    Scottish Draft Statutory Instruments</option>
+            <option value="nidsr">    Northern Ireland Draft Statutory Rules</option>
+            <option disabled="disabled">--------------------------------------------</option>
+            <option value="ukia">All Impact Assessments</option>
+            <option value="ukia">    UK Impact Assessments</option>
+        </select></div>
+    <div class="submit"><button type="submit" id="contentSearchSubmit" class="userFunctionalElement"><span
+                class="btl"></span><span class="btr"></span>Search<span class="bbl"></span><span
+                class="bbr"></span></button></div>
+    <div class="advSearch"><a href="/search">Advanced Search</a></div>
+</form>
