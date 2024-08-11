@@ -18,3 +18,12 @@
         {% endfor %}
     </div>
 </div>
+<h3 class="accessibleText"></h3>
+<table class="decades">
+    <tr>
+        {% for group in decade_groups_for_timeline %}
+        <td>{{ group.first_year }}</td>
+        {% endfor %}
+    </tr>
+    <tr id="fisheye"></tr>
+</table>
