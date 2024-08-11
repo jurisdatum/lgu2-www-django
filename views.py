@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-from .api import browse_by_type
+from .api import browse_by_type, get_document
 
 def index(request):
     return redirect('ukpga')
@@ -62,4 +62,11 @@ def browse(request):
         'timeline_style': timeline_style
     }
     template = loader.get_template('browse.html')
+    return HttpResponse(template.render(context, request))
+
+
+def document(request, type = 'ukpga', year = 2018, number = 1):
+    article = get_document(type, year, number)
+    template = loader.get_template('document.html')
+    context = { 'article': article }
     return HttpResponse(template.render(context, request))
