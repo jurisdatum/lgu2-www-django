@@ -105,26 +105,7 @@
 					<div class="redirectSearch" style="visibility: hidden"><a href="/search/?lang=cy&amp;type=ukpga"
 							class="redirectSearch">Search Welsh language text</a></div>
 				</div>
-				<div id="resultsTimeline" class="fisheye">
-					<h2 class="accessibleText">Results by year</h2>
-					<h3 class="accessibleText">Key</h3>
-					<dl class="key">
-						<dt><img src="https://www.legislation.gov.uk/images/chrome/timelinePartialKey.gif" alt="Partial" /></dt>
-						<dd><em>Partial dataset 1801 - 1987</em></dd>
-						<dt><img src="https://www.legislation.gov.uk/images/chrome/timelineCompleteKey.gif" alt="Complete" /></dt>
-						<dd><em>Complete dataset 1988 - Present</em></dd>
-					</dl>
-					<h3 class="groupInfo">Results grouped by <strong>10 year</strong> periods</h3>
-					<h3 class="accessibleText">Data is ordered by:</h3>
-					<ul class="dataDescription">
-						<li class="year">Time<span class="accessibleText"> of results</span></li>
-						<li class="number">Count<span class="accessibleText"> of results</span></li>
-					</ul>
-					<p class="explanation">The counts below reflect the number of documents on legislation.gov.uk that
-						match the search for items of this legislation type and are not intended to indicate the total
-						legislation made, enacted or adopted in a particular year.</p>
-					{% include "timeline.html" %}
-				</div>
+				{% include "timeline.html" %}
 				{% include "paged_nav.html" %}
 				<div id="tools">
 					<h2 class="accessibleText">Narrow results by:</h2>

@@ -1,29 +1,48 @@
-<div id="timeline">
-    <div id="timelineData">
-        {% for group in decade_groups_for_timeline %}
-        <div class="decade {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
-            <h3><a href="/ukpga/{{ group.first_year }}-{{ group.last_year }}" title="{{ group.first_year }}-{{ group.last_year }}">{{ group.first_year }}-{{ group.last_year }}</a></h3>
-            <ul>
-                {% for count in group.counts %}
-                <li class="per{{ count.count|stringformat:'02d' }} {% if count.complete %}complete{% else %}partial{% endif %} noDataforPrev{{ count.no_data_for_prev_yrs }}yrs">
-                    <a href="/ukpga/{{ count.year }}" title="{{ count.count }} results {{ count.year }}">
-                        <em><span>{{ count.count }}</span></em>
-                        <span class="accessibleText">Results</span>
-                        <strong><img src="https://www.legislation.gov.uk/images/chrome/timeline{% if count.complete %}Complete{% else %}Partial{% endif %}Key.gif" alt="({% if count.complete %}Complete{% else %}Partial{% endif %})" /> {{ count.year }}</strong>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
+<div id="resultsTimeline" class="fisheye">
+    <h2 class="accessibleText">Results by year</h2>
+    <h3 class="accessibleText">Key</h3>
+    <dl class="key">
+        <dt><img src="https://www.legislation.gov.uk/images/chrome/timelinePartialKey.gif" alt="Partial" /></dt>
+        <dd><em>Partial dataset 1801 - 1987</em></dd>
+        <dt><img src="https://www.legislation.gov.uk/images/chrome/timelineCompleteKey.gif" alt="Complete" /></dt>
+        <dd><em>Complete dataset 1988 - Present</em></dd>
+    </dl>
+    <h3 class="groupInfo">Results grouped by <strong>10 year</strong> periods</h3>
+    <h3 class="accessibleText">Data is ordered by:</h3>
+    <ul class="dataDescription">
+        <li class="year">Time<span class="accessibleText"> of results</span></li>
+        <li class="number">Count<span class="accessibleText"> of results</span></li>
+    </ul>
+    <p class="explanation">The counts below reflect the number of documents on legislation.gov.uk that
+        match the search for items of this legislation type and are not intended to indicate the total
+        legislation made, enacted or adopted in a particular year.</p>
+    <div id="timeline">
+        <div id="timelineData">
+            {% for group in decade_groups_for_timeline %}
+            <div class="decade {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+                <h3><a href="/ukpga/{{ group.first_year }}-{{ group.last_year }}" title="{{ group.first_year }}-{{ group.last_year }}">{{ group.first_year }}-{{ group.last_year }}</a></h3>
+                <ul>
+                    {% for count in group.counts %}
+                    <li class="per{{ count.count|stringformat:'02d' }} {% if count.complete %}complete{% else %}partial{% endif %} noDataforPrev{{ count.no_data_for_prev_yrs }}yrs">
+                        <a href="/ukpga/{{ count.year }}" title="{{ count.count }} results {{ count.year }}">
+                            <em><span>{{ count.count }}</span></em>
+                            <span class="accessibleText">Results</span>
+                            <strong><img src="https://www.legislation.gov.uk/images/chrome/timeline{% if count.complete %}Complete{% else %}Partial{% endif %}Key.gif" alt="({% if count.complete %}Complete{% else %}Partial{% endif %})" /> {{ count.year }}</strong>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
+    <h3 class="accessibleText"></h3>
+    <table class="decades">
+        <tr>
+            {% for group in decade_groups_for_timeline %}
+            <td>{{ group.first_year }}</td>
+            {% endfor %}
+        </tr>
+        <tr id="fisheye"></tr>
+    </table>
 </div>
-<h3 class="accessibleText"></h3>
-<table class="decades">
-    <tr>
-        {% for group in decade_groups_for_timeline %}
-        <td>{{ group.first_year }}</td>
-        {% endfor %}
-    </tr>
-    <tr id="fisheye"></tr>
-</table>
