@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template import loader
 
-from .api import browse_by_type, get_document
+from . import api
 
 def index(request):
     return redirect('ukpga')
@@ -50,7 +50,7 @@ def group_counts_for_timeline(yearly_counts):
 
 def browse(request):
     page = request.GET.get('page', '1')
-    data = browse_by_type('ukpga', page)
+    data = api.browse_by_type('ukpga', page)
     yearly_counts = data['meta']['counts']['yearly']
     grouped_yearly_counts = zip_longest(*(iter(yearly_counts),) * 24) # for yearPagination
     grouped_by_decade = group_counts_for_timeline(yearly_counts)
@@ -73,7 +73,7 @@ def browse(request):
 
 
 def document(request, type = 'ukpga', year = 2018, number = 1):
-    article = get_document(type, year, number)
+    article = api.get_document(type, year, number)
     template = loader.get_template('document.html')
     context = { 'article': article }
     return HttpResponse(template.render(context, request))
