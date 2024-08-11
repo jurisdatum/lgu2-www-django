@@ -55,11 +55,18 @@ def browse(request):
     grouped_yearly_counts = zip_longest(*(iter(yearly_counts),) * 24) # for yearPagination
     grouped_by_decade = group_counts_for_timeline(yearly_counts)
     timeline_style = "<style type=\"text/css\">#timeline #timelineData {{ width: {w}em }}</style>".format(w=str(len(grouped_by_decade) * 35))
+
+    page = int(page)
+    first_page = 1 if page <= 6 else page - 5
+    page_numbers = range(first_page, first_page + 10)
+
     context = {
         'documents': data['documents'],
         'grouped_yearly_counts': grouped_yearly_counts,
         'decade_groups_for_timeline': grouped_by_decade,
-        'timeline_style': timeline_style
+        'timeline_style': timeline_style,
+        'page_numbers': page_numbers,
+        'current_page': page
     }
     template = loader.get_template('browse.html')
     return HttpResponse(template.render(context, request))
