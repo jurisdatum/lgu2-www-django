@@ -57,8 +57,11 @@ def browse(request):
     timeline_style = "<style type=\"text/css\">#timeline #timelineData {{ width: {w}em }}</style>".format(w=str(len(grouped_by_decade) * 35))
 
     page = int(page)
-    first_page = 1 if page <= 6 else page - 5
-    page_numbers = range(first_page, first_page + 10)
+    first_page = 1 if page < 10 else page - 9
+    last_page = page if len(data['documents']) < 20 else page + 9
+    print('last page', last_page)
+    page_numbers = range(first_page, last_page + 1)
+    print('page numbers', page_numbers)
 
     context = {
         'documents': data['documents'],
