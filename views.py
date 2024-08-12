@@ -65,6 +65,7 @@ def browse(request):
 
     context = {
         'documents': data['documents'],
+        'total': data['meta']['counts']['total'],
         'grouped_yearly_counts': grouped_yearly_counts,
         'decade_groups_for_timeline': grouped_by_decade,
         'timeline_style': timeline_style,
