@@ -76,8 +76,8 @@ def browse(request):
     return HttpResponse(template.render(context, request))
 
 
-def document(request, type = 'ukpga', year = 2018, number = 1):
-    article = api.get_document(type, year, number)
+def document(request, type, year, number):
+    data = api.get_document(type, year, number)
     template = loader.get_template('document.html')
-    context = { 'article': article }
+    context = { 'article': data['html'] }
     return HttpResponse(template.render(context, request))
