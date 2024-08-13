@@ -70,7 +70,8 @@ def browse(request):
         'decade_groups_for_timeline': grouped_by_decade,
         'timeline_style': timeline_style,
         'page_numbers': page_numbers,
-        'current_page': page
+        'current_page': page,
+        'page_last_modified': data['meta']['updated'][:10]
     }
     template = loader.get_template('browse.html')
     return HttpResponse(template.render(context, request))

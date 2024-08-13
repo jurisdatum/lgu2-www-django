@@ -14,10 +14,13 @@
 <script type="text/javascript" src="{% static 'lgu1/scripts/search/jquery.ui.autocomplete.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'lgu1/scripts/search/jquery.ui.comboboxFromLinks.js' %}"></script>
 <script type="text/javascript" src="{% static 'lgu1/scripts/search/headingFacet.js' %}"></script>
-<meta name="DC.Date.Modified" content="2024-08-02" />
-<link rel="alternate" type="application/atom+xml" href="https://www.legislation.gov.uk/ukpga/data.feed" />
+<meta name="DC.Date.Modified" content="{{ page_last_modified }}" />
+<link rel="alternate" type="application/atom+xml" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page }}" />
 <link rel="first" href="https://www.legislation.gov.uk/ukpga/data.feed" />
-<link rel="next" href="https://www.legislation.gov.uk/ukpga/data.feed?page=2" />
+{% if current_page > 1 %}
+<link rel="prev" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page|add:'-1' }}" />
+{% endif %}
+<link rel="next" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page|add:'1' }}" />
 {% endblock %}
 
 {% block body_id %}browse{% endblock %}
