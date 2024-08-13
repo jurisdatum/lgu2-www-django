@@ -1,182 +1,99 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:dct="http://purl.org/dc/terms/" xml:lang="en">
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=0.1, user-scalable=1" />
-	<title>Legislation.gov.uk</title>
-	<link rel="icon" href="https://www.legislation.gov.uk/favicon.ico" />
-	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/screen.css" type="text/css" />
-	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/survey/survey.css" type="text/css" />
-	<!--[if lte IE 6]><link rel="stylesheet" href="/styles/IE/ie6chromeAdditions.css" type="text/css" /><![endif]--><!--[if lte IE 7]><link rel="stylesheet" href="/styles/IE/ie7chromeAdditions.css" type="text/css" /><![endif]-->
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/jquery-1.6.2.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/CentralConfig.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/survey/survey.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/chrome.js"></script>
-	<link rel="apple-touch-icon" href="https://www.legislation.gov.uk/images/chrome/apple-touch-icons/apple-touch-icon.png" />
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/view/minpagination.js"></script>
-	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/view/timeline.css" type="text/css" />
-	{{ timeline_style|safe }}
-	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/advancedsearch/jquery-ui.css" type="text/css" />
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/jquery-ui-1.8.24.custom.min.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/view/jquery.ui.slider.min.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/view/scrollbar.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/formFunctions/common.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/advancedsearch/search-eu.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/search/jquery.ui.autocomplete.min.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/search/jquery.ui.comboboxFromLinks.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/search/headingFacet.js"></script>
-	<meta name="DC.Date.Modified" content="2024-08-02" />
-	<link rel="alternate" type="application/atom+xml" href="https://www.legislation.gov.uk/ukpga/data.feed" />
-	<link rel="first" href="https://www.legislation.gov.uk/ukpga/data.feed" />
-	<link rel="next" href="https://www.legislation.gov.uk/ukpga/data.feed?page=2" />
-	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/website.css" type="text/css" />
-	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/print.css" type="text/css" media="print" />
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/jquery-cookie-directive/jquery.cookie.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/jquery-cookie-directive/jquery-cookie-functions.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/cookie-directive.js"></script><!--Google Tag Manager-->
-	<script type="text/javascript">
-		function addGtm(w, d, s, l, i) {
-			// Legislation.gov.uk: Check cookie preferences before running the Google analytics code.
-			if (window.legGlobals.cookiePolicy.userSet && window.legGlobals.cookiePolicy.analytics) {
-				w[l] = w[l] || [];
-				w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-				var and = '&amp;';
-				and = and.charAt(0);
-				var f = d.getElementsByTagName(s)[0], j = d.createElement(s),
-					dl = l != 'dataLayer' ? (and + 'l=' + l) : '';
-				j.async = true;
-				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-				f.parentNode.insertBefore(j, f);
-			} else {
-				$.removeCookie('_ga', { path: '/' });
-				$.removeCookie('_gid', { path: '/' });
-				$.removeCookie('_gat_UA-2827241-23', { path: '/' });
-				$.removeCookie('_ga', { path: '/', domain: '.legislation.gov.uk' });
-				$.removeCookie('_gid', { path: '/', domain: '.legislation.gov.uk' });
-				$.removeCookie('_gat_UA-2827241-23', { path: '/', domain: '.legislation.gov.uk' });
-			}
-		}
-		addGtm(window, document, 'script', 'dataLayer', 'GTM-TWB7339');
-		$('body').live('cookie.preferences.saved.banner', function () {
-			addGtm(window, document, 'script', 'dataLayer', 'GTM-TWB7339');
-		});
-	</script><!--End Google Tag Manager-->
-</head>
+{% block head_middle %}
+<script type="text/javascript" src="{% static 'lgu1/scripts/view/minpagination.js' %}"></script>
+<link rel="stylesheet" href="{% static 'lgu1/styles/view/timeline.css' %}" type="text/css" />
+{{ timeline_style|safe }}
+<link rel="stylesheet" href="{% static 'lgu1/styles/advancedsearch/jquery-ui.css' %}" type="text/css" />
+<script type="text/javascript" src="{% static 'lgu1/scripts/jquery-ui-1.8.24.custom.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/view/jquery.ui.slider.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/view/scrollbar.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/formFunctions/common.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/advancedsearch/search-eu.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/search/jquery.ui.autocomplete.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/search/jquery.ui.comboboxFromLinks.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/search/headingFacet.js' %}"></script>
+<meta name="DC.Date.Modified" content="2024-08-02" />
+<link rel="alternate" type="application/atom+xml" href="https://www.legislation.gov.uk/ukpga/data.feed" />
+<link rel="first" href="https://www.legislation.gov.uk/ukpga/data.feed" />
+<link rel="next" href="https://www.legislation.gov.uk/ukpga/data.feed?page=2" />
+{% endblock %}
 
-<body id="browse" class="ukpga timeline" dir="ltr" xml:lang="en">
-	<div id="preloadBg">
-		<script type="text/javascript">
-			$("body").addClass("js");
-		</script>
-	</div>
-	<ul id="top" class="accessibleLinks">
-		<li><a href="#pageTitle">Skip to main content</a></li>
-		<li><a href="#primaryNav">Skip to navigation</a></li>
-	</ul>
-	<div id="layout1">
-		{% include "top_banner.html" %}
-		{% include "main_nav.html" %}
-		<div id="background"></div>
-		<div id="layout2">
-			{% include "search.html" %}
-			<div>
-				<div class="info">
-					<h1 id="pageTitle">Search Results</h1>
-					<h2>Your search for English language UK Public General Acts has returned more than 200 results.</h2>
-					<div class="redirectSearch" style="visibility: hidden"><a href="/search/?lang=cy&amp;type=ukpga"
-							class="redirectSearch">Search Welsh language text</a></div>
-				</div>
-				{% include "timeline.html" %}
-				{% include "paged_nav.html" %}
-				<div id="tools">
-					<h2 class="accessibleText">Narrow results by:</h2>
-					<div class="section" id="type">
-						<div class="title">
-							<h3>Legislation by Type</h3>
-						</div>
-						<div class="content">
-							<ul>
-								<li class="legType">
-									<span class="userFunctionalElement disabled">UK Public General Acts ({{ total }})</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="section" id="year">
-						<div class="title">
-							<h3>Legislation by Year</h3>
-						</div>
-						<div class="content" id="yearPagination">
-							{% for group in grouped_yearly_counts %}
-							<ul class="page years">
-								{% for count in group %}
-								{% if count %}
-								<li class="legYear"><a href="/ukpga/{{ count.year }}">{{ count.year }} ({{ count.count }})</a></li>
-								{% endif %}
-								{% endfor %}
-							</ul>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-				<div id="content" class="results">
-					<table>
-						<thead>
-							<tr>
-								<th><a href="/ukpga?sort=title" class="sortAsc" title="Sort ascending by Title"><span
-											class="accessibleText">Sort ascending by </span>Title</a></th>
-								<th><span class="sortDesc active" title="Sort descending by Years and Numbers"><span
-											class="accessibleText">Sort descending by </span>Years and Numbers</span>
-								</th>
-								<th><span>Legislation type</span></th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for doc in documents %}
-							<tr {% if not forloop.counter|divisibleby:2 %} class="oddRow" {% endif %}>
-								<td>
-									<a href="/{{ doc.id }}">{{ doc.title }}</a>
-								</td>
-								<td>
-									<a href="/{{ doc.id }}">{{ doc.year }} c. {{ doc.number }}</a>
-								</td>
-								<td>UK Public General Acts</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-				<div class="contentFooter">
-					{% include "paged_nav.html" %}
-				</div>
-				<p class="backToTop"><a href="#top">Back to top</a></p>
-			</div>
-		</div>
-		{% include "footer.html" %}
-		<!--Google Tag Manager NoScript-->
-		<div id="google-tag-manager">
-			<script type="text/javascript">
-				if (window.legGlobals.cookiePolicy.userSet && window.legGlobals.cookiePolicy.analytics) {
-					var toRemove = document.getElementById('google-tag-manager');
-					document.getElementById('google-tag-manager').parentNode.removeChild(toRemove);
-				}
-			</script>
-			<div style="visibility: hidden; height: 0; width: 0; overflow: hidden; position: absolute"><object
-					data="https://www.googletagmanager.com/ns.html?id=GTM-TWB7339" height="0" width="0"
-					type="text/html"></object></div>
-		</div>
-		<!--End Google Tag Manager NoScript-->
-	</div>
-	<div id="modalBg" style="width: 1264px; height: 1731px; opacity: 0.8; display: none;"></div>
-	<script type="text/javascript">
-		$("#statusWarningSubSections").css("display", "none");
-		$(".help").css("display", "none");
-		$("#searchChanges", "#existingSearch").css({ "display": "none" });
-	</script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/libs/scrollmagic/ScrollMagic.min.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/SidebarScroll.js"></script>
-	<script type="text/javascript" src="https://www.legislation.gov.uk/scripts/StickyElements.js"></script>
-</body>
+{% block body_id %}browse{% endblock %}
+{% block body_class %}ukpga timeline{% endblock %}
 
-</html>
+{% block layout2 %}
+<div>
+    <div class="info">
+        <h1 id="pageTitle">Search Results</h1>
+        <h2>Your search for English language UK Public General Acts has returned more than 200 results.</h2>
+        <div class="redirectSearch" style="visibility: hidden"><a href="/search/?lang=cy&amp;type=ukpga"
+                class="redirectSearch">Search Welsh language text</a></div>
+    </div>
+    {% include "timeline.html" %}
+    {% include "paged_nav.html" %}
+    <div id="tools">
+        <h2 class="accessibleText">Narrow results by:</h2>
+        <div class="section" id="type">
+            <div class="title">
+                <h3>Legislation by Type</h3>
+            </div>
+            <div class="content">
+                <ul>
+                    <li class="legType">
+                        <span class="userFunctionalElement disabled">UK Public General Acts ({{ total }})</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="section" id="year">
+            <div class="title">
+                <h3>Legislation by Year</h3>
+            </div>
+            <div class="content" id="yearPagination">
+                {% for group in grouped_yearly_counts %}
+                <ul class="page years">
+                    {% for count in group %}
+                    {% if count %}
+                    <li class="legYear"><a href="/ukpga/{{ count.year }}">{{ count.year }} ({{ count.count }})</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="content" class="results">
+        <table>
+            <thead>
+                <tr>
+                    <th><a href="/ukpga?sort=title" class="sortAsc" title="Sort ascending by Title"><span
+                                class="accessibleText">Sort ascending by </span>Title</a></th>
+                    <th><span class="sortDesc active" title="Sort descending by Years and Numbers"><span
+                                class="accessibleText">Sort descending by </span>Years and Numbers</span>
+                    </th>
+                    <th><span>Legislation type</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documents %}
+                <tr {% if not forloop.counter|divisibleby:2 %} class="oddRow" {% endif %}>
+                    <td>
+                        <a href="/{{ doc.id }}">{{ doc.title }}</a>
+                    </td>
+                    <td>
+                        <a href="/{{ doc.id }}">{{ doc.year }} c. {{ doc.number }}</a>
+                    </td>
+                    <td>UK Public General Acts</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="contentFooter">
+        {% include "paged_nav.html" %}
+    </div>
+    <p class="backToTop"><a href="#top">Back to top</a></p>
+</div>
+{% endblock %}
