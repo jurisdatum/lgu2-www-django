@@ -2,7 +2,7 @@
 from datetime import datetime
 from itertools import zip_longest
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.template import loader
 
@@ -78,6 +78,9 @@ def browse(request):
 
 def document(request, type, year, number):
     data = api.get_document(type, year, number)
+    if 'error' in data:
+        template = loader.get_template('404.html')
+        return HttpResponseNotFound(template.render({}, request))
     template = loader.get_template('document.html')
     context = { 'article': data['html'] }
     return HttpResponse(template.render(context, request))
