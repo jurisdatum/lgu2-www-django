@@ -1,0 +1,95 @@
+{% load static %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:dct="http://purl.org/dc/terms/" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.1, user-scalable=1" />
+	<title>Legislation.gov.uk</title>
+	<link rel="icon" href="{% static 'lgu1/favicon.ico' %}" />
+	<link rel="stylesheet" href="{% static 'lgu1/styles/screen.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'lgu1/styles/survey/survey.css' %}" type="text/css" />
+	<!--[if lte IE 6]><link rel="stylesheet" href="{% static 'lgu1/styles/IE/ie6chromeAdditions.css' %}" type="text/css" /><![endif]--><!--[if lte IE 7]><link rel="stylesheet" href="/styles/IE/ie7chromeAdditions.css" type="text/css" /><![endif]-->
+	<script type="text/javascript" src="{% static 'lgu1/scripts/jquery-1.6.2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/CentralConfig.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/survey/survey.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/chrome.js' %}"></script>
+	<link rel="apple-touch-icon" href="{% static 'lgu1/images/chrome/apple-touch-icons/apple-touch-icon.png' %}" />
+	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/website.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.legislation.gov.uk/styles/print.css" type="text/css" media="print" />
+	<script type="text/javascript" src="{% static 'lgu1/scripts/jquery-cookie-directive/jquery.cookie.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/jquery-cookie-directive/jquery-cookie-functions.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/cookie-directive.js' %}"></script>
+	<!--Google Tag Manager-->
+	<script type="text/javascript">
+		function addGtm(w, d, s, l, i) {
+			// Legislation.gov.uk: Check cookie preferences before running the Google analytics code.
+			if (window.legGlobals.cookiePolicy.userSet && window.legGlobals.cookiePolicy.analytics) {
+				w[l] = w[l] || [];
+				w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+				var and = '&amp;';
+				and = and.charAt(0);
+				var f = d.getElementsByTagName(s)[0], j = d.createElement(s),
+					dl = l != 'dataLayer' ? (and + 'l=' + l) : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			} else {
+				$.removeCookie('_ga', { path: '/' });
+				$.removeCookie('_gid', { path: '/' });
+				$.removeCookie('_gat_UA-2827241-23', { path: '/' });
+				$.removeCookie('_ga', { path: '/', domain: '.legislation.gov.uk' });
+				$.removeCookie('_gid', { path: '/', domain: '.legislation.gov.uk' });
+				$.removeCookie('_gat_UA-2827241-23', { path: '/', domain: '.legislation.gov.uk' });
+			}
+		}
+		addGtm(window, document, 'script', 'dataLayer', 'GTM-TWB7339');
+		$('body').live('cookie.preferences.saved.banner', function () {
+			addGtm(window, document, 'script', 'dataLayer', 'GTM-TWB7339');
+		});
+	</script>
+	<!--End Google Tag Manager-->
+</head>
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}" dir="ltr" xml:lang="en">
+	<div id="preloadBg">
+		<script type="text/javascript">
+			$("body").addClass("js");
+		</script>
+	</div>
+	<ul id="top" class="accessibleLinks">
+		<li><a href="#pageTitle">Skip to main content</a></li>
+		<li><a href="#primaryNav">Skip to navigation</a></li>
+	</ul>
+	<div id="layout1">
+		{% include "top_banner.html" %}
+		{% include "main_nav.html" %}
+		<div id="background"></div>
+		<div id="layout2">
+			{% include "search.html" %}
+			{% block layout2 %}
+			{% endblock %}
+		</div>
+		{% include "footer.html" %}
+		<!--Google Tag Manager NoScript-->
+		<div id="google-tag-manager">
+			<script type="text/javascript">
+				if (window.legGlobals.cookiePolicy.userSet && window.legGlobals.cookiePolicy.analytics) {
+					var toRemove = document.getElementById('google-tag-manager');
+					document.getElementById('google-tag-manager').parentNode.removeChild(toRemove);
+				}
+			</script>
+			<div style="visibility: hidden; height: 0; width: 0; overflow: hidden; position: absolute"><object
+					data="https://www.googletagmanager.com/ns.html?id=GTM-TWB7339" height="0" width="0"
+					type="text/html"></object></div>
+		</div>
+		<!--End Google Tag Manager NoScript-->
+	</div>
+	<div id="modalBg" style="width: 1264px; height: 1731px; opacity: 0.8; display: none;"></div>
+	<script type="text/javascript">
+		$("#statusWarningSubSections").css("display", "none");
+		$(".help").css("display", "none");
+		$("#searchChanges", "#existingSearch").css({ "display": "none" });
+	</script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/libs/scrollmagic/ScrollMagic.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/SidebarScroll.js' %}"></script>
+	<script type="text/javascript" src="{% static 'lgu1/scripts/StickyElements.js' %}"></script>
+</body>
+</html>
