@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=0.1, user-scalable=1" />
-	<title>Legislation.gov.uk</title>
+	<title>{% block page_title %}Legislation.gov.uk{% endblock %}</title>
 	<link rel="icon" href="{% static 'lgu1/favicon.ico' %}" />
 	<link rel="stylesheet" href="{% static 'lgu1/styles/screen.css' %}" type="text/css" />
 	<link rel="stylesheet" href="{% static 'lgu1/styles/survey/survey.css' %}" type="text/css" />
@@ -64,11 +64,13 @@
 		{% include "top_banner.html" %}
 		{% include "main_nav.html" %}
 		<div id="background"></div>
-		<div id="layout2">
+		<div id="layout2" class="{% block layout2_class %}{% endblock %}">
 			{% include "search.html" %}
 			{% block layout2 %}
 			{% endblock %}
 		</div>
+		{% block after_layout2 %}
+		{% endblock %}
 		{% include "footer.html" %}
 		<!--Google Tag Manager NoScript-->
 		<div id="google-tag-manager">
