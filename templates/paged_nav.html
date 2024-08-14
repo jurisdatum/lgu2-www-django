@@ -3,7 +3,7 @@
         <ul>
             {% if current_page > page_numbers|first %}
             <li class="pageLink prev">
-                <a href="/ukpga?page={{ current_page|add:'-1' }}" title="previous page">
+                <a href="{{ search_endpoint }}?page={{ current_page|add:'-1' }}" title="previous page">
                     <span class="btl"></span>
                     <span class="btr"></span>
                     <span>Previous</span>
@@ -21,7 +21,7 @@
                     <span>{{ i }}</span>
                 </strong>
                 {% else %}
-                <a href="/ukpga?page={{ i }}">
+                <a href="{{ search_endpoint }}?page={{ i }}">
                     <span class="accessibleText">Results page </span>
                     <span>{{ i }}</span>
                 </a>
@@ -30,7 +30,7 @@
             {% endfor %}
             {% if current_page < page_numbers|last %}
             <li class="pageLink next">
-                <a href="/ukpga?page={{ current_page|add:'1' }}" title="next page">
+                <a href="{{ search_endpoint }}?page={{ current_page|add:'1' }}" title="next page">
                     <span class="btl"></span>
                     <span class="btr"></span>
                     <span>Next</span>
