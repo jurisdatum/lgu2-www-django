@@ -80,12 +80,52 @@
 					</div>
 					<div class="content">
 						<ul class="toolList">
-							<li><a class="userFunctionalElement" href="/ukpga/2018/1"><span class="background"><span
-											class="btl"></span><span class="btr"></span>Latest available (Revised)<span
-											class="bbl"></span><span class="bbr"></span></span></a></li>
-							<li><span class="userFunctionalElement active"><span class="background"><span
-											class="btl"></span><span class="btr"></span>Original (As enacted)<span
-											class="bbl"></span><span class="bbr"></span></span></span></li>
+							<li>
+								{% if meta.status == 'final' %}
+								<a class="userFunctionalElement" href="/{{ meta.id }}">
+									<span class="background">
+										<span class="btl"></span>
+										<span class="btr"></span>
+										Latest available (Revised)
+										<span class="bbl"></span>
+										<span class="bbr"></span>
+									</span>
+								</a>
+								{% else %}
+								<span class="userFunctionalElement active">
+									<span class="background">
+										<span class="btl"></span>
+										<span class="btr"></span>
+										Latest available (Revised)
+										<span class="bbl"></span>
+										<span class="bbr"></span>
+									</span>
+								</span>
+								{% endif %}
+							</li>
+							<li>
+								{% if meta.status == 'final' %}
+								<span class="userFunctionalElement active">
+									<span class="background">
+										<span class="btl"></span>
+										<span class="btr"></span>
+										Original (As enacted)
+										<span class="bbl"></span>
+										<span class="bbr"></span>
+									</span>
+								</span>
+								{% else %}
+								<a class="userFunctionalElement" href="/{{ meta.id }}">
+									<span class="background">
+										<span class="btl"></span>
+										<span class="btr"></span>
+										Original (As enacted)
+										<span class="bbl"></span>
+										<span class="bbr"></span>
+									</span>
+								</a>
+								{% endif %}
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -132,10 +172,12 @@
 				</div>
 			</div>
 			<div id="content">
+				{% if status_message %}
 				<div id="infoSection">
 					<h2>Status:</h2>
-					<p class="intro"> This is the original version (as it was originally enacted).</p>
+					<p class="intro">{{ status_message }}</p>
 				</div>
+				{% endif %}
 				<div id="viewLegContents" xml:lang="en">
 					<template shadowrootmode="open">
 						<style type="text/css"> @import "{% static 'primary.css' %}"; </style>

@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from . import api
+from .models import Message
 
 def index(request):
     return redirect('browse')
@@ -86,5 +87,12 @@ def document(request, type, year, number):
         template = loader.get_template('404.html')
         return HttpResponseNotFound(template.render({}, request))
     template = loader.get_template('document.html')
-    context = { 'article': data['html'] }
+    status_message = None
+    if data['meta']['status'] == 'final':
+        status_message = Message.objects.get(name='status_warning_original_version').text
+    context = {
+        'meta': data['meta'],
+        'status_message': status_message,
+        'article': data['html']
+    }
     return HttpResponse(template.render(context, request))
