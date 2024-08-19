@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -10,5 +10,5 @@ urlpatterns = [
     path('hello', views.hello, name='hello'),
     path('ukpga', views.browse, name='browse'),
     path('ukpga/<int:year>', views.browse, name='browse-year'),
-    path('<type>/<int:year>/<int:number>', views.document, name='document'),
+    re_path(r'(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)', views.document, name='document'),
 ]

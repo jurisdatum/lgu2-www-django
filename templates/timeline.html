@@ -3,9 +3,9 @@
     <h3 class="accessibleText">Key</h3>
     <dl class="key">
         <dt><img src="https://www.legislation.gov.uk/images/chrome/timelinePartialKey.gif" alt="Partial" /></dt>
-        <dd><em>Partial dataset 1801 - 1987</em></dd>
+        <dd><em>Partial dataset {{ years.first }} - {{ years.first_complete|add:'-1' }}</em></dd>
         <dt><img src="https://www.legislation.gov.uk/images/chrome/timelineCompleteKey.gif" alt="Complete" /></dt>
-        <dd><em>Complete dataset 1988 - Present</em></dd>
+        <dd><em>Complete dataset {{ years.first_complete }} - {% if years.last %}{{ years.last }}{% else %}Present{% endif %}</em></dd>
     </dl>
     <h3 class="groupInfo">Results grouped by <strong>10 year</strong> periods</h3>
     <h3 class="accessibleText">Data is ordered by:</h3>

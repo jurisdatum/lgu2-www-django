@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from . import api
-from .models import Message
+from .models import Message, DatasetCompleteness
 
 def index(request):
     return redirect('browse')
@@ -15,13 +15,12 @@ def index(request):
 def hello(request):
     return HttpResponse("Hello world!")
 
-def group_counts_for_timeline(yearly_counts):
+def group_counts_for_timeline(yearly_counts, complete_cutoff):
 
     yearly_counts = list(reversed(yearly_counts))
     first_year = yearly_counts[0]['year']
 
     # mark complete or partial
-    complete_cutoff = 1988
     for count in yearly_counts:
         count['complete'] = count['year'] >= complete_cutoff
 
@@ -56,8 +55,13 @@ def browse(request, year = None):
     else:
         data = api.browse_by_type_and_year('ukpga', year, page)
     yearly_counts = data['meta']['counts']['yearly']
+    last_year = yearly_counts[0]['year']
+    first_year = yearly_counts[-1]['year']
+    complete_cutoff = DatasetCompleteness.objects.get(type='ukpga').cutoff
+
     grouped_yearly_counts = zip_longest(*(iter(yearly_counts),) * 24) # for yearPagination
-    grouped_by_decade = group_counts_for_timeline(yearly_counts)
+
+    grouped_by_decade = group_counts_for_timeline(yearly_counts, complete_cutoff)
     timeline_style = "<style type=\"text/css\">#timeline #timelineData {{ width: {w}em }}</style>".format(w=str(len(grouped_by_decade) * 35))
 
     page = int(page)
@@ -69,6 +73,11 @@ def browse(request, year = None):
         'documents': data['documents'],
         'total': data['meta']['counts']['total'],
         'grouped_yearly_counts': grouped_yearly_counts,
+        'years': {
+            'first': first_year,
+            'first_complete': complete_cutoff,
+            'last': last_year if last_year < datetime.now().year else None
+        },
         'decade_groups_for_timeline': grouped_by_decade,
         'timeline_style': timeline_style,
         'page_numbers': page_numbers,
