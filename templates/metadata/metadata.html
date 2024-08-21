@@ -1,0 +1,140 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block head_middle %}
+    <link rel="stylesheet" href="{% static 'lgu1/css/result.css' %}" type="text/css">
+{% endblock %}
+
+{% block body_id %}doc{% endblock %}
+
+{% block layout2 %}
+<div>
+    <h1 id="pageTitle">The Legislation Core Reference</h1>
+</div>
+<nav class="topnav">
+    <section class="view">
+        <h3
+            style="background: none repeat scroll 0 0 #424240; color: #FFFFFF; font-weight: bold;       font-size: 1em; line-height: 1.231em; padding: 8px 15px;">
+            Data Formats</h3>
+        <ul>
+            <li><a class="format-rdf" type="application/rdf+xml" rel="alternate" title="view in RDF/XML format"
+                    href="//www.legislation.gov.uk/ukpga/2023/1/metadata/data.rdf">RDF/XML</a></li>
+            <li><a class="format-rdfjson" type="application/json" rel="alternate" title="view in RDF/JSON format"
+                    href="//www.legislation.gov.uk/ukpga/2023/1/metadata/data.rdfjson">RDF/JSON</a></li>
+            <li><a class="format-ttl" type="text/turtle" rel="alternate" title="view in Turtle format"
+                    href="//www.legislation.gov.uk/ukpga/2023/1/metadata/data.ttl">Turtle</a></li>
+            <li><a class="format-json" type="application/json" rel="alternate" title="view in Simple JSON format"
+                    href="//www.legislation.gov.uk/ukpga/2023/1/metadata/data.json">Simple JSON</a></li>
+            <li><a class="format-xml" type="application/xml" rel="alternate" title="view in Simple XML format"
+                    href="//www.legislation.gov.uk/ukpga/2023/1/metadata/data.xml">Simple XML</a></li>
+            <li><a class="format-html" type="text/html; charset=utf-8" rel="alternate" title="view in html format"
+                    href="//www.legislation.gov.uk/ukpga/2023/1/metadata/data.html">html</a></li>
+        </ul>
+    </section>
+    <script> function initMap() { return null; } </script>
+    <section class="view" style="display: none;">
+        <h3
+            style="background: none repeat scroll 0 0 #424240; color: #FFFFFF; font-weight: bold;     font-size: 1em; line-height: 1.231em; padding: 8px 15px;">
+            View</h3>
+        <ul>
+            <li><a href="http://www.legislation.gov.uk/ukpga/2023/1/metadata?_view=short"
+                    title="switch to short view">short</a></li>
+            <li><a href="http://www.legislation.gov.uk/ukpga/2023/1/metadata?_view=medium"
+                    title="switch to medium view">medium</a></li>
+            <li><span class="current">default</span></li>
+            <li><a href="http://www.legislation.gov.uk/ukpga/2023/1/metadata?_view=description"
+                    title="switch to description view">description</a></li>
+        </ul>
+    </section>
+</nav>
+<div id="result" style="width: calc(100% - 400px)">
+    <div class="panel">
+        <header>
+            <h1></h1>
+            <p class="id">
+                <!-- <input size="50" type="url" readonly value="{{ item.uri }}" style="background-color:white"> -->
+                <span style="background-color:white;padding:6pt 9pt;font-size:12pt;font-weight:normal;">{{ item.uri }}</span>
+            </p>
+        </header>
+        <section>
+            <h6 style="display:none">Section</h6>
+            <table>
+                <tbody>
+                    <tr>
+                        <th class="label">Type</th>
+                        <td class="value">{{ item.type }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Year</th>
+                        <td class="value">{{ item.year }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Number</th>
+                        <td class="value">{{ item.number }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Title</th>
+                        <td class="value">{{ item.title }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Original Language</th>
+                        <td class="value">{{ item.originalLanguage }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Citation</th>
+                        <td class="value">{{ item.citation }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Commentary Citation</th>
+                        <td class="value">{{ item.commentaryCitation }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Full Citation</th>
+                        <td class="value">{{ item.fullCitation }}</td>
+                    </tr>
+                    <tr>
+                        <th class="label">Interpretations</th>
+                        <td class="value nested">
+                            {% for interp in item.interpretations %}
+                            <table>
+                                <!-- <caption></caption> -->
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" class="value">{{ interp.uri }}</td>
+                                    </tr>
+                                    {% if interp.original %}
+                                    <tr>
+                                        <th class="label">Original</th>
+                                        <td class="value">{{ interp.original }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if interp.current %}
+                                    <tr>
+                                        <th class="label">Current</th>
+                                        <td class="value">{{ interp.current }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <th class="label">Language</th>
+                                        <td class="value">{{ interp.language }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="label">Short Title</th>
+                                        <td class="value">{{ interp.shortTitle }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="label">Long Title</th>
+                                        <td class="value">{{ interp.longTitle }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+<nav class="bottomnav"></nav>
+{% endblock %}

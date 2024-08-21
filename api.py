@@ -19,3 +19,9 @@ def get_document(type: str, year, number):
     url = _server + 'document/' + type + '/' + str(year) + '/' + str(number)
     headers = { 'Accept': 'application/json' }
     return requests.get(url, headers=headers).json()
+
+
+def get_metadata(type: str, year, number):
+    url = _server + 'metadata/' + type + '/' + str(year) + '/' + str(number)
+    headers = { 'Accept': 'application/json' }
+    return requests.get(url, headers=headers).json()

@@ -105,3 +105,10 @@ def document(request, type, year, number):
         'article': data['html']
     }
     return HttpResponse(template.render(context, request))
+
+
+def metadata(request, type, year, number):
+    data = api.get_metadata(type, year, number)
+    template = loader.get_template('metadata/metadata.html')
+    context = { 'item': data }
+    return HttpResponse(template.render(context, request))
