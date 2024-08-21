@@ -61,17 +61,17 @@
 		<li><a href="#primaryNav">Skip to navigation</a></li>
 	</ul>
 	<div id="layout1">
-		{% include "top_banner.html" %}
-		{% include "main_nav.html" %}
+		{% include "common/top_banner.html" %}
+		{% include "common/main_nav.html" %}
 		<div id="background"></div>
 		<div id="layout2" class="{% block layout2_class %}{% endblock %}">
-			{% include "search.html" %}
+			{% include "common/search.html" %}
 			{% block layout2 %}
 			{% endblock %}
 		</div>
 		{% block after_layout2 %}
 		{% endblock %}
-		{% include "footer.html" %}
+		{% include "common/footer.html" %}
 		<!--Google Tag Manager NoScript-->
 		<div id="google-tag-manager">
 			<script type="text/javascript">

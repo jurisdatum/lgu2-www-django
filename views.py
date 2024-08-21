@@ -86,7 +86,7 @@ def browse(request, year = None):
         'search_endpoint': '/ukpga' if year is None else '/ukpga/' + str(year),
         'page_last_modified': data['meta']['updated'][:10]
     }
-    template = loader.get_template('browse.html')
+    template = loader.get_template('browse/browse.html')
     return HttpResponse(template.render(context, request))
 
 
@@ -95,7 +95,7 @@ def document(request, type, year, number):
     if 'error' in data:
         template = loader.get_template('404.html')
         return HttpResponseNotFound(template.render({}, request))
-    template = loader.get_template('document.html')
+    template = loader.get_template('document/document.html')
     status_message = None
     if data['meta']['status'] == 'final':
         status_message = Message.objects.get(name='status_warning_original_version').text

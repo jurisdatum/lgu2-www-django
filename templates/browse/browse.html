@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 {% load static %}
 
 {% block head_middle %}
@@ -36,8 +36,8 @@
         <div class="redirectSearch" style="visibility: hidden"><a href="/search/?lang=cy&amp;type=ukpga"
                 class="redirectSearch">Search Welsh language text</a></div>
     </div>
-    {% include "timeline.html" %}
-    {% include "paged_nav.html" %}
+    {% include "browse/timeline.html" %}
+    {% include "browse/paged_nav.html" %}
     <div id="tools">
         <h2 class="accessibleText">Narrow results by:</h2>
         <div class="section" id="type">
@@ -97,7 +97,7 @@
         </table>
     </div>
     <div class="contentFooter">
-        {% include "paged_nav.html" %}
+        {% include "browse/paged_nav.html" %}
     </div>
     <p class="backToTop"><a href="#top">Back to top</a></p>
 </div>
