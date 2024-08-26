@@ -90,6 +90,8 @@ def browse(request, year = None):
     return HttpResponse(template.render(context, request))
 
 
+# documents
+
 def document(request, type, year, number):
     data = api.get_document(type, year, number)
     if 'error' in data:
@@ -106,6 +108,16 @@ def document(request, type, year, number):
     }
     return HttpResponse(template.render(context, request))
 
+def document_clml(request, type, year, number):
+    clml = api.get_clml(type, year, number)
+    return HttpResponse(clml, content_type='application/xml')
+
+def document_akn(request, type, year, number):
+    akn = api.get_akn(type, year, number)
+    return HttpResponse(akn, content_type='application/xml')
+
+
+# metadata
 
 def metadata(request, type, year, number):
     data = api.get_metadata(type, year, number)
