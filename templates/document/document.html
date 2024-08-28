@@ -36,9 +36,8 @@
 				<h2 class="accessibleText">You are here:</h2>
 				<ul>
 					<li class="first"><a href="/ukpga">UK Public General Acts</a></li>
-					<li><a href="/ukpga/2018/1/contents/enacted">2018 c. 1</a></li>
-					<li class="activetext">Whole
-						Act</li>
+					<li><a href="{{ meta.link }}">{{ meta.cite }}</a></li>
+					<li class="activetext">Whole Act</li>
 				</ul>
 			</div>
 			<ul id="legSubNav">
@@ -81,16 +80,28 @@
 					<div class="content">
 						<ul class="toolList">
 							<li>
-								{% if meta.status == 'final' %}
-								<a class="userFunctionalElement" href="/{{ meta.id }}">
-									<span class="background">
-										<span class="btl"></span>
-										<span class="btr"></span>
-										Latest available (Revised)
-										<span class="bbl"></span>
-										<span class="bbr"></span>
+								{% if meta.status == 'final' or pit %}
+									{% if True %}
+									<a class="userFunctionalElement" href="/{{ meta.id }}">
+										<span class="background">
+											<span class="btl"></span>
+											<span class="btr"></span>
+											Latest available (Revised)
+											<span class="bbl"></span>
+											<span class="bbr"></span>
+										</span>
+									</a>
+									{% else %}
+									<span class="userFunctionalElement disabled">
+										<span class="background">
+											<span class="btl"></span>
+											<span class="btr"></span>
+											Latest available (Revised)
+											<span class="bbl"></span>
+											<span class="bbr"></span>
+										</span>
 									</span>
-								</a>
+									{% endif %}
 								{% else %}
 								<span class="userFunctionalElement active">
 									<span class="background">
@@ -103,6 +114,19 @@
 								</span>
 								{% endif %}
 							</li>
+							{% if pit %}
+							<li>
+								<span class="userFunctionalElement active">
+									<span class="background">
+										<span class="btl"></span>
+										<span class="btr"></span>
+										Point in Time ({{ pit }})
+										<span class="bbl"></span>
+										<span class="bbr"></span>
+									</span>
+								</span>
+							</li>
+							{% endif %}
 							<li>
 								{% if meta.status == 'final' %}
 								<span class="userFunctionalElement active">
@@ -115,7 +139,7 @@
 									</span>
 								</span>
 								{% else %}
-								<a class="userFunctionalElement" href="/{{ meta.id }}">
+								<a class="userFunctionalElement" href="/{{ meta.id }}/enacted">
 									<span class="background">
 										<span class="btl"></span>
 										<span class="btr"></span>
@@ -172,13 +196,16 @@
 				</div>
 			</div>
 			<div id="content">
+				{% if timeline %}
+					{% include "document/timeline.html" %}
+				{% endif %}
 				{% if status_message %}
 				<div id="infoSection">
 					<h2>Status:</h2>
 					<p class="intro">{{ status_message }}</p>
 				</div>
 				{% endif %}
-				<div id="viewLegContents" xml:lang="en">
+				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt">
 					<template shadowrootmode="open">
 						<style type="text/css"> @import "{% static 'primary.css' %}"; </style>
 						{{ article|safe }}

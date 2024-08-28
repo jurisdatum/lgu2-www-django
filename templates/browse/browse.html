@@ -85,10 +85,10 @@
                 {% for doc in documents %}
                 <tr {% if not forloop.counter|divisibleby:2 %} class="oddRow" {% endif %}>
                     <td>
-                        <a href="/{{ doc.id }}">{{ doc.title }}</a>
+                        <a href="/{{ doc.link }}">{{ doc.title }}</a>
                     </td>
                     <td>
-                        <a href="/{{ doc.id }}">{{ doc.year }} c. {{ doc.number }}</a>
+                        <a href="/{{ doc.link }}">{{ doc.year }} c. {{ doc.number }}</a>
                     </td>
                     <td>UK Public General Acts</td>
                 </tr>
