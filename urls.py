@@ -22,5 +22,6 @@ urlpatterns = [
     re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|\d{4}-\d{2}-\d{2})/data.akn$', views.document_akn),
 
     re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', views.metadata, name='metadata'),
+    re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', views.combined),
 
 ]
