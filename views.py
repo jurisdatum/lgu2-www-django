@@ -108,6 +108,7 @@ def make_timeline_data(meta, pit):
 
     versions = meta['versions']
     versions = filter(lambda v: v != 'enacted', versions)
+    versions = filter(lambda v: v != 'prospective', versions) # ?
     versions = sorted(versions)
     versions = list(map(lambda v: { 'date': v }, versions))
 
