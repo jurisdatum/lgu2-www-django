@@ -1,14 +1,14 @@
-<div id="changesOverTime">
+{% load static %}<div id="changesOverTime">
     <h2>Changes over time for: {{ meta.title }}</h2>
     <div class="timelineHelp">
         <a href="#timelineHelp" class="helpItem helpItemToMidLeft">
-            <img src="/images/chrome/helpIcon.gif" alt=" Help about opening options" />
+            <img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about opening options" />
         </a>
         <div class="help" id="timelineHelp" style="display: none; position: absolute;">
             <span class="icon"></span>
             <div class="content">
                 <a href="#" class="close">
-                    <img alt="Close" src="/images/chrome/closeIcon.gif" />
+                    <img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" />
                 </a>
                 <h3>Timeline of Changes</h3>
                 <p id="Revised_toc_1">This timeline shows the different points in time where a change occurred. The

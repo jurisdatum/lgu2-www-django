@@ -1,4 +1,4 @@
-<div id="footerNav">
+{% load static %}<div id="footerNav">
     <ul>
         <li><a href="/new-design">New site design</a></li>
         <li><a href="/help">Help</a></li>
@@ -12,7 +12,7 @@
 </div>
 <div id="footer">
     <div>
-        <p class="copyrightstatement"><img src="https://www.legislation.gov.uk/images/chrome/ogl-symbol.gif" alt="OGL logo" /><span
+        <p class="copyrightstatement"><img src="{% static 'lgu1/images/chrome/ogl-symbol.gif' %}" alt="OGL logo" /><span
                 xml:lang="" id="Copyright_Statement">All content is available under the <a
                     href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3"
                     target="_blank" rel="license">Open Government Licence v3.0</a> except where <a

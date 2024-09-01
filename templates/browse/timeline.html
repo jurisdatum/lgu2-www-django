@@ -1,10 +1,10 @@
-<div id="resultsTimeline" class="fisheye">
+{% load static %}<div id="resultsTimeline" class="fisheye">
     <h2 class="accessibleText">Results by year</h2>
     <h3 class="accessibleText">Key</h3>
     <dl class="key">
-        <dt><img src="https://www.legislation.gov.uk/images/chrome/timelinePartialKey.gif" alt="Partial" /></dt>
+        <dt><img src="{% static 'lgu1/images/chrome/timelinePartialKey.gif' %}" alt="Partial" /></dt>
         <dd><em>Partial dataset {{ years.first }} - {{ years.first_complete|add:'-1' }}</em></dd>
-        <dt><img src="https://www.legislation.gov.uk/images/chrome/timelineCompleteKey.gif" alt="Complete" /></dt>
+        <dt><img src="{% static 'lgu1/images/chrome/timelineCompleteKey.gif' %}" alt="Complete" /></dt>
         <dd><em>Complete dataset {{ years.first_complete }} - {% if years.last %}{{ years.last }}{% else %}Present{% endif %}</em></dd>
     </dl>
     <h3 class="groupInfo">Results grouped by <strong>10 year</strong> periods</h3>
@@ -27,7 +27,7 @@
                         <a href="/ukpga/{{ count.year }}" title="{{ count.count }} results {{ count.year }}">
                             <em><span>{{ count.count }}</span></em>
                             <span class="accessibleText">Results</span>
-                            <strong><img src="https://www.legislation.gov.uk/images/chrome/timeline{% if count.complete %}Complete{% else %}Partial{% endif %}Key.gif" alt="({% if count.complete %}Complete{% else %}Partial{% endif %})" /> {{ count.year }}</strong>
+                            <strong><img src="{% get_static_prefix %}lgu1//images/chrome/timeline{% if count.complete %}Complete{% else %}Partial{% endif %}Key.gif" alt="({% if count.complete %}Complete{% else %}Partial{% endif %})" /> {{ count.year }}</strong>
                         </a>
                     </li>
                     {% endfor %}

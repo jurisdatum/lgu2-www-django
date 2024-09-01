@@ -4,7 +4,7 @@
 {% block page_title %}{{ meta.title }}{% endblock %}
 
 {% block head_middle %}
-<link rel="canonical" href="https://www.legislation.gov.uk/ukpga/2018/1" />
+<link rel="canonical" href="https://www.legislation.gov.uk/{{ meta.link }}" />
 <meta name="DC.title" content="{{ meta.title }}" />
 <meta name="DC.language" scheme="ISO639-2" content="{{ meta.lang }}" />
 <meta name="DC.publisher" content="{{ meta.publisher }}" />
@@ -47,10 +47,10 @@
 						class="disabled">Content</a></li>
 				<li id="legEnLink"><span class="presentation"></span><a href="/ukpga/2018/1/notes/contents">Explanatory
 						Notes</a><a href="#enTabHelp" class="helpItem helpItemToBot"><img
-							src="/images/chrome/helpIcon.gif" alt=" Help about Explanatory Notes" /></a></li>
+							src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about Explanatory Notes" /></a></li>
 				<li id="legResourcesLink"><span class="presentation"></span><a href="/ukpga/2018/1/resources">More
 						Resources</a><a href="#moreResourcesTabHelp" class="helpItem helpItemToBot"><img
-							src="/images/chrome/helpIcon.gif" alt=" Help about More Resources" /></a></li>
+							src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about More Resources" /></a></li>
 			</ul>
 			<div class="interface">
 				<div class="prevNextNav">
@@ -74,7 +74,7 @@
 			<div id="tools">
 				<div class="section" id="whatVersion">
 					<div class="title"><a href="#whatversionHelp" class="helpItem helpItemToMidRight"><img
-								src="/images/chrome/helpIcon.gif" alt=" Help about what version" /></a>
+								src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about what version" /></a>
 						<h2>What Version</h2>
 					</div>
 					<div class="content">
@@ -155,7 +155,7 @@
 				</div>
 				<div id="advFeatures" class="section">
 					<div class="title"><a href="#advFeaturesHelp" class="helpItem helpItemToMidRight"><img
-								src="/images/chrome/helpIcon.gif" alt=" Help about advanced features" /></a>
+								src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about advanced features" /></a>
 						<h2>Advanced Features</h2>
 					</div>
 					<div id="advFeaturesContent" class="content">
@@ -167,7 +167,7 @@
 				</div>
 				<div class="section" id="openingOptions">
 					<div class="title"><a href="#openingOptionsHelp" class="helpItem helpItemToMidRight"><img
-								src="/images/chrome/helpIcon.gif" alt=" Help about opening options" /></a>
+								src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about opening options" /></a>
 						<h2>Opening Options</h2>
 					</div>
 					<div id="openingOptionsContent" class="content">
@@ -251,7 +251,7 @@
 			</ul>
 		</div>
 		<div class="help" id="whatversionHelp"><span class="icon"></span>
-			<div class="content"><a href="#" class="close"><img alt="Close" src="/images/chrome/closeIcon.gif" /></a>
+			<div class="content"><a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
 				<h3>Legislation is available in different versions:</h3>
 				<p><strong>Latest Available (revised):</strong>The latest available updated version of the legislation
 					incorporating changes made by subsequent legislation and applied by our editorial team. Changes we
@@ -261,7 +261,7 @@
 			</div>
 		</div>
 		<div class="help" id="advFeaturesHelp"><span class="icon"></span>
-			<div class="content"><a href="#" class="close"><img alt="Close" src="/images/chrome/closeIcon.gif" /></a>
+			<div class="content"><a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
 				<h3>See additional information alongside the content</h3>
 				<p><strong>Show Explanatory Notes for Sections:
 					</strong>Displays relevant parts of the explanatory notes interweaved within the legislation
@@ -269,13 +269,13 @@
 			</div>
 		</div>
 		<div class="help" id="openingOptionsHelp"><span class="icon"></span>
-			<div class="content"><a href="#" class="close"><img alt="Close" src="/images/chrome/closeIcon.gif" /></a>
+			<div class="content"><a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
 				<h3>Opening Options</h3>
 				<p>Different options to open legislation in order to view more content on screen at once</p>
 			</div>
 		</div>
 		<div class="help" id="enTabHelp"><span class="icon"></span>
-			<div class="content"><a href="#" class="close"><img alt="Close" src="/images/chrome/closeIcon.gif" /></a>
+			<div class="content"><a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
 				<h3>Explanatory Notes</h3>
 				<p>Text created by the government department responsible for the subject matter of the Act to explain
 					what the Act sets out to achieve and to make the Act accessible to readers who are not legally
@@ -284,7 +284,7 @@
 			</div>
 		</div>
 		<div class="help" id="moreResourcesTabHelp"><span class="icon"></span>
-			<div class="content"><a href="#" class="close"><img alt="Close" src="/images/chrome/closeIcon.gif" /></a>
+			<div class="content"><a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
 				<h3>More Resources</h3>
 				<p>Access essential accompanying documents and information for this legislation item from this tab.
 					Dependent on the legislation item being viewed this may include:</p>
@@ -299,7 +299,7 @@
 			</div>
 		</div>
 		<div class="help" id="moreResourcesHelp"><span class="icon"></span>
-			<div class="content"><a href="#" class="close"><img alt="Close" src="/images/chrome/closeIcon.gif" /></a>
+			<div class="content"><a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
 				<h3>More Resources</h3>
 				<p>Use this menu to access essential accompanying documents and information for this legislation item.
 					Dependent on the legislation item being viewed this may include:</p>
