@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="interface">
     <div class="prevPagesNextNav">
         <ul>
@@ -6,7 +7,7 @@
                 <a href="{{ search_endpoint }}?page={{ current_page|add:'-1' }}" title="previous page">
                     <span class="btl"></span>
                     <span class="btr"></span>
-                    <span>Previous</span>
+                    <span>{% translate 'Previous' %}</span>
                     <span class="accessibleText"> results page</span>
                     <span class="bbl"></span>
                     <span class="bbr"></span>
@@ -33,7 +34,7 @@
                 <a href="{{ search_endpoint }}?page={{ current_page|add:'1' }}" title="next page">
                     <span class="btl"></span>
                     <span class="btr"></span>
-                    <span>Next</span>
+                    <span>{% translate 'Next' %}</span>
                     <span class="accessibleText"> results page</span>
                     <span class="bbl"></span>
                     <span class="bbr"></span>

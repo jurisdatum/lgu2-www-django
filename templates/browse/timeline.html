@@ -1,11 +1,13 @@
-{% load static %}<div id="resultsTimeline" class="fisheye">
+{% load static %}
+{% load i18n %}
+<div id="resultsTimeline" class="fisheye">
     <h2 class="accessibleText">Results by year</h2>
     <h3 class="accessibleText">Key</h3>
     <dl class="key">
         <dt><img src="{% static 'lgu1/images/chrome/timelinePartialKey.gif' %}" alt="Partial" /></dt>
-        <dd><em>Partial dataset {{ years.first }} - {{ years.first_complete|add:'-1' }}</em></dd>
+        <dd><em>{% translate 'Partial dataset' %} {{ years.first }} - {{ years.first_complete|add:'-1' }}</em></dd>
         <dt><img src="{% static 'lgu1/images/chrome/timelineCompleteKey.gif' %}" alt="Complete" /></dt>
-        <dd><em>Complete dataset {{ years.first_complete }} - {% if years.last %}{{ years.last }}{% else %}Present{% endif %}</em></dd>
+        <dd><em>{% translate 'Complete dataset' %} {{ years.first_complete }} - {% if years.last %}{{ years.last }}{% else %}{% translate 'Present' %}{% endif %}</em></dd>
     </dl>
     <h3 class="groupInfo">Results grouped by <strong>10 year</strong> periods</h3>
     <h3 class="accessibleText">Data is ordered by:</h3>
@@ -13,9 +15,7 @@
         <li class="year">Time<span class="accessibleText"> of results</span></li>
         <li class="number">Count<span class="accessibleText"> of results</span></li>
     </ul>
-    <p class="explanation">The counts below reflect the number of documents on legislation.gov.uk that
-        match the search for items of this legislation type and are not intended to indicate the total
-        legislation made, enacted or adopted in a particular year.</p>
+    <p class="explanation">{% translate 'The counts below reflect the number of documents on legislation.gov.uk that match the search for items of this legislation type and are not intended to indicate the total legislation made, enacted or adopted in a particular year.' %}</p>
     <div id="timeline">
         <div id="timelineData">
             {% for group in decade_groups_for_timeline %}

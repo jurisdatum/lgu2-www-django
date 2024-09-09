@@ -1,0 +1,353 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-09 01:07+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != "
+"11) ? 2 : 3;\n"
+
+#: lgu2/settings.py:104
+msgid "English"
+msgstr ""
+
+#: lgu2/settings.py:104
+msgid "Welsh"
+msgstr "Cymraeg"
+
+#: lgu2/templates/browse/browse.html:36
+msgid "Search Results"
+msgstr "Canlyniadau Chwilio"
+
+#: lgu2/templates/browse/browse.html:37
+msgid ""
+"Your search for English language UK Public General Acts has returned more "
+"than 200 results."
+msgstr ""
+"Mae eich chwiliad am English language Deddfau Cyhoeddus Cyffredinol y Deyrnas Unedig "
+"wedi dod o hyd i fwy na 200 o ganlyniadau."
+
+#: lgu2/templates/browse/browse.html:48
+msgid "Legislation by Type"
+msgstr "Deddfwriaeth yn ôl Math"
+
+#: lgu2/templates/browse/browse.html:53 lgu2/templates/browse/browse.html:103
+#: lgu2/templates/common/search.html:23
+msgid "UK Public General Acts"
+msgstr "Deddfau Cyhoeddus Cyffredinol y Deyrnas Unedig"
+
+#: lgu2/templates/browse/browse.html:60
+msgid "Legislation by Year"
+msgstr "Deddfwriaeth fesul Blwyddyn"
+
+#: lgu2/templates/browse/browse.html:83
+msgid "Sort ascending by"
+msgstr ""
+
+#: lgu2/templates/browse/browse.html:83 lgu2/templates/common/search.html:4
+msgid "Title"
+msgstr "Teitl"
+
+#: lgu2/templates/browse/browse.html:87
+msgid "Sort descending by"
+msgstr ""
+
+#: lgu2/templates/browse/browse.html:87
+msgid "Years and Numbers"
+msgstr "Blynyddoedd a Rhifau"
+
+#: lgu2/templates/browse/browse.html:90
+msgid "Legislation type"
+msgstr "Math o ddeddfwriaeth"
+
+#: lgu2/templates/browse/browse.html:113
+msgid "Back to top"
+msgstr "Yn ôl i’r brig"
+
+#: lgu2/templates/browse/paged_nav.html:10
+msgid "Previous"
+msgstr ""
+
+#: lgu2/templates/browse/paged_nav.html:37
+msgid "Next"
+msgstr "Nesaf"
+
+#: lgu2/templates/browse/timeline.html:8
+msgid "Partial dataset"
+msgstr "Set ddata rannol"
+
+#: lgu2/templates/browse/timeline.html:10
+msgid "Complete dataset"
+msgstr "Set ddata gyflawn"
+
+#: lgu2/templates/browse/timeline.html:10
+msgid "Present"
+msgstr "Presennol"
+
+#: lgu2/templates/browse/timeline.html:18
+msgid ""
+"The counts below reflect the number of documents on legislation.gov.uk that "
+"match the search for items of this legislation type and are not intended to "
+"indicate the total legislation made, enacted or adopted in a particular year."
+msgstr ""
+"Mae’r cyfrifon isod yn adlewyrchu’r nifer o ddogfennau ar deddfwriaeth.gov."
+"uk sy’n cyfateb i’r chwiliad am eitemau o’r math hwn o ddeddfwriaeth ac nid "
+"yw’n fwriad iddynt ddynodi cyfanswm y ddeddfwriaeth a wnaed, a weithredwyd "
+"nac a fabwysiadwyd mewn blwyddyn benodol."
+
+#: lgu2/templates/common/footer.html:4
+msgid "New site design"
+msgstr ""
+
+#: lgu2/templates/common/footer.html:7
+msgid "Help"
+msgstr ""
+
+#: lgu2/templates/common/footer.html:10
+msgid "About Us"
+msgstr "Amdanom ni"
+
+#: lgu2/templates/common/footer.html:13
+msgid "Site Map"
+msgstr "Map o’r safle"
+
+#: lgu2/templates/common/footer.html:16
+msgid "Accessibility"
+msgstr "Hygyrchedd"
+
+#: lgu2/templates/common/footer.html:19
+msgid "Contact Us"
+msgstr "Cysylltu â Ni"
+
+#: lgu2/templates/common/footer.html:22
+msgid "Privacy Notice"
+msgstr "Rhybudd Preifatrwydd"
+
+#: lgu2/templates/common/footer.html:25
+msgid "Cookies"
+msgstr "Cwcis"
+
+#: lgu2/templates/common/footer.html:55
+msgid "Crown and database right"
+msgstr "Hawl y goron a chronfa ddata"
+
+#: lgu2/templates/common/main_nav.html:5
+msgid "Home"
+msgstr "Hafan"
+
+#: lgu2/templates/common/main_nav.html:7
+msgid "Explore our Collections"
+msgstr "Archwilio ein Casgliadau"
+
+#: lgu2/templates/common/main_nav.html:10
+msgid "New Legislation"
+msgstr "Deddfwriaeth Newydd"
+
+#: lgu2/templates/common/main_nav.html:13
+msgid "Help and Guidance"
+msgstr "Cymorth ac Arweiniad"
+
+#: lgu2/templates/common/main_nav.html:16
+msgid "Changes to Legislation"
+msgstr "Newidiadau i Ddeddfwriaeth"
+
+#: lgu2/templates/common/main_nav.html:19
+msgid "Search Legislation"
+msgstr ""
+
+#: lgu2/templates/common/search.html:8
+msgid "Year"
+msgstr "Blwyddyn"
+
+#: lgu2/templates/common/search.html:12
+msgid "Number"
+msgstr "Rhif"
+
+#: lgu2/templates/common/search.html:16
+msgid "Type"
+msgstr "Math"
+
+#: lgu2/templates/common/search.html:18
+msgid "All UK Legislation (excluding originating from the EU)"
+msgstr "Pob Deddfwriaeth y Deyrnas Unedig (ac eithrio yn deillio o’r UE)"
+
+#: lgu2/templates/common/search.html:20
+msgid "All Legislation (including originating from the EU)"
+msgstr "Pob Legislation (including originating from the EU)"
+
+# this is wrong
+#: lgu2/templates/common/search.html:22
+msgid "All Primary Legislation"
+msgstr "Pob deddfwriaeth sylfaenol"
+
+#: lgu2/templates/common/search.html:24
+msgid "UK Local Acts"
+msgstr "Deddfau Lleol y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:25
+msgid "UK Private and Personal Acts"
+msgstr "Deddfau Preifat a Phersonol y DU"
+
+#: lgu2/templates/common/search.html:26
+msgid "Acts of the Scottish Parliament"
+msgstr "Deddfau Senedd yr Alban"
+
+#: lgu2/templates/common/search.html:27
+msgid "Acts of Senedd Cymru"
+msgstr "Deddfau Senedd Cymru"
+
+#: lgu2/templates/common/search.html:28
+msgid "Acts of the National Assembly for Wales"
+msgstr "Deddfau Cynulliad Cenedlaethol Cymru"
+
+#: lgu2/templates/common/search.html:29
+msgid "Measures of the National Assembly for Wales"
+msgstr "Mesurau Cynulliad Cenedlaethol Cymru"
+
+#: lgu2/templates/common/search.html:30
+msgid "Church Measures"
+msgstr "Mesurau Eglwysig"
+
+#: lgu2/templates/common/search.html:31
+msgid "Acts of the Northern Ireland Assembly"
+msgstr "Deddfau Cynulliad Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:32
+msgid "Acts of the Old Scottish Parliament"
+msgstr "Deddfau Hen Senedd yr Alban"
+
+#: lgu2/templates/common/search.html:33
+msgid "Acts of the English Parliament"
+msgstr "Deddfau Senedd Lloegr"
+
+#: lgu2/templates/common/search.html:34
+msgid "Acts of the Old Irish Parliament"
+msgstr "Deddfau Hen Senedd Iwerddon"
+
+#: lgu2/templates/common/search.html:35
+msgid "Acts of the Parliament of Great Britain"
+msgstr "Deddfau Senedd Prydain Fawr"
+
+#: lgu2/templates/common/search.html:36
+msgid "Local Acts of the Parliament of Great Britain"
+msgstr "Deddfau Lleol Senedd Prydain Fawr"
+
+#: lgu2/templates/common/search.html:37
+msgid "Private and Personal Acts of the Parliament of Great Britain"
+msgstr "Deddfau Preifat a Phersonol Senedd Prydain Fawr"
+
+#: lgu2/templates/common/search.html:38
+msgid "Northern Ireland Orders in Council"
+msgstr "Gorchmynion yn y Cyngor Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:39
+msgid "Measures of the Northern Ireland Assembly"
+msgstr "Mesurau Cynulliad Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:40
+msgid "Acts of the Northern Ireland Parliament"
+msgstr "Deddfau Senedd Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:42
+msgid "All Secondary Legislation"
+msgstr "Pob is-ddeddfwriaeth"
+
+#: lgu2/templates/common/search.html:43
+msgid "UK Statutory Instruments"
+msgstr "Offerynnau Statudol y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:44
+msgid "Wales Statutory Instruments"
+msgstr "Offerynnau Statudol Cymru"
+
+#: lgu2/templates/common/search.html:45
+msgid "Scottish Statutory Instruments"
+msgstr "Offerynnau Statudol yr Alban"
+
+#: lgu2/templates/common/search.html:46
+msgid "Northern Ireland Statutory Rules"
+msgstr "Rheolau Statudol Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:47
+msgid "Church Instruments"
+msgstr "Offerynnau Eglwysig"
+
+#: lgu2/templates/common/search.html:48
+msgid "UK Ministerial Directions"
+msgstr "Cyfarwyddiadau Gweinidogol y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:49
+msgid "UK Ministerial Orders"
+msgstr "Gorchmynion Gweinidogol y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:50
+msgid "UK Statutory Rules and Orders"
+msgstr "Rheolau a Gorchmynion Statudol y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:51
+msgid "Northern Ireland Statutory Rules and Orders"
+msgstr "Rheolau a Gorchmynion Statudol Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:53
+msgid "All Legislation originating from the EU"
+msgstr "Yr holl Ddeddfwriaeth sy’n deillio o’r UE"
+
+#: lgu2/templates/common/search.html:54
+msgid "Regulations originating from the EU"
+msgstr "Rheoliadau yn deillio o’r UE"
+
+#: lgu2/templates/common/search.html:55
+msgid "Decisions originating from the EU"
+msgstr "Penderfyniadau yn deillio o’r UE"
+
+#: lgu2/templates/common/search.html:56
+msgid "Directives originating from the EU"
+msgstr "Cyfarwyddebau yn deillio o’r UE"
+
+#: lgu2/templates/common/search.html:57
+msgid "European Union Treaties"
+msgstr "Cytuniadau’r Undeb Ewropeaidd"
+
+#: lgu2/templates/common/search.html:59
+msgid "All Draft Legislation"
+msgstr "Pob Deddfwriaeth Ddrafft"
+
+#: lgu2/templates/common/search.html:60
+msgid "UK Draft Statutory Instruments"
+msgstr "Offerynnau Statudol Drafft y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:61
+msgid "Scottish Draft Statutory Instruments"
+msgstr "Offerynnau Statudol Drafft yr Alban"
+
+#: lgu2/templates/common/search.html:62
+msgid "Northern Ireland Draft Statutory Rules"
+msgstr "Rheolau Statudol Drafft Gogledd Iwerddon"
+
+#: lgu2/templates/common/search.html:64
+msgid "All Impact Assessments"
+msgstr "Pob Asesiad Effaith"
+
+#: lgu2/templates/common/search.html:65
+msgid "UK Impact Assessments"
+msgstr "Asesiadau Effaith y Deyrnas Unedig"
+
+#: lgu2/templates/common/search.html:71
+msgid "Search"
+msgstr "Chwilio"
+
+#: lgu2/templates/common/search.html:77
+msgid "Advanced Search"
+msgstr "Chwiliad Uwch"

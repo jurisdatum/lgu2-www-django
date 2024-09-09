@@ -1,12 +1,24 @@
+{% load i18n %}
 <div id="primaryNav">
     <div class="navLayout">
         <ul>
-            <li class="link1"><a href="/"><span>Home</span></a></li>
-            <li class="link2"><a href="/browse"><span>Explore our Collections</span></a></li>
-            <li class="link3"><a href="/new"><span>New Legislation</span></a></li>
-            <li class="link4"><a href="/help"><span>Help and Guidance</span></a></li>
-            <li class="link5"><a href="/changes"><span>Changes to Legislation</span></a></li>
-            <li id="quickSearch" class="en"><a href="#contentSearch"><span>Search Legislation</span></a></li>
+            <li class="link1">
+                <a href="{% url 'home' %}"><span>{% translate 'Home' %}</span></a></li>
+            <li class="link2">
+                <a href="{% url 'browse' %}"><span>{% translate 'Explore our Collections' %}</span></a>
+            </li>
+            <li class="link3">
+                <a href="/new"><span>{% translate 'New Legislation' %}</span></a>
+            </li>
+            <li class="link4">
+                <a href="/help"><span>{% translate 'Help and Guidance' %}</span></a>
+            </li>
+            <li class="link5">
+                <a href="/changes"><span>{% translate 'Changes to Legislation' %}</span></a>
+            </li>
+            <li id="quickSearch" class="en">
+                <a href="#contentSearch"><span>{% translate 'Search Legislation' %}</span></a>
+            </li>
         </ul>
     </div>
 </div>

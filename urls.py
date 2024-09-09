@@ -1,14 +1,22 @@
 
 from django.contrib import admin
 from django.urls import path, re_path
+from django.conf.urls.i18n import i18n_patterns
 
 from . import views
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
 
-    path('', views.index),
+    path('', views.index, name='home'), prefix_default_language=False
+)
+
+urlpatterns += [
+
     path('admin/', admin.site.urls),
     path('hello', views.hello, name='hello'),
+]
+
+urlpatterns += i18n_patterns(
 
     path('ukpga', views.browse, name='browse'),
     path('ukpga/<int:year>', views.browse, name='browse-year'),
@@ -24,4 +32,5 @@ urlpatterns = [
     re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', views.metadata, name='metadata'),
     re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', views.combined),
 
-]
+    prefix_default_language=False
+)

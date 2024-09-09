@@ -3,6 +3,7 @@ import requests
 
 _server = 'http://localhost:8080/'
 
+# browse
 
 def browse_by_type(type: str, page: str):
     url = _server + 'documents/' + type + '?page=' + page

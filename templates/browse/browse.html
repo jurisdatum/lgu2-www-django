@@ -1,5 +1,7 @@
 {% extends "../base.html" %}
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block head_middle %}
 <script type="text/javascript" src="{% static 'lgu1/scripts/view/minpagination.js' %}"></script>
@@ -31,10 +33,11 @@
 {% block layout2 %}
 <div>
     <div class="info">
-        <h1 id="pageTitle">Search Results</h1>
-        <h2>Your search for English language UK Public General Acts has returned more than 200 results.</h2>
-        <div class="redirectSearch" style="visibility: hidden"><a href="/search/?lang=cy&amp;type=ukpga"
-                class="redirectSearch">Search Welsh language text</a></div>
+        <h1 id="pageTitle">{% translate 'Search Results' %}</h1>
+        <h2>{% blocktranslate %}Your search for English language UK Public General Acts has returned more than 200 results.{% endblocktranslate %}</h2>
+        <div class="redirectSearch" style="visibility: hidden">
+            <a href="/search/?lang=cy&amp;type=ukpga" class="redirectSearch">Search Welsh language text</a>
+        </div>
     </div>
     {% include "browse/timeline.html" %}
     {% include "browse/paged_nav.html" %}
@@ -42,26 +45,28 @@
         <h2 class="accessibleText">Narrow results by:</h2>
         <div class="section" id="type">
             <div class="title">
-                <h3>Legislation by Type</h3>
+                <h3>{% translate 'Legislation by Type' %}</h3>
             </div>
             <div class="content">
                 <ul>
                     <li class="legType">
-                        <span class="userFunctionalElement disabled">UK Public General Acts ({{ total }})</span>
+                        <span class="userFunctionalElement disabled">{% translate 'UK Public General Acts' %} ({{ total }})</span>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="section" id="year">
             <div class="title">
-                <h3>Legislation by Year</h3>
+                <h3>{% translate 'Legislation by Year' %}</h3>
             </div>
             <div class="content" id="yearPagination">
                 {% for group in grouped_yearly_counts %}
                 <ul class="page years">
                     {% for count in group %}
                     {% if count %}
-                    <li class="legYear"><a href="/ukpga/{{ count.year }}">{{ count.year }} ({{ count.count }})</a></li>
+                    <li class="legYear">
+                        <a href="{{ request.path }}/{{ count.year }}">{{ count.year }} ({{ count.count }})</a>
+                    </li>
                     {% endif %}
                     {% endfor %}
                 </ul>
@@ -73,12 +78,17 @@
         <table>
             <thead>
                 <tr>
-                    <th><a href="/ukpga?sort=title" class="sortAsc" title="Sort ascending by Title"><span
-                                class="accessibleText">Sort ascending by </span>Title</a></th>
-                    <th><span class="sortDesc active" title="Sort descending by Years and Numbers"><span
-                                class="accessibleText">Sort descending by </span>Years and Numbers</span>
+                    <th>
+                        <a href="/ukpga?sort=title" class="sortAsc" title="Sort ascending by Title">
+                            <span class="accessibleText">{% translate 'Sort ascending by' %} </span>{% translate 'Title' %}</a>
                     </th>
-                    <th><span>Legislation type</span></th>
+                    <th>
+                        <span class="sortDesc active" title="Sort descending by Years and Numbers">
+                            <span class="accessibleText">{% translate 'Sort descending by' %} </span>{% translate 'Years and Numbers' %}</span>
+                    </th>
+                    <th>
+                        <span>{% translate 'Legislation type' %}</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -90,7 +100,7 @@
                     <td>
                         <a href="/{{ doc.link }}">{{ doc.year }} c. {{ doc.number }}</a>
                     </td>
-                    <td>UK Public General Acts</td>
+                    <td>{% translate 'UK Public General Acts' %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -99,6 +109,8 @@
     <div class="contentFooter">
         {% include "browse/paged_nav.html" %}
     </div>
-    <p class="backToTop"><a href="#top">Back to top</a></p>
+    <p class="backToTop">
+        <a href="#top">{% translate 'Back to top' %}</a>
+    </p>
 </div>
 {% endblock %}

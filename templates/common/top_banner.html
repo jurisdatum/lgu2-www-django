@@ -1,8 +1,31 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <div id="header">
-    <h2><a href="/">legislation.gov.uk<span class="english"></span></a></h2><span class="natArch"><a
-            href="http://www.nationalarchives.gov.uk"><span class="backgroundImage"></span><span
-                class="accessibleText">http://www.nationalarchives.gov.uk</span></a></span>
+    {% if LANGUAGE_CODE == 'cy' %}
+    <h2>
+        <a href="/cy/">legislation.gov.uk<span class="welsh"></span></a>
+    </h2>
+    <span class="natArchWelsh">
+        <a href="http://www.nationalarchives.gov.uk">
+            <span class="backgroundImage"></span>
+            <span class="accessibleText">http://www.nationalarchives.gov.uk</span>
+        </a>
+    </span>
     <ul id="secondaryNav">
-        <li><a class="langaugeSwitch" href="/cy/ukpga">Cymraeg</a></li>
+        <li><a class="langaugeSwitch" href="{{ request.get_full_path|slice:'3:' }}">English</a></li>
     </ul>
+    {% else %}
+    <h2>
+        <a href="/">legislation.gov.uk<span class="english"></span></a>
+    </h2>
+    <span class="natArch">
+        <a href="http://www.nationalarchives.gov.uk">
+            <span class="backgroundImage"></span>
+            <span class="accessibleText">http://www.nationalarchives.gov.uk</span>
+        </a>
+    </span>
+    <ul id="secondaryNav">
+        <li><a class="langaugeSwitch" href="/cy{{ request.get_full_path }}">Cymraeg</a></li>
+    </ul>
+    {% endif %}
 </div>

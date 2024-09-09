@@ -1,29 +1,59 @@
-{% load static %}<div id="footerNav">
+{% load static %}
+{% load i18n %}
+<div id="footerNav">
     <ul>
-        <li><a href="/new-design">New site design</a></li>
-        <li><a href="/help">Help</a></li>
-        <li><a href="/aboutus">About Us</a></li>
-        <li><a href="/sitemap">Site Map</a></li>
-        <li><a href="/accessibility">Accessibility</a></li>
-        <li><a href="/contactus">Contact Us</a></li>
-        <li><a href="/privacynotice">Privacy Notice</a></li>
-        <li><a href="/cookiepolicy" id="cookies-content-link">Cookies</a></li>
+        <li>
+            <a href="/new-design">{% translate 'New site design' %}</a>
+        </li>
+        <li>
+            <a href="/help">{% translate 'Help' %}</a>
+        </li>
+        <li>
+            <a href="/aboutus">{% translate 'About Us' %}</a>
+        </li>
+        <li>
+            <a href="/sitemap">{% translate 'Site Map' %}</a>
+        </li>
+        <li>
+            <a href="/accessibility">{% translate 'Accessibility' %}</a>
+        </li>
+        <li>
+            <a href="/contactus">{% translate 'Contact Us' %}</a>
+        </li>
+        <li>
+            <a href="/privacynotice">{% translate 'Privacy Notice' %}</a>
+        </li>
+        <li>
+            <a href="/cookiepolicy" id="cookies-content-link">{% translate 'Cookies' %}</a>
+        </li>
     </ul>
 </div>
 <div id="footer">
-    <div>
-        <p class="copyrightstatement"><img src="{% static 'lgu1/images/chrome/ogl-symbol.gif' %}" alt="OGL logo" /><span
-                xml:lang="" id="Copyright_Statement">All content is available under the <a
-                    href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3"
-                    target="_blank" rel="license">Open Government Licence v3.0</a> except where <a
-                    href="/contributors">otherwise stated</a>. This site additionally contains content derived
-                from EUR-Lex, reused under the terms of the <a
-                    href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32011D0833"
-                    target="_blank">Commission Decision 2011/833/EU</a> on the reuse of documents from the EU
-                institutions. For more information see the <a
-                    href="https://eur-lex.europa.eu/content/legal-notice/legal-notice.html"
-                    target="_blank">EUR-Lex public statement on re-use</a>.</span></p><span class="copyright">©
-            <span rel="dct:rights" resource="http://reference.data.gov.uk/def/copyright/crown-copyright">Crown
-                and database right</span></span>
+    <div>{% get_current_language as LANGUAGE_CODE %}
+        <p class="copyrightstatement">
+            <img src="{% static 'lgu1/images/chrome/ogl-symbol.gif' %}" alt="OGL logo" />
+            {% if LANGUAGE_CODE == 'cy' %}
+            <span xml:lang="cy" id="Copyright_Statement">
+                Mae’r holl gynnwys ar gael dan
+                <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3" target="_blank" rel="license">Drwydded Llywodraeth Agored v3.0</a>
+                ac eithrio ble nodir yn wahanol. Yn ychwanegol mae’r safle hwn â chynnwys sy’n deillio o EUR-Lex, a ailddefnyddiwyd dan delerau
+                <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32011D0833" target="_blank">Penderfyniad y Comisiwn 2011/833/EU</a>
+                ar ailddefnyddio dogfennau o sefydliadau’r UE. Am ragor o wybodaeth gweler ddatganiad cyhoeddus
+                <a href="https://eur-lex.europa.eu/content/legal-notice/legal-notice.html" target="_blank">Swyddfa Gyhoeddiadau’r UE ar ailddefnyddio</a>.
+            </span>
+            {% else %}
+            <span id="Copyright_Statement">
+                All content is available under the
+                <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3" target="_blank" rel="license">Open Government Licence v3.0</a>
+                except where
+                <a href="/contributors">otherwise stated</a>.
+                This site additionally contains content derived from EUR-Lex, reused under the terms of the
+                <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32011D0833" target="_blank">Commission Decision 2011/833/EU</a>
+                on the reuse of documents from the EU institutions. For more information see the
+                <a href="https://eur-lex.europa.eu/content/legal-notice/legal-notice.html" target="_blank">EUR-Lex public statement on re-use</a>.
+            </span>
+            {% endif %}
+        </p>
+        <span class="copyright">© <span rel="dct:rights" resource="http://reference.data.gov.uk/def/copyright/crown-copyright">{% translate 'Crown and database right' %}</span></span>
     </div>
 </div>
