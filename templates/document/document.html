@@ -1,5 +1,6 @@
 {% extends "../base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block page_title %}{{ meta.title }}{% endblock %}
 
@@ -37,45 +38,88 @@
 				<ul>
 					<li class="first"><a href="/ukpga">UK Public General Acts</a></li>
 					<li><a href="{{ meta.link }}">{{ meta.cite }}</a></li>
-					<li class="activetext">Whole Act</li>
+					<li class="activetext">{% translate 'Whole Act' %}</li>
 				</ul>
 			</div>
 			<ul id="legSubNav">
-				<li id="legTocLink"><span class="presentation"></span><a href="/ukpga/2018/1/contents/enacted">Table of
-						Contents</a></li>
-				<li id="legContentLink"><span class="presentation"></span><a href="/ukpga/2018/1/introduction/enacted"
-						class="disabled">Content</a></li>
-				<li id="legEnLink"><span class="presentation"></span><a href="/ukpga/2018/1/notes/contents">Explanatory
-						Notes</a><a href="#enTabHelp" class="helpItem helpItemToBot"><img
-							src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about Explanatory Notes" /></a></li>
-				<li id="legResourcesLink"><span class="presentation"></span><a href="/ukpga/2018/1/resources">More
-						Resources</a><a href="#moreResourcesTabHelp" class="helpItem helpItemToBot"><img
-							src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about More Resources" /></a></li>
+				<li id="legTocLink">
+					<span class="presentation"></span>
+					<a href="/ukpga/2018/1/contents/enacted">{% translate 'Table of Contents' %}</a>
+				</li>
+				<li id="legContentLink">
+					<span class="presentation"></span>
+					<a href="/ukpga/2018/1/introduction/enacted" class="disabled">{% translate 'Content' %}</a>
+				</li>
+				<li id="legEnLink">
+					<span class="presentation"></span>
+					<a href="/ukpga/2018/1/notes/contents">{% translate 'Explanatory Notes' %}</a>
+					<a href="#enTabHelp" class="helpItem helpItemToBot">
+						<img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about Explanatory Notes" />
+					</a>
+				</li>
+				<li id="legResourcesLink">
+					<span class="presentation"></span>
+					<a href="/ukpga/2018/1/resources">{% translate 'More Resources' %}</a>
+					<a href="#moreResourcesTabHelp" class="helpItem helpItemToBot">
+						<img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about More Resources" />
+					</a>
+				</li>
 			</ul>
 			<div class="interface">
 				<div class="prevNextNav">
 					<ul>
-						<li class="prev"><span class="userFunctionalElement disabled"><span class="background"><span
-										class="btl"></span><span class="btr"></span>Previous<span
-										class="bbl"></span><span class="bbr"></span></span></span></li>
-						<li class="next"><span class="userFunctionalElement disabled"><span class="background"><span
-										class="btl"></span><span class="btr"></span>Next<span class="bbl"></span><span
-										class="bbr"></span></span></span></li>
+						<li class="prev">
+							<span class="userFunctionalElement disabled">
+								<span class="background">
+									<span class="btl"></span>
+									<span class="btr"></span>
+									{% translate 'Previous' %}
+									<span class="bbl"></span>
+									<span class="bbr"></span>
+								</span>
+							</span>
+						</li>
+						<li class="next">
+							<span class="userFunctionalElement disabled">
+								<span class="background">
+									<span class="btl"></span>
+									<span class="btr"></span>
+									{% translate 'Next' %}
+									<span class="bbl"></span>
+									<span class="bbr"></span>
+								</span>
+							</span>
+						</li>
 					</ul>
 				</div>
 				<ul id="viewPrintControl">
-					<li class="view"><a class="userFunctionalElement" href="?view=plain"><span class="btl"></span><span
-								class="btr"></span>Plain View<span class="bbl"></span><span class="bbr"></span></a></li>
-					<li class="print"><a class="userFunctionalElement" href="#printOptions"><span
-								class="btl"></span><span class="btr"></span>Print Options<span class="bbl"></span><span
-								class="bbr"></span></a></li>
+					<li class="view">
+						<a class="userFunctionalElement" href="?view=plain">
+							<span class="btl"></span>
+							<span class="btr"></span>
+							{% translate 'Plain View' %}
+							<span class="bbl"></span>
+							<span class="bbr"></span>
+						</a>
+					</li>
+					<li class="print">
+						<a class="userFunctionalElement" href="#printOptions">
+							<span class="btl"></span>
+							<span class="btr"></span>
+							{% translate 'Print Options' %}
+							<span class="bbl"></span>
+							<span class="bbr"></span>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div id="tools">
 				<div class="section" id="whatVersion">
-					<div class="title"><a href="#whatversionHelp" class="helpItem helpItemToMidRight"><img
-								src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about what version" /></a>
-						<h2>What Version</h2>
+					<div class="title">
+						<a href="#whatversionHelp" class="helpItem helpItemToMidRight">
+							<img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about what version" />
+						</a>
+						<h2>{% translate 'What Version' %}</h2>
 					</div>
 					<div class="content">
 						<ul class="toolList">
@@ -86,7 +130,7 @@
 										<span class="background">
 											<span class="btl"></span>
 											<span class="btr"></span>
-											Latest available (Revised)
+											{% translate 'Latest available (Revised)' %}
 											<span class="bbl"></span>
 											<span class="bbr"></span>
 										</span>
@@ -96,7 +140,7 @@
 										<span class="background">
 											<span class="btl"></span>
 											<span class="btr"></span>
-											Latest available (Revised)
+											{% translate 'Latest available (Revised)' %}
 											<span class="bbl"></span>
 											<span class="bbr"></span>
 										</span>
@@ -107,7 +151,7 @@
 									<span class="background">
 										<span class="btl"></span>
 										<span class="btr"></span>
-										Latest available (Revised)
+										{% translate 'Latest available (Revised)' %}
 										<span class="bbl"></span>
 										<span class="bbr"></span>
 									</span>
@@ -120,7 +164,7 @@
 									<span class="background">
 										<span class="btl"></span>
 										<span class="btr"></span>
-										Point in Time ({{ pit }})
+										{% translate 'Point in Time' %} ({{ pit }})
 										<span class="bbl"></span>
 										<span class="bbr"></span>
 									</span>
@@ -133,7 +177,7 @@
 									<span class="background">
 										<span class="btl"></span>
 										<span class="btr"></span>
-										Original (As enacted)
+										{% translate 'Original (As enacted)' %}
 										<span class="bbl"></span>
 										<span class="bbr"></span>
 									</span>
@@ -143,7 +187,7 @@
 									<span class="background">
 										<span class="btl"></span>
 										<span class="btr"></span>
-										Original (As enacted)
+										{% translate 'Original (As enacted)' %}
 										<span class="bbl"></span>
 										<span class="bbr"></span>
 									</span>
@@ -154,44 +198,56 @@
 					</div>
 				</div>
 				<div id="advFeatures" class="section">
-					<div class="title"><a href="#advFeaturesHelp" class="helpItem helpItemToMidRight"><img
-								src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about advanced features" /></a>
-						<h2>Advanced Features</h2>
+					<div class="title">
+						<a href="#advFeaturesHelp" class="helpItem helpItemToMidRight">
+							<img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about advanced features" />
+						</a>
+						<h2>{% translate 'Advanced Features' %}</h2>
 					</div>
 					<div id="advFeaturesContent" class="content">
 						<ul class="toolList">
-							<li><a class="userFunctionalElement" href="?view=interweave">Show Explanatory Notes for
-									Sections </a></li>
+							<li>
+								<a class="userFunctionalElement" href="?view=interweave">{% translate 'Show Explanatory Notes for Sections' %}</a>
+							</li>
 						</ul>
 					</div>
 				</div>
 				<div class="section" id="openingOptions">
-					<div class="title"><a href="#openingOptionsHelp" class="helpItem helpItemToMidRight"><img
-								src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about opening options" /></a>
-						<h2>Opening Options</h2>
+					<div class="title">
+						<a href="#openingOptionsHelp" class="helpItem helpItemToMidRight">
+							<img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about opening options" />
+						</a>
+						<h2>{% translate 'Opening Options' %}</h2>
 					</div>
 					<div id="openingOptionsContent" class="content">
 						<ul class="toolList">
-							<li class="whole"><a href="/ukpga/2018/1/enacted">Open whole Act</a></li>
-							<li class="minusSched"><a href="/ukpga/2018/1/body/enacted">Open Act without Schedules</a>
+							<li class="whole">
+								<a href="/ukpga/2018/1/enacted">{% translate 'Open whole Act' %}</a>
 							</li>
-							<li class="onlySched"><a href="/ukpga/2018/1/schedules/enacted">Open Schedules only</a></li>
+							<li class="minusSched">
+								<a href="/ukpga/2018/1/body/enacted">{% translate 'Open Act without Schedules' %}</a>
+							</li>
+							<li class="onlySched">
+								<a href="/ukpga/2018/1/schedules/enacted">{% translate 'Open Schedules only' %}</a>
+							</li>
 						</ul>
 					</div>
 				</div>
 				<div class="section" id="pdfVersions">
 					<div class="title">
-						<h2>More Resources</h2>
+						<h2>{% translate 'More Resources' %}</h2>
 					</div>
 					<div class="content" id="pdfVersionsContent">
 						<div class="content">
 							<ul class="toolList">
-								<li><a class="pdfLink" href="/ukpga/2018/1/pdfs/ukpga_20180001_en.pdf">Original: King's
-										Printer Version</a></li>
+								<li>
+									<a class="pdfLink" href="/ukpga/2018/1/pdfs/ukpga_20180001_en.pdf">{% translate 'Original' %}: {% translate "King's Printer Version" %}</a>
+								</li>
 							</ul>
 						</div>
-						<p class="viewMoreLink"><a href="/ukpga/2018/1/resources">View more<span
-									class="pageLinkIcon"></span></a></p>
+						<p class="viewMoreLink">
+							<a href="/ukpga/2018/1/resources">{% translate 'View more' %}<span class="pageLinkIcon"></span></a>
+						</p>
 					</div>
 				</div>
 			</div>
