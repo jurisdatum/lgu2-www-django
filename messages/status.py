@@ -8,7 +8,9 @@ STATUS_WARNING_PIT_AT = "Point in time view as at {pit}."
 from datetime import datetime
 import re
 
-def get_status_message(meta):
+from ..api.document import Meta
+
+def get_status_message(meta: Meta):
 
     status = meta['status']
     version = meta['version']
