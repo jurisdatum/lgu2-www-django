@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from .. import api
-from ..models import Message
+from ..messages.status import get_status_message
 
 def _make_timeline_data(meta, pit):
 
@@ -68,12 +68,7 @@ def document(request, type, year, number, version=None):
 
     timeline = _make_timeline_data(data['meta'], pit)
 
-    if data['meta']['status'] == 'final':
-        status_message = Message.objects.get(name='status_warning_original_version').text
-    elif pit:
-        status_message = 'Point in time view as at ' + pit + '.'
-    else:
-        status_message = None
+    status_message = get_status_message(data['meta'])
 
     template = loader.get_template('document/document.html')
     context = {
