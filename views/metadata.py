@@ -4,19 +4,20 @@ import asyncio
 from django.http import HttpResponse
 from django.template import loader
 
-from .. import api
+from ..api.metadata import get_metadata
+from ..api.document import get_document
 
 def metadata(request, type, year, number):
-    data = api.get_metadata(type, year, number)
+    data = get_metadata(type, year, number)
     template = loader.get_template('metadata/metadata.html')
     context = { 'item': data }
     return HttpResponse(template.render(context, request))
 
 async def _get_document_async(type, year, number):
-    return api.get_document(type, year, number)
+    return get_document(type, year, number)
 
 async def _get_metadata_async(type, year, number):
-    return api.get_metadata(type, year, number)
+    return get_metadata(type, year, number)
 
 async def combined(request, type, year, number):
     async with asyncio.TaskGroup() as tg:

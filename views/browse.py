@@ -5,7 +5,7 @@ from itertools import zip_longest
 from django.http import HttpResponse
 from django.template import loader
 
-from .. import api
+from ..api.browse import browse_by_type, browse_by_type_and_year
 from ..models import DatasetCompleteness
 
 def _group_counts_for_timeline(yearly_counts, complete_cutoff):
@@ -44,9 +44,9 @@ def _group_counts_for_timeline(yearly_counts, complete_cutoff):
 def browse(request, year = None):
     page = request.GET.get('page', '1')
     if year is None:
-        data = api.browse_by_type('ukpga', page)
+        data = browse_by_type('ukpga', page)
     else:
-        data = api.browse_by_type_and_year('ukpga', year, page)
+        data = browse_by_type_and_year('ukpga', year, page)
 
     for doc in data['documents']:
         if doc['version'] == 'enacted':
@@ -84,7 +84,7 @@ def browse(request, year = None):
         'current_page': page,
         'last_page': last_page,
         'search_endpoint': '/ukpga' if year is None else '/ukpga/' + str(year),
-        'page_last_modified': data['meta']['updated'][:10]
+        # 'page_last_modified': data['meta']['updated'][:10]
     }
     template = loader.get_template('browse/browse.html')
     return HttpResponse(template.render(context, request))

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.template import loader
 
-from .. import api
+from ..api.document import get_akn, get_clml, get_document
 from ..messages.status import get_status_message
 
 def _make_timeline_data(meta, pit):
@@ -46,7 +46,7 @@ def _make_timeline_data(meta, pit):
 
 def document(request, type, year, number, version=None):
 
-    data = api.get_document(type, year, number, version)
+    data = get_document(type, year, number, version)
 
     if 'error' in data:
         template = loader.get_template('404.html')
@@ -81,9 +81,9 @@ def document(request, type, year, number, version=None):
     return HttpResponse(template.render(context, request))
 
 def document_clml(request, type, year, number, version=None):
-    clml = api.get_clml(type, year, number, version)
+    clml = get_clml(type, year, number, version)
     return HttpResponse(clml, content_type='application/xml')
 
 def document_akn(request, type, year, number, version=None):
-    akn = api.get_akn(type, year, number, version)
+    akn = get_akn(type, year, number, version)
     return HttpResponse(akn, content_type='application/xml')
