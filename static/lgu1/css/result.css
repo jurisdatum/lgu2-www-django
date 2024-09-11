@@ -1,0 +1,277 @@
+#page {
+	background: white;
+	margin: 0px auto 50px;
+}
+
+nav.topnav {
+	float: right;
+	clear: right;
+	padding-right: 20px;
+	width: 300px;
+        margin-top: 30px;
+}
+
+#result {
+	float: left;
+	clear: left;
+	padding-right: 20px;
+	padding-left: 20px;
+	/* width: 578px; */
+        width: 610px;
+        margin-top: 30px;
+}
+
+#result .panel {
+	position: relative;
+}
+
+.panel, nav.topnav section {
+	background: none repeat scroll 0 0 #D7D7D7;
+	border-bottom: 1px solid #D3D3D3;
+	margin: 0 0 30px;
+	padding: 0 0 10px;
+}
+
+.panel header {
+	background: none repeat scroll 0 0 #424240;
+	color: #FFFFFF;
+	padding: 10px;
+}
+
+.panel header h1 {
+	/*background: none;
+	font-size: 25px;
+	font-family: Helvetica,Arial,sans-serif;
+	line-height: 26px; */
+	color: white;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px;
+}
+.panel header h1 a, .panel header h1 a:visited {
+  color:white;
+}
+
+nav.topnav section {
+	position: relative;
+}
+
+nav.topnav section ul {
+	/*width: 244px;*/
+}
+
+nav.topnav section table {
+	width: 265px;
+}
+
+.panel section, nav.topnav section>ul, nav.topnav section table, nav.topnav section.map div.mapWrapper {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #D3D3D3;
+	margin: 10px 10px 0;
+	padding: 10px;
+}
+
+nav.topnav section.map div.mapWrapper {
+	padding: 0;
+}
+
+nav.topnav section.map div#map {
+	width: 265px;
+	height: 285px;
+}
+
+td.map div.mapWrapper {
+	padding: 5px;
+}
+
+div.itemMap {
+	width: 91px;
+	height: 91px;
+	border: 1px solid #D3D3D3;
+}
+
+nav.topnav section h1 {
+	background: none repeat scroll 0 0 #424240;
+	color: #FFFFFF;
+	font-size: 1em;
+	line-height: 1.231em;
+	padding: 8px 15px;
+}
+
+nav.topnav section li {
+	background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -2742px;
+	padding: 0.5em 5px 0.5em 25px;
+        display: block;
+        border-bottom: 1px dotted #D7D7D7;
+        line-height: 1.1em;
+        margin-bottom: 2px;
+}
+
+th.label {
+	padding-left: 10px;
+	width: auto;
+}
+
+#search th.label {
+	width: auto;
+}
+
+th.label {
+	width: 25%;
+}
+
+section header {
+	background-image: none;
+}
+
+nav section.page {
+	text-align: center;
+}
+
+nav section.page ul, nav section.formats ul {
+	display: block;
+}
+
+nav section.page li, nav section.formats li {
+	display: inline;
+	padding: 3px;
+	margin: 0 5px;
+}
+
+nav section.formats {
+	float: right;
+	margin-right: 20px;
+	margin-top: 20px;
+}
+
+nav section.formats li {
+	border-right: 1px solid #D3D3D3;
+	padding-right: 13px;
+}
+
+nav section.formats li.last {
+	border-right: none;
+}
+
+#openSearch {
+	padding: 5px;
+	float: right;
+	text-align: right;
+	z-index: 5000;
+}
+
+span.current {
+	font-weight: bold;
+}
+
+table {
+	width: 100%;
+}
+
+tr {
+	border-bottom: 1px dotted #D7D7D7;
+}
+
+tr.last {
+	border-bottom: none;
+}
+
+th, td {
+	text-align: left;
+	vertical-align: top;
+	padding: 5px;
+}
+
+td.nested {
+	padding: 0;
+}
+
+td.nested td.nested {
+	padding: 0 5px 0 0;
+}
+
+.nested ul {
+	display: block;
+}
+
+.nested ul li {
+	display: block;
+	padding: 3px 17px;
+}
+
+.nested table {
+	border: 1px solid #D7D7D7;
+	margin: 5px 0;
+}
+
+tr tr {
+	border-bottom: none;
+}
+
+.info {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	width: 250px;
+	z-index: 5000;
+}
+
+.info p {
+	display: none;
+	background-color: white;
+	border: 1px solid #D3D3D3;
+	padding: 5px;
+	margin-top: 24px;
+	line-height: 1.5em;
+	opacity: 0.95;
+}
+
+.info img.open {
+	float: right;
+	clear: right;
+	padding: 5px;
+	cursor: pointer;
+}
+
+a.outlink:before {
+	content: '[';
+}
+
+a.outlink:after {
+	content: ']';
+}
+
+a.outlink {
+	font-size: 0.8em;
+	font-weight: normal;
+}
+
+a:link , a:visited , a:active , a:hover {
+	text-decoration: none;
+}
+
+
+.panel header p.id {
+	padding-left: 15px;
+	text-indent: -10px;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+.boxplot {
+	float: right;
+	padding-right: 20%;
+}
+
+.graphs th.label {
+	width: auto;
+}
+
+.barchart {
+	width: 100px;
+	text-align: center;
+}
+
+nav ul {
+    list-style:none;
+}

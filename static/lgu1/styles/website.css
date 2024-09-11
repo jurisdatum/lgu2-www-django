@@ -1,0 +1,1875 @@
+@charset "UTF-8";
+/* TNA Testing CSS */
+
+/* Roboto font */
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* TNA Current Site Redesign */
+	html {-moz-text-size-adjust: none; -webkit-text-size-adjust: none; text-size-adjust: none}
+	body {font: unset; line-height: 1.5em}
+	body, body * {max-height: 1000000px}
+
+/* generic */
+	script + script + script + img {visibility: hidden}
+	#layout1 {width: 100%; margin: 0 auto; min-width: 1280px !important}
+	#layout2 {display: table; margin: 0 auto 20px auto; width: 1280px !important; padding: 0 15px; box-sizing: border-box; height: auto; min-height: 0; border: 0}
+	#background {display: none}
+	.subNavPage .pageContent {border: 0}
+
+/* skip links */
+	#top.accessibleLinks {padding: 0; position: absolute; z-index: 1}
+	#top.accessibleLinks a:focus, #top.accessibleLinks a:active {width: auto; padding: 12px 25px; border: 0; font-size: 1.15em; left: unset; position: relative; margin: 0 0 0 15px}          
+
+/* cookie notification */
+	#per.home .cookie-preferences-banner h2, #leg .cookie-preferences-banner h2, #browse .cookie-preferences-banner h2, #search .cookie-preferences-banner h2, .newLeg .cookie-preferences-banner h2, #error .cookie-preferences-banner h2, #per .cookie-preferences-banner h2, #doc .cookie-preferences-banner h2, .cookie-preferences-banner h2 {padding: 0; margin: 10px 0 2px 0}
+	.cookie-preferences-banner {min-width: 1280px; width: 100%}
+	.cookie-preferences-banner p {margin: 0; line-height: 1.45; font-size: 1em}
+	.cookie-actions {margin: 10px 0 12px 0}
+	.cookie-actions li {margin: 0 14px 2px 0}
+	#cookie-preferences-management .btn, .cookie-preferences-banner .btn {font-size: 1rem; padding: 10px 20px 10px 40px}
+
+/* new design banner */
+	#new-design-banner .content {width: 1250px; margin: 0 auto; padding: 18px 0; position: relative}
+	#new-design-banner .content h2, #per.home #new-design-banner .content h2 {font-size: 1.25em; margin: 0 0 0.25em 0}
+	#new-design-banner .content p {margin: 0 4em 0 0}
+	#new-design-banner .content a {text-decoration: underline}
+	#new-design-banner button {font-size: 1em; padding: 10px 20px; border: 1px solid; border-radius: 3px; position: absolute; right: 0; top: calc(50% - 20px); cursor: pointer}
+
+/* recruitment banner */
+	#recruitment-banner {min-width: 1280px; width: 100%; height: unset; overflow: auto; font-size: unset}
+	#recruitment-banner .bannercontent {width: 1250px; font-size: 1.1em; margin:0 auto; display: table}
+	#recruitment-banner .recruit-main {display: table-cell; width: unset; float: none; vertical-align: top}
+	#recruitment-banner ul {display: table-cell; width: unset; float: none; margin: 0; text-align: right; white-space: nowrap; vertical-align: middle}
+	#recruitment-banner li {display: inline-block; float: unset}
+	#recruitment-banner li a {display: block; margin: 0 0 0 10px}
+	#recruitment-banner li a.join {margin: 0 14px 0 24px; padding: 10px 15px}
+
+/* survey banner */
+	#survey-banner {min-width: 1280px; width: 100%}
+	#survey-banner .content {position: relative; width: 1250px; font-size: 1.1em; margin: 10px auto 0 auto}
+	#survey-banner .content:before {content: "Have your say"; font-size: 1.1em; margin: 0 0 -5px 0; display: block}
+	#survey-banner .survey-link {margin: -12px 100px 0 0; border-radius: 3px; padding: 10px 0 8px 0}
+	#survey-banner .banner-close {border: 0; background: none; padding: 0; margin: 0; top: 7px; right: 0; font-size: 1em; cursor: pointer}
+	#survey-banner .banner-close .accessibleText {position: relative; display: inline-block; left: 0; border: 1px solid; border-radius: 3px; padding: 10px 20px 11px 20px; top: 0; width: auto; overflow: initial; margin: 0 0 0 -10px}
+
+/* coronavirus banner */
+	#coronavirus-banner .bannercontent {width: 970px}
+	#coronavirus-banner .main {margin: 0.9em 1.7em 1em 0; width: 231px}
+	#coronavirus-banner .main-cy {margin: 0.9em 1.7em 1em 0; width: 284px}
+	#coronavirus-banner .legislation {margin: -3px 0 0px 0}
+	#coronavirus-banner .legislation-cy {padding: 0.8em 1em; width: 240px; height: auto}
+	#coronavirus-banner .extents {margin: -7px 0 14px 0.5em; padding: 0.3em 0.5em}
+	#coronavirus-banner .extents-cy {margin: 0.1em 0 0 0.5em; padding: 0.15em 1.5em; width: auto}
+
+/* header */
+	#header {padding: 0 15px; width: 1280px !important; box-sizing: border-box; position: relative}
+	#header .english, #header .welsh {border-top: 4px solid}
+	.natArch a, .natArchWelsh a {margin: 0; height: 67px; width: 240px; left: unset; right: 15px; position: absolute; float: none}
+	.natArch a .backgroundImage, .natArchWelsh a .backgroundImage {left: 0; top: 18px; width: 250px}
+	#header h1 a, #header h2 a {position: absolute; white-space: nowrap}
+	h1.draft {background: unset; margin: 0 !important}
+
+	ul#secondaryNav {margin: 84px 0 0 0}
+	ul#secondaryNav li {margin: 0}
+	ul#secondaryNav li a.langaugeSwitch {font-size: 1em; font-weight: 300}
+	.natArch + #secondaryNav li:before {content: "English"; margin: 0 8px; padding: 0 8px; border-right: 1px solid; font-weight: 500}
+	.natArchWelsh + #secondaryNav li:after {content: "Cymraeg"; margin: 0 0 0 8px; padding: 0 0 0 8px; border-left: 1px solid; font-weight: 500}
+
+	#primaryNav {border: 0; width: 100%; min-width: 1280px}
+	#primaryNav ul li a {display: inline-block; padding: 0 12px; font-size: 1.15em; font-weight: 300; white-space: nowrap}
+	#primaryNav ul li:first-child a {padding: 0 12px 0 0}
+	#per.home #primaryNav ul li.link1 a, #browse #primaryNav ul li.link2 a, #per.newLeg #primaryNav ul li.link3 a, #doc.coronavirus #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a {font-weight: 500}
+	#primaryNav ul {padding: 7px 0}
+	#primaryNav ul li {padding: 3px 0; border-left: 1px solid}
+	#primaryNav ul li:first-child {padding: 2px 0; border: 0}
+	#primaryNav ul li#quickSearch {padding: 0 2px 0 0; border: 0}
+	#primaryNav ul li#quickSearch a {padding: 2px 12px 2px 30px; border-radius: 3px; border: 1px solid}
+	.js #primaryNav li#quickSearch a > span {padding: 0}
+	#primaryNav a.expandCollapseLink:before {display: block; margin: 9px 0 0 -19px}
+	#per.home #primaryNav ul li.link1 a, #browse #primaryNav ul li.link2 a, #per.newLeg #primaryNav ul li.link3 a, #doc.coronavirus #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a {background: none; color: inherit}
+
+	#contentSearch {margin: 0 -15px; padding: 8px 15px 15px 15px; width: 100%; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border: 0}
+	#contentSearch input, #contentSearch .type select {float: none; margin: 0 12px 0 0; border-radius: 1px; border: 0}
+	#contentSearch .typeCy {margin: 0}
+	#contentSearch input {padding: 9px 7px}
+	#contentSearch select {padding: 8px}
+	#contentSearch .submit {float: left}
+	#contentSearch .submit button.userFunctionalElement {margin: 22px 0 0 0; padding: 6px 12px; border-radius: 2px; border: 1px solid; font-weight: 300; cursor: pointer}
+	#contentSearch .submit button.userFunctionalElement span {display: none}
+	#contentSearch div {margin: 0; position: relative}
+	#contentSearch label {float: none; margin: 0; padding: 0 0 4px 1px; height: auto; position: relative}
+	#contentSearch div.title, #contentSearch div.title.titlecy, #contentSearch div.year, #contentSearch .year.cy, #contentSearch div.number, #contentSearch div.type, #contentSearch input, #contentSearch select, #contentSearch .title input {width: auto}
+	#contentSearch .title input, #contentSearch .titleCy.cy {width: 230px}
+	#contentSearch .year input {width: 32px}
+	#contentSearch .year.cy input {width: 52px}
+	#contentSearch .number input {width: 45px}
+	#contentSearch .advSearch {position: absolute; margin: -27px 845px; padding: 0; width: 125px; font-size: 1.15em; font-weight: 300}
+	#contentSearch .advSearch a {margin: 0; padding: 0}              
+	#contentSearchSubmit {float: none}
+	body#search.intro .advSearch {display: none}
+
+/* footer */
+	#footerNav {margin: 0 auto; padding: 5px 0 0 0; width: auto; height: 125px; font-size: 1.1em}
+	#footerNav ul {margin: 0 auto; width: 970px}
+	#footerNav li:first-child a {padding: 10px 10px 10px 1px}
+	#footer {margin: -85px auto; padding: 15px 0; width: 970px; border-top: 1px solid}
+	#footer .copyright {position: absolute; top: -55px; right: 0; width: auto; font-size: 1.1em}
+	#footer div p, #footer div p a {padding: 0}
+	#footer div {padding: 0; display: block; position: relative}
+	#footer p.copyrightstatement {padding: 0 0 0 56px}
+	#footer .copyrightstatement img {display: none}
+	#footer .copyrightstatement:before {content: ""; position: absolute; display: block; margin: 3px 0 0 -55px; width: 80px; height: 30px}
+	#footer .copyrightstatement {font-size: 1.1em}
+	#footer .copyrightstatement span:lang(cy) {font-size: 1em}
+
+/* help items */
+	a.helpItem, a.helpItemToBot, a.close:not(.toc-link .close, .userFunctionalElement.close, .expandCollapseLink.close, .print .close, .expandCollapseLink.close), a.closeLink {width: 16px; height: 16px; border-radius: 50%; font-size: 11px; padding: 0; text-align: center; display: inline-block}
+	a.helpItem:hover, a.helpItemToBot:hover, a.close:hover, a.closeLink:hover {text-decoration: none}
+	a.helpItem:before, a.helpItemToBot:before, a.close:not(.print .close, .expandCollapseLink.close, .en-menu a):before, a.closeLink:before {content: "?"; padding: 1px 0 0 0; width: 16px; display: table-cell}
+	a.close:not(.print .close, .expandCollapseLink.close, .en-menu a):before, a.closeLink:before {content: "x"; padding: 0}
+	a.helpItem img, a.helpItemToBot img, a.close img, a.closeLink img {clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute}
+	.help .content:not(#leg.resources .innerContent .help .content) {border: 1px solid; padding: 15px; border-radius: 3px}
+
+/* back to top */
+	#search p.backToTop, #browse p.backToTop, #doc p.backToTop, #doc #subNav p.backToTop, #leg #content p.backToTop, #per.newLeg p.backToTop, #doc.changeLeg p.backToTop {margin: 0; padding: 0; border: 0}
+	#search p.backToTop a, #browse p.backToTop a, #doc p.backToTop a, #doc #subNav p.backToTop a, #leg #content p.backToTop a, #per.newLeg p.backToTop a, #doc.changeLeg p.backToTop a {margin: 0; padding: 0; border: 0; display: inline-block; padding: 0 0 0 16px; font-weight: 300}
+	#search p.backToTop a:before, #browse p.backToTop a:before, #doc p.backToTop a:before, #leg #content p.backToTop a:before, #leg .markdown-page p.backToTop a:before, #per.newLeg p.backToTop a:before {position: absolute; content: ""; margin: 7px 0 0 -15px; width: 0; height: 0; border-style: solid; border-width: 0 5px 9px 5px}
+	#leg #content p.backToTop a:before, #per.newLeg p.backToTop a:before {margin: 3px 0 0 -15px}
+
+/* homepage */
+	#per.home #intro #animContent {margin: 20px 0 0 0; height: auto}
+	#per.home #intro #animContent div {margin: 20px 0 0 0; border-top-right-radius: 3px; border-top-left-radius: 3px}
+	#per.home #intro #homeCTA {text-align: left}
+
+	#homeCTA, #homeCTA a {border-radius: 3px}
+	#per.home #intro #homeCTA .btn {text-align: center; font-weight: 300}
+	#per.home #intro ul#countryLeg {border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; height: auto; margin: 0 0 20px 0}
+	#per.home #intro ul#countryLeg li {display: inline-block}
+	#per.home #intro ul#countryLeg li a {display: block; float: none; padding: 12px 22px; border-right: 1px solid; font-weight: 300}
+	#per.home #intro ul#countryLeg li:last-child a {border-right: 0}
+	#per.home .carousel-pause {left: 55px}
+	#per.home .carousel-pause.playing, #per.home .carousel-pause.paused {background-position: center center}
+	#per.home #intro div ul {width: 540px}
+	#per.home #intro div ul li {padding: 6px 22px 6px 12px; border-radius: 15px}
+	#per.home #intro div ul li a:after {content:""; position: absolute; margin: 4px 6px; width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 5px}
+	#per.home .box, .no_box {width: auto; border-radius: 3px}
+	#per.home .welcome ul#countryLeg li a#welcome, #per.home .welcomecy ul#countryLeg li a#welcomecy {border-bottom-left-radius: 3px}
+	.box .box_main {padding: 15px 20px}
+	.no_box {padding: 5px 20px 10px 20px}
+	.box .box_aside {padding: 0 20px; border-top-right-radius: 3px; border-bottom-right-radius: 3px}
+	.box h2, .no_box h2 {margin: 0 0 5px 0}
+	.box p, .no_box p {margin: 0; line-height: 1.7em}
+	.box ul.linkList, ol.linkList {margin: 0}
+	.box .box_aside ul.linkList, ol.linkList {margin: 0 0 10px 0}
+	.box .viewMoreLink {margin: 12px 0 0 0}
+	#per.home .viewMoreLink a {display: inline-block; padding: 10px 25px; border-radius: 3px; margin: 0 0 3px 0}
+	#per.home .viewMoreLink a:after {content: " \203a"}
+
+/* search and browse */
+	#search #pageTitle {padding: 15px 0 3px 0}
+	#browse #pageTitle {margin: 0 0 20px 0; padding: 20px 0 0 0}
+	#browse.timeline #pageTitle {margin: 0 0 5px 0}
+	#browse.intro.region #pageTitle {margin: 0 0 10px 0}
+	#search .info h2, #browse .info h2 {padding: 0 0 2px 0; font-weight: 300}
+
+	#search .info h2, #browse .info h2 {padding: 0 0 5px 0; font-weight: 300}
+	.prevPagesNextNav li.pageLink a {font-weight: 300}
+	.prevPagesNextNav li.pageLink, .prevPagesNextNav li.lastPageLink {font-size: 1em; letter-spacing: initial}
+	#search #content:before, #browse #content:before {display: none}
+
+	#search #content table, #browse #content table {border: 0; margin: 0}
+	#search #content th, #browse #content th {vertical-align: bottom}
+	#search #content td, #browse #content td {vertical-align: top; border: 0; border-top: 1px solid}
+	#search #content td[rowspan], #browse #content td[rowspan] {vertical-align: middle}
+	#search #content td[rowspan]:nth-child(2), #browse #content td[rowspan]:nth-child(2) {border-left: 1px solid}
+	#search #content tr th:nth-child(2), #search #content tr td:nth-child(2), #browse #content tr th:nth-child(2), #browse #content tr td:nth-child(2) {min-width: 85px; text-align: right}
+	#search #content tr th:nth-child(3), #search #content tr td:nth-child(3), #browse #content tr th:nth-child(3), #browse #content tr td:nth-child(3) {min-width: 100px}
+	#search #content .sortAsc, #search #content .sortDesc, #browse #content .sortAsc, #browse #content .sortDesc {padding: 0; display: inline-block; margin: 0 10px 0 0}
+	#search #content .sortAsc:after, #search #content .sortDesc:after, #browse #content .sortAsc:after, #browse #content .sortDesc:after {position: absolute; margin: -2px 0 0 4px}
+	#search #content .sortDesc:after, #browse #content .sortDesc:after {content: "\2193"}
+	#search #content .sortAsc:after, #browse #content .sortAsc:after {content: "\2191"}
+
+	#search .ui-state-hover, #search .ui-widget-content .ui-state-hover, #browse .ui-state-hover, #browse .ui-widget-content .ui-state-hover {border: 1px solid; border-radius: 0}
+	#search .ui-widget-content, #browse .ui-widget-content {border-radius: 3px; border-top-left-radius: 0}
+	#search .ui-widget-content.ui-autocomplete.ui-menu, #browse .ui-widget-content.ui-autocomplete.ui-menu {max-height: 400px; overflow: scroll}
+
+	#browse #tools, #search #tools {padding: 5px 0; margin: 0 10px 15px 0; border: 0; width: 220px}
+	#search #tools .section, #browse #tools .section {margin: 0; padding: 5px 10px; width: 199px; border: 0}
+	#search #tools .section .content ul, #browse #tools .section .content ul {padding: 0; margin: 0; width: 100%}
+	.legYear {line-height: 185%}
+
+	#search #tools h3, #browse #tools h3, #search #tools h4, #browse #tools h4, .section .title:not(#tools .section .title, #statusWarningSubSections .section .title) {margin: 0 0 5px 0}
+	#search #tools #miniPageNav, #browse #tools #miniPageNav {width: 100%}
+	#browse #content, #search #content {width: 740px; padding: 0}
+	#search #tools .content ul, #search #tools .content ol, #browse #tools .content ul, #browse #tools .content ol {padding: 0; border: 0}
+	#search #tools #miniPageNav, #browse #tools #miniPageNav {margin: 8px 0 3px 0}
+
+	#search #tools #miniPageNav li, #browse #tools #miniPageNav li {padding: 0}
+	#search #tools #miniPageNav li#miniPageNavCurrent, #browse #tools #miniPageNav li#miniPageNavCurrent {padding: 2px 10px; font-size: 1em; width: 93px; text-align: center}
+
+	#miniPageNavFirst a:before, #miniPageNavPrev a:before, #miniPageNavNext a:before, #miniPageNavLast a:before {border-radius: 3px; vertical-align: middle; text-align: center; width: 20px; height: 18px; display: table-cell; padding: 0 0 2px 0}
+	#miniPageNavFirst a:before {content: "\00AB"; font-size: 1.25em}
+	#miniPageNavPrev a:before {content: "\2039"; font-size: 1.25em}
+	#miniPageNavNext a:before {content: "\203A"; font-size: 1.25em}
+	#miniPageNavLast a:before {content: "\00BB"; font-size: 1.25em}
+
+	#search #tools #miniPageNav #miniPageNavFirst, #browse #tools #miniPageNav #miniPageNavFirst {padding: 0 3px 0 0}
+	#search #tools #miniPageNav #miniPageNavLast, #browse #tools #miniPageNav #miniPageNavLast {padding: 0 0 0 3px}
+
+	#miniPageNavFirst img, #miniPageNavPrev img, #miniPageNavNext img, #miniPageNavLast img{clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute}
+
+	#browse #resultsTimeline #scrollbar {margin: 0}
+	#browse #resultsTimeline #fisheye {display: none}
+	#browse #timeline {width: 968px; margin: 0 0 5px 0}
+	#browse #resultsTimeline {padding: 0 0 1.5em 0}
+	#browse .dataDescription {display: none}
+	#browse #resultsTimeline .decades {display: none; width: 770px; margin-left: 35px; margin-right: 35px}
+	#browse #scrollbar #slider {width: 763px}
+	#browse #scrollbar .ui-state-default, .ui-widget-content .ui-state-default {border: 0}
+	#browse #resultsTimeline .ui-slider .ui-slider-handle { margin-top: -1px}
+	#browse #scrollbar {width: 970px}
+	#browse #scrollbar:before {width: 898px; border-top: 3px solid; content: ""; display: block; position: absolute; margin: 16px 36px}
+	#browse #scrollbar .ui-widget-content {border: 0}
+	#browse #resultsTimeline .explanation {margin: 0 0 10px 0; line-height: 140%; font-weight: 300; border-top: 1px solid; padding: 12px 0 4px 0}
+	#browse #resultsTimeline h3.groupInfo {display: none}
+
+	#browse #timeline {border: 1px solid; border-radius: 3px}
+	#browse #timeline h3 {border: 0}
+	#browse #timeline li.partial a {border: 1px solid; border-bottom: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box}
+	#browse #timeline li.partial a em {border: 1px solid; margin: -1px}
+	#browse #timeline .even li.partial a em {border: 1px solid}
+	#browse #timeline li a strong {font-weight: 300}
+	#browse #timeline li a em span {font-weight: 500}
+
+	#search #tools ul li.returnLink a, #browse #tools ul li.returnLink a {padding-left: 0}
+	#search #tools ul li.returnLink a:before, #browse #tools ul li.returnLink a:before {content: "\2190"; margin: 0 5px 0 0}
+	#search #tools .content span.disabled, #browse #tools .content span.disabled {font-weight: 300}
+	#browse #tools .section , #search #tools .section {margin: 0 5px; padding: 8px 5px 3px 5px; border-top: 1px solid}
+	#browse #tools .section:first-of-type, #search #tools .section:first-of-type {padding: 3px 5px 3px 5px; border: 0}
+
+	#browse #resultsTimeline .key {border-top: 1px solid; margin: 0; padding: 7px 10px; width: 100%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; line-height: 1.75em; display: table}
+	#browse #resultsTimeline .key:before {content: "Key:"; font-weight: 500; font-size: 1.2em; vertical-align: middle; display: table-cell; width: 45px}
+	#browse #resultsTimeline .key dt, #browse #resultsTimeline .key dd {display: table-cell; vertical-align: middle}
+	#browse #resultsTimeline .key dt {width: 1.65em; border-radius: 2px}
+	#browse #resultsTimeline .key dt:first-of-type {border: 1px solid}
+	#browse #resultsTimeline .key dt:last-of-type {border: 1px solid}
+	#browse #resultsTimeline .key dd {padding: 0 0 0 6px}
+	#browse #resultsTimeline .key dd em {font-size: 1.1em; font-weight: 300; vertical-align: middle}
+	#browse #resultsTimeline .key dd:first-of-type {width: 10%; padding: 0 25px 0 6px; white-space: nowrap}
+	#browse #resultsTimeline .key img {display: none}
+
+	#search #tools h4, #browse #tools h4 {font-weight: 300}
+	#search.results #tools #heading .title h4, #browse.results #tools #heading .title h4 {margin: 3px 0 0 0}
+	#search #tools .ui-combobox input, #browse #tools .ui-combobox input {border: 1px solid; border-top-left-radius: 3px; border-bottom-left-radius: 3px; font-family: unset; margin: 0; width: 161px; text-indent: 5px}
+	#search #tools .ui-combobox .ui-button, #browse #tools .ui-combobox .ui-button {border-top-right-radius: 3px; border-bottom-right-radius: 3px; border: 0; padding: 9px 7px 9px 7px; margin: 0}
+	#search #tools .ui-combobox .ui-button:after, #browse #tools .ui-combobox .ui-button:after {content:""; width: 0; height: 0; border-style: solid; border-width: 5px 5px 0 5px; position: absolute; display: inline-block; left: 32%; top: 45%}
+
+	#browse #tools #heading li.legHeading, #search #tools #heading li.legHeading {border-radius: 2px; border: 1px solid; font-weight: 300; line-height: 1.7em; width: 24px; height: 24px}
+	#browse #tools #heading li.legHeading.empty, #search #tools #heading li.legHeading.empty {border: 1px solid}
+	#browse #tools #heading li.legHeading a, #search #tools #heading li.legHeading a {font-weight: 500; line-height: 1.5em}
+
+	#browse #tools #subheading a.userFunctionalElement, #search #tools #subheading a.userFunctionalElement {border: 1px solid; border-radius: 3px; margin: 10px 0 2px 0; width: 197px; padding: 8px 0}
+	#browse #tools #subheading a.userFunctionalElement.ui-state-disabled, #search #tools #subheading a.userFunctionalElement.ui-state-disabled {opacity: 100; border: 1px solid; font-weight: 300}
+	#browse #tools #subheading a.userFunctionalElement .ui-button-text span, #search #tools #subheading a.userFunctionalElement .ui-button-text span {display: none}
+
+	#browse.intro .card_list {width: 970px}
+	#browse.intro .card {margin: 10px; width: 174px; border-left: 7px solid}
+	#browse.intro .card a {padding: 10px 12px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border: 0}
+	#browse.intro .card:last-of-type {margin: 10px 0 10px 10px}
+	#browse.intro .card:first-of-type {margin: 10px 10px 10px 0}
+	#browse.intro .card .header.rule {padding: 0 0 1em 0}
+	#browse.intro .card .summary {display: none}
+	#browse.intro #pageTitle {padding: 20px 0 10px 0; font-size: 2.2em}
+	/* #browse.intro #pageTitle:not(#browse.intro.region #pageTitle):after {content: " legislation"} */
+	#browse.intro #pageTitle abbr[title] {text-decoration: none}
+	#browse.intro .card_list h2 {font-weight: 300; margin: 10px 0 0 0; font-size: 1.5em; line-height: 2em}
+	#browse.intro .card_list h2:empty {margin: 0}
+
+	#browse.region .intro {padding: 0}
+	#browse.region #content {padding: 0; width: 100%}
+	#browse.region #content p:not(.euregion #content p) {display: none}
+	#browse.region .quickLinks {display: none}
+	#browse.region h2 {margin: 15px 0 10px 2px}
+	#browse.region .p_one.s_8 {width: 760px}
+	#browse.region .legCol.s_4 {width: 345px; margin: 0 20px 0 0}
+	#browse.region ul.legTypes li {padding: 0.75em 2px; border-top: 1px solid}
+	#browse.region ul.legTypes li a {padding: 0; border: 0; display: inline}
+	#browse ul.legTypes li a.active, #browse ul.legTypes li a:hover {font-weight: 300}
+	#browse.region .p_absTopRight {padding: 0; margin: 0 10px 0 0; width: 220px; height: auto}
+	#browse.region .p_absTopRight #map {top: 1em; right: 0; margin: 0; border: 0; width: 220px; position: relative}
+	#browse.region .p_absTopRight #map img {width: 220px}
+	#browse.region .p_absTopRight .returnLink {border: 0; height: auto}
+	#browse.region .p_absTopRight .returnLink a {font-weight: 300; margin: 15px 0; width: auto; padding: 10px 20px; text-align: center; border-radius: 3px; text-transform: lowercase}
+	#browse.region .p_absTopRight .returnLink a:before {content: "\2039"; margin: 0 5px 0 0; font-weight: 500}
+	#browse.euregion #content p {width: 735px}
+	#browse.euregion .p_eucategories {margin: 10px 0}
+	#browse.euregion .p_eucategories ul.legTypes li:first-child {border: 0}
+
+/* refine results */
+	#search.results .info #pageTitle + h2 + p {padding: 1px 0}
+
+	#tools #refineSearch h3 {font-size: 1.25em; margin: 5px 0 -2px 3px; display: block}
+	#tools #refineSearch .group {width: 100%; margin: 5px 0 10px 0; float: none}
+	#tools #refineSearch form {padding: 0}
+	#tools #refineSearch form .group:not(.searchFieldCategory) label {margin: 0 0 5px 0; display: block}
+	#tools #refineSearch form input[type="radio"]:checked + label {font-weight: 500}
+
+	#tools #refineSearch .yearChoiceFields div {margin: 0}
+	#tools #refineSearch .rangeOfYears {padding: 15px 0 2px 0}
+	#tools #refineSearch .yearChoiceFields label {float: none; display: inline-block; text-align: left; width: auto; margin: 0 8px 0 4px}
+	#tools #refineSearch form .searchFieldCategory input[type="text"] {width: 60px}
+	#tools #refineSearch form .searchFieldCategory input {margin: 0}
+	#tools #refineSearch form .searchFieldCategory input[type="radio"] {margin: 2px 5px 0 3px; float: left}
+	#tools #refineSearch form .searchFieldCategory input[type="radio"] + label {display: block; margin: 0 0 1px 0}
+
+	#tools #refineSearch .group:not(.searchYear, .submit), #tools #refineSearch .group + .group + p {border-top: 1px solid; margin: 10px 0 0 0; padding: 10px 3px 0 3px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box}
+	#tools #refineSearch .yearChoiceFields div.from {display: inline-block; margin: 4px 0 0 0}
+	#tools #refineSearch .yearChoiceFields div.to {display: inline-block; margin: 4px 0 0 7px}
+
+	#tools #refineSearch .group.submit {padding: 0 3px; margin: 10px 0 5px 0; text-align: center; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box}
+	#tools #refineSearch .group.submit .userFunctionalElement {background: rgba(5,115,235,1); display: block; margin: 0; padding: 10px 0; width: 100%; text-align: center; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; text-transform: lowercase; cursor: pointer}
+	#tools #refineSearch .group.submit .userFunctionalElement:before {content: "Refine your "; text-transform: none}
+	#tools #refineSearch .group.submit .userFunctionalElement span {display: none}
+
+	#tools #refineSearch form input[type="text"], #tools #refineSearch form input[type="title"], #tools #refineSearch form select {border: 1px solid; border-radius: 2px; padding: 8px 6px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box}
+
+	#tools #refineSearch form .group:not(.searchFieldCategory) input[type="text"], #tools #refineSearch form input[type="title"], #tools #refineSearch form select {margin: 0 0 3px 0; width: 100%}
+
+/* content pages */
+	#error #content, #doc #content {padding: 5px 0 15px 0}
+	#doc #pageTitle {border-top: 0}
+	#doc .s_9 {width: 735px}
+	#doc .subNavPage #content {padding: 10px 15px 40px 15px}
+	#doc .subNavPage .pageContent #pageTitle {margin-left: 15px}
+	#doc .pageContent .sectionNav a {padding: 0}
+	#doc .pageContent .sectionNav li {padding: 12px 10px 10px 10px}
+	#doc .pageContent .sectionNav li:last-child {border: 0}
+	#doc #subNav .section ul.sectionNav {padding: 0}
+	#doc #subNav .section.resources {margin: 15px 0 0 0; border: 0}
+	#subNav .resources li {border-bottom: 1px solid}
+	#subNav .resources li:last-child {border: 0}
+	#doc #subNav .section {margin: 0 0 5px 0}
+	#doc #subNav p.backToTop {width: 970px; text-align: right; margin: auto 0 10px 0}
+	#doc #content ol li, #doc #content ul li {padding: 3px 0}
+	#doc .contentFooter {display: none}
+	#per.newLeg #pageTitle, #doc .info #pageTitle {border-bottom: 1px solid; padding-bottom: 10px; margin: 0 0 5px 0}
+
+
+/* cookie preferences page */
+	#cookie-preferences-management .btn, .cookie-preferences-banner .btn {border-radius: 3px}
+	#cookie-preferences-management .btn.show-hide {margin: 0 0 0 12px}
+	#cookie-preferences-management .btn.show-hide:before {position: absolute; content: ""; margin: 4px 0 0 -16px; transform: rotate(180deg); border-style: solid; border-width: 0 5px 8px 5px}
+	#cookie-preferences-management .btn.show-hide.close:before {transform: rotate(0)}
+	#cookie-preferences-management .details {margin: 0 0 20px 0}
+	#cookie-preferences-management .btn[type="submit"] {margin: 15px 0 0 0}
+	#cookie-preferences-management .details tr {vertical-align: top}
+
+/* advanced search pages */
+	#search.intro #pageTitle {padding: 16px 0 10px 0; border-bottom: 1px solid; font-size: 1.88em}
+	#search.intro .titles {border: 0}
+	#search.intro #tools #links {padding: 0 10px 0 20px}
+	#search.intro #tools div h2 {margin: 5px 0 7px 0}
+	#search.intro #tools #links a{padding: 0 0 10px 0}
+	#search.intro #tools div {padding: 5px 10px 0 20px}
+
+	#search .ui-datepicker {display: none}
+	#search #ui-datepicker-div {padding: 0 1px 0 0; border: 1px solid; margin: -1px 0 0 0; width: 280px}
+	#search #ui-datepicker-div .ui-widget-header {border-radius: 0; border: 0; padding: 0; width: 281px; font-size: 0.9em}
+	#search #ui-datepicker-div .ui-datepicker-calendar {border: 0; margin: 0; width: 280px; border-collapse: collapse}
+	#search #ui-datepicker-div .ui-datepicker th {text-align: right}
+	#search #ui-datepicker-div .ui-datepicker-calendar td {width: 40px; padding: 0; border: 1px solid}
+	#search #ui-datepicker-div .ui-datepicker-calendar td a {padding: 5px; border: 1px solid}
+	#search #ui-datepicker-div .ui-datepicker-calendar .ui-state-highlight {border: 1px solid}
+	#search #ui-datepicker-div .ui-datepicker-calendar .ui-state-active {font-weight: 500}
+	#search #ui-datepicker-div .ui-datepicker-calendar .ui-datepicker-unselectable.ui-state-disabled {opacity: 1}
+	#search #ui-datepicker-div.ui-helper-clearfix:after {display: none}
+	.ui-datepicker-prev.ui-corner-all, .ui-datepicker-next.ui-corner-all {border-radius: 0; border: 1px solid; margin: 0; top: 0; width: 38px; height: 34px; cursor: pointer}
+	.ui-datepicker-prev.ui-corner-all {left: 0}
+	.ui-datepicker-next.ui-corner-all {right: 0}
+	.ui-datepicker .ui-datepicker-title {margin: 0; padding: 5px 0}
+	.ui-widget-header .ui-corner-all:before {content: ""; display: inline-block; width: 0; height: 0; border-style: solid}
+	.ui-datepicker-prev:before {border-width: 6px 6px 6px 0; margin: 10px 0 0 15px}
+	.ui-datepicker-next:before {border-width: 6px 0 6px 6px; margin: 10px 0 0 18px}
+	.searchPIT + .submit {margin: 0 0 40px 0}
+
+	#search #content #advancedSearch a.helpItem {margin: -22px 0 0 -5px; display: block}
+	#search #content #advancedSearch .searchFieldCategory {margin: 0; border-bottom: 1px solid}
+	#search #content #advancedSearch div .searchFieldGroup {padding: 0 10px 8px 5px}
+	#search #content #advancedSearch div .searchCol1, #search #content #advancedSearch div .searchLangCol1,
+	legend.searchCol1 {font-weight: 500; float: none; width: auto; padding: 8px 0 0 5px; margin: 0}
+	#search #content #advancedSearch div input[type="text"] {height: 17px}
+	#search #content #advancedSearch div input[type="radio"] {height: 16px; width: 16px}
+	#search #content #advancedSearch input[type="checkbox"]:checked + label {font-weight: 500}
+	#search #content #advancedSearch input[type="radio"]:checked + label {font-weight: 500}
+	#search #content #advancedSearch .searchCol2 {width: 600px}
+	#search #content #advancedSearch .searchCol2 input[type="radio"] {margin: 1px 6px 3px 5px; display: inline-block}
+	#search #content #advancedSearch .searchCol2 .formGroup {width: auto; min-width: 130px ;overflow: auto; padding: 0 0 5px 0}
+	#search #content #advancedSearch .searchLang .welshLang {margin: 0}
+	#search #content #advancedSearch .searchCol2 .searchFieldGroup span, .searchFieldGroup input {margin: 0}
+	#content div .searchCol2 input[type="text"], #content fieldset .searchCol2 input[type="text"] {border: 1px solid; margin: 0 0 3px 0; border-radius: 2px; padding: 5px 6px}
+	#advancedSearch .searchType select {margin: 10px 0 0 5px; border: 1px solid}
+	#search #content #advancedSearch .specificYear, #search #content #advancedSearch .rangeOfYears {margin: 5px 0 0 0}
+	#search #content #advancedSearch .specificYear.PIT, #search #content #advancedSearch .pointInTime {margin: 5px 0 0 5px}
+	#search #content #advancedSearch .searchYear div.rangeOfYears div {margin: 5px 8px 0 0}
+	#search #content #advancedSearch .searchCol2 .formGroup div {margin: 10px 0 0 5px}
+	#search #content #advancedSearch .numberSearch select {border: 1px solid; border-radius: 2px}
+	#search #content #advancedSearch .searchCol2.searchType {margin: 0}
+	#search #content #advancedSearch .typeCheckBoxDoubleCol label, #search #content #advancedSearch .typeCheckBoxCol label {margin: 0 30px 0 3px; vertical-align: middle; min-width: 100px; display: inline-block; width: auto}
+	#search #content #advancedSearch .typeCheckBoxDoubleCol {width: 500px; border: 1px solid; padding: 3px 0 0 3px}
+	#search #content #advancedSearch #uniqueExtents {clear: left; padding: 3px 3px 0 3px; float: none; width: 110px}
+	#search #content #advancedSearch #uniqueExtents label {margin: 0 10px 0 3px}
+	#search #content #advancedSearch #uniqueExtents.expanded {border-bottom: 0; border-top-right-radius: 3px; border-top-left-radius: 3px}
+	#search #content #advancedSearch #lex {border-radius: 3px; border-top-left-radius: 0}
+	#search #content #advancedSearch .typeCheckBoxCol input[type="checkbox"], #search #content #advancedSearch .typeCheckBoxDoubleCol input[type="checkbox"] {margin: 3px 3px 4px 4px}
+	#search #content #advancedSearch .yearRange label {margin: 0 5px}
+	#search #content #advancedSearch .searchCol3 {width: 15px; margin: 0; padding: 0}
+	#search #content #advancedSearch .searchLangCol2 {width: 3px; margin: 0; padding: 0}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory {width: 94.5%; padding: 0.25em 0 0.5em 0}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .welshLangCol2 {margin-left: 1.75em; font-weight: 300}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .searchLangCol1 {padding: 0.5em 0 0.25em 5px}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .searchLangCol2 a.helpItem {margin: -16px 0 0 -5px}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .searchLangCol3 {width: unset; text-indent: unset}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .searchLangCol4 {width: unset; text-indent: unset}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .searchLangColumn {margin: 0 0 0.25em 0}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .welshLang input {margin: 0 0.25em}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .welshLang label {margin: 0 0 0 0.25em}
+	#search #content #advancedSearch .searchFieldCategory.searchType {margin: 5px 0 0 0 }
+	#search #content #advancedSearch .numberSearch {padding: 0 0 8px 0}
+	#search #content #advancedSearch .specificYear {padding: 0 0 8px 0}
+	#search #content #advancedSearch  div .searchCol2.numberSearch input[type="text"]{margin: 0 0 0 5px}
+	#search #content #advancedSearch  div .searchCol2.searchYear input[type="text"]{margin: 0 0 0 5px}
+	#search #content #advancedSearch .numberSearch select {vertical-align: top}
+	#search #content #advancedSearch .submit button {cursor: pointer; margin: 15px 5px; height: auto; width: auto; padding: 8px 20px; font-weight: 300}
+	#search #content #advancedSearch .helpToRightMid .icon {margin-top: -26px}
+	#search #content #advancedSearch input[type="checkbox"] {float: none; display: inline}
+	#search #content #advancedSearch #lex {padding: 0 3px; width: 600px}
+	#search #content #advancedSearch #lex .typeCheckBoxCol {width: 300px !important}
+	#search #content #advancedSearch label, input[type="checkbox"] {vertical-align: middle}
+	#search #content #advancedSearch .searchType .typeCheckBoxCol div {margin: 0 0 5px 0}
+	#search #content #advancedSearch .searchType .typeCheckBoxCol div label {padding: 0}
+	#search #content #advancedSearch p:not(.help p) {margin: 0; border-bottom: 1px solid; padding: 5px}
+	#search #content #advancedSearch div.searchExtendsTo {width: 870px}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup {padding: 0 10px 0 0}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup h3 {margin: 10px 0 0 5px; display: none}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup .searchExtendsToInput .opt1 {border-top: 0; border-bottom: 1px solid; width: 12.5em; padding: 0 0 5px 0}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup .searchExtendsToInput .opt1 label {margin: 0 0 3px 0; display: block}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup .searchExtendsToInput .opt2 input[type="checkbox"] {margin: -2px 5px 1px 0}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup .searchExtendsToInput .opt2 {margin: 0 0 0 5px}
+	#search #content #advancedSearch div.searchExtendsTo .searchFieldGroup .searchExtendsToInput .opt2 label {width: 170px; display: inline-block; margin: 0 0 5px 0}
+	#search #content #advancedSearch div.searchExtendsTo #extentSearchInfo h4 {float: none; margin: 0 5px; padding: 0 0 10px 0; font-style: italic; font-weight: 300}
+	#search #content #advancedSearch div.searchExtendsTo .LegExtentRestriction {padding: 5px 10px; border-radius: 3px; letter-spacing: 0.15em; border: 1px solid; margin: 0 0 5px 5px}
+	#search #content #advancedSearch div.searchExtendsTo .LegExtentRestriction span {display: none}
+	#search #content #advancedSearch fieldset.searchFieldCategory.searchYear .searchCol2 .formGroup {clear: none; float: left; margin: 5px 0; min-width: unset}
+	#search #content #advancedSearch fieldset.searchFieldCategory.searchYear .searchCol2 .formGroup.specificYear {min-width: 110px}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfYears.formGroup:nth-child(2) {margin: 5px 15px 5px 20px; padding: 0 20px 0 12px; border-right: 1px solid; border-left: 1px solid}
+	#search #content #advancedSearch .searchYear div.rangeOfYears .yearRange, #search #content #advancedSearch .searchYear div.rangeOfYears .yearRange div:nth-child(2) {margin: 5px 0 0 0}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfYears .yearRange input,
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .specificYear input[type="text"] {width: 40px}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfDates .yearRange div {margin: 0}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfDates .yearRange label {margin: 0 5px 0 0}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfDates .yearRange input {margin: 0 15px 3px 0; width: 70px}
+	#search #content #advancedSearch .searchYear div.rangeOfDates .yearRange div:nth-child(2) input {margin-right: 0}
+
+	#search #content #advancedSearch #lex .typeCheckBoxCol div {display: table}
+	#search #content #advancedSearch #lex .typeCheckBoxCol input {display: table-cell; margin: 3px 8px 6px 4px}
+	#search #content #advancedSearch #lex .typeCheckBoxCol label {display: table-cell;}
+
+	.redirectSearch {margin: 0.25em auto; text-align: center}
+	.redirectSearch a {display: inline-block; padding: 0.75rem 1.5rem; border-radius: 3px}
+
+/* legislation */
+	ul#legSubNav {border-top: 1px solid; border-bottom: 1px solid}
+	ul#legSubNav li:not(#leg .help .content li) {border-right: 1px solid; padding: 0 1px 0 0}
+	ul#legSubNav li:first-child:not(#leg .help .content li) {border-left: 1px solid; padding: 0 1px}
+	ul#legSubNav li a {padding: 5px 15px}
+	ul#legSubNav li a.helpItem {margin: 11px 10px 0 0; position: absolute; padding: 0; display: block; font-weight: 300; line-height: 1.4em; font-size: 11px}
+	ul#legSubNav li a.helpItem:hover {text-decoration: none}
+	.js ul#legSubNav .help.helpToMidTop .icon:before {margin: 4px 0; border-width: 0 5px 5px 5px}
+
+	.legContent li#legContentLink, .legComplete li#legContentLink, .legEmContent li#legEmLink, .legEmToc li#legEmLink, .legPnContent li#legPnLink, .legPnToc li#legPnLink, .legEnContent li#legEnLink, .legEnToc li#legEnLink, .legResources li#legResourcesLink, .legInForceInfo li#legInForceInfoLink, .legCommencement li#legConmmencementLink, .legIA li#legIALink, .legIAContent li#legIALink {border: 0}
+	.legToc ul#legSubNav li#legTocLink {border-left: 1px solid}
+
+	.legContent li#legContentLink a:after, .legComplete li#legContentLink a:after, .legToc li#legTocLink a:after, .legEmContent li#legEmLink a:after, .legEmToc li#legEmLink a:after, .legEnContent li#legEnLink a:after, .legEnToc li#legEnLink a:after, .legPnContent li#legPnLink a:after, .legPnToc li#legPnLink a:after, .legResources li#legResourcesLink a:after, .legInForceInfo li#legInForceInfoLink a:after, .legCommencement li#legConmmencementLink a:after, .legIA li#legIALink a:after, .legIAContent li#legIALink a:after {content:""; width: 0; height: 0; border-style: solid; border-width: 6px 7px 0 7px; position: absolute; display: inline-block; left: 45%; bottom: -7px}
+
+	.legEmContent li#legEmLink a:after, .legEmToc li#legEmLink a:after, .legEnContent li#legEnLink a:after, .legEnToc li#legEnLink a:after, .legIAContent li#legIALink a:after, .legResources li#legResourcesLink a:after {left: 47%}
+	li#legEnLink a.helpItem:after, li#legEnLink .help a:after, li#legEmLink a.helpItem:after, li#legEmLink .help a:after, li#legResourcesLink a.helpItem:after, li#legResourcesLink .help a:after {display: none}
+	.LegSnippet {min-height: 200px; padding: 10px 0 10px 10px}
+	#layout2.legEnToc #content p, #layout2.legEnContent #content p, #layout2.legEmToc #content p, #layout2.legEmContent #content p {overflow: auto}
+
+	#leg .pageTitle, .newLeg #pageTitle, #error #pageTitle, #per #pageTitle, #doc #pageTitle {padding: 16px 0; font-weight: 300}
+	#leg .pageTitle {padding-bottom: 8px}
+
+	#breadCrumb ul {padding: 0 18px 10px 0}
+	#breadCrumb ul li {padding: 0 0 0 20px; font-weight: 500}
+	#breadCrumb ul li:before {position: absolute; content: ""; border-right: 2px solid; border-top: 2px solid; width: 4px; height: 4px; margin:6px -14px; transform: rotate(45deg)}
+	#breadCrumb ul li:first-child:before {display: none}
+	#breadCrumb ul li a {font-weight: 300}
+
+	.legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a {border: 0; margin: -1px -2px 0 -1px; padding: 6px 15px 5px 15px}
+	#leg #content {border: 0; padding: 0 0 0 1px}
+
+	div.interface {padding: 8px 0}
+	div.interface ul { overflow: initial}
+	.interface a.userFunctionalElement {border: 1px solid; padding: 5px 15px; display: inline-block}
+	.interface span.userFunctionalElement {padding: 5px 0; display: inline-block; border: 0}
+	.interface a.userFunctionalElement.close:after {content:""; width: 0; height: 0; border-style: solid; border-width: 6px 7px 0 7px; position: absolute; display: inline-block; margin: 23px -42px}
+	.interface .userFunctionalElement span {display: none}
+	.interface .view a.userFunctionalElement {border: 1px solid; padding: 5px 5px}
+	.js .interfaceOptions {margin: 0 9px; width: auto; border: 1px solid; padding: 5px; border-radius: 3px}
+	.js ul.optionList { margin: 0 25px 0 5px}
+	ul.optionList li {border-left: 1px solid #787878; margin: 0.5em 0; padding: 0.25em 1em 0 1em}
+	ul.optionList li:first-child {border: 0}
+	ul.optionList ul li {display: inline-block; float: left; margin: 0; padding: 1px 0 0 0}
+	ul.optionList ul li a {padding: 0; margin: 0; font-size: 1em; display: inline-block; font-weight: 500}
+
+	#layout1 a.pdfLink {padding: 3px 10px 2px 26px}
+	#layout1 a.htmLink {padding: 3px 10px 2px 24px}
+	.wholeuri {padding: 0 0 0 10px}
+
+	.legEmToc .wholeuri .userFunctionalElement, .legEmContent .wholeuri .userFunctionalElement {width: 11em}
+	.legEmToc .userFunctionalElement.active.nav span, .legEnToc .userFunctionalElement.active.nav span, .interface #wholeNav .userFunctionalElement.active span, 
+	.legEmContent .userFunctionalElement.active.nav span, .legEnContent .userFunctionalElement.active.nav span {display: none}
+	.legEmToc .interface .toc .userFunctionalElement.disabled, .legEnToc .interface .toc .userFunctionalElement.disabled, .legEmToc .interface .userFunctionalElement.active, .legEnToc .interface .userFunctionalElement.active, .interface #wholeNav .userFunctionalElement.active {border: 0}
+
+	.legEmToc div.interface, .legEmContent div.interface, .legEnToc div.interface, .legEnContent div.interface {display: table}
+	.legEmToc div.interface #wholeNav, .legEmContent div.interface #wholeNav, .legEnToc div.interface #wholeNav, .legEnContent div.interface #wholeNav, .legEmToc div.interface #viewPrintControl, .legEmContent div.interface #viewPrintControl, .legEnToc div.interface #viewPrintControl, .legEnContent div.interface #viewPrintControl {display: table-cell; width: 260px}
+
+	.legEmContent div.interface #wholeNav, .legEmToc div.interface #wholeNav, .legEnContent div.interface #wholeNav, .legEnToc div.interface #wholeNav, .legPnContent div.interface #wholeNav, .legPnToc div.interface #wholeNav, .legIAContent div.interface #wholeNav {padding: 0}
+
+	.legEnToc div.interface .prevNextNav, .legEnContent div.interface .prevNextNav, .legEmToc div.interface .prevNextNav, .legEmContent div.interface .prevNextNav {display: table-cell; width: 100%}
+	.legEnToc div.interface .prevNextNav ul, .legEnContent div.interface .prevNextNav ul, .legEmToc div.interface .prevNextNav ul, .legEmContent div.interface .prevNextNav ul {width: 100%; margin: 0 auto}
+
+	.legContent div.interface {display: table}
+	.legContent div.interface #viewPrintControl {display: table-cell; width: unset; min-width: 310px; white-space: nowrap; float: none}
+	.legContent div.interface .prevNextNav {display: table-cell; padding: 0 0 0 310px}
+	.legContent .contentFooter div.interface .prevNextNav {padding: 0}
+	.legContent div.interface .prevNextNav ul {width: auto; float: none; text-align: center}
+
+	#browse #tools, #search #tools, #layout2.legToc #tools, #layout2.legPDFonly #tools, #layout2.legContent #tools, #layout2.legComplete #tools, #layout2.legIA #tools, #layout2.legIAContent #tools, body.legContent #navigation {min-height: 0; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px}
+	#tools {border-right: 1px solid; padding: 9px 0 0 0; box-sizing: border-box}
+	.section {padding: 0}
+	#tools .section {float: none; overflow: auto; margin: 5px 5px 0 5px; padding: 3px 3px 6px 3px; border-bottom: 1px solid}
+	#tools .section:first-child {margin: 2px 5px 5px 5px; padding: 0 3px 10px 3px}
+	/*  #tools .section:last-child {border: 0}  */
+	#tools .EUsection {margin: 8px 8px 8px 8px; padding: 8px 8px 8px 8px; background-color: rgba(255, 255, 255, 1); box-sizing: border-box; border-width: 1px; border-style: solid; border-color: rgba(220, 220, 220, 1); border-radius: 5px; box-shadow: none;}
+	#tools .EUSection-para {padding: 0px 0px 7px 0px; border-bottom: 0.5px solid; border-color: rgba(220, 220, 220, 1);}
+	#tools .section .title {padding: 0; width: 100%; float: none}
+	#tools .title a.helpItem {display: block; text-align: center; font-weight: 300}
+
+	.js .helpToRightMid {margin: 0 0 0 3px}
+	.js .help.helpToRightMid .icon:before, .js .help.helpToRightTop .icon:before, .js .help.helpToMidTop .icon:before, .js .help.helpToLeftMid .icon:before {content:""; width: 0; position: absolute; display: block; margin: 0 2px; height: 0; border-style: solid; border-width: 5px 7px 5px 0}
+	.js .help.helpToMidTop  {margin: 13px 0 0 1px}
+	.js .help.helpToMidTop .icon:before {margin: 2px 0; border-width: 0 5px 7px 5px}
+	.js .help.helpToLeftMid  {margin: 1px 0 0 -11px}
+	.js .help.helpToLeftMid .icon:before {margin: 0 3px; border-width: 5px 0 5px 7px}
+	.js .help .close, .closeLink {padding: 0 !important; margin: -5px !important}
+	.closeLink {margin: 3px 8px !important}
+	#printOptions a.closeLink:before {padding: 0}
+.interfaceOptions h4 {font-size: 1em}
+
+	#tools .section ul.toolList {padding: 1px 0 0 0; margin: 0}
+	#tools #whatVersion.section ul.toolList li {margin: 6px 0 0 0}
+	.userFunctionalElement {border-radius: 3px}
+	#tools a.userFunctionalElement {border: 1px solid; padding: 7px 10px}
+	#tools .userFunctionalElement.active {border: 1px solid; padding: 7px 10px 6px 24px}
+	#tools .toolList span.active .background {font-weight: 300}
+	#tools .userFunctionalElement.active:before {position: absolute; content: ""; border-right: 2px solid; border-bottom: 2px solid; width: 3px; height: 9px; margin: 2px -14px; transform: rotate(45deg)}
+	#tools .userFunctionalElement.disabled {border: 1px solid; padding: 5px 10px; font-weight: 300}
+	#tools .toolList .userFunctionalElement .background, #tools .toolList span.active .background, #tools .toolList span.disabled .background {padding: 0; margin: 0}
+	#tools .userFunctionalElement .background span {display: none}
+	.content .subsection {margin: 2px 0 0 0; font-size: 1em}
+
+	#openingOptions .whole a {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -697px}
+	#openingOptions .minusSched a {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -798px}
+	#openingOptions .onlySched a {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -897px}
+
+	#whatVersion .userFunctionalElement {padding: 0; margin: 0}
+	#whatVersion .userFunctionalElement {width: auto; display: block}
+
+	.geoExtShowing .LegExtentRestriction, .LegSnippet .LegExtentRestriction {padding: 5px 10px; border-radius: 3px; letter-spacing: 0.15em; border: 1px solid; position: absolute; margin: -0.5em 0 0 27px}
+	.extentMarkerInfo {clear: left}
+	#infoSection .extentMarkerInfo .LegExtentRestriction {position: relative}
+	.geoExtShowing .LegExtentRestriction:before, .LegSnippet .LegExtentRestriction:before {content: ""; position: absolute; width: 20px; height: 1px; display: inline-block; margin: 6px -30px}
+	.geoExtent span {border-radius: 3px; border: 1px solid; padding: 5px 8px; margin: 5px 10px 0 30px; font-size: 1em}
+	.geoExtent strong {font-size: 1.1em}
+	.geoExtShowing .LegExtentRestriction span, .LegSnippet .LegExtentRestriction span {display: none}
+	.LegExtentParagraph {text-align: center}
+	.LegExtentParagraph .LegExtentRestriction {position: relative; margin: 0}
+
+	a.expandCollapseLink {padding: 0 0 0 19px}
+	a.expandCollapseLink:before {position: absolute; content: ""; margin: 4px 0 0 -16px; transform: rotate(180deg); width: 0; height: 0; border-style: solid; border-width: 0 5px 8px 5px}
+	a.expandCollapseLink.close:before {transform: rotate(0deg)}
+
+	span.pageLinkIcon {display: none}
+	p.viewMoreLink {padding: 0; margin: 0}
+	#pdfVersionsContent .viewMoreLink:after {display: inline-block; content: ""; border-right: 1px solid; border-top: 1px solid; width: 3px; height: 3px; margin: 0 0 2px 3px; transform: rotate(45deg)}
+
+	#tools #advFeatures li {border: 0; padding: 2px 0}
+	#tools #advFeatures li:before {position: absolute; content: ""; border: 1px solid; width: 20px; height: 20px; border-radius: 2px; margin: 2px 0 0 0}
+	#tools #advFeatures li a.userFunctionalElement, #tools #advFeatures li span.userFunctionalElement {padding: 2px 0 0 30px; display: block; margin: 0; position: relative}
+	#tools #advFeatures li span.userFunctionalElement {width: unset}
+	#tools #advFeatures li a.close {font-weight: 300}
+	#tools #advFeatures li a.close:before, #tools #advFeatures li span.close:before {position: absolute; content: ""; border-right: 2px solid; border-bottom: 2px solid; width: 3px; height: 9px; margin: 4px -21px; transform: rotate(45deg)}
+
+	#tools #pdfVersionsContent .pdfLink {padding: 0 10px 2px 26px}
+
+	#legSubNav, #legSubNav li:first-child , #legSubNav li:first-child a {border-top-left-radius: 3px}
+	#legSubNav, #legSubNav li:last-child , #legSubNav li:last-child a:not(.helpItem, .close) {border-top-right-radius: 3px}
+	ul#legSubNav {border-top: 0}
+	ul#legSubNav li:not(#leg .help .content li) {border-top: 1px solid}
+	.legContent li#legContentLink, .legComplete li#legContentLink, .legEmContent li#legEmLink, .legEmToc li#legEmLink, .legPnContent li#legPnLink, .legPnToc li#legPnLink, .legToc li#legTocLink, .legEnContent li#legEnLink, .legEnToc li#legEnLink, .legResources li#legResourcesLink, .legInForceInfo li#legInForceInfoLink, .legCommencement li#legConmmencementLink, .legIA li#legIALink, .legIAContent li#legIALink {border-top: 1px solid}
+	#leg.resources ul#legSubNav #legResourcesLink {border-right: 1px solid; border-top: 1px solid}
+	ul#legSubNav #legResourcesLink a:not(.helpItem), ul#legSubNav #legPnLink a:not(.helpItem), ul#legSubNav #legEnLink a:not(.helpItem), ul#legSubNav #legEmLink a:not(.helpItem), ul#legSubNav #legIALink a:not(.helpItem) {padding-right: 35px}
+	ul#legSubNav .help a.close {line-height: 1.3em; font-weight: 300; font-size: 11px}
+	ul#legSubNav .help a.close:hover {text-decoration: none}
+	#leg.toc .legEmToc .interface .prev .userFunctionalElement:before, #leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .prev .userFunctionalElement:before, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .prev .userFunctionalElement:before, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .prev .userFunctionalElement:before, #leg.toc .legEnContent .interface .next .userFunctionalElement:after {position: absolute; content: ""; margin: 4px 0 0 -14px; width: 0; height: 0; border-style: solid; border-width: 5px 7px 5px 0}
+	#leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .next .userFunctionalElement:after {margin: 4px 0 0 8px; border-width: 5px 0 5px 7px}
+
+	#browse .contentFooter .interface, #search .contentFooter .interface, #doc .contentFooter .interface, #content .contentFooter .interface {padding: 15px 0 0 0; border: 0; border-top: 1px solid}
+	.interface {border-bottom: 1px solid; overflow: hidden; display: block}
+	.interface .prev a.userFunctionalElement, .interface .prev a.userFunctionalElement.nav, .interface .toc a.userFunctionalElement, .toc a.userFunctionalElement.nav, .interface .next a.userFunctionalElement, .interface .next a.userFunctionalElement.nav  {border: 1px solid; padding: 5px 12px 5px 25px}
+	.interface .next a.userFunctionalElement, .interface .next a.userFunctionalElement.nav  {padding: 5px 25px 5px 12px}
+	.interface .userFunctionalElement .background {padding: 0}
+	.interface .prev .userFunctionalElement .background:before, .interface .next .userFunctionalElement .background:before {position: absolute; content: ""; margin: 4px 0 0 -14px; width: 0; height: 0; border-style: solid; border-width: 5px 7px 5px 0}
+	.interface .next .userFunctionalElement .background:before {margin: 4px 0 0 8px; border-width: 5px 0 5px 7px}
+	.interface .prevNextNav span.userFunctionalElement.disabled {border: 1px solid}
+	.interface .prev span.userFunctionalElement.disabled {padding: 5px 12px 5px 25px}
+	.interface .next span.userFunctionalElement.disabled {padding: 5px 25px 5px 12px}
+	div.prevNextNav .userFunctionalElement {min-width: 0}
+
+	#leg .pageTitle, #browse #pageTitle, #search #pageTitle, .newLeg #pageTitle, #error #pageTitle, #per #pageTitle {border: 0}
+
+	.contentFooter {padding: 0; margin: 0}
+	.contentFooter .interface:empty, .contentFooter + .interface:empty {display: none}
+	#leg #content:before {content:""; display: block; width: 970px; height: 10px; left: 0; margin: -12px 0 0 15px; position: absolute}
+	#leg #content, body.legContent #content {width: 769px; margin: 0; padding: 0}
+	.LegSnippet .LegContents {margin: 5px 0 15px 10px}
+	.LegSnippet .LegContents a.userFunctionalElement {border: 1px solid; margin-left: -6.8em !important; margin-right: 1.75em !important; padding: 0 5px !important}
+	.LegSnippet .LegContents ol li.LegContentsSchedules ol ol .expandCollapseTocLink {margin-left: -11.8em !important;margin-right: 4.1em !important}
+	.LegSnippet .LegContents a.tocCollapseAll, .LegSnippet .LegContents a.tocExpandAll {padding: 0 5px !important; margin: 0 -5px !important}
+	.legToc .LegSnippet .LegContents ol:before {content: ""; border-left: 1px solid; position: absolute; left: 47px; width: 1px; height: 100%; z-index: 0}
+	.legToc .LegSnippet .LegContents li ol:before {display: none}
+	.legToc .LegSnippet .LegContents li, .LegSnippet .LegContents .tocGlobalControls {position: relative; z-index: 1}
+	.legToc .LegSnippet .LegContents a.tocCollapseAll, .LegSnippet .LegContents a.tocExpandAll {line-height: 2.1em}
+
+	#changesOverTime {border: 0; margin: 10px 0 0 10px; padding: 0}
+	#changesOverTime h2 {margin: 0; padding: 10px 0 0 0}
+	#changesOverTime .timelineHelp {margin: -20px 10px 0 0}
+	#changesOverTime .timelineHelp a.helpItem {display: block}
+	#changesOverTime #timeline #timelineData {position: relative}
+	#changesOverTime #timeline #timelineData ul {margin: 65px 0 0 50px; padding: 0; height: 140px}
+	#changesOverTime #timeline #timelineData ul li {height: 6px; padding: 0; font-size: 1em}
+	#changesOverTime p {font-size: 1em; margin: 3px 0 0 0}
+	#changesOverTime #timeline span.end {display: block; height: 0; width: 0; float: right; margin: 0}
+	#changesOverTime #timeline .end:before {content: ""; display: block;  margin: -6px 0;  width: 0; height: 0; border-style: solid; border-width: 9px 0 9px 10px}
+	#changesOverTime #timeline #timelineData ul li a {display: block; width: 64px; text-align: center; font-size: 1.1em; font-weight: 300}
+	#changesOverTime #timeline #timelineData ul li a:before {content: ""; display: block; border-radius: 50%; height: 50px; width: 50px; border: 3px solid; padding: 0; margin: -1px 0 7px 4px}
+	#changesOverTime #timeline #timelineData ul li.currentVersion a:before {border: 3px solid}
+	#changesOverTime #timeline #timelineData .pointer + span {margin: 0 0 0 -3px}
+	#changesOverTime #timeline #timelineData ul li a:after {content: ""; display: block; height: 30px; width: 30px; margin: -67px 0 0 20px}
+	#changesOverTime #timeline #timelineData ul li.pointInTime span {float: none; display: block; margin: -5px 14px; width: 95px; border: 1px solid; padding: 5px; border-radius: 3px; font-size: 1em}
+	#changesOverTime #timeline #timelineData ul li.pointInTime span em {font-size: 1em}
+	#changesOverTime #timeline #timelineData ul li.pointInTime em:after {content: ""; display: inline-block; border-right: 1px solid; border-top: 1px solid; width: 5px; height: 5px; margin: -3px 30px -14px -36px; transform: rotate(135deg)}
+	#changesOverTime #timeline #timelineData ul li a.euexitday-deal:before {width: 22px; height: 22px; border: 0; margin: 17px 0 0 20px}
+	#changesOverTime #timeline #timelineData ul li .euexitday-deal .content, #changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content {top: 9px; left: -20px; padding: 3px 0; width: 120px; font-size: 0.85em; border: 1px solid; line-height: 135%}
+	#changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content {top: 1px; left: -35px; width: 125px; padding: 5px 3px 4px 3px}
+	#changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content .title, #changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content .description {display: inline}
+	#changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content .description {padding: 0 0 0 4px}
+	#changesOverTime #timeline #timelineData ul li .euexitday .content::before, #changesOverTime #timeline #timelineData ul li .euexitday-deal .content::before, #changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content::before {transform: translate(-50%, 5px) rotate(45deg); width: 7px; height: 7px}
+	#changesOverTime #timeline #timelineData ul li:has(.euexitday-deal) ~ li .euexitdayoverlay-deal:before {height: 56px; width: 56px; padding: 15px 0 0 1px; color: #fff; font-size: 1.75em; box-sizing: border-box; content: "UK"}
+	#changesOverTime #timeline .pointer {display: none}
+	#changesOverTime #timeline .pointer-eu {position: absolute; margin: -52px 15px; height: 33px}
+	#changesOverTime #timeline .pointer-eu:before {content: "EU"; font-size: 1.75em; position: absolute; margin: 7px -14px}
+	#changesOverTime #timeline #timelineData ul li:has(.euexitday-deal) ~ li a:not(.euexitday-deal, .euexitdayoverlay-deal) .pointer:before {height: 46px; width: 46px; padding: 13px 0 0 1px; color: rgba(65,65,65,1); font-size: 1.75em; box-sizing: border-box; content: "UK"; display: block; position: absolute; margin: -58px 0 0 9px; background: rgba(255,255,255,1); border-radius: 50%}
+	#changesOverTime #timeline #timelineData ul li:has(.euexitday-deal) ~ li.currentVersion a:not(.euexitday-deal, .euexitdayoverlay-deal) .pointer:before {color: rgba(255,255,255,1); background: rgba(65,65,65,1)}
+	#changesOverTime #timeline #timelineData ul li a .pointer {background: none; height: 0; width: 0; margin: 0; position: absolute; display: block}
+	#changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content {left: -25px}
+
+	#scrollbar .arrow {width: 36px; height: 34px; margin: 1px 0 0 0}
+	#scrollbar .arrowLeftEnabled, #scrollbar .arrowLeftDisabled, #scrollbar .arrowRightDisabled, #scrollbar .arrowRightEnabled {border-radius: 3px}
+	#scrollbar .arrowLeftEnabled:after, #scrollbar .arrowLeftDisabled:after, #scrollbar .arrowRightDisabled:after, #scrollbar .arrowRightEnabled:after {position: absolute; width: 4px; height: 4px; content: ""; border-right: 2px solid; border-bottom: 2px solid; transform: rotate(135deg); margin: 14px 15px}
+	#scrollbar .arrowRightEnabled:after, #scrollbar .arrowRightDisabled:after {transform: rotate(-45deg); margin: 14px 15px}
+	#scrollbar {height: 40px; margin: 0 10px}
+	#leg #scrollbar:before {border-top: 3px solid #666; content: ""; width: 667px; display: block; position: absolute; margin: 16px 36px}
+	#leg #scrollbar #slider {margin: 5px 0 0 68px; width: 530px}
+	#scrollbar .ui-slider .ui-slider-handle {border-radius: 3px; padding: 6px 0; margin-top: -4px}
+	#scrollbar .ui-slider .ui-slider-handle:before, #scrollbar .ui-slider .ui-slider-handle:after {position: absolute; width: 4px; height: 4px; content: ""; border-right: 2px solid; border-bottom: 2px solid; transform: rotate(135deg); margin: 8px 17px}
+	#scrollbar .ui-slider .ui-slider-handle:after {transform: rotate(-45deg); margin: 8px 110px}
+
+	.LegSnippet .LegAnnotations {border: 1px solid; padding: 0; border-radius: 3px; margin: 1em 0}
+	.LegSnippet p.LegAnnotationsGroupHeading {margin: 0 0 0.5em 0; padding: 0.5em 0.75em}
+	.LegSnippet .LegCommentaryPara {display: table; padding: 0 0 0.75em 0; width: 100%}
+	.LegSnippet .LegCommentaryType {display: table-cell; width: 2em; margin: 0 0 -6px -3em; padding: 0 0 0 0.2em}
+	.LegSnippet .LegCommentaryText {display: table-cell; padding: 0 0.5em 0 0}
+	.LegSnippet .LegBlockNotYetInForce {margin: 10px 0 10px -15px; padding: 0 0 5px 15px; width: 757px; border: 1px solid #ddd; border-radius: 3px}
+	.LegSnippet .LegBlockNotYetInForce p {margin: 0; padding: 0 0 8px 0}
+	.LegSnippet .LegLevel4 {width: 89%}
+	.LegSnippet p.LegBlockNotYetInForceHeading {margin: 0 0 10px -15px; padding: 0}
+	.LegSnippet .LegBlockNotYetInForceHeading span {padding: 8px 12px; width: auto; text-align: left; text-transform: none; border-top-left-radius: 3px; border-top-right-radius: 3px}
+	.LegSnippet .LegAnnotations .LegCommentaryItem {margin: 10px 0 0 0}
+	/* .LegSnippet .LegAnnotations .LegAnnotationsGroupHeading + .LegCommentaryItem {margin: 0} */
+	.LegSnippet .LegAnnotations .LegCommentaryItem + .LegCommentaryItem {margin: 0}
+	.LegSnippet .LegP1No, .LegSnippet .LegP1GroupTitle, .LegSnippet .LegDS.LegP1GroupTitleFirst {font-weight: bold}
+
+	.LegSnippet .LegBlockNotYetInForce .LegAnnotations {margin: 1em 0.75em 1em 0}
+
+	#statusWarning, #brexitInfo {overflow: auto; margin: 10px 0 10px 10px; border: 0; padding: 0; width: 755px; display: table}
+	#statusWarning h2, #statusWarning.uptoDate h2, #brexitInfo h2 {float: none; font-size: 1.1em; display: block !important; margin: 0; padding: 10px 10px 2px 10px}
+	#statusWarning p.intro, #brexitInfo p.intro {display: block !important; float: left; margin: 0; padding: 0 10px 10px 10px}
+	#statusWarning p.intro ~ p, #brexitInfo p.intro ~ p {padding: 0 10px}
+	#statusWarning a.expandCollapseLink, #brexitInfo a.expandCollapseLink {display: block; float: right; margin: 0 20px 10px 0}
+	#statusWarning.uptoDate a.expandCollapseLink, #brexitInfo a.expandCollapseLink {width: auto}
+	#statusWarningSubSections, #outstandingRefs {margin: 30px 0 0 0; clear: both}
+	#statusWarning, #statusWarning.uptoDate, .pointInTimeView #statusWarning, #brexitInfo {border: 2px solid; border-radius: 2px}
+	#brexitInfo #outstandingRefs {border: 0; border-left: 2px solid; width: auto; margin: 0 10px 10px 10px; position: relative}
+	#statusWarning #statusWarningSubSections {border: 0; width: auto; margin: 0 10px; position: relative}
+	#outstandingRefs a.expandCollapseLink, #statusWarning #statusWarningSubSections a.expandCollapseLink {margin: 0}
+	#statusWarning #statusWarningSubSections .section{border: 0 ; border-left: 2px solid; margin: 0 0 10px 0}
+	#brexitInfo #outstandingRefs .title, #statusWarning #statusWarningSubSections .section .title {border: 0; padding: 0.75em 10px 0.75em 10px}
+	#brexitInfo #outstandingRefs .content, #statusWarning #statusWarningSubSections .section .content {display: block; padding: 0 10px 10px 10px/*; max-height: 200px; overflow: scroll */}
+	#brexitInfo #outstandingRefs p, #statusWarning #statusWarningSubSections ul {margin: 0}
+	#brexitInfo #outstandingRefs p + ul, #statusWarning #statusWarningSubSections p + ul {margin: 0 0 10px 0}
+
+	#layout2 .content ul, .content ol {padding: 0 4px 4px 4px; border-bottom: 1px solid}
+	#layout2 .content ul:last-child, .content ol:last-child {padding: 0 3px; border: 0}
+	#layout2 .content #pdfVersionsSubContent ul.toolList:last-child {padding: 0}
+
+	#statusWarning #statusWarningSubSections .content p, #brexitInfo #outstandingRefs p {padding: 0 5px; margin: 0; position: relative; z-index: 0}
+	#statusWarning #statusWarningSubSections .content p:after, #brexitInfo #outstandingRefs .content p:after {content: ""; display: block; height: 3px; margin: 6px 0 0 0; position: relative; z-index: -2}
+	#statusWarning #statusWarningSubSections .content p:before, #brexitInfo #outstandingRefs .content p:before {content: ""; height: 100%; width: 723px; padding: 0; margin: 0 -10px; display: block; position: absolute; z-index: -1}
+	#statusWarning #statusWarningSubSections .content ul + p, #brexitInfo #outstandingRefs .content ul + p {margin: 10px 0 0 0; padding: 0 4px}
+	#brexitInfo #outstandingRefs ul li, #statusWarning #statusWarningSubSections ul li {line-height: 1.5em; padding: 0 0 4px 0}
+	#brexitInfo #outstandingRefs ul li:last-child, #statusWarning #statusWarningSubSections ul li:last-child {padding: 0}
+	#brexitInfo #outstandingRefs ul li:first-child, #statusWarning #statusWarningSubSections ul li:first-child {line-height: 1.5em; padding: 0 0 4px 0}
+	#brexitInfo #outstandingRefs p + ul li:last-child, #statusWarning #statusWarningSubSections p + ul li:last-child {padding: 0 0 4px 0}
+	#brexitInfo #outstandingRefs p + ul li:first-child, #statusWarning #statusWarningSubSections p + ul li:first-child {padding: 10px 0 4px 0}
+	#brexitInfo #outstandingRefs p + ul, #statusWarning #statusWarningSubSections p + ul {margin: 0; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px}
+	#brexitInfo #outstandingRefs ul, #statusWarning #statusWarningSubSections ul {max-height: 215px; overflow: scroll}
+	#brexitInfo #outstandingRefs .content, #statusWarning #statusWarningSubSections .section .content {padding: 10px 10px}
+	#statusWarning a.helpItem {margin: 0 5px; position: absolute}
+	.js #statusWarning .help.helpToMidTop, .js #infoSection .help.helpToMidTop {margin: 3px 0 0 6px}
+	#brexitInfo ul, #statusWarningSubSections ul {margin: 10px 0 0 0}
+
+	.uk-effect, .eu-effect {padding: 1px 0}
+	.uk-effect:before, .eu-effect:before {width: 18px; height: 18px; margin: 0 8px 0 6px; text-align: center; line-height: 2.1; font-size: 0.75em; border-radius: 50%; float: left}
+	.uk-effect:before {content: "UK"}
+	.eu-effect:before {content: "EU"}
+
+	#infoSection, #infoSection-status, #infoSection-note, #infoDraft {padding: 0; overflow: auto; margin: 10px 0 10px 10px; border: 0; border: 2px solid; border-radius: 2px}
+	#infoSection h2, #infoSection-status h2, #infoSection-note h2, #infoDraft h2 {float: none; font-size: 1.1em; display: block !important; margin: 0; padding: 10px 10px 2px 10px}
+	#infoSection .extentMarkerInfo h2, #infoDraft .extentMarkerInfo h2 {padding: 0 10px 10px 10px}
+	#infoSection p.intro, #infoSection-status p.intro, #infoSection-note p.intro, #infoDraft p.intro {display: block !important; float: left; margin: 0; padding: 0 10px 10px 10px;}
+	#infoSection .intro .helpItem, #infoSection-status .intro .helpItem, #infoSection-note .intro .helpItem, #infoDraft .intro .helpItem {display: inline-block; margin: -2px 6px}
+
+	.js .covid-tabs .anchors, .legResources .anchors {border: 0}
+	.js .covid-tabs .anchors li, .legResources .anchors li {border: 0}
+	.js .covid-tabs .anchors li:first-child a, .legResources .anchors li:first-child a {border-top-left-radius: 3px;}
+	.js .covid-tabs .anchors li:last-child a, .legResources .anchors li:last-child a {border-top-right-radius: 3px}
+	.js .covid-tabs .anchors a, .legResources .anchors a, .htabs a {padding: 10px 15px; border: 0; border-top: 1px solid; border-right: 1px solid}
+	.js .covid-tabs .anchors li:first-child a, .legResources .anchors li:first-child a:not(.active) {border-left: 1px solid}
+	.js .covid-tabs .anchors li:last-child a, .legResources .anchors li:last-child a {border-top-right-radius: 3px}
+	.js .covid-tabs .anchors li:first-child a, .legResources .anchors li:first-child a {border-bottom: 0; border-left: 1px solid}
+
+	.confers_section.tab {border: 1px solid; width: 928px}
+	.confers_section.tab td {padding: 0.7em 1em 0.3em 1em}
+	.confers_section.tab tr {vertical-align: top}
+
+	.legResources #content .innerContent {margin: 20px 0 0 0}
+	#leg.resources.js #content .helpItem {display: none}
+	#leg.resources.js #content .help {position: relative !important; width: auto; left: 0; top: 0; display: block !important; z-index: 0}
+	#leg.resources.js #content .help h3, #leg.resources.js #content .help .close {display: none !important}
+	#leg.resources.js #content .help .content {width: auto; padding: 0; border: 0; margin: 4px 0}
+	#leg.resources.js #content h3 .content {font-size: 0.85em}
+	.legResources .printPdf {width: auto; padding: 0; border: 0; float: none; margin: 0 0 20px 0}
+	.legResources .printPdf h3, .legResources .allChanges h3 {width: auto; float: none; border-bottom: 1px solid; margin: 0 0 5px 0; font-size: 1.2em; padding: 0 0 5px 0}
+	#leg.resources.js #content .confers_title .help {border-top: 1px solid; margin: 5px 0 0 0}
+	#leg.resources.js #content .confers_title, #leg.resources.js #content .allChanges {border: 0}
+	.legResources .printPdf h3 + img, .legResources .printPdf p.helpAside {display: none}
+	.legResources .printPdf p, .legResources .printPdf * {margin: -20px 0 0 0}
+	.legResources .printPdf * {margin: 0}
+	.legResources .printPdf .plainList a:after {content: "Original Print PDF"}
+	.legResources .printPdf .plainList span:before {content: " ("}
+	.legResources .printPdf .plainList span:after {content: ")"}
+	.legResources .printPdf .plainList span:empty {display: none}
+	.legResources .s_7 {width: 100%; margin: 0 0 20px 0}
+	.filesizeShow li a {width: auto}
+	.filesizeShow li .filesize {position: relative; right: unset}
+	.legResources .assocDocs h4 + p {margin: 0}
+	.legResources h4 {margin-bottom: 0.5em}
+	.legResources .printPdf p {visibility: hidden; position: relative}
+	.legResources .printPdf p p {visibility: visible; position: relative}
+	.plainView #layout1 #header {height: auto; overflow: auto; border-bottom: 1px solid}
+	.plainView #layout1 #header h2 {padding: 10px 10px 0 10px}
+	.plainView #layout1 #header a {margin: 0; padding: 21px 10px}
+	.plainView #layout2 h1 {width: 1250px}
+	#leg.plainView #content:before {display: none}
+	#leg.plainView .LegSnippet .LegContents ol {padding: 0 !important}
+	#leg.plainView .legToc .LegSnippet .LegContents ol:before {display: none}
+
+	.legEnToc .LegSnippet .ENContents li {position: relative; z-index: 1}
+	.LegSnippet .ENContents ol {background-position: 39px}
+
+	.legEnContent .markdown-page .main-en-container {height: auto !important; overflow: unset !important}
+	.legEnContent .markdown-page h3.HSubheading3 {font-weight: 500}
+	ol li p.ENContentsTitle a {display: inline-block}
+	ol li ol li p.ENContentsTitle a {font-weight: 300 !important}
+	.en-content .footnotes {margin: 20px 0; padding: 0 30px 15px 30px; background: rgba(250,250,250,1); font-size: 1em}
+	.markdown-page table tr th, .markdown-page table tr td {border: 1px solid rgba(100,100,100,1)}
+	.en-menu a:before {margin: 0 0 5px 0}
+	.markdown-page .table-of-contents {font-weight: 500 !important}
+	.legEnContent#layout2 .pageTitle {border: 0 !important; padding: 16px 0 8px 0 !important}
+
+	.legIAContent #tools #whatVersion.section .title .helpItem {margin: -19px 0px}
+	.legIAContent #tools #whatVersion.section .title .help {margin: -19px -3px}
+	.legIAContent #tools #whatVersion.section .title .help .content h3 {margin: 0 25px 0.75em 0}
+	#viewLegContents .downloadPdfVersion a.pdfLink {padding: 20px; display: inline-block; border-radius: 5px; line-height: 1em}
+	#viewLegContents .downloadPdfVersion a.pdfLink img.pdfThumb {margin: 15px 0 0 0}
+	#viewLegContents .downloadPdfVersion a.pdfLink img.imgIcon {display: none}
+
+/* new legislation */
+	.newLeg #content {padding: 0}
+	.newLeg #content ul {padding: 0; border: 0}
+	.newLeg .introWrapper h2 {padding: 0 0 4px 0}
+	.newLeg .introWrapper .s_6 p {padding: 0}
+	.newLeg .introWrapper div {float: none; width: auto}
+	.newLeg .introWrapper div:first-of-type {margin: 0 0 8px 0}
+	.newLeg .introWrapper div p {margin: 0 3px 0 0; display: inline}
+
+	.newLeg .s_12.p_one.introWrapper, .newLeg .s_12.p_one.tabWrapper, .newLeg .tabWrapper .s_12, .newLeg .newLegFeeds {width: auto}
+	.newLeg p.warning {padding: 12px; font-weight: 300}
+	.newLeg p.warning a {display: block; font-weight: 500; margin: 5px 0 -25px 0; background: rgba(255,255,255,1); position: relative}
+	.newLeg .tabWrapper {margin: 0 0 15px 0; border: 0}
+	.newLeg ul.days {width: 100%; border-top-left-radius: 3px; border-top-right-radius: 3px; border: 1px solid; border-top: 0}
+	.newLeg ul.days li {font-size: 1.1em}
+	.newLeg ul.days li a {border: 0; width: 97px}
+	.newLeg ul.days li.current a:after {content: ""; width: 0; height: 0; border-style: solid; border-width: 6px 7px 0 7px; position: absolute; display: block; margin: 14px 42px}
+	.newLeg ul.days li:last-child a {border-right: 0}
+	.newLeg .s_6.p_two.sub.tracking li {width: auto; margin: 0 15px 0 25px}
+	.newLeg ul.days li:last-child, .newLeg ul.days li:last-child a {border-top-right-radius: 3px}
+	.newLeg ul.days li:first-child, .newLeg ul.days li:first-child a {border-top-left-radius: 3px}
+
+	.newLeg .sub {border: 1px solid}
+	.newLeg .sub h3 {padding: 10px 0 8px 10px}
+	.newLeg .sub ul {border: 0; margin: 0}
+	.newLeg .sub ul li {width: 214px; margin: 0 5px 8px 10px}
+	.newLeg .sub .content ul:last-child {padding: 0}
+
+	.newLeg ul.countryNav li a {width: 214px}
+	.newLeg .newLegFeeds .feeds {width: 228px}
+	.newLeg .tabWrapper .s_6 {width: 475px; border-radius: 3px; margin: 10px 0 0 0}
+	.newLeg .tabWrapper .s_6.p_one.sub {margin: 10px 15px 0 0}
+	.newLeg .tabWrapper .s_12 {margin: 17px 0 0 0}
+	.newLeg .tabWrapper .s_12.p_one {border-top-right-radius: 3px; border-top-left-radius: 3px}
+
+	.newLeg .feedHelp {position: absolute; top: 0; right: 15px; padding: 20px 0}
+	.newLeg a.helpItemToBot {margin: -21px 0 0 -18px; display: block}
+	.newLeg.js .feedHelp .help#feedHelp {margin: -15px 0 0 -17px}
+
+	.newLeg h3#allNew, .newLeg ul.countryNav li, .newLeg .newLegFeeds {margin: 0; padding: 0; border: 0; display: block; font-size: 1em}
+	.newLeg h3#allNew {width: 1250px}
+	.newLeg ul.countryNav {position: absolute; width: auto; margin: -43px 0 0 198px}
+	.newLeg h3#allNew a, .newLeg ul.countryNav li a {display: block; padding: 10px 15px; margin: 0; font-size: 1.25em; text-align: center; border: 1px solid; border-bottom: 0}
+	.newLeg .s_12.p_one.active h3#allNew a, .newLeg ul.countryNav li.active a, .newLeg ul.countryNav li.active a:hover {border: 1px solid}
+	.newLeg h3#allNew a {width: 166px; border-bottom: 1px solid}
+	.newLeg ul.countryNav li a {width: 162px}
+	.newLeg ul.countryNav li a, .newLeg ul.countryNav li.active a, .newLeg ul.countryNav li.active a:hover {border-left: 0}
+
+	.newLeg .newLegFeeds {width: 969px}
+	.newLeg .newLegFeeds .feeds {width: 193px; margin: 0; position: relative; }
+	.newLeg .newLegFeeds .feeds:first-of-type {margin: 0 0 0 197px}
+	.newLeg .newLegFeeds .feeds table {border: 0; width: 244px; margin: -10px 0 0 0; border: 1px solid; border-top: 0}
+	.newLeg .newLegFeeds div.feeds.last table {border-right: 1px solid}
+	.newLeg .newLegFeeds .feeds table tr {vertical-align: top}
+	.newLeg .newLegFeeds .feeds table td {border: 0; padding: 8px 0 5px 0; border-bottom: 1px solid; text-align: center}
+	.newLeg .newLegFeeds .feeds table td a.feed {margin: 0 10px 0 0; z-index: 1}
+	.newLeg .newLegFeeds .feeds table td.publishedNum {padding: 10px 0 0 8px; width: 21px}
+	.newLeg .newLegFeeds .feeds table td:nth-child(2) {height: 50px; padding: 8px 10px 5px 10px}
+	.newLeg .noPublish {font-weight: 300; margin: -2px 0; padding: 15px 0 0 0; text-align: center; border-top: 1px solid}
+
+	.newLeg .furtherInfo {border: 1px solid; margin: -1px 0 0 0; position: relative; width: 944px; padding: 8px 12px 10px 12px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px}
+	.newLeg .furtherInfo h5 {font-size: 1.4em; margin: 0 0 5px 0; padding: 0; border-bottom: 1px solid; line-height: 1.75em}
+	.newLeg .furtherInfo h6 {line-height: 150%; margin: 0}
+	.newLeg .furtherInfo p {line-height: 150%; margin: 0 0 15px 0}
+	.newLeg .furtherInfo p:empty {margin: 0 0 3px 0}
+	.newLeg .furtherInfo p:last-child {margin: 0}
+
+/* changes to legislation */
+	*.s_12 {width: auto}
+	#searchChanges div {width: auto}
+	#searchChanges {border: 0; margin: 20px 0; width: auto; clear: none; float: none}
+	#searchChanges fieldset.s_5 {margin: 0; padding: 15px 0 2px 25px}
+	#searchChanges div, #searchChanges .title label, #searchChanges .typeChoice label, #searchChanges label, #searchChanges .yearChoice, #legChanges .yearChoiceFields {padding: 0}
+	#searchChanges input.radio {width: 16px; height: 16px; margin: 0 5px 0 0}
+	#searchChanges .from {margin: 0; width: auto}
+	#searchChanges fieldset#affect, #searchChanges fieldset#affecting {border-radius: 3px; border: 1px solid; width: 445px; height: 285px}
+	#searchChanges fieldset#affect {margin: 0 26px 0 0}
+	#searchChanges fieldset#affect legend, #searchChanges fieldset#affecting legend {margin: 0 0 5px 0}
+	#searchChanges fieldset#affect > div:not(#changesThatAffectHelp), #searchChanges fieldset#affecting > div:not(#madeByHelp) {margin: 0 0 20px 0}
+	#searchChanges fieldset#affect legend {text-transform: lowercase}
+	#searchChanges fieldset#affect legend:before {content: "See "; text-transform: none}
+	#searchChanges fieldset#affecting legend:before {content: "...and are "}
+	#searchChanges fieldset.p_one, #searchChanges fieldset.p_two {float: none; clear: none; display: inline-block}
+	#searchChanges fieldset#affect:after, #searchChanges fieldset#affecting:after {content: ""; margin: 287px 198px; display: block; position: absolute; width: 0; height: 0; border-style: solid; border-width: 10px 12px}
+	#doc.changeLeg #layout1 #layout2 .help h3 {margin: 0 0 15px 0}
+	#searchChanges fieldset a.helpItem {margin: 7px 22px 0 0; padding: 0; float: right}
+	#searchChanges #changesThatAffectHelp, #searchChanges #madeByHelp {width: 450px !important}
+	#searchChanges #changesThatAffectHelp {margin-left: -500px}
+	#searchChanges #madeByHelp {margin-left: -210px}
+	.js #searchChanges .help {width: 490px}
+	.js #searchChanges .help .close {margin: -5px -5px 0 0 !important; padding: 0 !important}
+	#searchChanges fieldset#affect label, #searchChanges fieldset#affecting label {text-align: left; float: none; margin: 0 0 5px 0}
+	#searchChanges input[type="text"], #searchChanges select {float: none; margin: 0; border: 1px solid; border-radius: 2px}
+	#searchChanges input[type="text"] {padding: 8px}
+	#searchChanges select {padding: 7px}
+	#searchChanges .title input {width: 404px}
+	#searchChanges .typeChoice select{width: 420px}
+	#searchChanges .typeChoice label {width: 165px}
+	#searchChanges div.yearChoice.formGroup {display: inline-block; width: auto; white-space: nowrap}
+	div#affectsSingleYear, div#affectingSingleYear {width: 230px}
+	#searchChanges div.yearChoice.formGroup .from input[type="text"], #searchChanges div.yearChoice.formGroup .from select {margin: 0 10px 0 0}
+	#searchChanges .radio {margin: 2px 5px 0 0}
+	#searchChanges .number, #searchChanges .to {width: auto}
+	#searchChanges fieldset#affect label, #searchChanges fieldset#affecting label {display:block}
+	#searchChanges fieldset#affect .yearChoice .yearChoiceFields label, #searchChanges fieldset#affecting .yearChoice .yearChoiceFields label {font-weight: 300; margin: 2px 0}
+	#searchChanges .yearChoice .yearChoiceFields input {width: 40px}
+	#searchChanges .yearChoice .yearChoiceFields select {width: 70px}
+	#searchChanges .yearChoice input.disabled, #searchChanges .yearChoice select.disabled {border: 1px solid}
+	#doc.changeLeg .s_12 {width: 100%}
+
+	.changeLeg #searchChanges #searchInfo {border: 0; margin: 0 0 10px 0}
+	#searchChanges #searchInfo p {padding: 15px 25px; margin: 5px 0 15px 0; border-radius: 2px; font-size: 1.05em}
+	#searchChanges #effectsOptions {width: auto; display: inline-block; position: relative}
+	#searchChanges fieldset#effectsOptions legend {float: left; font-weight: 500}
+	#searchChanges fieldset#effectsOptions legend:after {content: ":"}
+	#searchChanges fieldset#effectsOptions a.helpItem {margin: 1px 0 0 15px; position: absolute; left: -25px}
+	#searchChanges fieldset#effectsOptions > div {float: left}
+	#searchChanges fieldset#effectsOptions > div label {padding: 0 10px 0 0}
+	#searchChanges #effectsOptions .radio {margin: 1px 5px 0 10px; height: 16px; width: 16px}
+	#searchChanges #legChangesSearchSubmit {position: relative; margin: -6px 10px 0 0; font-size: 1.1em; font-weight: 300; border-radius: 2px; padding: 7px 18px 6px 18px}
+
+	#doc.changeLeg .info {border: 0; padding: 0}
+	#doc.changeLeg .info #pageTitle {border: 0; padding: 16px 0 2px 0; margin: 0}
+	#doc.changeLeg .info h2 {padding: 0 0 8px 0; font-weight: 300}
+	#doc.changeLeg #existingSearch div.interface {margin: 0; padding: 0; border: 0}
+	#doc.changeLeg #newSearch a {margin: 0 0 0 15px; border: 1px solid; height: auto; padding: 8px 15px}
+	#doc.changeLeg #newSearch a:before, #doc.changeLeg #newSearch a:after {display: none}
+	#doc.changeLeg .createNewSearchOpt {margin: 0 0 5px 0; text-align: center}
+
+	#doc.changeLeg .interface {display: table; width: 100%}
+	#doc.changeLeg #content div.interface {border: 0}
+	#doc.changeLeg #content .prevPagesNextNav {padding: 0; float: none; display: table-cell; width: auto}
+	#doc.changeLeg #content ul li {padding: 4px 0}
+	#doc.changeLeg #content .interface ul li {padding: 8px}
+	#doc.changeLeg .results .prevPagesNextNav li {line-height: 2.5em}
+	#doc.changeLeg .resultsInfo {padding: 0 0 0 10px; display: table-cell; float: none; width: auto}
+	#doc.changeLeg .subscribe {padding: 0 10px 3px 0; display: table-cell; width: auto; float: none}
+	#doc.changeLeg .interface .userFunctionalElement {margin: 0}
+	#doc.changeLeg .interface .userFunctionalElement .background {display: block; padding: 0 20px 0 0}
+
+	#doc.changeLeg #content td {vertical-align: top; border: 0; border-top: 1px solid}
+	#doc.changeLeg #content th, #doc.changeLeg #content .headerRow1 td {vertical-align: bottom; border: 0}
+	#doc.changeLeg .results table {border: 0; margin: 15px 0 0 0}
+	#doc.changeLeg #content .headerRow2 th {border-top: 1px solid}
+	#doc.changeLeg #content .headerRow2 th.centralCol {border-top: 1px solid}
+	#doc.changeLeg .sortAsc, #doc.changeLeg .sortDesc {padding: 0; display: inline-block; margin: 0 8px 0 0}
+	#doc.changeLeg .sortAsc:after {content: "\2191"; position: absolute; margin: -2px 0 0 4px}
+	#doc.changeLeg .sortDesc:after {content: "\2193"; position: absolute; margin: -2px 0 0 4px}
+	#doc.changeLeg #content tr td:nth-child(2), #doc.changeLeg  #content tr th:nth-child(2) {min-width: 75px}
+	#doc.changeLeg #content tr.headerRow1 :nth-child(2) {text-align: left}
+	#doc.changeLeg #content tr :nth-child(3) {min-width: 60px}
+	#doc.changeLeg #content tr td:nth-child(4)::first-letter {text-transform: uppercase}
+	#doc.changeLeg #content tr :nth-child(6) {min-width: 75px}
+	#doc.changeLeg #content tr :nth-child(7) {min-width: 60px}
+	#doc.changeLeg #content tr :nth-child(8) {min-width: 55px; text-align: center}
+	#doc.changeLeg p.backToTop {margin: 10px 0 20px 0}
+	#doc.changeLeg th a.helpItem {margin: 0 0 0 9px; position: absolute}
+	#doc.changeLeg th.applied a.helpItem {position: absolute; margin: -19px 0 0 -55px}
+	#doc.changeLeg th a.helpItem, #doc.changeLeg th .help .close {font-weight: 300}
+	#doc.changeLeg #content .sortAsc.active, #doc.changeLeg  #content .sortDesc.active {font-weight: 300}
+	#doc.changeLeg.js .help {margin: 0 0 0 8px}
+	#doc.changeLeg.js .applied .help {margin: -18px 0 0 -65px}
+	#doc #content #newSearch {text-align: right}
+
+	#doc.changeLeg .results td img {clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute}
+	#doc.changeLeg .results .effectsApplied:before {border-color: rgba(10,165,100,1)}
+	#doc.changeLeg .results .effectsApplied:before {display: inline-block; content: ""; border-right: 3px solid; border-top: 3px solid; width: 14px; height: 5px; margin: 0 8px 3px 0; transform: rotate(130deg)}
+	.changeLeg .effectsApplied {float: none; display: block}
+
+/* coronavirus page */
+	#doc.js #content .covid-tabs .anchors {float: none; margin: 0; overflow: auto}
+	#doc.js #content .covid-tabs .anchors li {padding: 0; margin: 0}
+	#doc.js #content .covid-tabs .anchors a {margin: 0}
+	#doc.js #content .covid-tabs .anchors a.active {border: 1px solid; border-left: 0; border-bottom: 0}
+	#doc.js #content .covid-tabs .anchors li:first-child a.active {border: 1px solid; border-bottom: 0}
+	#doc.js #content .covid-tabs .tab {border: 1px solid; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px}
+
+/* contact us page */
+	#doc.js #layout1 .subNavPage .pageContent #content address {margin: 0 !important}
+	#doc.js #layout1 .subNavPage .pageContent #content address + p {margin: 3px 0 !important}
+	#doc.js #layout1 .subNavPage .pageContent #content address + p + p {margin: 3px 0 15px 0 !important}
+	#doc.js #layout1 .subNavPage .pageContent #content address + p span, #doc.js #layout1 .subNavPage .pageContent #content address + p + p span {width: 250px !important}
+
+/* sitemap */
+	#doc.sitemap #content ul {padding: 0 0 0 18px}
+
+/* modal windows */
+	.modWin {border: 0; border-radius: 3px; padding: 20px 25px 25px 25px}
+	.modWin .webWarningTitle {padding: 0}
+	.modWin h3 {display: table-cell; margin: 0; padding: 0 0 0 60px; vertical-align: middle; height: 60px}
+	.modWin h3:before {content: ""; width: 42px; height: 50px; position: absolute; left: 25px; top: 25px}
+	.modWin .content {padding: 5px 0 10px 0}
+	.modWin p {margin: 12px 0}
+	.modWin .interface {border: 0; min-height: auto; padding: 0; width: auto}
+	.modWin li.cancel {float: none; margin: 0}
+	.modWin li.continue {float: none; margin: 0 0 0 10px}
+	.modWin .interface a.userFunctionalElement {padding: 8px 25px}
+
+
+/* backgrounds */
+	#browse #timeline h3 {
+		background: rgba(0,0,0,0.025)}
+	#doc.changeLeg #content td.centralCol {
+		background: rgba(0,0,0,0.03)}
+	#doc.changeLeg #content th.centralCol {
+		background: rgba(0,0,0,0.2)}
+	#coronavirus-banner, #new-design-banner, #footerNav {
+		background: rgba(30,30,30,1)}
+	#primaryNav {
+		background: rgba(45,45,45,1)}
+	.legResources .htabs a.active, .htabs a.active, #doc.js #content .covid-tabs .anchors a.active, .newLeg .s_12.p_one.active h3#allNew a, .newLeg ul.countryNav li.active a, .newLeg ul.countryNav li.active a:hover, #changesOverTime #timeline #timelineData ul li a.euexitday-deal:before, #changesOverTime #timeline #timelineData ul li.currentVersion a.euexitdayoverlay-deal:before, #changesOverTime #timeline #timelineData ul li.currentVersion, .legContent li#legContentLink, .legComplete li#legContentLink, .legEmContent li#legEmLink, .legEmToc li#legEmLink, .legPnContent li#legPnLink, .legPnToc li#legPnLink, .legToc li#legTocLink, .legEnContent li#legEnLink, .legEnToc li#legEnLink, .legResources li#legResourcesLink, .legInForceInfo li#legInForceInfoLink, .legCommencement li#legConmmencementLink, .legIA li#legIALink, .legIAContent li#legIALink, .legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a, #search #ui-datepicker-div .ui-widget-header, .covid-travel table.searchExample .headerRow th, .newLeg ul.days, .newLeg ul.days li a, #tools .userFunctionalElement.active, .currentVersion a:before, #changesOverTime #timeline .currentVersion .pointer-eu {
+		background: rgba(65,65,65,1)}
+	.interface .userFunctionalElement.close {
+		background: rgba(65,65,65,1) !important}
+	#browse #timeline.eu li a, #timeline.eu li.complete a, #timeline li.complete a, #browse #resultsTimeline .key dt:last-of-type {
+		background: rgba(80,80,80,1)}
+	#contentSearch, #doc.changeLeg #content .headerRow1, #doc.changeLeg #content .headerRow2 {
+		background: rgba(100,100,100,1)}
+	#miniPageNavFirst a.disabled:before, #miniPageNavPrev a.disabled:before, #miniPageNavNext a.disabled:before, #miniPageNavLast a.disabled:before {
+		background: rgba(115,115,115,1)}
+	#scrollbar .arrowLeftDisabled, #scrollbar .arrowRightDisabled.arrowLeftEnabled, #scrollbar .arrowRightDisabled {
+		background: rgba(150,150,150,1)}
+	#changesOverTime #timeline #timelineData ul li {
+		background: rgba(220,220,220,1)}
+	#per.home #intro ul#countryLeg, .LegSnippet .LegBlockNotYetInForceHeading span, #statusWarning #statusWarningSubSections .section .title, #statusWarning #statusWarningSubSections .section .future {
+		background: rgba(235,235,235,1)}
+	.LegSnippet p.LegAnnotationsGroupHeading, #searchChanges #searchInfo p, #search #ui-datepicker-div .ui-datepicker-calendar td a {
+		background: rgba(240,240,240,1)}
+	.box .box_aside, #uniqueExtents.expanded, #lex, #browse #timeline .even, #timeline .even li a em, #browse #resultsTimeline .key, div.interface, #browse #tools, #search #tools, #layout2.legToc #tools, #layout2.legPDFonly #tools, #layout2.legContent #tools, #layout2.legComplete #tools, #layout2.legIA #tools, #layout2.legIAContent #tools, body.legContent #navigation, ul#legSubNav li:not(#leg .help .content li), #statusWarning, #statusWarning.uptoDate, .pointInTimeView #statusWarning, #brexitInfo, #infoSection, #infoSection-status, #infoSection-note, #infoDraft, #searchChanges .yearChoice input.disabled, #searchChanges .yearChoice select.disabled, #doc.changeLeg #content tr.oddRow, .newLeg .newLegFeeds .feeds table td, .newLeg h3#allNew a:hover, .newLeg ul.countryNav li a:hover, .newLeg h3#allNew a, .newLeg ul.countryNav li a, ul#legSubNav, #browse.intro .card a, .pageContent #subNav {
+		background: rgba(245,245,245,1)}
+	.cookie-preferences-banner, #search #content tr.oddRow td, #browse #content tr.oddRow td, #search #content #advancedSearch div.searchExtendsTo .LegExtentRestriction, .geoExtShowing .LegExtentRestriction, .LegSnippet .LegExtentRestriction, .geoExtent span, #changesOverTime, .LegSnippet .LegBlockNotYetInForce, #brexitInfo #outstandingRefs p + ul, #statusWarning #statusWarningSubSections p + ul, #search #ui-datepicker-div .ui-datepicker-calendar .ui-datepicker-unselectable.ui-state-disabled {
+		background: rgba(250,250,250,1)}
+	#primaryNav ul li#quickSearch a.expandCollapseLink.close, #contentSearch input, #contentSearch .type select, #search #tools .ui-combobox input, #browse #tools .ui-combobox input, #browse #tools #heading li.legHeading, #search #tools #heading li.legHeading, .interface a.userFunctionalElement, #statusWarning #statusWarningSubSections .content p, #brexitInfo #outstandingRefs p, #statusWarning #statusWarningSubSections .content p:before, #brexitInfo #outstandingRefs .content p:before, .js .covid-tabs .anchors a, .legResources .anchors a, .confers_section.tab, #doc.changeLeg th a.helpItem, .modWin, #searchChanges input[type="text"], #searchChanges select, .confers_section.tab tr.oddRow td, #brexitInfo #outstandingRefs .content, #statusWarning #statusWarningSubSections .section .content, #changesOverTime #timeline #timelineData ul li.pointInTime em:after, #changesOverTime #timeline #timelineData ul li:not(.currentVersion) a:not(.euexitday-deal):before, #tools #advFeatures li:before, #tools a.userFunctionalElement, .legEmToc #legSubNav #legEmLink .helpItem, .legEmContent #legSubNav #legEmLink .helpItem, .legEnToc #legSubNav #legEnLink .helpItem, .legEnContent #legSubNav #legEnLink .helpItem, .legResources #legSubNav #legResourcesLink .helpItem, #advancedSearch .searchType select, #content div .searchCol2 input[type="text"], #content fieldset .searchCol2 input[type="text"], .LegSnippet .ENContents a.userFunctionalElement, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-highlight, #tools #refineSearch form input[type="text"], #tools #refineSearch form input[type="title"], #tools #refineSearch form select, #survey-banner .survey-link, #changesOverTime #timeline .pointer-eu, .LegSnippet .LegBlockNotYetInForce .LegAnnotations {
+		background: rgba(255,255,255,1)}
+	.interface .prev a.userFunctionalElement, .interface .prev a.userFunctionalElement.nav, .interface .toc a.userFunctionalElement, .toc a.userFunctionalElement.nav, .interface .next a.userFunctionalElement, .interface .next a.userFunctionalElement.nav {
+		background: rgba(255,255,255,1) !important}
+	#per.home #intro div ul li {
+		background: rgba(255,255,255,0.15)}
+	a.helpItem, a.helpItemToBot, a.close:not(.toc-link .close, .expandCollapseLink.close), a.closeLink, #miniPageNavFirst a:before, #miniPageNavPrev a:before, #miniPageNavNext a:before, #miniPageNavLast a:before, #search #tools .ui-combobox .ui-button, #browse #tools .ui-combobox .ui-button, #browse #tools #heading li a:hover, #search #tools #heading li a:hover, #browse #tools #subheading a.userFunctionalElement, #search #tools #subheading a.userFunctionalElement, #search #content #advancedSearch .submit button, ul#legSubNav li a.helpItem, #tools .title a.helpItem, ul#legSubNav .help a.close, .uk-effect:before, .eu-effect:before, #searchChanges #legChangesSearchSubmit, #scrollbar .ui-slider .ui-slider-handle, #scrollbar .arrowLeftEnabled, #scrollbar .arrowRightEnabled, #browse.region .p_absTopRight .returnLink a, #browse #timeline.eu li.currentYear a, #timeline.eu li a:hover, #timeline.eu li.currentYear.complete a, #timeline.eu li.complete a:hover, #timeline li.currentYear.complete a, #timeline li.complete a:hover, #timeline li.partial a:hover, .LegSnippet .LegContents a.userFunctionalElement:hover, #search #tools .ui-combobox .ui-button, #browse #tools .ui-combobox .ui-button, #browse #tools #heading li a:hover, #search #tools #heading li a:hover, #browse #tools #heading li.legHeading.active, #search #tools #heading li.legHeading.active, #search .ui-state-hover, #search .ui-widget-content .ui-state-hover, #browse .ui-state-hover, #browse .ui-widget-content .ui-state-hover, #per.home .viewMoreLink a, .LegSnippet .ENContents a.userFunctionalElement:hover, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-hover, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-active, #top.accessibleLinks a:focus, #top.accessibleLinks a:active, #viewLegContents .downloadPdfVersion a.pdfLink, .newLeg ul.days li.current a, .newLeg ul.days li a:hover, #per.home #intro #homeCTA .btn, #survey-banner, .redirectSearch a {
+		background: rgba(5,115,235,1)}
+	#doc.changeLeg .interface .userFunctionalElement.close, .modWin .interface .continue a.userFunctionalElement {
+		background: rgba(5,115,235,1) !important}
+	#cookie-preferences-management .btn, .cookie-preferences-banner .btn {
+		background-color: rgba(5,115,235,1)}
+	#browse #timeline li.partial a, #browse #resultsTimeline .key dt:first-of-type {
+		background: rgba(255,200,70,1)}
+	#search #content #advancedSearch .searchCol3 {
+		background: rgba(100,0,100,1)}
+	#per.home .welcome ul#countryLeg li a#welcome, #per.home .welcomecy ul#countryLeg li a#welcomecy {
+		background: rgba(0,60,95,1)}
+	#per.home .uk ul#countryLeg li a#uk, #per.home .ukcy ul#countryLeg li a#ukcy {
+		background: rgba(160,100,35,1)}
+	#per.home .scotland ul#countryLeg li a#scotland, #per.home .scotlandcy ul#countryLeg li a#scotlandcy {
+		background: rgba(65,0,30,1)}
+	#per.home .wales ul#countryLeg li a#wales, #per.home .walescy ul#countryLeg li a#walescy {
+		background: rgba(13,38,39,1)}
+	#per.home .ni ul#countryLeg li a#ni, #per.home .nicy ul#countryLeg li a#nicy {
+		background: rgba(52,42,60,1)}
+	#per.home .eu ul#countryLeg li a#eu, #per.home .eucy ul#countryLeg li a#eucy {
+		background: rgba(41,41,41,1)}
+	#layout2, #browse #tools #heading li.legHeading.empty, #search #tools #heading li.legHeading.empty, #browse #tools #subheading a.userFunctionalElement.ui-state-disabled, #search #tools #subheading a.userFunctionalElement.ui-state-disabled, #primaryNav ul, #primaryNav ul li, #per.home #primaryNav ul li.link1 a, #doc.understanding #primaryNav ul li.link2 a, #doc.euleg #primaryNav ul li.link3 a, #browse #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, .js #primaryNav li#quickSearch a > span, #contentSearch .submit button.userFunctionalElement, #contentSearch .advSearch a, #footer, .modWin .interface, .modWin .content, .modWin h3, #doc.changeLeg .sortAsc, #doc.changeLeg .sortDesc, #doc.changeLeg #content th, #doc.changeLeg #content .headerRow1 td, #doc.changeLeg #content td, #doc.changeLeg .results, #searchChanges, .newLeg .newLegFeeds .feeds table, .newLeg .newLegFeeds .feeds, #per.newLeg p.backToTop a, #leg.plainView .LegSnippet .LegContents ol, .legResources .printPdf, #leg.resources.js #content .help .content, .js .covid-tabs .anchors, .legResources .anchors, .uk-effect, .eu-effect, #statusWarning #statusWarningSubSections ul li.uk-effect, #statusWarning #statusWarningSubSections ul li.eu-effect, .LegSnippet .LegBlockNotYetInForce *, .LegSnippet .LegBlockNotYetInForce .LegCommentaryItem, #scrollbar, #changesOverTime #timeline #timelineData ul li a.euexitdayoverlay-deal:after, #changesOverTime #timeline #timelineData ul li a.euexitday-deal:after, #changesOverTime #timeline #timelineData ul li.pointInTime, #changesOverTime #timeline span.end, #changesOverTime #timeline #timelineData ul, .legToc .LegSnippet .LegContents ol, #leg #content p.backToTop a, #leg #content p.backToTop, .contentFooter, .interface .prevNextNav span.userFunctionalElement.disabled, .interface .userFunctionalElement .background, #browse .contentFooter .interface, #search .contentFooter .interface, #doc .contentFooter .interface, #content .contentFooter .interface, ul#legSubNav, #tools #advFeatures li a.userFunctionalElement, #tools #advFeatures li span.userFunctionalElement, a.expandCollapseLink, #tools .toolList .userFunctionalElement .background, #tools .toolList span.active .background, #tools .toolList span.disabled .background, #tools .userFunctionalElement.disabled, .interface .view a.userFunctionalElement, .interface span.userFunctionalElement, #breadCrumb ul li, ul#legSubNav li:not(#leg .help .content li), #search #content #advancedSearch .numberSearch select, #cookie-preferences-management .btn.show-hide, #doc #subNav p.backToTop, #browse.region .p_absTopRight .returnLink, #browse.region .p_absTopRight, #browse.region ul.legTypes li a, #search #tools ul li.returnLink a, #browse #tools ul li.returnLink a, #browse #scrollbar .ui-widget-content, #browse #resultsTimeline, #browse #resultsTimeline #scrollbar, #search p.backToTop a, #browse p.backToTop a, #doc p.backToTop a, #search p.backToTop, #browse p.backToTop, #doc p.backToTop, #search #content .sortAsc, #search #content .sortDesc, #browse #content .sortAsc, #browse #content .sortDesc, .prevPagesNextNav li.pageLink, .prevPagesNextNav li.lastPageLink, .box .box_main, #search .info, #browse .info, #ui-datepicker-div .ui-icon-circle-triangle-w, #ui-datepicker-div .ui-icon-circle-triangle-e, .ui-datepicker-prev.ui-corner-all, .ui-datepicker-next.ui-corner-all, #new-design-banner button {
+		background: none}
+	.js .help .icon, .legEmToc .interface .toc .userFunctionalElement.disabled, .legEnToc .interface .toc .userFunctionalElement.disabled, .legEmToc .interface .userFunctionalElement.active, .legEnToc .interface .userFunctionalElement.active, .interface #wholeNav .userFunctionalElement.active, #per.home #intro #animContent {
+		background: none !important}
+	.geoExtShowing .LegExtentRestriction:before, .LegSnippet .LegExtentRestriction:before {
+		background: rgba(100,0,100,0.5); background: linear-gradient(270deg, rgba(102,0,102,0.5) 0%, rgba(102,0,102,0.2) 85%)}
+
+	#layout1 a.pdfLink {
+		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -1317px}
+	#layout1 a.htmLink {
+		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -1438px}
+	#layout1 #tools #pdfVersionsContent a.pdfLink {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0px -1320px}
+	#changesOverTime #timeline #timelineData ul li a:after {
+	    background: url("/static/lgu1/images/timeline-point.png") no-repeat 5px 1px}
+	#changesOverTime #timeline #timelineData ul li.currentVersion a:after {
+	    background: url("/static/lgu1/images/timeline-point-active.png") no-repeat 5px 1px}
+	#changesOverTime #timeline #timelineData ul li.currentVersion a.euexitday-deal:after, #changesOverTime #timeline #timelineData ul li.currentVersion a.euexitdayoverlay-deal:after {
+	    background: none}
+	#doc.changeLeg .interface .userFunctionalElement .background {
+		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat 100% -4547px}
+	.modWin h3:before {
+		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat -4px -1954px}
+	#footer .copyrightstatement:before {
+		background: url("/static/lgu1/images/ogl.png") no-repeat 0 0; background-size: 53%}
+	#per.home .welcome ul#countryLeg li a#welcome, #per.home .welcomecy ul#countryLeg li a#welcomecy, #per.home .uk ul#countryLeg li a#uk, #per.home .ukcy ul#countryLeg li a#ukcy, #per.home .scotland ul#countryLeg li a#scotland, #per.home .scotlandcy ul#countryLeg li a#scotlandcy, #per.home .wales ul#countryLeg li a#wales, #per.home .walescy ul#countryLeg li a#walescy, #per.home .ni ul#countryLeg li a#ni, #per.home .nicy ul#countryLeg li a#nicy, #per.home .eu ul#countryLeg li a#eu, #per.home .eucy ul#countryLeg li a#eucy {
+		background-image: none}
+
+/* colours */
+	a, a:link, a:visited, a:not(a.redirectSearch, a.close, a.closeLink, a.set-individual-cookies, .legResources .htabs a.active, .newLeg ul.days li a, .newLeg ul.days li.current a, .newLeg ul.countryNav li.active a):any-link:visited, .LegSnippet .LegContents li a:visited, .LegSnippet .LegContents li a, #leg #content p.backToTop a, .LegSnippet .LegContents a.userFunctionalElement, .LegSnippet .LegContents li a:active, ul#secondaryNav li a.langaugeSwitch, #cookie-preferences-management .btn.show-hide, #tools .toolList .userFunctionalElement, #tools .toolList .userFunctionalElement .background, #openingOptions .content a:not(.close), #tools a:not(.helpItem, .close), #pdfVersionsContent .viewMoreLink:after, #per.newLeg p.backToTop a, .newLeg h3#allNew a:hover, .newLeg ul.countryNav li a:hover, .LegSnippet .LegCommentaryLink, #changesOverTime #timeline #timelineData ul li a, #tools #advFeatures li a.userFunctionalElement, ul.optionList ul li a, .interface .view a.userFunctionalElement, #layout2 #tools #links a, #layout2 #tools .legType a, #layout2 #tools .legYear a, #search #content a:not(.helpItem, .close), #browse #content a:not(.helpItem, .close), #search #tools ul li.returnLink a, #browse #tools ul li.returnLink a, #search p.backToTop a, #browse p.backToTop a, #doc p.backToTop a, #search #content .sortDesc:hover, #search #content a.active:hover, #search #content a.sortAsc, #browse #content .sortDesc:hover, #browse #content a.active:hover, #browse #content a.sortAsc, .prevPagesNextNav li.pageLink a, #search .ui-widget-content a, #browse .ui-widget-content a, .LegSnippet .ENContents a.userFunctionalElement, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-highlight, .htabs a:hover, #survey-banner .survey-link {
+		color: rgba(10,100,215,1)}
+	body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, table, #doc h2, #doc legend, #infoSection h2, #infoSection-status h2, #infoSection-note h2, #infoDraft h2, #changesOverTime #timeline #timelineData ul li.currentVersion a, #statusWarning h2, #statusWarning.uptoDate h2, #brexitInfo h2, div.contentItem, address, #tools .section .title h2, #tools .section .title h3, #primaryNav ul li#quickSearch a.expandCollapseLink.close, #per.home #intro ul#countryLeg li a, #search #tools h3, #browse #tools h3, #search #tools h4, #browse #tools h4, .section .title:not(#tools .section .title, #statusWarningSubSections .section .title), #search .info h2, #browse .info h2, #search #content .active, #browse #content .active, #browse #timeline h3 a, #browse #timeline h3, #browse #timeline li.partial a strong, #search #tools .content span.disabled, #browse #tools .content span.disabled, #doc.js #content .covid-tabs .anchors li:first-child a.active, #doc.js #content .covid-tabs .anchors a.active, .LegSnippet p, #changesOverTime #timeline .pointer-eu, #changesOverTime #timeline #timelineData ul li:not(.currentVersion) a.euexitdayoverlay-deal:before, #contentSearch select {
+		color: rgba(30,30,30,1)}
+	#browse #tools #heading li.legHeading.empty, #search #tools #heading li.legHeading.empty, #doc.changeLeg th a.helpItem, #breadCrumb ul li, #breadCrumb ul li a, .legEmToc #legSubNav #legEmLink .helpItem, .legEmContent #legSubNav #legEmLink .helpItem, .legEnToc #legSubNav #legEnLink .helpItem, .legEnContent #legSubNav #legEnLink .helpItem, .legResources #legSubNav #legResourcesLink .helpItem {
+		color: rgba(65,65,65,1)}
+	#browse #tools #subheading a.userFunctionalElement.ui-state-disabled, #search #tools #subheading a.userFunctionalElement.ui-state-disabled {
+		color: rgba(65,65,65,1) !important}
+	#searchChanges .yearChoice input.disabled, #searchChanges .yearChoice select.disabled, .interface .prevNextNav span.userFunctionalElement.disabled, .interface span.userFunctionalElement, #tools .toolList span.disabled .background, .newLeg .noPublish {
+		color: rgba(110,110,110,1)}
+	#tools #advFeatures li span.userFunctionalElement {
+		color: rgba(113,112,113,1)}
+	#tools #advFeatures li span.close:before {
+		color: rgba(140,140,140,1)}
+	#tools #refineSearch form input[type="text"]:disabled, [disabled] {
+		color: rgba(120,118,120,1)}
+	#footer, #footer div p, #footer div p a, #new-design-banner .content * {
+		color: rgba(245,245,245,1)}
+	a.btn.set-individual-cookies, #per.home #primaryNav ul li.link1 a, #doc.understanding #primaryNav ul li.link2 a, #doc.euleg #primaryNav ul li.link3 a, #browse #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, #primaryNav ul li a, #contentSearch, #contentSearch .submit button.userFunctionalElement, #contentSearch .advSearch a, #footerNav ul a, a.helpItem, a.helpItemToBot, a.close, a.closeLink, #doc.changeLeg #content .headerRow1, #doc.changeLeg #content .headerRow2, .legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a, #per.home .viewMoreLink a, #browse.region #content .returnLink a, .interface .userFunctionalElement.close, #doc.changeLeg th a, #tools .toolList span.active .background, #scrollbar .arrowLeftEnabled:after, #scrollbar .arrowLeftDisabled:after, #scrollbar .arrowRightDisabled:after, #scrollbar .arrowRightEnabled:after, #scrollbar .ui-slider .ui-slider-handle:before, #scrollbar .ui-slider .ui-slider-handle:after, .legResources .htabs a.active, .htabs a.active, .newLeg ul.days li.current a, .newLeg .s_12.p_one.active h3#allNew a, .newLeg ul.countryNav li.active a, .newLeg ul.countryNav li.active a:hover, #miniPageNavFirst a:before, #miniPageNavPrev a:before, #miniPageNavNext a:before, #miniPageNavLast a:before, #browse.region .p_absTopRight .returnLink a, ul#legSubNav li a.helpItem, #openingOptions .content a.close, ul#legSubNav .help a.close, .uk-effect:before, .eu-effect:before, #doc.js #content .covid-tabs .anchors a.active, #doc.js #content .covid-tabs .anchors li:first-child a.active, #coronavirus-banner, #search .ui-state-hover, #search .ui-widget-content .ui-state-hover, #browse .ui-state-hover, #browse .ui-widget-content .ui-state-hover, #search #ui-datepicker-div .ui-widget-header, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-hover, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-active, #top.accessibleLinks a:focus, #top.accessibleLinks a:active, #viewLegContents .downloadPdfVersion a.pdfLink, .newLeg ul.days li a, #survey-banner .banner-close .accessibleText, #changesOverTime #timeline .currentVersion .pointer-eu, .redirectSearch a {
+		color: rgba(255,255,255,1)}
+	#browse #tools #heading li a:hover, #search #tools #heading li a:hover, #browse #tools #subheading a.userFunctionalElement, #search #tools #subheading a.userFunctionalElement, #survey-banner .content, .modWin .interface .continue a.userFunctionalElement {
+		color: rgba(255,255,255,1) !important}
+	#search #content #advancedSearch div.searchExtendsTo .LegExtentRestriction, .geoExtShowing .LegExtentRestriction, .LegSnippet .LegExtentRestriction, .geoExtent strong {
+		color: rgba(100,0,100,1)}
+	.newLeg .warning, #changesOverTime p.warning {
+		color: rgba(230,0,90,1)}
+	.legEmToc .interface .toc .userFunctionalElement.disabled, .legEnToc .interface .toc .userFunctionalElement.disabled, .legEmToc .interface .userFunctionalElement.active, .legEnToc .interface .userFunctionalElement.active, .interface #wholeNav .userFunctionalElement.active, #doc.js #content .covid-tabs .anchors a, .modWin h3, .newLeg .introWrapper h2, .LegSnippet .LegBlockNotYetInForceHeading span, .modWin p, .markdown-page h2, .newLeg .warning a, .legEnContent .markdown-page h3.HSubheading3 {
+		color: inherit}
+	#survey-banner .banner-close {
+		color: rgba(5,115,235,0)}
+
+/* borders */
+	#browse #timeline, #browse #resultsTimeline .explanation, .newLeg .furtherInfo {
+		border-color: rgba(30,30,30,1)}
+	#doc.changeLeg #content .headerRow2 th.centralCol, .legToc ul#legSubNav li#legTocLink, .legContent li#legContentLink, .legComplete li#legContentLink, .legEmContent li#legEmLink, .legEmToc li#legEmLink, .legPnContent li#legPnLink, .legPnToc li#legPnLink, .legToc li#legTocLink, .legEnContent li#legEnLink, .legEnToc li#legEnLink, .legResources li#legResourcesLink, .legInForceInfo li#legInForceInfoLink, .legCommencement li#legConmmencementLink, .legIA li#legIALink, .legIAContent li#legIALink, .legResources .anchors, .legResources .htabs a.active, .htabs a.active, .newLeg .s_12.p_one.active h3#allNew a, .newLeg ul.countryNav li.active a, .newLeg ul.countryNav li.active a:hover, #search #ui-datepicker-div, .js .covid-tabs .anchors a, .legResources .anchors a, .htabs a, .confers_section.tab, .js .covid-tabs .anchors li:first-child a, .legResources .anchors li:first-child a:not(.active), .js .covid-tabs .tab, .js .confers_section, .covid-travel table.searchExample, .newLeg h3#allNew a, .newLeg ul.days, .newLeg ul.countryNav li a, .newLeg .noPublish, .newLeg .newLegFeeds .feeds table, .newLeg .newLegFeeds .feeds table td, #changesOverTime #timeline #timelineData ul li.currentVersion a:before {
+		border-color: rgba(65,65,65,1)}
+	#doc.changeLeg #content .headerRow2 th, #browse #timeline li.partial a, #browse #resultsTimeline .key, #browse #resultsTimeline .key dt:first-of-type, #browse.intro .card {
+		border-color: rgba(80,80,80,1)}
+	#browse #scrollbar:before {
+		border-color: rgba(100,100,100,1)}
+	.help .content:not(#leg.resources .innerContent .help .content), #breadCrumb ul li:before, .js .interfaceOptions, #changesOverTime #timeline #timelineData ul li.pointInTime em:after, .content ul:not(.cookie-preferences-banner ul), .content ol  {
+		border-color: rgba(120,120,120,1)}
+	.natArch + #secondaryNav li:before, .natArchWelsh + #secondaryNav li:after, #tools .userFunctionalElement.disabled, .interface .prevNextNav span.userFunctionalElement.disabled {
+		border-color: rgba(135,135,135,1)}
+	#browse #tools #heading li.legHeading.empty, #search #tools #heading li.legHeading.empty, #browse #tools #subheading a.userFunctionalElement.ui-state-disabled, #search #tools #subheading a.userFunctionalElement.ui-state-disabled, #tools #refineSearch form input[type="text"]:disabled, #tools #advFeatures li:has(span.close):before {
+		border-color: rgba(140,140,140,1)}
+	#primaryNav ul li, #searchChanges .yearChoice input.disabled, #searchChanges .yearChoice select.disabled {
+		border-color: rgba(145,145,145,1)}
+	#content div .searchCol2 input[type="text"]:disabled, #content fieldset .searchCol2 input[type="text"]:disabled {
+		border-color: rgba(150,148,150,1)}
+	#leg.resources.js #content .confers_title .help, .legResources .printPdf h3, .legResources .allChanges h3, #uniqueExtents.expanded, #lex {
+		border-color: rgba(205,205,205,1)}
+	ul#legSubNav li:not(#leg .help .content li), .newLeg .warning, #browse #tools .section , #search #tools .section, #search.intro #pageTitle, #per.newLeg #pageTitle, #doc .info #pageTitle, #search #content #advancedSearch .searchFieldCategory, ul#legSubNav li:first-child:not(#leg .help .content li), ul#legSubNav li:not(#leg .help .content li), #search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfYears.formGroup:nth-child(2), #search #content #advancedSearch div.searchExtendsTo .searchFieldGroup .searchExtendsToInput .opt1, #search #content #advancedSearch p:not(.help p), #tools .section, #browse .contentFooter .interface, #search .contentFooter .interface, #doc .contentFooter .interface, #content .contentFooter .interface, #changesOverTime #timeline #timelineData ul li .euexitday-deal .content, #changesOverTime #timeline #timelineData ul li .euexitdayoverlay-deal .content, .plainView #layout1 #header, .newLeg .furtherInfo h5, #tools #refineSearch .group:not(.searchYear), #tools #refineSearch .group + .group + p {
+		border-color: rgba(220,220,220,1)}
+	.LegSnippet .LegAnnotations, #brexitInfo #outstandingRefs .title, #statusWarning #statusWarningSubSections .section .title, #browse.region ul.legTypes li, .newLeg .sub, #doc .pageContent .sectionNav li, #subNav .resources li {
+		border-color: rgba(230,230,230,1)}
+	#search #content td, #browse #content td, #search #content td[rowspan]:nth-child(2), #browse #content td[rowspan]:nth-child(2), .interface, #doc.changeLeg #content td {
+		border-color: rgba(235,235,235,1)}
+	#browse #timeline .even li.partial a em, #new-design-banner button {
+		border-color: rgba(245,245,245,1)}
+	#header .english, #header .welsh, #primaryNav ul li#quickSearch a, #contentSearch .submit button.userFunctionalElement, #footer, #per.home #intro ul#countryLeg li a, #browse #timeline li.partial a em, #tools .userFunctionalElement.active:before, #scrollbar .ui-slider .ui-slider-handle:before, #scrollbar .ui-slider .ui-slider-handle:after, #scrollbar .arrowLeftEnabled:after, #scrollbar .arrowLeftDisabled:after, #scrollbar .arrowRightDisabled:after, #scrollbar .arrowRightEnabled:after, #search #ui-datepicker-div .ui-datepicker-calendar td, #survey-banner .banner-close .accessibleText {
+		border-color: rgba(255,255,255,1)}
+	#browse #tools #heading li.legHeading, #search #tools #heading li.legHeading, .interface a.userFunctionalElement, #tools a.userFunctionalElement, .interface .prev a.userFunctionalElement, .interface .prev a.userFunctionalElement.nav, .interface .toc a.userFunctionalElement, .toc a.userFunctionalElement.nav, .interface .next a.userFunctionalElement, .interface .next a.userFunctionalElement.nav, #searchChanges input[type="text"], #searchChanges select, #doc.changeLeg #newSearch a, #search #content #advancedSearch .numberSearch select, #advancedSearch .searchType select, #content div .searchCol2 input[type="text"], #content fieldset .searchCol2 input[type="text"], #changesOverTime #timeline #timelineData ul li a:before, .legToc .LegSnippet .LegContents ol:before, .LegSnippet .LegContents a.userFunctionalElement:hover, #search #tools .ui-combobox input, #browse #tools .ui-combobox input, #tools #advFeatures li a.close:before, #tools #advFeatures li:before, .LegSnippet .LegContents a.userFunctionalElement, .LegSnippet .ENContents a.userFunctionalElement, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-highlight, #tools #refineSearch form input[type="text"], #tools #refineSearch form input[type="title"], #tools #refineSearch form select {
+		border-color: rgba(5,115,235,1)}
+	.viewMoreLink:after {
+		border-color: rgba(10,100,215,1)}
+	#statusWarning, #statusWarning #statusWarningSubSections .section {
+		border-color: rgba(240,0,100,1)}
+	#statusWarning.uptoDate {
+		border-color: rgba(0,200,50,1)}
+	#statusWarning.EU-black-border {
+		border-color: rgba(30,30,30,1) !important}
+	.pointInTimeView #statusWarning, #brexitInfo, #brexitInfo #outstandingRefs {
+		border-color: rgba(255,200,0,1)}
+	#infoSection, #infoSection-status, #infoSection-note {
+		border-color: rgba(30,30,190,1)}
+	#infoSection.EU {
+		border-color: rgba(30,30,30,1) !important}
+	#infoDraft {
+		border-color: rgba(255,153,0,1)}
+	#search #content #advancedSearch div.searchExtendsTo .LegExtentRestriction, .geoExtShowing .LegExtentRestriction, .LegSnippet .LegExtentRestriction, .geoExtent span {
+		border-color: rgba(100,0,100,1)}
+	#doc.changeLeg .results tr:not(.headerRow1, .headerRow2) td:nth-child(8):not(:empty):before {
+		border-color: rgba(10,165,100,1)}
+	#browse.intro #uk.card {
+		border-color: rgba(255,200,75,1)}
+	#browse.intro #scotland.card {
+		border-color: rgba(200,0,100,1)}
+	#browse.intro #wales.card {
+		border-color: rgba(0,150,125,1)}
+	#browse.intro #ni.card {
+		border-color: rgba(145,115,200,1)}
+	#browse.intro #eu.card {
+		border-color: rgba(100,100,100,1)}
+
+	#primaryNav ul li#quickSearch a.expandCollapseLink.close, #browse #resultsTimeline .key dt:last-of-type, #browse #tools #subheading a.userFunctionalElement, #search #tools #subheading a.userFunctionalElement, #search .ui-state-hover, #search .ui-widget-content .ui-state-hover, #browse .ui-state-hover, #browse .ui-widget-content .ui-state-hover, #search #content #advancedSearch .typeCheckBoxDoubleCol, .interface .view a.userFunctionalElement, #tools .userFunctionalElement.active, #leg.resources ul#legSubNav #legResourcesLink, #search #ui-datepicker-div .ui-datepicker-calendar td a, .ui-datepicker-prev.ui-corner-all, .ui-datepicker-next.ui-corner-all, .legResources .anchors li:first-child a.active, #doc.js #content .covid-tabs .anchors li:first-child a.active, #doc.js #content .covid-tabs .anchors a.active, #tools {
+		border-color: transparent}
+
+	ul#legSubNav {
+		border-top-color: rgba(240,240,240,1)}
+	ul#legSubNav, .newLeg ul.days {
+		border-bottom-color: rgba(65,65,65,1)}
+	#browse #timeline li.partial a em, #browse #timeline .even li.partial a em {
+		border-bottom-color: rgba(80,80,80,1)}
+
+	#content a.expandCollapseLink:before {
+		border-color: transparent transparent rgba(20,20,20,1) transparent}
+	#primaryNav a.expandCollapseLink.close:before {
+		border-color: transparent transparent rgba(30,30,30,1) transparent}
+	.legContent li#legContentLink a:after, .legComplete li#legContentLink a:after, .legToc li#legTocLink a:after, .legEmContent li#legEmLink a:after, .legEmToc li#legEmLink a:after, .legEnContent li#legEnLink a:after, .legEnToc li#legEnLink a:after, .legPnContent li#legPnLink a:after, .legPnToc li#legPnLink a:after, .legResources li#legResourcesLink a:after, .legInForceInfo li#legInForceInfoLink a:after, .legCommencement li#legConmmencementLink a:after, .legIA li#legIALink a:after, .legIAContent li#legIALink a:after, #searchChanges fieldset#affect:after, #searchChanges fieldset#affecting:after, .interface a.userFunctionalElement.close:after {
+		border-color: rgba(65,65,65,1) transparent transparent transparent}
+	a.expandCollapseLink:before {
+		border-color: transparent transparent rgba(65,65,65,1) transparent}
+	#changesOverTime #timeline .currentVersion span.end:before {
+		border-color: transparent transparent transparent rgba(65,65,65,1)}
+	.interface .prev span.userFunctionalElement.disabled .background:before {
+		border-color: transparent rgba(105,105,105,1) transparent transparent}
+	.interface .next span.userFunctionalElement.disabled .background:after {
+		border-color: transparent transparent transparent rgba(105,105,105,1)}
+	.js .help.helpToRightMid .icon:before, .js .help.helpToRightTop .icon:before, .js .help.helpToMidTop .icon:before, .js .help.helpToLeftMid .icon:before {
+		border-color: transparent rgba(120,120,120,1) transparent transparent}
+	.js .help.helpToMidTop .icon:before {
+		border-color: transparent transparent rgba(120,120,120,1) transparent}
+	.js .help.helpToLeftMid .icon:before {
+		border-color: transparent transparent transparent rgba(120,120,120,1)}
+	#leg.toc .legEmToc .interface .prev .userFunctionalElement.disabled:before, #leg.toc .legEmContent .interface .prev .userFunctionalElement.disabled:before, #leg.toc .legEnToc .interface .prev .userFunctionalElement.disabled:before, #leg.toc .legEnContent .interface .prev .userFunctionalElement.disabled:before {
+		border-color: transparent rgba(135,135,135,1) transparent transparent}
+	#leg.toc .legEmToc .interface .next .userFunctionalElement.disabled:after, #leg.toc .legEmContent .interface .next .userFunctionalElement.disabled:after, #leg.toc .legEnToc .interface .next .userFunctionalElement.disabled:after, #leg.toc .legEnContent .interface .next .userFunctionalElement.disabled:after {
+		border-color: transparent transparent transparent rgba(135,135,135,1)}
+	#changesOverTime #timeline .end:before {
+		border-color: transparent transparent transparent rgba(220,220,220,1)}
+	#search #tools .ui-combobox .ui-button:after, #browse #tools .ui-combobox .ui-button:after {
+		border-color: rgba(255,255,255,1) transparent transparent transparent}
+	#doc.changeLeg th .icon:before, .ui-datepicker-prev:before {
+		border-color: transparent rgba(255,255,255,1) transparent transparent}
+	#primaryNav a.expandCollapseLink:before {
+		border-color: transparent transparent rgba(255,255,255,1) transparent}
+	#per.home #intro div ul li a:after, #doc.changeLeg th.applied .icon:before, .ui-datepicker-next:before {
+		border-color: transparent transparent transparent rgba(255,255,255,1)}
+	.newLeg ul.days li.current a:after {
+		border-color: rgba(5,115,235,1) transparent transparent transparent}
+	#leg.toc .legEmToc .interface .prev .userFunctionalElement:before, #leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .prev .userFunctionalElement:before, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .prev .userFunctionalElement:before, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .prev .userFunctionalElement:before, #leg.toc .legEnContent .interface .next .userFunctionalElement:after, .interface .prev .userFunctionalElement .background:before, .interface .next .userFunctionalElement .background:before {
+		border-color: transparent rgba(5,115,235,1) transparent transparent}
+	#cookie-preferences-management .btn.show-hide:before, #leg #content p.backToTop a:before, #search p.backToTop a:before, #browse p.backToTop a:before, #doc p.backToTop a:before, #per.newLeg p.backToTop a:before, #leg .markdown-page p.backToTop a:before {
+		border-color: transparent transparent rgba(5,115,235,1) transparent}
+	#leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .next .userFunctionalElement:after, .interface .next .userFunctionalElement .background:before {
+		border-color: transparent transparent transparent rgba(5,115,235,1)}
+
+/* box shadows */
+	#leg #content:before {
+		-webkit-box-shadow: rgba(1,1,1,0.075) 0 6px 6px -2px; -moz-box-shadow: rgba(1,1,1,0.075) 0 6px 6px -2px; box-shadow: rgba(1,1,1,0.075) 0 6px 6px -2px}
+	#statusWarning #statusWarningSubSections .content p:after, #brexitInfo #outstandingRefs .content p:after, .help .content:not(#leg.resources .innerContent .help .content), .js .interfaceOptions {
+		-webkit-box-shadow: rgba(1,1,1,0.3) 0 1px 6px -1px; -moz-box-shadow: rgba(1,1,1,0.3) 0 1px 6px -1px; box-shadow: rgba(1,1,1,0.3) 0 1px 6px -1px}
+	#doc #subNav p.backToTop {
+		-webkit-box-shadow: unset; -moz-box-shadow: unset; box-shadow: unset}
+	#top.accessibleLinks a:focus, #top.accessibleLinks a:active {
+    	-webkit-box-shadow: rgba(1,1,1,0.5) 0 0 10px -1px; -moz-box-shadow: rgba(1,1,1,0.5) 0 0 10px -1px; box-shadow: rgba(1,1,1,0.5) 0 0 10px -1px}
+
+
+
+/* TNA Visible Search */
+	#per.home #background {position: absolute; display: block; width: 100%; height: 300px}
+	#header {height: 115px}
+	#contentSearch {position: absolute; z-index: 0; display: block !important; overflow: visible; margin: -70px 0; padding: 0; background: none; border-radius: 0}
+	#quickSearch {display: none}
+	#primaryNav {float: none; height: 80px}
+	#primaryNav div.navLayout {margin: 0 auto}
+	#primaryNav div.navLayout ul {position: absolute; margin: -35px 0 0 0}
+	#per.home #primaryNav ul li.link1 a, #doc.understanding #primaryNav ul li.link2 a, #doc.euleg #primaryNav ul li.link3 a, #browse #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, #primaryNav ul li a {padding: 0 12px 0 10px; line-height: 1.4em}
+	#primaryNav ul li {padding: 0; border-left: 1px solid}
+	#primaryNav ul li:first-child {padding: 0; border: 0}
+	#per.home  #primaryNav ul li:first-child a {padding: 0 12px 0 0}
+	#primaryNav ul li a:hover {text-decoration: underline}
+	ul#secondaryNav {position: relative; z-index: 2; margin: 84px 0 0 0; width: 140px; font-size: 1.15em}
+	ul#secondaryNav li {line-height: 1em}
+	#contentSearch .submit button.userFunctionalElement {padding: 7px 18px 6px 18px; border: 0}
+	#per.home #intro {margin: 20px auto 40px auto; width: 968px}
+	#per.home #intro ul#countryLeg li a {border-right: 1px solid}
+	#per.home #intro ul#countryLeg li:last-child a {border: 0}
+
+/* backgrounds */
+	#primaryNav {
+		background: rgba(45,45,45,1)}
+	#contentSearch .submit button.userFunctionalElement {
+		background: rgba(5,115,235,1)}
+	#per.home #background {
+		background: rgba(245,245,245,1)}
+
+/* colours */
+	#per.home #primaryNav ul li.link1 a, #doc.understanding #primaryNav ul li.link2 a, #doc.euleg #primaryNav ul li.link3 a, #browse #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, #primaryNav ul li a {
+		color: rgba(30,30,30,1)}
+	#contentSearch .submit button.userFunctionalElement {
+		color: rgba(255,255,255,1)}
+
+/* borders */
+	#primaryNav ul li {
+		border-color: rgba(145,145,145,1)}
+	#per.home #intro ul#countryLeg li a {
+		border-color: rgba(245,245,245,1)}
+
+
+
+
+/* TNA Wider Page */
+	.cookie-preferences-banner .content, #coronavirus-banner .bannercontent, #header, #primaryNav div.navLayout, #layout2, #footerNav ul, #footer, #browse.intro .card_list, #doc #subNav p.backToTop, #per.home #intro #animContent, #per.home #intro #animContent div, #per.home #intro, #per.home #intro ul#countryLeg, .legResources .s_12, #browse #scrollbar, #layout2.legResources #content, #layout2.legEmContent #content, #layout2.legEmToc #content, #layout2.legEnContent #content, #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content, #leg #content:before, .newLeg .newLegFeeds {width: 1250px}
+	#coronavirus-banner .main {width: 431px}
+	#coronavirus-banner .main-cy {width: 265px}
+	#coronavirus-banner .legislation, #coronavirus-banner .extents {height: auto}
+	#coronavirus-banner .legislation-cy {padding: 0.3em 1em; margin: 0.5em}
+	#coronavirus-banner .extents-cy {padding: 0.3em 1em; margin: 0.5em 0 0.5em 0.5em; height: auto; width: 530px}
+	#coronavirus-banner .extents-cy br:nth-child(3), #coronavirus-banner .extents-cy br:nth-child(4) {display: none}
+	#coronavirus-banner .extents-cy strong:last-child {margin: 0 0 0 5px}
+	#contentSearch div.title, #contentSearch div.title.titlecy, #contentSearch div.year, #contentSearch .year.cy, #contentSearch div.number{margin: 0 8px 0 0}
+	#contentSearch .title input {width: 360px}
+	#contentSearch .titleCy.cy {width: 320px}
+	#contentSearch .type select {margin: 0 16px 0 0; width: 375px}
+	#contentSearch .typeCy select {width: 425px}
+	#contentSearch .year input {width: 45px}
+	#contentSearch .advSearch {margin: -26px 0; float: right; position: relative; width: 130px}
+	#footer {margin: -70px auto}
+	#footerNav {height: 105px}
+
+	.home .box .box_main {width: 900px}
+	.home .box .box_aside {width: 380px}
+
+	#browse.intro .card {width: 233px; min-height: 180px}
+	#browse.intro .card .header.rule {padding: 0; border: 0}
+	#browse.intro .card p.content {margin: 8px 0 0 0}
+
+	#browse.region .p_one.s_8 {width: 940px}
+	#browse.region .legCol.s_4 {width: 425px; margin: 0 30px 0 0}
+	#browse.euregion #content p {width: 935px}
+
+	#doc .pageContent .sectionNav li {padding: 13px 15px 11px 15px}
+	#doc .subNavPage .pageContent #pageTitle {margin: 0 0 10px 0; padding: 18px 0 12px 0}
+	#doc .subNavPage #content {padding: 0 0 40px 0}
+	#error h2, #doc h2, #error h3, #doc h3 {margin: 1em 0 0.25em 0}
+	#error h3, #doc h3 {font-size: 1.1em}
+	#error #title + #content h2, #doc #title + #content h2 {margin: 0.75em 0 0.25em 0}
+	#error h2 + h3, #doc h2 + h3 {margin: 0 0 0.25em 0}
+
+	*.s_3, .pageContent #subNav {width: 275px; margin: 0 25px 0 0}
+	#doc .s_9 {width: unset; flex-grow: 1}
+
+	#per.home #background {height: 300px}
+	#per.home #layout1 #animContent {height: 214px}
+	#per.home #intro div ul {bottom: 15px}
+	#per.home #intro div.scotland ul {bottom: 10px}
+	#per.home #intro div.ni ul {bottom: 7px}
+	#per.home #intro #homeCTA {top: 19px; right: 19px}
+	#per.home #intro #layout1.js #animContent, #per.home #intro #animContent, #per.home #intro #animContent div {border: 0}
+
+	#per.home #intro #animContent h2 {width: 44px}
+	#per.home #intro.ukcy #animContent .ukcy h2 {height: 214px}
+	#per.home #intro div ul {width: 615px}
+	#per.home .box ul.linkList li, #per.home .box ol.linkList li {width: 99%}
+
+	#per.home #intro #homeCTA {max-width: 220px}
+	#per.home #intro #homeCTA img {width: auto; height: 53px}
+
+	.newLeg ul.days li a {width: 125px}
+	.newLeg h3#allNew a {width: 245px}
+	.newLeg ul.countryNav {margin: -40px 0 0 277px}
+	.newLeg ul.countryNav li a {width: 212px}
+	.newLeg h3#allNew a, .newLeg ul.countryNav li a {font-size: 1.1em}
+	.newLeg .sub ul li {width: 280px}
+	.newLeg .newLegFeeds .feeds {width: 243px}
+	.newLeg .newLegFeeds .feeds:first-of-type {margin: 0 0 0 276px}
+	.newLeg .newLegFeeds .feeds table {margin: -1px 0 0 0}
+	.newLeg .tabWrapper .s_6 {width: 100% !important; margin: 15px 0 0 0}
+	.newLeg .tabWrapper .s_6.p_one.sub {width: 100% !important; margin: 15px 15px 0 0}
+	.newLeg .s_6.p_two.sub.tracking li {margin: 0 15px 6px 25px}
+	.newLeg .furtherInfo {width: 1224px}
+	.newLeg ul.days li.current a:after {margin: 14px 52px}
+
+
+	#browse #content, #search #content {width: 940px}
+	#search #content tr th:nth-child(2), #search #content tr td:nth-child(2), #browse #content tr th:nth-child(2), #browse #content tr td:nth-child(2) {min-width: 100px}
+	#search #content tr th:nth-child(3), #search #content tr td:nth-child(3), #browse #content tr th:nth-child(3), #browse #content tr td:nth-child(3) {min-width: 160px}
+	#browse #tools, #search #tools, #layout2.legToc #tools, #layout2.legPDFonly #tools, #layout2.legContent #tools, #layout2.legComplete #tools, #layout2.legIA #tools, #layout2.legIAContent #tools, body.legContent #navigation {width: 300px}
+	#browse #tools .section, #search #tools .section {width: 280px}
+	#search #tools #miniPageNav li#miniPageNavCurrent, #browse #tools #miniPageNav li#miniPageNavCurrent {width: 174px}
+
+	#statusWarning, #brexitInfo {width: 935px}
+	#statusWarning #statusWarningSubSections .content p:before, #brexitInfo #outstandingRefs .content p:before {width: 853px}
+
+	#leg #content, body.legContent #content {width: 949px}
+	#layout2.legEnToc #infoSection, #layout2.legEmToc #infoSection, #layout2.legEmToc #infoDraft {margin: 10px 0}
+
+	#leg #scrollbar #slider {width: 710px}
+	#leg #scrollbar:before {width: 847px}
+
+	.LegSnippet .LegBlockNotYetInForce p:not(.LegBlockNotYetInForceHeading){margin: 0; padding: 0 32px 8px 0; box-sizing: border-box}
+	.LegSnippet .LegBlockNotYetInForce p.LegRHS {width: 768px}
+	.LegSnippet .LegBlockNotYetInForce {width: 940px}
+
+	.LegListItem {display: table; width: 100%; table-layout: fixed}
+	.LegSnippet .LegListItemNo {display: table-cell; width: 50px; float: none}
+	.LegSnippet .LegListItemNo + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard {float: none; width: auto}
+	.LegSnippet .LegP3list .LegRomanList .LegListItem  {float: right; width: 89%}
+	.LegSnippet .LegAlphaList .LegListItem {float: right; width: 95%}
+		/* fix*/
+		.LegSnippet .LegAlphaList .LegListItem {width: 84%}
+	.LegSnippet .LegAlphaList .LegListItem .LegListItemNo {padding: 0 10px 0 0}
+	.LegSnippet .LegListItemNo.LegKeyLegLevel3 + .LegListTextStandard {float: right; width: 97%}
+
+	#browse #timeline {width: 1248px}
+	#browse #resultsTimeline .ui-slider .ui-slider-handle {margin-top: 0}
+	#browse #scrollbar #slider {width: 1043px; margin: 6px 0 0 67px}
+	#browse #scrollbar:before {width: 1178px}
+	#browse #timeline li a {height: 124px}
+
+	#search #tools #heading, #browse #tools #heading {width: 280px}
+	#browse #tools #subheading a.userFunctionalElement, #search #tools #subheading a.userFunctionalElement {width: 278px}
+	#search #tools .ui-combobox input, #browse #tools .ui-combobox input {width: 242px}
+
+	#doc.js #content .covid-tabs .tab {width: 1225px}
+	#brexitInfo #outstandingRefs ul, #statusWarning #statusWarningSubSections ul {max-height: 230px}
+	.confers_section.tab {width: 1248px}
+
+/* backgrounds */
+	#per.home #intro.wales #animContent .wales {
+		background: rgba(13,38,39,1); 
+		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryBG/wales.png') no-repeat;
+		background: url('/images/chrome/homepageCountryBG/wales.png') no-repeat, linear-gradient(0deg, rgba(13,38,39,1) 0%, rgba(13,38,39,1) 25%, rgba(0,70,70,1) 100%)}
+
+	#per.home #intro.scotland #animContent .scotland {
+		background: rgba(13,38,39,1); 
+		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryBG/scotland.png') no-repeat;
+		background: url('/images/chrome/homepageCountryBG/scotland.png') no-repeat, linear-gradient(0deg, rgba(65,0,30,1) 0%, rgba(65,0,30,1) 25%, rgba(100,0,50,1) 100%)}
+
+	#per.home #intro.uk #animContent .uk {
+		background: rgba(13,38,39,1); 
+		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryBG/uk.png') no-repeat;
+		background: url('/images/chrome/homepageCountryBG/uk.png') no-repeat, linear-gradient(0deg, rgba(160,100,35,1) 0%, rgba(160,100,35,1) 25%, rgba(235,180,50,1) 100%)}
+
+	#per.home #intro.welcome #animContent .welcome {
+		background: rgba(13,38,39,1); 
+		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryBG/welcome.png') no-repeat;
+		background: url('/images/chrome/homepageCountryBG/welcome.png') no-repeat, linear-gradient(0deg, rgba(0,60,95,1) 0%, rgba(0,60,95,1) 25%, rgba(0,105,155,1) 100%)}
+
+	#per.home #intro.ni #animContent .ni {
+		background: rgba(13,38,39,1); 
+		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryBG/ni.png') no-repeat;
+		background: url('/images/chrome/homepageCountryBG/ni.png') no-repeat, linear-gradient(0deg, rgba(52,42,60,1) 0%, rgba(52,42,60,1) 25%, rgba(93,81,103,1) 100%)}
+
+	#per.home #intro.eu #animContent .eu {
+		background: rgba(119,119,119,1); 
+		background: rgba(119,119,119,1) url('/images/chrome/homepageCountryBG/eu.png') no-repeat;
+		background: url('/images/chrome/homepageCountryBG/eu.png') no-repeat, linear-gradient(0deg, rgba(41,41,41,1) 0%, rgba(41,41,41,1) 25%, rgba(101,101,101,1) 100%)}
+
+	#per.home #intro.walescy #animContent .walescy {
+		background: rgba(13,38,39,1); 
+		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryWelshBG/wales.png') no-repeat;
+		background: url('/images/chrome/homepageCountryWelshBG/wales.png') no-repeat, linear-gradient(0deg, rgba(13,38,39,1) 0%, rgba(13,38,39,1) 25%, rgba(0,70,70,1) 100%)}
+
+	#per.home #intro.scotlandcy #animContent .scotlandcy {
+		background: rgba(13,38,39,1); 
+		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryWelshBG/scotland.png') no-repeat;
+		background: url('/images/chrome/homepageCountryWelshBG/scotland.png') no-repeat, linear-gradient(0deg, rgba(65,0,30,1) 0%, rgba(65,0,30,1) 25%, rgba(100,0,50,1) 100%)}
+
+	#per.home #intro.ukcy #animContent .ukcy {
+		background: rgba(13,38,39,1); 
+		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryWelshBG/uk.png') no-repeat;
+		background: url('/images/chrome/homepageCountryWelshBG/uk.png') no-repeat, linear-gradient(0deg, rgba(160,100,35,1) 0%, rgba(160,100,35,1) 25%, rgba(235,180,50,1) 100%)}
+
+	#per.home #intro.welcomecy #animContent .welcomecy {
+		background: rgba(13,38,39,1); 
+		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryWelshBG/welcome.png') no-repeat;
+		background: url('/images/chrome/homepageCountryWelshBG/welcome.png') no-repeat, linear-gradient(0deg, rgba(0,60,95,1) 0%, rgba(0,60,95,1) 25%, rgba(0,105,155,1) 100%)}
+
+	#per.home #intro.nicy #animContent .nicy {
+		background: rgba(13,38,39,1); 
+		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryWelshBG/ni.png') no-repeat;
+		background: url('/images/chrome/homepageCountryWelshBG/ni.png') no-repeat, linear-gradient(0deg, rgba(52,42,60,1) 0%, rgba(52,42,60,1) 25%, rgba(93,81,103,1) 100%)}
+
+	#per.home #intro.eucy #animContent .eucy {
+		background: rgba(119,119,119,1); 
+		background: rgba(119,119,119,1) url('/images/chrome/homepageCountryWelshBG/eu.png') no-repeat;
+		background: url('/images/chrome/homepageCountryWelshBG/eu.png') no-repeat, linear-gradient(0deg, rgba(41,41,41,1) 0%, rgba(41,41,41,1) 25%, rgba(101,101,101,1) 100%)}
+
+	#per.home #intro.wales div#animContent h2, #per.home #intro.walescy div#animContent h2 {
+		background-color: rgba(0,50,50,1)}
+	#per.home #intro.scotland div#animContent h2, #per.home #intro.scotlandcy div#animContent h2 {
+		background-color: rgba(62,1,26,1)}
+	#per.home #intro.uk div#animContent h2, #per.home #intro.ukcy div#animContent h2 {
+		background-color: rgba(156,95,35,1)}
+	#per.home #intro.ni div#animContent h2, #per.home #intro.nicy div#animContent h2 {
+		background-color: rgba(91,77,99,1)}
+	#per.home #intro.eu div#animContent h2, #per.home #intro.eucy div#animContent h2 {
+		background-color: rgba(109,109,109,1)}
+
+
+
+
+
+/* TNA Larger Font */
+	body, input, select {font-size: 1em}
+	.LegSnippet .LegCommentaryPara {font-size: 1rem}
+	.LegSnippet .LegAnnotationsGroupHeading {font-size: 1rem; padding: 8px 15px !important}
+	.newLeg ul.days li a, .js ul.optionList, #doc.changeLeg .results table, #changesOverTime #timeline #timelineData ul li.pointInTime {font-size: 1em}
+	#browse #tools, #search #tools, #search #content, #layout2.legToc #tools, #layout2.legPDFonly #tools, #layout2.legContent #tools, #layout2.legComplete #tools, #layout2.legIA #tools, #layout2.legIAContent #tools, body.legContent #navigation, #changesOverTime #timeline #timelineData ul li.pointInTime span {font-size: 1em}
+	#contentSearch label, #footer .copyrightstatement, #footer .copyright, .pageContent .sectionNav a, #subNav .resources a, #footerNav, #browse.intro .card .content, #footer div, #browse #resultsTimeline .key dd em, ul#legSubNav li a, ul#legSubNav li span.disabled, #tools .section .title h2, #tools .section .title h3, #changesOverTime #timeline #timelineData ul li a,#cookie-preferences-management .btn.show-hide, #per.home #intro #homeCTA .btn, #changesOverTime #timeline #timelineData ul li.pointInTime strong {font-size: 1em}
+	#per.home #primaryNav ul li.link1 a, #doc.understanding #primaryNav ul li.link2 a, #doc.euleg #primaryNav ul li.link3 a, #browse #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, #primaryNav ul li a, #browse.region #content .returnLink a, #browse #resultsTimeline .key:before {font-size: 1em}
+	.newLeg .newLegFeeds .feeds table td, #infoSection h2, #infoDraft h2, #statusWarning h2, #statusWarning.uptoDate h2, #brexitInfo h2, .js .covid-tabs .anchors a, .legResources .anchors a {font-size: 1em}
+	ul#secondaryNav, #contentSearch .advSearch, #browse .legCol h2 {font-size: 1em}
+	button.userFunctionalElement, #per.home #intro ul#countryLeg li a, #doc.changeLeg .info h2, #search .info h2, #browse .info h2 {font-size: 1em}
+	#per.home h2, #browse.intro .card h3 {font-size: 1.5em}
+	#browse.intro #pageTitle {font-size: 2em}
+	#per.home #intro div ul a {font-weight: 300}
+	#per.home #intro div ul li a:after {margin: 6px}
+	#per.home #intro div ul li {padding: 6px 27px 6px 17px}
+
+	ul#secondaryNav {width: auto}
+	#header {height: 120px}
+	#primaryNav div.navLayout ul {margin: -43px 0 0 0}
+	#primaryNav {height: 5.62em}
+
+	#contentSearch {margin: -5em auto; max-width: 1250px}
+	#contentSearch .title input {width: 390px}
+	#contentSearch .titleCy.cy {width: 330px}
+	#contentSearch select {box-sizing: border-box; height: 37px}
+	#contentSearch .type select {width: 420px}
+	#contentSearch .typeCy select {width: 490px}
+	#contentSearch .submit button.userFunctionalElement {margin: 28px 0 0 0; padding: 7px 20px 8px 20px}
+	#contentSearch .advSearch {margin: -30px 0}
+
+	#footer {max-width: 1250px; margin: -6.45em auto}
+	#footerNav {height: 9.4em; width: 100%; min-width: 1280px}
+
+	#per.home #intro #homeCTA p {font-size: 15.5px}
+	#per.home #background {height: 329px}
+	#per.home #layout1 #animContent {height: 15.2em}
+	#per.home #intro div ul {bottom: 70px}
+	#per.home #intro div.ukcy ul, #per.home #intro div.scotlandcy ul, #per.home #intro div.nicy ul {bottom: 55px}
+	#per.home #intro div.scotland ul {bottom: 63px}
+	#per.home #intro div.ni ul {bottom: 60px}
+
+	#search p.backToTop a:before, #browse p.backToTop a:before, #doc p.backToTop a:before, #per.newLeg p.backToTop a:before, #leg #content p.backToTop a:before {margin: 11px 0 0 -16px; border-width: 0 5px 9px 5px}
+	#leg #content p.backToTop a:before, #per.newLeg p.backToTop a:before {margin: 7px 0 0 -16px}
+
+	#searchChanges #changesThatAffectHelp {padding: 0}
+	#searchChanges fieldset#affect, #searchChanges fieldset#affecting {height: 320px; width: 545px}
+	div#affectsSingleYear, div#affectingSingleYear {width: 280px}
+	#searchChanges fieldset#affect:after, #searchChanges fieldset#affecting:after {margin: 322px 248px}
+	#searchChanges .yearChoice .yearChoiceFields select {width: 75px}
+	#searchChanges .yearChoice .yearChoiceFields input {width: 50px}
+	#searchChanges input.radio {width: 16px; height: 16px; margin: 2px 5px 0 0}
+	#searchChanges #effectsOptions .radio {height: 31px}
+	#searchChanges fieldset#effectsOptions legend {margin: 4px 0 0 0}
+	#searchChanges #searchInfo p {margin: 5px 0 10px 0}
+
+	#searchChanges fieldset#effectsOptions > div label {padding: 5px 10px 0 0}
+	#doc.changeLeg.js .help {margin: 10px 0 0 13px}
+
+	#doc.changeLeg.js .help {margin: 0}
+
+	#searchChanges #changesThatAffectHelp {margin-left: -300px}
+	#searchChanges #madeByHelp {margin-left: -523px}
+	#searchChanges #affect .help .content, #searchChanges #affecting .help .content {width: 730px}
+
+	#searchChanges fieldset#effectsOptions a.helpItem {margin: 9px 0 0 15px}
+	/*.newLeg .tabWrapper .s_6 {min-height: 390px}*/
+	.newLeg ul.countryNav {margin: -46px 0 0 277px}
+	.newLeg ul.days li.current a:after {margin: 17px 59px}
+
+	#tools .userFunctionalElement.active {padding: 7px 10px 6px 27px}
+	#tools .userFunctionalElement.active:before {margin: 5px -14px}
+
+	#breadCrumb ul li:before {margin: 8px -14px}
+	#timeline .decade li {margin: 0.45em 0.45em 0 0}
+
+	#changesOverTime #timeline #timelineData ul li.pointInTime {line-height: 135%}
+	#changesOverTime #timeline #timelineData ul li.pointInTime span {margin: 5px 0 0 12px}
+	#changesOverTime #timeline #timelineData ul li.pointInTime em:after {position: absolute; margin: 24px 0 0 -45px}
+	#changesOverTime #timeline #timelineData ul li a:after {margin: -70px 0 0 20px}
+	#changesOverTime #timeline #timelineData .pointer + span {margin: 0 0 0 -10px}
+
+	a.expandCollapseLink:before {margin: 7px 0 0 -16px}
+	#tools .expandCollapseLink:before {margin: 5px 0 0 -16px}
+
+	.section .title.future {margin: 0}
+	#statusWarning a.helpItem {margin: 2px 5px}
+
+	.interface .prev .userFunctionalElement .background:before {margin: 6px 0 0 -14px}
+	.interface .next .userFunctionalElement .background:before {margin: 6px 0 0 0; right: 8px}
+
+	#cookie-preferences-management .btn.show-hide:before {margin: 6px 0 0 -16px}
+	#cookie-preferences-management .cookie-form-element input {margin: -3px 7px 0 0; width: 17px; height: 17px}
+
+	.js .help {width: 450px}
+	.helpToMidTop .icon {right: 219px}
+	.js .help .close:before, .closeLink:before {margin: -2px 0 0 1px}
+
+	.geoExtShowing .LegExtentRestriction {padding: 6px 10px 4px 10px; margin: -5px 0 0 27px}
+	.geoExtShowing .LegExtentRestriction, .LegSnippet .LegExtentRestriction {padding: 2px 10px 1px 10px; margin: 1px 0 0 27px}
+	.geoExtShowing .LegExtentRestriction:before, .LegSnippet .LegExtentRestriction:before {margin: 8px -30px}
+	
+	#search #content #advancedSearch .searchType .typeCheckBoxCol div {margin: 10px 0}
+	#search.js #content #advancedSearch .help {margin: 0 0 0 -330px}
+	#search.js #content #advancedSearch .help.helpToRightTop {margin: -18px 0 0 -456px}
+	#search.js #content #advancedSearch .help.helpToRightMid {margin: 10px 0 0 -456px}
+	#search #content #advancedSearch .searchCol2 {width: 855px}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfYears.formGroup:nth-child(2) {margin: 5px 25px 5px 30px; padding: 0 30px 0 22px}
+	#search #content #advancedSearch .searchCol2 .formGroup {min-width: 150px}
+	#search #content #advancedSearch #uniqueExtents {width: 150px}
+	#search #content #advancedSearch #lex {width: 800px}
+	#search #content #advancedSearch #lex .typeCheckBoxCol {width: 400px !important}
+	#search #tools .ui-combobox input, #browse #tools .ui-combobox input {line-height: 1.25em}
+	#browse #tools #heading li.legHeading, #search #tools #heading li.legHeading {line-height: 1.5em}
+	#browse #tools #heading li.legHeading a, #search #tools #heading li.legHeading a {line-height: 1.4em}
+	#search #content #advancedSearch div input[type="text"] {height: 19px}
+	#miniPageNavCurrent {line-height: 1.3em}
+
+	#search #content td, #browse #content td {padding: 0.6em 0.5em}
+
+	#tools #refineSearch form .searchFieldCategory input[type="radio"] {margin: 3px 6px 0 3px; width: 16px; height: 16px}
+	#tools #refineSearch .yearChoiceFields div.to {display: inline-block; margin: 4px 0 0 12px}
+
+	ul#legSubNav li a.helpItem {margin: 12px 10px 0 0}
+	.uk-effect:before, .eu-effect:before {width: 23px; height: 23px}
+	.interface a.userFunctionalElement.close:after {margin: 27px -51px}
+
+	.pageTitle {display: table; width: 100%}
+	.pageTitle span {display: table-cell}
+	#leg .pageTitle a.pageTitleToggleLink {padding: 7px 0 0 0; display: table-cell; font-size: 15px; width: 120px; text-align: center; vertical-align: top; border-radius: 3px}
+
+	.legToc .LegSnippet .LegContents .LegContentsEntry {padding: 5px 0 !important}
+
+	.LegSnippet .LegContents ol {margin-left: 2em !important}
+	.LegSnippet .LegContents a.userFunctionalElement {margin-left: -8.8em !important; margin-right: 3em !important; padding: 0.25em 0 !important; width: 5.5em}
+	.LegSnippet .LegContents a.tocCollapseAll, .LegSnippet .LegContents a.tocExpandAll {margin: 0 -0.5em !important; width: 7em}
+
+	.LegSnippet, .LegSnippet p, .LegSnippet p.LegContentsItem span.LegContentsTitle, .LegSnippet .LegContents p.LegContentsTitle, .LegSnippet p.LegContentsItem span.LegContentsNo, .LegSnippet .LegContents p.LegContentsNo, .LegSnippet .LegContents a.tocCollapseAll, .LegSnippet .LegContents a.tocExpandAll, .LegSnippet .LegContents a.userFunctionalElement span {font-size: 1rem !important}
+
+	.LegSnippet * {line-height: 1.55rem !important}
+
+/* backgrounds */
+	#leg .pageTitle a.pageTitleToggleLink {
+		background: rgba(5,115,235,1)}
+	#leg .pageTitle[data-title-type="full"] a.pageTitleToggleLink {
+		background: rgba(245,245,245,1)}
+
+/* colours */
+	#leg .pageTitle a.pageTitleToggleLink {
+		color: rgba(255,255,255,1)}
+	#leg .pageTitle[data-title-type="full"] a.pageTitleToggleLink {
+		color: inherit}
+
+
+
+
+
+/* TNA Roboto Font */
+
+	body, #cookie-preferences-management .btn, .cookie-preferences-banner .btn, .LegSnippet .LegAnnotations *:not(.LegAnnotationsGroupHeading), #leg .pageTitle .pageTitleToggleLink, #printOptions h4, .legToc .LegSnippet, ul#legSubNav li a.close, .ui-widget, .LegSnippet .ENContents a.userFunctionalElement span, ol li ol li p.ENContentsTitle a, #search #ui-datepicker-div .ui-datepicker-title, #search #ui-datepicker-div .ui-datepicker-calendar th, #tools #refineSearch form input[type="text"]:disabled, #content div .searchCol2 input[type="text"]:disabled, .legResources h3 em, #survey-banner .banner-close, .LegSnippet .LegBlockNotYetInForceHeading span, .english:after, .welsh:after, ul#legSubNav li a, #breadCrumb ul li a, #legSubNav a, h3 .help, ol li ol li p.ENContentsTitle a em, #new-design-banner button, ol li.ENContentsAnnex a, ol li.ENContentsAnnex a span {
+		font-family: "Roboto"; font-weight: 300}
+
+	.legToc p.LegContentsTitle em, #changesOverTime p.warning {
+		font-family: "Roboto"; font-style: 300; font-style: italic}
+
+	input, select, strong, h2:not(.LegSnippet .LegAnnotations .LegAnnotationsGroupHeading, .card_list h2, .info h2), h3, dt, strong, .accessibleLinks a:focus, .accessibleLinks a:active, .natArch + #secondaryNav li:before, .natArchWelsh + #secondaryNav li:after, #per.home #primaryNav ul li.link1 a, #browse #primaryNav ul li.link2 a, #per.newLeg #primaryNav ul li.link3 a, #doc.coronavirus #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, #browse #timeline li a em span, #browse #resultsTimeline .key:before, #browse #tools #heading li.legHeading a, #search #tools #heading li.legHeading a, #browse.region .p_absTopRight .returnLink a:before, legend.searchCol1, #changesOverTime .timelineHelp:before, #statusWarning a.helpItem:before, #leg .longPageTitle, .legResources h4, .legResources .printPdf .plainList a, .legResources .anchors a, table.searchExample td, #tools #advFeatures li span.close, #tools #moreOptions li a.close, dl.geoExtentDict dd span, a.expandCollapseLink, #statusWarning #statusWarningSubSections a, #statusWarning #statusWarningSubSections .LegAffected, #infoSection p.c2a a, #infoSection-status p.c2a a, #infoSection-note p.c2a a, #infoDraft p.c2a a, #brexitInfo #outstandingRefs .title, #viewLeg .LegSnippet .geoExtInfo p, .modWin h3, #per.home #intro #homeCTA .btn, .searchResults dt, ul.linkList li.viewMoreLink, ol.linkList li.viewMoreLink, p.viewMoreLink, #doc h3, #doc h4, .visit, .userFunctionalElement, #viewLegContents .downloadPdfVersion a.pdfLink, .plainView #layout1 #header a, #browse #tools #miniPageNavCurrent, #browse #tools ul li.returnLink a, #refineSearch .searchExtendsTo .LegExtentRestriction, #tools #subheading a.userFunctionalElement, .alphaLinkList a, #skipLinks a, #chron h2, .extentMarkerInfo a, .changeLang, #cookie-preferences-management .btn.show-hide, #PiTselector input[type=submit], a.helpItem, .legToc p.LegContentsNo a, .js .covid-tabs .anchors a, a.helpItemToBot:before, #browse #tools #heading li.legHeading.active, #search #tools #heading li.legHeading.active, ol li p.ENContentsTitle a, #search #content #advancedSearch input[type="checkbox"]:checked + label, #search #content #advancedSearch input[type="radio"]:checked + label, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-active, .markdown-page h2.title, .legEnContent .markdown-page h3.HSubheading3, .LegCommentaryItem .LegCommentaryType, .LegCommentaryItem .LegCommentaryType a, .newLeg .days li a, .newLeg h3 a, .newLegFeeds .furtherInfo h5 a, .newLegFeeds .furtherInfo h6 a, .newLeg p.warning a, #survey-banner .content:before, .english, .welsh, #breadCrumb ul li, .legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a, .euexitday-deal .content .description, .euexitdayoverlay-deal .content .description, #search.intro #tools #links .current, .newLeg h3#allNew a, .newLeg ul.countryNav li a, #searchChanges fieldset#effectsOptions legend, #search #content th, #browse #content th, #search #content #advancedSearch div .searchCol1, #search #content #advancedSearch div .searchLangCol1, legend.searchCol1, #cookie-preferences-management th, #timelineData .currentVersion .pointer + span:not(.content), #search #tools ul li.returnLink a, #browse #tools ul li.returnLink a, li.ENContentsCommentaryChapter > p.ENContentsTitle > a, #new-design-banner .content a, ol li.ENContentsAnnex p.ENContentsTitle a span, .redirectSearch a {font-family: "Roboto"; font-weight: 500 !important}
+
+	.btn.set-individual-cookies {padding: 10px 20px 9px 40px}
+
+	#leg #content p.backToTop {width: 100%; max-width: 1250px; margin: 15px 0 0 0}
+	#leg #content p.backToTop a:before, #per.newLeg p.backToTop a:before {margin: 6px 0 0 -16px}
+
+	#search #content .sortAsc:after, #search #content .sortDesc:after, #browse #content .sortAsc:after, #browse #content .sortDesc:after {margin: 0 0 0 2px}
+	ul#legSubNav li a.helpItem:before {margin: -3px -1px}
+	#searchChanges fieldset a.helpItem {padding: 1px 0 0 0; box-sizing: border-box}
+	#searchChanges input.radio {width: 17px; height: 17px; margin: 2px 5px 0 0}
+	#searchChanges #legChangesSearchSubmit {margin: -3px 0 0 10px}
+	#searchChanges #effectsOptions .radio {margin: 0 6px 0 11px}
+
+	#search #content #advancedSearch div input[type="text"] {height: 20px}
+
+	a.close:not(#tools .title .close:before, .timelineHelp .help .content a.close:before, .print .close, .expandCollapseLink.close):before, a.closeLink:before {padding: 1px 0 0 0}
+	#legSubNav .help .content a.close:before {padding: 1px 0 0 0}
+	#searchChanges a.close:before, #advancedSearch a.close:before, #per.newLeg a.close:before, #searchChanges a.helpItem:before {padding: 0}
+	.intro .help .content a.close:before {padding: 0 0 0 1px}
+
+	#layout1 #layout2 .help p, #layout1 #layout2 .help ul * {font-weight: 300}
+
+	#leg.toc .legEmToc .interface .prev .userFunctionalElement:before, #leg.toc .legEmContent .interface .prev .userFunctionalElement:before, #leg.toc .legEnToc .interface .prev .userFunctionalElement:before, #leg.toc .legEnContent .interface .prev .userFunctionalElement:before {margin: 6px 0 0 -14px}
+
+	#leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .next .userFunctionalElement:after {margin: 6px 0 0 8px}
+
+/* redesigned legislation logo */
+	#per.home #layout1 #header h1, #layout1 #header h2:not(.plainView #layout1 #header h2) {margin: 8px 0 0 0; background: url("/static/lgu1/images/uk-govt-crest.png") no-repeat 0 0; background-size: 69px; width: 18em}
+	#per.home #layout1 #header h1 {font-size: 1.3em; font-weight: 300}
+	#doc h2 {font-size: 1.3em}
+	#per.home #layout1 #header h1 a, #layout1 #header h2 a {color: transparent; padding: 0 70px 35px 85px}
+	.english, .welsh {background: none; height: 65px; width: auto; color: rgba(30,30,30,1); font-size: 1.45em}
+	.english:before, .welsh:before {content: "legislation"; padding: 20px 0 0 80px; display: inline-block}
+	.english:after, .welsh:after {content: ".gov.uk"}
+	.welsh:before {content: "deddfwriaeth"}
+
+
+/* TNA Updated legSubNav */
+	ul#legSubNav {border: 0}
+	ul#legSubNav li a {padding: 5px 25px}
+	.legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a {padding: 5px 25px; margin: 0}
+	.legContent li#legContentLink a:after, .legComplete li#legContentLink a:after, .legToc li#legTocLink a:after, .legEmContent li#legEmLink a:after, .legEmToc li#legEmLink a:after, .legEnContent li#legEnLink a:after, .legEnToc li#legEnLink a:after, .legPnContent li#legPnLink a:after, .legPnToc li#legPnLink a:after, .legResources li#legResourcesLink a:after, .legInForceInfo li#legInForceInfoLink a:after, .legCommencement li#legConmmencementLink a:after, .legIA li#legIALink a:after, .legIAContent li#legIALink a:after {bottom: -6px}
+	ul#legSubNav li:first-child:not(#leg .help .content li), ul#legSubNav li:not(#leg .help .content li) {padding: 0; border: 0}
+
+/* backgrounds */
+	ul#legSubNav {
+		background: rgba(46,47,46,1)}
+	.legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a {
+		background: rgba(5,115,235,1)}
+	ul#legSubNav li a.helpItem {
+		background: rgba(255,255,255,1)}
+
+/* colours */
+	ul#legSubNav li a.helpItem, .legEmToc #legSubNav #legEmLink .helpItem, .legEmContent #legSubNav #legEmLink .helpItem, .legEnToc #legSubNav #legEnLink .helpItem, .legEnContent #legSubNav #legEnLink .helpItem, .legResources #legSubNav #legResourcesLink .helpItem {
+		color: rgba(10,100,215,1)}
+	ul#legSubNav li a, ul#legSubNav li span.disabled {
+		color: rgba(255,255,255,1)}
+
+/* borders */
+	.legContent li#legContentLink a:after, .legComplete li#legContentLink a:after, .legToc li#legTocLink a:after, .legEmContent li#legEmLink a:after, .legEmToc li#legEmLink a:after, .legEnContent li#legEnLink a:after, .legEnToc li#legEnLink a:after, .legPnContent li#legPnLink a:after, .legPnToc li#legPnLink a:after, .legResources li#legResourcesLink a:after, .legInForceInfo li#legInForceInfoLink a:after, .legCommencement li#legConmmencementLink a:after, .legIA li#legIALink a:after, .legIAContent li#legIALink a:after {
+		border-color: rgba(5,115,235,1) transparent transparent transparent}
+	.js ul#legSubNav .help.helpToMidTop .icon:before {
+		border-color: transparent transparent rgba(255,255,255,1) transparent}
+
+/* search and repeals messaging */
+	.legisaltion_repealed_msg {font-size: 1rem; font-family: "Roboto"; font-weight: 500; padding: 5px 15px; border-radius: 4px; margin: 0 0 -1em 0; display: block; color: #fff; float: right; background: rgba(159, 101, 122, 1)}
+	.summary_search_term {font-family: "Roboto"; font-weight: 500}
+	.search_results_repealed_msg {font-style: italic; margin: 1px 0 -4px 0; display: block; color: rgba(159,101,122,1)}
+	.search_results_search_term {font-family: "Roboto"; font-weight: 500; text-transform: capitalize}
+
+/* interweaved ENs */
+	.eniw {background: rgba(245,245,245,1) !important; border-top: 1px solid rgba(220,220,220,1); border-bottom: 1px solid rgba(220,220,220,1)}
+	.eniw * {background: unset !important}
+	.eniw .enNote {color: unset}
+	/*.eniw .LegDS.noteLink {display: none}*/
+	.eniw .enNote {padding: 1em; float: none; display: block; margin: 0; background: rgba(225,225,225,1) !important}
+	.eniw .fragment {margin: 1rem 0 0 0}
+	.noteLink, .bigNoteLink { font-size: 1rem !important; background: rgba(255,255,255,1) !important; border: 1px solid rgba(5,115,235,1); border-radius: 3px; padding: 7px 12px 7px 12px; margin: -2.8em 1em 0 0; font-weight: 500; font-family: roboto; color: rgba(10,100,215,1) !important}
+	.bigNoteLink { margin: 2.25em 1em 0 0 !important;}
+
+/* heavier weight */
+	#contentSearch label, .XadvSearch a, ul#XsecondaryNav li a.langaugeSwitch, #breadCrumb ul li a, ul#legSubNav li a, #legSubNav a, #content .title .intro, #content #infoSection .intro, .legToc .LegSnippet, .LegSnippet .LegAnnotations *:not(.LegAnnotationsGroupHeading), #statusWarningSubSections .content, #changesOverTime #timeline #timelineData ul li a, .results #tools, .results #content, .timeline #tools, .timeline #content, .prevPagesNextNav li.pageLink a, #search .info h2, #browse .info h2, .subNavPage .pageContent, .changeLeg #content .s_12, #doc.changeLeg .info h2, #search #content, #search #tools #links, #browse .legTypes, #Browse_EUIntro, #browse ul.legTypes li a.active, #browse ul.legTypes li a:hover, #browse #resultsTimeline .key dd em, #per.home #intro ul#countryLeg li a, #per.home .box p, #per.home .no_box p, #per.home ul.linkList li a, #per.home ol.linkList li a, .newLeg .s_6.p_one, .newLeg .s_6.p_two, .newLeg .newLegFeeds .feeds, .changeLeg #effectsOptions label, #tools .toolList span.active .background, #cookie-preferences-management .btn, .cookie-preferences-banner .btn {font-weight: 400}
+
+	#searchInfo fieldset label {font-weight: 300}
+
+	.subNavPage .pageContent #content a:not(h3 + ul li a, .sitemap .subNavPage .pageContent #content a) {font-weight: 500}
+
+	.natArch + #XsecondaryNav li:before, #XbreadCrumb ul li, .legToc li#XlegTocLink a, #statusWarning .title h2, .legToc p.LegContentsNo a, .LegSnippet .LegCommentaryPara strong, #statusWarning #statusWarningSubSections .LegAffected, #timelineData .currentVersion .pointer + span:not(.content), #search #tools ul li.returnLink a, .helpPage dt, #doc.helpPage h4, #search.intro #tools #links .current, .newLeg .s_6.p_two strong {font-weight: 600 !important}
+
+/* TNA reduced width */
+@media (max-width: 1279px) {
+	.natArch a, .natArchWelsh a {right: 15px}
+	.natArchWelsh + #secondaryNav li:after {display: none}
+
+	#header {width: 970px !important; min-width: 970px !important; max-width: 970px !important}
+	#layout1, #footerNav, #primaryNav, .cookie-preferences-banner, #new-design-banner {min-width: 970px !important}
+
+	.cookie-preferences-banner .content, #coronavirus-banner .bannercontent, #primaryNav div.navLayout, #layout2, #footerNav ul, #footer, #browse.intro .card_list, #doc #subNav p.backToTop, #per.home #intro #animContent, #per.home #intro #animContent div, #per.home #intro, #per.home #intro ul#countryLeg, .legResources .s_12, #browse #scrollbar, #layout2.legResources #content, #layout2.legEmContent #content, #layout2.legEmToc #content, #layout2.legEnContent #content, #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content, .newLeg .newLegFeeds, body.legContent #content, #primaryNav ul, #contentSearch, #new-design-banner .content, .plainView #layout2 h1 {width: 940px !important; min-width: 940px !important; max-width: 940px !important}
+
+	#new-design-banner .content p {margin: 0 6.5em 0 0}
+
+	.cookie-actions li {margin: 0 10px 2px 0}
+	#cookie-preferences-management .btn, .cookie-preferences-banner .btn {font-size: 1rem; padding: 10px 12px 10px 38px}
+
+	#leg #content:before {margin: -12px 0 0 0; width: 940px}
+	#leg #content {width: 670px !important; min-width: 670px !important}
+	.plainView #layout1 #content {width: 100% !important}
+
+	#statusWarning {width: 655px !important; min-width: 655px !important; max-width: 655px}
+
+	#layout2 {padding: 0; width: 940px !important; min-width: 940px !important; max-width: 940px !important}
+
+	#contentSearch .title input {width: 222px}
+	#contentSearch .titleCy.cy {width: 142px}
+	#contentSearch .advSearch {margin: -69px 0}
+	#header {padding: 0 15px}
+
+	#browse #tools, #search #tools, #layout2.legToc #tools, #layout2.legPDFonly #tools, #layout2.legContent #tools, #layout2.legComplete #tools, #layout2.legIA #tools, #layout2.legIAContent #tools, body.legContent #navigation {width: 270px}
+
+	#doc.js #content .covid-tabs .tab {width: 918px}
+
+	#per.home #intro div ul {width: 555px;  left: 90px}
+
+	#per.home #intro.ukcy div ul {width: 648px; left: 0; font-size: 0.85em; bottom: 60px}
+	#per.home #intro.nicy div ul {width: 648px; left: 0; font-size: 0.9em; bottom: 60px}
+	body:lang(cy) #footer .copyright {top: 80px}
+	body:lang(cy) #footer {margin: -8.05em auto}
+	body:lang(cy) #footerNav {height: 11.0em}
+	body:lang(cy) #footer .copyright span:lang(cy) {font-size: 1em}
+
+	#browse #tools .section, #search #tools .section, #search #tools #heading, #browse #tools #heading {width: 250px}
+	#search #tools #miniPageNav li#miniPageNavCurrent, #browse #tools #miniPageNav li#miniPageNavCurrent {width: 144px}
+	#browse #content, #search #content {width: 660px}
+	#search #tools .ui-combobox input, #browse #tools .ui-combobox input {width: 212px}
+	#browse #tools #subheading a.userFunctionalElement, #search #tools #subheading a.userFunctionalElement {width: 248px}
+
+	.newLeg h3#allNew {width: 940px}
+	.newLeg .tabWrapper .s_6.p_one.sub {width: 365px}
+	.newLeg .tabWrapper .s_6 {width: 556px}
+	.newLeg ul.days li a {width: 94px}
+	.newLeg h3#allNew a {width: 154px}
+	.newLeg ul.countryNav {margin: -46px 0 0 186px}
+	.newLeg ul.countryNav li a {width: 157px}
+	.newLeg .newLegFeeds .feeds:first-of-type {margin: 0 0 0 185px}
+	.newLeg .newLegFeeds .feeds {width: 188px}
+	.newLeg .newLegFeeds .feeds table {width: 189px}
+	.newLeg ul.days li.current a:after {margin: 17px 40px}
+	.newLeg .furtherInfo {width: 912px}
+
+	#searchChanges fieldset#affect, #searchChanges fieldset#affecting {width: 445px}
+	#searchChanges fieldset#affect {margin: 0 15px 0 0}
+	#searchChanges .title input {width: 412px}
+	#searchChanges .typeChoice select {width: 430px}
+	#searchChanges fieldset.s_5 {padding: 15px 0 2px 15px}
+	div#affectsSingleYear, div#affectingSingleYear {width: 260px}
+	#searchChanges #legChangesSearchSubmit {margin: -3px 0 0 5px}
+	#searchChanges fieldset#effectsOptions a.helpItem {left: 130px}
+	#searchChanges #changesThatAffectHelp {margin-left: -180px}
+	#searchChanges #madeByHelp {margin-left: -271px}
+	#searchChanges #affect .help .content, #searchChanges #affecting .help .content {width: 480px}
+	#searchChanges fieldset#affect:after, #searchChanges fieldset#affecting:after {margin: 322px 0 0 205px}
+	#searchChanges .from .overlay, #searchChanges .to .overlay {display: none}
+	#searchChanges #effectsOptions .radio {margin: 0 5px 0 8px}
+	#searchChanges #legChangesSearchSubmit {padding: 7px 14px 6px 14px}
+
+	#browse #content, #search #content {width: 660px}
+	#search #content #advancedSearch .searchCol2 {width: 625px}
+	#search #content #advancedSearch fieldset.searchFieldCategory .searchCol2 .rangeOfYears.formGroup:nth-child(2) {margin: 5px 10px 5px 18px; padding: 0 20px 0 10px}
+	#search #content #advancedSearch #lex {width: 640px}
+	#search #content #advancedSearch #lex .typeCheckBoxCol {width: 320px !important}
+	#search #content #advancedSearch fieldset.searchLang.searchFieldCategory .searchLangCol3 {width: 625px; display: block}
+	#search #content #advancedSearch fieldset.searchLang .searchLangCol4 {display: block; padding: 10px 5px 5px 0}
+	#search #content #advancedSearch div.searchExtendsTo {width: 640px}
+
+	#browse.region .legCol.s_4 {width: 330px}
+	#browse.euregion #content p {width: 685px}
+
+	#browse #timeline {width: 938px}
+	#browse #scrollbar:before {width: 868px}
+	#browse #scrollbar #slider {width: 733px}
+
+	.confers_section.tab {width: 938px}
+
+	#leg #scrollbar:before {width: 567px}
+	#leg #scrollbar #slider {width: 432px}
+
+	.LegSnippet .LegBlockNotYetInForce {width: 670px}
+	.LegSnippet .LegBlockNotYetInForce p.LegRHS {width: 607px}
+	.confers_section.tab td {width: 25%}
+
+	#statusWarning #statusWarningSubSections .content p:before, #brexitInfo #outstandingRefs .content p:before {width: 625px}
+	.legContent div.interface .prevNextNav {padding: 0 0 0 260px}
+	.legContent div.interface #viewPrintControl {min-width: 260px}
+
+	ul.optionList li {height: 5.3em}
+	ul.optionList ul li {display: block; float: none}
+}
