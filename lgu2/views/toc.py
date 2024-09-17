@@ -48,7 +48,7 @@ def toc(request, type, year, number, version=None):
 
     if 'schedules' in data['contents']:
         toc_id = 'tocControlsAdded'
-    elif any(item.get('name') == 'part' for item in data['contents'['body']]):
+    elif any(item.get('name') == 'part' for item in data['contents']['body']):
         toc_id = 'tocControlsAdded'
     else:
         toc_id = 'viewLegSnippet'
