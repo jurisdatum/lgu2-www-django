@@ -1,14 +1,10 @@
 
-import requests
-
-from .server import SERVER
+from .server import get_json
 
 def browse_by_type(type: str, page: str):
-    url = SERVER + '/documents/' + type + '?page=' + page
-    headers = { 'Accept': 'application/json' }
-    return requests.get(url, headers=headers).json()
+    url = '/documents/' + type + '?page=' + page
+    return get_json(url)
 
 def browse_by_type_and_year(type: str, year: int, page: str):
-    url = SERVER + '/documents/' + type + '/' + str(year) + '?page=' + page
-    headers = { 'Accept': 'application/json' }
-    return requests.get(url, headers=headers).json()
+    url = '/documents/' + type + '/' + str(year) + '?page=' + page
+    return get_json(url)
