@@ -70,14 +70,21 @@ def document(request, type, year, number, version=None):
 
     status_message = get_status_message(data['meta'])
 
-    template = loader.get_template('document/document.html')
+    link_suffix = '/' + version if version else ''
     context = {
         'meta': data['meta'],
         'pit': pit,
         'timeline': timeline,
         'status_message': status_message,
-        'article': data['html']
+        'article': data['html'],
+        'links': {
+            'toc': '/' + data['meta']['id'] + '/contents' + link_suffix,
+            'content': '/' + data['meta']['id'] + link_suffix,
+            'notes': '/',
+            'resources': '/'
+        }
     }
+    template = loader.get_template('document/document.html')
     return HttpResponse(template.render(context, request))
 
 def document_clml(request, type, year, number, version=None):

@@ -123,3 +123,8 @@ STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'lgu2/static') ]
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# API
+
+API_BASE_URL = 'http://localhost:8080'

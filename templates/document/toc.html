@@ -5,22 +5,11 @@
 {% block page_title %}{{ meta.title }}{% endblock %}
 
 {% block head_middle %}
-<link rel="canonical" href="https://www.legislation.gov.uk/{{ meta.link }}" />
-<meta name="DC.title" content="{{ meta.title }}" />
-<meta name="DC.language" scheme="ISO639-2" content="{{ meta.lang }}" />
-<meta name="DC.publisher" content="{{ meta.publisher }}" />
-<meta name="DC.Date.Modified" content="{{ meta.modified }}" />
-<link rel="alternate" type="application/xml" href="/ukpga/2018/1/enacted/data.xml" />
-<link rel="alternate" type="application/rdf+xml" href="/ukpga/2018/1/enacted/data.rdf" title="RDF/XML" />
-<link rel="alternate" type="application/akn+xml" href="/ukpga/2018/1/enacted/data.akn" title="AKN" />
-<link rel="alternate" type="application/xhtml+xml" href="/ukpga/2018/1/enacted/data.xht" title="HTML snippet" />
-<link rel="alternate" type="text/html" href="/ukpga/2018/1/enacted/data.htm" title="Website (XHTML) Default View" />
-<link rel="alternate" type="application/pdf" href="/ukpga/2018/1/enacted/data.pdf" title="PDF" />
-<link rel="alternate" type="application/akn+xhtml" href="/ukpga/2018/1/enacted/data.html" title="HTML5 snippet" />
-<link rel="alternate" type="application/pdf" href="/ukpga/2018/1/pdfs/ukpga_20180001_en.pdf" title="Original PDF" />
-<link rel="index" href="/ukpga/2018/1/contents/enacted" title="Table of Contents" />
-<meta name="Legislation.year" content="2018" />
-<!-- <link rel="stylesheet" href="{% static 'primary.css' %}" type="text/css" /> -->
+<style type="text/css">/* Legislation stylesheets - load depending on content type */
+	@import "{% static 'lgu1/styles/legislation.css' %}";
+	@import "{% static 'lgu1/styles/primarylegislation.css' %}";
+	@import "{% static 'lgu1/styles/legislationOverwrites.css' %}";
+</style>
 <link rel="stylesheet" href="{% static 'lgu1/styles/view/changesOverTime.css' %}" type="text/css" />
 <script type="text/javascript" src="{% static 'lgu1/scripts/jquery-ui-1.8.24.custom.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'lgu1/scripts/view/jquery.ui.slider.min.js' %}"></script>
@@ -30,7 +19,7 @@
 {% block body_id %}leg{% endblock %}
 {% block body_class %}browse{% endblock %}
 
-{% block layout2_class %}legComplete{% endblock %}
+{% block layout2_class %}legToc{% endblock %}
 {% block layout2 %}
 			<h1 id="pageTitle" class="pageTitle">{{ meta.title }}</h1>
 			<div id="breadCrumb">
@@ -38,17 +27,17 @@
 				<ul>
 					<li class="first"><a href="/ukpga">UK Public General Acts</a></li>
 					<li><a href="{{ meta.link }}">{{ meta.cite }}</a></li>
-					<li class="activetext">{% translate 'Whole Act' %}</li>
+					<li class="activetext">{% translate 'Table of contents' %}</li>
 				</ul>
 			</div>
 			<ul id="legSubNav">
 				<li id="legTocLink">
 					<span class="presentation"></span>
-					<a href="{{ links.toc }}">{% translate 'Table of Contents' %}</a>
+					<a href="{{ links.toc }}" class="disabled">{% translate 'Table of Contents' %}</a>
 				</li>
 				<li id="legContentLink">
 					<span class="presentation"></span>
-					<a href="{{ links.content }}" class="disabled">{% translate 'Content' %}</a>
+					<a href="{{ links.content }}">{% translate 'Content' %}</a>
 				</li>
 				<li id="legEnLink">
 					<span class="presentation"></span>
@@ -66,7 +55,7 @@
 				</li>
 			</ul>
 			<div class="interface">
-				<div class="prevNextNav">
+				<!-- <div class="prevNextNav">
 					<ul>
 						<li class="prev">
 							<span class="userFunctionalElement disabled">
@@ -91,7 +80,7 @@
 							</span>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<ul id="viewPrintControl">
 					<li class="view">
 						<a class="userFunctionalElement" href="?view=plain">
@@ -124,13 +113,36 @@
 					<p class="intro">{{ status_message }}</p>
 				</div>
 				{% endif %}
-				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt">
-					<template shadowrootmode="open">
-						<style type="text/css"> @import "{% static 'primary.css' %}"; </style>
-						{{ article|safe }}
-					</template>
+				<div id="viewLegContents" xml:lang="en">
+					<div class="LegSnippet" id="{{ toc_id }}">
+						<div class="LegContents LegClearFix">
+							<ol>
+								<li class="LegContentsEntry">
+									<p class="LegClearFix LegContentsItem">
+										<span class="LegDS LegContentsTitle">
+											<a href="{{ links.intro }}">Introductory Text</a>
+										</span>
+									</p>
+								</li>
+								{% for item in contents.body %}
+									{% include "document/toc_item.html" with item=item %}
+								{% endfor %}
+								{% if contents.schedules %}
+								<li class="LegClearFix LegContentsSchedules">
+									<p class="LegContentsHeading">SCHEDULES</p>
+									<ol>
+									{% for item in contents.schedules %}
+										{% include "document/toc_item.html" with item=item %}
+									{% endfor %}
+									</ol>
+								</li>
+								{% endif %}
+							</ol>
+						</div>
+						<span class="LegClearFix"></span>
+					</div>
 				</div>
-				<div class="contentFooter">
+				<!-- <div class="contentFooter">
 					<div class="interface">
 						<div class="prevNextNav">
 							<ul>
@@ -145,7 +157,7 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<p class="backToTop"><a href="#top">Back to top</a></p>
 			</div>
 {% endblock %}
