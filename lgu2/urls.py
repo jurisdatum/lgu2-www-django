@@ -1,4 +1,5 @@
 
+from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.http import HttpResponse
@@ -20,6 +21,12 @@ urlpatterns += [
     path('admin/', admin.site.urls),
     path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
+
+# needed because some JavaScript files add links to "/static/..."
+if not settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^static/(.*)$', lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
+    ]
 
 urlpatterns += i18n_patterns(
 

@@ -579,9 +579,9 @@
 	#tools .userFunctionalElement .background span {display: none}
 	.content .subsection {margin: 2px 0 0 0; font-size: 1em}
 
-	#openingOptions .whole a {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -697px}
-	#openingOptions .minusSched a {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -798px}
-	#openingOptions .onlySched a {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -897px}
+	#openingOptions .whole a {background: url"../images/chrome/iconSprites.gif") no-repeat 0 -697px}
+	#openingOptions .minusSched a {background: url"../images/chrome/iconSprites.gif") no-repeat 0 -798px}
+	#openingOptions .onlySched a {background: url"../images/chrome/iconSprites.gif") no-repeat 0 -897px}
 
 	#whatVersion .userFunctionalElement {padding: 0; margin: 0}
 	#whatVersion .userFunctionalElement {width: auto; display: block}
@@ -1094,22 +1094,22 @@
 		background: rgba(100,0,100,0.5); background: linear-gradient(270deg, rgba(102,0,102,0.5) 0%, rgba(102,0,102,0.2) 85%)}
 
 	#layout1 a.pdfLink {
-		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -1317px}
+		background: url('../images/chrome/iconSprites.gif') no-repeat 0 -1317px}
 	#layout1 a.htmLink {
-		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0 -1438px}
-	#layout1 #tools #pdfVersionsContent a.pdfLink {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0px -1320px}
+		background: url('../images/chrome/iconSprites.gif') no-repeat 0 -1438px}
+	#layout1 #tools #pdfVersionsContent a.pdfLink {background: url"../images/chrome/iconSprites.gif") no-repeat 0px -1320px}
 	#changesOverTime #timeline #timelineData ul li a:after {
-	    background: url("/static/lgu1/images/timeline-point.png") no-repeat 5px 1px}
+	    background: url('../images/timeline-point.png') no-repeat 5px 1px}
 	#changesOverTime #timeline #timelineData ul li.currentVersion a:after {
-	    background: url("/static/lgu1/images/timeline-point-active.png") no-repeat 5px 1px}
+	    background: url('../images/timeline-point-active.png') no-repeat 5px 1px}
 	#changesOverTime #timeline #timelineData ul li.currentVersion a.euexitday-deal:after, #changesOverTime #timeline #timelineData ul li.currentVersion a.euexitdayoverlay-deal:after {
 	    background: none}
 	#doc.changeLeg .interface .userFunctionalElement .background {
-		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat 100% -4547px}
+		background: url('../images/chrome/iconSprites.gif') no-repeat 100% -4547px}
 	.modWin h3:before {
-		background: url("/static/lgu1/images/chrome/iconSprites.gif") no-repeat -4px -1954px}
+		background: url('../images/chrome/iconSprites.gif') no-repeat -4px -1954px}
 	#footer .copyrightstatement:before {
-		background: url("/static/lgu1/images/ogl.png") no-repeat 0 0; background-size: 53%}
+		background: url('../images/ogl.png') no-repeat 0 0; background-size: 53%}
 	#per.home .welcome ul#countryLeg li a#welcome, #per.home .welcomecy ul#countryLeg li a#welcomecy, #per.home .uk ul#countryLeg li a#uk, #per.home .ukcy ul#countryLeg li a#ukcy, #per.home .scotland ul#countryLeg li a#scotland, #per.home .scotlandcy ul#countryLeg li a#scotlandcy, #per.home .wales ul#countryLeg li a#wales, #per.home .walescy ul#countryLeg li a#walescy, #per.home .ni ul#countryLeg li a#ni, #per.home .nicy ul#countryLeg li a#nicy, #per.home .eu ul#countryLeg li a#eu, #per.home .eucy ul#countryLeg li a#eucy {
 		background-image: none}
 
@@ -1703,7 +1703,7 @@
 	#leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .next .userFunctionalElement:after {margin: 6px 0 0 8px}
 
 /* redesigned legislation logo */
-	#per.home #layout1 #header h1, #layout1 #header h2:not(.plainView #layout1 #header h2) {margin: 8px 0 0 0; background: url("/static/lgu1/images/uk-govt-crest.png") no-repeat 0 0; background-size: 69px; width: 18em}
+	#per.home #layout1 #header h1, #layout1 #header h2:not(.plainView #layout1 #header h2) {margin: 8px 0 0 0; background: url('../images/uk-govt-crest.png') no-repeat 0 0; background-size: 69px; width: 18em}
 	#per.home #layout1 #header h1 {font-size: 1.3em; font-weight: 300}
 	#doc h2 {font-size: 1.3em}
 	#per.home #layout1 #header h1 a, #layout1 #header h2 a {color: transparent; padding: 0 70px 35px 85px}

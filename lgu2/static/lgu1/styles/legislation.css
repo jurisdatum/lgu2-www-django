@@ -33,7 +33,7 @@ http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3
 .LegSnippet .LegProposedSubstitution {color: #FF4500; text-decoration: underline;}
 
 .LegSnippet .LegBlockRepeal {background-color: #EFF5F5; padding: 10px; zoom: 1; border: 1px solid #656A7B; float: left;}
-.LegSnippet .LegBlockRepealHeading {margin:-10px 0 20px -10px; padding-bottom: 8px; background: url(/static/lgu1/images/LegDisplay/blockRepealArrow.gif) no-repeat 92% 100%;}
+.LegSnippet .LegBlockRepealHeading {margin:-10px 0 20px -10px; padding-bottom: 8px; background: url('../images/LegDisplay/blockRepealArrow.gif') no-repeat 92% 100%;}
 .LegSnippet .LegBlockRepealHeading span {text-transform:uppercase; background: #656A7B; width: 100%; display: block; font-weight: bold; font-size: 120%; color: #FFF; text-align: right; font-style: normal; padding: 0.25em 10px 0.25em 0;}
 .LegSnippet .LegBlockRepeal p {background-color: #EFF5F5}
 .LegSnippet .LegBlockRepeal .LegAnnotations {background-color: #EFF5F5; margin-left: -10px; margin-right: -10px;}
@@ -44,7 +44,7 @@ http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3
 .LegSnippet .LegNotYetInForce {}
 
 .LegSnippet .LegBlockNotYetInForce {background-color: #EFF5F5; padding: 10px; zoom: 1; clear: both; width:728px; border: 1px solid #656A7B; float: left;}
-.LegSnippet .LegBlockNotYetInForceHeading {margin:-10px 0 20px -10px; padding-bottom: 8px; background: url(/static/lgu1/images/LegDisplay/blockNotYetInForceArrow.gif) no-repeat 92% 100%;}
+.LegSnippet .LegBlockNotYetInForceHeading {margin:-10px 0 20px -10px; padding-bottom: 8px; background: url('../images/LegDisplay/blockNotYetInForceArrow.gif') no-repeat 92% 100%;}
 .LegSnippet .LegBlockNotYetInForceHeading span {text-transform:uppercase; background: #656A7B; width: 100%; display: block; font-weight: bold; font-size: 120%; color: #FFF; text-align: right; font-style: normal; padding: 0.25em 10px 0.25em 0;}
 .LegSnippet .LegBlockNotYetInForce * {background-color: #EFF5F5}
 .LegSnippet .LegBlockNotYetInForce .LegP1No,
@@ -75,15 +75,15 @@ http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3
 .LegSnippet .LegCitation {}
 
 .LegExtentRestriction {display: none; font-size: 0.9em; line-height: 1.2em; margin-top: -0.2em; padding: 2px 1em 3px 1.25em; margin-left: 10px; vertical-align: top; position: relative;}
-.LegExtentRestriction { color: #fff; background: #660066 url(/static/lgu1/images/chrome/extentBg.gif) top left no-repeat; }
-a.LegExtentRestriction { color: #fff; background: #A41BB6 url(/static/lgu1/images/chrome/extentHighlightBg.gif) top left no-repeat; }
+.LegExtentRestriction { color: #fff; background: #660066 url('../images/chrome/extentBg.gif') top left no-repeat; }
+a.LegExtentRestriction { color: #fff; background: #A41BB6 url('../images/chrome/extentHighlightBg.gif') top left no-repeat; }
 .LegExtentRestriction .btl, .LegExtentRestriction .btr, .LegExtentRestriction .bbl, .LegExtentRestriction .bbr {position: absolute;  width: 10px;  height: 10px; margin: 0;}
-.LegExtentRestriction .btr {background: url(/static/lgu1/images/chrome/extentBg.gif) no-repeat -290px 0;  top:    0px;  right: 0;}
-.LegExtentRestriction .bbl {background: url(/static/lgu1/images/chrome/extentBg.gif) no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
-.LegExtentRestriction .bbr {background: url(/static/lgu1/images/chrome/extentBg.gif) no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
-a.LegExtentRestriction .btr {background: url(/static/lgu1/images/chrome/extentHighlightBg.gif) no-repeat -290px 0;  top:    0px;  right: 0;}
-a.LegExtentRestriction .bbl {background: url(/static/lgu1/images/chrome/extentHighlightBg.gif) no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
-a.LegExtentRestriction .bbr {background: url(/static/lgu1/images/chrome/extentHighlightBg.gif) no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
+.LegExtentRestriction .btr {background: url('../images/chrome/extentBg.gif') no-repeat -290px 0;  top:    0px;  right: 0;}
+.LegExtentRestriction .bbl {background: url('../images/chrome/extentBg.gif') no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
+.LegExtentRestriction .bbr {background: url('../images/chrome/extentBg.gif') no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
+a.LegExtentRestriction .btr {background: url('../images/chrome/extentHighlightBg.gif') no-repeat -290px 0;  top:    0px;  right: 0;}
+a.LegExtentRestriction .bbl {background: url('../images/chrome/extentHighlightBg.gif') no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
+a.LegExtentRestriction .bbr {background: url('../images/chrome/extentHighlightBg.gif') no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
 
 .LegSnippet .LegPerspective .LegExtentRestriction  {display: none;}
 .LegSnippet .LegConcurrent .LegExtentRestriction  {display: inline-block}

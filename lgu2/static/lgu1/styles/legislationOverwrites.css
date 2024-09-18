@@ -76,7 +76,7 @@ Use of !important is strictly temporary, if these styles can stay then integrate
     .LegSnippet .LegContents .LegContentsEntry p.LegContentsItem
     {padding-bottom: 0 !important; padding: 0 !important;}
     .LegSnippet .LegContents ol li {display: block !important; padding: 0.14em 0 !important;}
-    .LegSnippet .LegContents ol {margin-left: 0em !important; padding-left: 7em !important; background: transparent url(/static/lgu1/images/chrome/legTocBg.gif) repeat-y 2.5em 0;}
+    .LegSnippet .LegContents ol {margin-left: 0em !important; padding-left: 7em !important; background: transparent url('../images/chrome/legTocBg.gif') repeat-y 2.5em 0;}
     .LegSnippet .LegContents ol ol {margin-left: 1em !important; padding-left: 0 !important; background: none !important;}
 
     /* Schedules */
@@ -202,7 +202,7 @@ ol li ol li ol li ol li p.ENContentsTitle a {font-weight:normal;}
 /* Apply styles to image that open modal windows
 .LegSnippet a.previewImg {display: block;}
 .LegSnippet a.previewImg img {border: 2px solid #069; width: 740px;}
-.LegSnippet a.previewImg .zoomIcon {background: #069 url(../images/chrome/imgPreviewCorner.png) no-repeat bottom left; color: #fff; display: block; position: absolute; font-weight: bold; padding: 5px 10px 5px 25px; right: 15px;}
+.LegSnippet a.previewImg .zoomIcon {background: #069 url('../images/chrome/imgPreviewCorner.png') no-repeat bottom left; color: #fff; display: block; position: absolute; font-weight: bold; padding: 5px 10px 5px 25px; right: 15px;}
 */
 
 .LegExtentContainer .LegExtentRestriction {display:none;margin-left:0; right: 12px;position:absolute !important; max-width: 6%}

@@ -7,7 +7,7 @@ http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3
 
 */
 /* CSS for chrome view */
-#resultsTimeline {padding: 0.5em 3px 1em 61px; background: #F2F7FA url(/static/lgu1/images/chrome/navBgShadow.png) no-repeat scroll bottom left; position: relative;}
+#resultsTimeline {padding: 0.5em 3px 1em 61px; background: #F2F7FA url('../../images/chrome/navBgShadow.png') no-repeat scroll bottom left; position: relative;}
 
 #resultsTimeline .key {list-style: none; margin: 0 0 0.5em 0; width: 60%; float: left;}
 #resultsTimeline .key dt {display: inline; float: none;}
@@ -263,15 +263,15 @@ http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3
 #resultsTimeline #arrowLeft {float:left;}
 #resultsTimeline #arrowRight {float:right;}
 
-#resultsTimeline .arrowLeftEnabled {background:url(/static/lgu1/images/scrollbar/scrollbar.gif) -44px 0px;}
-#resultsTimeline .arrowRightEnabled {background:url(/static/lgu1/images/scrollbar/scrollbar.gif) -66px 0px;}
-#resultsTimeline .arrowLeftDisabled {background:url(/static/lgu1/images/scrollbar/scrollbar.gif) 0px 0px;}
-#resultsTimeline .arrowRightDisabled {background:url(/static/lgu1/images/scrollbar/scrollbar.gif) -22px 0px;}
+#resultsTimeline .arrowLeftEnabled {background:url('../../images/scrollbar/scrollbar.gif') -44px 0px;}
+#resultsTimeline .arrowRightEnabled {background:url('../../images/scrollbar/scrollbar.gif') -66px 0px;}
+#resultsTimeline .arrowLeftDisabled {background:url('../../images/scrollbar/scrollbar.gif') 0px 0px;}
+#resultsTimeline .arrowRightDisabled {background:url('../../images/scrollbar/scrollbar.gif') -22px 0px;}
 
 #resultsTimeline .arrow {display:block; width:22px; height: 22px;}
 #resultsTimeline #slider {position:relative; float:left; width: 727px; margin: 5px 0px 0px 67px;}
-#resultsTimeline #scrollbar {height: 30px; margin-top: 3px; background:url(/static/lgu1/images/scrollbar/scrollbar.gif) no-repeat 37px -33px;}
-#resultsTimeline .ui-slider .ui-slider-handle {background:url(/static/lgu1/images/scrollbar/scrollbar.gif) -88px 0px;
+#resultsTimeline #scrollbar {height: 30px; margin-top: 3px; background:url('../../images/scrollbar/scrollbar.gif') no-repeat 37px -33px;}
+#resultsTimeline .ui-slider .ui-slider-handle {background:url('../../images/scrollbar/scrollbar.gif') -88px 0px;
  width: 133px; height:22px; margin-top: -5px; margin-left: -66px; position:absolute; z-index: 2;}
 #resultsTimeline .ui-slider-horizontal {height: 0.8em;}
 

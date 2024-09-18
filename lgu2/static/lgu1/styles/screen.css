@@ -104,16 +104,16 @@ table th a {color: #494949;}
 #layout1 #header h2 {display: block; height: 97px; width: 363px; overflow: hidden; position: relative; margin: 0; float: left;}
 /*#header h1 span,
 #header h2 span
- {background: url(/static/lgu1/images/chrome/siteTitle.gif) no-repeat bottom left; display: block; position: absolute; left: 0; top: 0; height: 100%; width: 100%;} */
+ {background: url('../images/chrome/siteTitle.gif') no-repeat bottom left; display: block; position: absolute; left: 0; top: 0; height: 100%; width: 100%;} */
 
-.welsh {background: url(/static/lgu1/images/chrome/legislation_logo_welsh.gif) no-repeat bottom left; display: block; position: absolute; left: 0; top: 0; height: 100%; width: 100%;}
-.english{background: url(/static/lgu1/images/chrome/site_logo_legislation.gif) no-repeat bottom left; display: block; position: absolute; left: 0; top: 0; height: 100%; width: 100%;}
+.welsh {background: url('../images/chrome/legislation_logo_welsh.gif') no-repeat bottom left; display: block; position: absolute; left: 0; top: 0; height: 100%; width: 100%;}
+.english{background: url('../images/chrome/site_logo_legislation.gif') no-repeat bottom left; display: block; position: absolute; left: 0; top: 0; height: 100%; width: 100%;}
 
 
 /* Primary navigation */
 /* Sliding doors - taken from ALA article: http://www.alistapart.com/articles/slidingdoors2/
 Using example 8a to work with IE6 and below */
-#primaryNav  		{ background: #FFF url(/static/lgu1/images/chrome/navBg.gif) repeat-x bottom left; clear: both; width: 100%; min-width: 972px; border-top: 1px solid #424240; float: left; border-bottom: 1px solid #fff;}
+#primaryNav  		{ background: #FFF url('../images/chrome/navBg.gif') repeat-x bottom left; clear: both; width: 100%; min-width: 972px; border-top: 1px solid #424240; float: left; border-bottom: 1px solid #fff;}
 #primaryNav a {float:left;text-decoration:none;padding:5px 12px 4px 13px;}
 #primaryNav a > span {float:none;display:flex; cursor: pointer }
 #primaryNav a > span.cy{float:none;display:flex; cursor: pointer;}
@@ -125,14 +125,14 @@ Using example 8a to work with IE6 and below */
     padding: 0;
     float: none;
     width: 972px;
-    background: url(/static/lgu1/images/chrome/navDivider.gif) no-repeat bottom left;
+    background: url('../images/chrome/navDivider.gif') no-repeat bottom left;
 }
 /* shorten the width for the homepage */
 /*#per.home #primaryNav ul {width: 670px;}*/
 /* longer width for welsh language */
 /*#per.home #primaryNav ul.cy {width: 740px; font-size: 90%;}*/
 #primaryNav ul li 	{
-    background: url(/static/lgu1/images/chrome/navDivider.gif) no-repeat bottom right;
+    background: url('../images/chrome/navDivider.gif') no-repeat bottom right;
     float: none;
 } /* removed display:inline to prevent FF3.0 from misaligning first element */
 #primaryNav ul li a	{
@@ -148,8 +148,8 @@ Using example 8a to work with IE6 and below */
 #primaryNav ul li#quickSearch a.active {border-top: 2px solid #CCC; color: #000;}
 #primaryNav li#quickSearch {margin-left: auto;}
 #primaryNav li#quickSearch a {background: none;}
-/*#primaryNav li#quickSearch a {background: url(/static/lgu1/images/chrome/navDivider.gif) no-repeat bottom left;}*/
-.js #primaryNav li#quickSearch a > span {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat right -397px; padding-right: 22px;}
+/*#primaryNav li#quickSearch a {background: url('../images/chrome/navDivider.gif') no-repeat bottom left;}*/
+.js #primaryNav li#quickSearch a > span {background: url"../images/chrome/iconSprites.gif") no-repeat right -397px; padding-right: 22px;}
 .js #primaryNav li#quickSearch a.close > span {background-position: right -296px}
 /*.home #primaryNav li#quickSearch {display: none;}*/
 
@@ -163,7 +163,7 @@ Using example 8a to work with IE6 and below */
 #per.newLeg      	#primaryNav ul li.link3 a,
 #doc.coronavirus   	#primaryNav ul li.link4 a,
 #doc.changeLeg   	#primaryNav ul li.link5 a
- {background: url"/static/lgu1/images/chrome/activeHeaderLink.gif") no-repeat center top; color: #333;}
+ {background: url('../images/chrome/activeHeaderLink.gif') no-repeat center top; color: #333;}
 /* end of primary nav active */
 
 /* Search bar */
@@ -182,9 +182,9 @@ Using example 8a to work with IE6 and below */
 #contentSearch .number {width: 11em;}
 #contentSearch .submit {float: right;}
 #contentSearch .advSearch {padding-top: 0.5em; font-weight: bold; font-size: 1.2em; margin-right: 0; clear: both; float: none; text-align: right;}
-#contentSearch .advSearch a {color: #03395D; background:transparent url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat scroll right -3946px; margin-right: 12px; padding-right:10px;}
-input {border: 1px solid #7B85AD; padding:5px 3px; background: url(/static/lgu1/images/chrome/home_form_shadow.gif) no-repeat top left;}
-select {border: 1px solid #7B85AD; padding:5px 3px 5px 1px; background: url(/static/lgu1/images/chrome/home_form_shadow.gif) no-repeat top left;}
+#contentSearch .advSearch a {color: #03395D; background:transparent url('../images/chrome/iconSprites.gif') no-repeat scroll right -3946px; margin-right: 12px; padding-right:10px;}
+input {border: 1px solid #7B85AD; padding:5px 3px; background: url('../images/chrome/home_form_shadow.gif') no-repeat top left;}
+select {border: 1px solid #7B85AD; padding:5px 3px 5px 1px; background: url('../images/chrome/home_form_shadow.gif') no-repeat top left;}
 /* end of search bar */
 
 /* secondary nav */
@@ -193,11 +193,11 @@ ul#secondaryNav li {display: inline; list-style: none; margin: 0 1px 0 0; line-h
 ul#secondaryNav li a {text-decoration: none; font-size: 0.9em; color: #424240}
 ul#secondaryNav li a:hover {text-decoration: underline;}
 .natArch a {width: 249px; height: 51px; display: block; float: right; position: relative;  margin: 18px 12px 0 0;}
-.natArch a .backgroundImage {position: absolute; background: url("/static/lgu1/images/chrome/nat-archive-delivered-en.svg") no-repeat;left: 17px; top: 0; height: 49px; width: 252px;}
+.natArch a .backgroundImage {position: absolute; background: url('../images/chrome/activeHeaderLink.gif') no-repeat;left: 17px; top: 0; height: 49px; width: 252px;}
 
 /*welsh page image*/
 .natArchWelsh a {width: 249px; height: 51px; display: block; float: right; position: relative; margin: 18px 12px 0 0;}
-.natArchWelsh a .backgroundImage {position: absolute; background: url("/static/lgu1/images/chrome/nat-archive-delivered-cy.svg") no-repeat;left: 17px; top: 0px; height: 49px; width: 252px;}
+.natArchWelsh a .backgroundImage {position: absolute; background: url('../images/chrome/nat-archive-delivered-cy.svg') no-repeat;left: 17px; top: 0px; height: 49px; width: 252px;}
 
 /* end of secondary nav */
 
@@ -210,7 +210,7 @@ ul#secondaryNav li a.langaugeSwitch {font-weight: bold; color: #E00000;}
 #footer div {padding-right:1.5em; display: flex;  font-size: 0.95em; }
 #footer .copyright { text-align:right; flex-basis: 420px; margin-left: auto; }
 #footer .copyright span:lang(cy) { font-size: 0.92em; }
-#footer .copyrightstatement { font-size: 0.94em; /* padding-left:55px;background: url"/static/lgu1/images/chrome/ogl-symbol.gif") no-repeat scroll 0 0; */ }
+#footer .copyrightstatement { font-size: 0.94em; /* padding-left:55px;background: url"../images/chrome/ogl-symbol.gif") no-repeat scroll 0 0; */ }
 #footer .copyrightstatement span:lang(cy) { font-size: 0.84em; }
 #footer .copyrightstatement img { float: left; margin-right: 15px; }
 #footer div p {margin: 0 ; padding: 0 1% 0 1%; color: #66677C;}
@@ -282,7 +282,7 @@ ul#secondaryNav li a.langaugeSwitch {font-weight: bold; color: #E00000;}
 #layout2.legComplete #tools,
 #layout2.legIA #tools,
 #layout2.legIAContent #tools,
-body.legContent #navigation {float: left; clear: both; width: 200px; min-height: 300px; display:block; background: url"/static/lgu1/images/chrome/uiSprites.gif") no-repeat 0 -323px;}
+body.legContent #navigation {float: left; clear: both; width: 200px; min-height: 300px; display:block; background: url"../images/chrome/uiSprites.gif") no-repeat 0 -323px;}
 
 #leg #content,
 body.legContent #content
@@ -351,10 +351,10 @@ body.legContent #content
 {padding: 6px 18px 16px;}
 
 /* Legislation sub navigation */
-ul#legSubNav {padding: 0; margin: 0; padding: 0; float: left; clear: both; width: 100%; background: #FFF url(/static/lgu1/images/chrome/navBg.gif) repeat-x bottom left; border-top: 1px solid #424240; border-bottom: 1px solid #424240;}
-ul#legSubNav li {position: relative;    background: url(/static/lgu1/images/chrome/navDivider.gif) no-repeat bottom right;    float:left;    display: block;    list-style: none;    color: #666;    font-weight: bold;    text-decoration:none;    font-size: 1em;    line-height: 2.45em;    margin: 0;    padding: 0 1px 0 0;}
+ul#legSubNav {padding: 0; margin: 0; padding: 0; float: left; clear: both; width: 100%; background: #FFF url('../images/chrome/navBg.gif') repeat-x bottom left; border-top: 1px solid #424240; border-bottom: 1px solid #424240;}
+ul#legSubNav li {position: relative;    background: url('../images/chrome/navDivider.gif') no-repeat bottom right;    float:left;    display: block;    list-style: none;    color: #666;    font-weight: bold;    text-decoration:none;    font-size: 1em;    line-height: 2.45em;    margin: 0;    padding: 0 1px 0 0;}
 ul#legSubNav li, ul#navTabs li.active {text-decoration:none;}
-ul#legSubNav li span.presentation {background: url(/static/lgu1/images/chrome/navBgShadow.png) no-repeat bottom left; width: 100%; height: 5px; position: absolute; bottom: 0em; left: 0; z-index: 1000; display: none;}
+ul#legSubNav li span.presentation {background: url('../images/chrome/navBgShadow.png') no-repeat bottom left; width: 100%; height: 5px; position: absolute; bottom: 0em; left: 0; z-index: 1000; display: none;}
 ul#legSubNav li a, ul#legSubNav li span.disabled {color: #0D2840;font-weight: bold;font-size: 1.15em;line-height: 2em;background: none;display: block;float: left;padding: 5px 12px 4px 13px;z-index: 999;text-decoration: none;}
 ul#legSubNav li span.disabled {color: #878787}
 ul#legSubNav li a:hover {text-decoration: underline;}
@@ -375,7 +375,7 @@ ul#legSubNav li.base {margin-left: 0;}
 .legCommencement li#legConmmencementLink a,
 .legIA li#legIALink a,
 .legIAContent li#legIALink a
-{ background: url(/static/lgu1/images/chrome/activeHeaderLink.gif) no-repeat center top; }
+{ background: url('../images/chrome/activeHeaderLink.gif') no-repeat center top; }
 
 .legContent li#legContentLink,
 .legComplete li#legContentLink,
@@ -412,7 +412,7 @@ ul#legSubNav li.base {margin-left: 0;}
 /* end of Legislation sub navigation */
 
 /* Legislation interface */
-div.interface {display: block; clear: both; width: 100%; background: #fafafa url(/static/lgu1/images/chrome/uiSprites.gif) no-repeat 0px -254px; float: left; overflow: auto; padding: 10px 0; min-height: 23px;}
+div.interface {display: block; clear: both; width: 100%; background: #fafafa url('../images/chrome/uiSprites.gif') no-repeat 0px -254px; float: left; overflow: auto; padding: 10px 0; min-height: 23px;}
 div.interface ul {margin: 0; padding: 0; list-style: none; float: left; overflow: auto;}
 div.interface ul li {display: inline;}
 #content div.interface {border-top: 1px solid #d3d3d3;}
@@ -425,9 +425,9 @@ div.prevNextNav      .userFunctionalElement {min-width: 6em;}
 div.interface .disabled {color: #ACACAC}
 div.interface .active {color: #016398; background: #fff}
 
-.prev .userFunctionalElement .background    {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0% -101px;  padding-left: 15px; display:block;}
+.prev .userFunctionalElement .background    {background: url('../images/chrome/iconSprites.gif') no-repeat 0% -101px;  padding-left: 15px; display:block;}
 .prev .disabled .background {background-position: 0 -4351px}
-.next .userFunctionalElement .background   {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 100% -200px; padding-right: 15px; display:block;}
+.next .userFunctionalElement .background   {background: url('../images/chrome/iconSprites.gif') no-repeat 100% -200px; padding-right: 15px; display:block;}
 .next .disabled .background {background-position: 100% -4451px}
 .view .userFunctionalElement    {min-width: 6em;}
 
@@ -603,34 +603,34 @@ table.searchExample td a {font-weight: normal}
 
 #tools #advFeatures li.first { border-top: none;}
 #tools #advFeatures li { border-top: 1px dotted #ccc;}
-#tools #advFeatures li a.userFunctionalElement {color: #292929; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2275px; border: none; font-weight: normal; padding:6px 0 0.15em 25px; min-height: 20px; text-align: left;}
-#tools #advFeatures li a.close {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2425px; font-weight: bold; color: #069;}
-#tools #advFeatures li span.userFunctionalElement {width: 155px; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2265px; border: none; font-weight: normal; padding:6px 0 0.15em 25px; min-height: 20px; text-align: left;}
-#tools #advFeatures li span.close {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2425px; font-weight: bold; color: #069;}
+#tools #advFeatures li a.userFunctionalElement {color: #292929; background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2275px; border: none; font-weight: normal; padding:6px 0 0.15em 25px; min-height: 20px; text-align: left;}
+#tools #advFeatures li a.close {background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2425px; font-weight: bold; color: #069;}
+#tools #advFeatures li span.userFunctionalElement {width: 155px; background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2265px; border: none; font-weight: normal; padding:6px 0 0.15em 25px; min-height: 20px; text-align: left;}
+#tools #advFeatures li span.close {background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2425px; font-weight: bold; color: #069;}
 #advFeatures h2 {width: 155px; display: block;}
 #tools .linkContainer {float:right; margin-right: -22px;}
 #advFeatures .content {clear: left;}
 #advFeatures .content a {padding-left: 20px; padding-bottom: 8px;}
 
 #tools #moreOptions li { border-top: 1px dotted #ccc;}
-#tools #moreOptions li a.userFunctionalElement {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2265px; border: none; font-weight: normal; padding-left: 25px; padding-bottom: 0.15em; padding-top: 6px; min-height: 20px; text-align: left;}
-#tools #moreOptions li a.close {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2415px; font-weight: bold; color: #069;}
+#tools #moreOptions li a.userFunctionalElement {background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2265px; border: none; font-weight: normal; padding-left: 25px; padding-bottom: 0.15em; padding-top: 6px; min-height: 20px; text-align: left;}
+#tools #moreOptions li a.close {background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2415px; font-weight: bold; color: #069;}
 #moreOptions h2 {width: 155px; display: block;}
 #tools .linkContainer {float:right;}
 #moreOptions a.expandCollapseLink {display: block; height: 20px; float: left; clear: none;}
 #moreOptions .content {clear: left;}
 #moreOptions .content a {padding-left: 20px; padding-bottom: 8px;}
 
-#tools .toolList .userFunctionalElement .background	{background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 1px -598px; color: #666;}
-#tools .toolList span.userFunctionalElement .background {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 1px -598px; color: #878787}
-#tools .toolList span.active .background {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 1px -498px; color: #069;}
-#tools .toolList span.disabled .background {background: url"/static/lgu1/images/chrome/iconSprites.gif") no-repeat 0px -4649px; color: #ACACAC}
-#tools a.userFunctionalElement {background:url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat scroll -1px -495px transparent; border:1px solid #666;}
+#tools .toolList .userFunctionalElement .background	{background: url('../images/chrome/iconSprites.gif') no-repeat 1px -598px; color: #666;}
+#tools .toolList span.userFunctionalElement .background {background: url('../images/chrome/iconSprites.gif') no-repeat 1px -598px; color: #878787}
+#tools .toolList span.active .background {background: url('../images/chrome/iconSprites.gif') no-repeat 1px -498px; color: #069;}
+#tools .toolList span.disabled .background {background: url"../images/chrome/iconSprites.gif") no-repeat 0px -4649px; color: #ACACAC}
+#tools a.userFunctionalElement {background:url('../images/chrome/interfacebuttonSprites.gif') no-repeat scroll -1px -495px transparent; border:1px solid #666;}
 #tools a.userFunctionalElement .btl {background-position: 0 -494px;}
 #tools a.userFunctionalElement .btr {background-position: 100% -494px;}
 #tools a.userFunctionalElement .bbl {background-position: 0 -557px;}
 #tools a.userFunctionalElement .bbr {background-position: -293px -557px;}
-#tools .userFunctionalElement.active {background:url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat scroll -1px -424px transparent; border:1px solid #069;}
+#tools .userFunctionalElement.active {background:url('../images/chrome/interfacebuttonSprites.gif') no-repeat scroll -1px -424px transparent; border:1px solid #069;}
 #tools .userFunctionalElement.active .btl{background-position: 0 -423px;}
 #tools .userFunctionalElement.active .btr{background-position: 100% -423px;}
 #tools .userFunctionalElement.active .bbl{background-position: 0 -486px;}
@@ -641,9 +641,9 @@ table.searchExample td a {font-weight: normal}
 #tools .section .title a.expandCollapseLink {display: inline-block; float: none; clear: none;}
 #openingOptions .content {clear: left;}
 #openingOptions .content a {clear: left; float: left; padding-left: 20px; padding-bottom: 2px; margin:0 0 4px; color:#292929;}
-#openingOptions .whole a {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -700px;}
-#openingOptions .minusSched a {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -801px;}
-#openingOptions .onlySched a {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -900px;}
+#openingOptions .whole a {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -700px;}
+#openingOptions .minusSched a {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -801px;}
+#openingOptions .onlySched a {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -900px;}
 /* end of opening options */
 
 .geoExtent span {font-size: 0.9em; padding-left: 25px; display: block;}
@@ -655,7 +655,7 @@ dl.geoExtentDict dd span {font-weight: bold;}
 
 /* expandCollapse Links */
 #tools .section a.helpItem,
-a.expandCollapseLink {display: block; float: right; text-align: right; font-weight: bold; padding-right: 22px; padding-top: 0px; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat right -403px;}
+a.expandCollapseLink {display: block; float: right; text-align: right; font-weight: bold; padding-right: 22px; padding-top: 0px; background: url('../images/chrome/iconSprites.gif') no-repeat right -403px;}
 #tools .section a.helpItem {background: none; padding: 0;}
 a.expandCollapseLink span.accessibleText {position: absolute; top: -2000px; left: -5000px; }
 #statusWarning a.expandCollapseLink, #brexitInfo a.expandCollapseLink {float: none;}
@@ -671,15 +671,15 @@ a.expandCollapseLink.pageTitleAltLink { position: absolute;top: 30px;right: 15px
 #statusWarning h2 {color: #990100; float: left; margin: 0; font-size: 1.05em}
 #statusWarning #statusWarningSubSections {display: block; width: 737px;}
 #statusWarning #statusWarningSubSections .section {display: block; border: 1px solid #B87889; background: #F9F7F8; margin-top: 10px; }
-#statusWarning #statusWarningSubSections .section .title {font-size: 1em; padding: 0.3em 15px 0.4em ; background: #f3e7e7 url(/static/lgu1/images/chrome/statusWarningSubSectionTitleBg.gif) bottom left repeat-x; overflow: auto;}
+#statusWarning #statusWarningSubSections .section .title {font-size: 1em; padding: 0.3em 15px 0.4em ; background: #f3e7e7 url('../images/chrome/statusWarningSubSectionTitleBg.gif') bottom left repeat-x; overflow: auto;}
 #statusWarning #statusWarningSubSections .section .future {font-size: 1em; padding: 0.3em 15px 0.4em ; background: #e7e7e7; overflow: auto;}
 
 #statusWarning #statusWarningSubSections ul {margin: 0.25em 0; list-style: none; line-height: 1.8em; display: block;}
 #statusWarning #statusWarningSubSections ul li {list-style: none; display: block;}
 #statusWarning #statusWarningSubSections ul li.uk-effect,
 #statusWarning #statusWarningSubSections ul li.eu-effect { padding-left: 25px; }
-#statusWarning #statusWarningSubSections ul li.uk-effect { background: url(/static/lgu1/images/chrome/icon--uk-effect.png) 0% 25% no-repeat; }
-#statusWarning #statusWarningSubSections ul li.eu-effect { background: url(/static/lgu1/images/chrome/icon--eu-effect.png) 0% 25% no-repeat; }
+#statusWarning #statusWarningSubSections ul li.uk-effect { background: url('../images/chrome/icon--uk-effect.png') 0% 25% no-repeat; }
+#statusWarning #statusWarningSubSections ul li.eu-effect { background: url('../images/chrome/icon--eu-effect.png') 0% 25% no-repeat; }
 #statusWarningSubSections .section .title h3 {font-size: 1em; width: 600px; color: #000; display: inline;}
 #statusWarning.uptoDate{background: #c7e6c9; border-left: 2px solid #337135;}
 #statusWarning.uptoDate h2{color: #306E32}
@@ -702,7 +702,7 @@ a.expandCollapseLink.pageTitleAltLink { position: absolute;top: 30px;right: 15px
 /* Info section box */
 #infoSection, #infoSection-status, #infoSection-note {background: #E6EAF5; border-left: 2px solid #333; border-bottom: 2px solid #fff; padding: 10px;}
 #infoSection p.intro, #infoSection h2, #infoSection-status p.intro, #infoSection-status h2, #infoSection-note p.intro, #infoSection-note h2 {display: inline; padding-right: 0.25em; font-size: 1em;}
-#infoSection p.c2a, #infoSection-status p.c2a, #nfoSection-note p.c2a { text-align: right; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 100% -201px; padding-right: 15px; }
+#infoSection p.c2a, #infoSection-status p.c2a, #nfoSection-note p.c2a { text-align: right; background: url('../images/chrome/iconSprites.gif') no-repeat 100% -201px; padding-right: 15px; }
 #infoSection p.c2a a, #infoSection-status p.c2a a, #infoSection-note p.c2a a { color: inherit; font-weight: bold; }
 /* End of Brexit box */
 /* End of Info section box */
@@ -733,18 +733,18 @@ h1.proposed {background: #FFF9EE;margin-bottom:10px !important;}
 #brexitInfo ul {margin: 1em 0; list-style: none; line-height: 1.8em; display: block; padding-left: 0;}
 #brexitInfo li {list-style: none; display: block; margin-left: 0; padding-left: 0}
 #brexitInfo .uk-effect, #brexitInfo .eu-effect { padding-left: 25px; }
-#brexitInfo .uk-effect { background: url(/static/lgu1/images/chrome/icon--uk-effect.png) 0 25% no-repeat;}
-#brexitInfo .eu-effect { background: url(/static/lgu1/images/chrome/icon--eu-effect.png) 0 25% no-repeat;}
+#brexitInfo .uk-effect { background: url('../images/chrome/icon--uk-effect.png') 0 25% no-repeat;}
+#brexitInfo .eu-effect { background: url('../images/chrome/icon--eu-effect.png') 0 25% no-repeat;}
 /* End of Brexit box */
 
 /* Back to top */
 #leg #content p.backToTop {margin: 0; text-align: right; background: #E6E6E6; padding: 0; padding-top: 1px; float: left; /* added to stop scrollbars appearing in FF */ bottom: 0; width: 100%; /* can't be 100% because of the border of 1px to the left and right */}
-#leg #content p.backToTop a {font-size: 1em; font-weight: bold; padding: 0.25em 32px 0.35em 0.35em; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat top right; color: #069; border-top: 1px solid #fff; display: block; margin-top: -1px;}
+#leg #content p.backToTop a {font-size: 1em; font-weight: bold; padding: 0.25em 32px 0.35em 0.35em; background: url('../images/chrome/iconSprites.gif') no-repeat top right; color: #069; border-top: 1px solid #fff; display: block; margin-top: -1px;}
 /* End of Back to top */
 
 /* Back to top periphery pages */
 #per p.backToTop {clear: both; margin: 0; text-align: right;/* background: #E6E6E6*/;padding: 0; padding-top: 1px; border: 1px solid #c7c7c7; border-bottom: 0;}
-#per p.backToTop a {font-size: 1em; font-weight: bold; padding: 0.35em 32px 0.25em 0.35em; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat top right; color: #069; border-top: 1px solid #fff; display: block; margin: -1px 0;}
+#per p.backToTop a {font-size: 1em; font-weight: bold; padding: 0.35em 32px 0.25em 0.35em; background: url('../images/chrome/iconSprites.gif') no-repeat top right; color: #069; border-top: 1px solid #fff; display: block; margin: -1px 0;}
 /* End of Back to top periphery pages */
 
 #viewLeg .LegSnippet .geoExtInfo {display: block; text-align: right; margin: 0.5em 0 0 0;}
@@ -773,7 +773,7 @@ ul.optionList ul li {padding: 0;display: inline; float: none; border-left: none;
 
 #breadCrumb h3 {font-size: 1em; margin: 0.5em 0 0 1.3em;}
 #breadCrumb ul {list-style: none; padding: 0 18px 8px 18px; margin: 0;}
-#breadCrumb ul li {padding: 0 0 0 17px; margin: 0; display: inline; font-weight: bold; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat scroll -2px -2747px}
+#breadCrumb ul li {padding: 0 0 0 17px; margin: 0; display: inline; font-weight: bold; background: url('../images/chrome/iconSprites.gif') no-repeat scroll -2px -2747px}
 #breadCrumb ul li.first {background: none; padding: 0;}
 #breadCrumb ul li.active {color: #333;}
 #breadCrumb a {color: #666}
@@ -783,7 +783,7 @@ ul.optionList ul li {padding: 0;display: inline; float: none; border-left: none;
 .modWin {width: 600px; border: 5px solid #006599; background: #FAFAFA; margin-top: 30px; clear: both; margin-left: auto; margin-right: auto;}
 .js .modWin {display: none;}
 .modWin .title {padding: 1em 30px 0 30px;}
-.modWin .content {padding: 0 30px 1.5em 30px; margin: 0 0 0 0; background: url(/static/lgu1/images/chrome/navBgShadow.png) no-repeat bottom left;}
+.modWin .content {padding: 0 30px 1.5em 30px; margin: 0 0 0 0; background: url('../images/chrome/navBgShadow.png') no-repeat bottom left;}
 .modWin h3 {font-size: 1.7em; font-weight: bold; color: #666;}
 .modWin p {font-size: 1.2em;color: #666; line-height: 1.6em;}
 .modWin .interface {float: none;}
@@ -796,11 +796,11 @@ ul.optionList ul li {padding: 0;display: inline; float: none; border-left: none;
 
 /* Individual modal window styles */
 .pdfWarningTitle {margin-left: -12px;}
-.pdfWarningTitle h3 {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 5px -1000px; padding-left: 60px; min-height: 55px; }
-.webWarningTitle h3 {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -1950px; padding-left: 60px; min-height: 55px; }
-.openingWholeWarningTitle h3 {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -700px; padding-left: 60px; min-height: 55px; }
-.openingWholeWithoutSchedulesWarningTitle h3 {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -801px; padding-left: 60px; min-height: 55px; }
-.openingSchedulesOnlyWarningTitle h3 {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -900px; padding-left: 60px; min-height: 55px; }
+.pdfWarningTitle h3 {background: url('../images/chrome/iconSprites.gif') no-repeat 5px -1000px; padding-left: 60px; min-height: 55px; }
+.webWarningTitle h3 {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -1950px; padding-left: 60px; min-height: 55px; }
+.openingWholeWarningTitle h3 {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -700px; padding-left: 60px; min-height: 55px; }
+.openingWholeWithoutSchedulesWarningTitle h3 {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -801px; padding-left: 60px; min-height: 55px; }
+.openingSchedulesOnlyWarningTitle h3 {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -900px; padding-left: 60px; min-height: 55px; }
 /* end of modal windows */
 /*---------------
 6. Homepage
@@ -833,22 +833,22 @@ ul.optionList ul li {padding: 0;display: inline; float: none; border-left: none;
 .carousel-pause.paused {background: url('/images/chrome/play-circle-outline.svg') no-repeat bottom center; }
 .carousel-pause.playing {background: url('/images/chrome/pause-circle-outline.svg') no-repeat bottom center; }
 
-#per.home #intro ul#countryLeg {display: block;list-style: none; width: 969px; margin: 0 auto; padding: 0; display: block;background: #F9F9F9 url(/static/lgu1/images/chrome/navBg.gif) repeat-x bottom left; height: 4.15em; position: relative; margin-top: -4.15em;}
+#per.home #intro ul#countryLeg {display: block;list-style: none; width: 969px; margin: 0 auto; padding: 0; display: block;background: #F9F9F9 url('../images/chrome/navBg.gif') repeat-x bottom left; height: 4.15em; position: relative; margin-top: -4.15em;}
 #per.home #intro ul#countryLeg {display: none}
 #per.js #intro ul#countryLeg{display:block;}
 #per.home #intro ul#countryLeg li {list-style: none; display: inline;}
 #per.home #intro ul#countryLeg li a {font-size: 1.3em; font-weight: bold; color: #0F2741; padding: 1em 1.375em 0.8em; float: left; border-right: 1px solid #C0C5C8;}
 
 #per.home .welcome ul#countryLeg li a#welcome,
-#per.home .welcomecy ul#countryLeg li a#welcomecy {background: #02385A url(/static/lgu1/images/chrome/homeButtonBgWelcome.gif) bottom right; color: #fff}
+#per.home .welcomecy ul#countryLeg li a#welcomecy {background: #02385A url('../images/chrome/homeButtonBgWelcome.gif') bottom right; color: #fff}
 #per.home .uk ul#countryLeg li a#uk,
-#per.home .ukcy ul#countryLeg li a#ukcy {background:#9D6123 url(/static/lgu1/images/chrome/homeButtonBgUk.gif) bottom right; color: #fff}
+#per.home .ukcy ul#countryLeg li a#ukcy {background:#9D6123 url('../images/chrome/homeButtonBgUk.gif') bottom right; color: #fff}
 #per.home .scotland ul#countryLeg li a#scotland,
-#per.home .scotlandcy ul#countryLeg li a#scotlandcy {background: #430021 url(/static/lgu1/images/chrome/homeButtonBgScotland.gif) bottom right; color: #fff}
+#per.home .scotlandcy ul#countryLeg li a#scotlandcy {background: #430021 url('../images/chrome/homeButtonBgScotland.gif') bottom right; color: #fff}
 #per.home .wales ul#countryLeg li a#wales,
-#per.home .walescy ul#countryLeg li a#walescy {background: #002E2E url(/static/lgu1/images/chrome/homeButtonBgWales.gif) bottom right; color: #fff}
+#per.home .walescy ul#countryLeg li a#walescy {background: #002E2E url('../images/chrome/homeButtonBgWales.gif') bottom right; color: #fff}
 #per.home .ni ul#countryLeg li a#ni,
-#per.home .nicy ul#countryLeg li a#nicy {background:#5B4F65 url(/static/lgu1/images/chrome/homeButtonBgNi.gif) bottom right; color: #fff}
+#per.home .nicy ul#countryLeg li a#nicy {background:#5B4F65 url('../images/chrome/homeButtonBgNi.gif') bottom right; color: #fff}
 #per.home .eu ul#countryLeg li a#eu,
 #per.home .eucy ul#countryLeg li a#eucy {background:#222222 ; color: #fff}
 
@@ -865,12 +865,12 @@ ul.optionList ul li {padding: 0;display: inline; float: none; border-left: none;
 .js .ni #animContent .ni,
 .js .eu #animContent .eu{display: block !important;}
 
-#per.home #intro.welcome #animContent .welcome{background: #02385A url(/static/lgu1/images/chrome/homepageCountryBG/welcome.png) no-repeat bottom left;}
-#per.home #intro.scotland #animContent .scotland{background: #430021 url(/static/lgu1/images/chrome/homepageCountryBG/scotland.png) no-repeat bottom left; display: none}
-#per.home #intro.wales #animContent .wales {background: #002E2E url(/static/lgu1/images/chrome/homepageCountryBG/wales.png) no-repeat bottom left; display: none}
-#per.home #intro.uk #animContent .uk{background: #9D6123 url(/static/lgu1/images/chrome/homepageCountryBG/uk.png) no-repeat bottom left; display: none}
-#per.home #intro.ni #animContent .ni{background: #5B4F65 url(/static/lgu1/images/chrome/homepageCountryBG/ni.png) no-repeat bottom left; display: none;}
-#per.home #intro.eu #animContent .eu{background: #777777 url(/static/lgu1/images/chrome/homepageCountryBG/eu.png) no-repeat bottom left; display: none;}
+#per.home #intro.welcome #animContent .welcome{background: #02385A url('../images/chrome/homepageCountryBG/welcome.png') no-repeat bottom left;}
+#per.home #intro.scotland #animContent .scotland{background: #430021 url('../images/chrome/homepageCountryBG/scotland.png') no-repeat bottom left; display: none}
+#per.home #intro.wales #animContent .wales {background: #002E2E url('../images/chrome/homepageCountryBG/wales.png') no-repeat bottom left; display: none}
+#per.home #intro.uk #animContent .uk{background: #9D6123 url('../images/chrome/homepageCountryBG/uk.png') no-repeat bottom left; display: none}
+#per.home #intro.ni #animContent .ni{background: #5B4F65 url('../images/chrome/homepageCountryBG/ni.png') no-repeat bottom left; display: none;}
+#per.home #intro.eu #animContent .eu{background: #777777 url('../images/chrome/homepageCountryBG/eu.png') no-repeat bottom left; display: none;}
 
 #per.home #intro #homeCTA { position: absolute;top: 20px;right: 20px;background: #FFFFFF;padding: 10px 20px 15px;text-align: center;max-width: 200px;width: 100%;}
 #per.home #intro #homeCTA img { width: 85%; }
@@ -893,35 +893,35 @@ ul.optionList ul li {padding: 0;display: inline; float: none; border-left: none;
 .js .nicy #animContent .nicy,
 .js .eucy #animContent .eucy{display: block !important;}
 
-#per.home #intro.welcomecy #animContent .welcomecy{background: #02385A url(/static/lgu1/images/chrome/homepageCountryWelshBG/welcome.png) no-repeat bottom left;}
-#per.home #intro.scotlandcy #animContent .scotlandcy{background: #430021 url(/static/lgu1/images/chrome/homepageCountryWelshBG/scotland.png) no-repeat bottom left; display: none}
-#per.home #intro.walescy #animContent .walescy {background: #002E2E url(/static/lgu1/images/chrome/homepageCountryWelshBG/wales.png) no-repeat bottom left; display: none}
-#per.home #intro.ukcy #animContent .ukcy{ background: #9D6123 url(/static/lgu1/images/chrome/homepageCountryWelshBG/uk.png) no-repeat bottom left; display: none}
-#per.home #intro.nicy #animContent .nicy{background: #5B4F65 url(/static/lgu1/images/chrome/homepageCountryWelshBG/ni.png) no-repeat bottom left; display: none;}
-#per.home #intro.eucy #animContent .eucy{background:  #282828 url(/static/lgu1/images/chrome/homepageCountryWelshBG/eu.png) no-repeat bottom left; display: none;}
+#per.home #intro.welcomecy #animContent .welcomecy{background: #02385A url('../images/chrome/homepageCountryWelshBG/welcome.png') no-repeat bottom left;}
+#per.home #intro.scotlandcy #animContent .scotlandcy{background: #430021 url('../images/chrome/homepageCountryWelshBG/scotland.png') no-repeat bottom left; display: none}
+#per.home #intro.walescy #animContent .walescy {background: #002E2E url('../images/chrome/homepageCountryWelshBG/wales.png') no-repeat bottom left; display: none}
+#per.home #intro.ukcy #animContent .ukcy{ background: #9D6123 url('../images/chrome/homepageCountryWelshBG/uk.png') no-repeat bottom left; display: none}
+#per.home #intro.nicy #animContent .nicy{background: #5B4F65 url('../images/chrome/homepageCountryWelshBG/ni.png') no-repeat bottom left; display: none;}
+#per.home #intro.eucy #animContent .eucy{background:  #282828 url('../images/chrome/homepageCountryWelshBG/eu.png') no-repeat bottom left; display: none;}
 
 /*end here*/
 
 #per.home #intro div#animContent h2 {margin: 0; padding: 0; color: #fff}
 #per.home #intro.welcome div#animContent h2 {}
-#per.home #intro.scotland div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryBG/scotland_title.jpg) no-repeat;}
-#per.home #intro.wales div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryBG/wales_title.jpg) no-repeat;}
-#per.home #intro.uk div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryBG/uk_title.jpg) no-repeat;}
-#per.home #intro.ni div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryBG/ni_title.jpg) no-repeat;}
-#per.home #intro.eu div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryBG/eu_title.png) no-repeat;}
+#per.home #intro.scotland div#animContent h2 {background: url('../images/chrome/homepageCountryBG/scotland_title.jpg') no-repeat;}
+#per.home #intro.wales div#animContent h2 {background: url('../images/chrome/homepageCountryBG/wales_title.jpg') no-repeat;}
+#per.home #intro.uk div#animContent h2 {background: url('../images/chrome/homepageCountryBG/uk_title.jpg') no-repeat;}
+#per.home #intro.ni div#animContent h2 {background: url('../images/chrome/homepageCountryBG/ni_title.jpg') no-repeat;}
+#per.home #intro.eu div#animContent h2 {background: url('../images/chrome/homepageCountryBG/eu_title.png') no-repeat;}
 
 #per.home #intro.welcomecy div#animContent h2 {}
-#per.home #intro.scotlandcy div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryWelshBG/scotland_title.jpg) no-repeat;}
-#per.home #intro.walescy div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryWelshBG/wales_title.jpg) no-repeat;}
-#per.home #intro.ukcy div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryWelshBG/uk_title.jpg) no-repeat;}
-#per.home #intro.nicy div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryWelshBG/ni_title.jpg) no-repeat;}
-#per.home #intro.eucy div#animContent h2 {background: url(/static/lgu1/images/chrome/homepageCountryWelshBG/eu_title.png) no-repeat;}
+#per.home #intro.scotlandcy div#animContent h2 {background: url('../images/chrome/homepageCountryWelshBG/scotland_title.jpg') no-repeat;}
+#per.home #intro.walescy div#animContent h2 {background: url('../images/chrome/homepageCountryWelshBG/wales_title.jpg') no-repeat;}
+#per.home #intro.ukcy div#animContent h2 {background: url('../images/chrome/homepageCountryWelshBG/uk_title.jpg') no-repeat;}
+#per.home #intro.nicy div#animContent h2 {background: url('../images/chrome/homepageCountryWelshBG/ni_title.jpg') no-repeat;}
+#per.home #intro.eucy div#animContent h2 {background: url('../images/chrome/homepageCountryWelshBG/eu_title.png') no-repeat;}
 
 #per.home #intro.ni div.animContent.js h2 {position: absolute; top: -8px;}
 #per.home #intro div ul {width: 520px; left: 126px; position: absolute; bottom: 10px; padding: 0; text-align: right;}
 #per.home #intro div ul a {color: #fff; font-weight: bold;}
 #per.home #intro div ul a span.pageLinkIcon {display: none;}
-#per.home #intro div ul li {list-style: none; display: inline;  background:transparent url(/static/lgu1/images/chrome/greyBg.png) no-repeat scroll right 14.2%; margin-left: 15px; padding: 5px 16px 5px 8px;}
+#per.home #intro div ul li {list-style: none; display: inline;  background:transparent url('../images/chrome/greyBg.png') no-repeat scroll right 14.2%; margin-left: 15px; padding: 5px 16px 5px 8px;}
 #per.home #intro div ul li a:hover {text-decoration: underline;}
 
 /* IE 6 NOTE - All min-heights need replacing to height to function correctly /*
@@ -1050,7 +1050,7 @@ p.viewMoreLink {clear: left;padding-bottom:0.75em;padding-top:0;}
 #subNav ul {list-style: none; margin: 0; padding: 0 0 100px 0; }
 #subNav li {border-bottom: 1px dotted #CCC; display: block}
 #subNav .sectionNav li.last {border-bottom: 1px solid #CCC; }
-#subNav .resources {background: #FFF url(../images/chrome/subNavResourcesBg.gif) no-repeat top right; border: 1px solid #FFF; min-height: 615px;}
+#subNav .resources {background: #FFF url('../images/chrome/subNavResourcesBg.gif') no-repeat top right; border: 1px solid #FFF; min-height: 615px;}
 #subNav .resources h3 {font-size: 1.09em;line-height: 1.4em;padding: 10px;margin: 0;border-bottom: 1px solid #e4e4e4;}
 
 #subNav .resources li {border: 0; padding: 0; border-bottom: 1px solid #e4e4e4; }
@@ -1063,16 +1063,16 @@ p.viewMoreLink {clear: left;padding-bottom:0.75em;padding-top:0;}
 8. Misc. Sections
 These sections are large enough to contain their own subsection but are not generic to one section of the site.
 ---------------*/
-.subscribe a .background {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 100% -4547px; padding-right: 16px; display: block;}
+.subscribe a .background {background: url('../images/chrome/iconSprites.gif') no-repeat 100% -4547px; padding-right: 16px; display: block;}
 
-ul.docLinks li {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -6px -4150px; padding-left: 16px;}
-span.pageLinkIcon {background: transparent url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 100% -3546px; height: 12px; width: 8px; display:inline-block}
+ul.docLinks li {background: url('../images/chrome/iconSprites.gif') no-repeat -6px -4150px; padding-left: 16px;}
+span.pageLinkIcon {background: transparent url('../images/chrome/iconSprites.gif') no-repeat 100% -3546px; height: 12px; width: 8px; display:inline-block}
 
 /* Table sorting - asc arrows points up, desc arrow points down */
 table a.sortAsc,
 table a.sortDesc,
 table span.sortAsc,
-table span.sortDesc   {background: url(../images/chrome/tableSortIcons.gif) no-repeat 0 2px; padding-left: 16px;}
+table span.sortDesc   {background: url('../images/chrome/tableSortIcons.gif') no-repeat 0 2px; padding-left: 16px;}
 /*table span.sortAsc:hover,  !IMPORTANT DO NOT USE THIS RULE - causes massive rendering hit to IE 7 & 8*/
 table a.sortAsc:hover{background-position: 0 -98px; color: #069}
 table a.sortAsc:hover, table a.sortAsc.active:hover, table a.sortDesc.active {background-position: 0 -98px; color: #069}
@@ -1080,17 +1080,17 @@ table a.sortDesc:hover, table a.sortDesc.active:hover, table a.sortAsc.active {b
 table a.sortAsc {background-position: 0 -198px;}
 table span.active {background-position: 0 -98px; color: #069}
 
-.userFunctionalElement {color: #666; font-weight: bold; border: 1px solid #E5E5E5; border-bottom: 1px solid #fff; padding:1px 12px 2px; position: relative; text-decoration: none; display: inline-block; text-align: center; margin-right: 9px; min-width: 3.5em; font-family: "Gill Sans / Gill Sans MT", sans-serif; margin-bottom: 0;  background:transparent url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat scroll -1px -211px;}
+.userFunctionalElement {color: #666; font-weight: bold; border: 1px solid #E5E5E5; border-bottom: 1px solid #fff; padding:1px 12px 2px; position: relative; text-decoration: none; display: inline-block; text-align: center; margin-right: 9px; min-width: 3.5em; font-family: "Gill Sans / Gill Sans MT", sans-serif; margin-bottom: 0;  background:transparent url('../images/chrome/interfacebuttonSprites.gif') no-repeat scroll -1px -211px;}
 a.userFunctionalElement {cursor: pointer; cursor: hand; line-height: 1.5em;}
 .userFunctionalElement .btl, .userFunctionalElement .btr, .userFunctionalElement .bbl, .userFunctionalElement .bbr {position: absolute;  width: 8px;  height: 8px; margin: -1px;}
-.btl {background: url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat 0 -211px;  top:    0px;  left:  0px;}
-.btr {background: url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat 100% -211px;  top:    0px;  right: 0px;}
-.bbl {background: url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat 0px -273px;  bottom: 0px;  left:  0px;}
-.bbr {background: url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat -293px -273px;  bottom: 0px;  right: 0px;}
+.btl {background: url('../images/chrome/interfacebuttonSprites.gif') no-repeat 0 -211px;  top:    0px;  left:  0px;}
+.btr {background: url('../images/chrome/interfacebuttonSprites.gif') no-repeat 100% -211px;  top:    0px;  right: 0px;}
+.bbl {background: url('../images/chrome/interfacebuttonSprites.gif') no-repeat 0px -273px;  bottom: 0px;  left:  0px;}
+.bbr {background: url('../images/chrome/interfacebuttonSprites.gif') no-repeat -293px -273px;  bottom: 0px;  right: 0px;}
 a.userFunctionalElement:hover {text-decoration: underline}
 
 /* For blue links - all should be navigational */
-a.userFunctionalElement.nav {border: 1px solid #006599; background: url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat -1px -71px !important;}
+a.userFunctionalElement.nav {border: 1px solid #006599; background: url('../images/chrome/interfacebuttonSprites.gif') no-repeat -1px -71px !important;}
 .userFunctionalElement.nav .btl {background-position: 0px -70px}
 .userFunctionalElement.nav .btr {background-position: -293px -70px}
 .userFunctionalElement.nav .bbl {background-position: 0px -132px}
@@ -1100,7 +1100,7 @@ a.userFunctionalElement.nav {border: 1px solid #006599; background: url(/static/
 a.userFunctionalElement.close {background: #fff; color: #069}
 .interface .userFunctionalElement.active,
 .interface .userFunctionalElement.close
-{border: 1px solid #069; background: #FFF url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat -1px -141px !important;}
+{border: 1px solid #069; background: #FFF url('../images/chrome/interfacebuttonSprites.gif') no-repeat -1px -141px !important;}
 .interface .userFunctionalElement.active .btl,
 .interface .userFunctionalElement.close .btl {background-position: 0px -140px}
 .interface .userFunctionalElement.active .btr,
@@ -1111,9 +1111,9 @@ a.userFunctionalElement.close {background: #fff; color: #069}
 .interface .userFunctionalElement.close .bbr {background-position: -293px -202px}
 
 button.userFunctionalElement span {display: none;}
-button.userFunctionalElement {background:#676767 url(/static/lgu1/images/chrome/grey_button.gif) repeat-x bottom left;font-size: 1.2em; color: #fff; padding: 0.25em; border: none;}
+button.userFunctionalElement {background:#676767 url('../images/chrome/grey_button.gif') repeat-x bottom left;font-size: 1.2em; color: #fff; padding: 0.25em; border: none;}
 
-/*.interface .userFunctionalElement.active.nav {background:url(/static/lgu1/images/chrome/interfacebuttonSprites.gif) no-repeat scroll -1px -424px transparent !important; border:1px solid #069;}
+/*.interface .userFunctionalElement.active.nav {background:url('../images/chrome/interfacebuttonSprites.gif') no-repeat scroll -1px -424px transparent !important; border:1px solid #069;}
 .interface .userFunctionalElement.active.nav .btl{background-position: 0 -423px;}
 .interface .userFunctionalElement.active.nav .btr{background-position: 100% -423px;}
 .interface .userFunctionalElement.active.nav .bbl{background-position: 0 -486px;}
@@ -1134,7 +1134,7 @@ button.userFunctionalElement {background:#676767 url(/static/lgu1/images/chrome/
 .help .close,
 .help .icon {display: none;}
 .js .help .close {padding: 2px !important;float: right !important; margin: -15px -15px 0 0 !important; display: block;}
-.js .help .icon {background: url(/static/lgu1/images/chrome/triangle.png) no-repeat 0 0 !important; width: 12px; height: 10px; display:block; position: absolute;}
+.js .help .icon {background: url('../images/chrome/triangle.png') no-repeat 0 0 !important; width: 12px; height: 10px; display:block; position: absolute;}
 #statusWarning p.intro span.icon {padding: 0; display: block;}
 
 #layout1 #layout2 .help ul {margin: 0; padding: 0 1.5em; list-style: disc outside;}
@@ -1199,10 +1199,10 @@ button.userFunctionalElement {background:#676767 url(/static/lgu1/images/chrome/
 /* end of Modal windows */
 
 /* link bgs - use the #layout1 to overide cascadence where needed */
-#layout1 a.pdfLink {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0px -1320px; padding-left: 30px; padding-top: 5px; padding-bottom: 5px}
-#layout1 a.htmLink {background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -1443px;  padding-left: 30px}
+#layout1 a.pdfLink {background: url('../images/chrome/iconSprites.gif') no-repeat 0px -1320px; padding-left: 30px; padding-top: 5px; padding-bottom: 5px}
+#layout1 a.htmLink {background: url('../images/chrome/iconSprites.gif') no-repeat 0 -1443px;  padding-left: 30px}
 /* end of link bgs */
-#layout1 a.signlangLink {background: url(/static/lgu1/images/chrome/signlanguage24px.png) no-repeat; padding-left: 30px}
+#layout1 a.signlangLink {background: url('../images/chrome/signlanguage24px.png') no-repeat; padding-left: 30px}
 /* end of link bgs */
 
 /* View PDF versions of Leg */
@@ -1278,7 +1278,7 @@ Used for printing or viewing without menus, to print successfully the print styl
 #browse #tools
 {border-left: 1px solid #FFF;}
 
-.contentFooter {padding-top: 5px; background: url(/static/lgu1/images/chrome/navBgShadow.png) repeat-x top left; float: left; width: 100%; clear: left;}
+.contentFooter {padding-top: 5px; background: url('../images/chrome/navBgShadow.png') repeat-x top left; float: left; width: 100%; clear: left;}
 
 #search .contentFooter,
 #browse .contentFooter,
@@ -1342,7 +1342,7 @@ div.prevPagesNextNav ul {width: auto; float: none; display: block; margin: 0 aut
 
 .prevPagesNextNav li { overflow: hidden;}
 .prevPagesNextNav li.pageLink,
-.prevPagesNextNav li.lastPageLink {font-size: 0.95em; letter-spacing: 0.1em; line-height:2.5em; padding: 8px 8px; display: block; display: inline; background: url(/static/lgu1/images/chrome/navDivider.gif) no-repeat bottom right;}
+.prevPagesNextNav li.lastPageLink {font-size: 0.95em; letter-spacing: 0.1em; line-height:2.5em; padding: 8px 8px; display: block; display: inline; background: url('../images/chrome/navDivider.gif') no-repeat bottom right;}
 .prevPagesNextNav li.pageLink a {padding-left: 0.1em; border-bottom: 1px solid; text-decoration: none; font-weight: bold; color: #317496;}
 .prevPagesNextNav li.pageLink a:hover {text-decoration: none; border: 0;}
 .prevPagesNextNav li.lastPageLink {background: none;}
@@ -1360,7 +1360,7 @@ p.backToTop
 #search p.backToTop a,
 #browse p.backToTop a,
 #doc p.backToTop a
-{font-size: 1em; font-weight: bold; padding: 0.05em 32px 0 0; line-height: 2em; background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat top right; color: #317496; margin: 1px; display: block;}
+{font-size: 1em; font-weight: bold; padding: 0.05em 32px 0 0; line-height: 2em; background: url('../images/chrome/iconSprites.gif') no-repeat top right; color: #317496; margin: 1px; display: block;}
 #search #subNav p.backToTop a,
 #browse #subNav p.backToTop a,
 #doc #subNav p.backToTop a { display: inline-block; margin: 0 auto; }
@@ -1371,7 +1371,7 @@ p.backToTop
 
 /* Results info */
 #search .info,
-#browse .info {background:transparent url(/static/lgu1/images/chrome/navBgShadow.png) no-repeat left bottom; padding-bottom: 10px;}
+#browse .info {background:transparent url('../images/chrome/navBgShadow.png') no-repeat left bottom; padding-bottom: 10px;}
 
 #search .info h2,
 #browse .info h2 {font-weight: 600; padding: 0 20px; margin: 0;}
@@ -1438,7 +1438,7 @@ p.backToTop
 
 #search #tools ul li.returnLink a,
 #browse #tools ul li.returnLink a
-{background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat -5px -2588px; padding-left: 15px; font-weight: bold; color: #006193; width: 180px;}
+{background: url('../images/chrome/iconSprites.gif') no-repeat -5px -2588px; padding-left: 15px; font-weight: bold; color: #006193; width: 180px;}
 
 #search #tools .content span.disabled,
 #browse #tools .content span.disabled
@@ -1483,29 +1483,29 @@ li.empty {color: #9a9a9a;}
 #tools #refineSearch .yearChoiceFields div {margin: 5px 0}
 #tools #refineSearch .yearChoiceFields input {width: 50px;}
 #tools #refineSearch .yearChoiceFields label {float:left;line-height:2.5em;margin-right:5px;text-align:right;width:60px;}
-#tools #refineSearch .userFunctionalElement {background: #676767 url(/static/lgu1/images/chrome/grey_button.gif) repeat-x scroll left bottom; margin: 0.5em 0}
+#tools #refineSearch .userFunctionalElement {background: #676767 url('../images/chrome/grey_button.gif') repeat-x scroll left bottom; margin: 0.5em 0}
 #refineSearch .searchExtendsTo {padding-bottom: 5px; float: left;}
 #refineSearch .searchExtendsTo .radio {}
 #refineSearch .searchExtendsTo label {float: left; clear: left; width: 95%}
 #refineSearch .searchExtendsTo .opt2 {padding-left: 18px}
 #refineSearch .searchExtendsTo #extentSearchInfo h4 { line-height: 1.5em; }
 #refineSearch .searchExtendsTo .LegExtentRestriction {font-size: 0.9em; line-height: 1.2em; margin-top: 0.2em; padding: 2px 1.25em 3px 1.25em; margin-right: 5px; vertical-align: top; position: relative;}
-#refineSearch .searchExtendsTo .LegExtentRestriction { color: #fff; background: #660066 url(/static/lgu1/images/chrome/extentBg.gif) top left no-repeat; font-weight: bold; float: left; margin-bottom: 5px;}
+#refineSearch .searchExtendsTo .LegExtentRestriction { color: #fff; background: #660066 url('../images/chrome/extentBg.gif') top left no-repeat; font-weight: bold; float: left; margin-bottom: 5px;}
 #refineSearch .searchExtendsTo .LegExtentRestriction .btl, .LegExtentRestriction .btr, .LegExtentRestriction .bbl, .LegExtentRestriction .bbr {position: absolute;  width: 10px;  height: 10px; margin: 0;}
-#refineSearch .searchExtendsTo .LegExtentRestriction .btr {background: url(/static/lgu1/images/chrome/extentBg.gif) no-repeat -290px 0;  top:    0px;  right: 0;}
-#refineSearch .searchExtendsTo .LegExtentRestriction .bbl {background: url(/static/lgu1/images/chrome/extentBg.gif) no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
-#refineSearch .searchExtendsTo .LegExtentRestriction .bbr {background: url(/static/lgu1/images/chrome/extentBg.gif) no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
+#refineSearch .searchExtendsTo .LegExtentRestriction .btr {background: url('../images/chrome/extentBg.gif') no-repeat -290px 0;  top:    0px;  right: 0;}
+#refineSearch .searchExtendsTo .LegExtentRestriction .bbl {background: url('../images/chrome/extentBg.gif') no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
+#refineSearch .searchExtendsTo .LegExtentRestriction .bbr {background: url('../images/chrome/extentBg.gif') no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
 .extentList {display: inline; margin: 0; padding: 0; list-style: none;}
 
 #tools .ui-combobox .ui-widget {float: left; display: block;}
-#tools .ui-combobox input {margin-left: 6px; width: 148px; background: url(/static/lgu1/images/chrome/home_form_shadow.gif) no-repeat left top #fff; border-radius: 0; border: 1px solid #7B85AD; border-right: none; line-height: 1.5em;}
+#tools .ui-combobox input {margin-left: 6px; width: 148px; background: url('../images/chrome/home_form_shadow.gif') no-repeat left top #fff; border-radius: 0; border: 1px solid #7B85AD; border-right: none; line-height: 1.5em;}
 #tools .ui-combobox .ui-button {border-radius: 0; padding: 5px 5px 6px;}
 #tools #submitHeading {margin: 0.75em 6px;}
 #tools #subheading .userFunctionalElement { border-radius: 0 0 0 0; position: relative;}
 #tools #subheading .ui-button-text-only .ui-button-text {padding: 0.4em 1em;}
 #tools #subheading .ui-button .ui-button-text {display: block; line-height: 1.4;}
-#tools #subheading a.userFunctionalElement {background: url"/static/lgu1/images/chrome/interfacebuttonSprites.gif") no-repeat scroll -1px -424px transparent; font-weight: bold; font-size: 1em; font-family: "Gill Sans / Gill Sans MT",sans-serif; padding: 3px 12px; width: 158px; text-align: center; }
-#tools #subheading a.disabled {background: url"/static/lgu1/images/chrome/interfacebuttonSprites.gif") no-repeat scroll -1px -211px transparent}
+#tools #subheading a.userFunctionalElement {background: url"../images/chrome/interfacebuttonSprites.gif") no-repeat scroll -1px -424px transparent; font-weight: bold; font-size: 1em; font-family: "Gill Sans / Gill Sans MT",sans-serif; padding: 3px 12px; width: 158px; text-align: center; }
+#tools #subheading a.disabled {background: url"../images/chrome/interfacebuttonSprites.gif") no-repeat scroll -1px -211px transparent}
 #tools #subheading a.userFunctionalElement .ui-button-text {padding: 0; }
 /* end of tools section */
 
@@ -1571,10 +1571,10 @@ div.alphaLinkList {display: block; background: #ccc; float: left;}
 .extentMarkerInfo .description {margin-right: 0.5em;}
 .extentMarkerInfo a {font-weight: bold;}
 
-.extentMarkerInfo .LegExtentRestriction { color: #fff; background: #606 url(/static/lgu1/images/chrome/extentSkipLinksBg.gif) top left no-repeat; }
-.extentMarkerInfo .LegExtentRestriction .btr {background: url(/static/lgu1/images/chrome/extentSkipLinksBg.gif) no-repeat -290px 0;  top:    0px;  right: 0;}
-.extentMarkerInfo .LegExtentRestriction .bbl {background: url(/static/lgu1/images/chrome/extentSkipLinksBg.gif) no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
-.extentMarkerInfo .LegExtentRestriction .bbr {background: url(/static/lgu1/images/chrome/extentSkipLinksBg.gif) no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
+.extentMarkerInfo .LegExtentRestriction { color: #fff; background: #606 url('../images/chrome/extentSkipLinksBg.gif') top left no-repeat; }
+.extentMarkerInfo .LegExtentRestriction .btr {background: url('../images/chrome/extentSkipLinksBg.gif') no-repeat -290px 0;  top:    0px;  right: 0;}
+.extentMarkerInfo .LegExtentRestriction .bbl {background: url('../images/chrome/extentSkipLinksBg.gif') no-repeat 0 -90px;  bottom: 0px;  left:  0px;}
+.extentMarkerInfo .LegExtentRestriction .bbr {background: url('../images/chrome/extentSkipLinksBg.gif') no-repeat -290px -90px;  bottom: 0px;  right: 0em;}
 
 .hithighlight { background-color:#FFFF3D !important;}
 
@@ -1667,7 +1667,7 @@ div.alphaLinkList {display: block; background: #ccc; float: left;}
     cursor: pointer;
     display: block;
     padding: 5px 22px 5px 5px;
-    background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat right -398px;
+    background: url('../images/chrome/iconSprites.gif') no-repeat right -398px;
 }
 
 #cookie-preferences-management .btn.show-hide.close {
@@ -1705,7 +1705,7 @@ Icons from ionicons included under MIT licence. Please see:
 https://ionicons.com/ for details.
  */
 .btn.accept-all-cookies {
-    background-image: url(/static/lgu1/images/chrome/checkmark-sharp.svg);
+    background-image: url('../images/chrome/checkmark-sharp.svg');
     background-position: 11px;
     background-size: 20px;
     background-repeat: no-repeat;
@@ -1713,7 +1713,7 @@ https://ionicons.com/ for details.
 }
 
 .btn.reject-all-cookies {
-    background-image: url(/static/lgu1/images/chrome/close-sharp-inverse.svg);
+    background-image: url('../images/chrome/close-sharp-inverse.svg');
     background-position: 11px;
     background-size: 20px;
     background-repeat: no-repeat;
@@ -1724,7 +1724,7 @@ https://ionicons.com/ for details.
 }
 
 .btn.set-individual-cookies {
-    background-image: url(/static/lgu1/images/chrome/settings-sharp.svg);
+    background-image: url('../images/chrome/settings-sharp.svg');
     background-position: 12px;
     background-size: 19px;
     background-repeat: no-repeat;

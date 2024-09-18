@@ -99,7 +99,7 @@ nav.topnav section h1 {
 }
 
 nav.topnav section li {
-	background: url(/static/lgu1/images/chrome/iconSprites.gif) no-repeat 0 -2742px;
+	background: url('../images/chrome/iconSprites.gif') no-repeat 0 -2742px;
 	padding: 0.5em 5px 0.5em 25px;
         display: block;
         border-bottom: 1px dotted #D7D7D7;
