@@ -13,12 +13,14 @@ def toc(request, type, year, number, version=None):
     if version is None and data['meta']['status'] == 'final':
         return redirect('document-toc', type=type, year=year, number=number, version='enacted')
 
-    link_prefix = '/' + data['meta']['id'] + '/'
+    link_prefix = '/' + data['meta']['id']
+    if request.LANGUAGE_CODE == 'cy':
+        link_prefix = '/cy' + link_prefix
     link_suffix = '/' + version if version else ''
 
     def add_link(item):
         middle = item['ref'].replace('-', '/')
-        item['link'] = link_prefix + middle + link_suffix
+        item['link'] = link_prefix + '/' + middle + link_suffix
         if 'children' in item:
             add_links(item['children'])
     def add_links(items):
@@ -39,11 +41,13 @@ def toc(request, type, year, number, version=None):
     data['status_message'] = get_status_message(data['meta'])
 
     data['links'] = {
-        'toc': '/' + data['meta']['id'] + '/contents' + link_suffix,
-        'content': '/' + data['meta']['id'] + link_suffix,
+        'toc': link_prefix + '/contents' + link_suffix,
+        'content': link_prefix + '/introduction' + link_suffix,
         'notes': '/',
         'resources': '/',
-        'intro': '/' + data['meta']['id'] + '/introduction' + link_suffix
+        'whole': link_prefix + link_suffix,
+        'body': link_prefix + '/body' + link_suffix,
+        'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
     }
 
     if 'schedules' in data['contents']:

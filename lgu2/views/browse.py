@@ -49,11 +49,12 @@ def browse(request, year = None):
     else:
         data = browse_by_type_and_year('ukpga', year, page)
 
+    link_prefix = '/cy' if request.LANGUAGE_CODE == 'cy' else ''
     for doc in data['documents']:
         if doc['version'] == 'enacted':
-            doc['link'] = doc['id'] + '/' + doc['version']
+            doc['link'] = link_prefix + doc['id'] + '/contents/' + doc['version']
         else:
-            doc['link'] = doc['id']
+            doc['link'] = link_prefix + doc['id'] + '/contents'
 
     yearly_counts = data['meta']['counts']['yearly']
     last_year = yearly_counts[0]['year']

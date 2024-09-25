@@ -55,10 +55,12 @@ def document(request, type, year, number, version=None):
     if version is None and data['meta']['status'] == 'final':
         return redirect('document-version', type=type, year=year, number=number, version='enacted')
 
-    if version:
-        data['meta']['link'] = '/' + data['meta']['id'] + '/' + version
-    else:
-        data['meta']['link'] = '/' + data['meta']['id']
+    link_prefix = '/' + data['meta']['id']
+    if request.LANGUAGE_CODE == 'cy':
+        link_prefix = '/cy' + link_prefix
+    link_suffix = '/' + version if version else ''
+
+    data['meta']['link'] = link_prefix + link_suffix
 
     try:
         version_date = datetime.strptime(version, '%Y-%m-%d')
@@ -70,7 +72,6 @@ def document(request, type, year, number, version=None):
 
     status_message = get_status_message(data['meta'])
 
-    link_suffix = '/' + version if version else ''
     context = {
         'meta': data['meta'],
         'pit': pit,
@@ -78,10 +79,14 @@ def document(request, type, year, number, version=None):
         'status_message': status_message,
         'article': data['html'],
         'links': {
-            'toc': '/' + data['meta']['id'] + '/contents' + link_suffix,
-            'content': '/' + data['meta']['id'] + link_suffix,
+            'toc': link_prefix + '/contents' + link_suffix,
+            'content': link_prefix + '/introduction' + link_suffix,
             'notes': '/',
-            'resources': '/'
+            'resources': '/',
+            'whole': None,
+            'body': None if data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
+            'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
+
         }
     }
     template = loader.get_template('document/document.html')

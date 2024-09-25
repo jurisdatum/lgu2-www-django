@@ -2,7 +2,7 @@
 from typing import List, TypedDict
 
 from .document import Meta
-from .server import *
+from . import server
 
 class Item(TypedDict):
     name: str
@@ -31,16 +31,16 @@ def _make_url(type: str, year, number, version=None) -> str:
 
 def get_toc(type: str, year, number, version=None) -> dict:
     url = _make_url(type, year, number, version)
-    return get_json(url)
+    return server.get_json(url)
 
 def get_toc_json(type: str, year, number, version=None) -> str:
     url = _make_url(type, year, number, version)
-    return get_raw_json(url)
+    return server.get_raw_json(url)
 
 def get_toc_clml(type: str, year, number, version=None) -> str:
     url = _make_url(type, year, number, version)
-    return get_clml(url)
+    return server.get_clml(url)
 
 def get_toc_akn(type: str, year, number, version=None) -> str:
     url = _make_url(type, year, number, version)
-    return get_akn(url)
+    return server.get_akn(url)

@@ -66,32 +66,7 @@
 				</li>
 			</ul>
 			<div class="interface">
-				<div class="prevNextNav">
-					<ul>
-						<li class="prev">
-							<span class="userFunctionalElement disabled">
-								<span class="background">
-									<span class="btl"></span>
-									<span class="btr"></span>
-									{% translate 'Previous' %}
-									<span class="bbl"></span>
-									<span class="bbr"></span>
-								</span>
-							</span>
-						</li>
-						<li class="next">
-							<span class="userFunctionalElement disabled">
-								<span class="background">
-									<span class="btl"></span>
-									<span class="btr"></span>
-									{% translate 'Next' %}
-									<span class="bbl"></span>
-									<span class="bbr"></span>
-								</span>
-							</span>
-						</li>
-					</ul>
-				</div>
+				{% include "document/prev_next.html" %}
 				<ul id="viewPrintControl">
 					<li class="view">
 						<a class="userFunctionalElement" href="?view=plain">
@@ -132,18 +107,7 @@
 				</div>
 				<div class="contentFooter">
 					<div class="interface">
-						<div class="prevNextNav">
-							<ul>
-								<li class="prev"><span class="userFunctionalElement disabled"><span
-											class="background"><span class="btl"></span><span
-												class="btr"></span>Previous<span class="bbl"></span><span
-												class="bbr"></span></span></span></li>
-								<li class="next"><span class="userFunctionalElement disabled"><span
-											class="background"><span class="btl"></span><span
-												class="btr"></span>Next<span class="bbl"></span><span
-												class="bbr"></span></span></span></li>
-							</ul>
-						</div>
+						{% include "document/prev_next.html" %}
 					</div>
 				</div>
 				<p class="backToTop"><a href="#top">Back to top</a></p>

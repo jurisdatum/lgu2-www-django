@@ -84,7 +84,7 @@
             </ul>
         </div>
     </div>
-    <div id="advFeatures" class="section">
+    <!-- <div id="advFeatures" class="section">
         <div class="title">
             <a href="#advFeaturesHelp" class="helpItem helpItemToMidRight">
                 <img src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" alt=" Help about advanced features" />
@@ -98,7 +98,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
     <div class="section" id="openingOptions">
         <div class="title">
             <a href="#openingOptionsHelp" class="helpItem helpItemToMidRight">
@@ -108,15 +108,21 @@
         </div>
         <div id="openingOptionsContent" class="content">
             <ul class="toolList">
+                {% if links.whole %}
                 <li class="whole">
-                    <a href="/ukpga/2018/1/enacted">{% translate 'Open whole Act' %}</a>
+                    <a href="{{ links.whole }}">{% translate 'Open whole Act' %}</a>
                 </li>
+                {% endif %}
+                {% if links.body %}
                 <li class="minusSched">
-                    <a href="/ukpga/2018/1/body/enacted">{% translate 'Open Act without Schedules' %}</a>
+                    <a href="{{ links.body }}">{% translate 'Open Act without Schedules' %}</a>
                 </li>
+                {% endif %}
+                {% if links.schedules %}
                 <li class="onlySched">
-                    <a href="/ukpga/2018/1/schedules/enacted">{% translate 'Open Schedules only' %}</a>
+                    <a href="{{ links.schedules }}">{% translate 'Open Schedules only' %}</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -128,12 +134,12 @@
             <div class="content">
                 <ul class="toolList">
                     <li>
-                        <a class="pdfLink" href="/ukpga/2018/1/pdfs/ukpga_20180001_en.pdf">{% translate 'Original' %}: {% translate "King's Printer Version" %}</a>
+                        <a class="pdfLink" href="#">{% translate 'Original' %}: {% translate "King's Printer Version" %}</a>
                     </li>
                 </ul>
             </div>
             <p class="viewMoreLink">
-                <a href="/ukpga/2018/1/resources">{% translate 'View more' %}<span class="pageLinkIcon"></span></a>
+                <a href="#">{% translate 'View more' %}<span class="pageLinkIcon"></span></a>
             </p>
         </div>
     </div>

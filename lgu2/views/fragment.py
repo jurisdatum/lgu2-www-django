@@ -1,0 +1,70 @@
+
+from datetime import datetime
+
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import redirect
+from django.template import loader
+
+from ..api import fragment as api
+from .document import _make_timeline_data
+from ..messages.status import get_status_message
+
+def fragment(request, type, year, number, section, version=None):
+
+    data = api.get(type, year, number, section, version)
+
+    if 'error' in data:
+        template = loader.get_template('404.html')
+        return HttpResponseNotFound(template.render({}, request))
+
+    if version is None and data['meta']['status'] == 'final':
+        return redirect('fragment', type=type, year=year, number=number, section=section, version='enacted')
+
+    link_prefix = '/' + data['meta']['id']
+    if request.LANGUAGE_CODE == 'cy':
+        link_prefix = '/cy' + link_prefix
+    link_suffix = '/' + version if version else ''
+
+    data['meta']['link'] = link_prefix + link_suffix
+    if data['meta']['prev']:
+        data['meta']['prev'] = link_prefix + '/' + data['meta']['prev'] + link_suffix
+    if data['meta']['next']:
+        data['meta']['next'] = link_prefix + '/' + data['meta']['next'] + link_suffix
+
+    try:
+        version_date = datetime.strptime(version, '%Y-%m-%d')
+        pit = version_date.strftime("%d/%m/%Y")
+    except:
+        pit = None
+
+    timeline = _make_timeline_data(data['meta'], pit)
+
+    status_message = get_status_message(data['meta'])
+
+    context = {
+        'meta': data['meta'],
+        'pit': pit,
+        'timeline': timeline,
+        'status_message': status_message,
+        'article': data['html'],
+        'links': {
+            'toc': link_prefix + '/contents' + link_suffix,
+            'content': link_prefix + '/introduction' + link_suffix,
+            'notes': '/',
+            'resources': '/',
+            'whole': link_prefix + link_suffix,
+            'body': None if data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
+            'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
+        }
+    }
+    template = loader.get_template('document/document.html')
+    return HttpResponse(template.render(context, request))
+
+
+def data(request, type, year, number, section, format, version=None):
+    if format == 'xml':
+        xml = api.get_clml(type, year, number, section, version)
+        return HttpResponse(xml, content_type='application/xml')
+    if format == 'akn':
+        xml = api.get_akn(type, year, number, section, version)
+        return HttpResponse(xml, content_type='application/xml')

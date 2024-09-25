@@ -1,0 +1,53 @@
+{% load i18n %}
+{% if meta.prev or meta.next %}
+<div class="prevNextNav">
+    <ul>
+        <li class="prev">
+            {% if meta.prev %}
+            <a href="{{ meta.prev }}" class="userFunctionalElement nav" title="">
+                <span class="background">
+                    <span class="btl"></span>
+                    <span class="btr"></span>
+                    {% translate 'Previous' %}
+                    <span class="bbl"></span>
+                    <span class="bbr"></span>
+                </span>
+            </a>
+            {% else %}
+            <span class="userFunctionalElement disabled">
+                <span class="background">
+                    <span class="btl"></span>
+                    <span class="btr"></span>
+                    {% translate 'Previous' %}
+                    <span class="bbl"></span>
+                    <span class="bbr"></span>
+                </span>
+            </span>
+            {% endif %}
+        </li>
+        <li class="next">
+            {% if meta.next %}
+            <a href="{{ meta.next }}" class="userFunctionalElement nav" title="">
+                <span class="background">
+                    <span class="btl"></span>
+                    <span class="btr"></span>
+                    {% translate 'Next' %}
+                    <span class="bbl"></span>
+                    <span class="bbr"></span>
+                </span>
+            </a>
+            {% else %}
+            <span class="userFunctionalElement disabled">
+                <span class="background">
+                    <span class="btl"></span>
+                    <span class="btr"></span>
+                    {% translate 'Next' %}
+                    <span class="bbl"></span>
+                    <span class="bbr"></span>
+                </span>
+            </span>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+{% endif %}

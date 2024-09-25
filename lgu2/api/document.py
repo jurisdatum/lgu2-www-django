@@ -1,7 +1,7 @@
 
 from typing import List, TypedDict
 
-from .server import *
+from . import server
 
 class Meta(TypedDict):
     id: str
@@ -19,6 +19,10 @@ class Meta(TypedDict):
     publisher: str
     modified: str
     versions: List[str]
+    fragment: str
+    prev: str
+    next: str
+    schedules: bool
 
 class Document(TypedDict):
     meta: Meta
@@ -32,12 +36,12 @@ def _make_url(type: str, year, number, version=None) -> str:
 
 def get_document(type: str, year, number, version=None) -> Document:
     url = _make_url(type, year, number, version)
-    return get_json(url)
+    return server.get_json(url)
 
 def get_clml(type: str, year, number, version=None) -> str:
     url = _make_url(type, year, number, version)
-    return get_clml(url)
+    return server.get_clml(url)
 
 def get_akn(type: str, year, number, version=None) -> str:
     url = _make_url(type, year, number, version)
-    return get_akn(url)
+    return server.get_akn(url)

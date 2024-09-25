@@ -10,6 +10,7 @@ from .views.browse import browse
 from .views.document import document, document_clml, document_akn
 from .views import toc
 from .views.metadata import metadata, combined
+from .views import fragment
 
 urlpatterns = i18n_patterns(
 
@@ -46,6 +47,11 @@ urlpatterns += i18n_patterns(
 
     re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', metadata, name='metadata'),
     re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', combined),
+
+    re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|\d{4}-\d{2}-\d{2})$', fragment.fragment, name='fragment'),
+    re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|\d{4}-\d{2}-\d{2})/data\.(?P<format>xml|akn)$', fragment.data),
+    re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)$', fragment.fragment),
+    re_path(r'^(?P<type>ukpga)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/data\.(?P<format>xml|akn)$', fragment.data),
 
     prefix_default_language=False
 )
