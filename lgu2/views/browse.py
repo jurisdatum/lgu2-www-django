@@ -7,7 +7,7 @@ from django.template import loader
 from django.urls import reverse
 
 from ..api.browse import browse_by_type, browse_by_type_and_year
-from ..models import DatasetCompleteness
+from ..util.cutoff import get_cutoff
 
 def _group_counts_for_timeline(yearly_counts, complete_cutoff):
 
@@ -59,7 +59,7 @@ def browse(request, year = None):
     yearly_counts = data['meta']['counts']['yearly']
     last_year = yearly_counts[0]['year']
     first_year = yearly_counts[-1]['year']
-    complete_cutoff = DatasetCompleteness.objects.get(type='ukpga').cutoff
+    complete_cutoff = get_cutoff('ukpga')
 
     grouped_yearly_counts = zip_longest(*(iter(yearly_counts),) * 24) # for yearPagination
 
