@@ -79,7 +79,7 @@ def browse(request, type, year = None):
             doc['link'] = link_prefix + '/' + doc['id'] + '/contents'
         doc['label'] = get_type_label_plural(doc['longType'])
 
-    yearly_counts = data['meta']['counts']['yearly']
+    yearly_counts = data['meta']['counts']['byYear']
     last_year = yearly_counts[0]['year']
     first_year = yearly_counts[-1]['year']
     complete_cutoff = get_cutoff(type)
@@ -101,8 +101,8 @@ def browse(request, type, year = None):
 
     # subjects
     subject_initials = None
-    if 'subjects' in data['meta']['counts'] and data['meta']['counts']['subjects'] is not None:
-        subject_initials = set([ i['initial'] for i in data['meta']['counts']['subjects']['byInitial'] ])
+    if 'bySubjectInitial' in data['meta']['counts']: # should not be present and None
+        subject_initials = set([ i['initial'] for i in data['meta']['counts']['bySubjectInitial'] ])
 
     context = {
         'all_lowercase_letters': string.ascii_lowercase,

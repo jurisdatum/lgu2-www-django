@@ -11,12 +11,13 @@ class ListMeta:
     totalPages: int
     updated: str # dateTime
     counts: 'Counts'
+    subjects: List[str]
 
 class Counts:
     total: int
     byType: List['ByType']
-    yearly: List['ByYear']
-    subjects: 'Subjects'
+    byYear: List['ByYear']
+    bySubjectInitial: List['ByInitial']
 
 class ByType:
     type: str
@@ -25,10 +26,6 @@ class ByType:
 class ByYear:
     year: int
     count: int
-
-class Subjects:
-    byInitial: List['ByInitial']
-    headings: List[str]
 
 class ByInitial:
     initial: str
