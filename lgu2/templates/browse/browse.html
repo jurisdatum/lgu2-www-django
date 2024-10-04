@@ -17,26 +17,41 @@
 <script type="text/javascript" src="{% static 'lgu1/scripts/search/jquery.ui.comboboxFromLinks.js' %}"></script>
 <script type="text/javascript" src="{% static 'lgu1/scripts/search/headingFacet.js' %}"></script>
 <meta name="DC.Date.Modified" content="{{ page_last_modified }}" />
-<link rel="alternate" type="application/atom+xml" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page }}" />
+{% comment %} <link rel="alternate" type="application/atom+xml" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page }}" />
 <link rel="first" href="https://www.legislation.gov.uk/ukpga/data.feed" />
 {% if current_page > 1 %}
 <link rel="prev" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page|add:'-1' }}" />
 {% endif %}
 {% if current_page < last_page %}
 <link rel="next" href="https://www.legislation.gov.uk/ukpga/data.feed?page={{ current_page|add:'1' }}" />
-{% endif %}
+{% endif %} {% endcomment %}
 {% endblock %}
 
 {% block body_id %}browse{% endblock %}
-{% block body_class %}ukpga timeline{% endblock %}
+{% block body_class %}{{ short_type }} timeline{% endblock %}
 
 {% block layout2 %}
 <div>
     <div class="info">
         <h1 id="pageTitle">{% translate 'Search Results' %}</h1>
-        <h2>{% blocktranslate %}Your search for English language UK Public General Acts has returned more than 200 results.{% endblocktranslate %}</h2>
-        <div class="redirectSearch" style="visibility: hidden">
-            <a href="/search/?lang=cy&amp;type=ukpga" class="redirectSearch">Search Welsh language text</a>
+        <h2>
+            {% translate 'Your search for' %}
+            {% translate 'English language' %}
+            {% translate type_label_plural  %}
+            {% translate 'has returned' %}
+            {% if total > 200 %}
+                {% translate 'more than' %} 200
+            {% else %}
+                {{ total }}
+            {% endif %}
+            {% translate 'results' %}
+        </h2>
+        <div class="redirectSearch">
+            {% if year %}
+            <a href="{% url 'browse-year' short_type year %}?lang=cy" class="redirectSearch">Search Welsh language text</a>
+            {% else %}
+            <a href="{% url 'browse' short_type %}?lang=cy" class="redirectSearch">Search Welsh language text</a>
+            {% endif %}
         </div>
     </div>
     {% include "browse/timeline.html" %}
@@ -49,9 +64,15 @@
             </div>
             <div class="content">
                 <ul>
+                    {% for by_type in counts_by_type %}
                     <li class="legType">
-                        <span class="userFunctionalElement disabled">{% translate 'UK Public General Acts' %} ({{ total }})</span>
+                        {% if counts_by_type|length > 1 %}
+                        <a href="{{ by_type.link }}">{{ by_type.label }} ({{ by_type.count }})</a>
+                        {% else %}
+                        <span class="userFunctionalElement disabled">{{ by_type.label }} ({{ by_type.count }})</span>
+                        {% endif %}
                     </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -73,18 +94,21 @@
                 {% endfor %}
             </div>
         </div>
+        {% include "browse/subjects.html" %}
     </div>
     <div id="content" class="results">
         <table>
             <thead>
                 <tr>
                     <th>
-                        <a href="/ukpga?sort=title" class="sortAsc" title="Sort ascending by Title">
-                            <span class="accessibleText">{% translate 'Sort ascending by' %} </span>{% translate 'Title' %}</a>
+                        <a href="#" class="sortAsc" title="Sort ascending by Title">
+                            <span class="accessibleText">{% translate 'Sort ascending by' %} </span>
+                            {% translate 'Title' %}</a>
                     </th>
                     <th>
                         <span class="sortDesc active" title="Sort descending by Years and Numbers">
-                            <span class="accessibleText">{% translate 'Sort descending by' %} </span>{% translate 'Years and Numbers' %}</span>
+                            <span class="accessibleText">{% translate 'Sort descending by' %} </span>
+                            {% translate 'Years and Numbers' %}</span>
                     </th>
                     <th>
                         <span>{% translate 'Legislation type' %}</span>
@@ -93,15 +117,32 @@
             </thead>
             <tbody>
                 {% for doc in documents %}
-                <tr {% if not forloop.counter|divisibleby:2 %} class="oddRow" {% endif %}>
-                    <td>
-                        <a href="/{{ doc.link }}">{{ doc.title }}</a>
+                {% if doc.altTitle %}
+                <tr{% if not forloop.counter|divisibleby:2 %} class="oddRow"{% endif %}>
+                    <td class="bilingual en">
+                        <a href="{{ doc.link }}">{{ doc.title }}</a>
                     </td>
-                    <td>
-                        <a href="/{{ doc.link }}">{{ doc.year }} c. {{ doc.number }}</a>
+                    <td rowspan="2">
+                        <a href="{{ doc.link }}">{{ doc.cite }}</a>
                     </td>
-                    <td>{% translate 'UK Public General Acts' %}</td>
+                    <td rowspan="2">{{ doc.label }}</td>
                 </tr>
+                <tr{% if not forloop.counter|divisibleby:2 %} class="oddRow"{% endif %}>
+                    <td class="bilingual cy">
+                        <a href="{{ doc.link }}/welsh" xml:lang="cy">{{ doc.altTitle }}</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr{% if not forloop.counter|divisibleby:2 %} class="oddRow"{% endif %}>
+                    <td>
+                        <a href="{{ doc.link }}">{{ doc.title }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ doc.link }}">{{ doc.cite }}</a>
+                    </td>
+                    <td>{{ doc.label }}</td>
+                </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>

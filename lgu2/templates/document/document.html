@@ -5,7 +5,7 @@
 {% block page_title %}{{ meta.title }}{% endblock %}
 
 {% block head_middle %}
-<link rel="canonical" href="https://www.legislation.gov.uk/{{ meta.link }}" />
+{% comment %} <link rel="canonical" href="https://www.legislation.gov.uk/{{ meta.link }}" />
 <meta name="DC.title" content="{{ meta.title }}" />
 <meta name="DC.language" scheme="ISO639-2" content="{{ meta.lang }}" />
 <meta name="DC.publisher" content="{{ meta.publisher }}" />
@@ -19,7 +19,7 @@
 <link rel="alternate" type="application/akn+xhtml" href="/ukpga/2018/1/enacted/data.html" title="HTML5 snippet" />
 <link rel="alternate" type="application/pdf" href="/ukpga/2018/1/pdfs/ukpga_20180001_en.pdf" title="Original PDF" />
 <link rel="index" href="/ukpga/2018/1/contents/enacted" title="Table of Contents" />
-<meta name="Legislation.year" content="2018" />
+<meta name="Legislation.year" content="2018" /> {% endcomment %}
 <!-- <link rel="stylesheet" href="{% static 'primary.css' %}" type="text/css" /> -->
 <link rel="stylesheet" href="{% static 'lgu1/styles/view/changesOverTime.css' %}" type="text/css" />
 <script type="text/javascript" src="{% static 'lgu1/scripts/jquery-ui-1.8.24.custom.min.js' %}"></script>
@@ -36,8 +36,12 @@
 			<div id="breadCrumb">
 				<h2 class="accessibleText">You are here:</h2>
 				<ul>
-					<li class="first"><a href="/ukpga">UK Public General Acts</a></li>
-					<li><a href="{{ meta.link }}">{{ meta.cite }}</a></li>
+					<li class="first">
+						<a href="{% url 'browse' meta.shortType %}">{% translate type_label_plural %}</a>
+					</li>
+					<li>
+						<a href="{{ meta.link }}">{{ meta.cite }}</a>
+					</li>
 					<li class="activetext">{% translate 'Whole Act' %}</li>
 				</ul>
 			</div>
@@ -120,15 +124,23 @@
 			<h3 class="accessibleText">Print Options</h3>
 			<ul class="optionList">
 				<li class="printWhole">
-					<h4><span class="accessibleText">Print</span>The Whole
-						Act</h4>
+					<h4>
+						<span class="accessibleText">Print</span>
+						The Whole Act
+					</h4>
 					<ul>
-						<li><a class="pdfLink" href="/ukpga/2018/1/enacted/data.pdf" target="_blank">PDF<span
-									class="accessibleText"> The Whole
-									Act</span></a></li>
-						<li><a class="htmLink" href="/ukpga/2018/1/enacted/data.xht?view=snippet&amp;wrap=true"
-								target="_blank">Web page<span class="accessibleText"> The Whole
-									Act</span></a></li>
+						<li>
+							<a class="pdfLink" href="/ukpga/2018/1/enacted/data.pdf" target="_blank">
+								PDF
+								<span class="accessibleText">The Whole Act</span>
+							</a>
+						</li>
+						<li>
+							<a class="htmLink" href="/ukpga/2018/1/enacted/data.xht?view=snippet&amp;wrap=true" target="_blank">
+								Web page
+								<span class="accessibleText">The Whole Act</span>
+							</a>
+						</li>
 					</ul>
 				</li>
 			</ul>

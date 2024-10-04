@@ -20,11 +20,11 @@
         <div id="timelineData">
             {% for group in decade_groups_for_timeline %}
             <div class="decade {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
-                <h3><a href="/ukpga/{{ group.first_year }}-{{ group.last_year }}" title="{{ group.first_year }}-{{ group.last_year }}">{{ group.first_year }}-{{ group.last_year }}</a></h3>
+                <h3><a href="" title="{{ group.first_year }}-{{ group.last_year }}">{{ group.first_year }}-{{ group.last_year }}</a></h3>
                 <ul>
                     {% for count in group.counts %}
-                    <li class="per{{ count.count|stringformat:'02d' }} {% if count.complete %}complete{% else %}partial{% endif %} noDataforPrev{{ count.no_data_for_prev_yrs }}yrs">
-                        <a href="/ukpga/{{ count.year }}" title="{{ count.count }} results {{ count.year }}">
+                    <li class="{{ count.class }}">
+                        <a href="{{ count.link }}" title="{{ count.count }} results {{ count.year }}">
                             <em><span>{{ count.count }}</span></em>
                             <span class="accessibleText">Results</span>
                             <strong><img src="{% get_static_prefix %}lgu1//images/chrome/timeline{% if count.complete %}Complete{% else %}Partial{% endif %}Key.gif" alt="({% if count.complete %}Complete{% else %}Partial{% endif %})" /> {{ count.year }}</strong>

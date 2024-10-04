@@ -25,8 +25,12 @@
 			<div id="breadCrumb">
 				<h2 class="accessibleText">You are here:</h2>
 				<ul>
-					<li class="first"><a href="/ukpga">UK Public General Acts</a></li>
-					<li><a href="{{ meta.link }}">{{ meta.cite }}</a></li>
+					<li class="first">
+						<a href="{% url 'browse' meta.shortType %}">{% translate type_label_plural %}</a>
+					</li>
+					<li>
+						<a href="{{ meta.link }}">{{ meta.cite }}</a>
+					</li>
 					<li class="activetext">{% translate 'Table of contents' %}</li>
 				</ul>
 			</div>

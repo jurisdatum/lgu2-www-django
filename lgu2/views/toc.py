@@ -5,13 +5,14 @@ from django.template import loader
 
 from ..api import contents as api
 from ..messages.status import get_status_message
+from ..util.labels import get_type_label_plural
 
 def toc(request, type, year, number, version=None):
 
     data = api.get_toc(type, year, number, version)
 
     if version is None and data['meta']['status'] == 'final':
-        return redirect('document-toc', type=type, year=year, number=number, version='enacted')
+        return redirect('document-toc', type=type, year=year, number=number, version=data['meta']['version'])
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':
@@ -27,6 +28,8 @@ def toc(request, type, year, number, version=None):
         for item in items:
             add_link(item)
     def add_all_links(contents):
+        if contents is None:
+            return
         add_links(contents['body'])
         if 'appendices' in contents:
             add_links(contents['appendices'])
@@ -50,13 +53,17 @@ def toc(request, type, year, number, version=None):
         'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
     }
 
-    if 'schedules' in data['contents']:
+    if data['contents'] is None:
+        toc_id = 'viewLegSnippet'
+    elif 'schedules' in data['contents']:
         toc_id = 'tocControlsAdded'
     elif any(item.get('name') == 'part' for item in data['contents']['body']):
         toc_id = 'tocControlsAdded'
     else:
         toc_id = 'viewLegSnippet'
     data['toc_id'] = toc_id
+
+    data['type_label_plural'] = get_type_label_plural(data['meta']['longType'])
 
     template = loader.get_template('document/toc.html')
     return HttpResponse(template.render(data, request))

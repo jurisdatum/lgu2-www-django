@@ -1,0 +1,29 @@
+{% if subject_initials %}
+<div id="heading" class="section">
+    <div class="title">
+        <h3>Legislation by Subject Heading</h3>
+    </div>
+    <div class="title">
+        <h4>1. Select First Letter of Heading</h4>
+    </div>
+    <div class="content">
+        <ul>
+            {% for letter in all_lowercase_letters %}
+            {% if letter in subject_initials %}
+            <li class="legHeading"><a href="">{{ letter|upper }}</a></li>
+            {% else %}
+            <li class="legHeading empty">{{ letter|upper }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div id="subheading" class="section">
+    <div class="title">
+        <h4>2. Refine Results</h4>
+    </div>
+    <div class="content">
+        <ul style="display:none"></ul>
+    </div>
+</div>
+{% endif %}

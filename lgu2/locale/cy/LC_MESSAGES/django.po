@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 14:17-0400\n"
+"POT-Creation-Date: 2024-10-02 15:05-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,62 +27,73 @@ msgstr ""
 msgid "Welsh"
 msgstr "Cymraeg"
 
-#: lgu2/templates/browse/browse.html:36
+#: lgu2/templates/browse/browse.html:37
 msgid "Search Results"
 msgstr "Canlyniadau Chwilio"
 
-#: lgu2/templates/browse/browse.html:37
-msgid ""
-"Your search for English language UK Public General Acts has returned more "
-"than 200 results."
+#: lgu2/templates/browse/browse.html:39
+msgid "Your search for"
+msgstr "Mae eich chwiliad am"
+
+#: lgu2/templates/browse/browse.html:40
+msgid "English language"
 msgstr ""
-"Mae eich chwiliad am English language Deddfau Cyhoeddus Cyffredinol y "
-"Deyrnas Unedig wedi dod o hyd i fwy na 200 o ganlyniadau."
+
+#: lgu2/templates/browse/browse.html:42
+msgid "has returned"
+msgstr "wedi dod o hyd i"
+
+#: lgu2/templates/browse/browse.html:44
+msgid "more than"
+msgstr "fwy na"
 
 #: lgu2/templates/browse/browse.html:48
+msgid "results"
+msgstr "o ganlyniadau"
+
+#: lgu2/templates/browse/browse.html:59
 msgid "Legislation by Type"
 msgstr "Deddfwriaeth yn ôl Math"
 
-#: lgu2/templates/browse/browse.html:53 lgu2/templates/browse/browse.html:103
-#: lgu2/templates/common/search.html:24
-msgid "UK Public General Acts"
-msgstr "Deddfau Cyhoeddus Cyffredinol y Deyrnas Unedig"
-
-#: lgu2/templates/browse/browse.html:60
+#: lgu2/templates/browse/browse.html:77
 msgid "Legislation by Year"
 msgstr "Deddfwriaeth fesul Blwyddyn"
 
-#: lgu2/templates/browse/browse.html:83
+#: lgu2/templates/browse/browse.html:100
 msgid "Sort ascending by"
 msgstr ""
 
-#: lgu2/templates/browse/browse.html:83 lgu2/templates/common/search.html:5
+#: lgu2/templates/browse/browse.html:100 lgu2/templates/common/search.html:5
 msgid "Title"
 msgstr "Teitl"
 
-#: lgu2/templates/browse/browse.html:87
+#: lgu2/templates/browse/browse.html:104
 msgid "Sort descending by"
 msgstr ""
 
-#: lgu2/templates/browse/browse.html:87
+#: lgu2/templates/browse/browse.html:104
 msgid "Years and Numbers"
 msgstr "Blynyddoedd a Rhifau"
 
-#: lgu2/templates/browse/browse.html:90
+#: lgu2/templates/browse/browse.html:107
 msgid "Legislation type"
 msgstr "Math o ddeddfwriaeth"
 
-#: lgu2/templates/browse/browse.html:113
+#: lgu2/templates/browse/browse.html:130
 msgid "Back to top"
 msgstr "Yn ôl i’r brig"
 
 #: lgu2/templates/browse/paged_nav.html:10
-#: lgu2/templates/document/document.html:76
+#: lgu2/templates/document/prev_next.html:11
+#: lgu2/templates/document/prev_next.html:21
+#: lgu2/templates/document/toc.html:69
 msgid "Previous"
 msgstr "Blaenorol"
 
 #: lgu2/templates/browse/paged_nav.html:37
-#: lgu2/templates/document/document.html:87
+#: lgu2/templates/document/prev_next.html:34
+#: lgu2/templates/document/prev_next.html:44
+#: lgu2/templates/document/toc.html:80
 msgid "Next"
 msgstr "Nesaf"
 
@@ -193,6 +204,10 @@ msgstr "Pob Legislation (gan gynnwys yn deillio o’r UE)"
 msgid "All Primary Legislation"
 msgstr "Pob deddfwriaeth sylfaenol"
 
+#: lgu2/templates/common/search.html:24 lgu2/util/labels.py:6
+msgid "UK Public General Acts"
+msgstr "Deddfau Cyhoeddus Cyffredinol y Deyrnas Unedig"
+
 #: lgu2/templates/common/search.html:25
 msgid "UK Local Acts"
 msgstr "Deddfau Lleol y Deyrnas Unedig"
@@ -249,7 +264,7 @@ msgstr "Deddfau Lleol Senedd Prydain Fawr"
 msgid "Private and Personal Acts of the Parliament of Great Britain"
 msgstr "Deddfau Preifat a Phersonol Senedd Prydain Fawr"
 
-#: lgu2/templates/common/search.html:39
+#: lgu2/templates/common/search.html:39 lgu2/util/labels.py:12
 msgid "Northern Ireland Orders in Council"
 msgstr "Gorchmynion yn y Cyngor Gogledd Iwerddon"
 
@@ -265,11 +280,11 @@ msgstr "Deddfau Senedd Gogledd Iwerddon"
 msgid "All Secondary Legislation"
 msgstr "Pob is-ddeddfwriaeth"
 
-#: lgu2/templates/common/search.html:44
+#: lgu2/templates/common/search.html:44 lgu2/util/labels.py:8
 msgid "UK Statutory Instruments"
 msgstr "Offerynnau Statudol y Deyrnas Unedig"
 
-#: lgu2/templates/common/search.html:45
+#: lgu2/templates/common/search.html:45 lgu2/util/labels.py:10
 msgid "Wales Statutory Instruments"
 msgstr "Offerynnau Statudol Cymru"
 
@@ -353,86 +368,98 @@ msgstr "Chwilio"
 msgid "Advanced Search"
 msgstr "Chwiliad Uwch"
 
-#: lgu2/templates/document/document.html:41
+#: lgu2/templates/document/document.html:45
 msgid "Whole Act"
 msgstr ""
 
-#: lgu2/templates/document/document.html:47
+#: lgu2/templates/document/document.html:51 lgu2/templates/document/toc.html:40
 msgid "Table of Contents"
 msgstr "Tabl o’r Cynnwys"
 
-#: lgu2/templates/document/document.html:51
+#: lgu2/templates/document/document.html:55 lgu2/templates/document/toc.html:44
 msgid "Content"
 msgstr "Cynnwys"
 
-#: lgu2/templates/document/document.html:55
+#: lgu2/templates/document/document.html:59 lgu2/templates/document/toc.html:48
 msgid "Explanatory Notes"
 msgstr "Nodiadau Esboniadol"
 
-#: lgu2/templates/document/document.html:62
-#: lgu2/templates/document/document.html:238
+#: lgu2/templates/document/document.html:66
+#: lgu2/templates/document/left.html:131 lgu2/templates/document/toc.html:55
 msgid "More Resources"
 msgstr "Rhagor o Adnoddau"
 
-#: lgu2/templates/document/document.html:100
+#: lgu2/templates/document/document.html:79 lgu2/templates/document/toc.html:93
 msgid "Plain View"
 msgstr "Edrychiad Plaen"
 
-#: lgu2/templates/document/document.html:109
+#: lgu2/templates/document/document.html:88
+#: lgu2/templates/document/toc.html:102
 msgid "Print Options"
 msgstr "Dewisiadau Argraffu"
 
-#: lgu2/templates/document/document.html:122
+#: lgu2/templates/document/left.html:9
 msgid "What Version"
 msgstr "Pa Fersiwn"
 
-#: lgu2/templates/document/document.html:133
-#: lgu2/templates/document/document.html:143
-#: lgu2/templates/document/document.html:154
+#: lgu2/templates/document/left.html:20 lgu2/templates/document/left.html:30
+#: lgu2/templates/document/left.html:41
 msgid "Latest available (Revised)"
 msgstr "Y Diweddaraf sydd Ar Gael (Diwygiedig)"
 
-#: lgu2/templates/document/document.html:167
+#: lgu2/templates/document/left.html:54
 msgid "Point in Time"
 msgstr "Pwynt Penodol mewn Amser"
 
-#: lgu2/templates/document/document.html:180
-#: lgu2/templates/document/document.html:190
+#: lgu2/templates/document/left.html:67 lgu2/templates/document/left.html:77
 msgid "Original (As enacted)"
 msgstr "Gwreiddiol (Fel y'i Deddfwyd)"
 
-#: lgu2/templates/document/document.html:205
+#: lgu2/templates/document/left.html:92
 msgid "Advanced Features"
 msgstr "Nodweddion Uwch"
 
-#: lgu2/templates/document/document.html:210
+#: lgu2/templates/document/left.html:97
 msgid "Show Explanatory Notes for Sections"
 msgstr "Dangos Nodiadau Eglurhaol ar gyfer Adrannau "
 
-#: lgu2/templates/document/document.html:220
+#: lgu2/templates/document/left.html:107
 msgid "Opening Options"
 msgstr "Dewisiadau Agor"
 
-#: lgu2/templates/document/document.html:225
+#: lgu2/templates/document/left.html:113
 msgid "Open whole Act"
 msgstr "Agor y Ddeddf Gyfan"
 
-#: lgu2/templates/document/document.html:228
+#: lgu2/templates/document/left.html:118
 msgid "Open Act without Schedules"
 msgstr "Agor Deddf heb Atodlenni"
 
-#: lgu2/templates/document/document.html:231
+#: lgu2/templates/document/left.html:123
 msgid "Open Schedules only"
 msgstr "Agor Atodlenni yn unig"
 
-#: lgu2/templates/document/document.html:244
+#: lgu2/templates/document/left.html:137
 msgid "Original"
 msgstr "Gwreiddiol"
 
-#: lgu2/templates/document/document.html:244
+#: lgu2/templates/document/left.html:137
 msgid "King's Printer Version"
 msgstr "Fersiwn Argraffydd y Brenin"
 
-#: lgu2/templates/document/document.html:249
+#: lgu2/templates/document/left.html:142
 msgid "View more"
 msgstr "Gweld Mwy"
+
+#: lgu2/templates/document/toc.html:34
+#, fuzzy
+#| msgid "Table of Contents"
+msgid "Table of contents"
+msgstr "Tabl o’r Cynnwys"
+
+#~ msgid ""
+#~ "Your search for English language UK Public General Acts has returned more "
+#~ "than 200 results."
+#~ msgstr ""
+#~ "Mae eich chwiliad am English language Deddfau Cyhoeddus Cyffredinol y "
+#~ "Deyrnas Unedig wedi dod o hyd i fwy na 200 o ganlyniadau."

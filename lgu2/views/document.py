@@ -7,6 +7,7 @@ from django.template import loader
 
 from ..api.document import get_akn, get_clml, get_document
 from ..messages.status import get_status_message
+from ..util.labels import get_type_label_plural
 
 def _make_timeline_data(meta, pit):
 
@@ -16,6 +17,7 @@ def _make_timeline_data(meta, pit):
 
     versions = meta['versions']
     versions = filter(lambda v: v != 'enacted', versions)
+    versions = filter(lambda v: v != 'made', versions)
     versions = filter(lambda v: v != 'prospective', versions) # ?
     versions = sorted(versions)
     versions = list(map(lambda v: { 'date': v }, versions))
@@ -53,7 +55,7 @@ def document(request, type, year, number, version=None):
         return HttpResponseNotFound(template.render({}, request))
 
     if version is None and data['meta']['status'] == 'final':
-        return redirect('document-version', type=type, year=year, number=number, version='enacted')
+        return redirect('document-version', type=type, year=year, number=number, version=data['meta']['version'])
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':
@@ -75,6 +77,7 @@ def document(request, type, year, number, version=None):
     context = {
         'meta': data['meta'],
         'pit': pit,
+        'type_label_plural': get_type_label_plural(data['meta']['longType']),
         'timeline': timeline,
         'status_message': status_message,
         'article': data['html'],

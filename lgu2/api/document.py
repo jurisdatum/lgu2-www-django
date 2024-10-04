@@ -2,6 +2,7 @@
 from typing import List, TypedDict
 
 from . import server
+from .browse_types import AltNumber
 
 class Meta(TypedDict):
     id: str
@@ -10,6 +11,7 @@ class Meta(TypedDict):
     year: int
     regnalYear: str
     number: int
+    altNumbers: List[AltNumber]
     date: str
     cite: str
     version: str
