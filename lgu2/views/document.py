@@ -87,7 +87,7 @@ def document(request, type, year, number, version=None):
             'notes': '/',
             'resources': '/',
             'whole': None,
-            'body': None if data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
+            'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
             'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
 
         }

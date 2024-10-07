@@ -55,7 +55,7 @@ def fragment(request, type, year, number, section, version=None):
             'notes': '/',
             'resources': '/',
             'whole': link_prefix + link_suffix,
-            'body': None if data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
+            'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
             'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
         }
     }
