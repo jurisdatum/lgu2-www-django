@@ -54,8 +54,14 @@ def document(request, type, year, number, version=None):
         template = loader.get_template('404.html')
         return HttpResponseNotFound(template.render({}, request))
 
-    if version is None and data['meta']['status'] == 'final':
-        return redirect('document-version', type=type, year=year, number=number, version=data['meta']['version'])
+    meta = data['meta']
+
+    if version is None and meta['status'] == 'final':
+        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+    if version is None and meta['shortType'] != type:
+        return redirect('document', type=meta['shortType'], year=meta['year'], number=meta['number'])
+    if meta['shortType'] != type:
+        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':

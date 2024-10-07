@@ -18,8 +18,20 @@ def fragment(request, type, year, number, section, version=None):
         template = loader.get_template('404.html')
         return HttpResponseNotFound(template.render({}, request))
 
-    if version is None and data['meta']['status'] == 'final':
-        return redirect('fragment', type=type, year=year, number=number, section=section, version=data['meta']['version'])
+    meta = data['meta']
+
+    if version is None and meta['status'] == 'final':
+        if 'fragment' in meta:
+            section = meta['fragment']
+        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+    if version is None and meta['shortType'] != type:
+        if 'fragment' in meta:
+            section = meta['fragment']
+        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section)
+    if meta['shortType'] != type:
+        if 'fragment' in meta:
+            section = meta['fragment']
+        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':

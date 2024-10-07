@@ -11,8 +11,14 @@ def toc(request, type, year, number, version=None):
 
     data = api.get_toc(type, year, number, version)
 
-    if version is None and data['meta']['status'] == 'final':
-        return redirect('document-toc', type=type, year=year, number=number, version=data['meta']['version'])
+    meta = data['meta']
+
+    if version is None and meta['status'] == 'final':
+        return redirect('document-toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=data['meta']['version'])
+    if version is None and meta['shortType'] != type:
+        return redirect('document-toc', type=meta['shortType'], year=meta['year'], number=meta['number'])
+    if meta['shortType'] != type:
+        return redirect('document-toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':

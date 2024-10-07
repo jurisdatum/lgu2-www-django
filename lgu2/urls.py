@@ -44,8 +44,10 @@ urlpatterns += i18n_patterns(
     re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.xml$', document_clml),
     re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.akn$', document_akn),
 
-    re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents(/(?P<version>enacted|made|\d{4}-\d{2}-\d{2}))?$', toc.toc, name='document-toc'),
-    re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents(/(?P<version>enacted|made|\d{4}-\d{2}-\d{2}))?/data\.(?P<format>xml|akn|json)$', toc.data),
+    re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents$', toc.toc, name='document-toc'),
+    re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/data\.(?P<format>xml|akn|json)$', toc.data),
+    re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', toc.toc, name='document-toc-version'),
+    re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.(?P<format>xml|akn|json)$', toc.data),
 
     re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', metadata, name='metadata'),
     re_path(r'^(?P<type>ukpga|uksi|wsi|nisi)/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', combined),
