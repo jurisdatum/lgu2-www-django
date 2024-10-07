@@ -21,9 +21,6 @@ class Meta(TypedDict):
     publisher: str
     modified: str
     versions: List[str]
-    fragment: str
-    prev: str
-    next: str
     schedules: bool
 
 class Document(TypedDict):

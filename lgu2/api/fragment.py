@@ -1,6 +1,17 @@
 
+from typing import TypedDict
+
 from . import server
-from .document import Document
+from . import document
+
+class FragmentMetadata(document.Meta):
+    fragment: str
+    prev: str
+    next: str
+
+class Fragment(TypedDict):
+    meta: FragmentMetadata
+    html: str
 
 def _make_url(type: str, year, number, section: str, version=None) -> str:
     url = '/fragment/' + type + '/' + str(year) + '/' + str(number)
@@ -9,7 +20,7 @@ def _make_url(type: str, year, number, section: str, version=None) -> str:
         url += '?version=' + version
     return url
 
-def get(type: str, year, number, section: str, version=None) -> Document:
+def get(type: str, year, number, section: str, version=None) -> Fragment:
     url = _make_url(type, year, number, section, version)
     return server.get_json(url)
 
