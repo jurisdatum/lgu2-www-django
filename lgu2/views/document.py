@@ -8,6 +8,7 @@ from django.template import loader
 from ..api.document import get_akn, get_clml, get_document
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label_plural
+from ..util.types import get_category
 
 def _make_timeline_data(meta, pit):
 
@@ -79,6 +80,8 @@ def document(request, type, year, number, version=None):
     timeline = _make_timeline_data(data['meta'], pit)
 
     status_message = get_status_message(data['meta'])
+
+    meta['category'] = get_category(meta['shortType'])
 
     context = {
         'meta': data['meta'],

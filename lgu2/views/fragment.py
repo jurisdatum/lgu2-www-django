@@ -9,6 +9,7 @@ from ..api import fragment as api
 from .document import _make_timeline_data
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label_plural
+from ..util.types import get_category
 
 def fragment(request, type, year, number, section, version=None):
 
@@ -59,6 +60,8 @@ def fragment(request, type, year, number, section, version=None):
     timeline = _make_timeline_data(data['meta'], pit)
 
     status_message = get_status_message(data['meta'])
+
+    meta['category'] = get_category(meta['shortType'])
 
     context = {
         'meta': data['meta'],
