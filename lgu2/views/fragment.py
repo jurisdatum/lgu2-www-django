@@ -13,6 +13,12 @@ from ..util.labels import get_type_label_plural
 def fragment(request, type, year, number, section, version=None):
 
     data = api.get(type, year, number, section, version)
+    # API should add None values to fragment requests
+    # but they're current missing for intro and last section
+    if not 'prev' in data['meta']:
+        data['meta']['prev'] = None
+    if not 'next' in data['meta']:
+        data['meta']['next'] = None
 
     if 'error' in data:
         template = loader.get_template('404.html')
