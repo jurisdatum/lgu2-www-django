@@ -279,6 +279,9 @@ a[href=""]:hover, a[href^="#"]:hover {
 cite {
   font-style: normal;
 }
+cite.operative {
+  font-weight: bold;
+}
 
 .crossheading[data-ukl-name=P1group] > h2 {
   font-weight: bold;
