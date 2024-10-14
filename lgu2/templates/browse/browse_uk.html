@@ -1,6 +1,8 @@
 {% extends "../base.html" %}
 {% load static %}
 
+{% block page_title %}United Kingdom{% endblock %}
+
 {% block head_middle %}
 <link type="text/css" href="{% static 'lgu1/styles/legBrowse.css' %}" rel="stylesheet" />
 {% endblock %}
@@ -29,41 +31,17 @@
         <div class="s_4 p_one legCol">
             <h2>Exclusively or primarily applies to the UK</h2>
             <ul class="legTypes">
-                <li><a id="ukpga" href="/ukpga">UK Public General Acts<span></span></a></li>
-                <li>UK Local Acts</li>
-                <li>UK Private and Personal Acts</li>
-                <li><a id="uksi" href="/uksi">UK Statutory Instruments<span></span></a></li>
-                <li>UK Ministerial Directions</li>
-                <li>UK Ministerial Orders</li>
-                <li>UK Statutory Rules and Orders 1900-1948</li>
-                <li>UK Draft Statutory Instruments</li>
+                {% for type in primarily %}
+                <li><a id="{{ type.shortName }}" href="{% url 'browse' type.shortName %}">{{ type.label }}<span></span></a></li>
+                {% endfor %}
             </ul>
         </div>
         <div class="s_4 p_two legCol">
             <h2>May contain legislation that applies to the UK</h2>
             <ul class="legTypes">
-                <li>Acts of the Scottish Parliament</li>
-                <li>Acts of the Northern Ireland Assembly</li>
-                <li>Acts of the Old Scottish Parliament 1424-1707</li>
-                <li>Acts of the English Parliament 1267-1706</li>
-                <li>Acts of the Old Irish Parliament 1495-1800</li>
-                <li>Acts of the Parliament of Great Britain 1707-1800</li>
-                <li>Local Acts of the Parliament of Great Britain 1797-1800</li>
-                <li>Private and Personal Acts of the Parliament of Great Britain 1707-1800</li>
-                <li>Northern Ireland Statutory Rules</li>
-                <li>Acts of the National Assembly for Wales</li>
-                <li>Acts of Senedd Cymru</li>
-                <li>Measures of the National Assembly for Wales</li>
-                <li>UK Church Measures</li>
-                <li><a id="wsi" href="/wsi">Wales Statutory Instruments<span></span></a></li>
-                <li>Scottish Statutory Instruments</li>
-                <li><a id="nisi" href="/nisi">Northern Ireland Orders in Council<span></span></a></li>
-                <li>Church Instruments</li>
-                <li>Northern Ireland Assembly Measures 1974</li>
-                <li>Acts of the Northern Ireland Parliament 1921-1972</li>
-                <li>Northern Ireland Statutory Rules and Orders 1922-1973</li>
-                <li>Northern Ireland Draft Statutory Rules</li>
-                <li>Scottish Draft Statutory Instruments</li>
+                {% for type in possibly %}
+                <li><a id="{{ type.shortName }}" href="{% url 'browse' type.shortName %}">{{ type.label }}<span></span></a></li>
+                {% endfor %}
             </ul>
         </div>
         <div class="s_8 p_one quickLinks">

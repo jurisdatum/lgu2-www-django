@@ -5,9 +5,25 @@
     <h3 class="accessibleText">Key</h3>
     <dl class="key">
         <dt><img src="{% static 'lgu1/images/chrome/timelinePartialKey.gif' %}" alt="Partial" /></dt>
-        <dd><em>{% translate 'Partial dataset' %} {{ years.first }} - {{ years.first_complete|add:'-1' }}</em></dd>
+        <dd>
+            {% if years.first_complete is None %}
+            <em>{% translate 'Partial dataset' %} {{ years.first }} - {{ years.last }}</em>
+            {% elif years.first == years.first_complete %}
+            <em>{% translate 'Partial dataset' %}</em>
+            {% else %}
+            <em>{% translate 'Partial dataset' %} {{ years.first }} - {{ years.first_complete|add:'-1' }}</em>
+            {% endif %}
+        </dd>
         <dt><img src="{% static 'lgu1/images/chrome/timelineCompleteKey.gif' %}" alt="Complete" /></dt>
-        <dd><em>{% translate 'Complete dataset' %} {{ years.first_complete }} - {% if years.last %}{{ years.last }}{% else %}{% translate 'Present' %}{% endif %}</em></dd>
+        <dd>
+            {% if years.first_complete and years.last %}
+            <em>{% translate 'Complete dataset' %} {{ years.first_complete }} - {{ years.last }}</em>
+            {% elif years.first_complete %}
+            <em>{% translate 'Complete dataset' %} {{ years.first_complete }} - {% translate 'Present' %}</em>
+            {% else %}
+            <em>{% translate 'Complete dataset' %}</em>
+            {% endif %}
+        </dd>
     </dl>
     <h3 class="groupInfo">Results grouped by <strong>10 year</strong> periods</h3>
     <h3 class="accessibleText">Data is ordered by:</h3>

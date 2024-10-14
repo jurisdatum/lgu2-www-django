@@ -5,7 +5,7 @@ from django.template import loader
 
 from ..api import contents as api
 from ..messages.status import get_status_message
-from ..util.labels import get_type_label_plural
+from ..util.labels import get_type_label
 
 def toc(request, type, year, number, version=None):
 
@@ -69,7 +69,7 @@ def toc(request, type, year, number, version=None):
         toc_id = 'viewLegSnippet'
     data['toc_id'] = toc_id
 
-    data['type_label_plural'] = get_type_label_plural(data['meta']['longType'])
+    data['type_label_plural'] = get_type_label(data['meta']['longType'])
 
     template = loader.get_template('document/toc.html')
     return HttpResponse(template.render(data, request))

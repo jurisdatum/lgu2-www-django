@@ -2,6 +2,7 @@
 from datetime import datetime
 from itertools import zip_longest
 import string
+from typing import Optional
 
 from django.http import HttpResponse
 from django.template import loader
@@ -9,26 +10,24 @@ from django.urls import reverse
 
 from ..api.browse import browse_by_type, browse_by_type_and_year
 from ..util.cutoff import get_cutoff
-from ..util.labels import get_type_label_plural
+from ..util.labels import get_type_label
 from ..util.types import to_short_type
 
-def browse_uk(request):
-    template = loader.get_template('browse/browse_uk.html')
-    return HttpResponse(template.render({}, request))
-
-def _group_counts_for_timeline(yearly_counts, complete_cutoff):
+def _group_counts_for_timeline(yearly_counts, complete_cutoff: Optional[int]):
 
     yearly_counts = list(reversed(yearly_counts))
     first_year = yearly_counts[0]['year']
 
     # mark complete or partial
     for count in yearly_counts:
-        count['complete'] = count['year'] >= complete_cutoff
+        count['complete'] = False if complete_cutoff is None else count['year'] >= complete_cutoff
 
     # calclulate no_data_for_prev_yrs
     next_expected_year = (first_year // 10) * 10
     for count in yearly_counts:
-        count['no_data_for_prev_yrs'] = count['year'] - next_expected_year
+        prev_yrs = count['year'] - next_expected_year
+        mod = count['year'] % 10
+        count['no_data_for_prev_yrs'] = mod if mod < prev_yrs else prev_yrs
         next_expected_year = count['year'] + 1
 
     # add class
@@ -65,7 +64,7 @@ def browse(request, type, year = None):
         data = browse_by_type_and_year(type, year, page)
 
     for by_type in data['meta']['counts']['byType']:
-        by_type['label'] = get_type_label_plural(by_type['type'])
+        by_type['label'] = get_type_label(by_type['type'])
         short_type = to_short_type(by_type['type'])
         by_type['link'] = reverse('browse', args=[short_type]) if year is None else reverse('browse-year', args=[short_type, year])
 
@@ -77,7 +76,7 @@ def browse(request, type, year = None):
             doc['link'] = link_prefix + '/' + doc['id'] + '/contents/' + doc['version']
         else:
             doc['link'] = link_prefix + '/' + doc['id'] + '/contents'
-        doc['label'] = get_type_label_plural(doc['longType'])
+        doc['label'] = get_type_label(doc['longType'])
 
     yearly_counts = data['meta']['counts']['byYear']
     last_year = yearly_counts[0]['year']
@@ -109,7 +108,7 @@ def browse(request, type, year = None):
         'subject_initials': subject_initials,
         'short_type': type,
         'year': year,
-        'type_label_plural': get_type_label_plural(type),
+        'type_label_plural': get_type_label(type),
         'documents': data['documents'],
         'total': data['meta']['counts']['total'],
         'counts_by_type': data['meta']['counts']['byType'],

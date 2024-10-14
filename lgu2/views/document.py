@@ -7,7 +7,7 @@ from django.template import loader
 
 from ..api.document import get_akn, get_clml, get_document
 from ..messages.status import get_status_message
-from ..util.labels import get_type_label_plural
+from ..util.labels import get_type_label
 from ..util.types import get_category
 
 def _make_timeline_data(meta, pit):
@@ -86,7 +86,7 @@ def document(request, type, year, number, version=None):
     context = {
         'meta': data['meta'],
         'pit': pit,
-        'type_label_plural': get_type_label_plural(data['meta']['longType']),
+        'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
         'status_message': status_message,
         'article': data['html'],

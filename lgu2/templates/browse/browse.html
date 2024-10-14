@@ -46,6 +46,7 @@
             {% endif %}
             {% translate 'results' %}
         </h2>
+        {% if short_type == 'asc' or short_type == 'wsi' or short_type == 'anaw' or short_type == 'mwa' %}
         <div class="redirectSearch">
             {% if year %}
             <a href="{% url 'browse-year' short_type year %}?lang=cy" class="redirectSearch">Search Welsh language text</a>
@@ -53,6 +54,7 @@
             <a href="{% url 'browse' short_type %}?lang=cy" class="redirectSearch">Search Welsh language text</a>
             {% endif %}
         </div>
+        {% endif %}
     </div>
     {% include "browse/timeline.html" %}
     {% include "browse/paged_nav.html" %}

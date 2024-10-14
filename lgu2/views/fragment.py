@@ -8,7 +8,7 @@ from django.template import loader
 from ..api import fragment as api
 from .document import _make_timeline_data
 from ..messages.status import get_status_message
-from ..util.labels import get_type_label_plural
+from ..util.labels import get_type_label
 from ..util.types import get_category
 
 def fragment(request, type, year, number, section, version=None):
@@ -66,7 +66,7 @@ def fragment(request, type, year, number, section, version=None):
     context = {
         'meta': data['meta'],
         'pit': pit,
-        'type_label_plural': get_type_label_plural(data['meta']['longType']),
+        'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
         'status_message': status_message,
         'article': data['html'],
