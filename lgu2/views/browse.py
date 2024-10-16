@@ -13,6 +13,7 @@ from ..util.cutoff import get_cutoff
 from ..util.labels import get_type_label
 from ..util.types import to_short_type
 
+
 def _group_counts_for_timeline(yearly_counts, complete_cutoff: Optional[int]):
 
     yearly_counts = list(reversed(yearly_counts))
@@ -50,13 +51,14 @@ def _group_counts_for_timeline(yearly_counts, complete_cutoff: Optional[int]):
             last_year_of_decade = first_year_of_decade + 9
             if last_year_of_decade > this_year:
                 last_year_of_decade = this_year
-            group = { 'first_year': first_year_of_decade, 'last_year': last_year_of_decade, 'counts': [] }
+            group = {'first_year': first_year_of_decade, 'last_year': last_year_of_decade, 'counts': []}
             grouped.append(group)
             last_decade = decade
         grouped[-1]['counts'].append(count)
     return grouped
 
-def browse(request, type, year = None):
+
+def browse(request, type, year=None):
     page = request.GET.get('page', '1')
     if year is None:
         data = browse_by_type(type, page)
@@ -83,11 +85,11 @@ def browse(request, type, year = None):
     first_year = yearly_counts[-1]['year']
     complete_cutoff = get_cutoff(type)
 
-    #add links
+    # add links
     for count in yearly_counts:
         count['link'] = reverse('browse-year', args=[type, count['year']])
 
-    grouped_yearly_counts = zip_longest(*(iter(yearly_counts),) * 24) # for yearPagination
+    grouped_yearly_counts = zip_longest(*(iter(yearly_counts),) * 24)  # for yearPagination
 
     grouped_by_decade = _group_counts_for_timeline(yearly_counts, complete_cutoff)
     timeline_style = "<style type=\"text/css\">#timeline #timelineData {{ width: {w}em }}</style>".format(w=str(len(grouped_by_decade) * 35))
@@ -100,8 +102,8 @@ def browse(request, type, year = None):
 
     # subjects
     subject_initials = None
-    if 'bySubjectInitial' in data['meta']['counts']: # should not be present and None
-        subject_initials = set([ i['initial'] for i in data['meta']['counts']['bySubjectInitial'] ])
+    if 'bySubjectInitial' in data['meta']['counts']:  # should not be present and None
+        subject_initials = set([i['initial'] for i in data['meta']['counts']['bySubjectInitial']])
 
     context = {
         'all_lowercase_letters': string.ascii_lowercase,

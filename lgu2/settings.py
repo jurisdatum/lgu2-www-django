@@ -52,7 +52,7 @@ ROOT_URLCONF = 'lgu2.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(BASE_DIR, 'lgu2/templates') ],
+        'DIRS': [os.path.join(BASE_DIR, 'lgu2/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-LANGUAGES = LANGUAGES = ( ('en', _('English')), ('cy', _('Welsh')) )
+LANGUAGES = LANGUAGES = (('en', _('English')), ('cy', _('Welsh')))
 
 TIME_ZONE = 'UTC'
 
@@ -117,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'lgu2/static') ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'lgu2/static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

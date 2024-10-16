@@ -7,6 +7,7 @@ from ..api import contents as api
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 
+
 def toc(request, type, year, number, version=None):
 
     data = api.get_toc(type, year, number, version)
@@ -30,9 +31,11 @@ def toc(request, type, year, number, version=None):
         item['link'] = link_prefix + '/' + middle + link_suffix
         if 'children' in item:
             add_links(item['children'])
+
     def add_links(items):
         for item in items:
             add_link(item)
+
     def add_all_links(contents):
         if contents is None:
             return
@@ -45,6 +48,7 @@ def toc(request, type, year, number, version=None):
             add_links(contents['schedules'])
         if 'attachments' in contents:
             add_links(contents['attachments'])
+
     add_all_links(data['contents'])
 
     data['status_message'] = get_status_message(data['meta'])
@@ -73,6 +77,7 @@ def toc(request, type, year, number, version=None):
 
     template = loader.get_template('document/toc.html')
     return HttpResponse(template.render(data, request))
+
 
 def data(request, type, year, number, format, version=None):
     if format == 'xml':

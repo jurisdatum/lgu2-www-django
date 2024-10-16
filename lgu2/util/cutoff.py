@@ -37,6 +37,7 @@ cutoffs = {
     'eudr': None
 }
 
+
 def get_cutoff(type: str) -> Optional[int]:
     if type in cutoffs:
         return cutoffs[type]

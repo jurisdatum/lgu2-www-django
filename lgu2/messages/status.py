@@ -1,14 +1,13 @@
 
+from datetime import datetime
+import re
+
+from ..api.document import Meta
 
 STATUS_WARNING_ORIGINAL_VERSION = "This is the original version (as it was originally {version})."
 
 STATUS_WARNING_PIT_AT = "Point in time view as at {pit}."
 
-
-from datetime import datetime
-import re
-
-from ..api.document import Meta
 
 def get_status_message(meta: Meta):
 

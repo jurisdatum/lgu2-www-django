@@ -1,5 +1,5 @@
 
-from django.utils.translation import gettext as _
+# from django.utils.translation import gettext as _
 
 from .types import short_to_long
 
@@ -14,7 +14,7 @@ labels = {
     'aip': 'Acts of the Old Irish Parliament',
     'apgb': 'Acts of the Parliament of Great Britain',
     'gbla': 'Local Acts of the Parliament of Great Britain',
-    'gbppa': '???', # ToDo
+    'gbppa': '???',  # ToDo
     'anaw': 'Acts of the National Assembly for Wales',
     'asc': 'Acts of Senedd Cymru',
     'mwa': 'Measures of the National Assembly for Wales',
@@ -47,7 +47,8 @@ long_labels['aep'] = 'Acts of the English Parliament 1267-1706'
 long_labels['aip'] = 'Acts of the Old Irish Parliament 1495-1800'
 long_labels['apgb'] = 'Acts of the Parliament of Great Britain 1707-1800'
 long_labels['gbla'] = 'Local Acts of the Parliament of Great Britain 1797-1800'
-long_labels['gbppa'] = 'Private and Personal Acts of the Parliament of Great Britain 1707-1800'
+long_labels['gbppa'] = 'Private and Personal Acts of the Parliament of ' \
+    'Great Britain 1707-1800'
 long_labels['ukcm'] = 'Church Measures'
 long_labels['mnia'] = 'Northern Ireland Assembly Measures 1974'
 long_labels['apni'] = 'Acts of the Northern Ireland Parliament 1921-1972'
@@ -57,9 +58,11 @@ for short, long in short_to_long.items():
     labels[long] = labels[short]
     long_labels[long] = long_labels[short]
 
+
 def get_type_label(type):
     if type in labels:
         return labels[type]
+
 
 def get_long_type_label(type):
     if type in long_labels:

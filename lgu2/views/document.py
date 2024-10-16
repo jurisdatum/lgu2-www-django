@@ -10,6 +10,7 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
 
+
 def _make_timeline_data(meta, pit):
 
     min_list_width = 717
@@ -19,15 +20,15 @@ def _make_timeline_data(meta, pit):
     versions = meta['versions']
     versions = filter(lambda v: v != 'enacted', versions)
     versions = filter(lambda v: v != 'made', versions)
-    versions = filter(lambda v: v != 'prospective', versions) # ?
+    versions = filter(lambda v: v != 'prospective', versions)  # ?
     versions = sorted(versions)
-    versions = list(map(lambda v: { 'date': v }, versions))
+    versions = list(map(lambda v: {'date': v}, versions))
 
     if not versions:
         return None
     elif len(versions) == 1:
         item_width = max_item_width
-    elif len(versions) > 4: # 5?
+    elif len(versions) > 4:  # 5?
         item_width = min_item_width
     else:
         item_width = int((min_list_width - 50) / len(versions))
@@ -46,6 +47,7 @@ def _make_timeline_data(meta, pit):
         'versions': versions,
         'scroll': list_width > min_list_width
     }
+
 
 def document(request, type, year, number, version=None):
 
@@ -74,7 +76,7 @@ def document(request, type, year, number, version=None):
     try:
         version_date = datetime.strptime(version, '%Y-%m-%d')
         pit = version_date.strftime("%d/%m/%Y")
-    except:
+    except ValueError:
         pit = None
 
     timeline = _make_timeline_data(data['meta'], pit)
@@ -104,9 +106,11 @@ def document(request, type, year, number, version=None):
     template = loader.get_template('document/document.html')
     return HttpResponse(template.render(context, request))
 
+
 def document_clml(request, type, year, number, version=None):
     clml = get_clml(type, year, number, version)
     return HttpResponse(clml, content_type='application/xml')
+
 
 def document_akn(request, type, year, number, version=None):
     akn = get_akn(type, year, number, version)

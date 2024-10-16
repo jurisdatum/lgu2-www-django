@@ -5,6 +5,7 @@ from django.template import loader
 from ..api.doc_types import get_uk_types, Response
 from ..util.labels import get_long_type_label
 
+
 def list_uk(request):
     data: Response = get_uk_types()
     for type in data['primarily']:
