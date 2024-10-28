@@ -1,7 +1,8 @@
 
 from datetime import datetime
+from typing import Optional
 
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template import loader
 
@@ -10,6 +11,21 @@ from .document import _make_timeline_data
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
+
+
+def _should_redirect(type: str, version: str, meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
+    if version is None and meta['status'] == 'final':
+        if 'fragment' in meta:
+            section = meta['fragment']
+        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+    if version is None and meta['shortType'] != type:
+        if 'fragment' in meta:
+            section = meta['fragment']
+        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section)
+    if meta['shortType'] != type:
+        if 'fragment' in meta:
+            section = meta['fragment']
+        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
 
 
 def fragment(request, type, year, number, section, version=None):
@@ -28,18 +44,9 @@ def fragment(request, type, year, number, section, version=None):
 
     meta = data['meta']
 
-    if version is None and meta['status'] == 'final':
-        if 'fragment' in meta:
-            section = meta['fragment']
-        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
-    if version is None and meta['shortType'] != type:
-        if 'fragment' in meta:
-            section = meta['fragment']
-        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section)
-    if meta['shortType'] != type:
-        if 'fragment' in meta:
-            section = meta['fragment']
-        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+    rdrct = _should_redirect(type, version, meta)
+    if rdrct is not None:
+        return rdrct
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':

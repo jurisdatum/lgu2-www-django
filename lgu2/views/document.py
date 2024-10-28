@@ -1,14 +1,24 @@
 
 from datetime import datetime
+from typing import Optional
 
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template import loader
 
-from ..api.document import get_akn, get_clml, get_document
+from ..api.document import get_akn, get_clml, get_document, Meta as DocumentMetadata
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
+
+
+def _should_redirect(type: str, version: str, meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
+    if version is None and meta['status'] == 'final':
+        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+    if version is None and meta['shortType'] != type:
+        return redirect('document', type=meta['shortType'], year=meta['year'], number=meta['number'])
+    if meta['shortType'] != type:
+        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
 
 
 def _make_timeline_data(meta, pit):
@@ -59,12 +69,9 @@ def document(request, type, year, number, version=None):
 
     meta = data['meta']
 
-    if version is None and meta['status'] == 'final':
-        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
-    if version is None and meta['shortType'] != type:
-        return redirect('document', type=meta['shortType'], year=meta['year'], number=meta['number'])
-    if meta['shortType'] != type:
-        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+    rdrct = _should_redirect(type, version, meta)
+    if rdrct is not None:
+        return rdrct
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':
