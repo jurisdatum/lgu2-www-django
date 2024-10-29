@@ -23,6 +23,7 @@ class Meta(TypedDict):
     modified: str
     versions: List[str]
     schedules: bool
+    formats: List[str]
 
 
 class Document(TypedDict):

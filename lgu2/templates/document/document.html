@@ -103,6 +103,10 @@
 					<p class="intro">{{ status_message }}</p>
 				</div>
 				{% endif %}
+
+				{% if pdf_only %}
+				{% include "document/pdf.html" %}
+				{% else %}
 				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt;padding-bottom:12pt">
 					<template shadowrootmode="open">
 						{% if meta.category == 'secondary' %}
@@ -113,6 +117,8 @@
 						{{ article|safe }}
 					</template>
 				</div>
+				{% endif %}
+
 				<div class="contentFooter">
 					<div class="interface">
 						{% include "document/prev_next.html" %}

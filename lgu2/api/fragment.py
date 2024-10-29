@@ -1,5 +1,5 @@
 
-from typing import TypedDict
+from typing import Optional, TypedDict
 
 from . import server
 from . import document
@@ -7,8 +7,8 @@ from . import document
 
 class FragmentMetadata(document.Meta):
     fragment: str
-    prev: str
-    next: str
+    prev: Optional[str]
+    next: Optional[str]
 
 
 class Fragment(TypedDict):

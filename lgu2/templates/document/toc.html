@@ -117,6 +117,10 @@
 					<p class="intro">{{ status_message }}</p>
 				</div>
 				{% endif %}
+
+				{% if pdf_only %}
+				{% include "document/pdf.html" %}
+				{% else %}
 				<div id="viewLegContents" xml:lang="en">
 					<div class="LegSnippet" id="{{ toc_id }}">
 						<div class="LegContents LegClearFix">
@@ -146,6 +150,8 @@
 						<span class="LegClearFix"></span>
 					</div>
 				</div>
+				{% endif %}
+
 				<!-- <div class="contentFooter">
 					<div class="interface">
 						<div class="prevNextNav">

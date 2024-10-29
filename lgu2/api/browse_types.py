@@ -50,6 +50,7 @@ class DocEntry(TypedDict):
     published: str  # dateTime
     updated: str  # dateTime
     version: str
+    formats: List[str]
 
 
 class AltNumber(TypedDict):

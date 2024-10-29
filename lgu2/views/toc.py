@@ -7,6 +7,7 @@ from django.template import loader
 
 from ..api import contents as api
 from ..api.document import Meta as DocumentMetadata
+from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 
@@ -85,6 +86,15 @@ def toc(request, type, year, number, version=None):
     data['toc_id'] = toc_id
 
     data['type_label_plural'] = get_type_label(data['meta']['longType'])
+
+    if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
+        data['pdf_only'] = True
+        data['pdf_link'] = make_pdf_url(type, year, number, version)
+        data['pdf_thumb'] = make_thumbnail_url(type, year, number, version)
+    else:
+        data['pdf_only'] = False
+        data['pdf_link'] = None
+        data['pdf_thumb'] = None
 
     template = loader.get_template('document/toc.html')
     return HttpResponse(template.render(data, request))

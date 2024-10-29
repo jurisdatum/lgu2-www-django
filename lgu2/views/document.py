@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.template import loader
 
 from ..api.document import get_akn, get_clml, get_document, Meta as DocumentMetadata
+from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
@@ -92,6 +93,15 @@ def document(request, type, year, number, version=None):
 
     meta['category'] = get_category(meta['shortType'])
 
+    if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
+        pdf_only = True
+        pdf_link = make_pdf_url(type, year, number, version)
+        pdf_thumb = make_thumbnail_url(type, year, number, version)
+    else:
+        pdf_only = False
+        pdf_link = None
+        pdf_thumb = None
+
     context = {
         'meta': data['meta'],
         'pit': pit,
@@ -107,8 +117,10 @@ def document(request, type, year, number, version=None):
             'whole': None,
             'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
             'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
-
-        }
+        },
+        'pdf_only': pdf_only,
+        'pdf_link': pdf_link,
+        'pdf_thumb': pdf_thumb
     }
     template = loader.get_template('document/document.html')
     return HttpResponse(template.render(context, request))
