@@ -12,13 +12,22 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 
 
-def _should_redirect(type: str, version: str, meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
+def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
     if version is None and meta['status'] == 'final':
-        return redirect('document-toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=data['meta']['version'])
+        if lang is None:
+            return redirect('toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        else:
+            return redirect('toc-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
     if version is None and meta['shortType'] != type:
-        return redirect('document-toc', type=meta['shortType'], year=meta['year'], number=meta['number'])
+        if lang is None:
+            return redirect('toc', type=meta['shortType'], year=meta['year'], number=meta['number'])
+        else:
+            return redirect('toc-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], lang=lang)
     if meta['shortType'] != type:
-        return redirect('document-toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        if lang is None:
+            return redirect('toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        else:
+            return redirect('toc-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
 
 
 def _add_all_links(contents, prefix: str, suffix: str):
@@ -46,20 +55,24 @@ def _add_all_links(contents, prefix: str, suffix: str):
         add_links(contents['attachments'])
 
 
-def toc(request, type, year, number, version=None):
+def toc(request, type, year, number, version=None, lang=None):
 
-    data = api.get_toc(type, year, number, version)
+    data = api.get_toc(type, year, number, version, lang)
 
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, meta)
+    rdrct = _should_redirect(type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 
     link_prefix = '/' + data['meta']['id']
     if request.LANGUAGE_CODE == 'cy':
         link_prefix = '/cy' + link_prefix
-    link_suffix = '/' + version if version else ''
+    link_suffix = ''
+    if version:
+        link_suffix += '/' + version
+    if lang:
+        link_suffix += '/' + lang
 
     _add_all_links(data['contents'], link_prefix, link_suffix)
 

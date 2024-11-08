@@ -128,7 +128,13 @@
 								<li class="LegContentsEntry">
 									<p class="LegClearFix LegContentsItem">
 										<span class="LegDS LegContentsTitle">
-											<a href="{{ links.content }}">Introductory Text</a>
+											<a href="{{ links.content }}">
+												{% if meta.lang == 'cy' %}
+												Testun rhagarweiniol
+												{% else %}
+												Introductory Text
+												{% endif %}
+											</a>
 										</span>
 									</p>
 								</li>

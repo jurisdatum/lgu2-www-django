@@ -1,5 +1,6 @@
 
-from typing import List, TypedDict
+from typing import List, Optional, TypedDict
+from urllib.parse import urlencode
 
 from . import server
 from .browse_types import AltNumber
@@ -31,23 +32,25 @@ class Document(TypedDict):
     html: str
 
 
-def _make_url(type: str, year, number, version=None) -> str:
+def _make_url(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
     url = '/document/' + type + '/' + str(year) + '/' + str(number)
-    if version:
-        url += '?version=' + version
+    params = {'version': version, 'language': language}
+    params = {k: v for k, v in params.items() if v is not None}
+    if params:
+        url += '?' + urlencode(params)
     return url
 
 
-def get_document(type: str, year, number, version=None) -> Document:
-    url = _make_url(type, year, number, version)
+def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Document:
+    url = _make_url(type, year, number, version, language)
     return server.get_json(url)
 
 
-def get_clml(type: str, year, number, version=None) -> str:
-    url = _make_url(type, year, number, version)
+def get_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, version, language)
     return server.get_clml(url)
 
 
-def get_akn(type: str, year, number, version=None) -> str:
-    url = _make_url(type, year, number, version)
+def get_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, version, language)
     return server.get_akn(url)

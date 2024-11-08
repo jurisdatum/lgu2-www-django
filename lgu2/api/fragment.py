@@ -1,5 +1,6 @@
 
 from typing import Optional, TypedDict
+from urllib.parse import urlencode
 
 from . import server
 from . import document
@@ -16,24 +17,26 @@ class Fragment(TypedDict):
     html: str
 
 
-def _make_url(type: str, year, number, section: str, version=None) -> str:
+def _make_url(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> str:
     url = '/fragment/' + type + '/' + str(year) + '/' + str(number)
     url += '/' + section.replace('/', '-')
-    if version:
-        url += '?version=' + version
+    params = {'version': version, 'language': language}
+    params = {k: v for k, v in params.items() if v is not None}
+    if params:
+        url += '?' + urlencode(params)
     return url
 
 
-def get(type: str, year, number, section: str, version=None) -> Fragment:
-    url = _make_url(type, year, number, section, version)
+def get(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> Fragment:
+    url = _make_url(type, year, number, section, version, language)
     return server.get_json(url)
 
 
-def get_clml(type: str, year, number, section: str, version=None) -> str:
-    url = _make_url(type, year, number, section, version)
+def get_clml(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, section, version, language)
     return server.get_clml(url)
 
 
-def get_akn(type: str, year, number, section: str, version=None) -> str:
-    url = _make_url(type, year, number, section, version)
+def get_akn(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, section, version, language)
     return server.get_akn(url)

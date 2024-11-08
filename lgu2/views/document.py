@@ -13,13 +13,22 @@ from ..util.labels import get_type_label
 from ..util.types import get_category
 
 
-def _should_redirect(type: str, version: str, meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
+def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
     if version is None and meta['status'] == 'final':
-        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        if lang is None:
+            return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        else:
+            return redirect('document-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
     if version is None and meta['shortType'] != type:
-        return redirect('document', type=meta['shortType'], year=meta['year'], number=meta['number'])
+        if lang is None:
+            return redirect('document', type=meta['shortType'], year=meta['year'], number=meta['number'])
+        else:
+            return redirect('document-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], lang=lang)
     if meta['shortType'] != type:
-        return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        if lang is None:
+            return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
+        else:
+            return redirect('document-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
 
 
 def _make_timeline_data(meta, pit):
@@ -60,9 +69,9 @@ def _make_timeline_data(meta, pit):
     }
 
 
-def document(request, type, year, number, version=None):
+def document(request, type, year, number, version=None, lang=None):
 
-    data = get_document(type, year, number, version)
+    data = get_document(type, year, number, version, lang)
 
     if 'error' in data:
         template = loader.get_template('404.html')
@@ -70,7 +79,7 @@ def document(request, type, year, number, version=None):
 
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, meta)
+    rdrct = _should_redirect(type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 

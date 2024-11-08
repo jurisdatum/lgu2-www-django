@@ -13,24 +13,28 @@ from ..util.labels import get_type_label
 from ..util.types import get_category
 
 
-def _should_redirect(type: str, version: str, meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
+def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
+    section = meta['fragment'] if 'fragment' in meta else None
     if version is None and meta['status'] == 'final':
-        if 'fragment' in meta:
-            section = meta['fragment']
-        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+        if lang is None:
+            return redirect('fragment-version', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+        else:
+            return redirect('fragment-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'], lang=lang)
     if version is None and meta['shortType'] != type:
-        if 'fragment' in meta:
-            section = meta['fragment']
-        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section)
+        if lang is None:
+            return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section)
+        else:
+            return redirect('fragment-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, lang=lang)
     if meta['shortType'] != type:
-        if 'fragment' in meta:
-            section = meta['fragment']
-        return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+        if lang is None:
+            return redirect('fragment-version', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
+        else:
+            return redirect('fragment-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'], lang=lang)
 
 
-def fragment(request, type, year, number, section, version=None):
+def fragment(request, type, year, number, section, version=None, lang=None):
 
-    data = api.get(type, year, number, section, version)
+    data = api.get(type, year, number, section, version, lang)
     # API should add None values to fragment requests
     # but they're current missing for intro and last section
     if 'prev' not in data['meta']:
@@ -44,7 +48,7 @@ def fragment(request, type, year, number, section, version=None):
 
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, meta)
+    rdrct = _should_redirect(type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 

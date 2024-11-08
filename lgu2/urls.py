@@ -45,18 +45,29 @@ urlpatterns += i18n_patterns(
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.xml$', document_clml),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.akn$', document_akn),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents$', toc.toc, name='document-toc'),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<lang>english|welsh)$', document, name='document-lang'),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/(?P<lang>english|welsh)$', document, name='document-version-lang'),
+
+
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents$', toc.toc, name='toc'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/data\.(?P<format>xml|akn|json)$', toc.data),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', toc.toc, name='document-toc-version'),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', toc.toc, name='toc-version'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.(?P<format>xml|akn|json)$', toc.data),
+
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<lang>english|welsh)$', toc.toc, name='toc-lang'),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/(?P<lang>english|welsh)$', toc.toc, name='toc-version-lang'),
+
 
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', metadata, name='metadata'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', combined),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', fragment.fragment, name='fragment'),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', fragment.fragment, name='fragment-version'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.(?P<format>xml|akn)$', fragment.data),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)$', fragment.fragment),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)$', fragment.fragment, name='fragment'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/data\.(?P<format>xml|akn)$', fragment.data),
+
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/(?P<lang>english|welsh)$', fragment.fragment, name='fragment-version-lang'),
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)$/(?P<lang>english|welsh)', fragment.fragment, name='fragment-lang'),
 
     prefix_default_language=False
 )

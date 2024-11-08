@@ -1,5 +1,6 @@
 
-from typing import List, TypedDict
+from typing import List, Optional, TypedDict
+from urllib.parse import urlencode
 
 from .document import Meta
 from . import server
@@ -27,28 +28,30 @@ class Response(TypedDict):
     html: str
 
 
-def _make_url(type: str, year, number, version=None) -> str:
+def _make_url(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
     url = '/contents/' + type + '/' + str(year) + '/' + str(number)
-    if version:
-        url += '?version=' + version
+    params = {'version': version, 'language': language}
+    params = {k: v for k, v in params.items() if v is not None}
+    if params:
+        url += '?' + urlencode(params)
     return url
 
 
-def get_toc(type: str, year, number, version=None) -> dict:
-    url = _make_url(type, year, number, version)
+def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> dict:
+    url = _make_url(type, year, number, version, language)
     return server.get_json(url)
 
 
-def get_toc_json(type: str, year, number, version=None) -> str:
-    url = _make_url(type, year, number, version)
+def get_toc_json(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, version, language)
     return server.get_raw_json(url)
 
 
-def get_toc_clml(type: str, year, number, version=None) -> str:
-    url = _make_url(type, year, number, version)
+def get_toc_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, version, language)
     return server.get_clml(url)
 
 
-def get_toc_akn(type: str, year, number, version=None) -> str:
-    url = _make_url(type, year, number, version)
+def get_toc_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+    url = _make_url(type, year, number, version, language)
     return server.get_akn(url)
