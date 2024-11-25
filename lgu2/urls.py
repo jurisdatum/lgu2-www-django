@@ -30,6 +30,14 @@ if not settings.DEBUG:
         re_path(r'^static/(.*)$', lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
     ]
 
+TYPE = r'(?P<type>[a-z]{3,5})'
+YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'
+NUMBER = r'(?P<number>[0-9]+)'
+SECTION = r'(?P<section>[A-Za-z0-9/-]+?)'  # not sure about ? on the end
+VERSION = r'(?P<version>enacted|made|\d{4}-\d{2}-\d{2})'  # ToDo 'created', 'adopted'
+LANG = r'(?P<lang>english|welsh)'
+DATA = r'data\.(?P<format>xml|akn|json)'
+
 urlpatterns += i18n_patterns(
 
     path('browse', lambda r: redirect('browse-uk')),
@@ -37,37 +45,49 @@ urlpatterns += i18n_patterns(
     re_path(r'^(?P<type>[a-z]{3,5})$', browse, name='browse'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})$', browse, name='browse-year'),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)$', document, name='document'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/data\.xml$', document_clml),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/data\.akn$', document_akn),
+    # documents
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}$', document, name='document'),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/data\.xml$', document_clml),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/data\.akn$', document_akn),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{LANG}$', document, name='document-lang'),
+    # re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{LANG}/data\.xml$', document_clml),
+    # re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{LANG}/data\.akn$', document_akn),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', document, name='document-version'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.xml$', document_clml),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.akn$', document_akn),
+    # document versions
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}$', document, name='document-version'),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/data\.xml$', document_clml),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/data\.akn$', document_akn),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}$', document, name='document-version-lang'),
+    # re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}/data\.xml$', document_clml),
+    # re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}/data\.akn$', document_akn),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<lang>english|welsh)$', document, name='document-lang'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/(?P<lang>english|welsh)$', document, name='document-version-lang'),
+    # tables of contents
+    # FixMe this needs /? on the end and I don't know why
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/?$', toc.toc, name='toc'),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{DATA}$', toc.data),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{LANG}$', toc.toc, name='toc-lang'),
+    # re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{LANG}/{DATA}$', toc.data),
+
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}$', toc.toc, name='toc-version'),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{DATA}$', toc.data),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{LANG}$', toc.toc, name='toc-version-lang'),
+    # re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{LANG}/{DATA}$', toc.data),
 
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents$', toc.toc, name='toc'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/data\.(?P<format>xml|akn|json)$', toc.data),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', toc.toc, name='toc-version'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.(?P<format>xml|akn|json)$', toc.data),
-
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<lang>english|welsh)$', toc.toc, name='toc-lang'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/contents/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/(?P<lang>english|welsh)$', toc.toc, name='toc-version-lang'),
-
-
+    # linked data
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', metadata, name='metadata'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', combined),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})$', fragment.fragment, name='fragment-version'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/data\.(?P<format>xml|akn)$', fragment.data),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)$', fragment.fragment, name='fragment'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/data\.(?P<format>xml|akn)$', fragment.data),
 
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)/(?P<version>enacted|made|\d{4}-\d{2}-\d{2})/(?P<lang>english|welsh)$', fragment.fragment, name='fragment-version-lang'),
-    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/(?P<section>[A-Za-z0-9/-]+)$/(?P<lang>english|welsh)', fragment.fragment, name='fragment-lang'),
+    # document fragments (sections)
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}$', fragment.fragment, name='fragment-version'),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/data\.(?P<format>xml|akn)$', fragment.data),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}$', fragment.fragment, name='fragment'),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/data\.(?P<format>xml|akn)$', fragment.data),
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}$', fragment.fragment, name='fragment-version-lang'),
+    # ToDo data
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}$', fragment.fragment, name='fragment-lang'),
+    # ToDo data
 
     prefix_default_language=False
 )

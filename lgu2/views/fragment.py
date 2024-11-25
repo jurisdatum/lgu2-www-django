@@ -1,38 +1,29 @@
 
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import redirect
 from django.template import loader
 
 from ..api import fragment as api
-from .document import _make_timeline_data
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
+from .document import _make_timeline_data
+from .redirect import redirect_current, redirect_version
 
 
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
-    section = meta['fragment'] if 'fragment' in meta else None
+    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
     if version is None and meta['status'] == 'final':
-        if lang is None:
-            return redirect('fragment-version', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
-        else:
-            return redirect('fragment-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'], lang=lang)
+        return redirect_version('fragment', meta['shortType'], year, meta['number'], section=meta['fragment'], version=meta['version'], lang=lang)
     if version is None and meta['shortType'] != type:
-        if lang is None:
-            return redirect('fragment', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section)
-        else:
-            return redirect('fragment-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, lang=lang)
+        return redirect_current('fragment', meta['shortType'], year, meta['number'], section=meta['fragment'], lang=lang)
     if meta['shortType'] != type:
-        if lang is None:
-            return redirect('fragment-version', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'])
-        else:
-            return redirect('fragment-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], section=section, version=meta['version'], lang=lang)
+        return redirect_version('fragment', meta['shortType'], year, meta['number'], section=meta['fragment'], version=meta['version'], lang=lang)
 
 
-def fragment(request, type, year, number, section, version=None, lang=None):
+def fragment(request, type: str, year: str, number: str, section: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = api.get(type, year, number, section, version, lang)
     # API should add None values to fragment requests
@@ -66,7 +57,7 @@ def fragment(request, type, year, number, section, version=None, lang=None):
     try:
         version_date = datetime.strptime(version, '%Y-%m-%d')
         pit = version_date.strftime("%d/%m/%Y")
-    except ValueError:
+    except (TypeError, ValueError):
         pit = None
 
     timeline = _make_timeline_data(data['meta'], pit)

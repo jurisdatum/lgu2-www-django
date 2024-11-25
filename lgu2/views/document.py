@@ -1,9 +1,8 @@
 
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import redirect
 from django.template import loader
 
 from ..api.document import get_akn, get_clml, get_document, Meta as DocumentMetadata
@@ -11,24 +10,17 @@ from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
+from .redirect import redirect_current, redirect_version
 
 
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
+    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
     if version is None and meta['status'] == 'final':
-        if lang is None:
-            return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
-        else:
-            return redirect('document-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
+        return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
     if version is None and meta['shortType'] != type:
-        if lang is None:
-            return redirect('document', type=meta['shortType'], year=meta['year'], number=meta['number'])
-        else:
-            return redirect('document-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], lang=lang)
+        return redirect_current('document', meta['shortType'], year, meta['number'], lang=lang)
     if meta['shortType'] != type:
-        if lang is None:
-            return redirect('document-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
-        else:
-            return redirect('document-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
+        return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
 
 
 def _make_timeline_data(meta, pit):
@@ -69,7 +61,7 @@ def _make_timeline_data(meta, pit):
     }
 
 
-def document(request, type, year, number, version=None, lang=None):
+def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = get_document(type, year, number, version, lang)
 
@@ -93,7 +85,7 @@ def document(request, type, year, number, version=None, lang=None):
     try:
         version_date = datetime.strptime(version, '%Y-%m-%d')
         pit = version_date.strftime("%d/%m/%Y")
-    except ValueError:
+    except (TypeError, ValueError):
         pit = None
 
     timeline = _make_timeline_data(data['meta'], pit)
@@ -135,11 +127,11 @@ def document(request, type, year, number, version=None, lang=None):
     return HttpResponse(template.render(context, request))
 
 
-def document_clml(request, type, year, number, version=None):
+def document_clml(request, type: str, year: str, number: int, version: Optional[str] = None):  # ToDo lang
     clml = get_clml(type, year, number, version)
     return HttpResponse(clml, content_type='application/xml')
 
 
-def document_akn(request, type, year, number, version=None):
+def document_akn(request, type: str, year: str, number: int, version: Optional[str] = None):  # ToDo lang
     akn = get_akn(type, year, number, version)
     return HttpResponse(akn, content_type='application/xml')

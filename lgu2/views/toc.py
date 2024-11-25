@@ -1,8 +1,7 @@
 
-from typing import Optional
+from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect
 from django.template import loader
 
 from ..api import contents as api
@@ -10,24 +9,17 @@ from ..api.document import Meta as DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
+from .redirect import redirect_current, redirect_version
 
 
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
+    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
     if version is None and meta['status'] == 'final':
-        if lang is None:
-            return redirect('toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
-        else:
-            return redirect('toc-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
+        return redirect_version('toc', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
     if version is None and meta['shortType'] != type:
-        if lang is None:
-            return redirect('toc', type=meta['shortType'], year=meta['year'], number=meta['number'])
-        else:
-            return redirect('toc-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], lang=lang)
+        return redirect_current('toc', meta['shortType'], year, meta['number'], lang=lang)
     if meta['shortType'] != type:
-        if lang is None:
-            return redirect('toc-version', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'])
-        else:
-            return redirect('toc-version-lang', type=meta['shortType'], year=meta['year'], number=meta['number'], version=meta['version'], lang=lang)
+        return redirect_version('toc', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
 
 
 def _add_all_links(contents, prefix: str, suffix: str):
@@ -55,7 +47,7 @@ def _add_all_links(contents, prefix: str, suffix: str):
         add_links(contents['attachments'])
 
 
-def toc(request, type, year, number, version=None, lang=None):
+def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = api.get_toc(type, year, number, version, lang)
 
