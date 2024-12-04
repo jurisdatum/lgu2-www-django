@@ -10,9 +10,10 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
 from .document import _make_timeline_data
-from .redirect import redirect_current, redirect_version
+from .redirect import make_data_redirect, redirect_current, redirect_version
 
 
+# ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
     year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
     if version is None and meta['status'] == 'final':
@@ -87,10 +88,22 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     return HttpResponse(template.render(context, request))
 
 
-def data(request, type, year, number, section, format, version=None):
+def _xml_or_redirect(package, section: str, lang: Optional[str], format: str):
+    if package['redirect'] is None:
+        return HttpResponse(package['xml'], content_type='application/xml')
+    else:
+        return make_data_redirect('fragment', package['redirect'], lang, format, section=section)
+
+
+def data(request, type, year, number, section, format, version=None, lang: Optional[str] = None):
     if format == 'xml':
-        xml = api.get_clml(type, year, number, section, version)
-        return HttpResponse(xml, content_type='application/xml')
+        package = api.get_clml(type, year, number, section, version, lang)
+        return _xml_or_redirect(package, section, lang, format)
     if format == 'akn':
-        xml = api.get_akn(type, year, number, section, version)
-        return HttpResponse(xml, content_type='application/xml')
+        package = api.get_akn(type, year, number, section, version, lang)
+        return _xml_or_redirect(package, section, lang, format)
+    if format == 'html':
+        pass  # ToDo
+    if format == 'json':
+        pass  # ToDo
+    return HttpResponse(status=406)

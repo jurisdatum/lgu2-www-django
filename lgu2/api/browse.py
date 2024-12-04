@@ -8,6 +8,6 @@ def browse_by_type(type: str, page: str) -> DocumentList:
     return server.get_json(url)
 
 
-def browse_by_type_and_year(type: str, year: int, page: str) -> DocumentList:
+def browse_by_type_and_year(type: str, year, page: str) -> DocumentList:
     url = '/documents/' + type + '/' + str(year) + '?page=' + page
     return server.get_json(url)

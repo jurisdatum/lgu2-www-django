@@ -3,10 +3,10 @@ from typing import Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
-from . import document
+from .document import Meta, XmlPackage, package_xml
 
 
-class FragmentMetadata(document.Meta):
+class FragmentMetadata(Meta):
     fragment: str
     prev: Optional[str]
     next: Optional[str]
@@ -32,11 +32,13 @@ def get(type: str, year, number, section: str, version=None, language: Optional[
     return server.get_json(url)
 
 
-def get_clml(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> str:
+def get_clml(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> XmlPackage:
     url = _make_url(type, year, number, section, version, language)
-    return server.get_clml(url)
+    response = server.get_clml(url)
+    return package_xml(response)
 
 
-def get_akn(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> str:
+def get_akn(type: str, year, number, section: str, version=None, language: Optional[str] = None) -> XmlPackage:
     url = _make_url(type, year, number, section, version, language)
-    return server.get_akn(url)
+    response = server.get_akn(url)
+    return package_xml(response)

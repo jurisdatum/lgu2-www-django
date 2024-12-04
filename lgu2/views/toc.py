@@ -1,7 +1,7 @@
 
 from typing import Optional, Union
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 
 from ..api import contents as api
@@ -9,9 +9,10 @@ from ..api.document import Meta as DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
-from .redirect import redirect_current, redirect_version
+from .redirect import make_data_redirect, redirect_current, redirect_version
 
 
+# ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
     year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
     if version is None and meta['status'] == 'final':
@@ -105,13 +106,23 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
     return HttpResponse(template.render(data, request))
 
 
-def data(request, type, year, number, format, version=None):
+def _xml_or_redirect(package, lang: Optional[str], format: str):
+    if package['redirect'] is None:
+        return HttpResponse(package['xml'], content_type='application/xml')
+    else:
+        return make_data_redirect('toc', package['redirect'], lang, format)
+
+
+def data(request, type, year, number, format, version=None, lang: Optional[str] = None):
     if format == 'xml':
-        xml = api.get_toc_clml(type, year, number, version)
-        return HttpResponse(xml, content_type='application/xml')
+        package = api.get_toc_clml(type, year, number, version)
+        return _xml_or_redirect(package, lang, format)
     if format == 'akn':
-        xml = api.get_toc_akn(type, year, number, version)
-        return HttpResponse(xml, content_type='application/xml')
+        package = api.get_toc_akn(type, year, number, version)
+        return _xml_or_redirect(package, lang, format)
+    if format == 'html':
+        pass  # ToDo
     if format == 'json':
         data = api.get_toc_json(type, year, number, version)
         return HttpResponse(data, content_type='application/json')
+    return HttpResponse(status=406)

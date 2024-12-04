@@ -32,6 +32,18 @@ class Document(TypedDict):
     html: str
 
 
+class Redirect(TypedDict):
+    type: str  # short type
+    year: str  # calendar or regnal
+    number: str
+    version: Optional[str]  # None if 'current'
+
+
+class XmlPackage(TypedDict):
+    xml: str
+    redirect: Optional[Redirect]  # None if all request parameters were canonical
+
+
 def _make_url(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
     url = '/document/' + type + '/' + str(year) + '/' + str(number)
     params = {'version': version, 'language': language}
@@ -46,11 +58,26 @@ def get_document(type: str, year, number, version: Optional[str] = None, languag
     return server.get_json(url)
 
 
-def get_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
-    url = _make_url(type, year, number, version, language)
-    return server.get_clml(url)
+def package_xml(response) -> XmlPackage:
+    try:
+        redirect = {
+            'type': response.headers['X-Document-Type'],
+            'year': response.headers['X-Document-Year'],
+            'number': response.headers['X-Document-Number'],
+            'version': None if response.headers['X-Document-Version'] == 'current' else response.headers['X-Document-Version']
+        }
+    except KeyError:
+        redirect = None
+    return {'xml': response.text, 'redirect': redirect}
 
 
-def get_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+def get_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
     url = _make_url(type, year, number, version, language)
-    return server.get_akn(url)
+    response = server.get_clml(url)
+    return package_xml(response)
+
+
+def get_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+    url = _make_url(type, year, number, version, language)
+    response = server.get_akn(url)
+    return package_xml(response)

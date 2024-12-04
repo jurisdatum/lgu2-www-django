@@ -2,8 +2,8 @@
 from typing import List, Optional, TypedDict
 from urllib.parse import urlencode
 
-from .document import Meta
 from . import server
+from .document import Meta, XmlPackage, package_xml
 
 
 class Item(TypedDict):
@@ -47,11 +47,13 @@ def get_toc_json(type: str, year, number, version: Optional[str] = None, languag
     return server.get_raw_json(url)
 
 
-def get_toc_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+def get_toc_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
     url = _make_url(type, year, number, version, language)
-    return server.get_clml(url)
+    response = server.get_clml(url)
+    return package_xml(response)
 
 
-def get_toc_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+def get_toc_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
     url = _make_url(type, year, number, version, language)
-    return server.get_akn(url)
+    response = server.get_akn(url)
+    return package_xml(response)

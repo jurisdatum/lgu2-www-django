@@ -10,9 +10,10 @@ from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
-from .redirect import redirect_current, redirect_version
+from .redirect import redirect_current, redirect_version, make_data_redirect
 
 
+# ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
     year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
     if version is None and meta['status'] == 'final':
@@ -127,11 +128,22 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     return HttpResponse(template.render(context, request))
 
 
-def document_clml(request, type: str, year: str, number: int, version: Optional[str] = None):  # ToDo lang
-    clml = get_clml(type, year, number, version)
-    return HttpResponse(clml, content_type='application/xml')
+def _xml_or_redirect(package, lang: Optional[str], format: str):
+    if package['redirect'] is None:
+        return HttpResponse(package['xml'], content_type='application/xml')
+    else:
+        return make_data_redirect('document', package['redirect'], lang, format)
 
 
-def document_akn(request, type: str, year: str, number: int, version: Optional[str] = None):  # ToDo lang
-    akn = get_akn(type, year, number, version)
-    return HttpResponse(akn, content_type='application/xml')
+def data(request, type: str, year: str, number: int, format: str, version: Optional[str] = None, lang: Optional[str] = None):
+    if format == 'xml':
+        package = get_clml(type, year, number, version, lang)
+        return _xml_or_redirect(package, lang, format)
+    if format == 'akn':
+        package = get_akn(type, year, number, version, lang)
+        return _xml_or_redirect(package, lang, format)
+    if format == 'html':
+        pass  # ToDo
+    if format == 'json':
+        pass  # ToDo
+    return HttpResponse(status=406)
