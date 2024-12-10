@@ -1,0 +1,2307 @@
+@charset "UTF-8";
+
+/* Roboto font */
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* breakpoints */
+	@mobileLandscape: ~"450px";
+	@mobileWide: ~"700px";
+	@upToIpadPortrait: ~"767px";
+	@ipadPortrait: ~"768px";
+	@upToDesktopSmall: ~"1023px";
+	@desktopSmall: ~"1024px";
+	@desktopLarge: ~"1280px";
+
+/* colours */
+	:root[colour-scheme="light"] {
+		--bg: rgba(255,255,255,1);
+		--altBg: rgba(0,0,0,0.035);
+		--hdrBg: rgba(0,0,0,0.065);
+		--fullHdrBg: rgba(0,0,0,0.02);
+		--srchBg: rgba(0,0,0,0.82);
+		--ftrBg: var(--txt);
+		--mdlBg: var(--txt);
+		--annotation-bg: rgba(175,75,180,0.1);
+		--alrt: rgba(255,175,40,1);
+		--alrtBg: rgba(255,175,40,0.25);
+		--prspctvBg: var(--lgMtdtLnkBg);
+		--wrnng: rgba(235,0,85,1);
+		--wrnng-txt: rgba(210,0,75,1);
+		--wrnng-bg: rgba(235,0,85,0.1);
+		--btnWrnngBg: rgba(235,0,85,1);
+		--cmmncmnt: rgba(50,125,135,1);
+		--cmmncmntTxt: var(--cmmncmnt);
+		--cmmncmntHdrTxt: var(--bg);
+		--cmmncmnt-bg: rgba(50,125,135,0.1);
+		--nnopqbg: rgba(250,250,250,1);
+		--nnopqshdw: rgba(235,235,235,1);
+		--scrlTmlnPrspctivBg: rgba(240,240,240,1);
+
+		--txt: rgba(30,30,30,1);
+		--lightTxt: rgba(115,115,115,1);
+		--annotation: rgba(175,75,180,1);
+		--annotationTxt: var(--annotation);
+		--annotationHdrTxt: var(--bg);
+		--cntrstTxt: var(--bg);
+		--hdrTxt: var(--txt);
+		--srchTxt: var(--cntrstTxt);
+		--ftrTxt: var(--cntrstTxt);
+		--ftrBtnTxt: var(--ftrBg);
+		--ftrBrdr: var(--ftrTxt);
+		--ftrBtnBg: var(--ftrTxt);
+
+		--lnk: rgba(10,100,215,1);
+		--ftrLnk: var(--cntrstTxt);
+		--inpt: var(--bg);
+		--inptBrdr: var(--btnBrdr);
+		--srchInpt: var(--inpt);
+		--srchInptBrdr: transparent;
+		--btnBg: var(--lnk);
+		--dsbldBtnBg: rgba(138,138,138,1);
+		--fcsBtnBg: rgba(10,112,245,1);
+		--fcsBtnWrnngBg: rgba(210,0,75,1);
+		--btnBrdr: var(--lnk);
+		--btnTxt: var(--cntrstTxt);
+		--btnBxShdw: rgba(10,60,150,1);
+		--btnBxShdwLght: rgba(60,110,200,1);
+
+		--fcsOutln: var(--cntrstBrdr);
+		--fcsShdw: rgba(255,255,255,0.35);
+
+		--mdlTxt: var(--cntrstTxt);
+		--mdlLnk: var(--cntrstTxt);
+		--mdlBrdr: var(--cntrstBrdr);
+		--mdlBtnBg: var(--bg);
+		--mdlBtnTxt: var(--txt);
+		--mdlBtnBrdr: var(--cntrstBrdr);
+
+		--bxBg: var(--srchBg);
+		--bxTxt: var(--cntrstTxt);
+		--bxlnk: var(--cntrstTxt);
+		--bxShdw: rgba(0,0,0,0.35);
+
+		--brdr: var(--txt);
+		--midDrkBrdr: rgba(0,0,0,0.6);
+		--midLghtBrdr: rgba(0,0,0,0.2);
+		--lghtBrdr: rgba(0,0,0,0.1);
+		--sbtlBrdr: rgba(0,0,0,0.75);
+		--cntrstSbtlBrdr: rgba(255,255,255,0.75);
+		--cntrstBrdr: var(--bg);
+
+		--drpshdwEnd: rgba(0,0,0,0.1);
+		--drpshdwStrt: rgba(0,0,0,0);
+
+		--uk: rgba(200,16,46,1);
+		--scotland: rgba(20,94,184,1);
+		--wales: rgba(0,177,64,1);
+		--ni: rgba(200,16,46,1);
+		--eu: rgba(0,20,137,1);
+
+		--lgHdrBg: var(--fullHdrBg);
+		--lgHdrBrdr: var(--scrllblTmlnBg);
+		--pitSrchBg: rgba(0,0,0,0.035);
+		--tmlnBg: var(--lgHdrBg);
+		--scrllblTmlnBg: rgba(0,0,0,0.035);
+		--euTmlnBg: var(--scrllblTmlnBg);
+		--tmlnln: rgba(0,0,0,0.2);
+		--tmlnPitInactvLn: rgba(0,0,0,0.2);
+		--tmlnPitActv: var(--txt);
+		--rpld: rgba(120,0,100,1);
+		--tmlnPitInactv: rgba(200,200,200,1);
+		--tmlnScrllBg: var(--tmlnPitActv);
+		--tmlnPitBg: var(--bg);
+		--tmlnPitTxt: var(--cntrstTxt);
+		--tmlnPrspctvePitActv: rgba(55,45,0,1);
+		--tmlnPrspctvePitBg: rgba(250,250,250,1);
+		--tmlnDrpshdwEnd: rgba(0,0,0,0.15);
+		--tmlnDrpshdwStrt: rgba(0,0,0,0);
+		--lgMtdtLnkBg: rgba(0,0,0,0.025);
+		
+		header {
+			.open-menu {background: url('open.png') no-repeat 0.5em center; background-size: 20%}
+			.show-hide-search {background: url('search.png') no-repeat 0.5em center; background-size: 18%}
+			input[type="search"]::placeholder {color: var(--midDrkBrdr)}
+		}
+		
+		footer {
+			.copyright div {background:url("ogl-logo.png") 0 1.1em no-repeat; background-size: 3em}
+		}
+		
+		.legislation {
+			.pit-search {
+				button:not(form button) {background: url('down.png') right center no-repeat; background-size: 0.75em}
+				.toggle-open {background: url('up.png') right center no-repeat; background-size: 0.75em}
+			}
+			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+				.date:before {background: var(--tmlnPitActv) url("timeline-icon-active.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
+				&.eu {
+					.date:before {background: var(--tmlnPitActv) url(timeline-eu-icon-active.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+				}
+				&.uk {
+					.date:before {background: var(--tmlnPitActv) url(timeline-uk-icon-active.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+				}
+				&.repealed {
+					.date:before {background: var(--rpld) url(timeline-repealed-icon-active.png) no-repeat 0.83rem 0.5rem; background-size: 45%}
+				}
+				&.historical-prospective, &.prospective:not(.current) {
+					.date:before {
+						background: var(--tmlnPitActv) url('timeline-prospective-icon-active.png') no-repeat 0.9rem 0.65rem; 
+						background-size: 40%;
+					}
+					&.uk .date:before {
+						background: var(--tmlnPitActv) url(timeline-uk-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+						background-size: 74%;
+					}
+					&.eu .date:before {
+						background: var(--tmlnPitActv) url(timeline-eu-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+						background-size: 74%;
+					}
+					&.repealed .date:before {
+						background: var(--rpld) url(timeline-repealed-icon-active.png) no-repeat 0.83rem 0.5rem;
+						background-size: 45%;
+					}
+				}
+			}
+			.versions {
+				li {
+					.date:before {background: var(--tmlnPitBg) url(timeline-icon.png) no-repeat 0.9rem 0.65rem; background-size: 40%}
+					&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-icon-active.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
+					a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--fcsBtnBg) url("timeline-icon-active.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
+					&.eu {
+						.date:before {background: var(--tmlnPitBg) url(timeline-eu-icon.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+						&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-eu-icon-active.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--fcsBtnBg) url("timeline-eu-icon-active.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+					}
+					&.uk {
+						.date:before {background: var(--tmlnPitBg) url(timeline-uk-icon.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+						&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-uk-icon-active.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--fcsBtnBg) url("timeline-uk-icon-active.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+					}
+					&.repealed {
+						.date:before {background: var(--tmlnPitBg) url(timeline-repealed-icon.png) no-repeat 0.83rem 0.5rem; background-size: 45%; border: 0.2rem solid var(--rpld)}
+						&[aria-current="page"] .date:before {background: var(--rpld) url("timeline-repealed-icon-active.png") no-repeat 0.83rem 0.5rem; background-size: 45%}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--rpld) url("timeline-repealed-icon-active.png") no-repeat 0.83rem 0.5rem; background-size: 45%; -webkit-box-shadow: 0 0 0.375rem 0 var(--rpld); -moz-box-shadow: 0 0 0.375rem 0 var(--rpld); box-shadow: 0 0 0.375rem 0 var(--rpld)}
+						a:not([aria-current="page"] a):focus, a:not([aria-current="page"] a):hover {color: var(--rpld)}
+					}
+				}
+				&.prospective {
+					li.prospective {
+						&[aria-current="page"] .date:before {
+							background: var(--tmlnPitActv) url(timeline-prospective-icon-active.png) no-repeat 0.9rem 0.65rem; 
+							background-size: 40%;
+						}
+						&.uk[aria-current="page"] .date:before {
+							background: var(--tmlnPitActv) url(timeline-uk-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+							background-size: 74%;
+						}
+						&.eu[aria-current="page"] .date:before {
+							background: var(--tmlnPitActv) url(timeline-eu-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+							background-size: 74%;
+						}
+						&.repealed[aria-current="page"] .date:before {
+							background: var(--tmlnPitActv) url(timeline-repealed-prospective-icon.png) no-repeat 0.83rem 0.5rem;
+							background-size: 45%;
+						}
+					}
+				}
+			}
+			.legislation-metadata {
+				.prospective {background: url('prospective.png') no-repeat 0.85em 0.66em; background-size: 1.6em}
+				.repealed:not(.in-force) {background: url('repealed.png') no-repeat 0.75em 0.6em; background-size: 1.7em; border-color: var(--rpld)}
+				.up-to-date {background: url('up-to-date.png') no-repeat 0.85em 0.66em; background-size: 1.6em}
+				.in-force {background: url('in-force.png') no-repeat 0.75em 0.65em; background-size: 1.8em}
+				.geographical-extent {background: url('location.png') no-repeat 0.65em 0.65em; background-size: 2em}
+				.associated-documents {background: url('documents.png') no-repeat 0.65em 0.65em; background-size: 1.8em}
+				.key-versions button:before {background: url('print.png') no-repeat; background-size: 1.45em}
+				.other-formats button:before {background: url('print.png') no-repeat; background-size: 1.45em}
+				.accordion-open button:before {background: url('print-active.png') no-repeat; background-size: 1.45em}
+			}
+			.legislation-text {
+				.status-panel .extent {background: var(--cmmncmnt) url('location-dm.png') no-repeat 0.5em 0.66em; background-size: 1.6em}
+				.status-panel:not(.pinned) .status-hdr div button:last-of-type {background: url('pin-off.png') no-repeat 0.35em 0.15em; background-size: 9%}
+				.annotation-detail button span {background: url('close.png') no-repeat 0.65em center; background-size: 23%}
+			}
+			.legislation-footnotes {
+				h2.up-to-date {background: var(--altBg) url('up-to-date.png') no-repeat 0.85em center; background-size: 1.4em}
+				h2.in-force {background: var(--altBg) url('in-force.png') no-repeat 0.7em center; background-size: 1.7em}
+			}
+		}
+		
+		.search {
+			.close-filters {background: url('close.png') no-repeat 0.5em center; background-size: 20%}
+
+			.pagination {
+				ul {
+					.first {
+						span:before {background-image: url('first.png')}
+						a span:before {background-image: url('first-link.png')}
+					} 
+					.previous {
+						span:before {background-image: url('previous.png')}
+						a span:before {background-image: url('previous-link.png')}
+					} 
+					.next {
+						span:before {background-image: url('next.png')}
+						a span:before {background-image: url('next-link.png')}
+					} 
+					.last {
+						span:before {background-image: url('last.png')}
+						a span:before {background-image: url('last-link.png') }
+					}
+				}
+			}
+		}
+	}
+
+	:root[colour-scheme="dark"] {
+		--bg: rgba(10,20,30,1);
+		--altBg: rgba(255,255,255,0.075);
+		--hdrBg: rgba(0,20,30,1);
+		--fullHdrBg: var(--bg);
+		--srchBg: rgba(255,255,255,0.05);
+		--ftrBg: var(--srchBg);
+		--mdlBg: rgba(10,20,30,1);
+		--annotation-bg: rgba(180,70,200,0.2);
+		--alrt: rgba(255,175,40,1);
+		--alrtBg: rgba(55,45,0,1);
+		--prspctvBg: rgba(30,35,40,1);
+		--wrnng: rgba(255,41,119,1);
+		--wrnng-txt: rgba(210,0,75,1);
+		--wrnng-bg: rgba(235,0,85,0.1);
+		--btnWrnngBg: rgba(235,0,85,1);
+		--cmmncmnt: rgba(55,205,195,1);
+		--cmmncmntTxt: rgba(30,162,155,1);
+		--cmmncmntHdrTxt: var(--bg);
+		--cmmncmnt-bg: rgba(55,205,195,0.1);
+		--nnopqbg: rgba(22,34,42,1);
+		--nnopqshdw: rgba(10,10,10,1);
+		--scrlTmlnPrspctivBg: rgba(30,40,50,1);
+		
+		--txt: rgba(250,250,250,1);
+		--lightTxt: rgba(130,140,150,1);
+		--drkTxt: rgba(30,30,30,1);
+		--annotation: rgba(195,100,200,1);
+		--annotationTxt: var(--annotation);
+		--annotationHdrTxt: var(--bg);
+		--cntrstTxt: var(--txt);
+		--hdrTxt: var(--txt);
+		--srchTxt: var(--cntrstTxt);
+		--ftrTxt: var(--cntrstTxt);
+		--ftrBtnTxt: var(--bg);
+		--ftrBrdr: var(--ftrTxt);
+		--ftrBtnBg: var(--ftrTxt);
+
+		--lnk: rgba(0,133,250,1);
+		--lnk: var(--btnBg);
+		--ftrLnk: var(--cntrstTxt);
+		--inpt: rgba(255,255,255,0.1);
+		--inptBrdr: rgba(255,255,255,0.1);
+		--srchInpt: var(--inpt);
+		--srchInptBrdr: var(--inptBrdr);
+		--btnBg: rgba(54,134,247,1);
+		--dsbldBtnBg: rgba(138,138,138,1);
+		--fcsBtnBg: rgba(10,112,245,1);
+		--fcsBtnWrnngBg: rgba(210,0,75,1);
+		--btnBrdr: var(--lnk);
+		--btnTxt: var(--cntrstTxt);
+		--btnBxShdw: rgba(10,60,150,1);
+		--btnBxShdwLght: rgba(60,110,200,1);
+
+		--fcsOutln: var(--cntrstBrdr);
+		--fcsShdw: rgba(255,255,255,0.35);
+
+		--mdlTxt: var(--cntrstTxt);
+		--mdlLnk: var(--cntrstTxt);
+		--mdlBrdr: var(--lghtBrdr);
+		--mdlBtnBg: var(--txt);
+		--mdlBtnTxt: var(--bg);
+		--mdlBtnBrdr: var(--txt);
+
+		--bxBg: var(--srchBg);
+		--bxTxt: var(--cntrstTxt);
+		--bxlnk: var(--cntrstTxt);
+		--bxShdw: rgba(255,255,255,0.15);
+
+		--brdr: var(--txt);
+		--midDrkBrdr: rgba(255,255,255,0.6);
+		--midLghtBrdr: rgba(255,255,255,0.2);
+		--lghtBrdr: rgba(255,255,255,0.1);
+		--sbtlBrdr: rgba(255,255,255,0.5);
+		--cntrstSbtlBrdr: rgba(255,255,255,0.75);
+		--cntrstBrdr: var(--bg);
+
+		--drpshdwEnd: rgba(0,0,0,0.1);
+		--drpshdwStrt: rgba(0,0,0,0);
+
+		--uk: rgba(200,16,46,1);
+		--scotland: rgba(20,94,184,1);
+		--wales: rgba(0,177,64,1);
+		--ni: rgba(200,16,46,1);
+		--eu: rgba(0,20,137,1);
+
+		--lgHdrBg: rgba(255,255,255,0.035);
+		--lgHdrBrdr: var(--lghtBrdr);
+		--pitSrchBg: rgba(255,255,255,0.085);
+		--tmlnBg: var(--lgHdrBg);
+		--scrllblTmlnBg: rgba(255,255,255,0.05);
+		--euTmlnBg: var(--scrllblTmlnBg);
+		--tmlnln: rgba(255,255,255,0.25);
+		--tmlnPitInactvLn: rgba(255,255,255,0.25);
+		--tmlnPitActv: rgba(250,250,250,1);
+		--rpld: rgba(190,50,170,1);
+		--tmlnPitInactv: rgba(80,90,96,1);
+		--tmlnScrllBg: var(--tmlnPitActv);
+		--tmlnPitBg: var(--bg);
+		--tmlnPitTxt: rgba(30,30,30,1);
+		--tmlnPrspctvePitActv: rgba(55,45,0,1);
+		--tmlnPrspctvePitBg: rgba(22,34,42,1);
+		--tmlnDrpshdwEnd: rgba(0,0,0,0.15);
+		--tmlnDrpshdwStrt: rgba(0,0,0,0);
+		--lgMtdtLnkBg: rgba(255,255,255,0.05);
+
+		header {
+			.open-menu {background: url('open-dm.png') no-repeat 0.5em center; background-size: 20%}
+			.show-hide-search {background: url('search-dm.png') no-repeat 0.5em center; background-size: 18%}
+			input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {filter: invert(1)}
+			input[type="search"]::placeholder {color: var(--midDrkBrdr)}
+		}
+		
+		footer {
+			.copyright div {background:url("ogl-logo.png") 0 1.1em no-repeat; background-size: 3em}
+		}
+		
+		.legislation {
+			.pit-search {
+				button:not(form button) {background: url('down-dm.png') right center no-repeat; background-size: 0.75em}
+				.toggle-open {background: url('up-dm.png') right center no-repeat; background-size: 0.75em}
+				input[type="date"]::-webkit-calendar-picker-indicator {filter: invert(1)}
+			}
+			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+				.date:before {background: var(--tmlnPitActv) url("timeline-icon.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
+				&.eu {
+					.date:before {background: var(--tmlnPitActv) url(timeline-eu-icon.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+				}
+				&.uk {
+					.date:before {background: var(--tmlnPitActv) url(timeline-uk-icon.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+				}
+				&.repealed {
+					.date:before {background: var(--tmlnPitActv) url(timeline-repealed-icon-active-dm.png) no-repeat 0.84rem 0.5rem; background-size: 45%}
+				}
+				&.historical-prospective, &.prospective:not(.current) {
+					.date:before {
+						background: var(--tmlnPrspctvePitActv) url('timeline-prospective-icon-active.png') no-repeat 0.9rem 0.65rem; 
+						background-size: 40%;
+					}
+					&.uk .date:before {
+						background: var(--tmlnPrspctvePitActv) url(timeline-uk-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+						background-size: 74%;
+					}
+					&.eu .date:before {
+						background: var(--tmlnPrspctvePitActv) url(timeline-eu-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+						background-size: 74%;
+					}
+					&.repealed .date:before {
+						background: var(--tmlnPrspctvePitActv) url(timeline-repealed-prospective-icon.png) no-repeat 0.83rem 0.5rem;
+						background-size: 45%;
+					}
+				}
+			}
+			.versions {
+				li {
+					.date:before {background: var(--tmlnPitBg) url(timeline-icon-active.png) no-repeat 0.9rem 0.65rem; background-size: 40%}
+					&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-icon.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
+					a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--fcsBtnBg) url("timeline-icon-active.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
+					&.eu {
+						.date:before {background: var(--tmlnPitBg) url(timeline-eu-icon-active.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+						&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-eu-icon.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--fcsBtnBg) url("timeline-eu-icon-active.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+					}
+					&.uk {
+						.date:before {background: var(--tmlnPitBg) url(timeline-uk-icon-active.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
+						&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-uk-icon.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--fcsBtnBg) url("timeline-uk-icon-active.png") no-repeat 0.4rem 0.37rem; background-size: 74%}
+					}
+					&.repealed {
+						.date:before {background: var(--tmlnPitBg) url(timeline-repealed-icon-active.png) no-repeat 0.83rem 0.5rem; background-size: 45%}
+						&[aria-current="page"] .date:before {background: var(--tmlnPitActv) url("timeline-repealed-icon-active-dm.png") no-repeat 0.83rem 0.5rem; background-size: 45%}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {background: var(--rpld) url("timeline-repealed-icon-active.png") no-repeat 0.83rem 0.5rem; background-size: 45%; -webkit-box-shadow: 0 0 0.375rem 0 var(--rpld); -moz-box-shadow: 0 0 0.375rem 0 var(--rpld); box-shadow: 0 0 0.375rem 0 var(--rpld)}
+						a:not([aria-current="page"] a):focus, a:not([aria-current="page"] a):hover {color: var(--rpld)}
+					}
+				}
+				&.prospective {
+					li.prospective {
+						&[aria-current="page"] .date:before {
+							background: var(--tmlnPrspctvePitActv) url(timeline-prospective-icon-active.png) no-repeat 0.9rem 0.65rem; 
+							background-size: 40%;
+						}
+						&.uk[aria-current="page"] .date:before {
+							background: var(--tmlnPrspctvePitActv) url(timeline-uk-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+							background-size: 74%;
+						}
+						&.eu[aria-current="page"] .date:before {
+							background: var(--tmlnPrspctvePitActv) url(timeline-eu-prospective-icon-active.png) no-repeat 0.4rem 0.37rem;
+							background-size: 74%;
+						}
+						&.repealed[aria-current="page"] .date:before {
+							background: var(--tmlnPrspctvePitActv) url(timeline-repealed-prospective-icon.png) no-repeat 0.83rem 0.5rem;
+							background-size: 45%;
+						}
+					}
+				}
+			}
+
+			.legislation-metadata {
+				.prospective {background: url('prospective.png') no-repeat 0.85em 0.66em; background-size: 1.6em}
+				.repealed:not(.in-force) {background: url('repealed-dm.png') no-repeat 0.75em 0.6em; background-size: 1.7em; border-color: var(--rpld)}
+				.up-to-date {background: url('up-to-date-dm.png') no-repeat 0.85em 0.66em; background-size: 1.6em}
+				.in-force {background: url('in-force-dm.png') no-repeat 0.75em 0.65em; background-size: 1.8em}
+				.geographical-extent {background: url('location-dm.png') no-repeat 0.65em 0.65em; background-size: 2em}
+				.associated-documents {background: url('documents-dm.png') no-repeat 0.65em 0.65em; background-size: 1.8em}
+				.key-versions button:before {background: url('print-dm.png') no-repeat; background-size: 1.45em}
+				.other-formats button:before {background: url('print-dm.png') no-repeat; background-size: 1.45em}
+				.accordion-open button:before {background: url('print-active.png') no-repeat; background-size: 1.45em}
+			}
+			.legislation-text {
+				.status-panel:not(.pinned) .status-hdr div button:last-of-type {background: url('pin-off-dm.png') no-repeat 0.35em 0.15em; background-size: 9%}
+				.status-panel .extent {background: var(--cmmncmnt) url('location.png') no-repeat 0.5em 0.66em; background-size: 1.6em}
+				.prospective-message span {color: var(--alrt)}
+				.annotation-detail button span {background: url('close-dark.png') no-repeat 0.65em center; background-size: 23%}
+				.commencement-annotation .annotation-detail button span {background: url('close-dark.png') no-repeat 0.65em center; background-size: 23%}
+			}
+			.legislation-footnotes {
+				h2.up-to-date {background: var(--altBg) url('up-to-date-dm.png') no-repeat 0.85em center; background-size: 1.4em}
+				h2.in-force {background: var(--altBg) url('in-force-dm.png') no-repeat 0.7em center; background-size: 1.7em}
+			}
+		}
+		
+		.search {
+			.pagination {
+				ul {
+					.first {
+						span:before {background-image: url('first-dm.png')}
+						a span:before {background-image: url('first-link-dm.png')}
+					} 
+					.previous {
+						span:before {background-image: url('previous-dm.png')}
+						a span:before {background-image: url('previous-link-dm.png')}
+					} 
+					.next {
+						span:before {background-image: url('next-dm.png')}
+						a span:before {background-image: url('next-link-dm.png')}
+					} 
+					.last {
+						span:before {background-image: url('last-dm.png')}
+						a span:before {background-image: url('last-link-dm.png') }
+					}
+				}
+			}
+		}
+	}
+
+/* accessible animation */
+	@media (prefers-reduced-motion: no-preference) {
+		.hdr-menu, .hdr-search, .filters-menu, .versions, .contextual-help div, .pit-search form, .legislation-metadata h3 button:after, .legislation-metadata h3 + div, .status-detail, .status-panel button:after {transition: 0.35s}
+	}
+
+
+/* core */
+	* {margin: 0; padding: 0; border: 0; background: none; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; font-size: 1em; font-style: normal; font-family: "Roboto"}
+	html {width: 100%; height: 100%; -moz-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%}
+	body {margin: 0 auto; line-height: 1.5em; min-height: 100vh; min-height: -webkit-fill-available; display: table; width: 100%; font-weight: 300; color: var(--txt); background: var(--bg)}
+	section, .section {margin: 0 auto; max-width: 100%; max-width: var(--maxWidth); padding: 1rem; overflow: auto}
+	p {margin: 0}
+	p + p {margin: 1em 0 0}
+	ul {margin: 0 0 1em 2.5em}
+	input, select, button, textarea, strong {font-weight: 500; color: var(--txt)}
+	input::placeholder {font-weight: 300}
+	input, select, button {border-radius: 0.1875rem}
+	input, select {border: 0.0625rem solid}
+	input {padding: 0.5em}
+	select {padding: 0.5em}
+	button {
+		padding: 0.5em 1.5em; color: var(--btnBg);
+		&:not(:disabled) {cursor: pointer}
+	}
+	a {
+		color: var(--lnk); text-decoration: none; text-underline-offset: 0.25em;
+		&:hover, &:active, &:focus {text-decoration: underline; text-decoration-thickness: 0.075em}
+	}
+	.sr-only {position: absolute; width: 0.0625rem; height: 0.0625rem; padding: 0; margin: -0.0625rem; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0}
+	.sr-unset {position: unset; width: unset; height: unset; padding: unset; margin: unset; overflow: unset; clip: unset; white-space: unset; border: unset}
+	.skip-links {
+		margin: 0; list-style: none;
+		a:focus, a:active {width: unset; height: unset; clip: unset; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.075em; margin: 0 0 0 -0.3125rem; padding: 0.35em 1.25em 0.6em 1.25em; border-bottom-left-radius: 0.25em; border-bottom-right-radius: 0.25em; background: var(--btnBg); color: var(--btnTxt); z-index: 10}
+	}
+	.legislation .legislation-skip {display: unset}
+	.legislation-skip {
+		&:not(.legislation .legislation-skip) {display: none}
+	}
+	.search .search-skip {display: unset}
+	.search-skip {
+		&:not(.search .search-skip) {display: none}
+	}
+
+	.content-box {border-radius: 0.25rem; -moz-box-shadow: 0 0 0.1875rem var(--bxShdw); -webkit-box-shadow: 0 0 0.1875rem var(--bxShdw); box-shadow: 0 0 0.1875rem var(--bxShdw); color: unset; background: var(--bg)}
+
+/* headers */
+	h1 {font-size: 2em; font-weight: 800; outline: none; margin: 0 auto; max-width: var(--maxWidth)}
+	h2 {font-size: 1.5em}
+	h3 {font-size: 1.4em}
+	h4 {font-size: 1.3em}
+	h2, h3, h4, h5, h6 {
+		font-weight: 600;
+		a:not(.annotation-start a) {color: var(--txt)}
+	}
+	h1, h2 {line-height: 1.1em}
+	h3, h4, h5, h6 {line-height: 1.2em}
+
+/* navigation */
+	nav {
+		ul {margin: 0; list-style: none; display: inline-flex; flex-flow: column wrap}
+		li {padding: 0 0 0.5em 0}
+		[aria-current="page"] {font-weight: 600}
+	}
+
+	.nav-row {
+		nav {float: left}
+		nav ul {flex-direction: row}
+		nav li {
+			padding: 0 0.7em 0 0; margin: 0 0.7em 0 0;
+			&:last-child {border: 0}
+		}
+	}
+
+
+/* header */
+	header {
+		background: var(--hdrBg);
+		.section {padding: 0 1rem}
+		.top-menu {display: flex; flex-wrap: wrap; margin: 0 -0.5rem}
+		.open-menu {display: table-cell; padding: 0.5em 0.5em 0.5em 2em}
+		.show-hide-search {display: table-cell; padding: 0.5em 0.5em 0.5em 1.75em}
+
+		a.hdr-home {
+			display: table-cell; margin: 0.85em auto; padding: 0.15em 0.25em; color: unset; text-align: center; text-decoration: none;
+			span {font-weight: 500}
+		}
+
+		.hdr-tna {display: none}
+
+		.hdr-menu {
+			display: none; overflow: auto; background: var(--mdlBg); color: var(--mdlTxt); position: fixed; top: 0; z-index: 10; width: 100%; left: -100%; height: 100vh; height: -webkit-fill-available;
+			a {color: var(--mdlTxt)}
+			.hdr-links {display: flex; flex-direction: column; height: 100%; padding: 1rem}
+			.nav-hdr {
+				display: flex; flex-direction: row; flex-wrap: wrap; margin: 0 0 0.75em 0; border-bottom: 0.0625rem solid var(--mdlBrdr);
+				h2 {font-size: 1.25em; font-weight: 700; flex-grow: 4}
+				.close-menu {margin: -0.25em 0 0.25em -0; padding: 0.5em 0.6em 0.5em 2.05em; color: var(--mdlTxt); background: url('close.png') no-repeat 0.5em center; background-size: 20%}
+			}
+			.hdr-lang {flex-grow: 1}
+			.hdr-tna {display: block; padding: 1em 0 0 0}
+		}
+
+		.hdr-lang {
+			margin: 0.75em 0 0 0;
+			span {background: var(--mdlBtnBg); color: var(--mdlBtnTxt); font-weight: 600}
+			a, span {border-radius: 0.25rem 0 0 0.25rem; border: 0.0625rem solid var(--mdlBtnBrdr); padding: 0.35em 1.35em}
+			span + a, a + span {border-radius: 0 0.25rem 0.25rem 0; padding: 0.35em 1.35em}
+		}
+
+		.hdr-search {
+			display: none; height: 0; overflow: hidden; background: var(--srchBg); width: 100%;
+			section {padding: 0.75em; text-align: center} 
+			input {width: calc(100% - 4.25em); background: var(--srchInpt); border-radius: 0.25rem 0 0 0.25rem; border: 0; padding: 0.9em; max-width: 25em; border: 0.0625rem solid var(--srchInptBrdr)}
+			.go {
+				width: 4.25em; padding: 0.9em 0; background: var(--btnBg); color: var(--btnTxt); border-radius: 0 0.25rem 0.25rem 0; border: 0.0625rem solid transparent;
+				&:hover, &:focus {padding: 0.81875rem 0; background: var(--fcsBtnBg); border-color: var(--fcsOutln); outline-color: var(--fcsOutln); outline-style: solid}
+			}
+		}
+	}
+
+
+	.small-hdr {
+		a.hdr-home {margin: 0.15em auto; padding: 0.65em 0.25em 0.65em 2.5em; font-size: 1.25em}
+	}
+
+
+	.full-hdr {
+		background: var(--fullHdrBg);
+		.top-menu {display: block; margin: 0.4rem 0 0 0}
+		.open-menu, .close-menu, .show-hide-search, .hide-search {display: none}
+
+		a.hdr-home {display: block; float: left; margin: 0; padding: 0.9em 0.25em 0.65em 2.5em; font-size: 2em}
+		.hdr-menu {
+			display: block; background: unset; position: unset; top: unset; z-index: unset; left: unset; height: unset; transition: unset; color: unset;
+			a {color: unset}
+			.hdr-tna {display: none}
+			.hdr-links {
+				display: block; width: 100%; overflow: auto; margin: 0 0 0.725em 0; padding: 0;
+				.nav-hdr {
+					margin: unset; border: unset;
+					h2 {.sr-only()}
+				}
+			}
+		}
+
+		.hdr-tna {
+			display: block; bottom: auto; position: relative; float: right; padding: 0.3rem 0 1em 0; font-size: 0.7em; font-weight: 500; text-transform: lowercase;
+			a {display: table; padding: 0 15rem 2.05rem 0}
+			span {.sr-only()}
+		}
+
+		.hdr-lang {
+			margin: 0; float: right;
+			span {background: unset; color: unset}
+			a, span {border-radius: unset; border: unset; padding: unset}
+			span + a, a + span {border-radius: unset; border-left: 0.0625rem solid var(--sbtlBrdr); margin: 0 0 0 0.35em; padding: 0 0 0 0.5em}
+			a + span {margin: 0 0 0 0.5em}
+		}
+
+		nav li {
+			border-right: 0.0625rem solid var(--sbtlBrdr);
+			a {font-weight: 300}
+		}
+
+		.hdr-search {
+			display: block; height: unset;
+			section {
+				padding: 0.85em;
+				span {display: inline-block}
+				input {width: 25em}
+			}		
+		}		
+	}
+
+	.search-label {
+		.hdr-search label {.sr-unset(); color: var(--srchTxt); margin: 0 0.75em 0 0}
+	}
+
+
+/* footer */
+	footer {
+		display: table-row; height: 1%; background: var(--ftrBg); color: var(--ftrTxt);
+		nav ul {
+			max-height: 8em;
+			li {max-width: 45vW; width: 14em; padding: 0 0 0.5em 0}
+		}
+		a {color: var(--ftrLnk)}
+		.mode {
+			border-top: 0.0625rem solid var(--ftrBrdr); padding: 1rem 0 0 0; margin: 0.45rem 0 0 0; overflow: auto;
+			h2 {margin: 0 0.75rem 0.65rem 0; font-size: 1.04rem; font-weight: 300}
+			button {
+				margin: 0 0.75rem 0.75rem 0; display: inline-block; color: var(--ftrTxt); border: 0.0625rem solid var(--ftrBrdr);
+				&.selected {background: var(--ftrBtnBg); color: var(--ftrBtnTxt)}
+			}
+		}
+		p {
+			a {
+				text-decoration: underline; text-decoration-thickness: 0.075em;
+				&:hover {text-decoration: none}
+			}
+		}
+		.copyright {
+			display: flex; flex-wrap: wrap; margin: 0.25em 0 0 0; padding: 1em 0 0 0; border-top: 0.0625rem solid var(--cntrstSbtlBrdr);
+			div {padding: 1em 0 0 4em; width: 100%; text-align: right}
+		}
+	}
+
+/* contextual help */
+		.contextual-help {
+			z-index: 30;
+			button {
+				border-radius: 0.1875rem; padding: 0.85em 1.65em 0.85em 1.25em; background: var(--lnk); color: var(--btnTxt); width: 100%;
+				&:after {content: ""; display: inline-block; margin: 0 -0.35em 0.2em 0.85em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt); transform: rotate(135deg)}
+				+ div:not(.contextual-help div div) {
+					max-height: 0; padding: 1em 1em 0.25em 1em; overflow: hidden; border: 0.0625rem solid var(--lnk); border-top: 0; border-radius: 0 0 0.1875rem 0.1875rem;
+					button {display: none}
+					h3 {font-size: 1em}
+					p {margin: 0.5em 0; font-weight: 300; line-height: 1.25em}
+				}
+			}
+			&.accordion-open button {
+				border-radius: 0.1875rem 0.1875rem 0 0;
+				&:after {transform: rotate(315deg); margin: 0.2em -0.35em 0 0.85em}
+			}
+		}
+
+		.contextual-help-wide {
+			button:not(.contextual-help div button) {
+				width: 2rem; height: 2rem; overflow: hidden; padding: 0; border-radius: 50%; background: var(--lnk) url('help.png') no-repeat center center; background-size: 30%;
+				&:after {display: none}
+				span {.sr-only()}
+				+ div {
+					position: absolute; display: flex; flex-direction: column; z-index: 1; background: var(--bg); color: var(--txt); margin: -6.55rem 0 0 -9rem; width: 12.7rem; height: 11.25rem; padding: 0; border: 0;
+					button {
+						padding: unset;
+						&:after{display: none}
+						span {padding: 0.5em 0.6em 0.5em 2.05em; background: url('close.png') no-repeat 0.5em center; background-size: 20%; float: right}
+					}
+					div {
+						flex-grow: 1; overflow: auto; border: 0.0625rem solid var(--lnk); border-top: 0; border-radius: 0 0 0.1875rem 0.1875rem;
+						h3 {padding: 0.5em 0.75em 0.25em 0.75em}
+						p {margin: 0 0 0.5em 0; padding: 0 0.75em}
+					}
+				}
+				&:focus, &:hover {-webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border: 0.1875rem solid var(--fcsOutln); width: 2.375rem; height: 2.375rem; margin: -0.1875rem}
+			}
+		}
+
+/* homepage */
+	.home {
+		main {
+			section {
+				padding: 1.5rem 1rem;
+				+ div {background: var(--altBg)}
+				p {margin: 0.5em 0 0 0}
+			}
+			> section:first-child {padding: 1.5rem 1rem 1rem 1rem}
+
+			.regions {
+				margin: 1em 0 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5625rem, 1fr)); grid-auto-rows: auto; grid-gap: 1.5em;
+				li {
+					padding: 0; margin: 0; min-height: 6em;
+					a {
+						display: table; height: 100%; border-left: 0.25rem solid; padding: 0.7em 0.85em; line-height: 1.25em; .content-box();
+						&:hover, &:focus, &:active {-moz-box-shadow: 0 0 0.1875rem var(--fcsShdw); -webkit-box-shadow: 0 0 0.1875rem var(--fcsShdw); box-shadow: 0 0 0.1875rem var(--fcsShdw); background: var(--btnBg); color: var(--btnTxt); text-decoration: none; border-color: transparent}
+						h3 {
+							display: table-row;
+							&:after {content: ""; display: block; margin: 0.25em}
+						}
+						p {display: table-cell; vertical-align: bottom; height: 100%}
+					}
+					&:nth-child(1) a {border-color: var(--uk)}
+					&:nth-child(2) a {border-color: var(--scotland)}
+					&:nth-child(3) a {border-color: var(--wales)}
+					&:nth-child(4) a {border-color: var(--ni)}
+					&:nth-child(5) a {border-color: var(--eu)}
+					&:nth-child(6) a {border-color: var(--midDrkBrdr)}
+					&:nth-child(6) h3 {font-weight: 300; font-style: italic; font-size: 1.2em}
+				}
+			}
+
+			.features {
+				display: flex; flex-wrap: wrap; column-gap: 1.5em; row-gap: 1.5em; margin: 1em 0 0 0;
+				li {
+					display: flex; flex-grow: 1; flex-basis: 25%; width: 25%; min-width: 18rem; .content-box();
+					.contents {display: flex; flex-direction: column; height: 100%}
+					.banner {display: flex; height: 100%}
+					.banner img {display: flex; object-fit: cover; width: 100%; height: 100%; min-height: 6em; border-radius: 0.25rem 0.25rem 0 0}
+					.copy {padding: 1em 1.25em; display: flex; flex-direction: column}
+					p:last-of-type {margin: 0.5em 0} 
+					a {
+						padding: 0.35em 0 0 0; font-weight: 600; width: fit-content;
+						&:after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
+					}
+					.image {
+						display: none; width: 50%;
+						img {width: 100%; height: 100%; object-fit: cover; border-radius: 0 0.25rem 0.25rem 0; display: flex}
+					}
+					&:first-child .image {
+						order: -1;
+						img {border-radius: 0.25rem 0 0 0.25rem}
+					}
+				}
+			}
+
+			div.section {
+				padding: 0; display: flex; flex-wrap: wrap; .content-box();
+				ul {list-style: none; margin: 0.25em 0 0 0}
+				li {line-height: 1.3em; padding: 0.65em 0 0 0}
+				.intro {
+					display: flex; flex-grow: 2; flex-basis: 57%; padding: 1em 1.25em; flex-direction: column;
+					p:last-of-type {margin: 0.5em 0; display: table-row-group; height: 100%}
+					a:not(li a, p a) {
+						padding: 0.35em 0 0 0; width: fit-content; font-weight: 600;
+						&:not(li a, p a):after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
+					}
+					li:last-child a {
+						font-weight: 600;
+						&:after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
+					}
+				}
+				.list {
+					padding: 1em 1.25em; background: var(--bxBg); color: var(--bxTxt); border-radius: 0 0.25rem 0.25rem 0; flex-grow: 1; flex-direction: column;
+					h3 {font-size: 1.2em}
+					a {color: var(--bxLnk); font-weight: 300}
+				}
+			}
+
+			p {
+				+ div.section {margin: 1em 0 0 0}
+			}
+
+			ul.section {
+				list-style: none; padding: 0; margin: 0.25em 0 0 0;
+				li {
+					line-height: 1.3em; padding: 0.65em 0 0 0;
+					&:last-child a {
+						font-weight: 600;
+						&:after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
+					}
+				}
+			}
+		}		
+	}
+
+/* homepage at wider breakpoints */
+	.feature-wide {
+		 flex-grow: 3;
+		.contents {width: 50%}
+		.banner {display: none} 
+		.copy {height: 100%}
+		p:last-of-type {display: table-row-group; height: 100%} 
+		.image {display: flex}
+	}
+	.section-two-cols, .section-three-cols {float: left; margin: 0 1em 0 0}
+	.section-two-cols {width: calc(50% - 1em)}
+	.section-three-cols {width: calc(33.3% - 1em)}
+	
+
+/* legislation */
+	.legislation {
+		main section {padding: 0.75rem 1rem 1rem 1rem}
+		.breadcrumb {
+			padding: 1rem 1rem 0 1rem; line-height: 1.35em; margin: 0 auto; max-width: var(--maxWidth);
+			ol {
+				display: block;
+				li {
+					display: contents;
+					&:not(:first-child) {white-space: nowrap}
+					a {
+						color: unset;
+						&:not(li:last-child a) {
+							&:after {content: ""; display: inline-block; margin: 0.15em 0.4em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--txt); border-right: 0.0625rem solid var(--txt); transform: rotate(45deg)}
+						}
+					}
+				}
+			}
+		}
+
+		section.legislation-header {
+			padding: 0.75rem 0 0 0;
+			h1 {
+				font-weight: 300; margin: 0 1rem 1rem 1rem;
+				span {font-weight: 800; display: block; margin: 0 0 0.5rem 0}
+			}
+			nav {
+				text-align: center; display: flex;
+				> a, > span {white-space: nowrap; padding: 1.25rem 0.75rem; min-width: 3rem; background: var(--lgHdrBg); border-top: 0.0625rem solid var(--lgHdrBrdr)}
+				> .toc-link {flex-grow: 1}
+				a.previous:before {content: ""; display: inline-block; width: 0.65em; height: 0.65em; border-top: 0.1rem solid var(--btnBg); border-right: 0.1rem solid var(--btnBg); margin: 0 0.25em 0.05em 0.5em; transform: rotate(225deg)}
+				a.next:after {content: ""; display: inline-block; width: 0.65em; height: 0.65em; border-top: 0.1rem solid var(--btnBg); border-right: 0.1rem solid var(--btnBg); margin: 0 0.5em 0.05em 0.25em; transform: rotate(45deg)}
+			}
+		}
+		
+		.pit-search {
+			padding: 0;
+			&:before {position: relative; content: ""; height: 0.4em; overflow: hidden; display: block; margin: 0 0 -0.4em 0; z-index: 10; background: none; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%)}
+			> div {background: var(--pitSrchBg); padding: 0.75rem 1rem 0.25rem 1rem; text-align: center}
+			p {padding: 0 0 0.5em 0}
+			button {
+				margin: 0; padding: 0 1.1em 0 0;
+				&:hover, &:focus {outline-style: solid}
+			}
+			form {
+				max-height: 0; overflow: hidden;
+				label {margin: 0 0.5em 0 0}
+				input {border: 0.09em solid var(--inptBrdr); margin: 0 0 0.5em 0; padding: 0.725em 0.5em; background: var(--inpt); height: 2.9rem}
+				button {
+					width: 4.25em; padding: 0.815em 0; background: var(--btnBg); color: var(--btnTxt); margin: 0 0 0.5em 0.75em; border: 0.0625rem solid transparent;
+					&:hover, &:focus {background: var(--fcsBtnBg); -webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln); outline-color: var(--fcsOutln); outline-style: solid}
+				}
+			}
+		}		
+		
+		.timeline {
+			padding: 0;
+			&:before {position: relative; content: ""; height: 0.4em; overflow: hidden; display: block; margin: 0 0 -0.4em 0; z-index: 40; background: none; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%)}
+			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+				background: var(--tmlnBg); padding: 0.5em 0; border-radius: 0; width: 100%; font-weight: 300; color: unset;
+				.cta {background: var(--btnBg); color: var(--btnTxt); display: table; margin: 0.75em auto; font-weight: 500; border-radius: 0.1875rem; padding: 0.75em 3em}
+				.version {
+					margin: 0.75em 0 0 0; display: block; font-weight: 300;
+					&:before {content: ""; display: block; border-top: 0.5em solid var(--tmlnPitActv); margin: 5.625rem 50% -5.3rem 0}
+					&:after {content: ""; display: block; border-top: 0.5em solid var(--tmlnPitInactv); margin: 2.185rem 0 0 50%}
+					span {display: block; line-height: 1.3em}
+					.title {
+						font-weight: 500;
+						&:first-letter {text-transform: lowercase}
+					}
+				}
+				.date {
+					margin: 0.75em 0 0 0; display: block; font-weight: 300;
+					span {display: block; line-height: 1.35em}
+				}
+				&.original .version:before {border-top-color: transparent}
+				&.original .version:after {border-top-color: var(--tmlnPitInactv)}
+				&.current .version:before {border-top-color: var(--tmlnPitActv)}
+				&.current .version:after {border-top-color: transparent}
+				&.current.future .version:after {border-top: 0.5em dotted var(--tmlnln); margin: 2.17rem 0 0 50%}
+				
+				.date:before {content: ""; display: block; border: 0.2rem solid transparent; width: 3.15rem; height: 3.15rem; box-sizing: border-box; border-radius: 50%; overflow: hidden; margin: -2.575rem auto 1rem auto}
+				&:hover .cta, &:focus .cta {background: var(--fcsBtnBg); -webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln); outline-style: solid; outline-color: var(--fcsOutln)}
+				&.point-in-time:not(.open-timeline) {
+					.version:before {margin: 5.5rem 50% -5.275rem 0}
+					.date {display: none !important}
+					.point-in-time:before {background: var(--tmlnPitActv); height: 1em; width: 1em; content: ""; display: block; border: 0.2rem solid transparent; box-sizing: border-box; border-radius: 50%; overflow: hidden; position: absolute; margin: -2.55rem 0 0 2.6rem}
+					.point-in-time {
+						font-weight: 500; display: block; margin: 1.55rem 0 0 calc(50vW - 3.75em); position: absolute; background: var(--tmlnPitActv); color: var(--tmlnPitTxt); padding: 0.25em 0.625em; border-radius: 0.1875rem; line-height: 1.25em; width: 7.5em;
+						.heading {font-weight: 300; display: block; padding: 0}
+						.heading:before {content: ""; position: absolute; border-left: 0.15em solid var(--tmlnPitActv); height: 2em; width: 0.15em; margin: -2em 0 0 -0.075em; left: 50%}
+					}
+					.cta {margin: 5.75em auto 0.75em auto}
+				}
+			}
+			
+			&.prospective {
+				button:not(.close-menu, .contextual-help button, .scrollbar button) {
+					&.prospective .version:before {border-top: 0.5em dashed var(--alrt)}
+					&.prospective .version:after {border-top-color: transparent}
+					&.prospective .date:before {border-color: var(--alrt); color: var(--alrt)}	
+					&.historical-prospective .version:after {border-top: 0.5em dashed var(--tmlnPitInactv)}
+					&.historical-prospective .version:before {border-top: 0.5em dashed var(--alrt)}
+					&.historical-prospective .date:before {border-color: var(--alrt); color: var(--alrt)}	
+					&.original.current .version:before {border-color: transparent}
+					&.original.current .version:after {border-top: 0.5em dashed var(--tmlnPitInactv)}
+					&.current .version:after {border-top: 0.5em dashed var(--tmlnPitInactv)}
+				}
+			}
+
+			.versions {
+				display: none; overflow: hidden; background: var(--mdlBg); color: var(--mdlTxt); position: fixed; padding: 1rem; top: 0; z-index: 10; width: 100%; left: -100%; height: 100vh; height: -webkit-fill-available;
+				a {color: var(--mdlLnk)}
+				.nav-hdr {
+					display: flex; flex-direction: row; flex-wrap: wrap; margin: 0 0 0.75em 0; border-bottom: 0.0625rem solid var(--mdlBrdr);
+					h2 {font-size: 1.25em; font-weight: 700; flex-grow: 4}
+					.close-menu {margin: -0.25em 0 0.25em -0; padding: 0.5em 0.6em 0.5em 2.05em; color: var(--mdlTxt); background: url('close.png') no-repeat 0.5em center; background-size: 20%}
+				}
+				nav {height: calc(100vh - 5rem); overflow-y: auto; overflow-x: hidden}
+				ul {
+					position: relative; width: 100%; border-left: 0.2rem solid var(--cntrstSbtlBrdr); margin: 0.25rem 0 0 0.625rem;
+					li {
+						&:last-child {margin: 0 0 -3rem 0}
+						a, &.unavailable div:not(.contextual-help, .contextual-help div) {
+							display: block; padding: 0 0 1rem 1.5rem;
+							&:before {display: block; position: absolute; width: 1.125rem; height: 1.125rem; content: ""; background: var(--mdlBtnBg); left: -0.8rem; margin: 0; border-radius: 50%; border: 0.2rem solid var(--mdlBtnBrdr)}
+						}
+						.title {display: table-cell}
+						.date span {white-space: nowrap}
+						.prefix + .title:first-letter {text-transform: lowercase}
+						div:not(.contextual-help, .contextual-help div):before {background: var(--tmlnPitInactv); border: 0.2rem solid transparent}
+						&[aria-current="page"] a, &.unavailable[aria-current="page"] div:not(.contextual-help, .contextual-help div) {
+							&:before {background: var(--btnBg)}
+							.version {
+								.title {
+									font-weight: 500;
+								}
+							}
+						}
+						&:not([aria-current="page"]) a .title:first-letter {text-transform: uppercase}
+						&.break {
+							&:before {content: ""; display: block; height: 2.375rem; width: 2rem; background-image: url('timeline-break.png'); background-repeat: no-repeat; background-size: 1rem; margin: -0.3125rem 0 0.625rem -0.625rem}
+							.explanation {margin: -0.625rem 0 0.625rem 1.4375rem; font-style: italic; font-weight: 300}
+						}
+						.contextual-help {margin: 0 1.25rem 1.25rem 1.25rem}
+					}
+				}
+				&.prospective li.prospective a:before {background: var(--mdlBg); border: 0.2rem dashed var(--alrt)}
+				&.prospective li[aria-current="page"].prospective a:before {background: var(--btnBg); border: 0.2rem dashed var(--alrt)}
+			}
+			.scrollbar {display: none}
+		}
+		
+		.legislation-metadata {
+			padding: 0; overflow: visible;
+			> div:not(.key-versions, .other-formats) {
+				margin: 0 0 1rem 0; border: 0.0625rem solid var(--midLghtBrdr); border-radius: 0.25rem; padding: 0.5em 0.5em;
+				p:not(.historical p ~ p ~ p) {
+					padding: 0 0 0 2.5rem; line-height: 1.25em; display: table-cell; height: 2em; vertical-align: middle;
+					~ p:not(.concurrent p ~ p, .up-to-date.historical p ~ p ~ p) {display: block; padding: 0.5em 0.15em 0 0.15em; margin: 0.5em 0.25em 0 0.25em; height: auto; border-top: 0.0625rem solid var(--midLghtBrdr)}
+					a:not(.repealed a, .concurrent a) {font-weight: 500}
+					button {padding: 0}
+				}
+				button:not(p button) {
+					background: var(--btnBg); color: var(--btnTxt); font-weight: 300; padding: 0.75em; margin: 0.75em 0.25em 0.2em 0.25em; width: calc(100% - 0.5em); border: 0.0625rem solid transparent;
+					&:hover, &:focus {background: var(--fcsBtnBg); -webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln); outline-style: solid; outline-color: var(--fcsOutln)}
+				}
+				a:not(p a, .up-to-date.historical p a) {
+					display: block; margin: 0.75em -0.5em -0.5em -0.5em; background: var(--lgMtdtLnkBg); padding: 0.5em 0.85em 0.5em 0.85em; border-top: 0.05em solid var(--lghtBrdr); line-height: 1.35em; border-radius: 0 0 0.25rem 0.25rem;
+					&.sr-only {
+						&:focus, &:active {width: unset; height: unset; clip: unset; padding: 0.5em 0.85em 0.65em 0.85em !important; margin: 0.75em 0.25em 0.15em 0.25em !important; text-align: center; border-radius: 0.1875rem !important; background: var(--btnBg) !important; color: var(--btnTxt); position: relative}
+					}
+				}
+				&.up-to-date {
+					p span {white-space: nowrap}
+					&.historical p ~ p ~ p {
+						margin: 0;
+						a {
+							background: var(--btnBg); color: var(--btnTxt); font-weight: 300; padding: 0.75em 0; margin: 0.75em 0.25em 0.125em 0.25em; display: block; text-align: center; border: 0.0625rem solid transparent; border-radius: 0.1875rem;
+							&:hover, &:focus {background: var(--fcsBtnBg); -webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln); outline-style: solid; outline-color: var(--fcsOutln); text-decoration: none}
+						}
+					}
+				}
+				&.not-up-to-date {
+					border-color: var(--wrnng);
+					p:first-of-type {background: url(metadata-warning.png) no-repeat; background-size: 1em}
+					button:not(p button) {
+						background: var(--btnWrnngBg);
+						&:hover, &:focus {background: var(--fcsBtnWrnngBg)}
+					}
+				}
+				&.prospective {
+					border-color: var(--alrt); border-style: dashed; border-width: 0.125rem;
+					p {border-color: var(--alrt)}
+				}
+				&.geographical-extent {
+					p span {font-weight: 500; white-space: unset}
+					&.concurrent p ~ p {display: block; padding: 0.35em 0.15em 0 2.5em; margin: 0.35em 0.25em 0em 0; height: auto}
+				}
+			}
+			.key-versions {
+				> div {
+					border-radius: 0.1875rem; border: 0.0625rem solid var(--btnBrdr);
+				    a {margin: 0; line-height: 1.5em}
+				}
+				button {
+					padding: 0.8em 0.75em 0.8em 1.75rem; width: 100%; border-radius: 0.125rem 0.125rem 0 0;
+					&:before {content: ""; position: absolute; margin: -0.05em 0 0 -2.2em; height: 1.45em; width: 1.45em}
+					&:after {content: ""; display: inline-block; margin: 0 -1em 0.2em 1em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnBrdr); border-right: 0.0625rem solid var(--btnBrdr); transform: rotate(135deg)}
+				}
+				.accordion-open {
+					button {
+						background: var(--btnBg); color: var(--btnTxt);
+						&:before {content: ""; position: absolute; margin: -0.05em 0 0 -2.2em; height: 1.45em; width: 1.45em}
+						&:after {transform: rotate(315deg); margin: 0 -1em 0.0em 1em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt)}
+					}
+				}
+				
+				h3 {
+					font-size: 1em;
+					+ div {max-height: 0; overflow: hidden; padding: 0 0.75em}
+				}
+				h4 {
+					font-size: 1em; font-weight: 500; line-height: 1.25em;
+					&:first-child {padding: 0.75em 0 0 0}
+					span {
+						font-weight: 300;
+						span {white-space: nowrap}
+					}
+				}
+				ul {
+					margin: 0.5em 0 1em 0; list-style: none; display: table; width: 100%;
+					&:last-of-type {margin: 0.5em 0 0 0}
+					li {
+						display: inline-block; padding: 0 2% 0 0; display: table-cell;
+						&:last-of-type {padding: 0}
+						a {border: 0.0625rem solid var(--btnBrdr); padding: 0.45em 0.5em; display: block; border-radius: 0.1875rem; text-align: center}
+					}
+					&:last-child {padding: 0 0 0.75em 0}
+				}
+				&:hover > div:not(.accordion-open) {
+					-webkit-box-shadow: 0 0 0.25rem 0 var(--btnBxShdwLght); -moz-box-shadow: 0 0 0.25rem 0 var(--btnBxShdwLght); box-shadow: 0 0 0.25rem 0 var(--btnBxShdwLght); border: 0.0625rem solid transparent;
+					button {color: var(--fcsBtnBg)}
+				}
+				button:focus:not(.accordion-open button) {color: var(--fcsBtnBg)}
+				
+				+ .other-formats {margin: 1em 0 0 0}
+			}
+			.other-formats {
+				> div {
+					border-radius: 0.1875rem; border: 0.0625rem solid var(--btnBrdr);
+				    a {margin: 0; line-height: 1.5em}
+				}
+				button {
+					padding: 0.8em 0.75em 0.8em 1.75rem; width: 100%; border-radius: 0.125rem 0.125rem 0 0;
+					&:before {content: ""; position: absolute; margin: -0.05em 0 0 -2.2em; height: 1.45em; width: 1.45em}
+					&:after {content: ""; display: inline-block; margin: 0 -1em 0.2em 1em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnBrdr); border-right: 0.0625rem solid var(--btnBrdr); transform: rotate(135deg)}
+				}
+				.accordion-open {
+					button {
+						background: var(--btnBg); color: var(--btnTxt);
+						&:before {content: ""; position: absolute; margin: -0.05em 0 0 -2.2em; height: 1.45em; width: 1.45em}
+						&:after {transform: rotate(315deg); margin: 0 -1em 0.0em 1em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt)}
+					}
+				}
+				
+				h3 {
+					font-size: 1em;
+					+ div {
+						max-height: 0; overflow: hidden; padding: 0 0.75em;
+					}
+				}
+				h4 {
+					font-size: 1em; font-weight: 500; line-height: 1.25em;
+					&:first-child {padding: 0.75em 0 0 0}
+					span {
+						font-weight: 300;
+						span {white-space: nowrap}
+					}
+				}
+				ul {
+					margin: 0.5em 0 1em 0; list-style: none; display: grid; grid-template-columns: auto auto auto; gap: 0.5em; width: 100%;
+					&:last-of-type {margin: 0.5em 0 0 0}
+					li {
+						display: inline-block; padding: 0;
+						&:last-of-type {padding: 0}
+						a {border: 0.0625rem solid var(--btnBrdr); padding: 0.45em 0.5em; display: block; border-radius: 0.1875rem; text-align: center}
+					}
+					&:last-child {padding: 0 0 0.75em 0}
+				}
+				&:hover > div:not(.accordion-open) {
+					-webkit-box-shadow: 0 0 0.25rem 0 var(--btnBxShdwLght); -moz-box-shadow: 0 0 0.25rem 0 var(--btnBxShdwLght); box-shadow: 0 0 0.25rem 0 var(--btnBxShdwLght); border: 0.0625rem solid transparent;
+					button {color: var(--fcsBtnBg)}
+				}
+				button:focus:not(.accordion-open button) {color: var(--fcsBtnBg)}
+			}			
+		}
+		
+		.legislation-text {
+			padding: 1em 0 0.25rem 0; overflow: unset;
+			.status-panels {
+				positXion: relative; background: var(--bg);
+				&.notUpToDate:has(.pinned.scrolled) {
+					z-index: 10000;
+				}
+				&:has(.scrolled, .scrolling) {position: relative}
+			}
+			.status-panel {
+				posXition: relative; background: var(--nnopqbg); margin: 0 0 1em 0; padding: 0; border-left: 0.45em solid var(--midDrkBrdr);
+				&.scrolling {
+					position: relative; z-index: 25;
+				}
+				&.scrolled {
+					position: fixed; top: 0; width: calc(var(--maxWidth) - 19rem); z-index: 25; overflow: visible;
+					&:after {content: ""; display: block; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%); height: 1.01em; margin: 0.4em 0 -1em -0.6em; position: relative; opacity: 1}
+					&.last-pinned:not(.accordion-open):after {margin: 0 0 -0.4em -0.4em; height: 0.4em}
+					&:not(.accordion-open):after {background: linear-gradient(0deg, var(--bg) 70%, var(--nnopqshdw) 100%)}
+					&.accordion-open:not(.last-pinned):after {background: linear-gradient(0deg, var(--bg) 70%, var(--nnopqshdw) 100%); height: 1.01em; margin: 0 0 -1em -0.6em}
+					&.last-pinned:not(.accordion-open):after {background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%)}
+				}
+				&.notUpToDate {
+					border-left: 0.45em solid var(--wrnng);
+					.affecting-legislation.alternative {
+						p {
+							margin: 0 0 1em 0; background: var(--btnWrnngBg); padding: 0.5em 1em 0.75em 1em; color: var(--btnTxt); border-radius: 0.2em;
+							&:after {content: ""; display: block; position: absolute; width: 0; height: 0; border-style: solid; border-width: 0.565rem 0.688rem 0 0.688rem; border-color: var(--btnWrnngBg) transparent transparent transparent; margin: 0.65em 0 0 0}
+							
+							~ p {border-top: 0}
+							a {
+								color: var(--btnTxt); text-decoration: underline; text-decoration-thickness: 0.075em;
+								&:hover {text-decoration: none}
+							}
+						}
+					}
+				}
+				&.commencement {
+					border-left: 0.45em solid var(--cmmncmnt);
+					.affecting-legislation.alternative {
+						p {
+							margin: 0 0 1em 0; background: var(--cmmncmnt); padding: 0.5em 1em 0.75em 1em; color: var(--cmmncmntHdrTxt); border-radius: 0.2em;
+							&:after {content: ""; display: block; position: absolute; width: 0; height: 0; border-style: solid; border-width: 0.565rem 0.688rem 0 0.688rem; border-color: var(--cmmncmnt) transparent transparent transparent; margin: 0.65em 0 0 0}
+							
+							~ p {border-top: 0}
+							a {
+								color: var(--cmmncmntHdrTxt); text-decoration: underline; text-decoration-thickness: 0.075em;
+								&:hover {text-decoration: none}
+							}
+						}
+					}
+					.status-detail {
+						.affecting-legislation-item {
+							h4 {border: 0.0625rem solid var(--cmmncmnt); border-bottom: 0; background: var(--cmmncmnt-bg)}
+						}
+						.affecting-legislation-detail {border: 0.0625rem solid var(--cmmncmnt); border-top: 0}
+					}
+					&.extent {
+						border-radius: 0.25rem 0.25rem 0 0;
+						.extent-info {
+							background: var(--cmmncmnt) url('location-dm.png') no-repeat 0.5em 0.66em; background-size: 1.6em; border-radius: 0 0.25rem 0 0; color: var(--cmmncmntHdrTxt); padding: 0.75rem 1rem 0.75rem 2.65rem;
+							span {font-weight: 500}
+							a {color: var(--cmmncmntHdrTxt); text-decoration: underline; text-decoration-thickness: 0.075em}
+							a:hover {text-decoration: none}
+						}
+					}
+				}
+				&.pinned {
+					.status-hdr button:last-of-type {color: var(--btnTxt); background: var(--btnBg) url('pin-on.png') no-repeat 0.35em 0.15em; background-size: 9%}
+				}
+
+				&.scrollable-messaging:after {content: ""; display: block; background: linear-gradient(0deg, var(--drpshdwEnd) 0%, var(--drpshdwStrt) 100%); margin: -0.4em 0 0em 0; height: 0.4em; position: relative; opacity: 0}
+				.status-hdr {
+					position: relative; overflow: visible; padding: 0.75rem 1rem 0 1rem; 
+					&:after {content: ""; display: block; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%); width: calc(100% + 1.875rem); margin: -0.4em -1em 0.4em -1em; height: 0.4em; z-index: 1; position: relative; opacity: 0; width: 0.625rem}
+					h2 {font-size: 1.05em; line-height: unset}
+					div {
+						overflow: auto; margin: 0 -0.25em;
+						button:first-of-type {
+							padding: 0.1em 0.25em; margin: 0.15em 0 0.35em 0;
+							&:after {content: ""; display: inline-block; width: 0.35em; height: 0.35em; border-top: 0.1rem solid var(--btnBg); border-right: 0.1rem solid var(--btnBg); margin: 0 0.35em 0.185em 0.5em; transform: rotate(135deg)}
+						}
+						button:last-of-type {float: right; padding: 0.25em 0.5em 0.25em 1.4em; margin: 0.2em 0 0 0}
+					}
+				}
+				.status-detail {
+					clear: both; padding: 0.75em 1em 0.15em 0; max-height: 0; overflow: hidden; position: relative; margin: 0 0.25em 0 1em;
+					p {
+						margin: 0 0 0.5em 0;
+						~ p {border-top: 0.05em solid var(--midLghtBrdr); padding: 0.5em 0 0 0}
+					}
+					.affecting-legislation-item {
+						margin: 0.75em 0 1em 0;
+						h4 {
+							border: 0.0625rem solid var(--annotation); border-bottom: 0; background: var(--annotation-bg); padding: 0.75rem 0.9375rem; font-weight: 300; border-radius: 0.375rem 0.375rem 0 0; font-size: 1em;
+							&:after {content: ""; display: block; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%); width: calc(100% + 1.875rem); margin: 0.75rem 0 -1.1em -0.9375rem; height: 0.4em; position: relative}
+							a {font-weight: 500; color: var(--lnk)}
+						}
+					}
+					.affecting-legislation-detail {
+						border: 0.0625rem solid var(--annotation); border-top: 0; background: var(--bg); padding: 0.3125rem 0.625rem 0.3125rem 3.75rem; border-radius: 0 0 0.375rem 0.375rem;
+						* {font-family: "Arial", "Helvetica", "sans-serif"; line-height: 1.5em}
+						*:not(.affecting-legislation-detail h5, .affecting-legislation-detail h5 *) {font-weight: 300}
+						h5 {font-size: 1em; min-height: 1.5em}
+						> ol > li {
+							margin: 0.5em 0 0.5em 1.5em;
+							ol li {margin: 0.5em 0}
+							ol li ol li {margin: 0.5em 0 0.5em 2.25em}
+						}
+						.prefix {margin: 0 0 0 -5.5em; width: 4.5em}
+					}
+				}
+				&.accordion-open {
+					&:after {opacity: 1}
+					.status-hdr {
+						&:after {margin: 0.4em -1em -0.4em -1em; opacity: 1; width: unset}
+						.hdrCtrl:after {transform: rotate(315deg); margin: 0.185em 0.35em 0 0.5em}
+					}
+					.status-detail {overflow-y: auto; overflow-x: hidden; max-height: 13.4375rem}
+				}
+			}
+			
+			> ol {margin: 0}
+			> ol > li {
+				margin: 0; padding: 0.25em 0 0 3.75em;
+				&.prospective {
+					margin: 0 0 0.75em 0; padding: 5em 0.75em 0.5em 3.75em; border: 0.175rem dashed var(--alrt); background: var(--prspctvBg); border-radius: 0.35em;
+					.prospective-message {
+						margin: -2.15em -0.9em 2em -3.9em; background: var(--alrtBg); border: 0.175rem dashed var(--alrt); border-bottom-color: transparent; border-radius: 0.35em 0.35em 0 0; padding: 0.4em 0.85em;
+						span {display: block; font-weight: 600}
+					}
+				}
+			}
+			ol, ul {counter-reset: list}
+			ul {margin: 0; list-style: none}
+			.prefix {position: absolute; margin: 0 0 0 -8.25em; width: 7.5em; text-align: right; font-weight: 600}
+			ul > li > .prefix {margin: 0 0 0 -7.5em}
+			//span.prospective {background: var(--alrt); padding: 0.25em 0.5em; font-weight: 300; margin: 0 0 0 0.35em; border-radius: 0.2rem}
+
+			> ol > li {
+				margin: 0.75em 0 0 3.25em; padding: 0 0 0 1.25em; font-size: 1rem; 
+				li {padding: 0; margin: 0.5em 0 0.5em 0}
+				ol li ol li {margin: 0.5em 0 0.5em 2.25em}
+				h3 {font-size: 1rem; margin: 0; line-height: 1.5em}
+				li, li *:not(a, button, .annotation-detail h6, .annotation-detail h6 *) {font-family: "Arial", "Helvetica", "sans-serif"; font-weight: 300; font-size: 1rem}
+			}
+			
+		/* highlighted annotation */
+			.annotation-start {margin: 0 0.25em 0 0}
+			span.annotation, ul.annotation .marker, ol.annotation .marker {
+				background: var(--annotation-bg); border-radius: 0.2rem; padding: 0.15rem 0.25rem 0.23rem 0.25rem; margin: 0 -0.25rem 0 -0.25rem; -webkit-box-decoration-break: clone; box-decoration-break: clone}
+
+			.annotation-start {
+				position: relative; display: inline-block; vertical-align: text-top; padding: 0 0.2em 0 0.7em;
+				a:not(.annotation-detail a) {
+					font-family: "Roboto"; font-weight: 500; margin: -0.65em 0 0 0; display: block; color: var(--annotation);
+					&:before {content: ""; position: absolute; display: inline-block; border: 0.175em solid var(--annotation); border-right: 0; border-radius: 0.175em 0 0 0.175em; height: 1.25em; width: 0.25em; margin: 0.5em 0 0 -0.7em}
+				}
+				button.button-open:after {content: ""; display: block; position: absolute; width: 0; height: 0; border-style: solid; border-width: 0.565rem 0.688rem 0 0.688rem; border-color: var(--annotation) transparent transparent transparent; margin: -1.85em 0 0 -0.125rem}
+				> span:not(.annotation-detail, .wrapper .annotation-detail) + button {
+					padding: 0.2em 0.175em; margin: -0.7em -0.175em -0.2em -0.175em; display: block; color: var(--annotation);
+					&:before {content: ""; position: absolute; display: inline-block; border: 0.175em solid var(--annotation); border-right: 0; border-radius: 0.175em 0 0 0.175em; height: 1.25em; width: 0.25em; margin: 0.35em 0 0 -0.7em}
+					&:hover, &:focus {text-decoration: underline; text-decoration-thickness: 0.075em}
+				}
+			}
+
+			.annotation-end {
+				display: inline-block; vertical-align: text-top; width: 0.6em;
+				&:after {content: ""; position: absolute; display: inline-block; border: 0.175em solid var(--annotation); border-left: 0; border-radius: 0 0.175em 0.175em 0; height: 1.25em; width: 0.25em; margin: -0.15em 0 0 0}
+			}
+			
+			.annotation-detail {
+				position: absolute; margin: 0 0 0 -0.75rem; text-align: left; background: var(--annotation); border: 0.175em solid var(--annotation); border-radius: 0.3em; z-index: 40; width: 22.5rem; font-weight: 300;
+				h4 {
+					padding: 0.5em 0.6em 0.6em 0.6em; color: var(--annotationHdrTxt); font-size: 1em; font-weight: 300;
+					span {
+						font-weight: 500; margin: 0 0.65em 0 0;
+						&:after {content: ""; width: 0.25em; height: 0.0625rem; background: var(--annotationHdrTxt); display: inline-block; margin: 0.6em 0 0 0.35em; position: absolute}
+					}
+				}
+				p {background: var(--bg); padding: 0.5em 1em}
+				button {
+					float: right; color: var(--annotationHdrTxt); padding: 0; margin: 0 0 0 1em; background: var(--annotation);
+					span {display: block; padding: 0.5em 0.6em 0.5em 2.5em}
+				}
+			}
+			
+			&.extended-annotations {
+				.annotation-open {
+					width: 42.1875rem; min-width: 14.6875rem; max-width: calc(100vW - 3.75rem);
+					p {
+						padding: 0.5em 1em 0 1em;
+						&:after {margin: 0.5em 0 -0.4em -0.9375rem; content: ""; display: block; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%); width: calc(100% + 1.875rem); height: 0.4em; z-index: 20; position: relative}
+					}
+					.affecting-legislation {
+						overflow: auto; max-height: 13.75rem; display: block;
+						h5 {
+							border: 0.0625rem solid var(--annotation); background: var(--annotation-bg); padding: 0.75rem 0.9375rem; font-weight: 300; border-radius: 0.375rem 0.375rem 0 0; margin: 0.625rem 0 -0.75rem 0; line-height: 1.25em;
+							&:after {content: ""; display: block; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%); width: calc(100% + 1.875rem); margin: 0.75rem 0 -0.4em -0.9375rem; height: 0.4em; z-index: 20; position: relative}
+							a {font-weight: 500}
+						}
+						.affecting-legislation-item {
+							padding: 0.5em 1.25em 0 1.25em; display: block; background: var(--bg);
+							&:first-of-type {padding: 0.75em 1.25em 0 1.25em}
+							&:last-of-type {padding: 0.5em 1.25em 1.25em 1.25em}
+							.affecting-legislation-detail {
+								border: 0.0625rem solid var(--annotation); border-top: 0; background: var(--bg); padding: 0.3125rem 0.625rem 0.3125rem 3.75rem; display: block; border-radius: 0 0 0.375rem 0.375rem;
+								> ol > li {
+									margin: 0.5em 0 0.5em 1.5em;
+									ol li {margin: 0.5em 0}
+									ol li ol li {margin: 0.5em 0 0.5em 2.25em}
+								}
+
+								.prefix {position: initial; margin: 0 1em 0 -5.6875rem; width: 4.6875rem; display: inline-block}
+								.marker {font-family: "Arial", "Helvetica", "sans-serif"; font-size: 1rem}
+							}
+						}
+					}
+				}
+			}
+
+			.not-up-to-date {
+				&.annotation-start {
+					a:not(.annotation-detail a), button:not(.annotation-detail button) {
+							color: var(--wrnng);
+							&:before {border-color: var(--wrnng)}
+					}
+					.button-open:after {border-color: var(--wrnng) transparent transparent transparent}
+
+				}
+				~ .annotation-end:after {border-color: var(--wrnng)}
+				.annotation-detail {
+					background: var(--wrnng); border: 0.175em solid var(--wrnng);
+					button {background: var(--wrnng)}
+				}
+			}
+			.not-up-to-date-highlight {
+				border: 0.0625rem solid var(--wrnng); background: var(--wrnng-bg); color: var(--wrnng-txt); border-radius: 0.2rem; padding: 0.11rem 0.25rem 0.19rem 0.25rem; margin: 0 -0.35rem 0 -0.25rem; -webkit-box-decoration-break: clone; box-decoration-break: clone; line-height: 1.75em;
+				~ .annotation-end:after {height: 1.35em; margin: -0.225em 0 0 -0.05em}
+			}
+			
+			.commencement-annotation {
+				&.annotation-start {
+					a:not(.annotation-detail a), button:not(.annotation-detail button) {
+						color: var(--cmmncmntTxt);
+						&:before {border-color: var(--cmmncmntTxt)}
+					}
+					> span:not(.annotation-detail, .wrapper .annotation-detail) + button:before {border-color: var(--cmmncmntTxt)}
+					button.button-open:after {border-color: var(--cmmncmnt) transparent transparent transparent}
+				}
+				&.annotation-end:after {border-color: var(--cmmncmntTxt)}
+				.annotation-detail {
+					background: var(--cmmncmnt); border: 0.175em solid var(--cmmncmnt);
+					button {background: var(--cmmncmnt); color: var(--cmmncmntHdrTxt)}
+					h4 {
+						color: var(--cmmncmntHdrTxt);
+						span:after {background: var(--cmmncmntHdrTxt)}
+					}
+					.affecting-legislation {
+						h5 {border: 0.0625rem solid var(--cmmncmnt); background: var(--cmmncmnt-bg)}
+						.affecting-legislation-item .affecting-legislation-detail {border: 0.0625rem solid var(--cmmncmnt)}
+					}
+				}
+			}
+
+			.legislation-footnotes {
+				border: 0.0625rem solid var(--midLghtBrdr); border-radius: 0.25rem; margin: 1rem 0 0 0;
+				h2 {font-size: 1em; margin: 0 0 0.5em 0; padding: 0.75em 3em}
+				dl {
+					margin: 0 1em 0.5em 1em; display: grid; grid-template-columns: auto 1fr; column-gap: 0.75em;
+					dt {
+						font-weight: 500; min-width: 1.75em;
+						a {color: var(--annotation)}
+					}
+					dd {margin: 0 0 0.5em 0}
+				}
+				ol {
+					margin: 0 1em 0.75em 2.25em;
+					li {padding: 0 0 0.25em 0.25em}
+				}
+				.not-up-to-date {
+					h2:before {content: ""; background: url('metadata-warning.png') no-repeat; background-size: 0.875rem; position: absolute; margin: -0.25em 0 0 -2.45em; width: 1em; height: 1em}
+					dt a {color: var(--wrnng)}	
+				}
+				.commencement-annotation {
+					dt a {color: var(--cmmncmntTxt)}	
+				}
+			}
+		}
+	}
+
+	.full-legislation-header {
+		h1 {margin: 0 0 1rem 0}
+		nav {
+			> a, > span {width: 25%}
+			.previous {text-align: left}
+			.next {text-align: right}
+			.previous span:not(span span), .next span:not(span span) {.sr-unset(); font-weight: 600}
+			a.previous:before {width: 0.25em; height: 0.25em; margin: 0 0.35em 0.15em 0.35em}
+			a.next:after {width: 0.25em; height: 0.25em; margin: 0 0.35em 0.15em 0.35em}
+		}
+	}
+
+	.full-timeline {
+		.timeline {
+			display: flex; width: 100%; height: 0; overflow: visible;
+			&:before {margin: 0 -100% 0.4em 0; width: 100%}
+			button#open-versions {
+				display: block; display: flow-root; height: 0; padding: 0; z-index: 30; overflow: visible; margin: 0 0 0 calc(100% - 16rem); width: 16rem;
+				> span {position: absolute; display: block; margin: 0.425em 0 0 2.5em}
+				.version, .date {line-height: 1.5em}
+				.version .title, .date span {line-height: 1em}
+				.cta {.sr-only()}
+				&.open-timeline {
+					margin: 0 -0.5em 0 0; display: inline-block; width: 0.5em;
+					&:after {margin: 5.925rem 0 0 0.875rem; transform: rotate(45deg)}
+					.version, .date, .point-in-time {display: none}
+					+ .contextual-help {display: none}
+				}
+				&.point-in-time {
+					.point-in-time {
+						width: 8em; margin: 1.46rem 0 0 2.55rem;
+						.heading:before {margin: -2em 0 0 0.01em}
+					}
+					.version:before {margin: 5.625rem 50% -5.3rem 0}
+					.cta {margin: 0 auto}
+				}
+				&.current.future .version:after {margin: 2.3rem 0 0 50%}
+
+			}
+			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+				.version, .date {
+					margin: 0.75em 0 0 0; padding: 0 0.1rem 0 0; position: relative; width: 13.5rem;
+					span {line-height: 1.5em}
+				}
+				.version:after {margin: 2.3rem 0 0 50%}
+				&.point-in-time:not(.open-timeline) .point-in-time:before {margin: -2.45rem 0 0 2.95rem}
+			}
+			#open-versions:before {margin: 0 -2rem 0 0; position: relative; content: ""; display: block; background: var(--btnBg); float: left; width: 2.5rem; height: 12.5rem; border: 0; transform: unset}
+			#open-versions:hover:before, #open-versions:focus:before {background: var(--fcsBtnBg); -webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln); outline-style: solid; outline-color: var(--fcsOutln)}
+
+			#open-versions + .contextual-help {
+				margin: 5.275rem 0 0 -4.25rem;
+				button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -8.57rem; width: 12.1875rem}
+			}
+			#open-versions:after {margin: 5.925rem 0 0 1.125rem; content: ""; display: block; width: 0.5em; height: 0.5em; border-top: 0.1em solid var(--btnTxt); border-right: 0.1em solid var(--btnTxt); transform: rotate(225deg)}
+			.versions {
+				display: none; margin: unset; transform: unset; vertical-align: top; position: unset; top: unset; z-index: unset; left: unset; height: unset; padding: 0; margin: 0; color: unset; background: var(--tmlnBg);
+				.nav-hdr {
+					border: unset; margin: unset;
+					h2 {.sr-only()}
+					.close-menu {display: none}
+				}
+				nav {height: unset; overflow: unset}
+				ul {
+					flex-flow: row; border: unset; position: unset; overflow-x: auto; overflow-y: hidden; margin: 0 16rem; width: calc(100% - 32rem); min-height: 12.1rem;
+					&:before {content: ""; display: block; background: var(--tmlnln); width: calc(var(--maxWidth) - 20rem); height: 0.5em; position: absolute; margin: 6.05rem 0 0 -6rem}
+					li {
+						position: relative; flex-grow: 0; padding: 0; height: 12.5rem;
+						&:not(li:first-of-type, li:last-of-type, li.prospective):before, &:not(li:first-of-type, li:last-of-type, li.prospective, .prospective li.current):after {content: ""; position: absolute; width: 50%; border-top: 0.5em solid var(--tmlnPitActv)}
+						&:not(li:first-of-type, li:last-of-type, li.prospective, .prospective li.current):after {z-index: -1}
+						&:not(li:first-of-type, li:last-of-type):before {margin: 6.05rem 0 0 0%}
+						&:not(li:first-of-type, li:last-of-type):after {margin: calc(-5.55rem - 0.35em) 0 0 50%}
+						a, &.unavailable div:not(.contextual-help, .contextual-help div) {
+							width: 12.5rem; margin: 0 auto; padding: 0 0 0.575rem 0; text-align: center; text-decoration: none; color: unset;
+							&:before {display: none}
+						}
+						.cta {background: var(--btnBg); color: var(--btnTxt); display: table; margin: 0.75em auto; border-radius: 0.1875rem; padding: 0.75em 3em}
+						.version {
+							margin: 1.5em 0 0 0; display: block; font-weight: 300;
+							span {display: block; line-height: 1em}
+							.title {padding: 1.25em 0 0 0}
+							.prefix {position: absolute; width: 12.5rem}
+						}
+						.date {
+							margin: 0.75em 0 0 0; display: block; font-weight: 300;
+							span {display: block; line-height: 1em}
+						}
+						&[aria-current="page"] a, &.unavailable[aria-current="page"] div {
+							cursor: unset;
+							.version .title {font-weight: 500; display: block}
+						}
+						.version:after {content: ""; display: block; border-top: 0.5em solid var(--tmlnPitActv); height: 0; overflow: hidden; margin: 2.3rem 0 0 0}
+						.date:before {content: ""; position: relative; display: block; width: 3.15rem; height: 3.15rem; border-radius: 50%; overflow: hidden; margin: -2.575rem auto 1rem auto; border: 0.2rem solid var(--btnBrdr); box-sizing: border-box; position: relative; z-index: 1}
+						&[aria-current="page"] .date:before {border: 0.2rem solid transparent}
+						a:not([aria-current="page"] a):focus .date:before, a:not([aria-current="page"] a):hover .date:before, a .date:not([aria-current="page"] a .date):hover:before {-webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln)}
+						a:not([aria-current="page"] a):focus, a:not([aria-current="page"] a):hover {color: var(--lnk)}
+						&.unavailable .date:before {width: 1.65rem; height: 1.65rem; margin: -1.825rem auto 1.75rem auto; border: 0; background: var(--tmlnPitActv) url('')}
+						&.break {
+							&:first-of-type, &:last-of-type {
+								&:before {display: none}
+							}
+							a {
+								&:before {display: block; width: 1.6875rem; height: 2.125rem; border: 0; border-radius: 0; cursor: auto; background-color: unset; background-position: 0 0; background-repeat: no-repeat}
+							}
+							.explanation {.sr-only()}
+						}
+						&.break:last-of-type {
+							a {
+								&:before {margin: 5.125rem 0 0 0}
+							}
+						}
+						&.break:not(li:last-of-type) {
+							&:before {width: calc(50% - 3.375rem); height: 0.5em; margin: 6.05rem 0 0 0; background-image: unset; background-size: unset}
+							a {
+								width: calc(12.5rem + 4rem);
+								&:before {margin: 3.6875rem 0.625rem}
+								.version {
+									margin: 1.5em 0 0 1.6875rem;
+									.prefix {width: calc(12.5rem - -2.25rem)}
+								}
+								.date {margin: 0.75em 0 0 1.6875rem}
+							}
+						}
+
+						.contextual-help {position: absolute; top: 4.5rem; right: 0; left: 0; margin: 0.775rem auto; width: 0; height: 0; padding: 0 0 0 5.625rem}
+						&:first-of-type {
+							.contextual-help {
+								padding: 0 0 0 8.125rem;
+								button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -8.57rem}			
+							}
+							&.unavailable .contextual-help {
+								padding: 0 0 0 6.875rem;
+								button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -8.25rem}			
+							}
+						}
+						&:last-of-type .contextual-help {
+							padding: 0 0 0 7.5rem;
+							button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -11.0625rem; width: 14.6875rem}
+						}
+						&.break:not(li:last-of-type) .contextual-help {
+							padding: 0 0 0 7.5rem;
+							button:not(.contextual-help div button) + div {margin: -6.5625rem 0 0 -11.125rem; width: 15rem}
+						}
+						&[aria-current="page"] ~ li .version:not(li:last-of-type .version):after {border-top-color: transparent}
+						&[aria-current="page"] ~ li:last-of-type .version:after, &:first-of-type[aria-current="page"] .version:after {border-top-color: transparent}
+						&[aria-current="page"] .version:after {margin: 2.3rem 50% 0 0%}
+						&[aria-current="page"]:after, &[aria-current="page"] ~ li:not(:last-of-type):before, &[aria-current="page"] ~ li:not(:last-of-type):after {display: none}
+						&:last-of-type {flex-grow: 0; position: absolute; margin: 0 0 0 calc(var(--maxWidth) - 34rem)}
+						&:first-of-type {position: absolute; margin: 0 0 0 -16rem; z-index: 1}
+						&:first-of-type a, &:last-of-type a, &:first-of-type div:not(.contextual-help, .contextual-help div), &:last-of-type div:not(.contextual-help, .contextual-help div) {width: 16rem; padding: 0.001em 0 1rem 2.4rem}
+						&:first-of-type .prefix, &:last-of-type .prefix {width: calc(100% - 2.4rem)}
+						&:first-of-type .version:after {margin: 2.3rem 0 0 50%}
+						&:last-of-type .version:after {margin: 2.3rem 50% 0 -2.4rem}
+						&:first-of-type:last-of-type[aria-current="page"] {
+							width: calc(var(--maxWidth) - 10.5rem); margin: 0 0 0 -7.5rem;
+							a {
+								display: inline-block; float: right;
+								&:before {content: ""; display: block; border-top: 0.5em solid var(--tmlnln); width: calc(var(--maxWidth) - 34rem); height: 0; position: absolute; margin: 6rem 0; border-radius: 0; border: 0}
+								.prefix {width: 13.6rem}
+							}
+							&:before {content: ""; display: block; background: var(--tmlnPitActv); width: 1.65rem; height: 1.65rem; position: absolute; margin: 5.4rem 0; border-radius: 50%}
+							.version:after {background: var(--tmlnPitActv)}
+							&.point-in-time {
+								&:before {display: none}
+								a {
+									width: 24.25rem; padding: 0.001em 11.875rem 1rem 0.1rem; float: none; margin: 0 0 0 -5rem;
+									&:before {margin: 6rem 1.25rem; width: calc(var(--maxWidth) - 20rem)}
+									.version {
+										width: 12.8125rem;
+										&:after {display: none}
+										.prefix {width: 12.1875rem}
+									}
+									.date:before {margin: 0.935rem auto 1rem auto}
+									.point-in-time {
+										margin: -3.3em 3.77rem 0 calc(var(--maxWidth) - 22.68rem); line-height: 1.25em;
+										&:before {margin: -2.48rem 0 0 0}
+										&:after {display: none}
+									}
+								}
+							}
+						}
+						&.point-in-time .point-in-time, &.point-in-time .comma {display: none}
+						&.point-in-time[aria-current="page"] {
+							padding: 0 6.8rem 0 0;
+							a {cursor: pointer}
+							&:not(li:first-of-type, li:last-of-type):before {width: 14.7rem}
+							.point-in-time {
+								cursor: default; display: inline-block; position: absolute; color: var(--tmlnPitTxt); background: var(--tmlnPitActv); width: 8em; padding: 0.25em 0.5em; margin: -3.35em 0 0 4.35rem; border-radius: 0.1875rem; font-weight: 500; line-height: 1.25em;
+								&:before {content: ""; position: absolute; background: var(--tmlnPitActv); height: 1em; width: 1em; margin: -2.45em 0 0 0; left: calc(4rem - 0.4375rem); border-radius: 50%}
+								.heading {
+									display: block; font-weight: 300;
+									&:before {content: ""; position: absolute; border-left: 0.15em solid var(--tmlnPitActv); height: 2em; width: 0.15em; margin: -2.175em 0 0 0; left: 50%}
+								}
+							}
+						}
+						&.eu {background: var(--euTmlnBg)}
+						&.eu:not(li:last-of-type, li:first-of-type) {flex-grow: 1}
+						&.eu.original.current[aria-current="page"] {width: calc(var(--maxWidth) - 3rem); margin: 0 0 0 -15rem; padding: 0 0 0 7.5em}
+						&.eu.original + .eu.current {
+							margin: 0; padding: 0 0 0 calc(var(--maxWidth) - 34rem);
+							.prefix {width: 13.6rem}
+						}
+						&.eu.original.point-in-time + .eu.current {
+							margin: 0 0 0 0.15rem; padding: 0 0 0 calc(var(--maxWidth) - 41rem)
+						}
+						&.eu.original ~ .eu.current.point-in-time {
+							margin: 0; padding: 0 3.5rem 0 calc(var(--maxWidth) - 42.63rem);
+							.point-in-time {margin: -3.36em 2.1875rem 0 7.3em}
+							.prefix {width: 13.6rem}
+						}
+						&.eu:not(li.original) ~ .eu.current.point-in-time {
+							margin: 0; padding: 0 3.5rem 0 calc(var(--maxWidth) - 42.63rem);
+							.point-in-time {margin: -3.36em 2.1875rem 0 7.3em}
+							.prefix {width: 13.6rem}
+						}
+						&.uk .timeline-marker.contextual-help, 
+						&.eu .timeline-marker.contextual-help {top: 3.75rem; left: -12.625rem; padding: 0.625rem 0}
+						&.uk:last-of-type .timeline-marker.contextual-help {left: -15.9375rem}
+						&.eu:first-of-type .timeline-marker.contextual-help {top: 4.5rem; left: 0; right: -15.625rem; padding: 0.625rem 0; margin: 0 auto}
+						.timeline-marker.contextual-help {
+							&:before {content: ""; position: absolute; top: -4.5rem; border-left: 0.125rem solid var(--tmlnPitActv); height: 12.495rem}
+							button:not(.timeline-marker div button) {
+								top: 0.775rem; left: -0.9375rem; background: var(--lnk) url('help.png') no-repeat center center; background-size: 30%; position: absolute;
+								&:hover, &:focus {width: 2.375rem; height: 2.375rem; top: 0.565rem; left: -1.125rem; margin: 0}
+								+ div {margin: -4.25rem 0 0 -1.25rem}
+							}
+						}
+						&.eu:first-of-type .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {margin: -4.25rem 0 0 -11rem}
+						&:first-of-type .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {height: 11.5625rem}
+						&:last-of-type .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {margin: -4.1875rem 0 0 -10.9375rem; height: 11.5625rem; width: 12.1875rem}
+						&:last-of-type.eu.future {
+							&:after {width: 8.6rem; margin: -6.325rem 0 0 7.4rem}
+							a {padding: 0.001em 3.1rem 1rem 0}
+							.prefix {width: calc(100% - 3.1rem)}
+							.version:after {border-top: 0.5em dotted var(--tmlnln); margin: 2.3rem -3.1rem 0 50%}
+							.timeline-marker.contextual-help {
+								right: 3.125rem; left: unset; padding: 0; margin: 0;
+								button:not(.timeline-marker div button) + div {margin: -3.9375rem 0 0 -12.1875rem; width: 14.6875rem}
+							}
+						}
+					}
+					&::-webkit-scrollbar {margin: 0}
+				}
+				&.original-point-in-time, &.current-point-in-time {
+					li.point-in-time[aria-current="page"] {
+						padding: 0;
+						a {
+							.point-in-time {
+								margin: -3.35em 0.9375rem 0 5em;
+								&:before {z-index: 1}
+								&:after {content: ""; display: block; height: 0.5em; overflow: hidden; position: absolute}
+							}
+						}
+					}
+				}
+				&.original-point-in-time {
+					ul {
+						margin: 0 16rem 0 22.875rem; width: calc(100% - 38.875rem);
+						&:before {width: calc(var(--maxWidth) - 24rem)}
+						li.point-in-time[aria-current="page"] {
+							margin: 0 0 0 -22.72rem;
+							a {
+								width: 22.875rem; padding: 0.001em 6.875rem 1rem 2.1rem;
+								.version {
+									&:after {margin: 2.3rem -1.875rem 0 50%; background: var(--tmlnPitActv)}
+									.prefix {width: calc(100% - 8.975rem)}
+								}
+								.point-in-time {
+									&:after {background: transparent; margin: -4.725rem 0 0 3.65em; width: 4.6875rem}
+								}
+							}
+						}
+						li:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 40.875rem)}
+					}
+				}
+				&.current-point-in-time {
+					ul {
+						margin: 0 16rem; width: calc(100% - 29rem - 9.6875rem);
+						&:before {width: calc(var(--maxWidth) - 19rem)}
+						li.point-in-time[aria-current="page"] {
+							a {
+								width: 21.125rem; padding: 0.001em 8.4375rem 1rem 0.1rem;
+								.version {
+									&:after {margin: 2.3rem 50% 0 0}
+									.prefix {width: calc(100% - 8.5375rem)}
+								}
+								.point-in-time {
+									margin: -3.36em 2.1875rem 0 5.35em;
+									&:after {background: var(--tmlnPitActv); margin: -4.72rem 0 0 -4.6875rem; width: 7.8125rem}
+								}
+							}
+						}
+						li ~ .point-in-time:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 40.6875rem)}
+					}
+				}
+				&.prospective {
+					&.selected ul:before {background: none; border-top: 0.5em dashed var(--alrt); height: 0}
+					ul {
+						&:before {background: var(--tmlnPrspctvePitBg); border-top: 0.5em dashed var(--tmlnPitInactv); height: 0}
+						li {
+							&.prospective {
+								.version:after {height: 0; border-top: 0.5em dashed var(--alrt); height: 0; background: var(--tmlnPrspctvePitBg)}
+								.date:before {border: 0.2rem solid var(--alrt)}
+								&[aria-current="page"] .date:before {border-color: var(--alrt); color: var(--alrt)}
+							}
+							&[aria-current="page"] {
+								~ li.prospective:not(:last-of-type) .version:after {border-top: 0.5em dashed var(--tmlnPitInactv); background: var(--tmlnPrspctvePitBg)}
+								~ li:not(.prospective) .version:after {background: var(--tmlnPitInactv)}
+							}
+							&.prospective[aria-current="page"] {
+								.version:after {background: var(--tmlnPrspctvePitBg)}
+								~ li.prospective:not(:last-of-type) .version:after {border-top: 0.5em dashed var(--tmlnPitInactv); background: var(--tmlnPrspctvePitBg)}
+								~ li .version:after {background: var(--tmlnPitInactv)}
+							}
+							&.prospective:last-of-type {
+								.version:after {margin: 2.8rem 50% 0 -4.68rem; border: none}
+							}
+							&.original {
+								.version:after {border-top-color: var(--tmlnPitActv)}
+							}
+							&.original[aria-current="page"] {
+								.version:after {border-top-color: var(--tmlnPitInactv)}
+							}
+							&.original.current {
+								.version:after {border-top-color: transparent}
+							}
+							&.prospective.original[aria-current="page"] {
+								&:before {background: var(--alrt)}
+								.version:after {border-top-color: transparent; background: none}
+							}
+							&.prospective .version:after {margin: 2.3rem 50% 0 -50%}
+						}
+					}
+					.current .version:after {margin: 2.3rem 50% 0 0}
+				}
+			}
+			#open-versions.eu.point-in-time + .versions.current-point-in-time ul {width: calc(100% - 31rem - 9.6875rem) !important}
+			.selected ul:before {background: var(--tmlnPitActv)}
+		}
+		
+		.timeline.scrollable-timeline {
+			.versions {
+				height: 15.575em;
+				ul {
+					background: var(--scrllblTmlnBg); padding: 0 0 1rem 0;
+					li {
+						height: 15.5rem;
+						&.uk .timeline-marker:before {height: 15.5rem}
+					}
+				}
+				li:last-of-type:before, li:first-of-type:before {content: ""; height: 15.5rem; width: 0.5em}
+				li:last-of-type:before {margin: 0 0 0 -0.5em; float: left; position: absolute; z-index: 10; background: linear-gradient(90deg, var(--tmlnDrpshdwStrt) 0%, var(--tmlnDrpshdwEnd) 100%)}
+				li:first-of-type:before {margin: 0 -0.5em 0 0; float: right; background: linear-gradient(270deg, var(--tmlnDrpshdwStrt) 0%, var(--tmlnDrpshdwEnd) 100%)}
+				li.original {z-index: 20}
+				li.original.point-in-time:first-of-type:before {margin: 0 -0.35em 0 0}
+				ul {
+					li {
+						//.contextual-help button:not(.contextual-help div button) + div {height: 11.25rem}
+						&:first-of-type .contextual-help button:not(.contextual-help div button) + div, &:last-of-type .contextual-help button:not(.contextual-help div button) + div {
+							height: 14.375rem; width: 12.1875rem;
+						}
+						&:first-of-type, &:last-of-type:not(.eu) {
+							.timeline-marker.contextual-help:before {display: none}
+						}
+						.timeline-marker.contextual-help:not(li:first-of-type .timeline-marker.contextual-help, li:last-of-type .timeline-marker.contextual-help):before, &:last-of-type.eu .timeline-marker.contextual-help:before {height: 15.5rem}
+						&:last-of-type.eu .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {height: 14.375rem}
+					}
+				}
+				&.prospective {
+					ul {
+						&:before {width: calc(var(--maxWidth) - 27.8rem)}
+						li.prospective:not(li:last-of-type) .version:after {background: var(--scrlTmlnPrspctivBg)}
+						li.prospective:not(li:last-of-type).version:after {background: var(--nnopqshdw)}
+						li:last-of-type.prospective .version:after {margin: 2.3rem 50% 0 -2.4rem; border-top: 0.5em dashed var(--tmlnPitInactv); background: var(--tmlnPrspctvePitBg)}
+						li[aria-current="page"]:last-of-type.prospective .version:after {border-top: 0.5em dashed var(--alrt)}
+					}
+				}
+			}
+			#open-versions:before {height: 15.55em}
+			
+			.scrollbar {
+				margin: -5.15rem 0 0.75rem 16rem; height: 2.5rem; position: relative; text-align: center; display: table; width: calc(100% - 32rem); z-index: 10;
+				&:before {content: ''; position: absolute; width: calc(100% - 1.875rem); height: 0.25rem; background: var(--tmlnScrllBg); display: block; margin: 1.15rem 0.9375rem} 
+				button {
+					display: table-cell; width: 2.5rem; position: relative; margin: 0 0.1rem 0 0.9375rem; padding: 0; height: 2.5rem; background: var(--btnBg); border-radius: 0.15em;
+					&:disabled {background: var(--dsbldBtnBg)}
+				}
+				div + button {margin: 0 0.9375rem 0 0.1rem}
+				button:after {content: ""; display: inline-block; margin: 0 0 0.12em 0.25em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt); transform: rotate(225deg)}
+				div + button:after {transform: rotate(45deg); margin: 0 0.1em 0.12em 0}
+				> div {
+					display: table-cell; position: relative; width: 100%; height: 2.5rem; padding: 0 0 0.0625rem 0;
+					> div {
+						margin: 0 0 -0.0625rem 0; width: 5rem; height: 2.5rem; background: var(--btnBg); border-radius: 0.15em; position: absolute !important;
+						&:before {content: ""; display: inline-block; margin: 1em 0 0 -1.25em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt); transform: rotate(225deg); position: absolute}
+						&:after {content: ""; display: inline-block; margin: 1em 0 0 1em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt); transform: rotate(45deg); position: absolute}
+					}
+				}
+			}
+			.original-point-in-time .scrollbar {margin: -5.15rem 0 0.75rem 22.875rem; width: calc(100% - 38.875rem)}
+			.current-point-in-time .scrollbar {width: calc(100% - 29rem - 9.6875rem)}
+			#open-versions.eu.point-in-time + .current-point-in-time .scrollbar {width: calc(100% - 31rem - 9.6875rem)}
+		}
+
+		.legislation-main {
+			display: flex; flex-direction: row-reverse; width: 100%; padding: 0 1rem 1rem 1rem;
+			section {vertical-align: top}
+			.legislation-metadata {
+				width: 16rem; flex-grow: 0; flex-shrink: 0;
+				&:before {content: ""; display: block; padding: 12.5rem 0 0 1rem; background: var(--tmlnBg); margin: 0 0 1rem 0}
+				&.metadata-open-timeline:before {padding: 0};
+			}
+			.legislation-text {flex-grow: 1}
+		}
+	}
+
+	.full-legislation-text {
+		padding: 1rem 1rem 0.5rem 0;
+		> ol {margin: 0}
+		> ol > li {
+			margin: 0 0 0 0.75em; padding: 0.25em 0 0 5.5em;
+			&.prospective {
+				margin: 0 0 1.25em 0; padding: 1em 1em 1em 5.5em;
+				.prospective-message {
+					margin: -1.15em -1.15em 1em -5.65em; padding: 0.4em 0.85em
+				}
+			}
+		}
+		> ol > li li {padding: 0 0 0 1em}
+		> ol > li ul li {margin: 0.5em 0 0.5em 1.25em}
+		
+		&.extended-annotations {
+			.annotation-open {
+				.affecting-legislation {
+					.affecting-legislation-item {
+						.affecting-legislation-detail {
+							> ol > li,
+							> ol > li ol li {margin: 0.5em 0 0.5em 1.5em}
+							> ol > li ol li ol li {margin: 0.5em 0 0.5em 2.25em}
+						}
+					}
+				}
+			}
+		}
+		
+		.status-panel {
+			.status-detail {
+				.affecting-legislation {
+					.affecting-legislation-item {
+						.affecting-legislation-detail {
+							> ol > li, 
+							> ol > li ol li {margin: 0.5em 0 0.5em 2.25em}
+							> ol > li ol li ol li {margin: 0.5em 0 0.5em 3.25em}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+/* search results */
+	.search {
+		.pagination {
+			flex-grow: 1; order: -1; width: 100%; border-top: 0.0625rem solid var(--lghtBrdr); border-bottom: 0.0625rem solid var(--lghtBrdr); padding: 0.5em 0; margin: 0 0 0.85rem 0;
+			ul {
+				display: table; border-collapse: separate; border-spacing: 0.125rem; text-align: center; margin: 0 auto;
+				li {
+					display: table-cell; padding: 0 0.25rem; position: relative; width: 1em;
+					&.first, &.next, &.last {padding: 0}
+					&.previous {padding: 0 0 0 1.5em; font-weight: 500; text-transform: capitalize}
+					&.first, &.previous, &.next, &.last {
+						a {display: block; width: 0.9375rem; height: 0.9375rem}
+					}
+					&:not(.skip) span:not(span span):before {position: absolute; width: 1.25em; height: 1.5em; content: ''; top: 0; left: 0; background-position: center center; background-repeat: no-repeat; background-size: 40%}
+					&.skip span:first-of-type {.sr-only()}
+				}
+			}
+		}
+
+		h1 {
+			font-weight: 300; padding: 1rem;
+			span {font-weight: 800}
+		}
+
+		.search-header {
+			display: flex; flex-wrap: wrap; width: 100%; padding: 0 1rem 1rem 1rem;
+			div {
+				display: flex; align-items: center; white-space: nowrap; padding: 0.85em 0 0 0; border-top: 0.0625rem solid var(--lghtBrdr); 
+				&:first-of-type {flex-grow: 5; padding: 0.85em 0.75em 0 0}
+				label {display: inline-block; margin: 0 0.5em 0 0}
+				select {border: 0.0625rem solid var(--btnBg)}
+				button {padding: 0.565em 1em; border: 0.0625rem solid var(--btnBg); color: var(--lnk)}
+			}
+			.pagination {order: 1; margin: 0.85rem 0 0 0}
+		}
+		
+		.filters-menu {
+			display: none; overflow: auto; background: var(--mdlBg); color: var(--mdlTxt); position: fixed; top: 0; z-index: 10; width: 100%; left: -100%; height: 100vh; height: -webkit-fill-available; padding: 1rem;
+			a {color: var(--mdlTxt)}
+			.filters-hdr {
+				display: flex; flex-direction: row; flex-wrap: wrap; margin: 0 0 0.75em 0; border-bottom: 0.0625rem solid var(--mdlBrdr);
+				h2 {font-size: 1.25em; font-weight: 700; flex-grow: 4}
+				.close-filters {margin: -0.25em 0 0.25em -0; padding: 0.5em 0.6em 0.5em 2.05em; color: var(--mdlTxt)}
+			}
+		}
+		
+		.search-tools {display: none}
+
+		.search-main {
+			padding: 0 1rem;
+			.search-results {
+				padding: 0;
+				ul {
+					list-style: none; margin: 0;
+					li {
+						border-top: 0.0625rem solid var(--lghtBrdr); padding: 0.65em 0.25em; line-height: 1.3em;
+						&:first-of-type {padding: 0 0.25em 0.65em 0.25em; border: 0}
+						a {font-weight: 500}
+						span {
+							display: block; margin: 0.35em 0 0 0;
+							&:nth-of-type(2) {color: var(--lightTxt)}
+						}
+					}
+				}
+			}
+		}
+
+		.search-footer {
+			display: flex; flex-wrap: wrap; width: 100%; padding: 0.35rem 1rem 1rem 1rem;
+			div {
+				display: flex; align-items: center; white-space: nowrap;
+				&:first-of-type {flex-grow: 5; padding: 0 0.75em 0 0}
+				label {display: inline-block; margin: 0 0.5em 0 0}
+				input {width: 4em; text-align: center; margin: 0; padding: 0.575em; border-radius: 0.1875rem 0 0 0.1875rem; border: 0.0625rem solid var(--btnBg)}
+				button {padding: 0.575em 1.2em; background: var(--btnBg); color: white; border-radius: 0 0.1875rem 0.1875rem 0; border: 0.0625rem solid var(--btnBg)}
+			}
+		}
+	}
+
+	.search-header-wide {
+		div {
+			flex-grow: 0; padding: 0.85em 0 0.85em 1em; border-bottom: 0.0625rem solid var(--lghtBrdr);
+			&:first-of-type {flex-grow: 1; padding: 0.85em 0.75em 0.85em 0; max-width: 200px}
+		}
+		.pagination {flex-grow: 2; order: unset; width: unset; display: flex; align-items: center; margin: 0; padding: 0.85em 0 0.85em 0}
+	} 
+
+	.search-footer-wide {
+		div {
+			flex-grow: 0; padding: 0.85em 0 0 1em; border-top: 0.0625rem solid var(--lghtBrdr);
+			&:first-of-type {flex-grow: 1; padding: 0.85em 0.75em 0 0; max-width: 200px}
+		}
+		.pagination {flex-grow: 2; order: unset; width: unset; display: flex; align-items: center; margin: 0; border-bottom: 0; padding: 0.85em 0 0 0}
+	}
+
+
+	.search-wide {
+		.search-main {
+			display: flex; flex-direction: row; width: 100%; padding: 0 1rem 1rem 1rem;
+			section {vertical-align: top}
+			.search-metadata {width: 21rem; flex-grow: 0; flex-shrink: 0}
+		}
+		.search-results {flex-grow: 1}
+
+		.filters-menu {
+			display: block; background: unset; position: unset; top: unset; z-index: unset; left: unset; height: unset; transition: unset; color: unset; padding: 0 1rem 0 0;
+			a {color: unset}
+			.filters-hdr {
+				display: block; width: 100%; overflow: auto; margin: 0 0 0.725em 0; padding: 0;
+				.close-filters {display: none}
+			}
+		}
+	}
+
+
+/* New legislation - July 2024 */
+	.new-legislation {
+		h1 {margin: 0.35em 0 0.35em 0}
+		p {
+			margin: 0;
+			& + p {margin: 0.75em 0 0 0}
+			a {font-weight: 500}
+		}
+		
+		section + div {margin: 0 auto; background: rgba(249,249,249,1); border-bottom: 0.0625em solid rgba(226,226,226,1); z-index: 10; position: relative}
+
+		.new-legislation-hdr {
+			margin: 0 auto; padding: 0; display: flex; flex-wrap: wrap; padding: 1.1em 0 0 1em; overflow: visible; border-top: 1px solid rgba(226,226,226,1);
+			label {margin: auto 0.5em 1em 0; line-height: 2.5em}
+			select {margin: auto 1.25em 1em 0; padding: 0 0.5em; height: 2.5em; color: rgba(10,100,215,1); background: rgba(255,255,255,1); border: 0.0625em solid rgba(10,100,215,1); border-radius: 0.2em}
+			nav {
+				width: 100%;
+				h2 {position: absolute; width: 0.0625rem; height: 0.0625rem; padding: 0; margin: -0.0625rem; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0}
+				ul {
+					display: inline-flex; flex-flow: wrap; list-style: none; gap: 1.1em; width: calc(100% - 1em); padding: 1.2em 0; border-top: 1px solid rgba(226,226,226,1);
+					li {
+						padding: 0; font-size: 1.1em; font-weight: 400; flex-grow: 1; min-width: 30%;
+						&.active {padding: 0.65em 1.1em; font-weight: 500; background: rgba(30,30,30,1); border: 0.175em solid rgba(30,30,30,1); border-radius: 0.35em; text-align: center; color: rgba(255,255,255,1)}
+						a {display: block; padding: 0.75em; border: 0.0625em solid rgba(10,100,215,1); border-radius: 0.2em; text-align: center}
+					}
+				}
+			}
+		}
+		
+		.noscriptDates {
+			display: flex; flex-wrap: wrap; gap: 0.75em; margin: -1em 0 1em -0.5em; padding: 0 0 1em 0.5em !important; list-style: none; border-bottom: 1px solid rgba(226,226,226,1) !important; width: calc(100% - 0.5em);
+			li {position: relative; margin: 0; border-radius: 0.2em; padding: 0; font-weight: 400}
+			.active{padding: 0.75em 0.85em 0.5em 0.85em; background: rgba(255,255,255,1); border: 0.0625rem solid rgba(200,200,200,1); border-top: 0; font-weight: 500}
+			.active:before {position: absolute; margin: -0.75em 0 0 -0.85em; content: ""; height: 0.35em; width: 100%; background: rgba(30,30,30,1); border-radius: 0.2em 0.2em 0 0}
+			a {display: block; padding: 0.75em 0.85em 0.5em 0.85em; border-radius: 0.2em; border: 1px solid rgba(58,115,234,1)}
+		}		
+
+		.new-legislation-detail {
+			margin: 0.25em auto 1em auto; padding: 0 1em; font-weight: 400;
+			h2 {margin: 1.25em 0 0.5em 0; line-height: 1em; font-size: 1.1em; font-weight: 500}
+			ul {
+				margin: 0; list-style: none;
+				li {
+					margin: 0 0 0.8em 0;
+					a {
+						display: block; margin: 0.075em 0 0.1em 0; line-height: 1.4em;
+						span {font-weight: 500}
+					}
+				}
+			}
+		}
+
+		aside {
+			overflow: auto; background: rgba(246,246,246,1);
+			section {
+				margin: 0 auto; padding: 1rem; max-width: 100%; max-width: var(--maxWidth);
+				h2 {margin: 0 auto; padding: 0.5em 0 0.65em 0; font-weight: 700; font-size: 1.4em}
+				ul {
+					display: flex; flex-wrap: wrap; gap: 1.2em; margin: 0 auto; padding: 0 0 0.75em 0; list-style: none;
+					li {
+						margin: 0 auto; flex-basis: 0; flex-grow: 1; min-width: 14.625em; background: rgba(255,255,255,1); border-radius: 0.35em; -moz-box-shadow: 0 0 0.25em rgba(0,0,0,0.15); -webkit-box-shadow: 0 0 0.25em rgba(0,0,0,0.15); box-shadow: 0 0 0.25em rgba(0,0,0,0.15);
+						a {
+							box-sizing: border-box; display: block; padding: 0.85em; height: 100%; line-height: 1.45em; font-weight: 300; color: rgba(30,30,30,1); border: 0.125em solid transparent; border-radius: 0.35em;
+							&:hover {text-decoration: none; border: 0.125em solid rgba(58,115,234,1); background: rgba(236,242,253,1)}
+							&:focus {background: rgba(236,242,253,1); border: 0.125em solid rgba(58,115,234,1)}
+							h3 {margin: 0 0 0.25em 0; line-height: 1.3em; font-size: 1.1em}
+						}
+					}
+				}
+			}
+		}
+				
+		.new-legislation-feeds {
+			display: flex; flex-wrap: wrap; gap: 1em; margin: -0.75em 0 1em 0;
+			div {flex-grow: 1}
+			h2 {padding: 2em 0 0.5em 0.75em; font-size: 1.1em; font-weight: 500; background: rgba(249,249,249,1); border-bottom: 0.0625em solid rgba(226,226,226,1)}
+			ul {margin: 1em 1em 0 1em; list-style: none}
+			ul ul {margin: 0 0 0 1.5em}
+			li {margin: 0.75em 0 0 0}
+			a {padding: 0 0 0 1.5em; font-weight: 400; background: url('new-legislation-feed-icon.png') no-repeat 0 center; background-size: 1.1em}
+		}
+	}
+
+	.new-legislation-full {
+		.new-legislation-hdr {
+			border: 0;
+			nav {
+				width: unset;
+				ul {
+					gap: 0; width: unset; padding: 0; border: 0;
+					li {
+						padding: 1.2em 1.2em 0.7em 1.2em; flex-grow: 0; min-width: unset;
+						&.active {
+							position: relative; margin: 0 0 -1px 0; padding: 1.2em 1.6em 0.85em 1.6em; border-radius: 0.2em 0.2em 0 0; text-align: unset; background: rgba(255,255,255,1); border: 0.0625em solid rgba(226,226,226,1); border-top: 0; border-bottom: 0.0625em solid rgba(255,255,255,1); color: rgba(30,30,30,1);
+							&:before {position: absolute; margin: -1.2em 0 0 -1.6em; content: ""; height: 0.35em; width: 100%; background: rgba(30,30,30,1); border-radius: 0.2em 0.2em 0 0}
+						}
+						a {display: inline; padding: 0; border: 0; border-radius: unset; text-align: unset}
+					}
+				}
+			}
+		}
+	}
+
+/* breakpoints */
+	@media (max-width: @upToDesktopSmall) {
+		@supports (selector(:has(*))) {
+			.legislation {
+				.legislation-text {
+					.prefix {
+						margin: 0 0 0 -8em;
+						.wrapper {
+							display: inline-block; line-height: 1.2em;
+							&:before {conteCnt: ""; position: absolute; display: block; border: 0.175em solid var(--annotation); border-right: 0; border-radius: 0.175em 0 0 0.175em; height:1.85em; width: 0.25em; margin: -0.8em 0 0 -0.65em}
+							.annotation-start {
+								display: block; padding: 0; text-align: left;
+								a {
+									margin: -1.2em 0 0 0;
+								}
+								> span:not(.annotation-detail, .wrapper .annotation-detail) + button {
+									margin: -1.45em 0 0 0;
+									&:before {height: 2.25em}
+								}
+							}
+							.annotation-detail {margin: 0 0 0 -0.5625rem}
+						}
+					}
+					li:has( > .prefix > .wrapper .annotation-start):before, li:has( > h3 > .prefix > .wrapper .annotation-start):before {content: ""; display: block; height: 1em}
+					> ol > li {
+						margin: 0; padding: 0.25em 0 0 3.75em;
+						&.prospective {margin: 0 0 0.75em 0; padding: 1em 0.75em 0.5em 3.75em}
+					}
+
+					.scrolled.status-panel.pinned {width: calc(100% - 2rem)}
+				}
+			}
+		}
+	}
+
+	@media (min-height: @mobileLandscape) {
+		header {
+			.hdr-tna {
+				padding: 0;
+				a {display: table; padding: 1.5em 9em 7.75em 0; background: url("tna_square-logo.png") no-repeat 0 0.2em; background-size: 100%}
+				span {.sr-only()}
+			}
+		}
+	}
+
+	@media (min-width: @mobileLandscape) {
+		:root[colour-scheme="light"] {
+			a.hdr-home {background: url("legislation-logo.png") no-repeat 0; background-size: 20.5%}
+		}
+		:root[colour-scheme="dark"] {
+			a.hdr-home {background: url("legislation-logo-dm.png") no-repeat 0; background-size: 20.5%}
+		}
+		header {
+			.small-hdr;
+		}
+	}
+
+	@media (min-width: @mobileWide) {
+		.home {
+			.features li {min-width: unset}
+			ul.section li {.section-two-cols()}			
+		}
+	}
+
+	@media (min-width: @ipadPortrait) {
+		//html {--maxWidth: @ipadPortrait;}
+		:root[colour-scheme="light"] {
+			.hdr-tna a {background: url("tna-logo.png") no-repeat; background-size: 100%}
+			}
+		:root[colour-scheme="dark"] {
+			.hdr-tna a {background: url("tna-logo-dm.png") no-repeat; background-size: 100%}
+			}
+		header {
+			.full-hdr; 
+			.nav-row();
+			.search-label()
+		}
+		footer {
+			nav {background: url("tna_square-logo.png") no-repeat right 0; background-size: 7.5em}
+			.mode h2 {display: inline-block}
+		}
+		.home {
+			main section {padding: 1.75rem 1rem}
+			main > section:first-child {padding: 1.75rem 1rem 1.5rem 1rem}		
+		}
+		.legislation {
+			.breadcrumb {padding: 1.25rem 1rem 0 1rem}
+			section.legislation-header {
+				padding: 0.75rem 1rem 0 1rem;
+				.full-legislation-header()
+			}
+			section.pit-search, section.timeline {padding: 0 1rem}
+			.timeline {
+				button:not(.close-menu, .contextual-help button, .scrollbar button) {
+					&.point-in-time:not(.open-timeline) {
+						.point-in-time {margin: 1.55rem 0 0 calc(50vW - 1em - 3.4375rem)}
+					}
+				}
+			}
+		}
+		.search {
+			.search-footer {
+				.search-footer-wide;
+			}
+			.search-header {
+				.search-header-wide;
+			}
+		}
+	}
+
+	@media (min-width: @desktopSmall) {
+		html {--maxWidth: @desktopSmall;}
+		.home {
+			.features li:last-child {.feature-wide()}
+			div.section .intro ul li {.section-two-cols()}
+			ul.section li {.section-three-cols()}		
+		}
+
+		.contextual-help {
+			.contextual-help-wide()
+		}
+		.legislation {
+			.full-timeline();
+			section.legislation-text {
+				.full-legislation-text()
+			}
+			.scrollbar {min-width: calc(100% - 640px)}
+		}
+		.search {
+			.open-filters {display: none}
+			.search-wide()
+		}
+		.new-legislation {
+			.new-legislation-full()
+		}
+
+		:root[colour-scheme="light"] {
+			.legislation .versions li {
+				&.break a:before {background-image: url('timeline-break-active.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break a:before {background-image: url('timeline-break-inactive.png'); background-size: 100%}
+			}
+			.legislation .scrollable-timeline .versions li:not(li:last-of-type) {
+				&.break a:before {background-image: url('scrollable-timeline-break-active.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break:not(li:last-of-type) a:before {background-image: url('scrollable-timeline-break-inactive.png'); background-size: 100%}
+			}
+			.legislation .versions li.eu {
+				&.break a:before {background-image: url('timeline-break-active-eu.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break a:before {background-image: url('timeline-break-inactive-eu.png'); background-size: 100%}
+			}
+			.legislation .scrollable-timeline .versions li.eu:not(li:last-of-type) {
+				&.break a:before {background-image: url('scrollable-timeline-break-active-eu.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break:not(lilast-of-type) a:before {background-image: url('scrollable-timeline-break-inactive-eu.png'); background-size: 100%}
+			}
+		}
+		:root[colour-scheme="dark"] {
+			.legislation .versions li {
+				&.break a:before {background-image: url('timeline-break-active-dm.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break a:before {background-image: url('timeline-break-inactive-dm.png'); background-size: 100%}
+			}
+			.legislation .scrollable-timeline .versions li:not(li:last-of-type) {
+				&.break a:before {background-image: url('scrollable-timeline-break-active-dm.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break:not(li:last-of-type) a:before {background-image: url('scrollable-timeline-break-inactive-dm.png'); background-size: 100%}
+			}
+			.legislation .versions li.eu {
+				&.break a:before {background-image: url('timeline-break-active-eu-dm.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break a:before {background-image: url('timeline-break-inactive-eu-dm.png'); background-size: 100%}
+			}
+			.legislation .scrollable-timeline .versions li.eu:not(li:last-of-type) {
+				&.break a:before {background-image: url('scrollable-timeline-break-active-eu-dm.png'); background-size: 100%}
+				&[aria-current="page"] ~ .break:not(li:last-of-type) a:before {background-image: url('scrollable-timeline-break-inactive-eu-dm.png'); background-size: 100%}
+			}
+		}
+	}
+
+	@media (min-width: @desktopLarge) {
+		html {--maxWidth: @desktopLarge;}
+		.legislation {
+			.scrollbar {min-width: unset}
+		}
+	}

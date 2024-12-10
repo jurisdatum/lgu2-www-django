@@ -11,6 +11,7 @@ from ..util.labels import get_type_label
 from ..util.types import get_category
 from .document import _make_timeline_data
 from .redirect import make_data_redirect, redirect_current, redirect_version
+from . import theme
 
 
 # ToDo fix to use response headers
@@ -84,8 +85,16 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
             'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
         }
     }
-    template = loader.get_template('document/document.html')
-    return HttpResponse(template.render(context, request))
+    if theme.use_new_theme(request):
+        template = loader.get_template('new/default.html')
+        response = HttpResponse(template.render({}, request))
+        theme.set_new_theme(response)
+        return response
+    else:
+        template = loader.get_template('document/document.html')
+        response = HttpResponse(template.render(context, request))
+        theme.remove_new_theme(response)
+        return response
 
 
 def _xml_or_redirect(package, section: str, lang: Optional[str], format: str):
