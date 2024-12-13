@@ -4,6 +4,7 @@ from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 
 from ..api import fragment as api
 from ..messages.status import get_status_message
@@ -87,7 +88,8 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     }
     if theme.use_new_theme(request):
         template = loader.get_template('new/default.html')
-        response = HttpResponse(template.render({}, request))
+        context = convert_context_for_new_theme(context)
+        response = HttpResponse(template.render(context, request))
         theme.set_new_theme(response)
         return response
     else:
@@ -95,6 +97,25 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
         response = HttpResponse(template.render(context, request))
         theme.remove_new_theme(response)
         return response
+
+
+def convert_context_for_new_theme(context):
+    doc_year: int = context['meta']['year']
+    doc_num: int = context['meta']['number']
+    chapter_label: str = 'Chapter ' + str(doc_num)
+    return {
+        'breadcrumbs': {
+            'heading': 'The Statute Book',
+            'levels': [
+                ('UK Public General Acts', reverse('browse', args=['ukpga'])),
+                (str(doc_year), reverse('browse-year', args=['ukpga', doc_year])),
+                (chapter_label + ' (Table of contents)', reverse('toc', args=['ukpga', doc_year, doc_num])),
+                ('Part 1', '#'),  # ToDo
+                ('Suplimentary', '#'),  # ToDo
+                ('Section 25F', '#')  # ToDo
+            ]
+        }
+    }
 
 
 def _xml_or_redirect(package, section: str, lang: Optional[str], format: str):

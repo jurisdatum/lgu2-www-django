@@ -1,0 +1,8 @@
+<nav aria-label="Breadcrumb" class="breadcrumb">
+    <h2 class="sr-only">{{ breadcrumbs.heading }}</h2>
+    <ol>
+        {% for label, link in breadcrumbs.levels %}
+        <li><a href="{{ link }}"{% if forloop.last %} aria-current="page"{% endif %}>{{ label }}</a></li>
+        {% endfor %}
+    </ol>
+</nav>
