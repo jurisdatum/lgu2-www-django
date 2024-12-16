@@ -1,0 +1,45 @@
+<header>
+    <div class="section" aria-label="Header">
+        <ul class="skip-links">
+            <li><a href="#main-content-h" class="sr-only">Skip to content</a></li>
+            <li class="legislation-skip" style=""><a href="#legislation-text" class="sr-only">Skip to legislation text</a></li>
+            <li class="legislation-skip" style=""><a href="#timeline" class="sr-only">Skip to legislation information</a></li>
+            <li class="search-skip" style="display: none"><a href="#search-filters" class="sr-only">Skip to search filters</a></li>
+            <li class="search-skip" style="display: none"><a href="#search-results" class="sr-only">Skip to search results</a></li>
+        </ul>
+        <div class="top-menu">
+            <button class="open-menu" id="open-menu" aria-label="Open menu" aria-haspopup="dialog">Menu</button>
+            <a href="default.php" aria-current="page" class="hdr-home"><span>legislation</span>.gov.uk</a>
+            <button class="show-hide-search" id="show-hide-search" aria-label="Show search" aria-expanded="false">Search</button>
+            <div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
+        </div>
+        <div class="hdr-menu" id="hdr-menu">
+            <div class="hdr-links">
+                <nav aria-label="Main">
+                    <div class="nav-hdr">
+                        <h2>Main menu</h2>
+                        <button class="close-menu" id="close-menu" aria-label="Close menu" aria-haspopup="true">Close</button>
+                    </div>
+                    <ul>
+                        <li><a href="default.php">Home</a></li>
+                        <li><a href="/">Explore our collections</a></li>
+                        <li><a href="/">Research tools</a></li>
+                        <li><a href="/">Help and guidance</a></li>
+                        <li><a href="default.php">What's new</a></li>
+                        <li><a href="/">About us</a></li>
+                    </ul>
+                </nav>
+                <div class="hdr-lang"><a href="/cy" aria-label="Gosod iaith i'r Cymraeg" lang="cy"><span class="sr-only">Change language to </span>Cymraeg</a><span><span class="sr-only">Language set to </span>English </span></div>
+                <div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
+            </div>
+        </div>
+    </div>
+    <div id="hdr-search" class="hdr-search" aria-label="">
+        <section aria-label="Search">
+            <h2 class="sr-only">Search legislation</h2>
+            <form role="search" method="post" action="versions.php">
+                <label for="search" class="sr-only">Search legislation</label><span><input type="search" id="search" name="search" placeholder="e.g. equality, equality 15, equality 2010, 15 2010" aria-label="Search legislation"><button class="go">Go</button></span>
+            </form>
+        </section>
+    </div>
+</header>
