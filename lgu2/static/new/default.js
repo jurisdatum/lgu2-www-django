@@ -1,4 +1,4 @@
-// legislation.gov.uk v2 js
+// legislation.gov.uk v1 js
 
 // detect reducedMotion preference
 	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -56,6 +56,7 @@
 				$('.section').children().not('#hdr-menu').css('display','none')
 				$('#hdr-search').css('display','none')
 				$('#hdr-search').css('height','')
+				$('.breadcrumb').css('display','none')
 				$('#close-menu').focus()
 			},timeoutInterval)
 		})
@@ -70,6 +71,7 @@
 			else {
 				$('section').children().not('#hdr-menu').not('#versions').css('display','')	  
 			}
+			$('.breadcrumb').css('display','')
 			$('.section').children().not('#hdr-menu').css('display','')
 			$('#hdr-search').css('display','')
 			$('#open-menu').focus()
@@ -106,45 +108,6 @@
 				$('#show-hide-search').attr('aria-label','Hide search')
 				$('#search').focus()
 			}
-		})
-
-	// search filters on mobile
-		$('#open-filters').on('click', function() {
-			if (reducedMotion && !reducedMotion.matches) {
-				timeoutInterval = 360
-			}
-			$('#filters-menu').css('display','block')
-			setTimeout(function() { 
-				$('#filters-menu').css('left','0')
-			},10)
-			$('#filters-menu').attr('role','dialog')
-			$('#filters-menu').attr('aria-label','Filter your results')
-			setTimeout(function() { 
-				$('section').children().not('#filters-menu, #search-metadata').css('display','none')
-				$('.section').children().not('#filters-menu, #search-metadata').css('display','none')
-				$('h1').css('display','none')
-				$('#hdr-menu').css('display','none')
-				$('#hdr-search').css('display','none')
-				$('#hdr-search').css('height','')
-				$('#close-filters').focus()
-			},timeoutInterval)
-		})
-
-		$('#close-filters').on('click', function() {
-			if (reducedMotion && !reducedMotion.matches) {
-				timeoutInterval = 360
-			}
-			$('h1').css('display','')
-			$('section').children().not('#filters-menu, #search-metadata').css('display','')
-			$('.section').children().not('#filters-menu, #search-metadata').css('display','')
-			$('#hdr-search').css('display','')
-			$('#open-filters').focus()
-			$('#filters-menu').removeAttr('role')
-			$('#filters-menu').removeAttr('aria-labelledby')
-			$('#filters-menu').css('left','')
-			setTimeout(function() { 
-				$('#filters-menu').css('display','')
-			},timeoutInterval)
 		})
 
 	// if there is a timeline
@@ -192,6 +155,7 @@
 				}
 				$('section').children().not('#versions').not('#versions').css('display','')		  
 				$('.section').children().not('#versions').css('display','')
+				$('.breadcrumb').css('display','')
 				$('#hdr-search').css('display','')
 				$('#open-versions').focus()
 				$('#versions').css('left','')
@@ -212,24 +176,24 @@
 		// timeline scrollbar controls
 			var down = false
 
-			$('#timeline ul').scroll(function() {
+			$('#timeline ol').scroll(function() {
 				var scrollbarwidth = $('.scrollbar').width()
-				var liwidth = $('#timeline ul').children('li:not(.original, .break):first').width()
-				var noOfBreaks = ($('#timeline ul').children('li:not(.original, .current).break').length)
-				var addForBreak = $('#timeline ul').children('li:not(.original, .current).break').width() - liwidth
-				var noOfPiTs = ($('#timeline ul').children('li:not(.original, .current).point-in-time').length)
-				var addForPiT = $('#timeline ul').children('li:not(.original, .current).point-in-time').outerWidth() - liwidth
-				var ulwidth = ($('#timeline ul').children('li').length - 2) * liwidth - scrollbarwidth + (addForBreak * noOfBreaks) + (addForPiT * noOfPiTs)
-				var scrollx = $('#timeline ul').scrollLeft()
+				var liwidth = $('#timeline ol').children('li:not(.original, .break):first').width()
+				var noOfBreaks = ($('#timeline ol').children('li:not(.original, .current).break').length)
+				var addForBreak = $('#timeline ol').children('li:not(.original, .current).break').width() - liwidth
+				var noOfPiTs = ($('#timeline ol').children('li:not(.original, .current).point-in-time').length)
+				var addForPiT = $('#timeline ol').children('li:not(.original, .current).point-in-time').outerWidth() - liwidth
+				var olwidth = ($('#timeline ol').children('li').length - 2) * liwidth - scrollbarwidth + (addForBreak * noOfBreaks) + (addForPiT * noOfPiTs)
+				var scrollx = $('#timeline ol').scrollLeft()
 				var dragwidth = $('.drag').width()
 				var dragstripwidth = $('.drag-strip').width()
-				var thefactor = ((dragstripwidth - dragwidth) / ulwidth)
+				var thefactor = ((dragstripwidth - dragwidth) / olwidth)
 
 				if(!down) {
 					$('.drag').css('left',scrollx * thefactor)
 				}
 
-				if(scrollx >= ulwidth) {
+				if(scrollx >= olwidth) {
 					$('.right').attr('disabled','disabled')
 				}
 				else {
@@ -245,25 +209,25 @@
 			})
 
 			$('.right').on('click', function() {
-				var scrolltx = $('#timeline ul').scrollLeft()
-				var liwidth = $('#timeline ul').children('li:not(.original, .break):first').width()
+				var scrolltx = $('#timeline ol').scrollLeft()
+				var liwidth = $('#timeline ol').children('li:not(.original, .break):first').width()
 				var scrollbarwidth = $('.scrollbar').width()
 
 				if (reducedMotion && !reducedMotion.matches) {
 					animateInterval = 400
 				}
-				$('#timeline ul').animate({scrollLeft: scrolltx + scrollbarwidth - liwidth}, animateInterval)
+				$('#timeline ol').animate({scrollLeft: scrolltx + scrollbarwidth - liwidth}, animateInterval)
 			})
 
 			$('.left').on('click', function() {
-				var scrolltx = $('#timeline ul').scrollLeft()
-				var liwidth = $('#timeline ul').children('li:not(.original, .break):first').width()
+				var scrolltx = $('#timeline ol').scrollLeft()
+				var liwidth = $('#timeline ol').children('li:not(.original, .break):first').width()
 				var scrollbarwidth = $('.scrollbar').width()
 
 				if (reducedMotion && !reducedMotion.matches) {
 					animateInterval = 400
 				}
-				$('#timeline ul').animate({scrollLeft: scrolltx - scrollbarwidth + liwidth}, animateInterval)
+				$('#timeline ol').animate({scrollLeft: scrolltx - scrollbarwidth + liwidth}, animateInterval)
 			})
 
 			$(function() {
@@ -273,31 +237,31 @@
 			$('.drag').on('drag', function() {
 				down = true
 				var scrollbarwidth = $('.scrollbar').width()
-				var liwidth = $('#timeline ul').children('li:not(.original, .break):first').width()
-				var noOfBreaks = ($('#timeline ul').children('li:not(.original, .current).break').length)
-				var addForBreak = $('#timeline ul').children('li:not(.original, .current).break').width() - liwidth
-				var noOfPiTs = ($('#timeline ul').children('li:not(.original, .current).point-in-time').length)
-				var addForPiT = $('#timeline ul').children('li:not(.original, .current).point-in-time').outerWidth() - liwidth
-				var ulwidth = ($('#timeline ul').children('li').length - 2) * liwidth - scrollbarwidth + (addForBreak * noOfBreaks) + (addForPiT * noOfPiTs)
+				var liwidth = $('#timeline ol').children('li:not(.original, .break):first').width()
+				var noOfBreaks = ($('#timeline ol').children('li:not(.original, .current).break').length)
+				var addForBreak = $('#timeline ol').children('li:not(.original, .current).break').width() - liwidth
+				var noOfPiTs = ($('#timeline ol').children('li:not(.original, .current).point-in-time').length)
+				var addForPiT = $('#timeline ol').children('li:not(.original, .current).point-in-time').outerWidth() - liwidth
+				var olwidth = ($('#timeline ol').children('li').length - 2) * liwidth - scrollbarwidth + (addForBreak * noOfBreaks) + (addForPiT * noOfPiTs)
 
 				var dragwidth = $('.drag').width()
 				var dragleft = $('.drag').css('left')
 				dragleft = parseInt(dragleft.replace(/^\.|[^-?\d\.]|\.(?=.*\.)|^0+(?=\d)/g, ''))
 				var dragstripwidth = $('.drag-strip').width()
-				var thefactor = ((dragstripwidth - dragwidth) / ulwidth)
+				var thefactor = ((dragstripwidth - dragwidth) / olwidth)
 
-				$('#timeline ul').scrollLeft(dragleft / thefactor)
+				$('#timeline ol').scrollLeft(dragleft / thefactor)
 			})
 			$('.drag').on('dragstop', function() {
 				down = false
 			})
 
-		// timeline contextual help
-			$('.contextual-help button').on('click', function() {
+		// timeline contextual info
+			$('.contextual-info button').on('click', function() {
 				if (reducedMotion && !reducedMotion.matches) {
 					timeoutInterval = 250
 				}
-				var elementId = this.closest('.contextual-help').id
+				var elementId = this.closest('.contextual-info').id
 				if($('#' + elementId + ' div').attr('hidden')) {
 					var maxHeight = 0
 					$('#' + elementId + ' button').attr('aria-expanded',true)
@@ -327,11 +291,12 @@
 						$('#' + elementId + ' button').attr('aria-expanded',false)
 						$('#' + elementId + ' div').attr('hidden',true)
 						$('#' + elementId).removeClass('accordion-open')
+						$('#' + elementId + ' button').focus()
 					},timeoutInterval)
 				}
 			})
 
-		// open timeline if point-in-time or historical verion is selected 
+		// open timeline if point-in-time or historical version is selected 
 			if($(window).width() > 1023 && (!$('.current').is('[aria-current]') || $('.current').is('.point-in-time') || $('.current').is('.prospective')))
 			{
 				setTimeout(function() { 
@@ -367,7 +332,7 @@
 						index = String.fromCharCode(64 + parseInt(index)).toLowerCase()
 					}
 					else if($(this).parent().attr('type') == 'i') {
-						index = romanize(index).toLowerCase()
+						index = romanise(index).toLowerCase()
 					}
 
 					if($(this).parent().parent().prop('tagName').toLowerCase() == 'section') {
@@ -399,13 +364,13 @@
 				})
 
 				$('.status-panel .hdrCtrl').on('click', function() {
-				//operate all at once
+				//operate all panels at once
 					/* var theStatusPanelType = $(this).closest('.status-panel').attr('paneltype')
 					$('.status-panel[paneltype="' + theStatusPanelType + '"]').each(function() {
 						var theStatusPanelId = $(this).attr('id')
 						showHideStatusPanel(theStatusPanelId)
 					}); */
-				//operate individually
+				//operate each panel individually
 					var theStatusPanelId = $(this).closest('.status-panel').attr('id')
 					showHideStatusPanel(theStatusPanelId)
 				})
@@ -462,8 +427,6 @@
 			$('#other-formats button').on('click', function() {
 				metadataPanel("#other-formats")
 			})
-
-
 		}
 
 	// escape key functions
@@ -659,6 +622,7 @@
 				$('.section').children().not('#versions').css('display','none')
 				$('#hdr-search').css('display','none')
 				$('#hdr-search').css('height','')
+				$('.breadcrumb').css('display','none')
 				$('#close-versions').focus()
 			},timeoutInterval)
 		}
@@ -667,6 +631,7 @@
 			$('#timeline').css('height','')
 			$('#legislation-metadata').removeClass('metadata-open-timeline')
 			$('#open-versions').removeClass('open-timeline')
+			$('#open-versions').attr('aria-expanded',false)
 			$('#timeline').removeClass('scrollable-timeline')
 			$('#timeline').removeClass('scrollable-timeline')
 		}
@@ -675,14 +640,15 @@
 			$('#timeline').css('height','auto')
 			$('#legislation-metadata').addClass('metadata-open-timeline')
 			$('#open-versions').addClass('open-timeline')
+			$('#open-versions').attr('aria-expanded',true)
 
-			var ulwidth = $('#timeline ul').children('li').length
-			var liOriginal = $('#timeline ul').children('li.original').width()
-			var liCurrent = $('#timeline ul').children('li.current').width()
+			var olwidth = $('#timeline ol').children('li').length
+			var liOriginal = $('#timeline ol').children('li.original').width()
+			var liCurrent = $('#timeline ol').children('li.current').width()
 			var addForExtremeties = liOriginal + liCurrent
-			var timelineScrollWidth = $('#timeline ul').get(0).scrollWidth
+			var timelineScrollWidth = $('#timeline ol').get(0).scrollWidth
 			var timelineWidth = $('#timeline').width()
-			if((timelineScrollWidth + addForExtremeties) > timelineWidth && ulwidth > 1)
+			if((timelineScrollWidth + addForExtremeties) > timelineWidth && olwidth > 1)
 			{
 				$('#timeline').addClass('scrollable-timeline')
 			}
@@ -690,7 +656,7 @@
 			{
 				$('#timeline').removeClass('scrollable-timeline')
 			}
-			if(ulwidth < 3 && $('#timeline li:last-child').attr('aria-current')) {
+			if(olwidth < 3 && $('#timeline li:last-child').attr('aria-current')) {
 				$('.versions').addClass('selected')
 			}
 			else
@@ -702,7 +668,6 @@
 		$('.versions li').each(function() {
 			var attr = $(this).attr('aria-current')
 			if (typeof attr !== 'undefined' && attr !== false){
-
 				loadVersion($(this).children('a'),'noanim','initialise')
 			}
 		})
@@ -747,21 +712,21 @@
 			$('.versions').removeClass('selected')
 		}
 
-		var liwidth = $('#timeline ul').children('li:not(.original, .break):first').width()
-		var noOfBreaks = ($('#timeline ul').children('li:not(.original, .current).break').length)
-		var addForBreak = $('#timeline ul').children('li:not(.original, .current).break').width() - liwidth
-		var noOfPiTs = ($('#timeline ul').children('li:not(.original, .current).point-in-time').length)
-		var addForPiT = $('#timeline ul').children('li:not(.original, .current).point-in-time').outerWidth() - liwidth
+		var liwidth = $('#timeline ol').children('li:not(.original, .break):first').width()
+		var noOfBreaks = ($('#timeline ol').children('li:not(.original, .current).break').length)
+		var addForBreak = $('#timeline ol').children('li:not(.original, .current).break').width() - liwidth
+		var noOfPiTs = ($('#timeline ol').children('li:not(.original, .current).point-in-time').length)
+		var addForPiT = $('#timeline ol').children('li:not(.original, .current).point-in-time').outerWidth() - liwidth
 		var index = $(version).index()
 		var scrollbarwidth = $('.scrollbar').width()
 
 		if (reducedMotion && !reducedMotion.matches && anim != 'noanim') {
 			animateInterval = 400
 		}
-		$('#timeline ul').animate({scrollLeft: ((index * liwidth) + (addForBreak * noOfBreaks) + (addForPiT * noOfPiTs) + (liwidth / 2) - (scrollbarwidth * 0.7))}, animateInterval)
+		$('#timeline ol').animate({scrollLeft: ((index * liwidth) + (addForBreak * noOfBreaks) + (addForPiT * noOfPiTs) + (liwidth / 2) - (scrollbarwidth * 0.7))}, animateInterval)
 	}
 
-	function romanize(num) {
+	function romanise(num) {
 		if (isNaN(num))
 			return NaN
 		var digits = String(+num).split(''),

@@ -132,7 +132,7 @@
 				button:not(form button) {background: url('down.png') right center no-repeat; background-size: 0.75em}
 				.toggle-open {background: url('up.png') right center no-repeat; background-size: 0.75em}
 			}
-			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+			button:not(.close-menu, .contextual-info button, .scrollbar button) {
 				.date:before {background: var(--tmlnPitActv) url("timeline-icon-active.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
 				&.eu {
 					.date:before {background: var(--tmlnPitActv) url(timeline-eu-icon-active.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
@@ -224,31 +224,6 @@
 			.legislation-footnotes {
 				h2.up-to-date {background: var(--altBg) url('up-to-date.png') no-repeat 0.85em center; background-size: 1.4em}
 				h2.in-force {background: var(--altBg) url('in-force.png') no-repeat 0.7em center; background-size: 1.7em}
-			}
-		}
-		
-		.search {
-			.close-filters {background: url('close.png') no-repeat 0.5em center; background-size: 20%}
-
-			.pagination {
-				ul {
-					.first {
-						span:before {background-image: url('first.png')}
-						a span:before {background-image: url('first-link.png')}
-					} 
-					.previous {
-						span:before {background-image: url('previous.png')}
-						a span:before {background-image: url('previous-link.png')}
-					} 
-					.next {
-						span:before {background-image: url('next.png')}
-						a span:before {background-image: url('next-link.png')}
-					} 
-					.last {
-						span:before {background-image: url('last.png')}
-						a span:before {background-image: url('last-link.png') }
-					}
-				}
 			}
 		}
 	}
@@ -376,7 +351,7 @@
 				.toggle-open {background: url('up-dm.png') right center no-repeat; background-size: 0.75em}
 				input[type="date"]::-webkit-calendar-picker-indicator {filter: invert(1)}
 			}
-			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+			button:not(.close-menu, .contextual-info button, .scrollbar button) {
 				.date:before {background: var(--tmlnPitActv) url("timeline-icon.png") no-repeat 0.9rem 0.65rem; background-size: 40%}
 				&.eu {
 					.date:before {background: var(--tmlnPitActv) url(timeline-eu-icon.png) no-repeat 0.4rem 0.37rem; background-size: 74%}
@@ -473,34 +448,11 @@
 				h2.in-force {background: var(--altBg) url('in-force-dm.png') no-repeat 0.7em center; background-size: 1.7em}
 			}
 		}
-		
-		.search {
-			.pagination {
-				ul {
-					.first {
-						span:before {background-image: url('first-dm.png')}
-						a span:before {background-image: url('first-link-dm.png')}
-					} 
-					.previous {
-						span:before {background-image: url('previous-dm.png')}
-						a span:before {background-image: url('previous-link-dm.png')}
-					} 
-					.next {
-						span:before {background-image: url('next-dm.png')}
-						a span:before {background-image: url('next-link-dm.png')}
-					} 
-					.last {
-						span:before {background-image: url('last-dm.png')}
-						a span:before {background-image: url('last-link-dm.png') }
-					}
-				}
-			}
-		}
 	}
 
 /* accessible animation */
 	@media (prefers-reduced-motion: no-preference) {
-		.hdr-menu, .hdr-search, .filters-menu, .versions, .contextual-help div, .pit-search form, .legislation-metadata h3 button:after, .legislation-metadata h3 + div, .status-detail, .status-panel button:after {transition: 0.35s}
+		.hdr-menu, .hdr-search, .filters-menu, .versions, .contextual-info div, .pit-search form, .legislation-metadata h3 button:after, .legislation-metadata h3 + div, .status-detail, .status-panel button:after {transition: 0.35s}
 	}
 
 
@@ -536,10 +488,6 @@
 	.legislation-skip {
 		&:not(.legislation .legislation-skip) {display: none}
 	}
-	.search .search-skip {display: unset}
-	.search-skip {
-		&:not(.search .search-skip) {display: none}
-	}
 
 	.content-box {border-radius: 0.25rem; -moz-box-shadow: 0 0 0.1875rem var(--bxShdw); -webkit-box-shadow: 0 0 0.1875rem var(--bxShdw); box-shadow: 0 0 0.1875rem var(--bxShdw); color: unset; background: var(--bg)}
 
@@ -557,7 +505,7 @@
 
 /* navigation */
 	nav {
-		ul {margin: 0; list-style: none; display: inline-flex; flex-flow: column wrap}
+		ol, ul {margin: 0; list-style: none; display: inline-flex; flex-flow: column wrap}
 		li {padding: 0 0 0.5em 0}
 		[aria-current="page"] {font-weight: 600}
 	}
@@ -705,13 +653,13 @@
 		}
 	}
 
-/* contextual help */
-		.contextual-help {
+/* contextual info */
+		.contextual-info {
 			z-index: 30;
 			button {
 				border-radius: 0.1875rem; padding: 0.85em 1.65em 0.85em 1.25em; background: var(--lnk); color: var(--btnTxt); width: 100%;
 				&:after {content: ""; display: inline-block; margin: 0 -0.35em 0.2em 0.85em; width: 0.35em; height: 0.35em; border-top: 0.0625rem solid var(--btnTxt); border-right: 0.0625rem solid var(--btnTxt); transform: rotate(135deg)}
-				+ div:not(.contextual-help div div) {
+				+ div:not(.contextual-info div div) {
 					max-height: 0; padding: 1em 1em 0.25em 1em; overflow: hidden; border: 0.0625rem solid var(--lnk); border-top: 0; border-radius: 0 0 0.1875rem 0.1875rem;
 					button {display: none}
 					h3 {font-size: 1em}
@@ -724,15 +672,15 @@
 			}
 		}
 
-		.contextual-help-wide {
-			button:not(.contextual-help div button) {
+		.contextual-info-wide {
+			button:not(.contextual-info div button) {
 				width: 2rem; height: 2rem; overflow: hidden; padding: 0; border-radius: 50%; background: var(--lnk) url('help.png') no-repeat center center; background-size: 30%;
 				&:after {display: none}
 				span {.sr-only()}
 				+ div {
 					position: absolute; display: flex; flex-direction: column; z-index: 1; background: var(--bg); color: var(--txt); margin: -6.55rem 0 0 -9rem; width: 12.7rem; height: 11.25rem; padding: 0; border: 0;
 					button {
-						padding: unset;
+						padding: unset; border-radius: 0.1875rem 0.1875rem 0 0;
 						&:after{display: none}
 						span {padding: 0.5em 0.6em 0.5em 2.05em; background: url('close.png') no-repeat 0.5em center; background-size: 20%; float: right}
 					}
@@ -746,116 +694,6 @@
 			}
 		}
 
-/* homepage */
-	.home {
-		main {
-			section {
-				padding: 1.5rem 1rem;
-				+ div {background: var(--altBg)}
-				p {margin: 0.5em 0 0 0}
-			}
-			> section:first-child {padding: 1.5rem 1rem 1rem 1rem}
-
-			.regions {
-				margin: 1em 0 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5625rem, 1fr)); grid-auto-rows: auto; grid-gap: 1.5em;
-				li {
-					padding: 0; margin: 0; min-height: 6em;
-					a {
-						display: table; height: 100%; border-left: 0.25rem solid; padding: 0.7em 0.85em; line-height: 1.25em; .content-box();
-						&:hover, &:focus, &:active {-moz-box-shadow: 0 0 0.1875rem var(--fcsShdw); -webkit-box-shadow: 0 0 0.1875rem var(--fcsShdw); box-shadow: 0 0 0.1875rem var(--fcsShdw); background: var(--btnBg); color: var(--btnTxt); text-decoration: none; border-color: transparent}
-						h3 {
-							display: table-row;
-							&:after {content: ""; display: block; margin: 0.25em}
-						}
-						p {display: table-cell; vertical-align: bottom; height: 100%}
-					}
-					&:nth-child(1) a {border-color: var(--uk)}
-					&:nth-child(2) a {border-color: var(--scotland)}
-					&:nth-child(3) a {border-color: var(--wales)}
-					&:nth-child(4) a {border-color: var(--ni)}
-					&:nth-child(5) a {border-color: var(--eu)}
-					&:nth-child(6) a {border-color: var(--midDrkBrdr)}
-					&:nth-child(6) h3 {font-weight: 300; font-style: italic; font-size: 1.2em}
-				}
-			}
-
-			.features {
-				display: flex; flex-wrap: wrap; column-gap: 1.5em; row-gap: 1.5em; margin: 1em 0 0 0;
-				li {
-					display: flex; flex-grow: 1; flex-basis: 25%; width: 25%; min-width: 18rem; .content-box();
-					.contents {display: flex; flex-direction: column; height: 100%}
-					.banner {display: flex; height: 100%}
-					.banner img {display: flex; object-fit: cover; width: 100%; height: 100%; min-height: 6em; border-radius: 0.25rem 0.25rem 0 0}
-					.copy {padding: 1em 1.25em; display: flex; flex-direction: column}
-					p:last-of-type {margin: 0.5em 0} 
-					a {
-						padding: 0.35em 0 0 0; font-weight: 600; width: fit-content;
-						&:after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
-					}
-					.image {
-						display: none; width: 50%;
-						img {width: 100%; height: 100%; object-fit: cover; border-radius: 0 0.25rem 0.25rem 0; display: flex}
-					}
-					&:first-child .image {
-						order: -1;
-						img {border-radius: 0.25rem 0 0 0.25rem}
-					}
-				}
-			}
-
-			div.section {
-				padding: 0; display: flex; flex-wrap: wrap; .content-box();
-				ul {list-style: none; margin: 0.25em 0 0 0}
-				li {line-height: 1.3em; padding: 0.65em 0 0 0}
-				.intro {
-					display: flex; flex-grow: 2; flex-basis: 57%; padding: 1em 1.25em; flex-direction: column;
-					p:last-of-type {margin: 0.5em 0; display: table-row-group; height: 100%}
-					a:not(li a, p a) {
-						padding: 0.35em 0 0 0; width: fit-content; font-weight: 600;
-						&:not(li a, p a):after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
-					}
-					li:last-child a {
-						font-weight: 600;
-						&:after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
-					}
-				}
-				.list {
-					padding: 1em 1.25em; background: var(--bxBg); color: var(--bxTxt); border-radius: 0 0.25rem 0.25rem 0; flex-grow: 1; flex-direction: column;
-					h3 {font-size: 1.2em}
-					a {color: var(--bxLnk); font-weight: 300}
-				}
-			}
-
-			p {
-				+ div.section {margin: 1em 0 0 0}
-			}
-
-			ul.section {
-				list-style: none; padding: 0; margin: 0.25em 0 0 0;
-				li {
-					line-height: 1.3em; padding: 0.65em 0 0 0;
-					&:last-child a {
-						font-weight: 600;
-						&:after {content: ""; display: inline-block; margin: 0.1em 0.25em; width: 0.25em; height: 0.25em; border-top: 0.0625rem solid var(--lnk); border-right: 0.0625rem solid var(--lnk); transform: rotate(45deg)}
-					}
-				}
-			}
-		}		
-	}
-
-/* homepage at wider breakpoints */
-	.feature-wide {
-		 flex-grow: 3;
-		.contents {width: 50%}
-		.banner {display: none} 
-		.copy {height: 100%}
-		p:last-of-type {display: table-row-group; height: 100%} 
-		.image {display: flex}
-	}
-	.section-two-cols, .section-three-cols {float: left; margin: 0 1em 0 0}
-	.section-two-cols {width: calc(50% - 1em)}
-	.section-three-cols {width: calc(33.3% - 1em)}
-	
 
 /* legislation */
 	.legislation {
@@ -880,8 +718,8 @@
 		section.legislation-header {
 			padding: 0.75rem 0 0 0;
 			h1 {
-				font-weight: 300; margin: 0 1rem 1rem 1rem;
-				span {font-weight: 800; display: block; margin: 0 0 0.5rem 0}
+				font-weight: 800; margin: 0 1rem 1rem 1rem;
+				span {font-weight: 300; display: block; margin: 0.5rem 0 0 0}
 			}
 			nav {
 				text-align: center; display: flex;
@@ -915,7 +753,7 @@
 		.timeline {
 			padding: 0;
 			&:before {position: relative; content: ""; height: 0.4em; overflow: hidden; display: block; margin: 0 0 -0.4em 0; z-index: 40; background: none; background: linear-gradient(0deg, var(--drpshdwStrt) 0%, var(--drpshdwEnd) 100%)}
-			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+			button:not(.close-menu, .contextual-info button, .scrollbar button) {
 				background: var(--tmlnBg); padding: 0.5em 0; border-radius: 0; width: 100%; font-weight: 300; color: unset;
 				.cta {background: var(--btnBg); color: var(--btnTxt); display: table; margin: 0.75em auto; font-weight: 500; border-radius: 0.1875rem; padding: 0.75em 3em}
 				.version {
@@ -945,16 +783,17 @@
 					.date {display: none !important}
 					.point-in-time:before {background: var(--tmlnPitActv); height: 1em; width: 1em; content: ""; display: block; border: 0.2rem solid transparent; box-sizing: border-box; border-radius: 50%; overflow: hidden; position: absolute; margin: -2.55rem 0 0 2.6rem}
 					.point-in-time {
-						font-weight: 500; display: block; margin: 1.55rem 0 0 calc(50vW - 3.75em); position: absolute; background: var(--tmlnPitActv); color: var(--tmlnPitTxt); padding: 0.25em 0.625em; border-radius: 0.1875rem; line-height: 1.25em; width: 7.5em;
+						font-weight: 500; display: block; margin: 1.55rem 0 0 calc(50vW - 5.35em); position: absolute; background: var(--tmlnPitActv); color: var(--tmlnPitTxt); padding: 0.25em 0.625em; border-radius: 0.1875rem; line-height: 1.25em; width: 7.5em;
 						.heading {font-weight: 300; display: block; padding: 0}
 						.heading:before {content: ""; position: absolute; border-left: 0.15em solid var(--tmlnPitActv); height: 2em; width: 0.15em; margin: -2em 0 0 -0.075em; left: 50%}
 					}
 					.cta {margin: 5.75em auto 0.75em auto}
 				}
+				&.point-in-time .comma {display: none}
 			}
 			
 			&.prospective {
-				button:not(.close-menu, .contextual-help button, .scrollbar button) {
+				button:not(.close-menu, .contextual-info button, .scrollbar button) {
 					&.prospective .version:before {border-top: 0.5em dashed var(--alrt)}
 					&.prospective .version:after {border-top-color: transparent}
 					&.prospective .date:before {border-color: var(--alrt); color: var(--alrt)}	
@@ -976,19 +815,19 @@
 					.close-menu {margin: -0.25em 0 0.25em -0; padding: 0.5em 0.6em 0.5em 2.05em; color: var(--mdlTxt); background: url('close.png') no-repeat 0.5em center; background-size: 20%}
 				}
 				nav {height: calc(100vh - 5rem); overflow-y: auto; overflow-x: hidden}
-				ul {
+				ol {
 					position: relative; width: 100%; border-left: 0.2rem solid var(--cntrstSbtlBrdr); margin: 0.25rem 0 0 0.625rem;
 					li {
 						&:last-child {margin: 0 0 -3rem 0}
-						a, &.unavailable div:not(.contextual-help, .contextual-help div) {
+						a, &.unavailable div:not(.contextual-info, .contextual-info div) {
 							display: block; padding: 0 0 1rem 1.5rem;
 							&:before {display: block; position: absolute; width: 1.125rem; height: 1.125rem; content: ""; background: var(--mdlBtnBg); left: -0.8rem; margin: 0; border-radius: 50%; border: 0.2rem solid var(--mdlBtnBrdr)}
 						}
 						.title {display: table-cell}
 						.date span {white-space: nowrap}
 						.prefix + .title:first-letter {text-transform: lowercase}
-						div:not(.contextual-help, .contextual-help div):before {background: var(--tmlnPitInactv); border: 0.2rem solid transparent}
-						&[aria-current="page"] a, &.unavailable[aria-current="page"] div:not(.contextual-help, .contextual-help div) {
+						div:not(.contextual-info, .contextual-info div):before {background: var(--tmlnPitInactv); border: 0.2rem solid transparent}
+						&[aria-current="page"] a, &.unavailable[aria-current="page"] div:not(.contextual-info, .contextual-info div) {
 							&:before {background: var(--btnBg)}
 							.version {
 								.title {
@@ -1001,7 +840,7 @@
 							&:before {content: ""; display: block; height: 2.375rem; width: 2rem; background-image: url('timeline-break.png'); background-repeat: no-repeat; background-size: 1rem; margin: -0.3125rem 0 0.625rem -0.625rem}
 							.explanation {margin: -0.625rem 0 0.625rem 1.4375rem; font-style: italic; font-weight: 300}
 						}
-						.contextual-help {margin: 0 1.25rem 1.25rem 1.25rem}
+						.contextual-info {margin: 0 1.25rem 1.25rem 1.25rem}
 					}
 				}
 				&.prospective li.prospective a:before {background: var(--mdlBg); border: 0.2rem dashed var(--alrt)}
@@ -1472,7 +1311,7 @@
 					margin: 0 -0.5em 0 0; display: inline-block; width: 0.5em;
 					&:after {margin: 5.925rem 0 0 0.875rem; transform: rotate(45deg)}
 					.version, .date, .point-in-time {display: none}
-					+ .contextual-help {display: none}
+					+ .contextual-info {display: none}
 				}
 				&.point-in-time {
 					.point-in-time {
@@ -1482,10 +1321,14 @@
 					.version:before {margin: 5.625rem 50% -5.3rem 0}
 					.cta {margin: 0 auto}
 				}
+				&.original.current.point-in-time {
+					.point-in-time {
+						margin: 1.48rem 0 0 2.55rem;
+					}
+				}
 				&.current.future .version:after {margin: 2.3rem 0 0 50%}
-
 			}
-			button:not(.close-menu, .contextual-help button, .scrollbar button) {
+			button:not(.close-menu, .contextual-info button, .scrollbar button) {
 				.version, .date {
 					margin: 0.75em 0 0 0; padding: 0 0.1rem 0 0; position: relative; width: 13.5rem;
 					span {line-height: 1.5em}
@@ -1496,20 +1339,20 @@
 			#open-versions:before {margin: 0 -2rem 0 0; position: relative; content: ""; display: block; background: var(--btnBg); float: left; width: 2.5rem; height: 12.5rem; border: 0; transform: unset}
 			#open-versions:hover:before, #open-versions:focus:before {background: var(--fcsBtnBg); -webkit-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); -moz-box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); box-shadow: 0 0 0.375rem 0 var(--btnBxShdw); border-color: var(--fcsOutln); outline-style: solid; outline-color: var(--fcsOutln)}
 
-			#open-versions + .contextual-help {
-				margin: 5.275rem 0 0 -4.25rem;
-				button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -8.57rem; width: 12.1875rem}
+			#open-versions + .contextual-info {
+				margin: 5.275rem 0 0 -4.24rem;
+				button:not(.contextual-info div button) + div {margin: -6.55rem 0 0 -8.57rem; width: 12.1875rem}
 			}
 			#open-versions:after {margin: 5.925rem 0 0 1.125rem; content: ""; display: block; width: 0.5em; height: 0.5em; border-top: 0.1em solid var(--btnTxt); border-right: 0.1em solid var(--btnTxt); transform: rotate(225deg)}
 			.versions {
 				display: none; margin: unset; transform: unset; vertical-align: top; position: unset; top: unset; z-index: unset; left: unset; height: unset; padding: 0; margin: 0; color: unset; background: var(--tmlnBg);
 				.nav-hdr {
 					border: unset; margin: unset;
-					h2 {.sr-only()}
+					h2 {display: none}
 					.close-menu {display: none}
 				}
 				nav {height: unset; overflow: unset}
-				ul {
+				ol {
 					flex-flow: row; border: unset; position: unset; overflow-x: auto; overflow-y: hidden; margin: 0 16rem; width: calc(100% - 32rem); min-height: 12.1rem;
 					&:before {content: ""; display: block; background: var(--tmlnln); width: calc(var(--maxWidth) - 20rem); height: 0.5em; position: absolute; margin: 6.05rem 0 0 -6rem}
 					li {
@@ -1518,7 +1361,7 @@
 						&:not(li:first-of-type, li:last-of-type, li.prospective, .prospective li.current):after {z-index: -1}
 						&:not(li:first-of-type, li:last-of-type):before {margin: 6.05rem 0 0 0%}
 						&:not(li:first-of-type, li:last-of-type):after {margin: calc(-5.55rem - 0.35em) 0 0 50%}
-						a, &.unavailable div:not(.contextual-help, .contextual-help div) {
+						a, &.unavailable div:not(.contextual-info, .contextual-info div) {
 							width: 12.5rem; margin: 0 auto; padding: 0 0 0.575rem 0; text-align: center; text-decoration: none; color: unset;
 							&:before {display: none}
 						}
@@ -1570,24 +1413,24 @@
 							}
 						}
 
-						.contextual-help {position: absolute; top: 4.5rem; right: 0; left: 0; margin: 0.775rem auto; width: 0; height: 0; padding: 0 0 0 5.625rem}
+						.contextual-info {position: absolute; top: 4.5rem; right: 0; left: 0; margin: 0.775rem auto; width: 0; height: 0; padding: 0 0 0 5.625rem}
 						&:first-of-type {
-							.contextual-help {
+							.contextual-info {
 								padding: 0 0 0 8.125rem;
-								button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -8.57rem}			
+								button:not(.contextual-info div button) + div {margin: -6.55rem 0 0 -8.57rem}			
 							}
-							&.unavailable .contextual-help {
+							&.unavailable .contextual-info {
 								padding: 0 0 0 6.875rem;
-								button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -8.25rem}			
+								button:not(.contextual-info div button) + div {margin: -6.55rem 0 0 -8.25rem}			
 							}
 						}
-						&:last-of-type .contextual-help {
+						&:last-of-type .contextual-info {
 							padding: 0 0 0 7.5rem;
-							button:not(.contextual-help div button) + div {margin: -6.55rem 0 0 -11.0625rem; width: 14.6875rem}
+							button:not(.contextual-info div button) + div {margin: -6.55rem 0 0 -11.0625rem; width: 14.6875rem}
 						}
-						&.break:not(li:last-of-type) .contextual-help {
+						&.break:not(li:last-of-type) .contextual-info {
 							padding: 0 0 0 7.5rem;
-							button:not(.contextual-help div button) + div {margin: -6.5625rem 0 0 -11.125rem; width: 15rem}
+							button:not(.contextual-info div button) + div {margin: -6.5625rem 0 0 -11.125rem; width: 15rem}
 						}
 						&[aria-current="page"] ~ li .version:not(li:last-of-type .version):after {border-top-color: transparent}
 						&[aria-current="page"] ~ li:last-of-type .version:after, &:first-of-type[aria-current="page"] .version:after {border-top-color: transparent}
@@ -1595,7 +1438,7 @@
 						&[aria-current="page"]:after, &[aria-current="page"] ~ li:not(:last-of-type):before, &[aria-current="page"] ~ li:not(:last-of-type):after {display: none}
 						&:last-of-type {flex-grow: 0; position: absolute; margin: 0 0 0 calc(var(--maxWidth) - 34rem)}
 						&:first-of-type {position: absolute; margin: 0 0 0 -16rem; z-index: 1}
-						&:first-of-type a, &:last-of-type a, &:first-of-type div:not(.contextual-help, .contextual-help div), &:last-of-type div:not(.contextual-help, .contextual-help div) {width: 16rem; padding: 0.001em 0 1rem 2.4rem}
+						&:first-of-type a, &:last-of-type a, &:first-of-type div:not(.contextual-info, .contextual-info div), &:last-of-type div:not(.contextual-info, .contextual-info div) {width: 16rem; padding: 0.001em 0 1rem 2.4rem}
 						&:first-of-type .prefix, &:last-of-type .prefix {width: calc(100% - 2.4rem)}
 						&:first-of-type .version:after {margin: 2.3rem 0 0 50%}
 						&:last-of-type .version:after {margin: 2.3rem 50% 0 -2.4rem}
@@ -1661,11 +1504,11 @@
 							.point-in-time {margin: -3.36em 2.1875rem 0 7.3em}
 							.prefix {width: 13.6rem}
 						}
-						&.uk .timeline-marker.contextual-help, 
-						&.eu .timeline-marker.contextual-help {top: 3.75rem; left: -12.625rem; padding: 0.625rem 0}
-						&.uk:last-of-type .timeline-marker.contextual-help {left: -15.9375rem}
-						&.eu:first-of-type .timeline-marker.contextual-help {top: 4.5rem; left: 0; right: -15.625rem; padding: 0.625rem 0; margin: 0 auto}
-						.timeline-marker.contextual-help {
+						&.uk .timeline-marker.contextual-info, 
+						&.eu .timeline-marker.contextual-info {top: 3.75rem; left: -12.625rem; padding: 0.625rem 0}
+						&.uk:last-of-type .timeline-marker.contextual-info {left: -15.9375rem}
+						&.eu:first-of-type .timeline-marker.contextual-info {top: 4.5rem; left: 0; right: -15.625rem; padding: 0.625rem 0; margin: 0 auto}
+						.timeline-marker.contextual-info {
 							&:before {content: ""; position: absolute; top: -4.5rem; border-left: 0.125rem solid var(--tmlnPitActv); height: 12.495rem}
 							button:not(.timeline-marker div button) {
 								top: 0.775rem; left: -0.9375rem; background: var(--lnk) url('help.png') no-repeat center center; background-size: 30%; position: absolute;
@@ -1673,15 +1516,15 @@
 								+ div {margin: -4.25rem 0 0 -1.25rem}
 							}
 						}
-						&.eu:first-of-type .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {margin: -4.25rem 0 0 -11rem}
-						&:first-of-type .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {height: 11.5625rem}
-						&:last-of-type .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {margin: -4.1875rem 0 0 -10.9375rem; height: 11.5625rem; width: 12.1875rem}
+						&.eu:first-of-type .timeline-marker.contextual-info button:not(.timeline-marker div button) + div {margin: -4.25rem 0 0 -11rem}
+						&:first-of-type .timeline-marker.contextual-info button:not(.timeline-marker div button) + div {height: 11.5625rem}
+						&:last-of-type .timeline-marker.contextual-info button:not(.timeline-marker div button) + div {margin: -4.1875rem 0 0 -10.9375rem; height: 11.5625rem; width: 12.1875rem}
 						&:last-of-type.eu.future {
 							&:after {width: 8.6rem; margin: -6.325rem 0 0 7.4rem}
 							a {padding: 0.001em 3.1rem 1rem 0}
 							.prefix {width: calc(100% - 3.1rem)}
 							.version:after {border-top: 0.5em dotted var(--tmlnln); margin: 2.3rem -3.1rem 0 50%}
-							.timeline-marker.contextual-help {
+							.timeline-marker.contextual-info {
 								right: 3.125rem; left: unset; padding: 0; margin: 0;
 								button:not(.timeline-marker div button) + div {margin: -3.9375rem 0 0 -12.1875rem; width: 14.6875rem}
 							}
@@ -1702,7 +1545,7 @@
 					}
 				}
 				&.original-point-in-time {
-					ul {
+					ol {
 						margin: 0 16rem 0 22.875rem; width: calc(100% - 38.875rem);
 						&:before {width: calc(var(--maxWidth) - 24rem)}
 						li.point-in-time[aria-current="page"] {
@@ -1722,7 +1565,7 @@
 					}
 				}
 				&.current-point-in-time {
-					ul {
+					ol {
 						margin: 0 16rem; width: calc(100% - 29rem - 9.6875rem);
 						&:before {width: calc(var(--maxWidth) - 19rem)}
 						li.point-in-time[aria-current="page"] {
@@ -1742,8 +1585,8 @@
 					}
 				}
 				&.prospective {
-					&.selected ul:before {background: none; border-top: 0.5em dashed var(--alrt); height: 0}
-					ul {
+					&.selected ol:before {background: none; border-top: 0.5em dashed var(--alrt); height: 0}
+					ol {
 						&:before {background: var(--tmlnPrspctvePitBg); border-top: 0.5em dashed var(--tmlnPitInactv); height: 0}
 						li {
 							&.prospective {
@@ -1782,14 +1625,14 @@
 					.current .version:after {margin: 2.3rem 50% 0 0}
 				}
 			}
-			#open-versions.eu.point-in-time + .versions.current-point-in-time ul {width: calc(100% - 31rem - 9.6875rem) !important}
-			.selected ul:before {background: var(--tmlnPitActv)}
+			#open-versions.eu.point-in-time + .versions.current-point-in-time ol {width: calc(100% - 31rem - 9.6875rem) !important}
+			.selected ol:before {background: var(--tmlnPitActv)}
 		}
 		
 		.timeline.scrollable-timeline {
 			.versions {
 				height: 15.575em;
-				ul {
+				ol {
 					background: var(--scrllblTmlnBg); padding: 0 0 1rem 0;
 					li {
 						height: 15.5rem;
@@ -1801,21 +1644,21 @@
 				li:first-of-type:before {margin: 0 -0.5em 0 0; float: right; background: linear-gradient(270deg, var(--tmlnDrpshdwStrt) 0%, var(--tmlnDrpshdwEnd) 100%)}
 				li.original {z-index: 20}
 				li.original.point-in-time:first-of-type:before {margin: 0 -0.35em 0 0}
-				ul {
+				ol {
 					li {
-						//.contextual-help button:not(.contextual-help div button) + div {height: 11.25rem}
-						&:first-of-type .contextual-help button:not(.contextual-help div button) + div, &:last-of-type .contextual-help button:not(.contextual-help div button) + div {
+						//.contextual-info button:not(.contextual-info div button) + div {height: 11.25rem}
+						&:first-of-type .contextual-info button:not(.contextual-info div button) + div, &:last-of-type .contextual-info button:not(.contextual-info div button) + div {
 							height: 14.375rem; width: 12.1875rem;
 						}
 						&:first-of-type, &:last-of-type:not(.eu) {
-							.timeline-marker.contextual-help:before {display: none}
+							.timeline-marker.contextual-info:before {display: none}
 						}
-						.timeline-marker.contextual-help:not(li:first-of-type .timeline-marker.contextual-help, li:last-of-type .timeline-marker.contextual-help):before, &:last-of-type.eu .timeline-marker.contextual-help:before {height: 15.5rem}
-						&:last-of-type.eu .timeline-marker.contextual-help button:not(.timeline-marker div button) + div {height: 14.375rem}
+						.timeline-marker.contextual-info:not(li:first-of-type .timeline-marker.contextual-info, li:last-of-type .timeline-marker.contextual-info):before, &:last-of-type.eu .timeline-marker.contextual-info:before {height: 15.5rem}
+						&:last-of-type.eu .timeline-marker.contextual-info button:not(.timeline-marker div button) + div {height: 14.375rem}
 					}
 				}
 				&.prospective {
-					ul {
+					ol {
 						&:before {width: calc(var(--maxWidth) - 27.8rem)}
 						li.prospective:not(li:last-of-type) .version:after {background: var(--scrlTmlnPrspctivBg)}
 						li.prospective:not(li:last-of-type).version:after {background: var(--nnopqshdw)}
@@ -1907,224 +1750,6 @@
 	}
 
 
-/* search results */
-	.search {
-		.pagination {
-			flex-grow: 1; order: -1; width: 100%; border-top: 0.0625rem solid var(--lghtBrdr); border-bottom: 0.0625rem solid var(--lghtBrdr); padding: 0.5em 0; margin: 0 0 0.85rem 0;
-			ul {
-				display: table; border-collapse: separate; border-spacing: 0.125rem; text-align: center; margin: 0 auto;
-				li {
-					display: table-cell; padding: 0 0.25rem; position: relative; width: 1em;
-					&.first, &.next, &.last {padding: 0}
-					&.previous {padding: 0 0 0 1.5em; font-weight: 500; text-transform: capitalize}
-					&.first, &.previous, &.next, &.last {
-						a {display: block; width: 0.9375rem; height: 0.9375rem}
-					}
-					&:not(.skip) span:not(span span):before {position: absolute; width: 1.25em; height: 1.5em; content: ''; top: 0; left: 0; background-position: center center; background-repeat: no-repeat; background-size: 40%}
-					&.skip span:first-of-type {.sr-only()}
-				}
-			}
-		}
-
-		h1 {
-			font-weight: 300; padding: 1rem;
-			span {font-weight: 800}
-		}
-
-		.search-header {
-			display: flex; flex-wrap: wrap; width: 100%; padding: 0 1rem 1rem 1rem;
-			div {
-				display: flex; align-items: center; white-space: nowrap; padding: 0.85em 0 0 0; border-top: 0.0625rem solid var(--lghtBrdr); 
-				&:first-of-type {flex-grow: 5; padding: 0.85em 0.75em 0 0}
-				label {display: inline-block; margin: 0 0.5em 0 0}
-				select {border: 0.0625rem solid var(--btnBg)}
-				button {padding: 0.565em 1em; border: 0.0625rem solid var(--btnBg); color: var(--lnk)}
-			}
-			.pagination {order: 1; margin: 0.85rem 0 0 0}
-		}
-		
-		.filters-menu {
-			display: none; overflow: auto; background: var(--mdlBg); color: var(--mdlTxt); position: fixed; top: 0; z-index: 10; width: 100%; left: -100%; height: 100vh; height: -webkit-fill-available; padding: 1rem;
-			a {color: var(--mdlTxt)}
-			.filters-hdr {
-				display: flex; flex-direction: row; flex-wrap: wrap; margin: 0 0 0.75em 0; border-bottom: 0.0625rem solid var(--mdlBrdr);
-				h2 {font-size: 1.25em; font-weight: 700; flex-grow: 4}
-				.close-filters {margin: -0.25em 0 0.25em -0; padding: 0.5em 0.6em 0.5em 2.05em; color: var(--mdlTxt)}
-			}
-		}
-		
-		.search-tools {display: none}
-
-		.search-main {
-			padding: 0 1rem;
-			.search-results {
-				padding: 0;
-				ul {
-					list-style: none; margin: 0;
-					li {
-						border-top: 0.0625rem solid var(--lghtBrdr); padding: 0.65em 0.25em; line-height: 1.3em;
-						&:first-of-type {padding: 0 0.25em 0.65em 0.25em; border: 0}
-						a {font-weight: 500}
-						span {
-							display: block; margin: 0.35em 0 0 0;
-							&:nth-of-type(2) {color: var(--lightTxt)}
-						}
-					}
-				}
-			}
-		}
-
-		.search-footer {
-			display: flex; flex-wrap: wrap; width: 100%; padding: 0.35rem 1rem 1rem 1rem;
-			div {
-				display: flex; align-items: center; white-space: nowrap;
-				&:first-of-type {flex-grow: 5; padding: 0 0.75em 0 0}
-				label {display: inline-block; margin: 0 0.5em 0 0}
-				input {width: 4em; text-align: center; margin: 0; padding: 0.575em; border-radius: 0.1875rem 0 0 0.1875rem; border: 0.0625rem solid var(--btnBg)}
-				button {padding: 0.575em 1.2em; background: var(--btnBg); color: white; border-radius: 0 0.1875rem 0.1875rem 0; border: 0.0625rem solid var(--btnBg)}
-			}
-		}
-	}
-
-	.search-header-wide {
-		div {
-			flex-grow: 0; padding: 0.85em 0 0.85em 1em; border-bottom: 0.0625rem solid var(--lghtBrdr);
-			&:first-of-type {flex-grow: 1; padding: 0.85em 0.75em 0.85em 0; max-width: 200px}
-		}
-		.pagination {flex-grow: 2; order: unset; width: unset; display: flex; align-items: center; margin: 0; padding: 0.85em 0 0.85em 0}
-	} 
-
-	.search-footer-wide {
-		div {
-			flex-grow: 0; padding: 0.85em 0 0 1em; border-top: 0.0625rem solid var(--lghtBrdr);
-			&:first-of-type {flex-grow: 1; padding: 0.85em 0.75em 0 0; max-width: 200px}
-		}
-		.pagination {flex-grow: 2; order: unset; width: unset; display: flex; align-items: center; margin: 0; border-bottom: 0; padding: 0.85em 0 0 0}
-	}
-
-
-	.search-wide {
-		.search-main {
-			display: flex; flex-direction: row; width: 100%; padding: 0 1rem 1rem 1rem;
-			section {vertical-align: top}
-			.search-metadata {width: 21rem; flex-grow: 0; flex-shrink: 0}
-		}
-		.search-results {flex-grow: 1}
-
-		.filters-menu {
-			display: block; background: unset; position: unset; top: unset; z-index: unset; left: unset; height: unset; transition: unset; color: unset; padding: 0 1rem 0 0;
-			a {color: unset}
-			.filters-hdr {
-				display: block; width: 100%; overflow: auto; margin: 0 0 0.725em 0; padding: 0;
-				.close-filters {display: none}
-			}
-		}
-	}
-
-
-/* New legislation - July 2024 */
-	.new-legislation {
-		h1 {margin: 0.35em 0 0.35em 0}
-		p {
-			margin: 0;
-			& + p {margin: 0.75em 0 0 0}
-			a {font-weight: 500}
-		}
-		
-		section + div {margin: 0 auto; background: rgba(249,249,249,1); border-bottom: 0.0625em solid rgba(226,226,226,1); z-index: 10; position: relative}
-
-		.new-legislation-hdr {
-			margin: 0 auto; padding: 0; display: flex; flex-wrap: wrap; padding: 1.1em 0 0 1em; overflow: visible; border-top: 1px solid rgba(226,226,226,1);
-			label {margin: auto 0.5em 1em 0; line-height: 2.5em}
-			select {margin: auto 1.25em 1em 0; padding: 0 0.5em; height: 2.5em; color: rgba(10,100,215,1); background: rgba(255,255,255,1); border: 0.0625em solid rgba(10,100,215,1); border-radius: 0.2em}
-			nav {
-				width: 100%;
-				h2 {position: absolute; width: 0.0625rem; height: 0.0625rem; padding: 0; margin: -0.0625rem; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0}
-				ul {
-					display: inline-flex; flex-flow: wrap; list-style: none; gap: 1.1em; width: calc(100% - 1em); padding: 1.2em 0; border-top: 1px solid rgba(226,226,226,1);
-					li {
-						padding: 0; font-size: 1.1em; font-weight: 400; flex-grow: 1; min-width: 30%;
-						&.active {padding: 0.65em 1.1em; font-weight: 500; background: rgba(30,30,30,1); border: 0.175em solid rgba(30,30,30,1); border-radius: 0.35em; text-align: center; color: rgba(255,255,255,1)}
-						a {display: block; padding: 0.75em; border: 0.0625em solid rgba(10,100,215,1); border-radius: 0.2em; text-align: center}
-					}
-				}
-			}
-		}
-		
-		.noscriptDates {
-			display: flex; flex-wrap: wrap; gap: 0.75em; margin: -1em 0 1em -0.5em; padding: 0 0 1em 0.5em !important; list-style: none; border-bottom: 1px solid rgba(226,226,226,1) !important; width: calc(100% - 0.5em);
-			li {position: relative; margin: 0; border-radius: 0.2em; padding: 0; font-weight: 400}
-			.active{padding: 0.75em 0.85em 0.5em 0.85em; background: rgba(255,255,255,1); border: 0.0625rem solid rgba(200,200,200,1); border-top: 0; font-weight: 500}
-			.active:before {position: absolute; margin: -0.75em 0 0 -0.85em; content: ""; height: 0.35em; width: 100%; background: rgba(30,30,30,1); border-radius: 0.2em 0.2em 0 0}
-			a {display: block; padding: 0.75em 0.85em 0.5em 0.85em; border-radius: 0.2em; border: 1px solid rgba(58,115,234,1)}
-		}		
-
-		.new-legislation-detail {
-			margin: 0.25em auto 1em auto; padding: 0 1em; font-weight: 400;
-			h2 {margin: 1.25em 0 0.5em 0; line-height: 1em; font-size: 1.1em; font-weight: 500}
-			ul {
-				margin: 0; list-style: none;
-				li {
-					margin: 0 0 0.8em 0;
-					a {
-						display: block; margin: 0.075em 0 0.1em 0; line-height: 1.4em;
-						span {font-weight: 500}
-					}
-				}
-			}
-		}
-
-		aside {
-			overflow: auto; background: rgba(246,246,246,1);
-			section {
-				margin: 0 auto; padding: 1rem; max-width: 100%; max-width: var(--maxWidth);
-				h2 {margin: 0 auto; padding: 0.5em 0 0.65em 0; font-weight: 700; font-size: 1.4em}
-				ul {
-					display: flex; flex-wrap: wrap; gap: 1.2em; margin: 0 auto; padding: 0 0 0.75em 0; list-style: none;
-					li {
-						margin: 0 auto; flex-basis: 0; flex-grow: 1; min-width: 14.625em; background: rgba(255,255,255,1); border-radius: 0.35em; -moz-box-shadow: 0 0 0.25em rgba(0,0,0,0.15); -webkit-box-shadow: 0 0 0.25em rgba(0,0,0,0.15); box-shadow: 0 0 0.25em rgba(0,0,0,0.15);
-						a {
-							box-sizing: border-box; display: block; padding: 0.85em; height: 100%; line-height: 1.45em; font-weight: 300; color: rgba(30,30,30,1); border: 0.125em solid transparent; border-radius: 0.35em;
-							&:hover {text-decoration: none; border: 0.125em solid rgba(58,115,234,1); background: rgba(236,242,253,1)}
-							&:focus {background: rgba(236,242,253,1); border: 0.125em solid rgba(58,115,234,1)}
-							h3 {margin: 0 0 0.25em 0; line-height: 1.3em; font-size: 1.1em}
-						}
-					}
-				}
-			}
-		}
-				
-		.new-legislation-feeds {
-			display: flex; flex-wrap: wrap; gap: 1em; margin: -0.75em 0 1em 0;
-			div {flex-grow: 1}
-			h2 {padding: 2em 0 0.5em 0.75em; font-size: 1.1em; font-weight: 500; background: rgba(249,249,249,1); border-bottom: 0.0625em solid rgba(226,226,226,1)}
-			ul {margin: 1em 1em 0 1em; list-style: none}
-			ul ul {margin: 0 0 0 1.5em}
-			li {margin: 0.75em 0 0 0}
-			a {padding: 0 0 0 1.5em; font-weight: 400; background: url('new-legislation-feed-icon.png') no-repeat 0 center; background-size: 1.1em}
-		}
-	}
-
-	.new-legislation-full {
-		.new-legislation-hdr {
-			border: 0;
-			nav {
-				width: unset;
-				ul {
-					gap: 0; width: unset; padding: 0; border: 0;
-					li {
-						padding: 1.2em 1.2em 0.7em 1.2em; flex-grow: 0; min-width: unset;
-						&.active {
-							position: relative; margin: 0 0 -1px 0; padding: 1.2em 1.6em 0.85em 1.6em; border-radius: 0.2em 0.2em 0 0; text-align: unset; background: rgba(255,255,255,1); border: 0.0625em solid rgba(226,226,226,1); border-top: 0; border-bottom: 0.0625em solid rgba(255,255,255,1); color: rgba(30,30,30,1);
-							&:before {position: absolute; margin: -1.2em 0 0 -1.6em; content: ""; height: 0.35em; width: 100%; background: rgba(30,30,30,1); border-radius: 0.2em 0.2em 0 0}
-						}
-						a {display: inline; padding: 0; border: 0; border-radius: unset; text-align: unset}
-					}
-				}
-			}
-		}
-	}
-
 /* breakpoints */
 	@media (max-width: @upToDesktopSmall) {
 		@supports (selector(:has(*))) {
@@ -2183,14 +1808,9 @@
 	}
 
 	@media (min-width: @mobileWide) {
-		.home {
-			.features li {min-width: unset}
-			ul.section li {.section-two-cols()}			
-		}
 	}
 
 	@media (min-width: @ipadPortrait) {
-		//html {--maxWidth: @ipadPortrait;}
 		:root[colour-scheme="light"] {
 			.hdr-tna a {background: url("tna-logo.png") no-repeat; background-size: 100%}
 			}
@@ -2206,10 +1826,6 @@
 			nav {background: url("tna_square-logo.png") no-repeat right 0; background-size: 7.5em}
 			.mode h2 {display: inline-block}
 		}
-		.home {
-			main section {padding: 1.75rem 1rem}
-			main > section:first-child {padding: 1.75rem 1rem 1.5rem 1rem}		
-		}
 		.legislation {
 			.breadcrumb {padding: 1.25rem 1rem 0 1rem}
 			section.legislation-header {
@@ -2218,33 +1834,19 @@
 			}
 			section.pit-search, section.timeline {padding: 0 1rem}
 			.timeline {
-				button:not(.close-menu, .contextual-help button, .scrollbar button) {
+				button:not(.close-menu, .contextual-info button, .scrollbar button) {
 					&.point-in-time:not(.open-timeline) {
-						.point-in-time {margin: 1.55rem 0 0 calc(50vW - 1em - 3.4375rem)}
+						.point-in-time {margin: 1.55rem 0 0 calc(50vW - 1em - 5.35rem)}
 					}
 				}
-			}
-		}
-		.search {
-			.search-footer {
-				.search-footer-wide;
-			}
-			.search-header {
-				.search-header-wide;
 			}
 		}
 	}
 
 	@media (min-width: @desktopSmall) {
 		html {--maxWidth: @desktopSmall;}
-		.home {
-			.features li:last-child {.feature-wide()}
-			div.section .intro ul li {.section-two-cols()}
-			ul.section li {.section-three-cols()}		
-		}
-
-		.contextual-help {
-			.contextual-help-wide()
+		.contextual-info {
+			.contextual-info-wide()
 		}
 		.legislation {
 			.full-timeline();
@@ -2252,13 +1854,6 @@
 				.full-legislation-text()
 			}
 			.scrollbar {min-width: calc(100% - 640px)}
-		}
-		.search {
-			.open-filters {display: none}
-			.search-wide()
-		}
-		.new-legislation {
-			.new-legislation-full()
 		}
 
 		:root[colour-scheme="light"] {
