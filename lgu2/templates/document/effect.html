@@ -1,0 +1,23 @@
+<li>
+    {% if effect.affected.rich %}
+        {% for node in effect.affected.rich %}
+            {% if node.type == 'link' %}
+                <b>{{ node.text }}</b>
+            {% else %}
+                <span>{{ node.text }}</span>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <span>{{ effect.affected.plain }}</span>
+    {% endif %}
+    <span>{{ effect.type }}</span>
+    <span>by</span>
+    <a href="/{{ effect.source.id }}">{{ effect.source.cite }}</a>
+    {% for node in effect.source.provisions.rich %}
+        {% if node.type == 'link' %}
+            <a href="/{{ node.href }}">{{ node.text }}</a>
+        {% else %}
+            <span>{{ node.text }}</span>
+        {% endif %}
+    {% endfor %}
+</li>

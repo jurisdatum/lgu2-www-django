@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 
 from . import server
 from .browse_types import AltNumber
+from .responses.effects import Effect
 
 
 class Meta(TypedDict):
@@ -25,6 +26,7 @@ class Meta(TypedDict):
     versions: List[str]
     schedules: bool
     formats: List[str]
+    effects: List[Effect]
 
 
 class Document(TypedDict):
