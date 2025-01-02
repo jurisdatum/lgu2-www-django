@@ -29,12 +29,14 @@
 
     <div class="other-formats">
         <div id="other-formats">
-            <h3><button id="other-formats-header" aria-expanded="false" aria-controls="other-formats-panel">PDFs and other formats</button></h3>
+            <h3>
+                <button id="other-formats-header" aria-expanded="false" aria-controls="other-formats-panel">PDFs and other formats</button>
+            </h3>
             <div id="other-formats-panel" aria-labelledby="other-formats-header" class="" hidden="hidden">
                 <h4>Section 25F <span>on <span>09 Dec 2024</span></span></h4>
                 <ul>
                     <li>
-                        <a href="#">Data XML<span class="sr-only"> of Section 25F</span></a>
+                        <a href="{{ links.this.xml }}">Data XML<span class="sr-only"> of Section 25F</span></a>
                     </li>
                     <li>
                         <a href="#">PDF<span class="sr-only"> of Section 25F</span></a>
@@ -52,7 +54,7 @@
                 <h4>The Whole Act <span>on <span>09 Dec 2024</span></span></h4>
                 <ul>
                     <li>
-                        <a href="#">Data XML<span class="sr-only"> of the whole act</span></a>
+                        <a href="{{ links.whole.xml }}">Data XML<span class="sr-only"> of the whole act</span></a>
                     </li>
                     <li>
                         <a href="#">PDF<span class="sr-only"> of the whole act</span></a>
@@ -70,7 +72,7 @@
                 <h4>Table of contents</h4>
                 <ul>
                     <li>
-                        <a href="#">Data XML<span class="sr-only"> of the table of contents</span></a>
+                        <a href="{{ links.toc.xml }}">Data XML<span class="sr-only"> of the table of contents</span></a>
                     </li>
                     <li>
                         <a href="#">PDF<span class="sr-only"> of the table of contents</span></a>

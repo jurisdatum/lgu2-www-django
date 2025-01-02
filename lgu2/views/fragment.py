@@ -13,6 +13,7 @@ from ..util.types import get_category
 from .document import _make_timeline_data
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from . import theme
+from .helper.data_urls import make_fragment_data_url, make_whole_doc_data_url, make_toc_data_url
 
 
 # ToDo fix to use response headers
@@ -70,6 +71,14 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     meta['category'] = get_category(meta['shortType'])
 
     context = {
+        'params': {
+            'type': type,
+            'year': year,
+            'number': number,
+            'section': section,
+            'version': version,
+            'lang': lang
+        },
         'meta': data['meta'],
         'pit': pit,
         'type_label_plural': get_type_label(data['meta']['longType']),
@@ -114,6 +123,17 @@ def convert_context_for_new_theme(context):
                 ('Suplimentary', '#'),  # ToDo
                 ('Section 25F', '#')  # ToDo
             ]
+        },
+        'links': {
+            'this': {
+                'xml': make_fragment_data_url(**context['params'])
+            },
+            'whole': {
+                'xml': make_whole_doc_data_url(**context['params'])
+            },
+            'toc': {
+                'xml': make_toc_data_url(**context['params'])
+            }
         }
     }
 
