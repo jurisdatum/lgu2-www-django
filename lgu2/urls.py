@@ -12,6 +12,7 @@ from .views.document import document, data as document_data
 from .views import toc
 from .views.metadata import metadata, combined
 from .views import fragment
+from .views import changes
 
 urlpatterns = i18n_patterns(
 
@@ -87,6 +88,14 @@ urlpatterns += i18n_patterns(
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}/{DATA}$', fragment.data, name='fragment-version-lang-data'),
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}$', fragment.fragment, name='fragment-lang'),
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}/{DATA}$', fragment.data, name='fragment-lang-data'),
+
+
+    # changes
+    re_path(r'^changes$', changes.intro),
+    re_path(fr'^changes/affected/{TYPE}$', changes.affected, name='changes-affected-type'),
+    re_path(fr'^changes/affected/{TYPE}/{YEAR4}$', changes.affected, name='changes-affected-type-year'),
+    re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}$', changes.affected, name='changes-affected-number'),
+    re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{NUMBER}$', changes.affected, name='changes-affected-type-year-number'),
 
     prefix_default_language=False
 )

@@ -1,0 +1,347 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block page_title %}Changes To Legislation{% endblock %}
+
+{% block head_middle %}
+<script type="text/javascript" src="{% static 'lgu1/scripts/formFunctions/common.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/changesLeg/search.js' %}"></script>
+<link type="text/css" href="{% static 'lgu1/styles/per/changeLeg.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block body_id %}doc{% endblock %}
+{% block body_class %}changeLeg{% endblock %}
+
+
+{% block layout2 %}
+<div>
+    <div class="info">
+        <h1 id="pageTitle">Changes to Legislation</h1>
+    </div>
+</div>
+<div id="content">
+    <div class="s_12">
+        <p id="New_changes_p1">
+            <span>These lists provide details of changes to legislation including repeals, amendments and
+                other effects (e.g. modifications and commencement information) made by subsequent
+                legislation.</span>
+        </p>
+        <p id="New_changes_p2">
+            <span>The search form below provides access to lists detailing changes made by all UK
+                legislation enacted from 2002 – present to the UK primary legislation held on
+                legislation.gov.uk. Changes made by legislation enacted prior to 2002 have already been
+                incorporated into the content of the primary legislation and are not available as searchable
+                lists. Changes made by secondary legislation enacted from 1971 onwards are available.
+                Changes to EU Regulations and Decisions originating from the EU by UK legislation are also
+                included in these lists.</span>
+        </p>
+        <p id="New_changes_p3">
+            <span>The lists are updated with changes made by new legislation as soon as possible after the
+                legislation is received by the legislation.gov.uk editorial team. In most cases the changes
+                will be available within two weeks of the new legislation being published, though during
+                particularly busy periods for new legislation it may take longer. Up to 11.00 p.m. on 31
+                December 2020, changes to EU legislation made by EU legislation were captured from EUR-Lex
+                and published to the Changes to Legislation pages. Due to the high volume of Statutory
+                Instruments containing EU Exit amendments published in the period up to and around 31
+                December 2020, the usual <a href="/understanding-legislation#editorialpractice">editorial
+                    practice and timescales</a> will not apply to <a
+                    href="/eu-legislation-and-uk-law#revisinglegislation">EU Exit amendments</a>.</span>
+        </p>
+        <p id="New_changes_p4">
+            <span>Note: Where changes and effects have yet to be applied to revised legislation you are
+                viewing on this site, then any ‘Changes to Legislation’ are also displayed alongside the
+                content of the legislation at provision level.</span>
+        </p>
+    </div>
+    <div class="s_12 createNewSearchOpt">
+        <h2 class="accessibleText">Search</h2>
+        <form action="/changes" id="searchChanges" class="s_12 p_one">
+            <fieldset id="affect" class="s_5 p_one">
+                <legend>Changes that affect:</legend><a class="helpItem helpItemToTop"
+                    href="#changesThatAffectHelp"><img alt="Changes that affect help"
+                        src="/images/chrome/helpIcon.gif" /></a>
+                <div class="title"><label for="affected-title">Title:</label><input id="affected-title"
+                        name="affected-title" type="text" value="" /></div>
+                <div class="typeChoice"><label for="affected-type">Legislation type:</label><select
+                        id="affected-type" name="affected-type">
+                        <option value="">Any</option>
+                        <option value="ukpga">UK Public General Acts</option>
+                        <option value="ukla">UK Local Acts</option>
+                        <option value="apgb">Acts of the Parliament of Great Britain</option>
+                        <option value="aep">Acts of the English Parliament</option>
+                        <option value="aosp">Acts of the Old Scottish Parliament</option>
+                        <option value="asp">Acts of the Scottish Parliament</option>
+                        <option value="aip">Acts of the Old Irish Parliament</option>
+                        <option value="apni">Acts of the Northern Ireland Parliament</option>
+                        <option value="mnia">Measures of the Northern Ireland Assembly</option>
+                        <option value="nia">Acts of the Northern Ireland Assembly</option>
+                        <option value="ukcm">Church Measures</option>
+                        <option value="asc">Acts of Senedd Cymru</option>
+                        <option value="anaw">Acts of the National Assembly for Wales</option>
+                        <option value="mwa">Measures of the National Assembly for Wales</option>
+                        <option value="uksi">UK Statutory Instruments</option>
+                        <option value="ssi">Scottish Statutory Instruments</option>
+                        <option value="wsi">Wales Statutory Instruments</option>
+                        <option value="nisr">Northern Ireland Statutory Rules</option>
+                        <option value="nisi">Northern Ireland Orders in Council</option>
+                        <option value="nisro">Northern Ireland Statutory Rules and Orders</option>
+                        <option value="eur">Regulations originating from the EU</option>
+                        <option value="eudn">Decisions originating from the EU</option>
+                        <option value="eudr">Directives originating from the EU</option>
+                    </select></div>
+                <div class="yearChoice"><input type="radio" name="affected-year-choice"
+                        id="affected-year-specific" value="specific" class="yearChoice radio"
+                        checked="checked" /><label for="affected-year-specific">Specific year and
+                        number</label>
+                    <div class="yearChoiceFields" id="affectsSingleYear">
+                        <div class="from"><label for="affected-year">Year:</label><input id="affected-year"
+                                name="affected-year" type="text" value="" /></div>
+                        <div class="number"><label for="affected-number">Number:</label><input
+                                id="affected-number" name="affected-number" type="text" value="" /></div>
+                    </div>
+                </div>
+                <div class="yearChoice"><input type="radio" name="affected-year-choice"
+                        id="affected-year-choice-range" value="range" class="yearChoice radio" /><label
+                        for="affected-year-choice-range">Range of years</label>
+                    <div class="yearChoiceFields" id="affectedRangeYears">
+                        <div class="from"><label for="affected-start-year">From:</label><input
+                                id="affected-start-year" name="affected-start-year" type="text" value="" />
+                        </div>
+                        <div class="to"><label for="affected-end-year">To:</label><input
+                                id="affected-end-year" name="affected-end-year" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="affecting" class="s_5 p_two">
+                <legend>made by:</legend><a class="helpItem helpItemToTop" href="#madeByHelp"><img
+                        alt="Made by help" src="/images/chrome/helpIcon.gif" /></a>
+                <div class="title"><label for="affecting-title">Title:</label><input id="affecting-title"
+                        name="affecting-title" type="text" value="" /></div>
+                <div class="typeChoice"><label for="affecting-type">Legislation type:</label><select
+                        id="affecting-type" name="affecting-type">
+                        <option value="">Any</option>
+                        <option value="ukpga">UK Public General Acts</option>
+                        <option value="ukla">UK Local Acts</option>
+                        <option value="ukppa">UK Private and Personal Acts</option>
+                        <option value="asp">Acts of the Scottish Parliament</option>
+                        <option value="asc">Acts of Senedd Cymru</option>
+                        <option value="anaw">Acts of the National Assembly for Wales</option>
+                        <option value="mwa">Measures of the National Assembly for Wales</option>
+                        <option value="ukcm">Church Measures</option>
+                        <option value="nia">Acts of the Northern Ireland Assembly</option>
+                        <option value="gbla">Local Acts of the Parliament of Great Britain</option>
+                        <option value="gbppa">Private and Personal Acts of the Parliament of Great Britain
+                        </option>
+                        <option value="uksi">UK Statutory Instruments</option>
+                        <option value="wsi">Wales Statutory Instruments</option>
+                        <option value="ssi">Scottish Statutory Instruments</option>
+                        <option value="nisi">Northern Ireland Orders in Council</option>
+                        <option value="nisr">Northern Ireland Statutory Rules</option>
+                        <option value="ukci">Church Instruments</option>
+                        <option value="ukmd">UK Ministerial Directions</option>
+                        <option value="ukmo">UK Ministerial Orders</option>
+                        <option value="eur">Regulations originating from the EU</option>
+                        <option value="eudn">Decisions originating from the EU</option>
+                        <option value="eudr">Directives originating from the EU</option>
+                    </select></div>
+                <div class="yearChoice"><input type="radio" name="affecting-year-choice"
+                        id="affecting-year-choice-specific" value="specific" class="yearChoice radio"
+                        checked="checked" /><label for="affecting-year-choice-specific">Specific year and
+                        number</label>
+                    <div class="yearChoiceFields" id="affectingSingleYear">
+                        <div class="from"><label for="affecting-year">Year:</label><select
+                                name="affecting-year" id="affecting-year">
+                                <option value="" selected="selected">Any</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                                <option value="2005">2005</option>
+                                <option value="2006">2006</option>
+                                <option value="2007">2007</option>
+                                <option value="2008">2008</option>
+                                <option value="2009">2009</option>
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select></div>
+                        <div class="number"><label for="affecting-number">Number:</label><input
+                                id="affecting-number" name="affecting-number" type="text" value="" /></div>
+                    </div>
+                </div>
+                <div class="yearChoice"><input type="radio" name="affecting-year-choice"
+                        id="affecting-year-choice-range" value="range" class="yearChoice radio" /><label
+                        for="affecting-year-choice-range">Range of years</label>
+                    <div class="yearChoiceFields" id="affectingRangeYears">
+                        <div class="from"><label for="affecting-start-year">From:</label><select
+                                name="affecting-start-year" id="affecting-start-year">
+                                <option value="" selected="selected">YYYY</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                                <option value="2005">2005</option>
+                                <option value="2006">2006</option>
+                                <option value="2007">2007</option>
+                                <option value="2008">2008</option>
+                                <option value="2009">2009</option>
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select></div>
+                        <div class="to"><label for="affecting-end-year">To:</label><select
+                                name="affecting-end-year" id="affecting-end-year">
+                                <option selected="selected">YYYY</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                                <option value="2005">2005</option>
+                                <option value="2006">2006</option>
+                                <option value="2007">2007</option>
+                                <option value="2008">2008</option>
+                                <option value="2009">2009</option>
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select></div>
+                    </div>
+                </div>
+            </fieldset>
+            <div id="searchInfo">
+                <p></p>
+                <fieldset id="effectsOptions" class="s_6">
+                    <legend>Results showing</legend><a class="helpItem helpItemToMidRight"
+                        href="#resultsShowingHelp"><img alt="Results showing help"
+                            src="/images/chrome/helpIcon.gif" /></a>
+                    <div><input type="radio" id="appliedAll" value="all" name="applied" class="radio"
+                            checked="checked" /><label for="appliedAll">All changes</label><input
+                            type="radio" id="applied" value="applied" name="applied" class="radio" /><label
+                            for="applied">Changes made to the website text</label><input type="radio"
+                            id="unapplied" value="unapplied" name="applied" class="radio" /><label
+                            for="unapplied">Outstanding changes not yet made to the website</label><button
+                            type="submit" id="legChangesSearchSubmit" class="userFunctionalElement"><span
+                                class="btl"></span><span class="btr"></span>Get Results<span
+                                class="bbl"></span><span class="bbr"></span></button></div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+    <div class="s_12">
+        <h2>Changes to Local and Private and Personal Acts</h2>
+        <p>The Chronological Tables list changes to Local, Private and Personal Acts dating from 1797 –
+            2008. They are updated each year and as the title suggests, the tables list Local, Private and
+            Personal Acts in their chronological sequence along with details about repeals of, and changes
+            (including amendments and substitutions) made to those Acts. They have been published in parts
+            to make navigation easier.</p>
+        <ul class="linkList">
+            <li><a href="/changes/chron-tables/local">Chronological Table of Local Acts<span
+                        class="pageLinkIcon"></span></a></li>
+            <li><a href="/changes/chron-tables/private">Chronological Table of Private and Personal
+                    Acts<span class="pageLinkIcon"></span></a></li>
+        </ul>
+    </div>
+    <div class="s_12">
+        <h2>Changes to Statutory Rules (Northern Ireland)</h2>
+        <p>The Chronological Tables list changes to Statutory Rules dating from 1923 – 2023. They are
+            updated each year and as the title suggests, the tables list Northern Ireland SRs in their
+            chronological sequence along with the details of amendments made to Statutory Rules, which are
+            in force. Rules, which are revoked, are listed with details of revoking legislation and are
+            printed in italics.</p>
+        <ul class="linkList">
+            <li><a href="/changes/chron-tables/ni">Chronological Table of Statutory Rules (Northern
+                    Ireland)<span class="pageLinkIcon"></span></a></li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="changesThatAffectHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Changes made to website text</h3>
+        <p>Use this facility to search for changes that affect one or more items of legislation based on the
+            criteria below. Alternatively you can leave this side of the form blank to find the changes and
+            effects on any revised legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to changes
+                affecting the legislation type you are interested in. The drop down list only includes those
+                legislation types for which we hold revised versions for on legislation.gov.uk.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes that affect legislation of a particular year or over a range of years.</li>
+            <li>Number: If you are looking for changes that affect a specific item of legislation and you
+                know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="madeByHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Made by</h3>
+        <p>Narrow down your search for changed legislation by entering details about the legislation that
+            made the effects using this side of the form. Alternatively, leave his side of the form blank
+            for effects and changes made by any legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to the
+                legislation type you are interested in using the drop down box.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes made by legislation in a particular year or over a range of years. Tip: to search
+                for all changes made by all legislation in a particular year, enter the year in this side of
+                the form, leaving the ‘Changes that affect’ side blank.</li>
+            <li>Number: If you are looking for changes that are made by a specific item of legislation and
+                you know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="resultsShowingHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Use the tick boxes to see either:</h3>
+        <ul>
+            <li>All changes: All the changes and effects that match your search</li>
+            <li>Applied changes: Those changes and effects that match your search criteria and have been
+                applied to the text of legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+            <li>Unapplied changes: Those changes and effects that match your search criteria but have not
+                yet been applied to the legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

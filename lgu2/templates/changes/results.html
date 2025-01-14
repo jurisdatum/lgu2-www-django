@@ -1,0 +1,1176 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block page_title %}Changes To Legislation{% endblock %}
+
+{% block head_middle %}
+<script type="text/javascript" src="{% static 'lgu1/scripts/formFunctions/common.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/changesLeg/search.js' %}"></script>
+<link type="text/css" href="{% static 'lgu1/styles/per/changeLeg.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block body_id %}doc{% endblock %}
+{% block body_class %}changeLeg{% endblock %}
+
+
+{% block layout2 %}
+<div>
+    <div class="info">
+        <h1 id="pageTitle">Changes to Legislation Results</h1>
+        <h2>Your search for changes that affect UK Public General Acts made by all legislation has returned
+            more than 200 results:</h2>
+    </div>
+</div>
+<div id="content">
+    <div class="s_12 createNewSearchOpt">
+        <h2 class="accessibleText">Search</h2>
+        <div id="existingSearch">
+            <div id="newSearch" class="interface"><a id="modifySearch" href="#searchChanges"
+                    class="userFunctionalElement"><span class="btl"></span><span class="btr"></span>Modify
+                    existing search<span class="bbl"></span><span class="bbr"></span></a></div>
+            <form action="/changes" id="searchChanges" class="s_12 p_one">
+                <fieldset id="affect" class="s_5 p_one">
+                    <legend>Changes that affect:</legend><a class="helpItem helpItemToTop"
+                        href="#changesThatAffectHelp"><img alt="Changes that affect help"
+                            src="/images/chrome/helpIcon.gif" /></a>
+                    <div class="title"><label for="affected-title">Title:</label><input id="affected-title"
+                            name="affected-title" type="text" value="" /></div>
+                    <div class="typeChoice"><label for="affected-type">Legislation type:</label><select
+                            id="affected-type" name="affected-type">
+                            <option value="">Any</option>
+                            <option value="ukpga" selected="selected">UK Public General Acts</option>
+                            <option value="ukla">UK Local Acts</option>
+                            <option value="apgb">Acts of the Parliament of Great Britain</option>
+                            <option value="aep">Acts of the English Parliament</option>
+                            <option value="aosp">Acts of the Old Scottish Parliament</option>
+                            <option value="asp">Acts of the Scottish Parliament</option>
+                            <option value="aip">Acts of the Old Irish Parliament</option>
+                            <option value="apni">Acts of the Northern Ireland Parliament</option>
+                            <option value="mnia">Measures of the Northern Ireland Assembly</option>
+                            <option value="nia">Acts of the Northern Ireland Assembly</option>
+                            <option value="ukcm">Church Measures</option>
+                            <option value="asc">Acts of Senedd Cymru</option>
+                            <option value="anaw">Acts of the National Assembly for Wales</option>
+                            <option value="mwa">Measures of the National Assembly for Wales</option>
+                            <option value="uksi">UK Statutory Instruments</option>
+                            <option value="ssi">Scottish Statutory Instruments</option>
+                            <option value="wsi">Wales Statutory Instruments</option>
+                            <option value="nisr">Northern Ireland Statutory Rules</option>
+                            <option value="nisi">Northern Ireland Orders in Council</option>
+                            <option value="nisro">Northern Ireland Statutory Rules and Orders</option>
+                            <option value="eur">Regulations originating from the EU</option>
+                            <option value="eudn">Decisions originating from the EU</option>
+                            <option value="eudr">Directives originating from the EU</option>
+                        </select></div>
+                    <div class="yearChoice"><input type="radio" name="affected-year-choice"
+                            id="affected-year-specific" value="specific" class="yearChoice radio"
+                            checked="checked" /><label for="affected-year-specific">Specific year and
+                            number</label>
+                        <div class="yearChoiceFields" id="affectsSingleYear">
+                            <div class="from"><label for="affected-year">Year:</label><input
+                                    id="affected-year" name="affected-year" type="text" value="" /></div>
+                            <div class="number"><label for="affected-number">Number:</label><input
+                                    id="affected-number" name="affected-number" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yearChoice"><input type="radio" name="affected-year-choice"
+                            id="affected-year-choice-range" value="range" class="yearChoice radio" /><label
+                            for="affected-year-choice-range">Range of years</label>
+                        <div class="yearChoiceFields" id="affectedRangeYears">
+                            <div class="from"><label for="affected-start-year">From:</label><input
+                                    id="affected-start-year" name="affected-start-year" type="text"
+                                    value="" /></div>
+                            <div class="to"><label for="affected-end-year">To:</label><input
+                                    id="affected-end-year" name="affected-end-year" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="affecting" class="s_5 p_two">
+                    <legend>made by:</legend><a class="helpItem helpItemToTop" href="#madeByHelp"><img
+                            alt="Made by help" src="/images/chrome/helpIcon.gif" /></a>
+                    <div class="title"><label for="affecting-title">Title:</label><input
+                            id="affecting-title" name="affecting-title" type="text" value="" /></div>
+                    <div class="typeChoice"><label for="affecting-type">Legislation type:</label><select
+                            id="affecting-type" name="affecting-type">
+                            <option value="">Any</option>
+                            <option value="ukpga">UK Public General Acts</option>
+                            <option value="ukla">UK Local Acts</option>
+                            <option value="ukppa">UK Private and Personal Acts</option>
+                            <option value="asp">Acts of the Scottish Parliament</option>
+                            <option value="asc">Acts of Senedd Cymru</option>
+                            <option value="anaw">Acts of the National Assembly for Wales</option>
+                            <option value="mwa">Measures of the National Assembly for Wales</option>
+                            <option value="ukcm">Church Measures</option>
+                            <option value="nia">Acts of the Northern Ireland Assembly</option>
+                            <option value="gbla">Local Acts of the Parliament of Great Britain</option>
+                            <option value="gbppa">Private and Personal Acts of the Parliament of Great
+                                Britain</option>
+                            <option value="uksi">UK Statutory Instruments</option>
+                            <option value="wsi">Wales Statutory Instruments</option>
+                            <option value="ssi">Scottish Statutory Instruments</option>
+                            <option value="nisi">Northern Ireland Orders in Council</option>
+                            <option value="nisr">Northern Ireland Statutory Rules</option>
+                            <option value="ukci">Church Instruments</option>
+                            <option value="ukmd">UK Ministerial Directions</option>
+                            <option value="ukmo">UK Ministerial Orders</option>
+                            <option value="eur">Regulations originating from the EU</option>
+                            <option value="eudn">Decisions originating from the EU</option>
+                            <option value="eudr">Directives originating from the EU</option>
+                        </select></div>
+                    <div class="yearChoice"><input type="radio" name="affecting-year-choice"
+                            id="affecting-year-choice-specific" value="specific" class="yearChoice radio"
+                            checked="checked" /><label for="affecting-year-choice-specific">Specific year
+                            and number</label>
+                        <div class="yearChoiceFields" id="affectingSingleYear">
+                            <div class="from"><label for="affecting-year">Year:</label><select
+                                    name="affecting-year" id="affecting-year">
+                                    <option value="" selected="selected">Any</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select></div>
+                            <div class="number"><label for="affecting-number">Number:</label><input
+                                    id="affecting-number" name="affecting-number" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yearChoice"><input type="radio" name="affecting-year-choice"
+                            id="affecting-year-choice-range" value="range" class="yearChoice radio" /><label
+                            for="affecting-year-choice-range">Range of years</label>
+                        <div class="yearChoiceFields" id="affectingRangeYears">
+                            <div class="from"><label for="affecting-start-year">From:</label><select
+                                    name="affecting-start-year" id="affecting-start-year">
+                                    <option value="" selected="selected">YYYY</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select></div>
+                            <div class="to"><label for="affecting-end-year">To:</label><select
+                                    name="affecting-end-year" id="affecting-end-year">
+                                    <option selected="selected">YYYY</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select></div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div id="searchInfo">
+                    <p></p>
+                    <fieldset id="effectsOptions" class="s_6">
+                        <legend>Results showing</legend><a class="helpItem helpItemToMidRight"
+                            href="#resultsShowingHelp"><img alt="Results showing help"
+                                src="/images/chrome/helpIcon.gif" /></a>
+                        <div><input type="radio" id="appliedAll" value="all" name="applied" class="radio"
+                                checked="checked" /><label for="appliedAll">All changes</label><input
+                                type="radio" id="applied" value="applied" name="applied"
+                                class="radio" /><label for="applied">Changes made to the website
+                                text</label><input type="radio" id="unapplied" value="unapplied"
+                                name="applied" class="radio" /><label for="unapplied">Outstanding changes
+                                not yet made to the website</label><button type="submit"
+                                id="legChangesSearchSubmit" class="userFunctionalElement"><span
+                                    class="btl"></span><span class="btr"></span>Get Results<span
+                                    class="bbl"></span><span class="bbr"></span></button></div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="results s_12 p_one">
+        <div id="topPager" class="interface">
+            <div class="resultsInfo">1 to 50 of 495436 results</div>
+            <div class="prevPagesNextNav">
+                <ul>
+                    <li class="currentPage pageLink"><strong><span class="accessibleText">This is results
+                                page </span>1</strong></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=2"
+                            rel="next"><span class="accessibleText">Results page </span>2</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=3"><span
+                                class="accessibleText">Results page </span>3</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=4"><span
+                                class="accessibleText">Results page </span>4</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=5"><span
+                                class="accessibleText">Results page </span>5</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=6"><span
+                                class="accessibleText">Results page </span>6</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=7"><span
+                                class="accessibleText">Results page </span>7</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=8"><span
+                                class="accessibleText">Results page </span>8</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=9"><span
+                                class="accessibleText">Results page </span>9</a></li>
+                    <li class="pageLink"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=10"><span
+                                class="accessibleText">Results page </span>10</a></li>
+                    <li class="pageLink next"><a
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=2"
+                            title="next page"><span class="btl"></span><span class="btr"></span>Next<span
+                                class="accessibleText"> results page</span><span class="bbl"></span><span
+                                class="bbr"></span></a></li>
+                </ul>
+            </div>
+            <div class="subscribe"><a
+                    href="/changes/affected/ukpga/data.feed?results-count=50&amp;sort=affected-year-number"
+                    class="userFunctionalElement"><span class="background"><span class="btl"></span><span
+                            class="btr"></span>Subscribe to this list<span class="bbl"></span><span
+                            class="bbr"></span></span></a></div>
+        </div>
+        <table>
+            <thead>
+                <tr class="headerRow1">
+                    <th colspan="4">Changes that affect</th>
+                    <th colspan="3" class="centralCol">Made by</th>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="headerRow2">
+                    <th><a title="Sort by Changed Legislation" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-title"><span
+                                class="accessibleText">Sort
+                                by </span>Changed Legislation</a></th>
+                    <th><a title="Sort by Year and Number" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number"><span
+                                class="accessibleText">Sort
+                                by </span>Year and Number</a></th>
+                    <th>Changed Provision</th>
+                    <th>Type of effect<a class="helpItem helpItemToMidRight" href="#typeofEffectHelp"><img
+                                alt="Type of effect help" src="/images/chrome/helpIcon.gif" /></a></th>
+                    <th class="centralCol"><a title="Sort by Affecting Legislation Title" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affecting-title"><span
+                                class="accessibleText">Sort
+                                by </span>Affecting Legislation Title</a></th>
+                    <th class="centralCol"><a title="Sort by Year and Number" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affecting-year-number"><span
+                                class="accessibleText">Sort
+                                by </span>Year and Number</a></th>
+                    <th class="centralCol">Affecting Provision</th>
+                    <th class="applied"><a title="Sort by Changes made to website text" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=applied"><span
+                                class="accessibleText">Sort
+                                by </span>Changes made to website text</a><a
+                            class="helpItem helpItemToMidLeft" href="#appliedHelp"><img
+                                alt="Amendment applied help" src="/images/chrome/helpIcon.gif" /></a></th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="oddRow">
+                    <td><strong>House of Commons (Clergy Disqualification) Act 1801 (repealed)</strong></td>
+                    <td><a href="/id/ukpga/1801/63">1801 c. 63</a></td>
+                    <td><a href="/id/ukpga/Geo3/41/63">Act</a></td>
+                    <td></td>
+                    <td class="centralCol"><strong>House of Commons (Removal of Clergy Disqualification) Act
+                            2001</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2001/13">2001 c. 13</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2001/13/schedule/2">Sch. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Public Notaries Act 1801</strong></td>
+                    <td><a href="/id/ukpga/1801/79">1801 c. 79</a></td>
+                    <td><a href="/id/ukpga/Geo3/41/79/section/1">s. 1</a></td>
+                    <td>words repealed</td>
+                    <td class="centralCol"><strong>Legal Services Act 2007</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/29">2007 c. 29</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/29/schedule/21">Sch. 21 </a><a
+                            href="/id/ukpga/2007/29/schedule/21/paragraph/2">para. 2</a> <a
+                            href="/id/ukpga/2007/29/schedule/23">Sch. 23</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Public Notaries Act 1801</strong></td>
+                    <td><a href="/id/ukpga/1801/79">1801 c. 79</a></td>
+                    <td><a href="/id/ukpga/Geo3/41/79/section/13">s. 13</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Access to Justice Act 1999</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1999/22">1999 c. 22</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1999/22/schedule/15">Sch. 15 </a><a
+                            href="/id/ukpga/1999/22/schedule/15/part/II">Pt. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Public Notaries Act 1801</strong></td>
+                    <td><a href="/id/ukpga/1801/79">1801 c. 79</a></td>
+                    <td><a href="/id/ukpga/Geo3/41/79/section/14">s. 14</a></td>
+                    <td>words repealed</td>
+                    <td class="centralCol"><strong>Legal Services Act 2007</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/29">2007 c. 29</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/29/schedule/21">Sch. 21 </a><a
+                            href="/id/ukpga/2007/29/schedule/21/paragraph/3">para. 3</a> <a
+                            href="/id/ukpga/2007/29/schedule/23">Sch. 23</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Public Notaries Act 1801</strong></td>
+                    <td><a href="/id/ukpga/1801/79">1801 c. 79</a></td>
+                    <td><a href="/id/ukpga/Geo3/41/79"></a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Access to Justice Act 1999 (Commencement No. 1) Order
+                            1999</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1999/2657">1999 No. 2657</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1999/2657"></a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Public Notaries Act 1801</strong></td>
+                    <td><a href="/id/ukpga/1801/79">1801 c. 79</a></td>
+                    <td><a href="/id/ukpga/Geo3/41/79">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Legal Services Act 2007 (Commencement No. 6,
+                            Transitory, Transitional and Saving Provisions) Order 2009</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/2009/3250">2009 No. 3250</a></td>
+                    <td class="centralCol"><a href="/id/uksi/2009/3250/article/2">art. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td><a class="helpItem hover" href="#noted12e241"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e241" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2007
+                                c. 29</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Criminal Jurisdiction Act 1802</strong></td>
+                    <td><a href="/id/ukpga/1802/85">1802 c. 85</a></td>
+                    <td>s. 1</td>
+                    <td>repealed in part</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 1995</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1995/44">1995 c. 44</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1995/44/section/1">s. 1</a> <a
+                            href="/id/ukpga/1995/44/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/1995/44/schedule/1/part/II">Pt. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Forgery of Foreign Bills Act 1803</strong></td>
+                    <td><a href="/id/ukpga/1803/139">1803 c. 139</a></td>
+                    <td><a href="/id/ukpga/Geo3/43/139">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/2">Pt. 2</a> Group 4</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1803/143">1803 c. 143</a></td>
+                    <td><a href="/id/ukpga/1803/143">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Police (Northern Ireland) Act 1998</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/32">1998 c. 32</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/32/schedule/6">Sch. 6</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Clergy Ordination Act 1804</strong></td>
+                    <td><a href="/id/ukpga/1804/43">1804 c. 43</a></td>
+                    <td><a href="/id/ukpga/Geo3/44/43">Preamble</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2004</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/14">2004 c. 14</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/14/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2004/14/schedule/1/part/6">Pt. 6</a> Group 1</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1808/48">1808 c. 48</a></td>
+                    <td><a href="/id/ukpga/1808/48">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/4">Pt. 4</a> Group 4</td>
+                    <td>See note</td>
+                    <td><a class="helpItem hover" href="#noted12e422"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e422" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>This amendment not applied
+                                to legislation.gov.uk. The text of the Dublin General Post Office Act 1808
+                                (48 Geo. 3 c. 48) was not reproduced in Statutes In Force and is not held on
+                                legislation.gov.uk</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Regimental Accounts Act 1808 (repealed 8.11.1995)</strong></td>
+                    <td><a href="/id/ukpga/1808/128">1808 c. 128</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/128">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 1995</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1995/44">1995 c. 44</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1995/44/section/1">s. 1</a> <a
+                            href="/id/ukpga/1995/44/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/1995/44/schedule/1/part/VI">Pt. 6</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Teinds Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/138">1808 c. 138</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/138">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Abolition of Feudal Tenure etc. (Scotland) Act
+                            2000</strong></td>
+                    <td class="centralCol"><a href="/id/asp/2000/5">2000 asp 5</a></td>
+                    <td class="centralCol"><a href="/id/asp/2000/5/schedule/13">Sch. 13 </a><a
+                            href="/id/asp/2000/5/schedule/13/part/1">Pt. 1</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Teinds Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/138">1808 c. 138</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/138">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Abolition of Feudal Tenure etc. (Scotland) Act 2000
+                            (Commencement No. 2) (Appointed Day) Order 2003</strong></td>
+                    <td class="centralCol"><a href="/id/ssi/2003/456">2003 No. 456</a></td>
+                    <td class="centralCol"><a href="/id/ssi/2003/456/article/2">art. 2</a></td>
+                    <td>Not yet</td>
+                    <td><a class="helpItem hover" href="#noted12e547"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e547" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2000
+                                asp 5</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Life Annuities Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/142">1808 c. 142</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/142/section/32">s. 32</a></td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>Bank of England Act 1998</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/11">1998 c. 11</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/11/section/9/1">s. 9(1)</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Life Annuities Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/142">1808 c. 142</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/142"></a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Bank of England Act 1998 (Commencement) Order
+                            1998</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1998/1120">1998 No. 1120</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1998/1120"></a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Probate and Legacy Duties Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/149">1808 c. 149</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/149/section/42/1">s. 42(1)</a></td>
+                    <td>s. 42 renumbered as s. 42(1)</td>
+                    <td class="centralCol"><strong>Finance Act 2004</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/12">2004 c. 12</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/12/section/294/2/a">s. 294(2)(a)</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Probate and Legacy Duties Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/149">1808 c. 149</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/149/section/42/1">s. 42(1)</a></td>
+                    <td>words substituted</td>
+                    <td class="centralCol"><strong>Finance Act 2004</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/12">2004 c. 12</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/12/section/294/2/b">s. 294(2)(b)</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Probate and Legacy Duties Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/149">1808 c. 149</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/149/section/42/2">s. 42(2)</a></td>
+                    <td>inserted</td>
+                    <td class="centralCol"><strong>Finance Act 2004</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/12">2004 c. 12</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/12/section/294/2/c">s. 294(2)(c)</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Probate and Legacy Duties Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/149">1808 c. 149</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/149">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Law Reform (Miscellaneous Provisions) (Scotland) Act
+                            1990 (Commencement No. 13) Order 1996</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/2894">1996 No. 2894</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/2894"></a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Probate and Legacy Duties Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/149">1808 c. 149</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/149">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Law Reform (Miscellaneous Provisions) (Scotland) Act
+                            1990 (Commencement No.13) (Amendment) Order 1996</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/2966">1996 No. 2966</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/2966"></a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Probate and Legacy Duties Act 1808</strong></td>
+                    <td><a href="/id/ukpga/1808/149">1808 c. 149</a></td>
+                    <td><a href="/id/ukpga/Geo3/48/149">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Finance Act 2004, Section 294 (Appointed Day) Order
+                            2004</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/2004/2571">2004 No. 2571</a></td>
+                    <td class="centralCol"><a href="/id/uksi/2004/2571/article/2">art. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td><a class="helpItem hover" href="#noted12e818"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e818" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2004
+                                c. 12</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1809/70">1809 c. 70</a></td>
+                    <td><a href="/id/ukpga/1809/70">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/4">Pt. 4</a> Group 4</td>
+                    <td>See note</td>
+                    <td><a class="helpItem hover" href="#noted12e853"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e853" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>This amendment not applied
+                                to legislation.gov.uk. The text of the Dublin General Post Office Act 1809
+                                (49 Geo. 3 c. 70) was not reproduced in Statutes In Force and is not held on
+                                legislation.gov.uk</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Sale of Offices Act 1809</strong></td>
+                    <td><a href="/id/ukpga/1809/126">1809 c. 126</a></td>
+                    <td><a href="/id/ukpga/Geo3/49/126">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/2">Pt. 2</a> Group 7</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Gifts for Churches Act 1811</strong></td>
+                    <td><a href="/id/ukpga/1811/115">1811 c. 115</a></td>
+                    <td><a href="/id/ukpga/Geo3/51/115/section/2">s. 2</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Commons Act 2006</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2006/26">2006 c. 26</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2006/26/section/48/2/a">s. 48(2)(a)</a> <a
+                            href="/id/ukpga/2006/26/schedule/6">Sch. 6 </a><a
+                            href="/id/ukpga/2006/26/schedule/6/part/3">Pt. 3</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Gifts for Churches Act 1811</strong></td>
+                    <td><a href="/id/ukpga/1811/115">1811 c. 115</a></td>
+                    <td><a href="/id/ukpga/Geo3/51/115">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Commons Act 2006 (Commencement No. 3, Transitional
+                            Provisions and Savings) (England) Order 2007</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/2007/2584">2007 No. 2584</a></td>
+                    <td class="centralCol"><a href="/id/uksi/2007/2584/article/2">art. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td><a class="helpItem hover" href="#noted12e982"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e982" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2006
+                                c. 26</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1814/63">1814 c. 63</a></td>
+                    <td><a href="/id/ukpga/1814/63">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/4">Pt. 4</a> Group 4</td>
+                    <td>See note</td>
+                    <td><a class="helpItem hover" href="#noted12e1017"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1017" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>This amendment not applied
+                                to legislation.gov.uk. The text of the Dublin General Post Office Act 1814
+                                (54 Geo. 3 c. 63) was not reproduced in Statutes In Force and is not held on
+                                legislation.gov.uk</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Apprentices Act 1814</strong></td>
+                    <td><a href="/id/ukpga/1814/96">1814 c. 96</a></td>
+                    <td><a href="/id/ukpga/Geo3/54/96">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2004</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/14">2004 c. 14</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2004/14/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2004/14/schedule/1/part/8">Pt. 8</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1814/113">1814 c. 113</a></td>
+                    <td><a href="/id/ukpga/1814/113">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/4">Pt. 4</a> Group 4</td>
+                    <td>See note</td>
+                    <td><a class="helpItem hover" href="#noted12e1085"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1085" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>This amendment not applied
+                                to legislation.gov.uk. The text of the Dublin Site of Record Office Act 1814
+                                (54 Geo. 3 c. 113) was not reproduced in Statutes In Force and is not held
+                                on legislation.gov.uk</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1814/128">1814 c. 128</a></td>
+                    <td><a href="/id/ukpga/1814/128">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/4">Pt. 4</a> Group 2</td>
+                    <td>See note</td>
+                    <td><a class="helpItem hover" href="#noted12e1120"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1120" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>This amendment not applied
+                                to legislation.gov.uk. The text of the Dublin Foundling Hospital Act 1814
+                                (54 Geo. 3 c. 128) was not reproduced in Statutes In Force and is not held
+                                on legislation.gov.uk</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Treason Act 1814</strong></td>
+                    <td><a href="/id/ukpga/1814/146">1814 c. 146</a></td>
+                    <td>s. 1</td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>Crime and Disorder Act 1998</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/37">1998 c. 37</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/37/section/36/4">s. 36(4)</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Treason Act 1814</strong></td>
+                    <td><a href="/id/ukpga/1814/146">1814 c. 146</a></td>
+                    <td><a href="/id/ukpga/Geo3/54/146"></a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Crime and Disorder Act 1998 (Commencement No. 2 and
+                            Transitional Provisions) Order 1998</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1998/2327">1998 No. 2327</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1998/2327"></a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1815/152">1815 c. 152</a></td>
+                    <td><a href="/id/ukpga/1815/152">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 2013</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2">2013 c. 2</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2013/2/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2013/2/schedule/1/part/11">Pt. 11</a> Group 3(1)</td>
+                    <td>See note</td>
+                    <td><a class="helpItem hover" href="#noted12e1214"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1214" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>This amendment not applied
+                                to legislation.gov.uk. The text of the Holyhead Roads Act 1815 (55 Geo. 3 c.
+                                152) was not reproduced in Statutes In Force and is not held on
+                                legislation.gov.uk</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Civil List Audit Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/46">1816 c. 46</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/46">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Sovereign Grant Act 2011</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2011/15">2011 c. 15</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2011/15/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/2011/15/schedule/1/paragraph/1">para. 1</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Sale of Farming Stock Act 1816 (repealed)</strong></td>
+                    <td><a href="/id/ukpga/1816/50">1816 c. 50</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/50">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Tribunals, Courts and Enforcement Act 2007</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/15">2007 c. 15</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/15/schedule/13">Sch. 13 </a><a
+                            href="/id/ukpga/2007/15/schedule/13/paragraph/5">para. 5</a> <a
+                            href="/id/ukpga/2007/15/schedule/23">Sch. 23 </a><a
+                            href="/id/ukpga/2007/15/schedule/23/part/3">Pt. 3</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Sale of Farming Stock Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/50">1816 c. 50</a></td>
+                    <td><a href="/id/ukpga/1816/50/section/10">s. 10</a></td>
+                    <td>words substituted</td>
+                    <td class="centralCol"><strong>Courts Act 2003</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2003/39">2003 c. 39</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2003/39/schedule/8">Sch. 8 </a><a
+                            href="/id/ukpga/2003/39/schedule/8/paragraph/5">para. 5</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Sale of Farming Stock Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/50">1816 c. 50</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/50">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Courts Act 2003 (Commencement No. 3 and Transitional
+                            Provisions) Order 2004</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/2004/401">2004 No. 401</a></td>
+                    <td class="centralCol"><a href="/id/uksi/2004/401/article/2">art. 2</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td><a class="helpItem hover" href="#noted12e1388"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1388" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2003
+                                c. 39</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Sale of Farming Stock Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/50">1816 c. 50</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/50">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Courts Act 2003 (Commencement No. 10) Order
+                            2005</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/2005/910">2005 No. 910</a></td>
+                    <td class="centralCol"><a href="/id/uksi/2005/910/article/3">art. 3</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td><a class="helpItem hover" href="#noted12e1421"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1421" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2003
+                                c. 39</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><span>not available</span></td>
+                    <td><a href="/id/ukpga/1816/55">1816 c. 55</a></td>
+                    <td><a href="/id/ukpga/1816/55">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>The Water (Northern Ireland) Order 1999</strong></td>
+                    <td class="centralCol"><a href="/id/nisi/1999/662">1999 No. 662</a></td>
+                    <td class="centralCol"><a href="/id/nisi/1999/662/article/63/2">art. 63(2)</a> <a
+                            href="/id/nisi/1999/662/schedule/8">Sch. 8 </a><a
+                            href="/id/nisi/1999/662/schedule/8/part/I">Pt. 1</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Burial Ground Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/141">1816 c. 141</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/141/section/2">s. 2</a></td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>The Local Government Changes for England (Magistrates'
+                            Courts) Regulations 1996</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/674">1996 No. 674</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/674/regulation/2">reg. 2</a> Sch. Pt. 2
+                        para. 5(2)(d)</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Burial Ground Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/141">1816 c. 141</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/141/section/2">s. 2</a></td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>The Magistrates' Courts (Wales) (Consequences of Local
+                            Government Changes) Order 1996</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/675">1996 No. 675</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/675/article/2">art. 2</a> Sch. Pt. 2 para.
+                        7(2)(d)</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Burial Ground Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/141">1816 c. 141</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/141/section/2">s. 2</a></td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>Access to Justice Act 1999</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1999/22">1999 c. 22</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1999/22/schedule/10">Sch. 10 </a><a
+                            href="/id/ukpga/1999/22/schedule/10/paragraph/4">para. 4</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Burial Ground Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/141">1816 c. 141</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/141/section/2">s. 2</a></td>
+                    <td>words repealed</td>
+                    <td class="centralCol"><strong>Courts Act 2003</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2003/39">2003 c. 39</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2003/39/schedule/8">Sch. 8 </a><a
+                            href="/id/ukpga/2003/39/schedule/8/paragraph/6">para. 6</a> <a
+                            href="/id/ukpga/2003/39/schedule/10">Sch. 10</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Burial Ground Act 1816</strong></td>
+                    <td><a href="/id/ukpga/1816/141">1816 c. 141</a></td>
+                    <td><a href="/id/ukpga/Geo3/56/141">specified amended provision(s)</a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Courts Act 2003 (Commencement No. 10) Order
+                            2005</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/2005/910">2005 No. 910</a></td>
+                    <td class="centralCol"><a href="/id/uksi/2005/910/article/3">art. 3</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td><a class="helpItem hover" href="#noted12e1645"><img alt="Note"
+                                src="/images/chrome/noteIcon.gif" /></a>
+                        <div id="noted12e1645" class="help"><span class="icon"></span>
+                            <div class="content"><a href="#" class="close"><img alt="Close"
+                                        src="/images/chrome/closeIcon.gif" /></a>commencement order for 2003
+                                c. 39</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Treason Act 1817 (repealed 30.9.1998)</strong></td>
+                    <td><a href="/id/ukpga/1817/6">1817 c. 6</a></td>
+                    <td><a href="/id/ukpga/Geo3/57/6">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Crime and Disorder Act 1998</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/37">1998 c. 37</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1998/37/section/120/2">s. 120(2)</a> <a
+                            href="/id/ukpga/1998/37/schedule/10">Sch. 10</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Treason Act 1817 (repealed 30.9.1998)</strong></td>
+                    <td><a href="/id/ukpga/1817/6">1817 c. 6</a></td>
+                    <td><a href="/id/ukpga/Geo3/57/6"></a></td>
+                    <td>Commencement Order</td>
+                    <td class="centralCol"><strong>The Crime and Disorder Act 1998 (Commencement No. 2 and
+                            Transitional Provisions) Order 1998</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1998/2327">1998 No. 2327</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1998/2327"></a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Deserted Tenements Act 1817 (repealed)</strong></td>
+                    <td><a href="/id/ukpga/1817/52">1817 c. 52</a></td>
+                    <td><a href="/id/ukpga/Geo3/57/52">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Tribunals, Courts and Enforcement Act 2007</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/15">2007 c. 15</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/2007/15/schedule/14">Sch. 14 </a><a
+                            href="/id/ukpga/2007/15/schedule/14/paragraph/5">para. 5</a> <a
+                            href="/id/ukpga/2007/15/schedule/23">Sch. 23 </a><a
+                            href="/id/ukpga/2007/15/schedule/23/part/4">Pt. 4</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Distress (Costs) Act 1817 (repealed 8.11.1995)</strong></td>
+                    <td><a href="/id/ukpga/1817/93">1817 c. 93</a></td>
+                    <td><a href="/id/ukpga/Geo3/57/93">Act</a></td>
+                    <td>repealed</td>
+                    <td class="centralCol"><strong>Statute Law (Repeals) Act 1995</strong></td>
+                    <td class="centralCol"><a href="/id/ukpga/1995/44">1995 c. 44</a></td>
+                    <td class="centralCol"><a href="/id/ukpga/1995/44/section/1">s. 1</a> <a
+                            href="/id/ukpga/1995/44/schedule/1">Sch. 1 </a><a
+                            href="/id/ukpga/1995/44/schedule/1/part/VI">Pt. 6</a></td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr class="oddRow">
+                    <td><strong>Distress (Costs) Act 1817 (repealed 8.11.1995)</strong></td>
+                    <td><a href="/id/ukpga/1817/93">1817 c. 93</a></td>
+                    <td><a href="/id/ukpga/Geo3/57/93/section/2">s. 2</a></td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>The Local Government Changes for England (Magistrates'
+                            Courts) Regulations 1996</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/674">1996 No. 674</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/674/regulation/2">reg. 2</a> Sch. Pt. 2
+                        para. 5(2)(e)</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Distress (Costs) Act 1817 (repealed 8.11.1995)</strong></td>
+                    <td><a href="/id/ukpga/1817/93">1817 c. 93</a></td>
+                    <td><a href="/id/ukpga/Geo3/57/93/section/2">s. 2</a></td>
+                    <td>amended</td>
+                    <td class="centralCol"><strong>The Magistrates' Courts (Wales) (Consequences of Local
+                            Government Changes) Order 1996</strong></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/675">1996 No. 675</a></td>
+                    <td class="centralCol"><a href="/id/uksi/1996/675/article/2">art. 2</a> Sch. Pt. 2 para.
+                        7(2)(e)</td>
+                    <td><span class="effectsApplied">Yes</span></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="contentFooter">
+            <div class="interface">
+                <div class="prevPagesNextNav">
+                    <ul>
+                        <li class="currentPage pageLink"><strong><span class="accessibleText">This is
+                                    results page </span>1</strong></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=2"
+                                rel="next"><span class="accessibleText">Results page </span>2</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=3"><span
+                                    class="accessibleText">Results page </span>3</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=4"><span
+                                    class="accessibleText">Results page </span>4</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=5"><span
+                                    class="accessibleText">Results page </span>5</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=6"><span
+                                    class="accessibleText">Results page </span>6</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=7"><span
+                                    class="accessibleText">Results page </span>7</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=8"><span
+                                    class="accessibleText">Results page </span>8</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=9"><span
+                                    class="accessibleText">Results page </span>9</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=10"><span
+                                    class="accessibleText">Results page </span>10</a></li>
+                        <li class="pageLink next"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=2"
+                                title="next page"><span class="btl"></span><span
+                                    class="btr"></span>Next<span class="accessibleText"> results
+                                    page</span><span class="bbl"></span><span class="bbr"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="backToTop"><a href="#top">Back to top</a></p>
+    </div>
+</div>
+<div class="help" id="changesThatAffectHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Changes made to website text</h3>
+        <p>Use this facility to search for changes that affect one or more items of legislation based on the
+            criteria below. Alternatively you can leave this side of the form blank to find the changes and
+            effects on any revised legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to changes
+                affecting the legislation type you are interested in. The drop down list only includes those
+                legislation types for which we hold revised versions for on legislation.gov.uk.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes that affect legislation of a particular year or over a range of years.</li>
+            <li>Number: If you are looking for changes that affect a specific item of legislation and you
+                know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="madeByHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Made by</h3>
+        <p>Narrow down your search for changed legislation by entering details about the legislation that
+            made the effects using this side of the form. Alternatively, leave his side of the form blank
+            for effects and changes made by any legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to the
+                legislation type you are interested in using the drop down box.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes made by legislation in a particular year or over a range of years. Tip: to search
+                for all changes made by all legislation in a particular year, enter the year in this side of
+                the form, leaving the ‘Changes that affect’ side blank.</li>
+            <li>Number: If you are looking for changes that are made by a specific item of legislation and
+                you know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="resultsShowingHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Use the tick boxes to see either:</h3>
+        <ul>
+            <li>All changes: All the changes and effects that match your search</li>
+            <li>Applied changes: Those changes and effects that match your search criteria and have been
+                applied to the text of legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+            <li>Unapplied changes: Those changes and effects that match your search criteria but have not
+                yet been applied to the legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="appliedHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Changes applied to text</h3>
+        <p>In this column, 'Yes' indicates that the changes have been applied to the text of the revised
+            legislation on this site by the Legislation.gov.uk editorial team.</p>
+        <p>'Not yet' indicates that the changes and effects have not yet been applied to the text on the
+            website. However, a list of any unapplied changes will be displayed alongside the content of the
+            legislation at provision level in the 'Changes to Legislation' red box.</p>
+        <p>'N/A (see note)' indicates that the changes are not going to be applied by the editorial team.
+            More information on why the changes will not be applied will be contained in the 'Notes' column.
+        </p>
+        <p>Where the text of legislation is available in both English and Welsh languages, changes will be
+            applied to both language versions separately. Where changes have been made to both language
+            versions this column will have an entry of 'Yes'.</p>
+        <p>Where changes have been applied to one language version and not the other this column will state
+            which changes have been applied and which have not for each language.</p>
+    </div>
+</div>
+<div class="help" id="typeofEffectHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="/images/chrome/closeIcon.gif" /></a>
+        <h3>Type of effect</h3>
+        <p>There are many different types of effects. An “effect” can denote any way in which legislation
+            impacts on or changes other legislation. There are three main types of effect which result in
+            the text of the legislation changing: insertions (text is added), substitutions (text is
+            replaced) and repeals (where existing text ceases to have effect and may also be removed from
+            the legislation). In addition there are some effects that we record that do not result in a
+            change to the text of the legislation e.g. “Applied” which is used where provisions of existing
+            legislation are applied to new legislation or to some set of circumstances specified in the
+            applying legislation.</p>
+    </div>
+</div>
+{% endblock %}
