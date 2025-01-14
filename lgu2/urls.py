@@ -91,10 +91,10 @@ urlpatterns += i18n_patterns(
 
 
     # changes
-    re_path(r'^changes$', changes.intro),
+    re_path(r'^changes$', changes.intro, name='changes-intro'),
     re_path(fr'^changes/affected/{TYPE}$', changes.affected, name='changes-affected-type'),
     re_path(fr'^changes/affected/{TYPE}/{YEAR4}$', changes.affected, name='changes-affected-type-year'),
-    re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}$', changes.affected, name='changes-affected-number'),
+    re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}$', changes.affected, name='changes-affected-type-number'),
     re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{NUMBER}$', changes.affected, name='changes-affected-type-year-number'),
 
     prefix_default_language=False

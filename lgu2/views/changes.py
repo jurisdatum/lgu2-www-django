@@ -21,10 +21,13 @@ def intro(request):
                 return redirect('changes-affected-type-year', type=affected_type, year=affected_year)
         else:
             if affected_number:
-                return redirect('changes-affected-number', type=affected_type, number=affected_number)
+                return redirect('changes-affected-type-number', type=affected_type, number=affected_number)
             else:
                 return redirect('changes-affected-type', type=affected_type)
-        
+    if request.GET:
+        # log unrecognized parameters
+        return redirect('changes-intro')
+
     template = loader.get_template('changes/intro.html')
     return HttpResponse(template.render({}, request))
 
