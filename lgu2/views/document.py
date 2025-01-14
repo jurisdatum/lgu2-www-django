@@ -5,7 +5,7 @@ from typing import Optional, Union
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 
-from ..api.document import get_akn, get_clml, get_document, Meta as DocumentMetadata
+from ..api.document import get_akn, get_clml, get_document, DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label

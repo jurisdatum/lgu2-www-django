@@ -1,15 +1,23 @@
 
-from typing import Optional, TypedDict
+from typing import List, Optional, TypedDict
 from urllib.parse import urlencode
 
+from lgu2.api.responses.effects import UnappliedEffect
+
 from . import server
-from .document import Meta, XmlPackage, package_xml
+from .document import CommonMetadata, XmlPackage, package_xml
 
 
-class FragmentMetadata(Meta):
+class FragmentMetadata(CommonMetadata):
     fragment: str
     prev: Optional[str]
     next: Optional[str]
+    unappliedEffects: 'FragmentEffects'
+
+
+class FragmentEffects(TypedDict):
+    fragment: List[UnappliedEffect]
+    ancestor: List[UnappliedEffect]
 
 
 class Fragment(TypedDict):

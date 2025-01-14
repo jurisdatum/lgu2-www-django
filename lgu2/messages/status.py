@@ -2,14 +2,14 @@
 from datetime import datetime
 import re
 
-from ..api.document import Meta
+from ..api.document import CommonMetadata
 
 STATUS_WARNING_ORIGINAL_VERSION = "This is the original version (as it was originally {version})."
 
 STATUS_WARNING_PIT_AT = "Point in time view as at {pit}."
 
 
-def get_status_message(meta: Meta):
+def get_status_message(meta: CommonMetadata):
 
     status = meta['status']
     version = meta['version']

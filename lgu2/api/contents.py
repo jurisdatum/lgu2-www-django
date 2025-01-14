@@ -3,7 +3,7 @@ from typing import List, Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
-from .document import Meta, XmlPackage, package_xml
+from .document import DocumentMetadata, XmlPackage, package_xml
 
 
 class Item(TypedDict):
@@ -24,7 +24,7 @@ class Contents(TypedDict):
 
 
 class Response(TypedDict):
-    meta: Meta
+    meta: DocumentMetadata
     html: str
 
 

@@ -2,7 +2,7 @@
 from typing import List, NotRequired, Optional, TypedDict
 
 
-class Effect(TypedDict):
+class UnappliedEffect(TypedDict):
     required: bool
     type: str
     affected: 'Provisions'
