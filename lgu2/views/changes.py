@@ -8,6 +8,33 @@ from django.template import loader
 from ..api import effects as api
 
 
+TYPES = {
+    'ukpga': "UK Public General Acts",
+    'ukla': "UK Local Acts",
+    'apgb': "Acts of the Parliament of Great Britain",
+    'aep': "Acts of the English Parliament",
+    'aosp': "Acts of the Old Scottish Parliament",
+    'asp': "Acts of the Scottish Parliament",
+    'aip': "Acts of the Old Irish Parliament",
+    'apni': "Acts of the Northern Ireland Parliament",
+    'mnia': "Measures of the Northern Ireland Assembly",
+    'nia': "Acts of the Northern Ireland Assembly",
+    'ukcm': "Church Measures",
+    'asc': "Acts of Senedd Cymru",
+    'anaw': "Acts of the National Assembly for Wales",
+    'mwa': "Measures of the National Assembly for Wales",
+    'uksi': "UK Statutory Instruments",
+    'ssi': "Scottish Statutory Instruments",
+    'wsi': "Wales Statutory Instruments",
+    'nisr': "Northern Ireland Statutory Rules",
+    'nisi': "Northern Ireland Orders in Council",
+    'nisro': "Northern Ireland Statutory Rules and Orders",
+    'eur': "Regulations originating from the EU",
+    'eudn': "Decisions originating from the EU",
+    'eudr': "Directives originating from the EU",
+}
+
+
 def intro(request):
 
     affected_type = request.GET.get('affected-type')
@@ -28,13 +55,30 @@ def intro(request):
         # log unrecognized parameters
         return redirect('changes-intro')
 
+    context = {
+        'types': TYPES
+    }
+
     template = loader.get_template('changes/intro.html')
-    return HttpResponse(template.render({}, request))
+    return HttpResponse(template.render(context, request))
 
 
 def affected(request, type: str, year: Optional[str] = None, number: Optional[str] = None):
+
     if type == 'all':
         type = None
+
     # effects = api.fetch(targetType=type, targetYear=year, targetNumber=number)
+
+    context = {
+        'query': {
+            'affected_type': type,
+            'affected_year': year,
+            'affected_number': number
+        },
+        'types': TYPES,
+        'effects': []
+    }
+
     template = loader.get_template('changes/results.html')
-    return HttpResponse(template.render({}, request))
+    return HttpResponse(template.render(context, request))
