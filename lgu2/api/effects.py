@@ -2,6 +2,8 @@
 from typing import Optional
 from urllib.parse import urlencode
 
+from .responses.effects2 import Page
+
 from . import server
 
 
@@ -15,7 +17,7 @@ def fetch(
     targetYear: Optional[str] = None,
     targetNumber: Optional[int] = None,
     targetTitle: Optional[str] = None
-):
+) -> Page:
     url = _make_url(**locals())
     return server.get_json(url)
 

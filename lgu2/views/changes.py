@@ -68,7 +68,7 @@ def affected(request, type: str, year: Optional[str] = None, number: Optional[st
     if type == 'all':
         type = None
 
-    # effects = api.fetch(targetType=type, targetYear=year, targetNumber=number)
+    page = api.fetch(targetType=type, targetYear=year, targetNumber=number)
 
     context = {
         'query': {
@@ -77,7 +77,8 @@ def affected(request, type: str, year: Optional[str] = None, number: Optional[st
             'affected_number': number
         },
         'types': TYPES,
-        'effects': []
+        'meta': page['meta'],
+        'effects': page['effects']
     }
 
     template = loader.get_template('changes/results.html')
