@@ -67,6 +67,8 @@ def affected(request, type: str, year: Optional[str] = None, number: Optional[st
 
     if type == 'all':
         type = None
+    year = int(year) if year is not None else None
+    number = int(number) if number is not None else None
 
     page = api.fetch(targetType=type, targetYear=year, targetNumber=number)
 
@@ -83,3 +85,17 @@ def affected(request, type: str, year: Optional[str] = None, number: Optional[st
 
     template = loader.get_template('changes/results.html')
     return HttpResponse(template.render(context, request))
+
+
+def affected_data(request, format: str, type: str, year: Optional[str] = None, number: Optional[str] = None):
+    if type == 'all':
+        type = None
+    year = int(year) if year is not None else None
+    number = int(number) if number is not None else None
+    if format == 'feed':
+        atom = api.fetch_atom(targetType=type, targetYear=year, targetNumber=number)
+        return HttpResponse(atom, content_type='application/atom+xml')
+    if format == 'json':
+        page = api.fetch(targetType=type, targetYear=year, targetNumber=number)
+        return JsonResponse(page)
+    return HttpResponse(status=406)

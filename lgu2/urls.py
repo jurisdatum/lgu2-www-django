@@ -38,7 +38,7 @@ NUMBER = r'(?P<number>[0-9]+)'
 SECTION = r'(?P<section>[A-Za-z0-9/-]+?)'  # not sure about ? on the end
 VERSION = r'(?P<version>enacted|made|\d{4}-\d{2}-\d{2})'  # ToDo 'created', 'adopted'
 LANG = r'(?P<lang>english|welsh)'
-DATA = r'data\.(?P<format>xml|akn|html|json)'
+DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
 
@@ -93,9 +93,13 @@ urlpatterns += i18n_patterns(
     # changes
     re_path(r'^changes$', changes.intro, name='changes-intro'),
     re_path(fr'^changes/affected/{TYPE}$', changes.affected, name='changes-affected-type'),
+    re_path(fr'^changes/affected/{TYPE}/{DATA}$', changes.affected_data),
     re_path(fr'^changes/affected/{TYPE}/{YEAR4}$', changes.affected, name='changes-affected-type-year'),
+    re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{DATA}$', changes.affected_data),
     re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}$', changes.affected, name='changes-affected-type-number'),
+    re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}/{DATA}$', changes.affected_data),
     re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{NUMBER}$', changes.affected, name='changes-affected-type-year-number'),
+    re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{NUMBER}/{DATA}$', changes.affected_data),
 
     prefix_default_language=False
 )

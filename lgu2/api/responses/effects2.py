@@ -46,6 +46,8 @@ class Metadata(TypedDict):
     page: int
     pageSize: int
     totalPages: int
+    startIndex: int
+    totalResults: int
     updated: str
 
 
