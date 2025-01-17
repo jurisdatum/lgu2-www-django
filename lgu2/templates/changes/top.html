@@ -1,0 +1,62 @@
+{% load i18n %}
+<div id="topPager" class="interface">
+    <div class="resultsInfo">
+        {% if effects %}
+        <span>{{ meta.startIndex }} to {{ meta.lastIndex }} of {{ meta.totalResults }} results</span>
+        {% else %}
+        <span>Your search returned 0 results</span>
+        {% endif %}
+    </div>
+    <div class="prevPagesNextNav">
+        <ul>
+            {% if pages.prev %}
+            <li class="{{ pages.prev.class }}">
+                <a href="{{ pages.prev.link }}" title="previous page">
+                    <span class="btl"></span>
+                    <span class="btr"></span>
+                    <span>{% translate 'Previous' %}</span>
+                    <span class="accessibleText"> results page</span>
+                    <span class="bbl"></span>
+                    <span class="bbr"></span>
+                </a>
+            </li>
+            {% endif %}
+            {% for page in pages.all %}
+            <li class="{{ page.class }}">
+                {% if page.number == meta.page %}
+                <strong>
+                    <span class="accessibleText">Results page</span>
+                    <span>{{ page.number }}</span>
+                </strong>
+                {% else %}
+                <a href="{{ page.link }}">
+                    <span class="accessibleText">Results page</span>
+                    <span>{{ page.number }}</span>
+                </a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% if pages.next %}
+            <li class="{{ pages.next.class }}">
+                <a href="{{ pages.next.link }}" title="previous page">
+                    <span class="btl"></span>
+                    <span class="btr"></span>
+                    <span>{% translate 'Next' %}</span>
+                    <span class="accessibleText"> results page</span>
+                    <span class="bbl"></span>
+                    <span class="bbr"></span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="subscribe">
+        <a href="{{ feed_link }}" class="userFunctionalElement">
+            <span class="background">
+                <span class="btl"></span>
+                <span class="btr"></span>Subscribe to this list<span class="bbl"></span>
+                <span class="bbr"></span>
+            </span>
+        </a>
+    </div>
+</div>

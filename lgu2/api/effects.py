@@ -16,7 +16,8 @@ def fetch(
     targetType: Optional[str] = None,
     targetYear: Optional[int] = None,
     targetNumber: Optional[int] = None,
-    targetTitle: Optional[str] = None
+    targetTitle: Optional[str] = None,
+    page: int = 1
 ) -> Page:
     url = _make_url(**locals())
     return server.get_json(url)
@@ -26,7 +27,8 @@ def fetch_atom(
     targetType: Optional[str] = None,
     targetYear: Optional[int] = None,
     targetNumber: Optional[int] = None,
-    targetTitle: Optional[str] = None
+    targetTitle: Optional[str] = None,
+    page: int = 1
 ) -> str:
     url = _make_url(**locals())
     return server.get(url, 'application/atom+xml').text
