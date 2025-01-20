@@ -26,7 +26,7 @@ class AboutUsPage(models.Model):
     subheading_1 = models.CharField(max_length=255, blank=True)
     introduction_subheading_1 = RichTextField(help_text="Introduction text for About this website section", blank=True)
     
-    content_panels = [
+    panels = [
         FieldPanel('main_heading'),
         FieldPanel('subheading_1'),
         FieldPanel('introduction_subheading_1'),        
@@ -41,7 +41,7 @@ class AboutUsPageSubSection(models.Model):
     subheading_2 = models.CharField(max_length=255)
     introduction_subheading_2 = RichTextField(help_text="Introduction text for About us", blank=True)
     
-    content_panels = [
+    panels = [
         FieldPanel('subheading_2'),
         FieldPanel('introduction_subheading_2'),
     ]
