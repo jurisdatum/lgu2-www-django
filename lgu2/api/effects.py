@@ -2,7 +2,7 @@
 from typing import Optional
 from urllib.parse import urlencode
 
-from .responses.effects2 import Page
+from .responses.effects import Page
 
 from . import server
 
@@ -17,6 +17,10 @@ def fetch(
     targetYear: Optional[int] = None,
     targetNumber: Optional[int] = None,
     targetTitle: Optional[str] = None,
+    sourceType: Optional[str] = None,
+    sourceYear: Optional[int] = None,
+    sourceNumber: Optional[int] = None,
+    sourceTitle: Optional[str] = None,
     page: int = 1
 ) -> Page:
     url = _make_url(**locals())
@@ -28,6 +32,10 @@ def fetch_atom(
     targetYear: Optional[int] = None,
     targetNumber: Optional[int] = None,
     targetTitle: Optional[str] = None,
+    sourceType: Optional[str] = None,
+    sourceYear: Optional[int] = None,
+    sourceNumber: Optional[int] = None,
+    sourceTitle: Optional[str] = None,
     page: int = 1
 ) -> str:
     url = _make_url(**locals())

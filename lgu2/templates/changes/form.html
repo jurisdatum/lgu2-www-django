@@ -6,7 +6,8 @@
         <div class="title"><label for="affected-title">Title:</label><input id="affected-title"
                 name="affected-title" type="text" value="" /></div>
         <div class="typeChoice">
-            <label for="affected-type">Legislation type:</label><select id="affected-type" name="affected-type">
+            <label for="affected-type">Legislation type:</label>
+            <select id="affected-type" name="affected-type">
                 <option value="">Any</option>
                 {% for key, value in types.items %}
                 <option value="{{ key }}" {% if key == query.affected_type %}selected{% endif %}>{{ value }}</option>
@@ -46,68 +47,32 @@
                 alt="Made by help" src="/images/chrome/helpIcon.gif" /></a>
         <div class="title"><label for="affecting-title">Title:</label><input id="affecting-title"
                 name="affecting-title" type="text" value="" /></div>
-        <div class="typeChoice"><label for="affecting-type">Legislation type:</label><select
-                id="affecting-type" name="affecting-type">
+        <div class="typeChoice">
+            <label for="affecting-type">Legislation type:</label>
+            <select id="affecting-type" name="affecting-type">
                 <option value="">Any</option>
-                <option value="ukpga">UK Public General Acts</option>
-                <option value="ukla">UK Local Acts</option>
-                <option value="ukppa">UK Private and Personal Acts</option>
-                <option value="asp">Acts of the Scottish Parliament</option>
-                <option value="asc">Acts of Senedd Cymru</option>
-                <option value="anaw">Acts of the National Assembly for Wales</option>
-                <option value="mwa">Measures of the National Assembly for Wales</option>
-                <option value="ukcm">Church Measures</option>
-                <option value="nia">Acts of the Northern Ireland Assembly</option>
-                <option value="gbla">Local Acts of the Parliament of Great Britain</option>
-                <option value="gbppa">Private and Personal Acts of the Parliament of Great Britain
-                </option>
-                <option value="uksi">UK Statutory Instruments</option>
-                <option value="wsi">Wales Statutory Instruments</option>
-                <option value="ssi">Scottish Statutory Instruments</option>
-                <option value="nisi">Northern Ireland Orders in Council</option>
-                <option value="nisr">Northern Ireland Statutory Rules</option>
-                <option value="ukci">Church Instruments</option>
-                <option value="ukmd">UK Ministerial Directions</option>
-                <option value="ukmo">UK Ministerial Orders</option>
-                <option value="eur">Regulations originating from the EU</option>
-                <option value="eudn">Decisions originating from the EU</option>
-                <option value="eudr">Directives originating from the EU</option>
-            </select></div>
+                {% for key, value in types.items %}
+                <option value="{{ key }}" {% if key == query.affecting_type %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="yearChoice"><input type="radio" name="affecting-year-choice"
                 id="affecting-year-choice-specific" value="specific" class="yearChoice radio"
                 checked="checked" /><label for="affecting-year-choice-specific">Specific year and
                 number</label>
             <div class="yearChoiceFields" id="affectingSingleYear">
-                <div class="from"><label for="affecting-year">Year:</label><select
-                        name="affecting-year" id="affecting-year">
-                        <option value="" selected="selected">Any</option>
-                        <option value="2002">2002</option>
-                        <option value="2003">2003</option>
-                        <option value="2004">2004</option>
-                        <option value="2005">2005</option>
-                        <option value="2006">2006</option>
-                        <option value="2007">2007</option>
-                        <option value="2008">2008</option>
-                        <option value="2009">2009</option>
-                        <option value="2010">2010</option>
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
+                <div class="from">
+                    <label for="affecting-year">Year:</label>
+                    <select name="affecting-year" id="affecting-year">
+                        <option value="">Any</option>
+                        {% for year in affecting_years %}
+                        <option value="{{ year }}" {% if year == query.affecting_year %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
                     </select></div>
-                <div class="number"><label for="affecting-number">Number:</label><input
-                        id="affecting-number" name="affecting-number" type="text" value="" /></div>
+                <div class="number">
+                    <label for="affecting-number">Number:</label>
+                    <input id="affecting-number" name="affecting-number" type="text" value="{{ query.affecting_number|default_if_none:'' }}" />
+                </div>
             </div>
         </div>
         <div class="yearChoice"><input type="radio" name="affecting-year-choice"
