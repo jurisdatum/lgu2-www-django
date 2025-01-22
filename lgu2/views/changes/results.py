@@ -124,7 +124,7 @@ def affecting(request, type: str, year: Optional[str] = None, number: Optional[s
     context = {
         'query': {
             'affecting_type': type,
-            'affecting_year': year,
+            'affecting_year': year2,
             'affecting_number': number
         },
         'types': TYPES,
