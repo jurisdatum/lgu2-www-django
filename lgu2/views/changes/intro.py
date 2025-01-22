@@ -12,9 +12,9 @@ def intro(request):
     redrct = get_redirect(request)
     if redrct:
         return redrct
-    if request.GET:
-        # log unrecognized parameters
-        return redirect('changes-intro')
+    # if request.GET:
+    #     # log unrecognized parameters
+    #     return redirect('changes-intro')
 
     context = { 'types': TYPES, 'affecting_years': AFFECTING_YEARS }
     template = loader.get_template('changes/intro.html')

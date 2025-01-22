@@ -5,10 +5,9 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.urls import reverse
 
-from lgu2.api.responses.effects import Metadata
-from lgu2.views.changes.types import AFFECTING_YEARS, TYPES
-
 from ...api import effects as api
+from ...api.responses.effects import Metadata
+from .types import AFFECTING_YEARS, TYPES
 
 
 def make_nav(meta: Metadata, link_prefix: str):
@@ -138,7 +137,6 @@ def affecting(request, type: str, year: Optional[str] = None, number: Optional[s
 
     template = loader.get_template('changes/results.html')
     return HttpResponse(template.render(context, request))
-
 
 # data
 

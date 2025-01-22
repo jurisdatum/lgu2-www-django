@@ -17,6 +17,7 @@ from .views.changes.results import affected as changes_affected
 from .views.changes.results import affecting as changes_affecting
 from .views.changes.results import affected_data as changes_affected_data
 from .views.changes.results import affecting_data as changes_affecting_data
+from .views.changes.both import both as changes_both
 
 urlpatterns = i18n_patterns(
 
@@ -114,6 +115,10 @@ urlpatterns += i18n_patterns(
     re_path(fr'^changes/affecting/{TYPE}/\\*/{NUMBER}/{DATA}$', changes_affecting_data),
     re_path(fr'^changes/affecting/{TYPE}/{YEAR4}/{NUMBER}$', changes_affecting, name='changes-affecting-type-year-number'),
     re_path(fr'^changes/affecting/{TYPE}/{YEAR4}/{NUMBER}/{DATA}$', changes_affecting_data),
+
+    re_path(
+        r'^changes/affected(?:/(?P<type1>[a-z]{3,5}))(?:/(?P<year1>[0-9]{4}|\*))?(?:/(?P<number1>[0-9]+))?/affecting(?:/(?P<type2>[a-z]{3,5}))(?:/(?P<year2>[0-9]{4}|\*))?(?:/(?P<number2>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
+        changes_both, name='changes-both'),
 
     prefix_default_language=False
 )
