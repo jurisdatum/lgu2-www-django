@@ -49,12 +49,12 @@ http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3
 	padding: 0 5px 0 0;	
 	display: block;
 	float: left;
-	background:	url(/images/chrome/iconSprites.gif) no-repeat scroll -5px -2275px;
+	background:	url('../../images/chrome/iconSprites.gif') no-repeat scroll -5px -2275px;
 	margin: 0 5px;
 }
 
 #searchChanges #effectsOptions .checked {
-	background: url(/images/chrome/iconSprites.gif) no-repeat scroll -5px -2425px;	
+	background: url('../../images/chrome/iconSprites.gif') no-repeat scroll -5px -2425px;	
 }
 
 /* Results info */
