@@ -13,11 +13,7 @@ from .views import toc
 from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
-from .views.changes.results import affected as changes_affected
-from .views.changes.results import affecting as changes_affecting
-from .views.changes.results import affected_data as changes_affected_data
-from .views.changes.results import affecting_data as changes_affecting_data
-from .views.changes.both import both as changes_both
+from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
 
 urlpatterns = i18n_patterns(
 
@@ -97,25 +93,12 @@ urlpatterns += i18n_patterns(
 
     # changes
     re_path(r'^changes$', changes_intro, name='changes-intro'),
-
-    re_path(fr'^changes/affected/{TYPE}$', changes_affected, name='changes-affected-type'),
-    re_path(fr'^changes/affected/{TYPE}/{DATA}$', changes_affected_data),
-    re_path(fr'^changes/affected/{TYPE}/{YEAR4}$', changes_affected, name='changes-affected-type-year'),
-    re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{DATA}$', changes_affected_data),
-    re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}$', changes_affected, name='changes-affected-type-number'),
-    re_path(fr'^changes/affected/{TYPE}/\\*/{NUMBER}/{DATA}$', changes_affected_data),
-    re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{NUMBER}$', changes_affected, name='changes-affected-type-year-number'),
-    re_path(fr'^changes/affected/{TYPE}/{YEAR4}/{NUMBER}/{DATA}$', changes_affected_data),
-
-    re_path(fr'^changes/affecting/{TYPE}$', changes_affecting, name='changes-affecting-type'),
-    re_path(fr'^changes/affecting/{TYPE}/{DATA}$', changes_affecting_data),
-    re_path(fr'^changes/affecting/{TYPE}/{YEAR4}$', changes_affecting, name='changes-affecting-type-year'),
-    re_path(fr'^changes/affecting/{TYPE}/{YEAR4}/{DATA}$', changes_affecting_data),
-    re_path(fr'^changes/affecting/{TYPE}/\\*/{NUMBER}$', changes_affecting, name='changes-affecting-type-number'),
-    re_path(fr'^changes/affecting/{TYPE}/\\*/{NUMBER}/{DATA}$', changes_affecting_data),
-    re_path(fr'^changes/affecting/{TYPE}/{YEAR4}/{NUMBER}$', changes_affecting, name='changes-affecting-type-year-number'),
-    re_path(fr'^changes/affecting/{TYPE}/{YEAR4}/{NUMBER}/{DATA}$', changes_affecting_data),
-
+    re_path(
+        r'^changes/affected(?:/(?P<type>[a-z]{3,5}))(?:/(?P<year>[0-9]{4}|\*))?(?:/(?P<number>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
+        changes_affected, name='changes-affected'),
+    re_path(
+        r'^changes/affecting(?:/(?P<type>[a-z]{3,5}))(?:/(?P<year>[0-9]{4}|\*))?(?:/(?P<number>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
+        changes_affecting, name='changes-affecting'),
     re_path(
         r'^changes/affected(?:/(?P<type1>[a-z]{3,5}))(?:/(?P<year1>[0-9]{4}|\*))?(?:/(?P<number1>[0-9]+))?/affecting(?:/(?P<type2>[a-z]{3,5}))(?:/(?P<year2>[0-9]{4}|\*))?(?:/(?P<number2>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
         changes_both, name='changes-both'),

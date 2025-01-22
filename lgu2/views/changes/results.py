@@ -10,7 +10,47 @@ from ...api.responses.effects import Metadata
 from .types import AFFECTING_YEARS, TYPES
 
 
-def make_nav(meta: Metadata, link_prefix: str):
+def _get_page(request):
+    page = request.GET.get('page', '1')
+    try:
+        page = int(page)
+    except ValueError:
+        page = 1
+    return page
+
+
+def _capture_query(type1=None, year1=None, number1=None, type2=None, year2=None, number2=None):
+    affected_type = None if type1 == 'all' else type1
+    affected_year = None if year1 == '*' else year1
+    affected_year = int(affected_year) if affected_year is not None else None
+    affected_number = int(number1) if number1 is not None else None
+    affecting_type = None if type2 == 'all' else type2
+    affecting_year = None if year2 == '*' else year2
+    affecting_year = int(affecting_year) if affecting_year is not None else None
+    affecting_number = int(number2) if number2 is not None else None
+    return {
+        'affected_type': affected_type,
+        'affected_year': affected_year,
+        'affected_number': affected_number,
+        'affecting_type': affecting_type,
+        'affecting_year': affecting_year,
+        'affecting_number': affecting_number
+    }
+
+
+def _make_api_parameters(query, page):
+    return {
+        'targetType': query['affected_type'],
+        'targetYear': query['affected_year'],
+        'targetNumber': query['affected_number'],
+        'sourceType': query['affecting_type'],
+        'sourceYear': query['affecting_year'],
+        'sourceNumber': query['affecting_number'],
+        'page': page
+    }
+
+
+def _make_nav(meta: Metadata, link_prefix: str):
 
     page: int = meta['page']
     last_page: int = meta['totalPages']
@@ -41,43 +81,42 @@ def make_nav(meta: Metadata, link_prefix: str):
     }
 
 
-def affected(request, type: str, year: Optional[str] = None, number: Optional[str] = None):
+def affected(request, type: str, year: Optional[str] = None, number: Optional[str] = None, format: Optional[str] = None):
+    link_prefix = reverse('changes-affected', kwargs={key: value for key, value in locals().items() if key != 'request' and value is not None})
+    query = _capture_query(type, year, number)
+    return _combined(request, query, link_prefix, format)
 
-    page = request.GET.get('page', '1')
-    try:
-        page = int(page)
-    except ValueError:
-        page = 1
 
-    # convert parameters for API call
-    type2 = None if type == 'all' else type
-    year2 = int(year) if year is not None else None
-    number2 = int(number) if number is not None else None
+def affecting(request, type: str, year: Optional[str] = None, number: Optional[str] = None, format: Optional[str] = None):
+    link_prefix = reverse('changes-affecting', kwargs={key: value for key, value in locals().items() if key != 'request' and value is not None})
+    query = _capture_query(type2=type, year2=year, number2=number)
+    return _combined(request, query, link_prefix, format)
 
-    data = api.fetch(targetType=type2, targetYear=year2, targetNumber=number2, page=page)
+
+def both(request, type1=None, year1=None, number1=None, type2=None, year2=None, number2=None, format=None):
+    link_prefix = reverse('changes-both', kwargs={key: value for key, value in locals().items() if key != 'request' and value is not None})
+    query = _capture_query(type1, year1, number1, type2, year2, number2)
+    return _combined(request, query, link_prefix, format)
+
+
+def _combined(request, query, link_prefix, format):
+
+    page = _get_page(request)
+
+    api_params = _make_api_parameters(query, page)
+
+    if format is not None:
+        return _data(api_params, format)
+
+    data = api.fetch(**api_params)
+
     meta = data['meta']
-
     meta['lastIndex'] = meta['startIndex'] + len(data['effects']) - 1
 
-    if year is None:
-        if number is None:
-            link_prefix = reverse('changes-affected-type', kwargs={'type': type})
-        else:
-            link_prefix = reverse('changes-affected-type-number', kwargs={'type': type, 'number': number})
-    else:
-        if number is None:
-            link_prefix = reverse('changes-affected-type-year', kwargs={'type': type, 'year': year})
-        else:
-            link_prefix = reverse('changes-affected-type-year-number', kwargs={'type': type, 'year': year, 'number': number})
-
-    nav = make_nav(meta, link_prefix) if data['effects'] else {}
+    nav = _make_nav(meta, link_prefix) if data['effects'] else {}
 
     context = {
-        'query': {
-            'affected_type': type,
-            'affected_year': year,
-            'affected_number': number
-        },
+        'query': query,
         'types': TYPES,
         'affecting_years': AFFECTING_YEARS,
         'meta': data['meta'],
@@ -90,99 +129,12 @@ def affected(request, type: str, year: Optional[str] = None, number: Optional[st
     return HttpResponse(template.render(context, request))
 
 
-def affecting(request, type: str, year: Optional[str] = None, number: Optional[str] = None):
-
-    page = request.GET.get('page', '1')
-    try:
-        page = int(page)
-    except ValueError:
-        page = 1
-
-    # convert parameters for API call
-    type2 = None if type == 'all' else type
-    year2 = int(year) if year is not None else None
-    number2 = int(number) if number is not None else None
-
-    data = api.fetch(sourceType=type2, sourceYear=year2, sourceNumber=number2, page=page)
-    meta = data['meta']
-
-    meta['lastIndex'] = meta['startIndex'] + len(data['effects']) - 1
-
-    if year is None:
-        if number is None:
-            link_prefix = reverse('changes-affecting-type', kwargs={'type': type})
-        else:
-            link_prefix = reverse('changes-affecting-type-number', kwargs={'type': type, 'number': number})
-    else:
-        if number is None:
-            link_prefix = reverse('changes-affecting-type-year', kwargs={'type': type, 'year': year})
-        else:
-            link_prefix = reverse('changes-affecting-type-year-number', kwargs={'type': type, 'year': year, 'number': number})
-
-    nav = make_nav(meta, link_prefix) if data['effects'] else {}
-
-    context = {
-        'query': {
-            'affecting_type': type,
-            'affecting_year': year2,
-            'affecting_number': number
-        },
-        'types': TYPES,
-        'affecting_years': AFFECTING_YEARS,
-        'meta': data['meta'],
-        'pages': nav,
-        'feed_link': link_prefix + '/data.feed',
-        'effects': data['effects']
-    }
-
-    template = loader.get_template('changes/results.html')
-    return HttpResponse(template.render(context, request))
-
-# data
-
-def affected_data(request, format: str, type: str, year: Optional[str] = None, number: Optional[str] = None):
-
-    page = request.GET.get('page', '1')
-    try:
-        page = int(page)
-    except ValueError:
-        page = 1
-
-    # convert parameters for API call
-    type2 = None if type == 'all' else type
-    year2 = int(year) if year is not None else None
-    number2 = int(number) if number is not None else None
+def _data(api_params, format: str):
 
     if format == 'feed':
-        atom = api.fetch_atom(targetType=type2, targetYear=year2, targetNumber=number2, page=page)
+        atom = api.fetch_atom(**api_params)
         return HttpResponse(atom, content_type='application/atom+xml')
 
     if format == 'json':
-        page = api.fetch(targetType=type2, targetYear=year2, targetNumber=number2, page=page)
+        page = api.fetch(**api_params)
         return JsonResponse(page)
-
-    return HttpResponse(status=406)
-
-
-def affecting_data(request, format: str, type: str, year: Optional[str] = None, number: Optional[str] = None):
-
-    page = request.GET.get('page', '1')
-    try:
-        page = int(page)
-    except ValueError:
-        page = 1
-
-    # convert parameters for API calls
-    type2 = None if type == 'all' else type
-    year2 = int(year) if year is not None else None
-    number2 = int(number) if number is not None else None
-
-    if format == 'feed':
-        atom = api.fetch_atom(sourceType=type2, sourceYear=year2, sourceNumber=number2, page=page)
-        return HttpResponse(atom, content_type='application/atom+xml')
-
-    if format == 'json':
-        page = api.fetch(sourceType=type2, sourceYear=year2, sourceNumber=number2, page=page)
-        return JsonResponse(page)
-
-    return HttpResponse(status=406)
