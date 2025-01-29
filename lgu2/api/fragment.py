@@ -2,7 +2,7 @@
 from typing import List, Optional, TypedDict
 from urllib.parse import urlencode
 
-from lgu2.api.responses.effects import UnappliedEffect
+from lgu2.api.responses.effects import Effect
 
 from . import server
 from .document import CommonMetadata, XmlPackage, package_xml
@@ -16,8 +16,8 @@ class FragmentMetadata(CommonMetadata):
 
 
 class FragmentEffects(TypedDict):
-    fragment: List[UnappliedEffect]
-    ancestor: List[UnappliedEffect]
+    fragment: List[Effect]
+    ancestor: List[Effect]
 
 
 class Fragment(TypedDict):

@@ -1,7 +1,7 @@
 
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
-# from django.contrib import admin
+from django.contrib import admin
 # from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import path, re_path
@@ -12,6 +12,8 @@ from .views.document import document, data as document_data
 from .views import toc
 from .views.metadata import metadata, combined
 from .views import fragment
+from .views.changes.intro import intro as changes_intro
+from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
 
 urlpatterns = i18n_patterns(
 
@@ -20,7 +22,7 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
 
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
 
@@ -37,7 +39,7 @@ NUMBER = r'(?P<number>[0-9]+)'
 SECTION = r'(?P<section>[A-Za-z0-9/-]+?)'  # not sure about ? on the end
 VERSION = r'(?P<version>enacted|made|\d{4}-\d{2}-\d{2})'  # ToDo 'created', 'adopted'
 LANG = r'(?P<lang>english|welsh)'
-DATA = r'data\.(?P<format>xml|akn|html|json)'
+DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
 
@@ -87,6 +89,19 @@ urlpatterns += i18n_patterns(
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}/{DATA}$', fragment.data, name='fragment-version-lang-data'),
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}$', fragment.fragment, name='fragment-lang'),
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}/{DATA}$', fragment.data, name='fragment-lang-data'),
+
+
+    # changes
+    re_path(r'^changes$', changes_intro, name='changes-intro'),
+    re_path(
+        r'^changes/affected(?:/(?P<type>[a-z]{3,5}))(?:/(?P<year>[0-9]{4}|\*))?(?:/(?P<number>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
+        changes_affected, name='changes-affected'),
+    re_path(
+        r'^changes/affecting(?:/(?P<type>[a-z]{3,5}))(?:/(?P<year>[0-9]{4}|\*))?(?:/(?P<number>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
+        changes_affecting, name='changes-affecting'),
+    re_path(
+        r'^changes/affected(?:/(?P<type1>[a-z]{3,5}))(?:/(?P<year1>[0-9]{4}|\*))?(?:/(?P<number1>[0-9]+))?/affecting(?:/(?P<type2>[a-z]{3,5}))(?:/(?P<year2>[0-9]{4}|\*))?(?:/(?P<number2>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
+        changes_both, name='changes-both'),
 
     prefix_default_language=False
 )

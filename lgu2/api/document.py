@@ -4,7 +4,7 @@ from urllib.parse import urlencode
 
 from . import server
 from .browse_types import AltNumber
-from .responses.effects import UnappliedEffect
+from .responses.effects import Effect
 
 
 class CommonMetadata(TypedDict):
@@ -29,7 +29,7 @@ class CommonMetadata(TypedDict):
 
 
 class DocumentMetadata(CommonMetadata):
-    unappliedEffects: List[UnappliedEffect]
+    unappliedEffects: List[Effect]
 
 
 class Document(TypedDict):
