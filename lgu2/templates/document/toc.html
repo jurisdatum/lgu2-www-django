@@ -111,13 +111,7 @@
 				{% if timeline %}
 					{% include "document/timeline.html" %}
 				{% endif %}
-				{% if status_message %}
-				<div id="infoSection">
-					<h2>Status:</h2>
-					<p class="intro">{{ status_message }}</p>
-				</div>
-				{% endif %}
-
+				{% include "document/status.html" %}
 				{% if pdf_only %}
 				{% include "document/pdf.html" %}
 				{% else %}

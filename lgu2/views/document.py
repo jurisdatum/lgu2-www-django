@@ -62,6 +62,14 @@ def _make_timeline_data(meta, pit):
     }
 
 
+def group_effects(unappliedEffects):
+    return {
+        'outstanding': [ effect for effect in unappliedEffects if effect['outstanding'] ],
+        'future': [ effect for effect in unappliedEffects if effect['required'] and not effect['outstanding'] ],
+        'unrequired': [ effect for effect in unappliedEffects if not effect['required'] ]
+    }
+
+
 def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = get_document(type, year, number, version, lang)
@@ -91,7 +99,15 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     timeline = _make_timeline_data(data['meta'], pit)
 
-    status_message = get_status_message(data['meta'])
+    status = {
+        'message': get_status_message(data['meta']),
+        'label': meta['title'],
+        'effects': {
+            'direct': group_effects(meta['unappliedEffects'])
+        },
+        'direct_effects': meta['unappliedEffects'],
+        'larger_effects': []
+    }
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -109,7 +125,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'pit': pit,
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
-        'status_message': status_message,
+        'status': status,
         'article': data['html'],
         'links': {
             'toc': link_prefix + '/contents' + link_suffix,

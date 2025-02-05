@@ -2,14 +2,14 @@
 from datetime import datetime
 from typing import Optional, Union
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.template import loader
 
 from ..api import fragment as api
-from ..messages.status import get_status_message
+from ..messages.status import get_status_message_for_fragment
 from ..util.labels import get_type_label
 from ..util.types import get_category
-from .document import _make_timeline_data
+from .document import _make_timeline_data, group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
 
 
@@ -63,7 +63,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
 
     timeline = _make_timeline_data(data['meta'], pit)
 
-    status_message = get_status_message(data['meta'])
+    status_message = get_status_message_for_fragment(data['meta'])
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -72,7 +72,16 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
         'pit': pit,
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
-        'status_message': status_message,
+        'status': {
+            'message': status_message,
+            'label': meta['fragmentInfo']['label'],
+            'effects': {
+                'direct': group_effects(meta['unappliedEffects']['fragment']),
+                'larger': group_effects(meta['unappliedEffects']['ancestor'])
+            },
+            'direct_effects': meta['unappliedEffects']['fragment'],
+            'larger_effects': meta['unappliedEffects']['ancestor']
+        },
         'article': data['html'],
         'links': {
             'toc': link_prefix + '/contents' + link_suffix,
@@ -105,5 +114,6 @@ def data(request, type, year, number, section, format, version=None, lang: Optio
     if format == 'html':
         pass  # ToDo
     if format == 'json':
-        pass  # ToDo
+        data = api.get(type, year, number, section, version, lang)
+        return JsonResponse(data)
     return HttpResponse(status=406)

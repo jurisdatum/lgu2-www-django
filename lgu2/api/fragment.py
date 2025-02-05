@@ -1,5 +1,5 @@
 
-from typing import List, Optional, TypedDict
+from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
 from lgu2.api.responses.effects import Effect
@@ -12,7 +12,20 @@ class FragmentMetadata(CommonMetadata):
     fragment: str
     prev: Optional[str]
     next: Optional[str]
+    fragmentInfo: 'Level'
+    ancestors: List['Level']
+    descendants: List['Level']
     unappliedEffects: 'FragmentEffects'
+    upToDate: NotRequired[bool]
+
+
+class Level(TypedDict):
+    element: str
+    id: str
+    href: str
+    number: str
+    title: str
+    label: str
 
 
 class FragmentEffects(TypedDict):

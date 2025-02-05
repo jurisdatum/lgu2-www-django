@@ -1,6 +1,6 @@
 <li>
-    {% if effect.affected.rich %}
-        {% for node in effect.affected.rich %}
+    {% if effect.target.provisions.rich %}
+        {% for node in effect.target.provisions.rich %}
             {% if node.type == 'link' %}
                 <b>{{ node.text }}</b>
             {% else %}
@@ -8,7 +8,7 @@
             {% endif %}
         {% endfor %}
     {% else %}
-        <span>{{ effect.affected.plain }}</span>
+        <span>{{ effect.target.provisions.plain }}</span>
     {% endif %}
     <span>{{ effect.type }}</span>
     <span>by</span>
