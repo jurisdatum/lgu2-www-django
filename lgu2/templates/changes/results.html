@@ -1,0 +1,256 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block page_title %}Changes To Legislation{% endblock %}
+
+{% block head_middle %}
+<script type="text/javascript" src="{% static 'lgu1/scripts/formFunctions/common.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/changesLeg/search.js' %}"></script>
+<link type="text/css" href="{% static 'lgu1/styles/per/changeLeg.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block body_id %}doc{% endblock %}
+{% block body_class %}changeLeg{% endblock %}
+
+
+{% block layout2 %}
+<div>
+    <div class="info">
+        <h1 id="pageTitle">Changes to Legislation Results</h1>
+        <h2>Your search for changes that affect UK Public General Acts made by all legislation has returned
+            more than 200 results:</h2>
+    </div>
+</div>
+<div id="content">
+    <div class="s_12 createNewSearchOpt">
+        <h2 class="accessibleText">Search</h2>
+        <div id="existingSearch">
+            <div id="newSearch" class="interface"><a id="modifySearch" href="#searchChanges"
+                    class="userFunctionalElement"><span class="btl"></span><span class="btr"></span>Modify
+                    existing search<span class="bbl"></span><span class="bbr"></span></a></div>
+            {% include "changes/form.html" %}
+        </div>
+    </div>
+    <div class="results s_12 p_one">
+        {% include "changes/top.html" %}
+        <table>
+            <thead>
+                <tr class="headerRow1">
+                    <th colspan="4">Changes that affect</th>
+                    <th colspan="3" class="centralCol">Made by</th>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="headerRow2">
+                    <th><a title="Sort by Changed Legislation" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-title"><span
+                                class="accessibleText">Sort
+                                by </span>Changed Legislation</a></th>
+                    <th><a title="Sort by Year and Number" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number"><span
+                                class="accessibleText">Sort
+                                by </span>Year and Number</a></th>
+                    <th>Changed Provision</th>
+                    <th>Type of effect<a class="helpItem helpItemToMidRight" href="#typeofEffectHelp"><img
+                                alt="Type of effect help" src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" /></a></th>
+                    <th class="centralCol"><a title="Sort by Affecting Legislation Title" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affecting-title"><span
+                                class="accessibleText">Sort
+                                by </span>Affecting Legislation Title</a></th>
+                    <th class="centralCol"><a title="Sort by Year and Number" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=affecting-year-number"><span
+                                class="accessibleText">Sort
+                                by </span>Year and Number</a></th>
+                    <th class="centralCol">Affecting Provision</th>
+                    <th class="applied"><a title="Sort by Changes made to website text" class="sortAsc"
+                            href="/changes/affected/ukpga?results-count=50&amp;sort=applied"><span
+                                class="accessibleText">Sort
+                                by </span>Changes made to website text</a><a
+                            class="helpItem helpItemToMidLeft" href="#appliedHelp"><img
+                                alt="Amendment applied help" src="{% static 'lgu1/images/chrome/helpIcon.gif' %}" /></a></th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for effect in effects %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}oddRow{% endif %}">
+                    <td><strong>{{ effect.target.title }}</strong></td>
+                    <td><a href="/{{ effect.target.id }}">{{ effect.target.cite }}</a></td>
+                    <td>
+                        {% for node in effect.target.provisions.rich %}
+                        {% if node.type == 'link' %}
+                            <a href="/{{ node.href }}">{{ node.text }}</a>
+                        {% else %}
+                            <span>{{ node.text }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ effect.type }}</td>
+                    <td class="centralCol"><strong>{{ effect.source.title }}</strong></td>
+                    <td class="centralCol"><a href="/{{ effect.source.id }}">{{ effect.source.cite }}</a></td>
+                    <td class="centralCol">
+                        {% for node in effect.source.provisions.rich %}
+                        {% if node.type == 'link' %}
+                            <a href="/{{ node.href }}">{{ node.text }}</a>
+                        {% else %}
+                            <span>{{ node.text }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if effect.applied %}
+                        <span class="effectsApplied">Yes</span></td>
+                        {% elif effect.note %}
+                        <span>See note</span>
+                        {% else %}
+                        <span>Not yet</span>
+                        {% endif %}
+                    <td>
+                        {% if effect.note %}
+                        <a class="helpItem hover" href="#noted{{ forloop.counter }}">
+                            <img alt="Note" src="{% static 'lgu1/images/chrome/noteIcon.gif' %}" />
+                        </a>
+                        <div id="noted{{ forloop.counter }}" class="help">
+                            <span class="icon"></span>
+                            <div class="content">
+                                <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+                                <span>{{ effect.note }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="contentFooter">
+            <div class="interface">
+                <div class="prevPagesNextNav">
+                    <ul>
+                        <li class="currentPage pageLink"><strong><span class="accessibleText">This is
+                                    results page </span>1</strong></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=2"
+                                rel="next"><span class="accessibleText">Results page </span>2</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=3"><span
+                                    class="accessibleText">Results page </span>3</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=4"><span
+                                    class="accessibleText">Results page </span>4</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=5"><span
+                                    class="accessibleText">Results page </span>5</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=6"><span
+                                    class="accessibleText">Results page </span>6</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=7"><span
+                                    class="accessibleText">Results page </span>7</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=8"><span
+                                    class="accessibleText">Results page </span>8</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=9"><span
+                                    class="accessibleText">Results page </span>9</a></li>
+                        <li class="pageLink"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=10"><span
+                                    class="accessibleText">Results page </span>10</a></li>
+                        <li class="pageLink next"><a
+                                href="/changes/affected/ukpga?results-count=50&amp;sort=affected-year-number&amp;page=2"
+                                title="next page"><span class="btl"></span><span
+                                    class="btr"></span>Next<span class="accessibleText"> results
+                                    page</span><span class="bbl"></span><span class="bbr"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="backToTop"><a href="#top">Back to top</a></p>
+    </div>
+</div>
+<div class="help" id="changesThatAffectHelp"><span class="icon"></span>
+    <div class="content">
+        <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Changes made to website text</h3>
+        <p>Use this facility to search for changes that affect one or more items of legislation based on the
+            criteria below. Alternatively you can leave this side of the form blank to find the changes and
+            effects on any revised legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to changes
+                affecting the legislation type you are interested in. The drop down list only includes those
+                legislation types for which we hold revised versions for on legislation.gov.uk.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes that affect legislation of a particular year or over a range of years.</li>
+            <li>Number: If you are looking for changes that affect a specific item of legislation and you
+                know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="madeByHelp"><span class="icon"></span>
+    <div class="content">
+        <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Made by</h3>
+        <p>Narrow down your search for changed legislation by entering details about the legislation that
+            made the effects using this side of the form. Alternatively, leave his side of the form blank
+            for effects and changes made by any legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to the
+                legislation type you are interested in using the drop down box.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes made by legislation in a particular year or over a range of years. Tip: to search
+                for all changes made by all legislation in a particular year, enter the year in this side of
+                the form, leaving the ‘Changes that affect’ side blank.</li>
+            <li>Number: If you are looking for changes that are made by a specific item of legislation and
+                you know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="resultsShowingHelp"><span class="icon"></span>
+    <div class="content">
+        <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Use the tick boxes to see either:</h3>
+        <ul>
+            <li>All changes: All the changes and effects that match your search</li>
+            <li>Applied changes: Those changes and effects that match your search criteria and have been
+                applied to the text of legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+            <li>Unapplied changes: Those changes and effects that match your search criteria but have not
+                yet been applied to the legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="appliedHelp"><span class="icon"></span>
+    <div class="content">
+        <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Changes applied to text</h3>
+        <p>In this column, 'Yes' indicates that the changes have been applied to the text of the revised
+            legislation on this site by the Legislation.gov.uk editorial team.</p>
+        <p>'Not yet' indicates that the changes and effects have not yet been applied to the text on the
+            website. However, a list of any unapplied changes will be displayed alongside the content of the
+            legislation at provision level in the 'Changes to Legislation' red box.</p>
+        <p>'N/A (see note)' indicates that the changes are not going to be applied by the editorial team.
+            More information on why the changes will not be applied will be contained in the 'Notes' column.
+        </p>
+        <p>Where the text of legislation is available in both English and Welsh languages, changes will be
+            applied to both language versions separately. Where changes have been made to both language
+            versions this column will have an entry of 'Yes'.</p>
+        <p>Where changes have been applied to one language version and not the other this column will state
+            which changes have been applied and which have not for each language.</p>
+    </div>
+</div>
+<div class="help" id="typeofEffectHelp"><span class="icon"></span>
+    <div class="content">
+        <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Type of effect</h3>
+        <p>There are many different types of effects. An “effect” can denote any way in which legislation
+            impacts on or changes other legislation. There are three main types of effect which result in
+            the text of the legislation changing: insertions (text is added), substitutions (text is
+            replaced) and repeals (where existing text ceases to have effect and may also be removed from
+            the legislation). In addition there are some effects that we record that do not result in a
+            change to the text of the legislation e.g. “Applied” which is used where provisions of existing
+            legislation are applied to new legislation or to some set of circumstances specified in the
+            applying legislation.</p>
+    </div>
+</div>
+{% endblock %}

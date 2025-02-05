@@ -134,7 +134,7 @@ def browse(request, type, year=None):
 
 def data(request, type: str, format: str, year: Optional[str] = None):
     page = request.GET.get('page', '1')
-    if format == 'xml':
+    if format == 'feed':
         pass  # ToDo
     if format == 'json':
         if year is None:

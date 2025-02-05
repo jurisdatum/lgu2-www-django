@@ -1,0 +1,140 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block page_title %}Changes To Legislation{% endblock %}
+
+{% block head_middle %}
+<script type="text/javascript" src="{% static 'lgu1/scripts/formFunctions/common.js' %}"></script>
+<script type="text/javascript" src="{% static 'lgu1/scripts/changesLeg/search.js' %}"></script>
+<link type="text/css" href="{% static 'lgu1/styles/per/changeLeg.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block body_id %}doc{% endblock %}
+{% block body_class %}changeLeg{% endblock %}
+
+
+{% block layout2 %}
+<div>
+    <div class="info">
+        <h1 id="pageTitle">Changes to Legislation</h1>
+    </div>
+</div>
+<div id="content">
+    <div class="s_12">
+        <p id="New_changes_p1">
+            <span>These lists provide details of changes to legislation including repeals, amendments and
+                other effects (e.g. modifications and commencement information) made by subsequent
+                legislation.</span>
+        </p>
+        <p id="New_changes_p2">
+            <span>The search form below provides access to lists detailing changes made by all UK
+                legislation enacted from 2002 – present to the UK primary legislation held on
+                legislation.gov.uk. Changes made by legislation enacted prior to 2002 have already been
+                incorporated into the content of the primary legislation and are not available as searchable
+                lists. Changes made by secondary legislation enacted from 1971 onwards are available.
+                Changes to EU Regulations and Decisions originating from the EU by UK legislation are also
+                included in these lists.</span>
+        </p>
+        <p id="New_changes_p3">
+            <span>The lists are updated with changes made by new legislation as soon as possible after the
+                legislation is received by the legislation.gov.uk editorial team. In most cases the changes
+                will be available within two weeks of the new legislation being published, though during
+                particularly busy periods for new legislation it may take longer. Up to 11.00 p.m. on 31
+                December 2020, changes to EU legislation made by EU legislation were captured from EUR-Lex
+                and published to the Changes to Legislation pages. Due to the high volume of Statutory
+                Instruments containing EU Exit amendments published in the period up to and around 31
+                December 2020, the usual <a href="/understanding-legislation#editorialpractice">editorial
+                    practice and timescales</a> will not apply to <a
+                    href="/eu-legislation-and-uk-law#revisinglegislation">EU Exit amendments</a>.</span>
+        </p>
+        <p id="New_changes_p4">
+            <span>Note: Where changes and effects have yet to be applied to revised legislation you are
+                viewing on this site, then any ‘Changes to Legislation’ are also displayed alongside the
+                content of the legislation at provision level.</span>
+        </p>
+    </div>
+    <div class="s_12 createNewSearchOpt">
+        <h2 class="accessibleText">Search</h2>
+        {% include "changes/form.html" %}
+    </div>
+    <div class="s_12">
+        <h2>Changes to Local and Private and Personal Acts</h2>
+        <p>The Chronological Tables list changes to Local, Private and Personal Acts dating from 1797 –
+            2008. They are updated each year and as the title suggests, the tables list Local, Private and
+            Personal Acts in their chronological sequence along with details about repeals of, and changes
+            (including amendments and substitutions) made to those Acts. They have been published in parts
+            to make navigation easier.</p>
+        <ul class="linkList">
+            <li><a href="/changes/chron-tables/local">Chronological Table of Local Acts<span
+                        class="pageLinkIcon"></span></a></li>
+            <li><a href="/changes/chron-tables/private">Chronological Table of Private and Personal
+                    Acts<span class="pageLinkIcon"></span></a></li>
+        </ul>
+    </div>
+    <div class="s_12">
+        <h2>Changes to Statutory Rules (Northern Ireland)</h2>
+        <p>The Chronological Tables list changes to Statutory Rules dating from 1923 – 2023. They are
+            updated each year and as the title suggests, the tables list Northern Ireland SRs in their
+            chronological sequence along with the details of amendments made to Statutory Rules, which are
+            in force. Rules, which are revoked, are listed with details of revoking legislation and are
+            printed in italics.</p>
+        <ul class="linkList">
+            <li><a href="/changes/chron-tables/ni">Chronological Table of Statutory Rules (Northern
+                    Ireland)<span class="pageLinkIcon"></span></a></li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="changesThatAffectHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Changes made to website text</h3>
+        <p>Use this facility to search for changes that affect one or more items of legislation based on the
+            criteria below. Alternatively you can leave this side of the form blank to find the changes and
+            effects on any revised legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to changes
+                affecting the legislation type you are interested in. The drop down list only includes those
+                legislation types for which we hold revised versions for on legislation.gov.uk.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes that affect legislation of a particular year or over a range of years.</li>
+            <li>Number: If you are looking for changes that affect a specific item of legislation and you
+                know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="madeByHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Made by</h3>
+        <p>Narrow down your search for changed legislation by entering details about the legislation that
+            made the effects using this side of the form. Alternatively, leave his side of the form blank
+            for effects and changes made by any legislation.</p>
+        <ul>
+            <li>Legislation type: This optional field allows you to narrow down your search to the
+                legislation type you are interested in using the drop down box.</li>
+            <li>Specific year/Range of years: These optional fields allow you to restrict your search to
+                changes made by legislation in a particular year or over a range of years. Tip: to search
+                for all changes made by all legislation in a particular year, enter the year in this side of
+                the form, leaving the ‘Changes that affect’ side blank.</li>
+            <li>Number: If you are looking for changes that are made by a specific item of legislation and
+                you know its series number you can enter it in the number field.</li>
+        </ul>
+    </div>
+</div>
+<div class="help" id="resultsShowingHelp"><span class="icon"></span>
+    <div class="content"><a href="#" class="close"><img alt="Close"
+                src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
+        <h3>Use the tick boxes to see either:</h3>
+        <ul>
+            <li>All changes: All the changes and effects that match your search</li>
+            <li>Applied changes: Those changes and effects that match your search criteria and have been
+                applied to the text of legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+            <li>Unapplied changes: Those changes and effects that match your search criteria but have not
+                yet been applied to the legislation held on this website by the legislation.gov.uk editorial
+                team.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
