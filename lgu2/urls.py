@@ -2,11 +2,10 @@
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-# from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.urls import path, re_path
-
+from django.urls import path, re_path, include
 from .views.doc_types import list_uk
+
 from .views.browse import browse, data as browse_data
 from .views.document import document, data as document_data
 from .views import toc
@@ -14,15 +13,19 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
+from .views.cms_pages import about_us
+from wagtail.admin import urls as wagtailadmin_urls 
+# from wagtail import urls as wagtailurls
 
 urlpatterns = i18n_patterns(
-
     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 )
 
 urlpatterns += [
 
     path('admin/', admin.site.urls),
+    path('cms/', include(wagtailadmin_urls)),
+    # path('pages/', include(wagtailurls)),
     # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
 
@@ -45,6 +48,8 @@ urlpatterns += i18n_patterns(
 
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
+    path('about-us/', about_us, name='about-us'),
+
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),
     re_path(fr'^{TYPE}/{YEAR4}$', browse, name='browse-year'),
