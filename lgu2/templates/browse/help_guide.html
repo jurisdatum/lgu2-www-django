@@ -1,0 +1,12 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+{% block body_id %}browse{% endblock %}
+{% block body_class %}{{ short_type }} timeline{% endblock %}
+
+{% block layout2 %}
+{{ page.body | safe }}
+{% endblock %}
