@@ -54,11 +54,6 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
 
 def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Document:
     url = _make_url(type, year, number, version)
-    if language is not None:
-        if language == "welsh":
-            language = "cy"
-        else:
-            language = "en"
     return server.get_json(url, language)
 
 
@@ -76,12 +71,12 @@ def package_xml(response) -> XmlPackage:
 
 
 def get_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
-    url = _make_url(type, year, number, version, language)
-    response = server.get_clml(url)
+    url = _make_url(type, year, number, version)
+    response = server.get_clml(url, language)
     return package_xml(response)
 
 
 def get_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
-    url = _make_url(type, year, number, version, language)
-    response = server.get_akn(url)
+    url = _make_url(type, year, number, version)
+    response = server.get_akn(url, language)
     return package_xml(response)
