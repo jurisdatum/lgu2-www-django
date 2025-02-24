@@ -1,0 +1,71 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+{% block head_middle %}
+<link type="text/css" href="{% static 'lgu1/styles/legBrowseCards.css' %}" rel="stylesheet" />
+
+{% endblock %}
+
+
+
+
+{% block body_id %}browse{% endblock %}
+{% block body_class %}intro{% endblock %}
+
+
+{% block layout2 %}
+      
+    <div class="info-content">
+      <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/explore">Explore our collections</a></li>
+        <li>
+          <a href="#" style="font-weight: 500"
+            >Different legislatures of the UK</a
+          >
+        </li>
+      </ul>
+      <h1>Different legislatures of the UK</h1>
+      <ul class="content-cards">
+        <li id="uk">
+          <a class="icon_united_kingdom" href="/explore/legislatures/uk"
+            ><h3>United Kingdom</h3>
+            <p id="explore_uk_summary">
+              Legislation made by the UK Parliament and UK Government, and
+              Historic Parliaments
+            </p></a
+          >
+        </li>
+        <li id="wales">
+          <a class="icon_wales" href="/explore/legislatures/wales"
+            ><h3>Wales</h3>
+            <p id="explore_wales_summary">
+              Including legislation made by the Welsh Parliament, Welsh
+              Assembly and Welsh Government
+            </p></a
+          >
+        </li>
+        <li id="scotland">
+          <a class="icon_scotland" href="/explore/legislatures/scotland"
+            ><h3>Scotland</h3>
+            <p id="explore_scotland_summary">
+              Including legislation made by the Scottish Parliament and
+              Scottish Government
+            </p></a
+          >
+        </li>
+        <li id="ni">
+          <a class="icon_northern_ireland" href="/explore/legislatures/ni"
+            ><h3>Northern Ireland</h3>
+            <p id="explore_ni_summary">
+              Including legislation made by the Northern Ireland Assembly
+            </p></a
+          >
+        </li>
+      </ul>
+    </div>
+  
+{% endblock %}

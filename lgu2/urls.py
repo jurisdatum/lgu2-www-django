@@ -14,8 +14,8 @@ from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
 from .views.cms_pages import about_us
+from .views.explore_collection import explore_collection, explore_legislatures
 from wagtail.admin import urls as wagtailadmin_urls 
-# from wagtail import urls as wagtailurls
 
 urlpatterns = i18n_patterns(
     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
@@ -25,8 +25,6 @@ urlpatterns += [
 
     path('admin/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
-    # path('pages/', include(wagtailurls)),
-    # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
 
 # needed because some JavaScript files add links to "/static/..."
@@ -49,6 +47,9 @@ urlpatterns += i18n_patterns(
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
     path('about-us/', about_us, name='about-us'),
+
+    path('explore/', explore_collection, name='explore'),
+    path('explore/legislatures/', explore_legislatures, name='explore-legislatures'),
 
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),

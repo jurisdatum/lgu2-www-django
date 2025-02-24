@@ -1,0 +1,95 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+{% block head_middle %}
+<link type="text/css" href="{% static 'lgu1/styles/legBrowseCards.css' %}" rel="stylesheet" />
+
+{% endblock %}
+
+
+
+
+{% block body_id %}browse{% endblock %}
+{% block body_class %}intro{% endblock %}
+
+
+{% block layout2 %}
+    <div class="info-content">
+      <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li>Explore our collections</li>
+      </ul>
+      <h1>Explore our collections</h1>
+      <p>
+        Browse legislation by specific current and historic Parliaments,
+        Assemblies and Governments of the UK. Alternatively, explore our
+        curated collections of Draft Statutory Instruments awaiting
+        Parliamentary procedure; legislation relating to specific events
+        such as coronavirus, and find out what happened with EU legislation
+        when the UK left the EU.
+      </p>
+      <ul class="content-cards">
+        <li id="legislatures">
+          <a class="icon_united_kingdom" href="/explore/legislatures"
+            ><h3 id="Different legislatures of the UK">
+              Different legislatures of the UK
+            </h3>
+            <p id="explore_legislatures_summary">
+              Legislation made by the current and historic Parliaments,
+              Assemblies and Governments of the UK.
+            </p></a
+          >
+        </li>
+        <li id="eu-legislation-and-uk-law">
+          <a
+            class="icon_eu_legislation_and_uk_law"
+            href="/explore/legislatures/eu"
+            ><h3>Legislation originating from the EU</h3>
+            <p id="eu_legislation_and_uk_law_text">
+              EU legislation as it applied to the UK on 31 Dec 2020, with
+              any subsequent changes made by the UK applied.
+            </p></a
+          >
+        </li>
+        <li id="new">
+          <a class="icon_new_legislation" href="/new"
+            ><h3>New legislation</h3>
+            <p id="new_legislation">
+              New UK, Scottish, Welsh and Northern Ireland legislation
+              listed by publication date.
+            </p></a
+          >
+        </li>
+        <li id="draft">
+          <a class="icon_draft_legislation" href="/draft"
+            ><h3>Draft legislation</h3>
+            <p id="explore_draft_summary">
+              Draft Statutory Instruments that are awaiting approval.
+            </p></a
+          >
+        </li>
+        <li id="ukia">
+          <a class="icon_uk_impact_assessments" href="/ukia"
+            ><h3>UK Impact Assessments</h3>
+            <p id="ukia_summary">
+              Procedures that assess prospective economic, social, and
+              environmental effects of public UK policy proposals.
+            </p></a
+          >
+        </li>
+        <li id="coronavirus">
+          <a class="icon_coronavirus_legislation" href="/coronavirus"
+            ><h3 id="Coronavirus legislation">Coronavirus legislation</h3>
+            <p id="coronavirus_legislation_text">
+              Key coronavirus legislation that applies to the UK, England,
+              Wales, Scotland and Northern Ireland.
+            </p></a
+          >
+        </li>
+      </ul>
+    </div>
+  
+{% endblock %}

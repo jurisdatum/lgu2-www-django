@@ -48,3 +48,26 @@ class AboutUsPageSubSection(models.Model):
 
     def __str__(self):
         return self.subheading_2
+    
+
+@register_snippet
+class StatusMessages(models.Model):
+    title = models.CharField(max_length=255, blank=True, help_text="This is non editable field")
+    message_in_english = RichTextField(blank=True)
+    message_in_welsh = RichTextField(blank=True)
+    
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('message_in_english'),
+        FieldPanel('message_in_welsh'),
+    ]
+
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            original = StatusMessages.objects.get(pk=self.pk)
+            if original.title and self.title != original.title:
+                self.title = original.title
+        super().save(*args, **kwargs)
