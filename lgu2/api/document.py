@@ -44,18 +44,17 @@ class XmlPackage(TypedDict):
     redirect: Optional[Redirect]  # None if all request parameters were canonical
 
 
-def _make_url(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
     url = '/document/' + type + '/' + str(year) + '/' + str(number)
-    params = {'version': version, 'language': language}
-    params = {k: v for k, v in params.items() if v is not None}
-    if params:
+    if version is not None:
+        params = {'version': version}
         url += '?' + urlencode(params)
     return url
 
 
 def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Document:
-    url = _make_url(type, year, number, version, language)
-    return server.get_json(url)
+    url = _make_url(type, year, number, version)
+    return server.get_json(url, language)
 
 
 def package_xml(response) -> XmlPackage:
@@ -72,12 +71,12 @@ def package_xml(response) -> XmlPackage:
 
 
 def get_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
-    url = _make_url(type, year, number, version, language)
-    response = server.get_clml(url)
+    url = _make_url(type, year, number, version)
+    response = server.get_clml(url, language)
     return package_xml(response)
 
 
 def get_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
-    url = _make_url(type, year, number, version, language)
-    response = server.get_akn(url)
+    url = _make_url(type, year, number, version)
+    response = server.get_akn(url, language)
     return package_xml(response)
