@@ -29,6 +29,7 @@ class InForceDate(TypedDict):
     applied: bool
     prospective: NotRequired[bool]  # True if date is None?
     description: NotRequired[str]
+    outstanding: NotRequired[bool]
 
 
 class Effect(TypedDict):
@@ -40,6 +41,7 @@ class Effect(TypedDict):
     inForce: List[InForceDate]
     commencement: Provisions
     notes: Optional[str]
+    outstanding: NotRequired[bool]
 
 
 class Metadata(TypedDict):

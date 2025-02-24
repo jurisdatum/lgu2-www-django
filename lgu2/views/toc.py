@@ -5,11 +5,12 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 
 from ..api import contents as api
-from ..api.document import Meta as DocumentMetadata
+from ..api.document import DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from .redirect import make_data_redirect, redirect_current, redirect_version
+from .document import group_effects
 
 
 # ToDo fix to use response headers
@@ -69,7 +70,15 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     _add_all_links(data['contents'], link_prefix, link_suffix)
 
-    data['status_message'] = get_status_message(data['meta'])
+    data['status'] = {
+        'message': get_status_message(data['meta']),
+        'label': meta['title'],
+        'effects': {
+            'direct': group_effects(meta['unappliedEffects'])
+        },
+        'direct_effects': meta['unappliedEffects'],
+        'larger_effects': []
+    }
 
     data['links'] = {
         'toc': link_prefix + '/contents' + link_suffix,
