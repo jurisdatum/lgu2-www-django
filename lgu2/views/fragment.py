@@ -63,6 +63,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
 
     timeline = _make_timeline_data(data['meta'], pit)
 
+    data['meta']['lang'] = lang
     status_message = get_status_message_for_fragment(data['meta'])
 
     meta['category'] = get_category(meta['shortType'])

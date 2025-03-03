@@ -69,7 +69,8 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         link_suffix += '/' + lang
 
     _add_all_links(data['contents'], link_prefix, link_suffix)
-
+    
+    data['meta']['lang'] = lang
     data['status'] = {
         'message': get_status_message(data['meta']),
         'label': meta['title'],
