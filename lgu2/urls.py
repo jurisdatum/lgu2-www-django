@@ -4,8 +4,9 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, re_path, include
-from .views.doc_types import list_uk
+from django.views.generic import TemplateView
 
+from .views.doc_types import list_uk
 from .views.browse import browse, data as browse_data
 from .views.document import document, data as document_data
 from .views import toc
@@ -45,6 +46,8 @@ LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
+
+    path('flint', TemplateView.as_view(template_name='flint.html'), name='flint'),
 
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
