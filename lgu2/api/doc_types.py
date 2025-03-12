@@ -16,6 +16,6 @@ class Type(TypedDict):
     category: str
 
 
-def get_uk_types() -> Response:
-    url = '/types/uk'
+def get_types(country: str) -> Response:
+    url = '/types/' + country
     return server.get_json(url)

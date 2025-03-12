@@ -13,7 +13,7 @@
 
 {% block layout2 %}
 <div class="title">
-    <h1 id="pageTitle"><abbr title="United Kingdom">UK</abbr></h1>
+    <h1 id="pageTitle">{{ country_heading }}</h1>
 </div>
 <div id="content">
     <div class="s_8 p_one intro">
@@ -29,7 +29,7 @@
     </div>
     <div class="s_8 p_one">
         <div class="s_4 p_one legCol">
-            <h2>Exclusively or primarily applies to the UK</h2>
+            <h2>Exclusively or primarily applies to {{ country_name }}</h2>
             <ul class="legTypes">
                 {% for type in primarily %}
                 <li><a id="{{ type.shortName }}" href="{% url 'browse' type.shortName %}">{{ type.label }}<span></span></a></li>
@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="s_4 p_two legCol">
-            <h2>May contain legislation that applies to the UK</h2>
+            <h2>May contain legislation that applies to  {{ country_name }}</h2>
             <ul class="legTypes">
                 {% for type in possibly %}
                 <li><a id="{{ type.shortName }}" href="{% url 'browse' type.shortName %}">{{ type.label }}<span></span></a></li>
