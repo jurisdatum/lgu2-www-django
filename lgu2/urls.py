@@ -14,7 +14,7 @@ from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
 from .views.cms_pages import about_us
-from .views.explore_collection import explore_collection, explore_legislatures
+from .views.explore_collection import explore_collection, explore_legislatures, legislature_list
 from wagtail.admin import urls as wagtailadmin_urls 
 
 urlpatterns = i18n_patterns(
@@ -33,6 +33,7 @@ if not settings.DEBUG:
         re_path(r'^static/(.*)$', lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
     ]
 
+COUNTRY_TYPE = r'(?P<type>[a-z]+)'
 TYPE = r'(?P<type>[a-z]{3,5})'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
@@ -50,6 +51,7 @@ urlpatterns += i18n_patterns(
 
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures/', explore_legislatures, name='explore-legislatures'),
+    re_path(fr'explore/legislatures/{COUNTRY_TYPE}$', legislature_list, name='legislature-list'),
 
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),

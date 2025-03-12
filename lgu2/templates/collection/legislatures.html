@@ -31,7 +31,7 @@
       <h1>Different legislatures of the UK</h1>
       <ul class="content-cards">
         <li id="uk">
-          <a class="icon_united_kingdom" href="/explore/legislatures/uk"
+          <a class="icon_united_kingdom" href="{% url 'legislature-list' type='uk' %}"
             ><h3>United Kingdom</h3>
             <p id="explore_uk_summary">
               Legislation made by the UK Parliament and UK Government, and
@@ -40,7 +40,7 @@
           >
         </li>
         <li id="wales">
-          <a class="icon_wales" href="/explore/legislatures/wales"
+          <a class="icon_wales" href="{% url 'legislature-list' type='wales' %}"
             ><h3>Wales</h3>
             <p id="explore_wales_summary">
               Including legislation made by the Welsh Parliament, Welsh
@@ -49,7 +49,7 @@
           >
         </li>
         <li id="scotland">
-          <a class="icon_scotland" href="/explore/legislatures/scotland"
+          <a class="icon_scotland" href="{% url 'legislature-list' type='scotland' %}"
             ><h3>Scotland</h3>
             <p id="explore_scotland_summary">
               Including legislation made by the Scottish Parliament and
@@ -58,7 +58,7 @@
           >
         </li>
         <li id="ni">
-          <a class="icon_northern_ireland" href="/explore/legislatures/ni"
+          <a class="icon_northern_ireland" href="{% url 'legislature-list' type='ni' %}"
             ><h3>Northern Ireland</h3>
             <p id="explore_ni_summary">
               Including legislation made by the Northern Ireland Assembly

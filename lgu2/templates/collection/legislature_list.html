@@ -1,0 +1,88 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+{% block head_middle %}
+<link type="text/css" href="{% static 'lgu1/styles/legBrowseCards.css' %}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body_id %}browse{% endblock %}
+{% block body_class %}intro{% endblock %}
+
+
+{% block layout2 %}
+      
+<div class="title">
+    <h1 id="pageTitle"><abbr title="United Kingdom">UK</abbr></h1>
+  </div>
+  <div id="content">
+    <div class="s_8 p_one intro">
+      <p>
+        Legislation.gov.uk carries most types of UK Legislation. The list
+        below is a breakdown of the types of legislation held on this site
+        that are applicable to the whole or some part of the UK. From this
+        page you can select any legislation type to continue browsing.
+      </p>
+      <div class="s_4 p_absTopRight">
+        <div id="map">
+          <img
+            id="blank"
+            src="/images/maps/activeUk.gif"
+            alt="United Kingdom (UK)"
+          />
+          <div class="returnLink ukRegion">
+            <a href="/explore">Back to all legislation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="s_8 p_one">
+      <div class="s_4 p_one legCol">
+        <h2>Exclusively or primarily applies to the {{country}}</h2>
+        <ul class="legTypes">
+            {% for list in primarily %}
+          <li>
+            <a id="{{list.shortName}}" href="/{{list.shortName}}"
+              >{{list.longName}}<span></span
+            ></a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="s_4 p_two legCol">
+        <h2>May contain legislation that applies to the {{country}}</h2>
+        <ul class="legTypes">
+            {% for list in possibly %}
+          <li>
+            <a id="{{list.shortName}}" href="/{{list.shortName}}"
+              >{{list.longName}}<span></span
+            ></a>
+          </li>
+          {% endfor %}            
+          
+        </ul>
+      </div>
+      <div class="s_8 p_one quickLinks">
+        <h2>Quick links</h2>
+        <ul>
+          <li>
+            <a href="/explore/legislatures/scotland"
+              >Scotland Legislation</a>
+          </li>
+          <li>
+            <a href="/explore/legislatures/wales">Wales Legislation</a>
+          </li>
+          <li>
+            <a href="/explore/legislatures/ni"
+              >Northern Ireland Legislation</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}
