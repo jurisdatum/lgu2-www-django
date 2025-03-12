@@ -7,9 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-Django = "^5.1.2"
+Django = "^5.1.7"
 requests = "^2.32.3"
-django-environ = "^0.11.2"
+django-environ = "^0.12.0"
 wagtail = "^6.3.2"
 
 [tool.poetry.group.dev.dependencies]
