@@ -48,3 +48,4 @@ class AboutUsPageSubSection(models.Model):
 
     def __str__(self):
         return self.subheading_2
+    

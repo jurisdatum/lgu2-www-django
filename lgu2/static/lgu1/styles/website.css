@@ -78,7 +78,6 @@
 	#primaryNav {border: 0; width: 100%; min-width: 1280px}
 	#primaryNav ul li a {display: inline-block; padding: 0 12px; font-size: 1.15em; font-weight: 300; white-space: nowrap}
 	#primaryNav ul li:first-child a {padding: 0 12px 0 0}
-	#per.home #primaryNav ul li.link1 a, #browse #primaryNav ul li.link2 a, #per.newLeg #primaryNav ul li.link3 a, #doc.coronavirus #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a {font-weight: 500}
 	#primaryNav ul {padding: 7px 0}
 	#primaryNav ul li {padding: 3px 0; border-left: 1px solid}
 	#primaryNav ul li:first-child {padding: 2px 0; border: 0}
@@ -565,7 +564,7 @@
 	.js .help .close, .closeLink {padding: 0 !important; margin: -5px !important}
 	.closeLink {margin: 3px 8px !important}
 	#printOptions a.closeLink:before {padding: 0}
-.interfaceOptions h4 {font-size: 1em}
+	.interfaceOptions h4 {font-size: 1em}
 
 	#tools .section ul.toolList {padding: 1px 0 0 0; margin: 0}
 	#tools #whatVersion.section ul.toolList li {margin: 6px 0 0 0}
@@ -579,9 +578,9 @@
 	#tools .userFunctionalElement .background span {display: none}
 	.content .subsection {margin: 2px 0 0 0; font-size: 1em}
 
-	#openingOptions .whole a {background: url"../images/chrome/iconSprites.gif") no-repeat 0 -697px}
-	#openingOptions .minusSched a {background: url"../images/chrome/iconSprites.gif") no-repeat 0 -798px}
-	#openingOptions .onlySched a {background: url"../images/chrome/iconSprites.gif") no-repeat 0 -897px}
+	#openingOptions .whole a {background: url("../images/chrome/iconSprites.gif") no-repeat 0 -697px}
+	#openingOptions .minusSched a {background: url("../images/chrome/iconSprites.gif") no-repeat 0 -798px}
+	#openingOptions .onlySched a {background: url("../images/chrome/iconSprites.gif") no-repeat 0 -897px}
 
 	#whatVersion .userFunctionalElement {padding: 0; margin: 0}
 	#whatVersion .userFunctionalElement {width: auto; display: block}
@@ -1094,22 +1093,22 @@
 		background: rgba(100,0,100,0.5); background: linear-gradient(270deg, rgba(102,0,102,0.5) 0%, rgba(102,0,102,0.2) 85%)}
 
 	#layout1 a.pdfLink {
-		background: url('../images/chrome/iconSprites.gif') no-repeat 0 -1317px}
+		background: url("../images/chrome/iconSprites.gif") no-repeat 0 -1317px}
 	#layout1 a.htmLink {
-		background: url('../images/chrome/iconSprites.gif') no-repeat 0 -1438px}
-	#layout1 #tools #pdfVersionsContent a.pdfLink {background: url"../images/chrome/iconSprites.gif") no-repeat 0px -1320px}
+		background: url("../images/chrome/iconSprites.gif") no-repeat 0 -1438px}
+	#layout1 #tools #pdfVersionsContent a.pdfLink {background: url("../images/chrome/iconSprites.gif") no-repeat 0px -1320px}
 	#changesOverTime #timeline #timelineData ul li a:after {
-	    background: url('../images/timeline-point.png') no-repeat 5px 1px}
+	    background: url("../images/timeline-point.png") no-repeat 5px 1px}
 	#changesOverTime #timeline #timelineData ul li.currentVersion a:after {
-	    background: url('../images/timeline-point-active.png') no-repeat 5px 1px}
+	    background: url("../images/timeline-point-active.png") no-repeat 5px 1px}
 	#changesOverTime #timeline #timelineData ul li.currentVersion a.euexitday-deal:after, #changesOverTime #timeline #timelineData ul li.currentVersion a.euexitdayoverlay-deal:after {
 	    background: none}
 	#doc.changeLeg .interface .userFunctionalElement .background {
-		background: url('../images/chrome/iconSprites.gif') no-repeat 100% -4547px}
+		background: url("../images/chrome/iconSprites.gif") no-repeat 100% -4547px}
 	.modWin h3:before {
-		background: url('../images/chrome/iconSprites.gif') no-repeat -4px -1954px}
+		background: url("../images/chrome/iconSprites.gif") no-repeat -4px -1954px}
 	#footer .copyrightstatement:before {
-		background: url('../images/ogl.png') no-repeat 0 0; background-size: 53%}
+		background: url("../images/ogl.png") no-repeat 0 0; background-size: 53%}
 	#per.home .welcome ul#countryLeg li a#welcome, #per.home .welcomecy ul#countryLeg li a#welcomecy, #per.home .uk ul#countryLeg li a#uk, #per.home .ukcy ul#countryLeg li a#ukcy, #per.home .scotland ul#countryLeg li a#scotland, #per.home .scotlandcy ul#countryLeg li a#scotlandcy, #per.home .wales ul#countryLeg li a#wales, #per.home .walescy ul#countryLeg li a#walescy, #per.home .ni ul#countryLeg li a#ni, #per.home .nicy ul#countryLeg li a#nicy, #per.home .eu ul#countryLeg li a#eu, #per.home .eucy ul#countryLeg li a#eucy {
 		background-image: none}
 
@@ -1414,6 +1413,7 @@
 	.LegSnippet .LegListItemNo {display: table-cell; width: 50px; float: none}
 	.LegSnippet .LegListItemNo + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard, .LegSnippet .LegListItemNo + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard + .LegListTextStandard {float: none; width: auto}
 	.LegSnippet .LegP3list .LegRomanList .LegListItem  {float: right; width: 89%}
+	.LegSnippet .LegP3list .LegRomanList .LegClearFix .LegListItem  {float: right; width: 100%}
 	.LegSnippet .LegAlphaList .LegListItem {float: right; width: 95%}
 		/* fix*/
 		.LegSnippet .LegAlphaList .LegListItem {width: 84%}
@@ -1437,63 +1437,63 @@
 /* backgrounds */
 	#per.home #intro.wales #animContent .wales {
 		background: rgba(13,38,39,1); 
-		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryBG/wales.png') no-repeat;
-		background: url('/images/chrome/homepageCountryBG/wales.png') no-repeat, linear-gradient(0deg, rgba(13,38,39,1) 0%, rgba(13,38,39,1) 25%, rgba(0,70,70,1) 100%)}
+		background: rgba(13,38,39,1) url('../images/chrome/homepageCountryBG/wales.png') no-repeat;
+		background: url('../images/chrome/homepageCountryBG/wales.png') no-repeat, linear-gradient(0deg, rgba(13,38,39,1) 0%, rgba(13,38,39,1) 25%, rgba(0,70,70,1) 100%)}
 
 	#per.home #intro.scotland #animContent .scotland {
 		background: rgba(13,38,39,1); 
-		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryBG/scotland.png') no-repeat;
-		background: url('/images/chrome/homepageCountryBG/scotland.png') no-repeat, linear-gradient(0deg, rgba(65,0,30,1) 0%, rgba(65,0,30,1) 25%, rgba(100,0,50,1) 100%)}
+		background: rgba(13,38,39,1) url('../images/chrome/homepageCountryBG/scotland.png') no-repeat;
+		background: url('../images/chrome/homepageCountryBG/scotland.png') no-repeat, linear-gradient(0deg, rgba(65,0,30,1) 0%, rgba(65,0,30,1) 25%, rgba(100,0,50,1) 100%)}
 
 	#per.home #intro.uk #animContent .uk {
 		background: rgba(13,38,39,1); 
-		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryBG/uk.png') no-repeat;
-		background: url('/images/chrome/homepageCountryBG/uk.png') no-repeat, linear-gradient(0deg, rgba(160,100,35,1) 0%, rgba(160,100,35,1) 25%, rgba(235,180,50,1) 100%)}
+		background: rgba(13,38,39,1) url('../images/chrome/homepageCountryBG/uk.png') no-repeat;
+		background: url('../images/chrome/homepageCountryBG/uk.png') no-repeat, linear-gradient(0deg, rgba(160,100,35,1) 0%, rgba(160,100,35,1) 25%, rgba(235,180,50,1) 100%)}
 
 	#per.home #intro.welcome #animContent .welcome {
 		background: rgba(13,38,39,1); 
-		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryBG/welcome.png') no-repeat;
-		background: url('/images/chrome/homepageCountryBG/welcome.png') no-repeat, linear-gradient(0deg, rgba(0,60,95,1) 0%, rgba(0,60,95,1) 25%, rgba(0,105,155,1) 100%)}
+		background: rgba(2,56,90,1) url('../images/chrome/homepageCountryBG/welcome.png') no-repeat;
+		background: url('../images/chrome/homepageCountryBG/welcome.png') no-repeat, linear-gradient(0deg, rgba(0,60,95,1) 0%, rgba(0,60,95,1) 25%, rgba(0,105,155,1) 100%)}
 
 	#per.home #intro.ni #animContent .ni {
 		background: rgba(13,38,39,1); 
-		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryBG/ni.png') no-repeat;
-		background: url('/images/chrome/homepageCountryBG/ni.png') no-repeat, linear-gradient(0deg, rgba(52,42,60,1) 0%, rgba(52,42,60,1) 25%, rgba(93,81,103,1) 100%)}
+		background: rgba(2,56,90,1) url('../images/chrome/homepageCountryBG/ni.png') no-repeat;
+		background: url('../images/chrome/homepageCountryBG/ni.png') no-repeat, linear-gradient(0deg, rgba(52,42,60,1) 0%, rgba(52,42,60,1) 25%, rgba(93,81,103,1) 100%)}
 
 	#per.home #intro.eu #animContent .eu {
 		background: rgba(119,119,119,1); 
-		background: rgba(119,119,119,1) url('/images/chrome/homepageCountryBG/eu.png') no-repeat;
-		background: url('/images/chrome/homepageCountryBG/eu.png') no-repeat, linear-gradient(0deg, rgba(41,41,41,1) 0%, rgba(41,41,41,1) 25%, rgba(101,101,101,1) 100%)}
+		background: rgba(119,119,119,1) url('../images/chrome/homepageCountryBG/eu.png') no-repeat;
+		background: url('../images/chrome/homepageCountryBG/eu.png') no-repeat, linear-gradient(0deg, rgba(41,41,41,1) 0%, rgba(41,41,41,1) 25%, rgba(101,101,101,1) 100%)}
 
 	#per.home #intro.walescy #animContent .walescy {
 		background: rgba(13,38,39,1); 
-		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryWelshBG/wales.png') no-repeat;
-		background: url('/images/chrome/homepageCountryWelshBG/wales.png') no-repeat, linear-gradient(0deg, rgba(13,38,39,1) 0%, rgba(13,38,39,1) 25%, rgba(0,70,70,1) 100%)}
+		background: rgba(13,38,39,1) url('../images/chrome/homepageCountryWelshBG/wales.png') no-repeat;
+		background: url('../images/chrome/homepageCountryWelshBG/wales.png') no-repeat, linear-gradient(0deg, rgba(13,38,39,1) 0%, rgba(13,38,39,1) 25%, rgba(0,70,70,1) 100%)}
 
 	#per.home #intro.scotlandcy #animContent .scotlandcy {
 		background: rgba(13,38,39,1); 
-		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryWelshBG/scotland.png') no-repeat;
-		background: url('/images/chrome/homepageCountryWelshBG/scotland.png') no-repeat, linear-gradient(0deg, rgba(65,0,30,1) 0%, rgba(65,0,30,1) 25%, rgba(100,0,50,1) 100%)}
+		background: rgba(13,38,39,1) url('../images/chrome/homepageCountryWelshBG/scotland.png') no-repeat;
+		background: url('../images/chrome/homepageCountryWelshBG/scotland.png') no-repeat, linear-gradient(0deg, rgba(65,0,30,1) 0%, rgba(65,0,30,1) 25%, rgba(100,0,50,1) 100%)}
 
 	#per.home #intro.ukcy #animContent .ukcy {
 		background: rgba(13,38,39,1); 
-		background: rgba(13,38,39,1) url('/images/chrome/homepageCountryWelshBG/uk.png') no-repeat;
-		background: url('/images/chrome/homepageCountryWelshBG/uk.png') no-repeat, linear-gradient(0deg, rgba(160,100,35,1) 0%, rgba(160,100,35,1) 25%, rgba(235,180,50,1) 100%)}
+		background: rgba(13,38,39,1) url('../images/chrome/homepageCountryWelshBG/uk.png') no-repeat;
+		background: url('../images/chrome/homepageCountryWelshBG/uk.png') no-repeat, linear-gradient(0deg, rgba(160,100,35,1) 0%, rgba(160,100,35,1) 25%, rgba(235,180,50,1) 100%)}
 
 	#per.home #intro.welcomecy #animContent .welcomecy {
 		background: rgba(13,38,39,1); 
-		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryWelshBG/welcome.png') no-repeat;
-		background: url('/images/chrome/homepageCountryWelshBG/welcome.png') no-repeat, linear-gradient(0deg, rgba(0,60,95,1) 0%, rgba(0,60,95,1) 25%, rgba(0,105,155,1) 100%)}
+		background: rgba(2,56,90,1) url('../images/chrome/homepageCountryWelshBG/welcome.png') no-repeat;
+		background: url('../images/chrome/homepageCountryWelshBG/welcome.png') no-repeat, linear-gradient(0deg, rgba(0,60,95,1) 0%, rgba(0,60,95,1) 25%, rgba(0,105,155,1) 100%)}
 
 	#per.home #intro.nicy #animContent .nicy {
 		background: rgba(13,38,39,1); 
-		background: rgba(2,56,90,1) url('/images/chrome/homepageCountryWelshBG/ni.png') no-repeat;
-		background: url('/images/chrome/homepageCountryWelshBG/ni.png') no-repeat, linear-gradient(0deg, rgba(52,42,60,1) 0%, rgba(52,42,60,1) 25%, rgba(93,81,103,1) 100%)}
+		background: rgba(2,56,90,1) url('../images/chrome/homepageCountryWelshBG/ni.png') no-repeat;
+		background: url('../images/chrome/homepageCountryWelshBG/ni.png') no-repeat, linear-gradient(0deg, rgba(52,42,60,1) 0%, rgba(52,42,60,1) 25%, rgba(93,81,103,1) 100%)}
 
 	#per.home #intro.eucy #animContent .eucy {
 		background: rgba(119,119,119,1); 
-		background: rgba(119,119,119,1) url('/images/chrome/homepageCountryWelshBG/eu.png') no-repeat;
-		background: url('/images/chrome/homepageCountryWelshBG/eu.png') no-repeat, linear-gradient(0deg, rgba(41,41,41,1) 0%, rgba(41,41,41,1) 25%, rgba(101,101,101,1) 100%)}
+		background: rgba(119,119,119,1) url('../images/chrome/homepageCountryWelshBG/eu.png') no-repeat;
+		background: url('../images/chrome/homepageCountryWelshBG/eu.png') no-repeat, linear-gradient(0deg, rgba(41,41,41,1) 0%, rgba(41,41,41,1) 25%, rgba(101,101,101,1) 100%)}
 
 	#per.home #intro.wales div#animContent h2, #per.home #intro.walescy div#animContent h2 {
 		background-color: rgba(0,50,50,1)}
@@ -1675,7 +1675,10 @@
 	.legToc p.LegContentsTitle em, #changesOverTime p.warning {
 		font-family: "Roboto"; font-style: 300; font-style: italic}
 
-	input, select, strong, h2:not(.LegSnippet .LegAnnotations .LegAnnotationsGroupHeading, .card_list h2, .info h2), h3, dt, strong, .accessibleLinks a:focus, .accessibleLinks a:active, .natArch + #secondaryNav li:before, .natArchWelsh + #secondaryNav li:after, #per.home #primaryNav ul li.link1 a, #browse #primaryNav ul li.link2 a, #per.newLeg #primaryNav ul li.link3 a, #doc.coronavirus #primaryNav ul li.link4 a, #doc.changeLeg #primaryNav ul li.link5 a, #browse #timeline li a em span, #browse #resultsTimeline .key:before, #browse #tools #heading li.legHeading a, #search #tools #heading li.legHeading a, #browse.region .p_absTopRight .returnLink a:before, legend.searchCol1, #changesOverTime .timelineHelp:before, #statusWarning a.helpItem:before, #leg .longPageTitle, .legResources h4, .legResources .printPdf .plainList a, .legResources .anchors a, table.searchExample td, #tools #advFeatures li span.close, #tools #moreOptions li a.close, dl.geoExtentDict dd span, a.expandCollapseLink, #statusWarning #statusWarningSubSections a, #statusWarning #statusWarningSubSections .LegAffected, #infoSection p.c2a a, #infoSection-status p.c2a a, #infoSection-note p.c2a a, #infoDraft p.c2a a, #brexitInfo #outstandingRefs .title, #viewLeg .LegSnippet .geoExtInfo p, .modWin h3, #per.home #intro #homeCTA .btn, .searchResults dt, ul.linkList li.viewMoreLink, ol.linkList li.viewMoreLink, p.viewMoreLink, #doc h3, #doc h4, .visit, .userFunctionalElement, #viewLegContents .downloadPdfVersion a.pdfLink, .plainView #layout1 #header a, #browse #tools #miniPageNavCurrent, #browse #tools ul li.returnLink a, #refineSearch .searchExtendsTo .LegExtentRestriction, #tools #subheading a.userFunctionalElement, .alphaLinkList a, #skipLinks a, #chron h2, .extentMarkerInfo a, .changeLang, #cookie-preferences-management .btn.show-hide, #PiTselector input[type=submit], a.helpItem, .legToc p.LegContentsNo a, .js .covid-tabs .anchors a, a.helpItemToBot:before, #browse #tools #heading li.legHeading.active, #search #tools #heading li.legHeading.active, ol li p.ENContentsTitle a, #search #content #advancedSearch input[type="checkbox"]:checked + label, #search #content #advancedSearch input[type="radio"]:checked + label, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-active, .markdown-page h2.title, .legEnContent .markdown-page h3.HSubheading3, .LegCommentaryItem .LegCommentaryType, .LegCommentaryItem .LegCommentaryType a, .newLeg .days li a, .newLeg h3 a, .newLegFeeds .furtherInfo h5 a, .newLegFeeds .furtherInfo h6 a, .newLeg p.warning a, #survey-banner .content:before, .english, .welsh, #breadCrumb ul li, .legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a, .euexitday-deal .content .description, .euexitdayoverlay-deal .content .description, #search.intro #tools #links .current, .newLeg h3#allNew a, .newLeg ul.countryNav li a, #searchChanges fieldset#effectsOptions legend, #search #content th, #browse #content th, #search #content #advancedSearch div .searchCol1, #search #content #advancedSearch div .searchLangCol1, legend.searchCol1, #cookie-preferences-management th, #timelineData .currentVersion .pointer + span:not(.content), #search #tools ul li.returnLink a, #browse #tools ul li.returnLink a, li.ENContentsCommentaryChapter > p.ENContentsTitle > a, #new-design-banner .content a, ol li.ENContentsAnnex p.ENContentsTitle a span, .redirectSearch a {font-family: "Roboto"; font-weight: 500 !important}
+    /* primary nav active */
+    #per.home #primaryNav ul li.link1 a, #browse #primaryNav ul li.link2 a, #doc.research #primaryNav ul li.link3 a, #doc.helpPage #primaryNav ul li.link4 a, #per.newLeg #primaryNav ul li.link5 a, #doc.aboutUs #primaryNav ul li.link6 a {font-family: "Roboto"; font-weight: 500 !important}
+    /* other nav active */
+	input, select, strong, h2:not(.LegSnippet .LegAnnotations .LegAnnotationsGroupHeading, .card_list h2, .info h2), h3, dt, strong, .accessibleLinks a:focus, .accessibleLinks a:active, .natArch + #secondaryNav li:before, .natArchWelsh + #secondaryNav li:after, #browse #timeline li a em span, #browse #resultsTimeline .key:before, #browse #tools #heading li.legHeading a, #search #tools #heading li.legHeading a, #browse.region .p_absTopRight .returnLink a:before, legend.searchCol1, #changesOverTime .timelineHelp:before, #statusWarning a.helpItem:before, #leg .longPageTitle, .legResources h4, .legResources .printPdf .plainList a, .legResources .anchors a, table.searchExample td, #tools #advFeatures li span.close, #tools #moreOptions li a.close, dl.geoExtentDict dd span, a.expandCollapseLink, #statusWarning #statusWarningSubSections a, #statusWarning #statusWarningSubSections .LegAffected, #infoSection p.c2a a, #infoSection-status p.c2a a, #infoSection-note p.c2a a, #infoDraft p.c2a a, #brexitInfo #outstandingRefs .title, #viewLeg .LegSnippet .geoExtInfo p, .modWin h3, #per.home #intro #homeCTA .btn, .searchResults dt, ul.linkList li.viewMoreLink, ol.linkList li.viewMoreLink, p.viewMoreLink, #doc h3, #doc h4, .visit, .userFunctionalElement, #viewLegContents .downloadPdfVersion a.pdfLink, .plainView #layout1 #header a, #browse #tools #miniPageNavCurrent, #browse #tools ul li.returnLink a, #refineSearch .searchExtendsTo .LegExtentRestriction, #tools #subheading a.userFunctionalElement, .alphaLinkList a, #skipLinks a, #chron h2, .extentMarkerInfo a, .changeLang, #cookie-preferences-management .btn.show-hide, #PiTselector input[type=submit], a.helpItem, .legToc p.LegContentsNo a, .js .covid-tabs .anchors a, a.helpItemToBot:before, #browse #tools #heading li.legHeading.active, #search #tools #heading li.legHeading.active, ol li p.ENContentsTitle a, #search #content #advancedSearch input[type="checkbox"]:checked + label, #search #content #advancedSearch input[type="radio"]:checked + label, #search #ui-datepicker-div .ui-datepicker-calendar .ui-state-active, .markdown-page h2.title, .legEnContent .markdown-page h3.HSubheading3, .LegCommentaryItem .LegCommentaryType, .LegCommentaryItem .LegCommentaryType a, .newLeg .days li a, .newLeg h3 a, .newLegFeeds .furtherInfo h5 a, .newLegFeeds .furtherInfo h6 a, .newLeg p.warning a, #survey-banner .content:before, .english, .welsh, #breadCrumb ul li, .legContent li#legContentLink a, .legComplete li#legContentLink a, .legToc li#legTocLink a, .legEmContent li#legEmLink a, .legEmToc li#legEmLink a, .legEnContent li#legEnLink a, .legEnToc li#legEnLink a, .legPnContent li#legPnLink a, .legPnToc li#legPnLink a, .legResources li#legResourcesLink a, .legInForceInfo li#legInForceInfoLink a, .legCommencement li#legConmmencementLink a, .legIA li#legIALink a, .legIAContent li#legIALink a, .euexitday-deal .content .description, .euexitdayoverlay-deal .content .description, #search.intro #tools #links .current, .newLeg h3#allNew a, .newLeg ul.countryNav li a, #searchChanges fieldset#effectsOptions legend, #search #content th, #browse #content th, #search #content #advancedSearch div .searchCol1, #search #content #advancedSearch div .searchLangCol1, legend.searchCol1, #cookie-preferences-management th, #timelineData .currentVersion .pointer + span:not(.content), #search #tools ul li.returnLink a, #browse #tools ul li.returnLink a, li.ENContentsCommentaryChapter > p.ENContentsTitle > a, #new-design-banner .content a, ol li.ENContentsAnnex p.ENContentsTitle a span, .redirectSearch a {font-family: "Roboto"; font-weight: 500 !important}
 
 	.btn.set-individual-cookies {padding: 10px 20px 9px 40px}
 
@@ -1703,7 +1706,7 @@
 	#leg.toc .legEmToc .interface .next .userFunctionalElement:after, #leg.toc .legEmContent .interface .next .userFunctionalElement:after, #leg.toc .legEnToc .interface .next .userFunctionalElement:after, #leg.toc .legEnContent .interface .next .userFunctionalElement:after {margin: 6px 0 0 8px}
 
 /* redesigned legislation logo */
-	#per.home #layout1 #header h1, #layout1 #header h2:not(.plainView #layout1 #header h2) {margin: 8px 0 0 0; background: url('../images/uk-govt-crest.png') no-repeat 0 0; background-size: 69px; width: 18em}
+	#per.home #layout1 #header h1, #layout1 #header h2:not(.plainView #layout1 #header h2) {margin: 8px 0 0 0; background: url("../images/uk-govt-crest.png") no-repeat 0 0; background-size: 69px; width: 18em}
 	#per.home #layout1 #header h1 {font-size: 1.3em; font-weight: 300}
 	#doc h2 {font-size: 1.3em}
 	#per.home #layout1 #header h1 a, #layout1 #header h2 a {color: transparent; padding: 0 70px 35px 85px}
@@ -1765,6 +1768,69 @@
 
 	.natArch + #XsecondaryNav li:before, #XbreadCrumb ul li, .legToc li#XlegTocLink a, #statusWarning .title h2, .legToc p.LegContentsNo a, .LegSnippet .LegCommentaryPara strong, #statusWarning #statusWarningSubSections .LegAffected, #timelineData .currentVersion .pointer + span:not(.content), #search #tools ul li.returnLink a, .helpPage dt, #doc.helpPage h4, #search.intro #tools #links .current, .newLeg .s_6.p_two strong {font-weight: 600 !important}
 
+    /* Alternate Formats */
+    #altFormats { background: rgba(30,30,30,1);height: 5.4em; width: 100%; padding: 5px 0 0 0; }
+    #altFormats ul{display: inline-block; list-style-type: none; color: rgba(255,255,255,1);}
+    #altFormats li{display: inline-block;}
+    #altFormats ul a, .altFormats p, .altFormats p a{color: rgba(255,255,255,1) !important;}
+    #altFormats ul a {padding: 0px 10px 0px 0px;}
+    .altFormats {width: 1250px; margin: 0 auto; border-bottom: 1px solid rgba(255,255,255,1);}
+
+/* New IA - October 2024 */
+    .info-content {font-weight: 400;}
+    .info-content p + ul {margin: 1rem 0 0.75rem 0}
+    .info-content li {padding: 0 0 0.2rem 0}
+    #doc .info-content h2, #browse .info-content h2 {font-weight: 900 !important; font-size: 1.6em; margin: 1.25rem 0 0 0}
+    #doc .info-content p, #browse .info-content p {margin: 0.25rem 0 0 0}
+	#doc .info-content p + p, #browse .info-content p + p {margin: 0.75rem 0 0 0}
+
+	.info-content .breadcrumb {margin: 1.5rem 0 0.75rem 0; padding: 0; list-style: none; overflow: auto}
+	.info-content .breadcrumb li {float: left; font-weight: 500; padding: 0}
+	.info-content .breadcrumb li:before {content: "\00203A"; padding: 0 0.35rem; font-weight: 300}
+	.info-content .breadcrumb li:first-child:before {display: none}
+	.info-content .breadcrumb li a {color: #1b1b1b !important; font-weight: 300}
+
+	.info-content h1 {font-weight: 900; font-size: 2rem}
+	.hidden {clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute}
+
+	.info-content .content-cards {margin: 1.35rem 0; padding: 0; list-style: none; overflow: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem}
+	.info-content .content-cards li {background: rgba(45,45,45,1); display: flex; border-radius: 5px; padding: 0}
+	.info-content .content-cards li:hover {background: rgba(58, 115, 234, 1)}
+	.info-content .content-cards li a {background: rgba(255,255,255,1) no-repeat  1rem 1.5rem; background-size: 4rem; flex: 1; margin: 2px 2px 2px 9px; padding: 1.5rem 1rem 1.2rem 6rem; line-height: 25px; border-radius: 0 5px 5px 0}
+	.info-content .content-cards li a:hover {background-color: rgba(255,255,255,0.9); text-decoration: none}
+	#doc .info-content .content-cards li a h3, #browse .info-content .content-cards li a h3{font-size: 1.1em; font-weight: 700 !important; margin: 0 0 0.5rem 0; line-height: 1.35em}
+	.info-content .content-cards li a p {margin: 0}
+
+	.content-cards.min-cards li a {padding: 1.75rem 2rem}
+	#doc .info-content .content-cards.min-cards li a h3, #browse .info-content .content-cards.min-cards li a h3 {margin: 0}
+
+	.also-interested {background: rgba(0, 0, 0, 0.035); font-weight: 400}
+	#doc .also-interested h2, #browse .also-interested h2 {margin: 0 auto; font-weight: 700 !important; font-size: 1.35em; padding: 1.75rem 15px 1rem 15px; width: 1275px; box-sizing: border-box}
+	.also-interested ul {margin: 0 auto; padding: 10px 15px 2.5rem 15px; width: 1275px; box-sizing: border-box; list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem}
+	.also-interested li {margin: 0; padding: 0; box-sizing: border-box; display: flex; background: rgba(255,255,255,1); border-radius: 5px; ; -moz-box-shadow: 0 0 0.25rem rgba(0,0,0,0.15); -webkit-box-shadow: 0 0 0.25rem rgba(0,0,0,0.15); box-shadow: 0 0 0.25rem rgba(0,0,0,0.15)}
+	.also-interested li:hover {background: rgba(58,115,234,1)}
+	.also-interested li a {flex: 1; padding: 0.7rem 0.9rem; border: 2px solid transparent; border-radius: 5px}
+	.also-interested li a:hover {background-color: rgba(255,255,255,0.9); text-decoration: none; border: 2px solid rgba(58,115,234,1)}
+	#doc .also-interested li a h3, #browse .also-interested li a h3 {margin: 0; line-height: 1.5rem; font-size: 1.075rem}
+	#doc .also-interested li a p, #browse .also-interested li a p {margin: 0.25rem 0 0 0; line-height: 1.5rem}
+
+	.info-content .content-cards li a.icon_advanced_search {background-image: url('../images/LegIcons/advanced_search.png')}
+	.info-content .content-cards li a.icon_changes_to_legislation {background-image: url('../images/LegIcons/changes_to_legislation.png')}
+	.info-content .content-cards li a.icon_changes_to_local_and_private_and_personal_acts {background-image: url('../images/LegIcons/changes_to_local_and_private_and_personal_acts.png')}
+	.info-content .content-cards li a.icon_coronavirus_legislation {background-image: url('../images/LegIcons/coronavirus_legislation.png')}
+	.info-content .content-cards li a.icon_different_legislatures_of_the_uk {background-image: url('../images/LegIcons/different_legislatures_of_the_uk.png')}
+	.info-content .content-cards li a.icon_draft_legislation {background-image: url('../images/LegIcons/draft_legislation.png')}
+	.info-content .content-cards li a.icon_eu_legislation_and_uk_law {background-image: url('../images/LegIcons/eu_legislation_and_uk_law.png')}
+	.info-content .content-cards li a.icon_find-case-law {background-image: url('../images/LegIcons/find-case-law.png')}
+	.info-content .content-cards li a.icon_new_legislation {background-image: url('../images/LegIcons/new_legislation.png')}
+	.info-content .content-cards li a.icon_northern_ireland {background-image: url('../images/LegIcons/northern_ireland.png')}
+	.info-content .content-cards li a.icon_research-website {background-image: url('../images/LegIcons/research-website.png')}
+	.info-content .content-cards li a.icon_reusing_legislation_data {background-image: url('../images/LegIcons/reusing_legislation_data.png')}
+	.info-content .content-cards li a.icon_scotland {background-image: url('../images/LegIcons/scotland.png')}
+	.info-content .content-cards li a.icon_uk_impact_assessments {background-image: url('../images/LegIcons/uk_impact_assessments.png')}
+	.info-content .content-cards li a.icon_united_kingdom {background-image: url('../images/LegIcons/united_kingdom.png')}
+	.info-content .content-cards li a.icon_wales {background-image: url('../images/LegIcons/wales.png')}
+
 /* TNA reduced width */
 @media (max-width: 1279px) {
 	.natArch a, .natArchWelsh a {right: 15px}
@@ -1772,8 +1838,9 @@
 
 	#header {width: 970px !important; min-width: 970px !important; max-width: 970px !important}
 	#layout1, #footerNav, #primaryNav, .cookie-preferences-banner, #new-design-banner {min-width: 970px !important}
-
-	.cookie-preferences-banner .content, #coronavirus-banner .bannercontent, #primaryNav div.navLayout, #layout2, #footerNav ul, #footer, #browse.intro .card_list, #doc #subNav p.backToTop, #per.home #intro #animContent, #per.home #intro #animContent div, #per.home #intro, #per.home #intro ul#countryLeg, .legResources .s_12, #browse #scrollbar, #layout2.legResources #content, #layout2.legEmContent #content, #layout2.legEmToc #content, #layout2.legEnContent #content, #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content, .newLeg .newLegFeeds, body.legContent #content, #primaryNav ul, #contentSearch, #new-design-banner .content, .plainView #layout2 h1 {width: 940px !important; min-width: 940px !important; max-width: 940px !important}
+    /* LEGDEV-5399, LEGDEV-5400 and  LEGDEV-5401: remove this comment once ready */
+	.cookie-preferences-banner .content, #coronavirus-banner .bannercontent, #primaryNav div.navLayout, #layout2, #footerNav ul, #footer, #browse.intro .card_list, #doc #subNav p.backToTop, #per.home #intro #animContent, #per.home #intro #animContent div, #per.home #intro, #per.home #intro ul#countryLeg, .legResources .s_12, #browse #scrollbar, #layout2.legResources #content, #layout2.legEmContent #content, #layout2.legEmToc #content, #layout2.legEnContent #content, #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content, .newLeg .newLegFeeds, body.legContent #content, #primaryNav ul, #contentSearch, #new-design-banner .content, .plainView #layout2 h1,#altFormats div, #altFormats ul {width: 940px !important; min-width: 940px !important; max-width: 940px !important}
+	/* .cookie-preferences-banner .content, #coronavirus-banner .bannercontent, #primaryNav div.navLayout, #layout2, #footerNav ul, #footer, #browse.intro .card_list, #doc #subNav p.backToTop, #per.home #intro #animContent, #per.home #intro #animContent div, #per.home #intro, #per.home #intro ul#countryLeg, .legResources .s_12, #browse #scrollbar, #layout2.legResources #content, #layout2.legEmContent #content, #layout2.legEmToc #content, #layout2.legEnContent #content, #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content #layout2.legEnToc #content, #layout2.legPnContent #content, #layout2.legPnToc #content, .newLeg .newLegFeeds, body.legContent #content, #primaryNav ul, #contentSearch, #new-design-banner .content, .plainView #layout2 h1 {width: 940px !important; min-width: 940px !important; max-width: 940px !important} */
 
 	#new-design-banner .content p {margin: 0 6.5em 0 0}
 
@@ -1825,6 +1892,9 @@
 	.newLeg ul.days li.current a:after {margin: 17px 40px}
 	.newLeg .furtherInfo {width: 912px}
 
+	/* New legislation - July 2024 */
+	.newLeg aside h2:not(.LegSnippet .LegAnnotations .LegAnnotationsGroupHeading, .card_list h2, .info h2), .newLeg aside ul {width: 940px}
+
 	#searchChanges fieldset#affect, #searchChanges fieldset#affecting {width: 445px}
 	#searchChanges fieldset#affect {margin: 0 15px 0 0}
 	#searchChanges .title input {width: 412px}
@@ -1872,4 +1942,7 @@
 
 	ul.optionList li {height: 5.3em}
 	ul.optionList ul li {display: block; float: none}
+	/* New IA - October 2024 */
+	.also-interested ul {width: 970px; grid-template-columns: repeat(3, minmax(0, 1fr))}
+	#doc .also-interested h2, #browse .also-interested h2 {width: 970px}
 }

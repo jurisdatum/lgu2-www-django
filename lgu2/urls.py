@@ -4,8 +4,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, re_path, include
-from .views.doc_types import list_uk
 
+from .views.doc_types import list_types
 from .views.browse import browse, data as browse_data
 from .views.document import document, data as document_data
 from .views import toc
@@ -14,19 +14,17 @@ from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
 from .views.cms_pages import about_us
+from .views.explore_collection import explore_collection, explore_legislatures
 from wagtail.admin import urls as wagtailadmin_urls 
-# from wagtail import urls as wagtailurls
 
 urlpatterns = i18n_patterns(
-    path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
+    path('', lambda r: redirect('explore-legislatures'), name='home'), prefix_default_language=False
 )
 
 urlpatterns += [
 
     path('admin/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
-    # path('pages/', include(wagtailurls)),
-    # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
 
 # needed because some JavaScript files add links to "/static/..."
@@ -35,6 +33,7 @@ if not settings.DEBUG:
         re_path(r'^static/(.*)$', lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
     ]
 
+COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
 TYPE = r'(?P<type>[a-z]{3,5})'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
@@ -46,9 +45,11 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
 
-    path('browse', lambda r: redirect('browse-uk')),
-    path('browse/uk', list_uk, name='browse-uk'),
     path('about-us/', about_us, name='about-us'),
+
+    path('explore', explore_collection, name='explore'),
+    path('explore/legislatures', explore_legislatures, name='explore-legislatures'),
+    re_path(fr'^explore/legislatures/{COUNTRY}', list_types, name='explore-country'),
 
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),

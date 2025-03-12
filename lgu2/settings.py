@@ -143,8 +143,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # API
 
-API_BASE_URL = 'http://localhost:8080'
-# API_BASE_URL = 'http://api.lgu2.tna.jurisdatum.com'
+# API_BASE_URL = 'http://localhost:8080'
+API_BASE_URL = 'http://api.lgu2.tna.jurisdatum.com'
 
 WAGTAIL_SITE_NAME = 'first site'
 WAGTAILADMIN_BASE_URL = 'http://127.0.0.1:8000/wagtail-admin/'
