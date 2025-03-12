@@ -13,7 +13,7 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
-from .views.cms_pages import about_us
+from .views.wagtail import about_us
 from wagtail.admin import urls as wagtailadmin_urls 
 # from wagtail import urls as wagtailurls
 

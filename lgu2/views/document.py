@@ -99,6 +99,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     timeline = _make_timeline_data(data['meta'], pit)
 
+    data['meta']['lang'] = lang
     status = {
         'message': get_status_message(data['meta']),
         'label': meta['title'],

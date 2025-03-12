@@ -2,7 +2,7 @@
 from datetime import datetime
 # import re
 # from typing import Optional
-
+from ..views.wagtail import get_snippet_message
 from ..api.document import CommonMetadata
 from ..api.fragment import FragmentMetadata
 
@@ -26,20 +26,19 @@ from ..api.fragment import FragmentMetadata
 
 
 def get_status_message(meta: CommonMetadata) -> str:
-    doc_title = meta['title']
-    today = datetime.now().strftime('%d %B %Y')
+    label = meta['title']
+    date = datetime.now().strftime('%d %B %Y')
     if meta['upToDate']:
-        return f'{ doc_title } is up to date with all changes known to be in force on or before { today }.'
+        return get_snippet_message('status_message_up_to_date', label, date, meta['lang'])
     else:
-        return f'There are outstanding changes not yet made by the legislation.gov.uk editorial team to { doc_title }. Any changes that have already been made by the team appear in the content and are referenced with annotations.'
+        return get_snippet_message('status_message_outstanding', label, None, meta['lang'])
 
 
 def get_status_message_for_fragment(meta: FragmentMetadata) -> str:
-    doc_title = meta['title']
-    frag_label = meta['fragmentInfo']['label']
-    today = datetime.now().strftime('%d %B %Y')
+    label = meta['title'] + ', ' + meta['fragmentInfo']['label']
+    date = datetime.now().strftime('%d %B %Y')
     if meta['upToDate']:
-        return f'{ doc_title }, { frag_label } is up to date with all changes known to be in force on or before { today }.'
+        return get_snippet_message('status_message_up_to_date', label, date, meta['lang'])
     else:
-        return f'There are outstanding changes not yet made by the legislation.gov.uk editorial team to { doc_title }. Any changes that have already been made by the team appear in the content and are referenced with annotations.'
+        get_snippet_message('status_message_outstanding', label, None, meta['lang'])
 
