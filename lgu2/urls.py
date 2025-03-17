@@ -9,7 +9,7 @@ from .views.doc_types import list_types
 from .views.browse import browse, data as browse_data
 from .views.document import document, data as document_data
 from .views import toc
-from .views.metadata import metadata, combined
+from .views.metadata import metadata, combined, metadata_list
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
@@ -82,6 +82,7 @@ urlpatterns += i18n_patterns(
 
 
     # linked data
+    re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/metadata', metadata_list, name='metadata-list'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/metadata', metadata, name='metadata'),
     re_path(r'^(?P<type>[a-z]{3,5})/(?P<year>[0-9]{4})/(?P<number>[0-9]+)/combined', combined),
 

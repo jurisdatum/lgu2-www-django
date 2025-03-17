@@ -4,13 +4,22 @@ import asyncio
 from django.http import HttpResponse
 from django.template import loader
 
-from ..api.metadata import get_metadata
+from ..api.metadata import get_metadata, get_metadata_list
 from ..api.document import get_document
 
 
 def metadata(request, type, year, number):
     data = get_metadata(type, year, number)
+    print(data)
     template = loader.get_template('metadata/metadata.html')
+    context = {'item': data}
+    return HttpResponse(template.render(context, request))
+
+
+def metadata_list(request, type, year):
+    data = get_metadata_list(type, year)
+    print(data)
+    template = loader.get_template('metadata/metadata_list.html')
     context = {'item': data}
     return HttpResponse(template.render(context, request))
 
