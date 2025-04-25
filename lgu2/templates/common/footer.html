@@ -1,6 +1,5 @@
 {% load static %}
 {% load i18n %}
-{% load wagtailcore_tags %}
 
 <div id="footerNav">
     <ul>
@@ -31,29 +30,6 @@
     </ul>
 </div>
 <div id="footer">
-
-    {% if footer %}
-    <div>{% get_current_language as LANGUAGE_CODE %}
-        <p class="copyrightstatement">
-            <img src="{% static 'lgu1/images/chrome/ogl-symbol.gif' %}" alt="OGL logo" />
-            {% if LANGUAGE_CODE == 'cy' %}
-            <span xml:lang="cy" id="Copyright_Statement">
-                {{footer.copyright_statement_cy}}
-                <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3" target="_blank" rel="license">Drwydded Llywodraeth Agored v3.0</a>
-                ac eithrio ble nodir yn wahanol. Yn ychwanegol mae’r safle hwn â chynnwys sy’n deillio o EUR-Lex, a ailddefnyddiwyd dan delerau
-                <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32011D0833" target="_blank">Penderfyniad y Comisiwn 2011/833/EU</a>
-                ar ailddefnyddio dogfennau o sefydliadau’r UE. Am ragor o wybodaeth gweler ddatganiad cyhoeddus
-                <a href="https://eur-lex.europa.eu/content/legal-notice/legal-notice.html" target="_blank">Swyddfa Gyhoeddiadau’r UE ar ailddefnyddio</a>.
-            </span>
-            {% else %}
-            <span id="Copyright_Statement">
-                {{footer.copyright_statement_en|safe}}
-            </span>
-            {% endif %}
-        </p>
-        <span class="copyright">© <span rel="dct:rights" resource="http://reference.data.gov.uk/def/copyright/crown-copyright">{% translate 'Crown and database right' %}</span></span>
-    </div>
-    {% else %}
     <div>{% get_current_language as LANGUAGE_CODE %}
         <p class="copyrightstatement">
             <img src="{% static 'lgu1/images/chrome/ogl-symbol.gif' %}" alt="OGL logo" />
@@ -81,5 +57,4 @@
         </p>
         <span class="copyright">© <span rel="dct:rights" resource="http://reference.data.gov.uk/def/copyright/crown-copyright">{% translate 'Crown and database right' %}</span></span>
     </div>
-    {% endif %}
 </div>
