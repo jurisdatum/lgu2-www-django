@@ -34,21 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lgu2',
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail',
-
-    'taggit',
-    'modelcluster',
+    'lgu2'
 ]
 
 MIDDLEWARE = [
@@ -59,8 +45,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware'
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'lgu2.urls'
@@ -142,9 +127,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # API
-
-API_BASE_URL = 'http://localhost:8080'
-# API_BASE_URL = 'http://api.lgu2.tna.jurisdatum.com'
-
-WAGTAIL_SITE_NAME = 'first site'
-WAGTAILADMIN_BASE_URL = 'http://127.0.0.1:8000/wagtail-admin/'
+API_BASE_URL = env('API_BASE_URL')
