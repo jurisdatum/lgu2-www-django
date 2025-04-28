@@ -13,12 +13,12 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
+from .views.general import homepage
+# urlpatterns = i18n_patterns(
+#     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
+# )
 
-urlpatterns = i18n_patterns(
-    path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
-)
-
-urlpatterns += [
+urlpatterns = [
     path('admin/', admin.site.urls),
     # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
@@ -39,7 +39,7 @@ LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
-
+    path('', homepage, name='homepage'),
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
 
