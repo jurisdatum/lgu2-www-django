@@ -73,6 +73,16 @@
             <div class="newly-published">
                 <h3>New legislation</h3>
                 <ul>
+                    {% for doc in new_legislation %}
+                    <li>
+                        <h4>
+                            <a href="#"><span>{{ doc.cite }}</span> - {{ doc.title }}</a>
+                        </h4>
+                        <p>{{ doc.typeLabel }}</p>
+                        <p>Published {{ doc.published|date:'j M Y' }}</p>
+                    </li>
+                    {% endfor %}
+                    {% comment %}
                     <li>
                         <h4><a href="#"><span>SSI 2024/193</span> - The Scottish Pubs Code Regulations 2024</a></h4>
                         <p>Scottish Statutory Instrument</p>
@@ -102,6 +112,7 @@
                         <p>Scottish Statutory Instrument</p>
                         <p>Published 27 Apr 2025</p>
                     </li>
+                    {% endcomment %}
                 </ul>
                 <a href="{% url 'homepage' %}">See legislation published this week</a>
             </div>
