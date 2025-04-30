@@ -1,0 +1,98 @@
+{% extends "new_theme/base.html" %}
+{% block content %}
+<main>
+    <section>
+        <nav aria-label="Breadcrumb">
+            <h2>Where this page sits</h2>
+            <ol>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'explore' %}">Explore our collections</a></li>
+                <li><a href="{% url 'different-legislatures' %}">Different legislatures of {{country_name}}</a></li>
+                <li><a href="{% url 'different-legislatures-country' country='uk' %}" aria-current="page">Legislation for {{country_heading}}</a></li>
+            </ol>
+        </nav>
+        <h1 id="main-content-h" tabindex="-1">Legislation for {{country_heading}}</h1>
+    </section>
+    <section>
+        <p>{{country_text.p1}}</p>
+
+        <h2>Legislation that exclusively applies to {{country_name}}</h2>
+        <p>{{country_text.p2}}</p>
+        <div class="narrow-lists">
+            <h3>Primary legislation</h3>
+            <ul>
+                {% for primary in apply_primary %}
+                <li><a href="{% url 'browse' primary.shortName %}">{{ primary.label }}</a></li>
+                {% empty %}
+                <li>No legislation found.</li>
+                {% endfor %}
+            </ul>
+            <h3>Secondary legislation</h3>
+            <ul>
+                {% for secondary in apply_secondary %}
+                <li><a href="{% url 'browse' secondary.shortName %}">{{ secondary.label }}</a></li>
+                {% empty %}
+                <li>No legislation found.</li>
+                {% endfor %}                
+            </ul>
+        </div>
+
+        <h2>Legislation that may apply to {{country_name}}</h2>
+        <p>{{country_text.p3}}</p>
+        <div class="narrow-lists">
+            <h3>Primary legislation</h3>
+            <ul>
+                {% for primary in may_primary %}
+                <li><a href="{% url 'browse' primary.shortName %}">{{ primary.label }}</a></li>
+                {% empty %}
+                <li>No legislation found.</li>
+                {% endfor %}
+            </ul>
+            <h3>Secondary legislation</h3>
+            <ul>
+                {% for secondary in may_secondary %}
+                <li><a href="{% url 'browse' secondary.shortName %}">{{ secondary.label }}</a></li>
+                {% empty %}
+                <li>No legislation found.</li>
+                {% endfor %}  
+            </ul>
+        </div>
+    </section>
+
+    <aside>
+        <h2>You might also be interested in finding out about...</h2>
+        <ul>
+            <li>
+                <a href="{% url 'explore' %}">
+                    <h3>Northern Ireland legislation</h3>
+                    <p>Legislation made by the Northern Ireland Assembly and Government.</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'explore' %}">
+                    <h3>Scotland legislation</h3>
+                    <p>Legislation made by the Scottish Parliament and Government.</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'explore' %}">
+                    <h3>Wales legislation</h3>
+                    <p>Legislation made by the Welsh Assembly and Government.</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'explore' %}">
+                    <h3>Legislation originating from the EU</h3>
+                    <p>EU legislation as it applied to the UK on 31 December 2020 is now a part of domestic legislation.</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>What applies in the UK</h3>
+                    <p>Find out which legislation applies in the UK, from the UK Parliament and Governments, to legislation originating from the EU.</p>
+                </a>
+            </li>
+        </ul>
+    </aside>
+</main>
+{% endblock %}

@@ -13,7 +13,7 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
-from .views.general import homepage
+from .views.general import homepage, explore_collection, different_legislature, different_legislature_by_country
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -29,6 +29,7 @@ if not settings.DEBUG:
         re_path(r'^static/(.*)$', lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
     ]
 
+COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
 TYPE = r'(?P<type>[a-z]{3,5})'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
@@ -40,6 +41,9 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
+    path('explore/', explore_collection, name='explore'),
+    path('explore/legislatures', different_legislature, name='different-legislatures'),
+    re_path(fr'^explore/legislatures/{COUNTRY}', different_legislature_by_country, name='different-legislatures-country'),
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
 

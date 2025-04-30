@@ -20,7 +20,7 @@
                             <li>
                                 <a href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
                             </li>
-                            <li><a href="/tna/explore-our-collections.php">Explore our collections</a></li>
+                            <li><a href="{% url 'explore' %}" {% if request.path == '/explore/' %}aria-current="page"{% endif %}>Explore our collections</a></li>
                             <li><a href="/tna/research-tools.php">Research tools</a></li>
                             <li><a href="/tna/help-and-guidance.php">Help and guidance</a></li>
                             <li><a href="/tna/whats-new.php">What's new</a></li>
