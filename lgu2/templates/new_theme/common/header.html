@@ -4,8 +4,8 @@
             <li><a href="#main-content-h">Skip to content</a></li>
         </ul>
         <div class="top-menu">
-            <a href="/tna/default.php" aria-current="page" class="hdr-home"><span>legislation</span>.gov.uk</a>
-            <div class="hdr-tna">Delivered by <a href="/tna/"><span>The National Archives</span></a></div>
+            <a href="/" aria-current="page" class="hdr-home"><span>legislation</span>.gov.uk</a>
+            <div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
         </div>
         <div class="hdr-menu">
             <h2>Main menu</h2>
@@ -20,7 +20,7 @@
                             <li>
                                 <a href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
                             </li>
-                            <li><a href="{% url 'explore' %}" {% if request.path == '/explore/' %}aria-current="page"{% endif %}>Explore our collections</a></li>
+                            <li><a href="{% url 'explore' %}" {% if request.path|slice:':8' == '/explore' %}aria-current="page"{% endif %}>Explore our collections</a></li>
                             <li><a href="/tna/research-tools.php">Research tools</a></li>
                             <li><a href="/tna/help-and-guidance.php">Help and guidance</a></li>
                             <li><a href="/tna/whats-new.php">What's new</a></li>
@@ -106,6 +106,7 @@
                         <optgroup label="Impact Assessments">
                             <option value="ukia">All Impact Assessments</option>
                             <option value="ukia">UK Impact Assessments</option>
+                        </optgroup>
                     </select>
                 </span>
                 <span>

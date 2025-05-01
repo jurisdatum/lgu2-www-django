@@ -1,17 +1,27 @@
 
+import json
+import os
+
+from django.conf import settings
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 
 from ..api import documents as api
-from lgu2.util.labels import get_type_label, get_long_type_label
 from ..api.doc_types import get_types, Response
-from django.conf import settings
-import os
-import json
+from lgu2.util.labels import get_singular_type_label, get_long_type_label
 
+@cache_page(60 * 15)
 def homepage(request):
     data = api.get_new()
     for doc in data['documents'][:5]:
-        doc['typeLabel'] = get_type_label(doc['longType'])
+        doc['typeLabel'] = get_singular_type_label(doc['longType'])
+        if doc['version'] == 'enacted':
+            doc['link'] = '/' + doc['id'] + '/contents/' + doc['version']
+        elif doc['version'] == 'made':
+            doc['link'] = '/' + doc['id'] + '/contents/' + doc['version']
+        else:
+            doc['link'] = '/' + doc['id'] + '/contents'
+
     context = {
         'new_legislation': data['documents'][:5]
     }

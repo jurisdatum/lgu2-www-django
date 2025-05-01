@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'homepage' %}">
+                    <a href="{% url 'explore' %}">
                         <h3>Other ways to explore legislation</h3>
                         <p>Explore collections of legislation by type, or new, amended or draft legislation</p>
                     </a>
@@ -76,43 +76,12 @@
                     {% for doc in new_legislation %}
                     <li>
                         <h4>
-                            <a href="#"><span>{{ doc.cite }}</span> - {{ doc.title }}</a>
+                            <a href="{{ doc.link }}"><span>{{ doc.cite }}</span> - {{ doc.title }}</a>
                         </h4>
                         <p>{{ doc.typeLabel }}</p>
                         <p>Published {{ doc.published|date:'j M Y' }}</p>
                     </li>
                     {% endfor %}
-                    {% comment %}
-                    <li>
-                        <h4><a href="#"><span>SSI 2024/193</span> - The Scottish Pubs Code Regulations 2024</a></h4>
-                        <p>Scottish Statutory Instrument</p>
-                        <p>Published 28 Apr 2025</p>
-                    </li>
-                    <li>
-                        <h4><a href="#"><span>SSI 2024/192</span> - The Valuation Timetable (Scotland) Amendment Order
-                                2024</a></h4>
-                        <p>Scottish Statutory Instrument</p>
-                        <p>Published 28 Apr 2025</p>
-                    </li>
-                    <li>
-                        <h4><a href="#"><span>SSI 2024/191</span> - The Waste (Materials Facilities) (Scotland)
-                                Regulations 2024</a></h4>
-                        <p>Scottish Statutory Instrument</p>
-                        <p>Published 28 Apr 2025</p>
-                    </li>
-                    <li>
-                        <h4><a href="#"><span>SSI 2024/192</span> - The Valuation Timetable (Scotland) Amendment Order
-                                2024</a></h4>
-                        <p>Scottish Statutory Instrument</p>
-                        <p>Published 27 Apr 2025</p>
-                    </li>
-                    <li>
-                        <h4><a href="#"><span>SSI 2024/191</span> - The Waste (Materials Facilities) (Scotland)
-                                Regulations 2024</a></h4>
-                        <p>Scottish Statutory Instrument</p>
-                        <p>Published 27 Apr 2025</p>
-                    </li>
-                    {% endcomment %}
                 </ul>
                 <a href="{% url 'homepage' %}">See legislation published this week</a>
             </div>
