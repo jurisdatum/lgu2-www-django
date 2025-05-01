@@ -1,4 +1,5 @@
 
+from datetime import datetime
 from typing import List, TypedDict
 
 
@@ -11,7 +12,7 @@ class ListMeta:
     page: int
     pageSize: int
     totalPages: int
-    updated: str  # dateTime
+    updated: datetime
     counts: 'Counts'
     subjects: List[str]
 
@@ -47,8 +48,8 @@ class DocEntry(TypedDict):
     cite: str
     title: str
     altTitle: str
-    published: str  # dateTime
-    updated: str  # dateTime
+    published: datetime
+    updated: datetime
     version: str
     formats: List[str]
 
