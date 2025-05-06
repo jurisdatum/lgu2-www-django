@@ -13,7 +13,7 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
-from .views.general import homepage, explore_collection, different_legislature, different_legislature_by_country
+from .views.general import homepage, explore_collection, different_legislature, different_legislature_by_country, legislature_eu, legislature_eu_exit_uk_law
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -44,6 +44,9 @@ urlpatterns += i18n_patterns(
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures', different_legislature, name='different-legislatures'),
     re_path(fr'^explore/legislatures/{COUNTRY}', different_legislature_by_country, name='different-legislatures-country'),
+    path('explore-eu-exit-and-uk-law', legislature_eu_exit_uk_law, name='explore-eu-exit-and-uk-law'),
+    path('explore/legislatures/eu', legislature_eu, name='legislatures-eu'),
+    
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
 

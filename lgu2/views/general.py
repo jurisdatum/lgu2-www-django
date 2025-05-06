@@ -89,3 +89,9 @@ def different_legislature_by_country(request, country):
 
     result["country_text"] = country_texts[country]
     return render(request, 'new_theme/explore_collection/different_country_legislature.html', result)
+
+def legislature_eu_exit_uk_law(request):
+    return render(request, 'new_theme/explore_collection/explore-eu-exit-and-uk-law.html')
+
+def legislature_eu(request):
+    return render(request, 'new_theme/explore_collection/explore-legislation-originating-from-the-eu.html')
