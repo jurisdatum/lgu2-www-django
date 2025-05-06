@@ -1,0 +1,61 @@
+{% extends "new_theme/base.html" %}
+{% block content %}
+<main>
+    <section>
+        <nav aria-label="Breadcrumb">
+            <h2>Where this page sits</h2>
+            <ol>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'help' %}">Help and guidance</a></li>
+                <li><a href="{% url 'how-legislation-works' %}" aria-current="page">How legislation works</a></li>
+            </ol>
+        </nav>
+        <h1 id="main-content-h" tabindex="-1">How legislation works</h1>
+    </section>
+
+    <section class="cards">
+        <p>
+            Find out how different types of legislation get made in various parts of the United Kingdom, how legislation come into force, and how it is amended.
+        </p>
+
+        <h2>Main sections in How legislation works</h2>
+        <ul>
+            <li><a href="#"><h3>How legislation is made</h3></a></li>
+            <li><a href="#"><h3>Parliaments and jurisdictions</h3></a></li>
+            <li><a href="#"><h3>How legislation comes into force</h3></a></li>
+            <li><a href="#"><h3>Understanding geographical extent</h3></a></li>
+            <li><a href="#"><h3>The statute book</h3></a></li>
+            <li><a href="#"><h3>Primary legislation explained</h3></a></li>
+            <li><a href="{% url 'secondary-legislation' %}"><h3>Secondary legislation explained</h3></a></li>
+            <li><a href="#"><h3>Numbering for primary and secondary legislation</h3></a></li>
+            <li><a href="{% url 'revised-legislation' %}"><h3>Revised legislation explained</h3></a></li>
+        </ul>
+    </section>
+
+    <aside>
+        <h2>You might also be interested in finding out about...</h2>
+        <ul>
+            <li>
+                <a href="#"><h3>Legislation originating from the EU</h3>
+                <p>EU legislation as it applied to the UK on 31 Dec 2020, with any changes since made by the UK applied.</p></a>
+            </li>
+            <li>
+                <a href="#"><h3>What applies in the UK</h3>
+                <p>Find out which legislation applies in the UK, from the UK Parliament and Governments, to legislation originating from the EU.</p></a>
+            </li>
+            <li>
+                <a href="#"><h3>What legislation we hold</h3>
+                <p>We hold most, but not all, types of legislation and their accompanying explanatory documents. See a complete list of what we hold.</p></a>
+            </li>
+            <li>
+                <a href="#"><h3>How legislation works</h3>
+                <p>Find out how laws get made, what various terms mean, how legislation can change other legislation and what revised legislation is.</p></a>
+            </li>
+            <li>
+                <a href="#"><h3>Our editorial process</h3>
+                <p>Find out what legislation we revise, our timescales for revision, the conventions we follow and the principles that we abide by.</p></a>
+            </li>
+        </ul>
+    </aside>
+</main>
+{% endblock %}

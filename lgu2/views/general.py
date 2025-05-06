@@ -31,6 +31,7 @@ def homepage(request):
 def explore_collection(request):
     return render(request, 'new_theme/explore_collection/explore_our_collection.html')
 
+
 def different_legislature(request):
     return render(request, 'new_theme/explore_collection/different_legislatures.html')
 
@@ -90,8 +91,30 @@ def different_legislature_by_country(request, country):
     result["country_text"] = country_texts[country]
     return render(request, 'new_theme/explore_collection/different_country_legislature.html', result)
 
+
 def legislature_eu_exit_uk_law(request):
     return render(request, 'new_theme/explore_collection/explore-eu-exit-and-uk-law.html')
 
+
 def legislature_eu(request):
     return render(request, 'new_theme/explore_collection/explore-legislation-originating-from-the-eu.html')
+
+
+def research_tools(request):
+    return render(request, 'new_theme/research-tools.html')
+
+
+def help_guide(request):
+    return render(request, 'new_theme/help_guide/help-and-guide.html')
+
+
+def how_legislation_work(request):
+    return render(request, 'new_theme/help_guide/how-legislation-work.html')
+
+
+def revised_legislation(request):
+    return render(request, 'new_theme/help_guide/revised-legislation.html')
+
+
+def secondary_legislation(request):
+    return render(request, 'new_theme/help_guide/secondary-legislation.html')
