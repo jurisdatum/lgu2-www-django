@@ -1,0 +1,46 @@
+{% extends "new_theme/base.html" %}
+{% block content %}
+<main>
+    <section>
+        <nav aria-label="Breadcrumb">
+            <h2>Where this page sits</h2>
+            <ol>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'explore' %}">Explore our collections</a></li>
+                <li><a href="{% url 'different-legislatures' %}" aria-current="page">Different legislatures of the UK</a></li>
+            </ol>
+        </nav>
+        <h1 id="main-content-h" tabindex="-1">Different legislatures of the UK</h1>
+    </section>
+    <section class="cards icon-cards">
+        <p>Explore primary and secondary legislation that applies to specific countries, made by the current and historic Parliaments and Governments of the UK.</p>
+        <h2>Main sections in Different legislatures of the UK</h2>
+        <ul>
+            <li>
+                <a class="icon_different_legislatures_uk" href="{% url 'different-legislatures-country' country='uk' %}">
+                    <h3>United Kingdom</h3>
+                    <p>Legislation made by the UK Parliament and UK Government, and Historic Parliaments.</p>
+                </a>
+            </li>
+            <li>
+                <a class="icon_different_legislatures_ni" href="{% url 'different-legislatures-country' country='ni'  %}">
+                    <h3>Northern Ireland</h3>
+                    <p>Legislation made by the Northern Ireland Assembly.</p>
+                </a>
+            </li>
+            <li>
+                <a class="icon_different_legislatures_s" href="{% url 'different-legislatures-country' country='scotland' %}">
+                    <h3>Scotland</h3>
+                    <p>Legislation made by the Scottish Parliament and Scottish Government.</p>
+                </a>
+            </li>
+            <li>
+                <a class="icon_different_legislatures_w" href="{% url 'different-legislatures-country' country='wales' %}">
+                    <h3>Wales</h3>
+                    <p>Legislation made by the Welsh Parliament, Welsh Assembly and Welsh Government.</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+</main>
+{% endblock %}

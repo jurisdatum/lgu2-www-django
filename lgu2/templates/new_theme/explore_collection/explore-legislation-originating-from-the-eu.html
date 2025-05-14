@@ -1,0 +1,73 @@
+{% extends "new_theme/base.html" %}
+{% block content %}
+<main>
+    <section>
+        <nav aria-label="Breadcrumb">
+            <h2>Where this page sits</h2>
+            <ol>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'explore' %}">Explore our collections</a></li>
+                <li><a href="{% url 'explore-eu-exit-and-uk-law' %}">EU Exit and UK law</a></li>
+                <li><a href="{% url 'legislatures-eu' %}" aria-current="page">Legislation originating from the EU</a></li>
+            </ol>
+        </nav>
+        <h1 id="main-content-h" tabindex="-1">Legislation originating from the EU</h1>
+    </section>
+
+    <section>
+        <p>
+            We have published all of the EU legislation set out in 
+            <a href="https://www.legislation.gov.uk/ukpga/2018/16/schedule/5">
+                Schedule 5 to the European Union (Withdrawal) Act 2018 (c. 16)
+            </a>
+            along with Corrigenda (formal instruments used to correct errors or omissions in EU Legislation) and EU Directives published before EU Exit (11:00pm on 31 December 2020).
+        </p>
+
+        <p>For more information see <a href="{% url 'explore-eu-exit-and-uk-law' %}">EU Exit and UK law</a>.</p>
+
+        <ul>
+            <li><a href="#">All Legislation originating from the EU</a></li>
+            <li><a href="#">Regulations originating from the EU</a></li>
+            <li><a href="#">Decisions originating from the EU</a></li>
+            <li><a href="#">Directives originating from the EU</a></li>
+            <li><a href="#">European Union Treaties</a></li>
+        </ul>
+    </section>
+
+    <aside>
+        <h2>You might also be interested in finding out about...</h2>
+        <ul>
+            <li>
+                <a href="{% url 'different-legislatures-country' country='uk' %}">
+                    <h3>UK legislation</h3>
+                    <p>Legislation made by the UK Parliament and Government, and Historic Parliaments.</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'different-legislatures-country' country='ni' %}">
+                    <h3>Northern Ireland legislation</h3>
+                    <p>Legislation made by the Northern Ireland Assembly and Government.</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'different-legislatures-country' country='scotland' %}">
+                    <h3>Scotland legislation</h3>
+                    <p>Legislation made by the Scottish Parliament and Government.</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'different-legislatures-country' country='wales' %}">
+                    <h3>Wales legislation</h3>
+                    <p>Legislation made by the Welsh Assembly and Government.</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>What applies in the UK</h3>
+                    <p>Find out which legislation applies in the UK, from the UK Parliament and Governments, to legislation originating from the EU.</p>
+                </a>
+            </li>
+        </ul>
+    </aside>
+</main>
+{% endblock %}
