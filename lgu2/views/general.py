@@ -118,3 +118,7 @@ def revised_legislation(request):
 
 def secondary_legislation(request):
     return render(request, 'new_theme/help_guide/secondary-legislation.html')
+
+
+def about_us(request):
+    return render(request, 'new_theme/about_us/about_us.html')
