@@ -13,7 +13,7 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
-from .views.general import homepage, explore_collection, different_legislature, different_legislature_by_country, legislature_eu, legislature_eu_exit_uk_law, research_tools, help_guide, how_legislation_work, revised_legislation, secondary_legislation
+from .views.general import homepage, explore_collection, different_legislature, different_legislature_by_country, legislature_eu, legislature_eu_exit_uk_law, research_tools, help_guide, how_legislation_work, revised_legislation, secondary_legislation, about_us
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -48,6 +48,7 @@ urlpatterns += i18n_patterns(
     path('explore/legislatures/eu', legislature_eu, name='legislatures-eu'),
 
     path('research-tools/', research_tools, name='research-tools'),
+    path('about-us/', about_us, name='about-us'),
     path('help/', help_guide, name='help'),
     path('help-how-legislation-works/', how_legislation_work, name='how-legislation-works'),
     path('help-revised-legislation/', revised_legislation, name='revised-legislation'),
