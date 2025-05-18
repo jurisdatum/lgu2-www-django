@@ -13,7 +13,14 @@ from .views.metadata import metadata, combined
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
 from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
-from .views.general import homepage, explore_collection, different_legislature, different_legislature_by_country, legislature_eu, legislature_eu_exit_uk_law, research_tools, help_guide, how_legislation_work, revised_legislation, secondary_legislation, about_us
+from .views.general import (
+    homepage, explore_collection,
+    different_legislature, different_legislature_by_country,
+    legislature_eu, legislature_eu_exit_uk_law, research_tools,
+    help_guide, how_legislation_work, revised_legislation, secondary_legislation,
+    whats_new, new_legislation, new_legislation_feeds,
+    about_us
+)
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -41,6 +48,7 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
+    
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures', different_legislature, name='different-legislatures'),
     re_path(fr'^explore/legislatures/{COUNTRY}', different_legislature_by_country, name='different-legislatures-country'),
@@ -49,6 +57,11 @@ urlpatterns += i18n_patterns(
 
     path('research-tools/', research_tools, name='research-tools'),
     path('about-us/', about_us, name='about-us'),
+    
+    path('new/', whats_new, name='new'),
+    path('new-legislation/', new_legislation, name='new-legislation'),
+    path('new-legislation-feeds/', new_legislation_feeds, name='new-legislation-feeds'),
+    
     path('help/', help_guide, name='help'),
     path('help-how-legislation-works/', how_legislation_work, name='how-legislation-works'),
     path('help-revised-legislation/', revised_legislation, name='revised-legislation'),

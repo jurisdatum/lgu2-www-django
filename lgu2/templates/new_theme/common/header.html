@@ -23,7 +23,7 @@
                             <li><a href="{% url 'explore' %}" {% if request.path|slice:':8' == '/explore' %}aria-current="page"{% endif %}>Explore our collections</a></li>
                             <li><a href="{% url 'research-tools' %}" {% if request.path == '/research-tools/' %}aria-current="page"{% endif %}>Research tools</a></li>
                             <li><a href="{% url 'help' %}" {% if request.path|slice:':8' == '/help' %}aria-current="page"{% endif %}>Help and guidance</a></li>
-                            <li><a href="/tna/whats-new.php">What's new</a></li>
+                            <li><a href="{% url 'new' %}" {% if request.path == '/new/' %}aria-current="page"{% endif %}>What's new</a></li>
                             <li><a href="{% url 'about-us' %}" {% if request.path == '/about-us/' %}aria-current="page"{% endif %}>About us</a></li>
                         </ul>
                     </nav>

@@ -120,5 +120,17 @@ def secondary_legislation(request):
     return render(request, 'new_theme/help_guide/secondary-legislation.html')
 
 
+def whats_new(request):
+    return render(request, 'new_theme/whats_new/whats_new.html')
+
+
+def new_legislation(request):
+    return render(request, 'new_theme/whats_new/new-legislation.html')
+
+
+def new_legislation_feeds(request):
+    return render(request, 'new_theme/whats_new/new-legislation-feeds.html')
+
+
 def about_us(request):
     return render(request, 'new_theme/about_us/about_us.html')
