@@ -24,7 +24,7 @@
                             <li><a href="{% url 'research-tools' %}" {% if request.path == '/research-tools/' %}aria-current="page"{% endif %}>Research tools</a></li>
                             <li><a href="{% url 'help' %}" {% if request.path|slice:':8' == '/help' %}aria-current="page"{% endif %}>Help and guidance</a></li>
                             <li><a href="{% url 'new' %}" {% if request.path == '/new/' %}aria-current="page"{% endif %}>What's new</a></li>
-                            <li><a href="/tna/about-us.php">About us</a></li>
+                            <li><a href="{% url 'about-us' %}" {% if request.path == '/about-us/' %}aria-current="page"{% endif %}>About us</a></li>
                         </ul>
                     </nav>
                     <div class="hdr-lang"><a href="/cy" aria-label="Gosod iaith i'r Cymraeg" lang="cy"><span>Change language to </span>Cymraeg</a><span><span>Language set to </span>English </span></div>

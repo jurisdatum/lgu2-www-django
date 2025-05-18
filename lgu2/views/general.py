@@ -130,3 +130,7 @@ def new_legislation(request):
 
 def new_legislation_feeds(request):
     return render(request, 'new_theme/whats_new/new-legislation-feeds.html')
+
+
+def about_us(request):
+    return render(request, 'new_theme/about_us/about_us.html')
