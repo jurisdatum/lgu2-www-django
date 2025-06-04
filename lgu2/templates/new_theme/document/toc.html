@@ -1,0 +1,102 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% block content %}
+<main class="legislation">
+    <section>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this legislation sits in the Statute Book</h2>
+            <ol>
+                <li><a href="#">UK Public General Acts</a></li>
+                <li><a href="#">{{ meta.cite }}</a></li>
+                <li><a href="#" aria-current="page">(Table of contents)</a></li>
+            </ol>
+        </nav>
+        <h1 id="main-content-h" tabindex="-1">
+            Table of contents 
+            <br class="initialise" /><span>{{ meta.title }}</span>
+        </h1>
+    </section>
+
+    <nav aria-labelledby="legislationNavigation" class="legislation-navigation">
+        <h2 id="legislationNavigation">Table of contents, previous and next provisions</h2>
+        <span></span>
+        <span></span>
+        <a href="#"><span><span>Next: </span>Introduction</span></a>
+    </nav>
+
+    <section class="pit-search">
+        <h2>View this legislation at a specific date</h2>
+        <details>
+            <summary>You are viewing the table of contents on <span>{{ current_date|date:"d M Y" }}</span><span> Enter a date or choose from the versions below</span></summary>
+            <form role="search">
+                <h3>Change the date</h3>
+                <label for="pitDate">Date:</label>
+                <input type="date" id="pitDate" name="pitDate" value="{{ current_date|date:'Y-m-d' }}">
+                <button class="go">Go</button>
+            </form>
+        </details>
+    </section>
+
+    <div class="legislation-content">
+        <aside aria-labelledby="legislationStatus">
+            <h2 id="legislationStatus">Legislation status</h2>
+            <div class="up-to-date">
+                <h3>Up to date status</h3>
+                <p>This Act is up to date with all changes as of {{ current_date|date:"d M Y" }}</p>
+                <a href="#">See all changes made to or by this Act</a>
+            </div>
+            <div class="extent">
+                <h3>Extent information</h3>
+                <p>This Act contains legislation in relation to <span>England</span>, <span>Northern Ireland</span>, <span>Scotland</span> and <span>Wales</span></p>
+                <button hidden class="initialise">Show geographical extent</button>
+                <a href="#">How we communicate territorial extent and application</a>
+            </div>
+            <div class="in-force">
+                <h3>In force status</h3>
+                <p>This Act is partially in force</p>
+                <a href="#">Commencement and repeal history of this Act</a>
+            </div>
+        </aside>
+
+        <div>
+            <section class="toc-detail">
+                <button hidden class="initialise expanded" id="toc"><span>Collapse table of contents</span></button>
+                <h2>Table of contents for this Act</h2>
+                <ul>
+                    <li><h3><a href="#">The whole Act</a></h3>
+                        <ul>
+                            <li><a href="{{ links.content }}">Introduction</a></li>
+                            {% for item in contents.body %}
+                                    {% include "new_theme/document/toc_item.html" with item=item level=1 %}                                                         
+                            {% endfor %}      
+                            <!-- <h4>Schedules</h4>                       -->
+                                {% for item in contents.schedules %}                                    
+                                    {% include "new_theme/document/toc_item.html" with item=item level=4 %}
+                                {% endfor %}                            
+                            
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <aside aria-labelledby="relatedInfo">
+            <h2 id="relatedInfo">Related information</h2>
+            <div class="explanatory-notes">
+                <h3>Explanatory Notes</h3>
+                <a href="#">See the explanatory notes</a>
+            </div>
+            <div class="associated-documents">
+                <h3>Associated documents</h3>
+                <a href="#">See associated documents</a>
+            </div>
+            <details class="other-formats">
+                <summary>
+                    <h3>PDFs and other formats</h3>
+                </summary>
+                <div>[Legislation in different formats and links to PDFs, including whole Act and KPV will go here.]</div>
+            </details>
+        </aside>
+    </div>
+</main>
+{% endblock %}

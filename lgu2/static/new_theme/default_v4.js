@@ -13,15 +13,22 @@
 				$(this).removeAttr('hidden')
 			}
 			else {
-				$(this).attr('hidden',true)
+				$(this).prop('hidden',true)
 			}
 			$(this).removeClass('initialise')
 		})
 
+	// if a table of contents
+		if($('.legislation .toc-detail').length != 0) {
+			$('.toc-detail li .extent').each(function() {
+				$(this).addClass('hidden')
+			})
+		}
+
 	// hide search on small header
 		if ($(window).width() > 1023) {
 			setTimeout(function(){
-				$('.hdr-search details').attr('open',true)
+				$('.hdr-search details').prop('open',true)
 			},10)
 		}
 		else {
@@ -33,7 +40,7 @@
 	// show menu on large header
 		if ($(window).width() > 767) {
 			setTimeout(function(){
-				$('.hdr-menu details').attr('open',true)
+				$('.hdr-menu details').prop('open',true)
 			},10)
 		}
 		else {
@@ -121,14 +128,14 @@
 				}
 
 				if(scrollx >= olwidth) {
-					$('.right').attr('disabled','disabled')
+					$('.right').prop('disabled',true)
 				}
 				else {
 					$('.right').removeAttr('disabled')
 				}
 
 				if(scrollx == 0) {
-					$('.left').attr('disabled','disabled')
+					$('.left').prop('disabled',true)
 				}
 				else {
 					$('.left').removeAttr('disabled')
@@ -186,13 +193,86 @@
 			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
 			{
 				setTimeout(function() { 
-					$('.timeline details').attr('open',true)
+					$('.timeline details').prop('open',true)
 					openTimeline()
 				},150)
 			}
 		}
-			
-			
+		
+	// if a table of contents
+		if($('.legislation .toc-detail').length != 0) {
+			$('#toc').on('click', function() {
+				expandToc($(this))
+			})
+			$('.legislation-content aside .extent button').on('click', function() {
+				tocExtent($(this))
+			})
+		}
+		
+		
+	// if there is legislation text
+		if($('.legislation-text').length != 0 || $('.toc-detail').length != 0) {
+		// set up markers
+			$('.legislation-text li, .toc-detail li').each(function() {
+				if(!$(this).attr('data-level') && $(this).parent().prop('tagName').toLowerCase() == 'ol') {
+					if($(this).children(':header').eq(0).children('.prefix').length == 0){
+						$(this).children(':header').eq(0).prepend($('<span class="prefix"></span>'))
+					}
+					if($(this).attr('value')) {
+						var index = $(this).attr('value')
+					}
+					else if($(this).index() === 0) {
+						index = 1
+					}
+					else
+					{
+						index = parseFloat($(this).prev().attr('value')) + 1
+					}
+
+					$(this).attr('value',index)
+
+					if($(this).parent().attr('type') == 'a') {
+						index = String.fromCharCode(64 + parseInt(index)).toLowerCase()
+					}
+					else if($(this).parent().attr('type') == 'i') {
+						index = romanise(index).toLowerCase()
+					}
+
+					if($('.parenthesis').length != 0) {
+						var indexPrefix = "("
+						var indexSuffix = ")"
+					}
+					else {
+						indexPrefix = ""
+						indexSuffix = "."
+					}
+					
+					if($('.toc-detail').length != 0) {
+							if($(this).attr('type') != 'none') {
+								if($(this).children('a .prefix').length == 0){
+									$(this).children('a').prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+								else if($(this).children('.prefix').length == 0){
+									$(this).prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+							}
+					}
+					else {
+							if($(this).attr('type') != 'none') {
+								if($(this).children('.prefix').length == 0){
+									$(this).prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+								else if($(this).children('.prefix').length == 0){
+									$(this).prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+							}
+					}
+					
+				}
+			})
+		}
+		
+
 	// escape key functions
 		$(document).keydown(function(e) {
 			if(e.keyCode == 27) {
@@ -222,22 +302,19 @@
 	// on window resize
 		$(window).resize(function() {
 		// hide search on small header
-			if ($(window).width() > 1023) {
-				setTimeout(function(){
-					$('.hdr-search details').attr('open',true)
-				},10)
+			if ($(window).width() < 1024 && $('.hdr-search details').attr('open')) {
+				$('.hdr-search details').removeAttr('open')
+			}
+			else if ($(window).width() > 1023 && !$('.hdr-search details').attr('open')) {
+				$('.hdr-search details').prop('open',true)
 			}
 			
 		// show menu on large header
-			if ($(window).width() > 767) {
-				setTimeout(function(){
-					$('.hdr-menu details').attr('open',true)
-				},10)
+			if ($(window).width() < 768 && $('.hdr-menu details').attr('open')) {
+				$('.hdr-menu details').removeAttr('open')
 			}
-			else {
-				setTimeout(function(){
-					$('.hdr-menu details').removeAttr('open')
-				},10)
+			else if ($(window).width() > 767 && !$('.hdr-menu details').attr('open')) {
+				$('.hdr-menu details').prop('open',true)
 			}
 			
 		// remove dynamic left-hand nav on lower breakpoints
@@ -369,5 +446,53 @@
 		if($(window).width() < 1023)
 		{
 			$('.timeline details').removeAttr('open')
+		}
+	}
+
+	function romanise(num) {
+		if (isNaN(num))
+			return NaN
+		var digits = String(+num).split(''),
+			key = ['','C','CC','CCC','CD','D','DC','DCC','DCCC','CM',
+					'','X','XX','XXX','XL','L','LX','LXX','LXXX','XC',
+					'','I','II','III','IV','V','VI','VII','VIII','IX'],
+			roman = '',
+			i = 3
+		while (i--)
+			roman = (key[+digits.pop() + (i * 10)] || '') + roman
+		return Array(+digits.join('') + 1).join('M') + roman
+	}
+
+	function expandToc(element) {
+		if($('#toc.expanded').length != 0) {
+			$(element).removeClass('expanded')
+			$(element).text('Expand table of contents')
+			$('.toc-detail details').each(function() {
+				$(this).removeAttr('open')
+			})
+		}
+		else {
+			$(element).addClass('expanded')
+			$(element).text('Collapse table of contents')
+			$('.toc-detail details').each(function() {
+				$(this).prop('open',true)
+			})
+		}
+	}
+
+	function tocExtent(element) {
+		if($('.extent button.expanded').length != 0) {
+			$(element).removeClass('expanded')
+			$(element).text('Show geographical extent')
+			$('.toc-detail li .extent').each(function() {
+				$(this).addClass('hidden')
+			})
+		}
+		else {
+			$(element).addClass('expanded')
+			$(element).text('Hide geographical extent')
+			$('.toc-detail li .extent').each(function() {
+				$(this).removeClass('hidden')
+			})
 		}
 	}
