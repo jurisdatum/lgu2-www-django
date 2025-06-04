@@ -5,9 +5,9 @@ import os
 from django.conf import settings
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-
 from ..api import documents as api
 from ..api.doc_types import get_types, Response
+from ..api.wagtail_api import get_wagtail_content
 from lgu2.util.labels import get_singular_type_label, get_long_type_label
 
 @cache_page(60 * 15)
@@ -113,11 +113,15 @@ def how_legislation_work(request):
 
 
 def revised_legislation(request):
-    return render(request, 'new_theme/help_guide/revised-legislation.html')
+    url = "pages/7/"
+    api_data = get_wagtail_content(url)
+    return render(request, 'new_theme/help_guide/revised-legislation.html', {"data": api_data})
 
 
 def secondary_legislation(request):
-    return render(request, 'new_theme/help_guide/secondary-legislation.html')
+    url = "pages/8/"    
+    api_data = get_wagtail_content(url)
+    return render(request, 'new_theme/help_guide/secondary-legislation.html', {"data": api_data})
 
 
 def whats_new(request):
