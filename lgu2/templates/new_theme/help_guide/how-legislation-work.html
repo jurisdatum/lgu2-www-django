@@ -2,8 +2,8 @@
 {% block content %}
 <main>
     <section>
-        <nav aria-label="Breadcrumb">
-            <h2>Where this page sits</h2>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this page sits</h2>
             <ol>
                 <li><a href="{% url 'homepage' %}">Home</a></li>
                 <li><a href="{% url 'help' %}">Help and guidance</a></li>
@@ -20,15 +20,15 @@
 
         <h2>Main sections in How legislation works</h2>
         <ul>
-            <li><a href="#"><h3>How legislation is made</h3></a></li>
-            <li><a href="#"><h3>Parliaments and jurisdictions</h3></a></li>
-            <li><a href="#"><h3>How legislation comes into force</h3></a></li>
-            <li><a href="#"><h3>Understanding geographical extent</h3></a></li>
-            <li><a href="#"><h3>The statute book</h3></a></li>
-            <li><a href="#"><h3>Primary legislation explained</h3></a></li>
-            <li><a href="{% url 'secondary-legislation' %}"><h3>Secondary legislation explained</h3></a></li>
-            <li><a href="#"><h3>Numbering for primary and secondary legislation</h3></a></li>
-            <li><a href="{% url 'revised-legislation' %}"><h3>Revised legislation explained</h3></a></li>
+            <li><article><a href="#"><h3>How legislation is made</h3></a></article></li>
+            <li><article><a href="#"><h3>Parliaments and jurisdictions</h3></a></article></li>
+            <li><article><a href="#"><h3>How legislation comes into force</h3></a></article></li>
+            <li><article><a href="#"><h3>Understanding geographical extent</h3></a></article></li>
+            <li><article><a href="#"><h3>The statute book</h3></a></article></li>
+            <li><article><a href="#"><h3>Primary legislation explained</h3></a></article></li>
+            <li><article><a href="{% url 'secondary-legislation' %}"><h3>Secondary legislation explained</h3></a></article></li>
+            <li><article><a href="#"><h3>Numbering for primary and secondary legislation</h3></a></article></li>
+            <li><article><a href="{% url 'revised-legislation' %}"><h3>Revised legislation explained</h3></a></article></li>
         </ul>
     </section>
 

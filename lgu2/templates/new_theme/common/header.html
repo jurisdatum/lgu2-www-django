@@ -8,14 +8,14 @@
             <div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
         </div>
         <div class="hdr-menu">
-            <h2>Main menu</h2>
+            <h2 id="mainMenu">Main menu</h2>
             <details>
                 <summary>
                     <span class="open-menu"><span>Show </span>menu</span>
                     <span class="close-menu">Close menu</span>
                 </summary>
                 <div class="hdr-links">
-                    <nav aria-label="Main">
+                    <nav aria-labelledby="mainMenu">
                         <ul>
                             <li>
                                 <a href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
@@ -27,7 +27,9 @@
                             <li><a href="{% url 'about-us' %}" {% if request.path == '/about-us/' %}aria-current="page"{% endif %}>About us</a></li>
                         </ul>
                     </nav>
-                    <div class="hdr-lang"><a href="/cy" aria-label="Gosod iaith i'r Cymraeg" lang="cy"><span>Change language to </span>Cymraeg</a><span><span>Language set to </span>English </span></div>
+                    <div class="hdr-lang">
+                        <h3>Change language</h3>
+                        <a href="/cy" lang="cy">Cymraeg</a><a href="/" aria-current="page"><span>Language set to </span>English</a></div>
                     <div class="hdr-tna initialise" hidden>Delivered by <a href="/tna/"><span>The National Archives</span></a></div>
                 </div>
             </details>

@@ -2,8 +2,8 @@
 {% block content %}
 <main>
     <section>
-        <nav aria-label="Breadcrumb">
-            <h2>Where this page sits</h2>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this page sits</h2>
             <ol>
                 <li><a href="{% url 'homepage' %}">Home</a></li>
                 <li><a href="{% url 'about-us' %}" aria-current="page">About us</a></li>
@@ -19,65 +19,94 @@
         <h2>Main sections in About us</h2>
         <ul>
             <li>
-                <a class="icon_what_we_do" href="#">
-                    <h3>What we do</h3>
-                    <p>Find out what our role is and what services we provide for the public.</p>
-                </a>
+                <article>
+                    <a class="icon_what_we_do" href="#">
+                        <h3>What we do</h3>
+                        <p>Find out what our role is and what services we provide for the public.</p>
+                    </a>
+                </article>
             </li>
             <li>
+                <article>
                 <a class="icon_our_vision" href="#">
                     <h3>Our vision</h3>
                     <p>Information about the vision and ambitions Legislation Services has for its users.</p>
                 </a>
+                </article>
             </li>
+
             <li>
+                <article>
                 <a class="icon_meet_the_team" href="#">
                     <h3>Meet the team</h3>
                     <p>Meet the Legislation Services team to find out what we do and who is doing it.</p>
                 </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_kings_printer" href="#">
-                    <h3>The King's printer</h3>
-                    <p>Learn about our role as King's Printer and King's Printer for Scotland, and how we fit into Government.</p>
-                </a>
+                <article>
+                    <a class="icon_kings_printer" href="#">
+                        <h3>The King's printer</h3>
+                        <p>Learn about our role as King's Printer and King's Printer for Scotland, and how we fit into Government.</p>
+                    </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_history_legislation_services" href="#">
-                    <h3>A history of Legislation Services</h3>
-                    <p>Discover the origins of The National Archives' Legislation Services.</p>
-                </a>
+                <article>
+                    <a class="icon_history_legislation_services" href="#">
+                        <h3>A history of Legislation Services</h3>
+                        <p>Discover the origins of The National Archives' Legislation Services.</p>
+                    </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_legislation_services_tna" href="#">
-                    <h3>Legislation services and TNA</h3>
-                    <p>Find out how legislation.gov.uk fits in with the other National Archives services.</p>
-                </a>
+                <article>
+                    <a class="icon_legislation_services_tna" href="#">
+                        <h3>Legislation services and TNA</h3>
+                        <p>Find out how legislation.gov.uk fits in with the other National Archives services.</p>
+                    </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_get_involved_user_research" href="#">
-                    <h3>Get involved with user research</h3>
-                    <p>Find out how you can help shape the services we offer in our regular user research sessions.</p>
-                </a>
+                <article>
+                    <a class="icon_get_involved_user_research" href="#">
+                        <h3>Get involved with user research</h3>
+                        <p>Find out how you can help shape the services we offer in our regular user research sessions.</p>
+                    </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_join_team" href="#">
-                    <h3>Join the team</h3>
-                    <p>Interested in working in Legislation Services at TNA? See what opportunities we can offer you.</p>
-                </a>
+                <article>
+                    <a class="icon_join_team" href="#">
+                        <h3>Join the team</h3>
+                        <p>Interested in working in Legislation Services at TNA? See what opportunities we can offer you.</p>
+                    </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_contact_us" href="#">
-                    <h3>Contact us</h3>
-                    <p>Get in touch to ask a question or to provide feedback about about the legislation.gov.uk website.</p>
-                </a>
+                <article>
+                    <a class="icon_contact_us" href="#">
+                        <h3>Contact us</h3>
+                        <p>Get in touch to ask a question or to provide feedback about about the legislation.gov.uk website.</p>
+                    </a>
+                </article>
             </li>
+
             <li>
-                <a class="icon_gazette" href="#">
-                    <h3>The Gazette</h3>
-                    <p>The National Archives is responsible for The Gazette, the UK's official public record.</p>
-                </a>
+                <article>
+                    <a class="icon_gazette" href="#">
+                        <h3>The Gazette</h3>
+                        <p>The National Archives is responsible for The Gazette, the UK's official public record.</p>
+                    </a>
+                </article>
             </li>
+
         </ul>
     </section>
 </main>
