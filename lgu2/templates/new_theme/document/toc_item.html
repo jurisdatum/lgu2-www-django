@@ -1,0 +1,35 @@
+{% load heading_tags %}
+<li>
+    {% if item.children %}
+        <details open>  <!-- Only open details for items with children -->
+            <summary>
+                <{{ level|heading_tag }} class="crossheading">
+                    <a href="{{ item.link }}">
+                        {% if item.number and item.title %}
+                            {{ item.number }}. {{ item.title|safe }}
+                        {% elif item.number %}
+                            {{ item.number }}
+                        {% else %}
+                            {{ item.title|safe }}
+                        {% endif %}
+                    </a>
+                </{{ level|heading_tag }}>
+            </summary>
+            <!-- Include children recursively -->
+            {% include "new_theme/document/toc_children.html" with children=item.children level=level|add:"1" %}
+        </details>
+    {% else %}
+        <{{ level|heading_tag }} class="crossheading">
+            <a href="{{ item.link }}">
+                
+                {% if item.number and item.title %}
+                    {{ item.number }}. {{ item.title|safe }}
+                {% elif item.number %}
+                    {{ item.number }}
+                {% else %}
+                    {{ item.title|safe }}
+                {% endif %}
+            </a>
+        </{{ level|heading_tag }}>
+    {% endif %}
+</li>
