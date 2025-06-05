@@ -69,10 +69,10 @@
                             {% for item in contents.body %}
                                     {% include "new_theme/document/toc_item.html" with item=item level=1 %}                                                         
                             {% endfor %}      
-                            <!-- <h4>Schedules</h4>                       -->
-                                {% for item in contents.schedules %}                                    
-                                    {% include "new_theme/document/toc_item.html" with item=item level=4 %}
-                                {% endfor %}                            
+
+                            {% for item in contents.schedules %}                                    
+                                {% include "new_theme/document/toc_item.html" with item=item level=4 %}
+                            {% endfor %}                            
                             
                         </ul>
                     </li>

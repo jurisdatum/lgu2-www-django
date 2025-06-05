@@ -30,6 +30,14 @@
                     {{ item.title|safe }}
                 {% endif %}
             </a>
+            <span class="extent">
+                <span>Extends to </span>
+                {% if item.extent %}
+                {% for extent in item.extent %}
+                <span class="{{extent|lower}}"><span>{{extent}}</span></span>
+                {% endfor %}
+                {% endif %}
+            </span>
         </{{ level|heading_tag }}>
     {% endif %}
 </li>
