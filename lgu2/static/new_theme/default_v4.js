@@ -7,21 +7,28 @@
 	var animateInterval = 0
 
 	$(document).ready(function() {
-	// to undo hiding of functionality unavailable to people who do not have JS enabled
+	// to undo hiding of functionality unavailable to user agents that do not have JS enabled
 		$('.initialise').each(function() {
 			if($(this).attr('hidden')) {
 				$(this).removeAttr('hidden')
 			}
 			else {
-				$(this).attr('hidden',true)
+				$(this).prop('hidden',true)
 			}
 			$(this).removeClass('initialise')
 		})
 
+	// if a table of contents
+		if($('.legislation .toc-detail').length != 0) {
+			$('.toc-detail li .extent').each(function() {
+				$(this).addClass('hidden')
+			})
+		}
+
 	// hide search on small header
 		if ($(window).width() > 1023) {
 			setTimeout(function(){
-				$('.hdr-search details').attr('open',true)
+				$('.hdr-search details').prop('open',true)
 			},10)
 		}
 		else {
@@ -33,7 +40,7 @@
 	// show menu on large header
 		if ($(window).width() > 767) {
 			setTimeout(function(){
-				$('.hdr-menu details').attr('open',true)
+				$('.hdr-menu details').prop('open',true)
 			},10)
 		}
 		else {
@@ -121,14 +128,14 @@
 				}
 
 				if(scrollx >= olwidth) {
-					$('.right').attr('disabled','disabled')
+					$('.right').prop('disabled',true)
 				}
 				else {
 					$('.right').removeAttr('disabled')
 				}
 
 				if(scrollx == 0) {
-					$('.left').attr('disabled','disabled')
+					$('.left').prop('disabled',true)
 				}
 				else {
 					$('.left').removeAttr('disabled')
@@ -186,13 +193,120 @@
 			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
 			{
 				setTimeout(function() { 
-					$('.timeline details').attr('open',true)
+					$('.timeline details').prop('open',true)
 					openTimeline()
 				},150)
 			}
 		}
+		
+	// if a table of contents
+		if($('.legislation .toc-detail').length != 0) {
+			$('#toc').on('click', function() {
+				expandToc($(this))
+			})
+			$('.legislation-content aside .extent button').on('click', function() {
+				tocExtent($(this))
+			})
+		}
+		
+	// if there is legislation text
+		if($('.legislation-text').length != 0 || $('.toc-detail').length != 0) {
+		// set up markers
+			$('.legislation-text li, .toc-detail li').each(function() {
+				if(!$(this).attr('data-level') && $(this).parent().prop('tagName').toLowerCase() == 'ol') {
+					if($(this).children(':header').eq(0).children('.prefix').length == 0){
+						$(this).children(':header').eq(0).prepend($('<span class="prefix"></span>'))
+					}
+					if($(this).attr('value')) {
+						var index = $(this).attr('value')
+					}
+					else if($(this).index() === 0) {
+						index = 1
+					}
+					else
+					{
+						index = parseFloat($(this).prev().attr('value')) + 1
+					}
+
+					$(this).attr('value',index)
+
+					if($(this).parent().attr('type') == 'a') {
+						index = String.fromCharCode(64 + parseInt(index)).toLowerCase()
+					}
+					else if($(this).parent().attr('type') == 'i') {
+						index = romanise(index).toLowerCase()
+					}
+
+					if($('.parenthesis').length != 0) {
+						var indexPrefix = "("
+						var indexSuffix = ")"
+					}
+					else {
+						indexPrefix = ""
+						indexSuffix = "."
+					}
+					
+					if($('.toc-detail').length != 0) {
+							if($(this).attr('type') != 'none') {
+								if($(this).children('a .prefix').length == 0){
+									$(this).children('a').prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+								else if($(this).children('.prefix').length == 0){
+									$(this).prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+							}
+					}
+					else {
+							if($(this).attr('type') != 'none') {
+								if($(this).children('.prefix').length == 0){
+									$(this).prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+								else if($(this).children('.prefix').length == 0){
+									$(this).prepend($('<span class="prefix"><span class="marker">' + indexPrefix + index + indexSuffix + ' </span></span>'))
+								}
+							}
+					}
+					
+				}
+			})
+		}
+		
+		
+	// if there is a status panel
+		if($('.status-panel').length != 0) {
+			$('.status-panel button').on('click', function() {
+				pinStatusPanel()
+			})
+
+			if(localStorage.getItem('statusPanel')) {
+				var pinStatus = localStorage.getItem('statusPanel')
+				if(pinStatus == 'pinned') {
+					$('.status-panel').addClass('pinned')
+					$('.status-panel button span').text('Unpin this panel')
+				}
+			}
+			$('.status-panel summary').on('click', function() {
+				if($('.status-panel details').is('[open]')) {
+					hideStatusPanel()
+				}
+				else {
+					showStatusPanel()
+				}
+			})
 			
-			
+			$('.legislation-content > aside > div.not-up-to-date button').on('click', function() {
+				if($('.status-panel details').is('[open]')) {
+					$('.status-panel details').removeAttr('open')
+					hideStatusPanel()
+				}
+				else {
+					$('.status-panel details').prop('open',true)
+					showStatusPanel()
+				}
+			})
+		}
+		
+
 	// escape key functions
 		$(document).keydown(function(e) {
 			if(e.keyCode == 27) {
@@ -217,27 +331,39 @@
 			if($('.in-page-nav ol').length != 0 && $(window).width() > 1023) {
 				setDynamicLeftHandNav()
 			}
+			
+		// if status panel is pinned
+			if($('.status-panel.pinned').length != 0) {
+				if($(window).scrollTop() >= ($('.legislation-content > div').offset().top)) {
+					setTimeout(function() {
+						$('.status-panel').addClass('stuck')
+					},10)
+				}
+				else {
+					setTimeout(function() {
+						$('.status-panel').removeClass('stuck')
+					},10)
+				}
+			}
 		})
-
+		
+		
 	// on window resize
 		$(window).resize(function() {
 		// hide search on small header
-			if ($(window).width() > 1023) {
-				setTimeout(function(){
-					$('.hdr-search details').attr('open',true)
-				},10)
+			if ($(window).width() < 1024 && $('.hdr-search details').attr('open')) {
+				$('.hdr-search details').removeAttr('open')
+			}
+			else if ($(window).width() > 1023 && !$('.hdr-search details').attr('open')) {
+				$('.hdr-search details').prop('open',true)
 			}
 			
 		// show menu on large header
-			if ($(window).width() > 767) {
-				setTimeout(function(){
-					$('.hdr-menu details').attr('open',true)
-				},10)
+			if ($(window).width() < 768 && $('.hdr-menu details').attr('open')) {
+				$('.hdr-menu details').removeAttr('open')
 			}
-			else {
-				setTimeout(function(){
-					$('.hdr-menu details').removeAttr('open')
-				},10)
+			else if ($(window).width() > 767 && !$('.hdr-menu details').attr('open')) {
+				$('.hdr-menu details').prop('open',true)
 			}
 			
 		// remove dynamic left-hand nav on lower breakpoints
@@ -249,20 +375,20 @@
 			
 		// and retrigger on higher breakpoints
 			else if($('.in-page-nav ol').length != 0) {
-				if($(window).scrollTop() < $('main section h2:first-of-type:not(nav h2)').offset().top) {
+				if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 					setDynamicLeftHandNav()
 				}
-			}
+			}		
 		})
 	})
 
 	function setDynamicLeftHandNav() {
-		if($(window).scrollTop() >= $('.in-page-nav ol').closest('section').offset().top && $(window).scrollTop() > ($('aside').offset().top) - $('.in-page-nav ol').outerHeight()) {
+		if($(window).scrollTop() >= $('.in-page-nav ol').closest('article').offset().top && $(window).scrollTop() > ($('aside').offset().top) - $('.in-page-nav ol').outerHeight()) {
 			$('.in-page-nav ol').css('top','')
-			$('.in-page-nav ol').css('bottom',$('.in-page-nav ol').closest('section').css('bottom'))
+			$('.in-page-nav ol').css('bottom',$('.in-page-nav ol').closest('article').css('bottom'))
 		}
-		else if($(window).scrollTop() >= $('.in-page-nav ol').closest('section').offset().top && $('.in-page-nav ol').css('bottom').replace("px", "") < $('aside').offset().top) {
-			$('.in-page-nav ol').css('top',$(window).scrollTop() - $('.in-page-nav ol').closest('section').offset().top)
+		else if($(window).scrollTop() >= $('.in-page-nav ol').closest('article').offset().top && $('.in-page-nav ol').css('bottom').replace("px", "") < $('aside').offset().top) {
+			$('.in-page-nav ol').css('top',$(window).scrollTop() - $('.in-page-nav ol').closest('article').offset().top)
 			$('.in-page-nav ol').css('bottom','')
 		}
 		else {
@@ -270,7 +396,7 @@
 			$('.in-page-nav ol').css('bottom','')
 		}
 
-		$('main section h2:not(nav h2)').each(function() {
+		$('main article h2:not(nav h2)').each(function() {
 			if($(window).scrollTop() >= $(this).offset().top - 1) {
 				var subHeadId = $(this).attr("id")
 				var subHeadNo = 'lnk'+ subHeadId
@@ -279,7 +405,7 @@
 			}
 		})
 
-		if($(window).scrollTop() < $('main section h2:first-of-type:not(nav h2)').offset().top) {
+		if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 			$('.in-page-nav a').removeAttr('aria-current','page')
 			$('.in-page-nav li:first-of-type a').attr('aria-current','page')
 		}
@@ -370,4 +496,78 @@
 		{
 			$('.timeline details').removeAttr('open')
 		}
+	}
+
+	function romanise(num) {
+		if (isNaN(num))
+			return NaN
+		var digits = String(+num).split(''),
+			key = ['','C','CC','CCC','CD','D','DC','DCC','DCCC','CM',
+					'','X','XX','XXX','XL','L','LX','LXX','LXXX','XC',
+					'','I','II','III','IV','V','VI','VII','VIII','IX'],
+			roman = '',
+			i = 3
+		while (i--)
+			roman = (key[+digits.pop() + (i * 10)] || '') + roman
+		return Array(+digits.join('') + 1).join('M') + roman
+	}
+
+	function expandToc(element) {
+		if($('#toc.expanded').length != 0) {
+			$(element).removeClass('expanded')
+			$(element).text('Expand table of contents')
+			$('.toc-detail details').each(function() {
+				$(this).removeAttr('open')
+			})
+		}
+		else {
+			$(element).addClass('expanded')
+			$(element).text('Collapse table of contents')
+			$('.toc-detail details').each(function() {
+				$(this).prop('open',true)
+			})
+		}
+	}
+
+	function tocExtent(element) {
+		if($('.extent button.expanded').length != 0) {
+			$(element).removeClass('expanded')
+			$(element).text('Show geographical extent')
+			$('.toc-detail li .extent').each(function() {
+				$(this).addClass('hidden')
+			})
+		}
+		else {
+			$(element).addClass('expanded')
+			$(element).text('Hide geographical extent')
+			$('.toc-detail li .extent').each(function() {
+				$(this).removeClass('hidden')
+			})
+		}
+	}
+
+	function pinStatusPanel() {
+		if($('.status-panel.pinned').length != 0) {
+			$('.status-panel').removeClass('pinned')
+			$('.status-panel').removeClass('stuck')
+			$('.status-panel button span').text('Pin this panel')
+			localStorage.removeItem('statusPanel')
+		}
+		else {
+			$('.status-panel').addClass('pinned')
+			$('.status-panel button span').text('Unpin this panel')
+			localStorage.setItem('statusPanel', 'pinned')
+		}
+	}
+
+	function showStatusPanel() {
+		$('.legislation-content > aside > div.not-up-to-date button').text('Hide detail of these changes')
+		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',true)
+		$('.status-panel summary').text('Hide detail of these changes')
+	}
+
+	function hideStatusPanel() {
+		$('.status-panel summary').text('See what these changes are')
+		$('.legislation-content > aside > div.not-up-to-date button').text('See what these changes are')
+		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',false)
 	}

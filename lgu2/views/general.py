@@ -11,7 +11,7 @@ from ..api.doc_types import get_types, Response
 from ..api.wagtail_api import get_wagtail_content
 from lgu2.util.labels import get_singular_type_label, get_long_type_label
 
-@cache_page(60 * 15)
+# @cache_page(60 * 15)
 def homepage(request):
     data = api.get_new()
     for doc in data['documents'][:5]:
