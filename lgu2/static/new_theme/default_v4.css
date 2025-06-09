@@ -11,6 +11,14 @@
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
+  font-weight: 200;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v47/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLgHQiA8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
   font-weight: 300;
   font-stretch: normal;
   font-display: swap;
@@ -35,10 +43,26 @@
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
+  font-weight: 600;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v47/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLl_XiA8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
   font-weight: 700;
   font-stretch: normal;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/roboto/v47/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLmbXiA8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 800;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v47/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLgHXiA8.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Roboto';
@@ -91,10 +115,26 @@
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v47/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYaammT.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
   font-weight: 700;
   font-stretch: normal;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/roboto/v47/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYjammT.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v47/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuZEammT.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Roboto';
@@ -129,6 +169,12 @@
   --disabledContrastText: #c8c8c8;
   --disabledButtonBg: #8a8a8a;
   --disabledButtonLightBg: #ebebeb;
+  --alert: #ffaf28;
+  --alertBg: rgba(255, 175, 40, 0.25);
+  --warningText: #d2004b;
+  --warningBg: #eb0055;
+  --focusWarningBg: #eb0c73;
+  --warningBorder: var(--warningBg);
   --searchBg: rgba(0, 0, 0, 0.82);
   --searchText: var(--contrastText);
   --searchInput: var(--bg);
@@ -142,13 +188,14 @@
   --boxShadow: rgba(0, 0, 0, 0.15);
   --dropShadowEnd: rgba(0, 0, 0, 0.1);
   --dropShadowStart: rgba(0, 0, 0, 0);
-  --verySubtleBg: rgba(0, 0, 0, 0.02);
-  --subtleBorder: rgba(0, 0, 0, 0.1);
   --subtleBg: rgba(0, 0, 0, 0.04);
+  --moreSubtleBg: rgba(0, 0, 0, 0.025);
+  --verySubtleBg: rgba(0, 0, 0, 0.02);
+  --verySubtleFixedBg: #fafafa;
+  --subtleBorder: rgba(0, 0, 0, 0.1);
+  --lessSubtleBorder: rgba(0, 0, 0, 0.135);
   --midDark: rgba(0, 0, 0, 0.75);
   --contrastBorder: rgba(255, 255, 255, 0.75);
-  --alert: #ffaf28;
-  --alertBg: rgba(255, 175, 40, 0.25);
   --openSearch: url('images/search.png') no-repeat 0.5em center;
   --openMenu: url('images/open.png') no-repeat 0.5em center;
   --uk: #c8102e;
@@ -171,6 +218,7 @@
   --timelineEnactedVersionIcon: url('images/timeline-enacted-version.png') no-repeat center;
   --timelineEnactedVersionIconHover: url('images/timeline-enacted-version-active.png') no-repeat center;
   --timelineEnactedVersionIconActive: url('images/timeline-enacted-version-active.png') no-repeat center;
+  --annotation: #af4bb4;
 }
 :root .icon-cards li a.icon_what_legislation_we_hold,
 :root[colour-scheme="light"] .icon-cards li a.icon_what_legislation_we_hold {
@@ -320,6 +368,90 @@
 :root[colour-scheme="light"] .icon-cards li a.icon_gazette {
   background-image: url('images/icon_gazette.png');
 }
+:root .legislation .legislation-content aside > div.up-to-date,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.up-to-date {
+  background: url('images/up-to-date.png') no-repeat 0.25em 0.575em;
+  background-size: 1.25em;
+}
+:root .legislation .legislation-content aside > div.extent,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.extent {
+  background: url('images/extent.png') no-repeat 0.125em 0.625em;
+  background-size: 1.5em;
+}
+:root .legislation .legislation-content aside > div.in-force,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.in-force {
+  background: url('images/in-force.png') no-repeat 0.125em 0.575em;
+  background-size: 1.5em;
+}
+:root .legislation .legislation-content aside > div.explanatory-notes,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.explanatory-notes {
+  background: url('images/explanatory-notes.png') no-repeat 0.25em 0.6em;
+  background-size: 1.3em;
+}
+:root .legislation .legislation-content aside > div.associated-documents,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.associated-documents {
+  background: url('images/associated-documents.png') no-repeat 0.15em 0.5em;
+  background-size: 1.45em;
+}
+:root .legislation .legislation-content aside details.other-formats h3:before,
+:root[colour-scheme="light"] .legislation .legislation-content aside details.other-formats h3:before {
+  background: url('images/print.png') no-repeat;
+  background-size: 1.45em;
+}
+:root .legislation .legislation-content aside details.other-formats[open] h3:before,
+:root[colour-scheme="light"] .legislation .legislation-content aside details.other-formats[open] h3:before {
+  background: url('images/print-active.png') no-repeat;
+  background-size: 1.45em;
+}
+:root .legislation .legislation-content aside details.other-formats summary:hover h3:before,
+:root[colour-scheme="light"] .legislation .legislation-content aside details.other-formats summary:hover h3:before,
+:root .legislation .legislation-content aside details.other-formats summary:focus h3:before,
+:root[colour-scheme="light"] .legislation .legislation-content aside details.other-formats summary:focus h3:before,
+:root .legislation .legislation-content aside details.other-formats summary:active h3:before,
+:root[colour-scheme="light"] .legislation .legislation-content aside details.other-formats summary:active h3:before {
+  background: url('images/print-active.png') no-repeat;
+  background-size: 1.45em;
+}
+:root .legislation .legislation-content > div .legislation-ftr aside h3.up-to-date,
+:root[colour-scheme="light"] .legislation .legislation-content > div .legislation-ftr aside h3.up-to-date {
+  background: var(--moreSubtleBg) url('images/up-to-date.png') no-repeat 0.85em center;
+  background-size: 1.3em;
+}
+:root .legislation .legislation-content > div .legislation-ftr aside h3.extent,
+:root[colour-scheme="light"] .legislation .legislation-content > div .legislation-ftr aside h3.extent {
+  background: var(--moreSubtleBg) url('images/extent.png') no-repeat 0.75em center;
+  background-size: 1.5em;
+}
+:root .legislation .legislation-content > div .legislation-ftr aside h3.in-force,
+:root[colour-scheme="light"] .legislation .legislation-content > div .legislation-ftr aside h3.in-force {
+  background: var(--moreSubtleBg) url('images/in-force.png') no-repeat 0.75em 0.6em;
+  background-size: 1.4em;
+}
+:root .legislation .legislation-content .toc-detail button:before,
+:root[colour-scheme="light"] .legislation .legislation-content .toc-detail button:before {
+  background: url('images/plus.png');
+  background-size: 100%;
+}
+:root .legislation .legislation-content .toc-detail button.expanded:before,
+:root[colour-scheme="light"] .legislation .legislation-content .toc-detail button.expanded:before {
+  background: url('images/minus.png');
+  background-size: 100%;
+}
+:root .legislation .legislation-content .toc-detail details > summary:before,
+:root[colour-scheme="light"] .legislation .legislation-content .toc-detail details > summary:before {
+  background: url('images/plus.png');
+  background-size: 100%;
+}
+:root .legislation .legislation-content .toc-detail details[open] > summary:before,
+:root[colour-scheme="light"] .legislation .legislation-content .toc-detail details[open] > summary:before {
+  background: url('images/minus.png');
+  background-size: 100%;
+}
+:root .legislation .legislation-content .status-panel:not(.pinned) button,
+:root[colour-scheme="light"] .legislation .legislation-content .status-panel:not(.pinned) button {
+  background: url('images/pin-off.png') no-repeat center;
+  background-size: 0.8rem;
+}
 :root[colour-scheme="dark"] {
   --bg: #0a141e;
   --altBg: rgba(255, 255, 255, 0.075);
@@ -333,8 +465,8 @@
   --ftrButtonText: var(--bg);
   --ftrBorder: var(--ftrText);
   --ftrButtonBg: var(--ftrText);
-  --link: var(--buttonBg);
-  --buttonBg: #3686f7;
+  --link: #3686f7;
+  --buttonBg: var(--link);
   --buttonText: var(--contrastText);
   --focusButtonBg: #0a70f5;
   --focusOutline: var(--text);
@@ -342,6 +474,12 @@
   --disabledContrastText: #c8c8c8;
   --disabledButtonBg: #8a8a8a;
   --disabledButtonLightBg: #141414;
+  --alert: #ffaf28;
+  --alertBg: #372d00;
+  --warningText: #d2004b;
+  --warningBg: #eb0055;
+  --focusWarningBg: #eb0c73;
+  --warningBorder: #ff2977;
   --searchBg: rgba(255, 255, 255, 0.05);
   --searchText: var(--contrastText);
   --searchInput: rgba(255, 255, 255, 0.1);
@@ -355,13 +493,14 @@
   --boxShadow: rgba(255, 255, 255, 0.15);
   --dropShadowEnd: rgba(0, 0, 0, 0.1);
   --dropShadowStart: rgba(0, 0, 0, 0);
-  --verySubtleBg: rgba(255, 255, 255, 0.035);
-  --subtleBorder: rgba(255, 255, 255, 0.2);
   --subtleBg: var(--altBg);
+  --moreSubtleBg: rgba(255, 255, 255, 0.05);
+  --verySubtleBg: rgba(255, 255, 255, 0.035);
+  --verySubtleFixedBg: #131c26;
+  --subtleBorder: rgba(255, 255, 255, 0.2);
+  --lessSubtleBorder: rgba(255, 255, 255, 0.235);
   --midDark: rgba(255, 255, 255, 0.6);
   --contrastBorder: rgba(255, 255, 255, 0.75);
-  --alert: #ffaf28;
-  --alertBg: #372d00;
   --openSearch: url('images/search-dm.png') no-repeat 0.5em center;
   --openMenu: url('images/open-dm.png') no-repeat 0.5em center;
   --uk: #c8102e;
@@ -383,6 +522,7 @@
   --timelineEnactedVersionIcon: url('images/timeline-enacted-version-active.png') no-repeat center;
   --timelineEnactedVersionIconHover: url('images/timeline-enacted-version-active.png') no-repeat center;
   --timelineEnactedVersionIconActive: url('images/timeline-enacted-version.png') no-repeat center;
+  --annotation: #c364c8;
 }
 :root[colour-scheme="dark"] .icon-cards li a.icon_what_legislation_we_hold {
   background-image: url('images/icon_what_legislation_we_hold-dm.png');
@@ -495,6 +635,58 @@
 :root[colour-scheme="dark"] .icon-cards li a.icon_gazette {
   background-image: url('images/icon_gazette-dm.png');
 }
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.up-to-date {
+  background: url('images/up-to-date-dm.png') no-repeat 0 0.6em;
+  background-size: 1.3em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.extent {
+  background: url('images/extent-dm.png') no-repeat 0 0.625em;
+  background-size: 1.5em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.in-force {
+  background: url('images/in-force-dm.png') no-repeat 0 0.575em;
+  background-size: 1.5em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.explanatory-notes {
+  background: url('images/explanatory-notes-dm.png') no-repeat 0.125em 0.6em;
+  background-size: 1.3em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.associated-documents {
+  background: url('images/associated-documents-dm.png') no-repeat 0.15em 0.5em;
+  background-size: 1.45em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content > div .legislation-ftr aside h3.up-to-date {
+  background: var(--moreSubtleBg) url('images/up-to-date-dm.png') no-repeat 0.85em center;
+  background-size: 1.3em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content > div .legislation-ftr aside h3.extent {
+  background: var(--moreSubtleBg) url('images/extent-dm.png') no-repeat 0.75em center;
+  background-size: 1.5em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content > div .legislation-ftr aside h3.in-force {
+  background: var(--moreSubtleBg) url('images/in-force-dm.png') no-repeat 0.7em center;
+  background-size: 1.5em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content .toc-detail button:before {
+  background: url('images/plus-dm.png');
+  background-size: 100%;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content .toc-detail button.expanded:before {
+  background: url('images/minus-dm.png');
+  background-size: 100%;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content .toc-detail details > summary:before {
+  background: url('images/plus-dm.png');
+  background-size: 100%;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content .toc-detail details[open] > summary:before {
+  background: url('images/minus-dm.png');
+  background-size: 100%;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content .status-panel:not(.pinned) button {
+  background: url('images/pin-off-dm.png') no-repeat center;
+  background-size: 0.8rem;
+}
 /* accessible animation */
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -594,6 +786,12 @@ button,
   padding: 0.5em 1.5em;
   text-align: center;
 }
+button.ghost-button,
+.button.ghost-button {
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+}
 button:not([disabled]):hover,
 .button:not([disabled]):hover,
 button:not([disabled]):active,
@@ -601,6 +799,7 @@ button:not([disabled]):active,
 button:not([disabled]):focus,
 .button:not([disabled]):focus {
   background: var(--focusButtonBg);
+  color: var(--buttonText);
   border-color: var(--focusOutline);
   outline-color: var(--focusOutline);
   outline-style: solid;
@@ -612,6 +811,7 @@ button:not([disabled]):focus,
 }
 .button-focus {
   background: var(--focusButtonBg);
+  color: var(--buttonText);
   border-color: var(--focusOutline);
   outline-color: var(--focusOutline);
   outline-style: solid;
@@ -623,6 +823,7 @@ button:not([disabled]):focus,
 }
 summary {
   cursor: pointer;
+  display: block;
 }
 summary::marker,
 summary::-webkit-details-marker {
@@ -700,6 +901,19 @@ summary::-webkit-details-marker {
   background: var(--altBg);
   background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
 }
+.drop-shadow-reverse {
+  position: relative;
+  content: "";
+  height: 0.4rem;
+  overflow: hidden;
+  display: block;
+  margin: 0 0 -0.4rem 0;
+  background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+  margin: -0.4rem 0 0 0;
+  z-index: 10;
+  background: var(--altBg);
+  background: linear-gradient(0deg, var(--dropShadowEnd) 0%, var(--dropShadowStart) 100%);
+}
 .chevron {
   content: "";
   display: inline-block;
@@ -747,8 +961,7 @@ header a.hdr-home {
 header a.hdr-home span {
   font-weight: 500;
 }
-header .hdr-lang a span,
-header .hdr-lang span span {
+header .hdr-lang h3 {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -759,8 +972,19 @@ header .hdr-lang span span {
   white-space: nowrap;
   border: 0;
 }
-header .hdr-lang span {
+header .hdr-lang a[aria-current="page"] {
   font-weight: 500;
+}
+header .hdr-lang a[aria-current="page"] span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 header .hdr-search {
   text-align: center;
@@ -774,46 +998,57 @@ header .hdr-search form {
   width: 100%;
   text-align: left;
 }
-header .hdr-search form label {
+header .hdr-search form fieldset legend {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+header .hdr-search form fieldset label {
   color: var(--searchText);
   display: block;
   margin: 0 1em 0.25em 0;
 }
-header .hdr-search form input,
-header .hdr-search form select {
+header .hdr-search form fieldset input,
+header .hdr-search form fieldset select {
   background: var(--searchInput);
   border: 0;
   border: 0.0625rem solid var(--searchInputBorder);
   margin: 0 0 0.85em 0;
   width: 6.5em;
 }
-header .hdr-search form input {
+header .hdr-search form fieldset input {
   padding: 0.75em 0.9em;
 }
-header .hdr-search form select {
+header .hdr-search form fieldset select {
   padding: 0.75em 0.535em;
   height: 2.8125rem;
 }
-header .hdr-search form select,
-header .hdr-search form input[type="search"] {
+header .hdr-search form fieldset select,
+header .hdr-search form fieldset .title input {
   width: 100%;
 }
-header .hdr-search form input::placeholder {
+header .hdr-search form fieldset input::placeholder {
   color: var(--midDrkBrdr);
 }
-header .hdr-search form span {
+header .hdr-search form fieldset span {
   display: block;
 }
-header .hdr-search form span.year {
+header .hdr-search form fieldset span.year {
   float: left;
   margin: 0 1em 0 0;
 }
-header .hdr-search form button {
+header .hdr-search form fieldset button {
   width: 6.25em;
   margin: 0.25em 1em 0.25em 0;
   padding: 0.9em 0;
 }
-header .hdr-search form a {
+header .hdr-search form fieldset a {
   color: var(--searchText);
   margin: 0.35em 0 0 0;
   display: inline-block;
@@ -832,7 +1067,7 @@ footer nav ul {
   max-height: 8em;
 }
 footer nav ul li {
-  max-width: 45vW;
+  max-width: 45vw;
   width: 14em;
   padding: 0 0 0.5em 0;
 }
@@ -848,7 +1083,6 @@ footer .mode {
 }
 footer .mode h2 {
   margin: 0 0.75rem 0.65rem 0;
-  font-size: 1.04rem;
   font-weight: 300;
 }
 footer .mode button {
@@ -888,72 +1122,103 @@ footer .copyright div {
 main {
   /* sections */
 }
-main section {
+main > section,
+main > article {
   padding: 0 1rem 1rem 1rem;
+}
+main > section:last-of-type,
+main > article:last-of-type {
+  padding: 0 1rem 2rem 1rem;
+}
+main section,
+main article {
   /* headings */
   /* content */
 }
-main section h1 {
-  font-size: 2em;
+main section h1,
+main article h1 {
+  font-size: 2rem;
   font-weight: 800;
   line-height: 1.1em;
   outline: none;
 }
-main section h2 {
-  font-size: 1.625em;
+main section h2,
+main article h2 {
+  font-size: 1.625rem;
   font-weight: 800;
   line-height: 1.2em;
   margin: 0 0 0.4em 0;
   outline: none;
 }
 main section p + h2,
+main article p + h2,
 main section ul + h2,
+main article ul + h2,
 main section ol + h2,
-main section .narrow-lists + h2 {
+main article ol + h2,
+main section .narrow-lists + h2,
+main article .narrow-lists + h2 {
   margin: 0.7em 0 0 0;
   padding: 0.25em 0 0.4em 0;
 }
-main section h3 {
+main section h3,
+main article h3 {
   font-weight: 700;
   margin: 0.9em 0 0.4em 0;
-  font-size: 1.375em;
+  font-size: 1.375rem;
 }
-main section h2 + h3 {
+main section h2 + h3,
+main article h2 + h3 {
   margin: 0 0 0.4em 0;
 }
-main section h4 {
-  font-size: 1.3em;
+main section h4,
+main article h4 {
+  font-size: 1.3rem;
 }
 main section h3,
+main article h3,
 main section h4,
+main article h4,
 main section h5,
-main section h6 {
+main article h5,
+main section h6,
+main article h6 {
   font-weight: 600;
   line-height: 1.2em;
 }
-main section p {
+main section p,
+main article p {
   margin: 0.25rem 0 0 0;
 }
-main section p + p {
+main section p + p,
+main article p + p {
   margin: 0.65em 0 0 0;
 }
-main section p a {
+main section p a,
+main article p a {
   font-weight: 500;
 }
-main section ul {
+main section ul,
+main article ul {
   margin: 0 0 1em 2.5em;
   list-style-type: disc;
 }
 main section ul,
-main section ol {
+main article ul,
+main section ol,
+main article ol {
   margin: 0.75em 0 0.75em 2em;
 }
 main section ul li,
-main section ol li {
+main article ul li,
+main section ol li,
+main article ol li {
   margin: 0.25em 0;
 }
-main > section:last-of-type {
-  padding: 0 1rem 2rem 1rem;
+main > article {
+  margin: 0 auto;
+  max-width: var(--maxWidth);
+  overflow: auto;
 }
 main > section:first-of-type {
   padding: 1.75rem 1rem 0.75rem 1rem;
@@ -1102,7 +1367,11 @@ main .cards ul li:has(a:focus) a,
 main .cards ul li:hover a {
   background-color: var(--cardsHover);
 }
-main .cards ul li a {
+main .cards ul li article {
+  display: flex;
+  flex-grow: 1;
+}
+main .cards ul li article a {
   padding: 1.25rem 2rem;
   background: var(--bg) no-repeat 1rem 1.5rem;
   background-size: 4rem;
@@ -1114,14 +1383,14 @@ main .cards ul li a {
   display: flex;
   align-items: center;
 }
-main .cards ul li a h3 {
-  font-size: 1.1em;
+main .cards ul li article a h3 {
+  font-size: 1.1rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.35em;
 }
-main .cards ul li a:focus,
-main .cards ul li a:hover {
+main .cards ul li article a:focus,
+main .cards ul li article a:hover {
   background-color: var(--cardsHover);
   text-decoration: none;
 }
@@ -1187,7 +1456,11 @@ main .whats-new .newly-published h2 {
 main .whats-new .newly-published > a:last-of-type {
   margin: 1.3rem 0 0 0;
 }
-main .articles h2 {
+main section.articles {
+  padding: 0;
+  overflow: unset;
+}
+main section.articles h2 {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -1198,7 +1471,12 @@ main .articles h2 {
   white-space: nowrap;
   border: 0;
 }
-main .articles > .article {
+main section.articles > ul,
+main section.articles > ul li {
+  margin: 0;
+  list-style: none;
+}
+main section.articles article {
   margin: 1.5rem 0;
   background: var(--altBg);
   border-radius: 0.3rem;
@@ -1207,40 +1485,40 @@ main .articles > .article {
   box-shadow: 0 0 0.25rem var(--boxShadow);
   color: unset;
 }
-main .articles > .article:last-of-type {
+main section.articles article:last-of-type {
   margin: 1.5rem 0 0 0;
 }
-main .articles > .article a:has(img) {
+main section.articles article a:has(img) {
   display: contents;
 }
-main .articles > .article a:has(img) img {
+main section.articles article a:has(img) img {
   display: flex;
   object-fit: cover;
   flex-grow: 1;
   border-radius: 0.25rem 0.25rem 0 0;
   min-height: 12rem;
-  max-height: 30vW;
+  max-height: 30vw;
   width: 100%;
 }
-main .articles > .article div {
+main section.articles article div {
   padding: 1rem;
 }
-main .articles > .article div h3,
-main .articles > .article div h4 {
+main section.articles article div h3,
+main section.articles article div h4 {
   font-weight: 800;
   padding: 0;
   margin: 0 0 0.4em 0;
   font-size: 1.375em;
 }
-main .articles > .article div p:first-of-type:not(:last-of-type) {
+main section.articles article div p:first-of-type:not(:last-of-type) {
   color: var(--lightText);
 }
-main .articles > .article div > a {
+main section.articles article div > a {
   font-weight: 500;
   margin: 0.75em 0 0 0;
   display: inline-block;
 }
-main .articles > .article div > a:after {
+main section.articles article div > a:after {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -1254,14 +1532,14 @@ main .articles > .article div > a:after {
   border-color: var(--link);
   transform: rotate(45deg);
 }
-main .articles > .article:last-of-type {
+main section.articles article:last-of-type {
   padding: 0 0 0.001rem 0;
 }
-main .articles > .article:last-of-type:last-of-type > a:last-of-type:not(:has(img)) {
+main section.articles article:last-of-type:last-of-type > a:last-of-type:not(:has(img)) {
   margin: 0 1rem 1rem 1rem;
 }
 main .newly-published > a,
-main .article:last-of-type > a:last-of-type:not(:has(img)) {
+main .articles li:last-of-type article > a:last-of-type:not(:has(img)) {
   font-weight: 500;
   color: var(--text);
   border-radius: 0.1875rem;
@@ -1273,13 +1551,20 @@ main .article:last-of-type > a:last-of-type:not(:has(img)) {
   display: block;
   padding: 0.65rem 0.5rem;
 }
+main .newly-published > a.ghost-button,
+main .articles li:last-of-type article > a:last-of-type:not(:has(img)).ghost-button {
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+}
 main .newly-published > a:not([disabled]):hover,
-main .article:last-of-type > a:last-of-type:not(:has(img)):not([disabled]):hover,
+main .articles li:last-of-type article > a:last-of-type:not(:has(img)):not([disabled]):hover,
 main .newly-published > a:not([disabled]):active,
-main .article:last-of-type > a:last-of-type:not(:has(img)):not([disabled]):active,
+main .articles li:last-of-type article > a:last-of-type:not(:has(img)):not([disabled]):active,
 main .newly-published > a:not([disabled]):focus,
-main .article:last-of-type > a:last-of-type:not(:has(img)):not([disabled]):focus {
+main .articles li:last-of-type article > a:last-of-type:not(:has(img)):not([disabled]):focus {
   background: var(--focusButtonBg);
+  color: var(--buttonText);
   border-color: var(--focusOutline);
   outline-color: var(--focusOutline);
   outline-style: solid;
@@ -1290,7 +1575,7 @@ main .article:last-of-type > a:last-of-type:not(:has(img)):not([disabled]):focus
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 main .newly-published > a:after,
-main .article:last-of-type > a:last-of-type:not(:has(img)):after {
+main .articles li:last-of-type article > a:last-of-type:not(:has(img)):after {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -1323,8 +1608,12 @@ main aside:not(.legislation aside) ul {
   grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   grid-auto-rows: auto;
   gap: 1.25rem;
+  list-style: none;
 }
 main aside:not(.legislation aside) ul li {
+  display: flex;
+}
+main aside:not(.legislation aside) ul li article {
   display: flex;
   margin: 0;
   background: var(--cards);
@@ -1334,15 +1623,15 @@ main aside:not(.legislation aside) ul li {
   box-shadow: 0 0 0.25rem var(--boxShadow);
   color: unset;
 }
-main aside:not(.legislation aside) ul li:has(a:focus),
-main aside:not(.legislation aside) ul li:hover {
+main aside:not(.legislation aside) ul li article:has(a:focus),
+main aside:not(.legislation aside) ul li article:hover {
   background: var(--cardsOver);
 }
-main aside:not(.legislation aside) ul li:has(a:focus) a,
-main aside:not(.legislation aside) ul li:hover a {
+main aside:not(.legislation aside) ul li article:has(a:focus) a,
+main aside:not(.legislation aside) ul li article:hover a {
   background: var(--cardsHover);
 }
-main aside:not(.legislation aside) ul li a {
+main aside:not(.legislation aside) ul li article a {
   flex: 1;
   padding: 0.75rem 0.95rem;
   background: var(--bg);
@@ -1350,13 +1639,13 @@ main aside:not(.legislation aside) ul li a {
   border-radius: 0.3rem;
   color: var(--text);
 }
-main aside:not(.legislation aside) ul li a:focus,
-main aside:not(.legislation aside) ul li a:hover {
+main aside:not(.legislation aside) ul li article a:focus,
+main aside:not(.legislation aside) ul li article a:hover {
   background: var(--cardsHover);
   border: 0.125rem solid var(--cardsOver);
   text-decoration: none;
 }
-main aside:not(.legislation aside) ul li a h3 {
+main aside:not(.legislation aside) ul li article a h3 {
   margin: 0 0 0.25em 0;
   line-height: 1.45rem;
   font-size: 1.075rem;
@@ -1415,7 +1704,7 @@ main aside:not(.legislation aside) ul li a h3 {
 .home section.regions ul li:nth-child(6) h3 {
   font-weight: 300;
   font-style: italic;
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 .home section.regions ul li:has(a:focus),
 .home section.regions ul li:hover {
@@ -1442,7 +1731,7 @@ main aside:not(.legislation aside) ul li a h3 {
 }
 .home section.regions ul li a h3 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   flex-grow: 1;
 }
 .home section.regions ul li a p {
@@ -1526,16 +1815,22 @@ main aside:not(.legislation aside) ul li a h3 {
   border: 0.0625rem solid transparent;
   padding: 0.5em 1.5em;
   text-align: center;
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
   display: block;
   padding: 0.65em 0.75em;
-  border-color: var(--buttonBg);
-  color: var(--link);
-  background: var(--bg);
+}
+.new-legislation > div section a.ghost-button {
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
 }
 .new-legislation > div section a:not([disabled]):hover,
 .new-legislation > div section a:not([disabled]):active,
 .new-legislation > div section a:not([disabled]):focus {
   background: var(--focusButtonBg);
+  color: var(--buttonText);
   border-color: var(--focusOutline);
   outline-color: var(--focusOutline);
   outline-style: solid;
@@ -1544,11 +1839,6 @@ main aside:not(.legislation aside) ul li a h3 {
   -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
   -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.new-legislation > div section a:hover,
-.new-legislation > div section a:active,
-.new-legislation > div section a:focus {
-  color: var(--contrastText);
 }
 .new-legislation > div section a[aria-current="page"] {
   font-weight: 500;
@@ -1598,7 +1888,7 @@ main aside:not(.legislation aside) ul li a h3 {
 .new-legislation > div section nav ul li {
   margin: 0;
   padding: 0;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   flex-grow: 1;
   min-width: 30%;
 }
@@ -1639,9 +1929,13 @@ main aside:not(.legislation aside) ul li a h3 {
   margin: 0 0 0 1.25rem;
 }
 /* legislation pages */
+.legislation section {
+  overflow: unset;
+}
 .legislation .legislation-navigation {
   text-align: center;
   display: flex;
+  background: var(--verySubtleBg);
 }
 .legislation .legislation-navigation h2 {
   position: absolute;
@@ -1657,12 +1951,12 @@ main aside:not(.legislation aside) ul li a h3 {
 .legislation .legislation-navigation > a,
 .legislation .legislation-navigation > span {
   white-space: nowrap;
-  min-width: 3rem;
+  min-width: 3.5rem;
   padding: 1.25rem 0.75rem;
-  background: var(--verySubtleBg);
   font-weight: 500;
 }
-.legislation .legislation-navigation span:not(.toc-link) {
+.legislation .legislation-navigation > a span,
+.legislation .legislation-navigation > span span {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -1673,12 +1967,12 @@ main aside:not(.legislation aside) ul li a h3 {
   white-space: nowrap;
   border: 0;
 }
-.legislation .legislation-navigation > .toc-link {
+.legislation .legislation-navigation > a:nth-last-child(2) {
   flex-grow: 1;
   font-weight: 300;
 }
-.legislation .legislation-navigation a.previous:before,
-.legislation .legislation-navigation a.next:after {
+.legislation .legislation-navigation > a:first-of-type:not(:nth-last-child(2)):before,
+.legislation .legislation-navigation > a:last-child:after {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -1694,23 +1988,31 @@ main aside:not(.legislation aside) ul li a h3 {
   width: 0.65em;
   height: 0.65em;
 }
-.legislation .legislation-navigation a.previous:before {
+.legislation .legislation-navigation > a:first-of-type:not(:nth-last-child(2)):before {
   border-top: 0;
   border-right: 0;
   border-bottom-width: 0.1rem;
   border-left-width: 0.1rem;
   margin: 0 0.25em 0.05em 0.5em;
 }
-.legislation .legislation-navigation a.next:after {
+.legislation .legislation-navigation > a:last-child:not(:nth-last-child(2)):before {
+  display: none;
+}
+.legislation .legislation-navigation > a:last-child:not(:nth-last-child(2)) :after {
   border-top-width: 0.1rem;
   border-right-width: 0.1rem;
   margin: 0 0.5em 0.05em 0.25em;
 }
+.legislation .legislation-navigation > span + span {
+  flex-grow: 1;
+}
 .legislation .pit-search {
   padding: 0;
   font-weight: 300;
+  overflow: unset;
 }
-.legislation .pit-search:before {
+.legislation .pit-search:before,
+.legislation .pit-search:after {
   position: relative;
   content: "";
   height: 0.4rem;
@@ -1745,10 +2047,27 @@ main aside:not(.legislation aside) ul li a h3 {
 .legislation .pit-search details summary span {
   font-weight: 500;
   color: var(--link);
-  padding: 0 1.1em 0 0;
-  background: url("images/down.png") right center no-repeat;
-  background-size: 0.75em;
   white-space: nowrap;
+}
+.legislation .pit-search details summary span:first-of-type:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  width: 0.4em;
+  height: 0.4em;
+  border-top-width: 0;
+  border-bottom-width: 0.15rem;
+  border-right-width: 0.15rem;
+  margin: 0 0.25em 0.23em 0.5em;
 }
 .legislation .pit-search details summary span:last-of-type {
   position: absolute;
@@ -1761,9 +2080,12 @@ main aside:not(.legislation aside) ul li a h3 {
   white-space: nowrap;
   border: 0;
 }
-.legislation .pit-search details[open] span {
-  background: url("images/up.png") right center no-repeat;
-  background-size: 0.75em;
+.legislation .pit-search details[open] summary span:after {
+  border-bottom: 0;
+  border-right: 0;
+  border-top-width: 0.15rem;
+  border-left-width: 0.15rem;
+  margin: 0.23em 0.25em 0 0.5em;
 }
 .legislation .pit-search form h3 {
   position: absolute;
@@ -1791,7 +2113,7 @@ main aside:not(.legislation aside) ul li a h3 {
   padding: 0;
   font-weight: 300;
 }
-.legislation .timeline:before {
+.legislation .timeline:not(.pit-search + .timeline):before {
   position: relative;
   content: "";
   height: 0.4rem;
@@ -1821,19 +2143,7 @@ main aside:not(.legislation aside) ul li a h3 {
 .legislation .timeline:has(details:not([open])) summary .button {
   display: table;
   margin: 0.75em auto;
-  padding: 0.75em 3em;
-}
-.legislation .timeline:has(details:not([open])) summary:not([disabled]):hover .button,
-.legislation .timeline:has(details:not([open])) summary:not([disabled]):focus .button {
-  background: var(--focusButtonBg);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  padding: 0.65em 3em;
 }
 .legislation .timeline:has(details:not([open])) summary[disabled] {
   cursor: default;
@@ -1977,19 +2287,214 @@ main aside:not(.legislation aside) ul li a h3 {
 .legislation .timeline .versions .scrollbar {
   display: none;
 }
+.legislation section:has(h1) + .timeline:not(.pit-search + .timeline):before {
+  height: 0.1rem;
+  margin: 0 0 -0.1em 0;
+  background: var(--altBg);
+}
 .legislation .legislation-content {
   margin: 0 auto;
   max-width: var(--maxWidth);
   padding: 1rem;
-  overflow: auto;
 }
-.legislation .legislation-content aside {
-  padding: 0;
-  overflow: visible;
-}
-.legislation .legislation-content section {
-  padding: 1em 0 0.25rem 0;
+.legislation .legislation-content > aside h2 {
+  position: unset;
+  width: unset;
+  height: unset;
+  padding: unset;
+  margin: unset;
   overflow: unset;
+  clip: unset;
+  white-space: unset;
+  border: unset;
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+}
+.legislation .legislation-content > aside > div {
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+  border-top: 0.0625rem solid var(--subtleBorder);
+  padding: 0.2rem 0 0 0;
+}
+.legislation .legislation-content > aside > div h3 {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.legislation .legislation-content > aside > div p {
+  line-height: 1.25em;
+  padding: 0.25em 0 0.15rem 2em;
+}
+.legislation .legislation-content > aside > div p span {
+  font-weight: 500;
+}
+.legislation .legislation-content > aside > div p span.date {
+  white-space: nowrap;
+  font-weight: inherit;
+}
+.legislation .legislation-content > aside > div > a {
+  display: inline-block;
+  padding: 0.4em 0 0.5em 2em;
+  line-height: 1.35em;
+}
+.legislation .legislation-content > aside > div > button {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  background: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  margin: 0.35rem 0 0.45rem 2rem;
+  padding: 0.65rem 1rem;
+  width: calc(100% - 2rem);
+  font-weight: 300;
+}
+.legislation .legislation-content > aside > div > button.ghost-button {
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+}
+.legislation .legislation-content > aside > div > button:not([disabled]):hover,
+.legislation .legislation-content > aside > div > button:not([disabled]):active,
+.legislation .legislation-content > aside > div > button:not([disabled]):focus {
+  background: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.legislation .legislation-content > aside > div:has(p) > a {
+  padding: 0 0 0.35em 2em;
+}
+.legislation .legislation-content > aside > div.not-up-to-date p:first-of-type {
+  background: url('images/not-up-to-date.png') no-repeat 0.1rem 0.15rem;
+  background-size: 0.85rem;
+}
+.legislation .legislation-content > aside > div.not-up-to-date button {
+  background: var(--warningBg);
+}
+.legislation .legislation-content > aside > div.not-up-to-date button:not([disabled]):hover,
+.legislation .legislation-content > aside > div.not-up-to-date button:not([disabled]):active,
+.legislation .legislation-content > aside > div.not-up-to-date button:not([disabled]):focus {
+  background: var(--focusWarningBg);
+}
+.legislation .legislation-content > aside details {
+  margin: 0.5rem 0.25rem 0.65rem 0.25rem;
+}
+.legislation .legislation-content > aside details summary {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  background: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  padding: 0.8em 0.75em 0.8em;
+  text-align: center;
+}
+.legislation .legislation-content > aside details summary.ghost-button {
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+}
+.legislation .legislation-content > aside details summary:not([disabled]):hover,
+.legislation .legislation-content > aside details summary:not([disabled]):active,
+.legislation .legislation-content > aside details summary:not([disabled]):focus {
+  background: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.legislation .legislation-content > aside details summary h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2em;
+  display: inline-block;
+}
+.legislation .legislation-content > aside details summary h3:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  width: 0.35em;
+  height: 0.35em;
+  border-top-width: 0;
+  border-bottom-width: 0.0625rem;
+  margin: 0 0.25em 0.2em 0.6em;
+}
+.legislation .legislation-content > aside details summary:hover,
+.legislation .legislation-content > aside details summary:focus,
+.legislation .legislation-content > aside details summary:active {
+  color: var(--buttonText);
+}
+.legislation .legislation-content > aside details summary:hover h3:after,
+.legislation .legislation-content > aside details summary:focus h3:after,
+.legislation .legislation-content > aside details summary:active h3:after {
+  border-color: var(--buttonText);
+}
+.legislation .legislation-content > aside details[open] summary {
+  background: var(--buttonBg);
+  color: var(--buttonText);
+  border-radius: 0.1875rem 0.1875rem 0 0;
+}
+.legislation .legislation-content > aside details[open] summary h3:after {
+  border-bottom: 0;
+  border-right: 0;
+  border-top-width: 0.0625rem;
+  border-left-width: 0.0625rem;
+  border-color: var(--buttonText);
+  margin: 0.2em 0.25em 0 0.6em;
+}
+.legislation .legislation-content > aside details[open] > div {
+  background: var(--bg);
+  border: 0.0625rem solid var(--buttonBg);
+  border-top: 0;
+  border-radius: 0 0 0.1875rem 0.1875rem;
+  padding: 0.65rem 0.85rem;
+}
+.legislation .legislation-content > aside details.other-formats summary h3 {
+  padding: 0 0 0 2rem;
+}
+.legislation .legislation-content > aside details.other-formats summary h3:before {
+  content: "";
+  position: absolute;
+  margin: -0.065em 0 0 -2.1em;
+  height: 1.45em;
+  width: 1.45em;
+}
+.legislation .legislation-content > aside + aside {
+  margin: 1rem 0 0 0;
 }
 .legislation .legislation-content h2 {
   position: absolute;
@@ -2001,6 +2506,650 @@ main aside:not(.legislation aside) ul li a h3 {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+.legislation .legislation-content > div {
+  margin: 1em 0 0 0;
+}
+.legislation .legislation-content > div .legislation-text {
+  padding: 0;
+}
+.legislation .legislation-content > div .legislation-text ol,
+.legislation .legislation-content > div .legislation-text ul {
+  counter-reset: list;
+}
+.legislation .legislation-content > div .legislation-text ol li,
+.legislation .legislation-content > div .legislation-text ul li,
+.legislation .legislation-content > div .legislation-text ol li a,
+.legislation .legislation-content > div .legislation-text ul li a {
+  font-family: "Arial", "Helvetica", "sans-serif";
+}
+.legislation .legislation-content > div .legislation-text ol .annotation-start,
+.legislation .legislation-content > div .legislation-text ul .annotation-start {
+  display: inline-block;
+  vertical-align: text-top;
+  padding: 0 0.05em 0 0.7rem;
+  margin: 0 0.25rem 0 0;
+  font-size: 1rem;
+}
+.legislation .legislation-content > div .legislation-text ol .annotation-start a,
+.legislation .legislation-content > div .legislation-text ul .annotation-start a {
+  font-family: "Roboto";
+  font-weight: 500;
+  margin: -0.65rem 0 0 0.15rem;
+  display: block;
+  color: var(--annotation);
+}
+.legislation .legislation-content > div .legislation-text ol .annotation-start a:before,
+.legislation .legislation-content > div .legislation-text ul .annotation-start a:before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  border: 0.175rem solid var(--annotation);
+  border-right: 0;
+  border-radius: 0.175rem 0 0 0.175rem;
+  height: 1.25rem;
+  width: 0.25rem;
+  margin: 0.5rem 0 0 -0.7rem;
+}
+.legislation .legislation-content > div .legislation-text ol .annotation-end,
+.legislation .legislation-content > div .legislation-text ul .annotation-end {
+  display: inline-block;
+  vertical-align: text-top;
+  width: 0.6rem;
+}
+.legislation .legislation-content > div .legislation-text ol .annotation-end:after,
+.legislation .legislation-content > div .legislation-text ul .annotation-end:after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  border: 0.175rem solid var(--annotation);
+  border-left: 0;
+  border-radius: 0 0.175rem 0.175rem 0;
+  height: 1.25rem;
+  width: 0.25rem;
+  margin: -0.15rem 0 0 0.15rem;
+}
+.legislation .legislation-content > div .legislation-text ol .annotation-start span,
+.legislation .legislation-content > div .legislation-text ul .annotation-start span,
+.legislation .legislation-content > div .legislation-text ol .annotation-end span,
+.legislation .legislation-content > div .legislation-text ul .annotation-end span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.legislation .legislation-content > div .legislation-text ol h3,
+.legislation .legislation-content > div .legislation-text ul h3,
+.legislation .legislation-content > div .legislation-text ol h4,
+.legislation .legislation-content > div .legislation-text ul h4,
+.legislation .legislation-content > div .legislation-text ol h5,
+.legislation .legislation-content > div .legislation-text ul h5,
+.legislation .legislation-content > div .legislation-text ol h5,
+.legislation .legislation-content > div .legislation-text ul h5 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5em;
+}
+.legislation .legislation-content > div .legislation-text > ol {
+  margin: 0;
+}
+.legislation .legislation-content > div .legislation-text > ol ol,
+.legislation .legislation-content > div .legislation-text > ol ul {
+  margin: 0 0 0 2em;
+}
+.legislation .legislation-content > div .legislation-text > ol ol ol,
+.legislation .legislation-content > div .legislation-text > ol ul ol,
+.legislation .legislation-content > div .legislation-text > ol ol ul,
+.legislation .legislation-content > div .legislation-text > ol ul ul {
+  margin: 0 0 0 3em;
+}
+.legislation .legislation-content > div .legislation-text > ol ol li:has(.prefix)::marker,
+.legislation .legislation-content > div .legislation-text > ol ul li:has(.prefix)::marker {
+  color: rgba(255, 255, 255, 0);
+}
+.legislation .legislation-content > div .legislation-text > ol > li {
+  margin: 0;
+  padding: 0.25em 0 0 3.75em;
+}
+.legislation .legislation-content > div .legislation-text > ol > li:has(h3, h4, h5, h5) {
+  position: relative;
+}
+.legislation .legislation-content > div .legislation-text > ol > li:has(h3, h4, h5, h5) h3 .prefix,
+.legislation .legislation-content > div .legislation-text > ol > li:has(h3, h4, h5, h5) h4 .prefix,
+.legislation .legislation-content > div .legislation-text > ol > li:has(h3, h4, h5, h5) h5 .prefix,
+.legislation .legislation-content > div .legislation-text > ol > li:has(h3, h4, h5, h5) h5 .prefix {
+  position: relative;
+  margin: 0 0 0 -3.5em;
+  width: 5rem;
+  display: inline-block;
+  text-align: left;
+}
+.legislation .legislation-content > div .legislation-text > ol > li li {
+  margin: 0.25em 0 0 0;
+}
+.legislation .legislation-content > div .legislation-text .prefix {
+  position: absolute;
+  margin: 0 0 0 -8em;
+  width: 7.5em;
+  text-align: right;
+}
+.legislation .legislation-content > div .legislation-text .prefix .wrapper {
+  display: inline-block;
+  line-height: 1.2em;
+}
+.legislation .legislation-content > div .legislation-ftr {
+  padding: 0;
+}
+.legislation .legislation-content > div .legislation-ftr aside {
+  margin: 1.25rem 0 0 0;
+  border: 0.05em solid var(--lessSubtleBorder);
+  border-radius: 0.25rem;
+}
+.legislation .legislation-content > div .legislation-ftr aside h3 {
+  margin: 0;
+  padding: 0.75em 3em;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2em;
+}
+.legislation .legislation-content > div .legislation-ftr aside h3:first-of-type {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+.legislation .legislation-content > div .legislation-ftr aside dl {
+  margin: 0.5em 1em 0.75em 1em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.75em;
+}
+.legislation .legislation-content > div .legislation-ftr aside dl dt {
+  font-weight: 500;
+  min-width: 1.5em;
+  margin: 0 0.25em 0 0;
+  text-align: right;
+}
+.legislation .legislation-content > div .legislation-ftr aside dl dt a {
+  color: var(--annotation);
+}
+.legislation .legislation-content > div .legislation-ftr aside dl dd {
+  margin: 0 0 0.5em 0;
+  font-weight: 300;
+}
+.legislation .legislation-content > div .legislation-ftr aside dl dd .primary {
+  font-weight: 500;
+}
+.legislation .legislation-content > div .legislation-ftr aside dl dd ul {
+  margin: 0;
+  list-style: none;
+}
+.legislation .legislation-content > div .legislation-ftr aside dl dd ul li {
+  margin: 0 0 0.25em 0;
+}
+.legislation .legislation-content > div .legislation-ftr nav {
+  background: none;
+  margin: 0;
+}
+.legislation .legislation-content > div .legislation-ftr nav > a,
+.legislation .legislation-content > div .legislation-ftr nav > span {
+  padding: 1.25rem 0;
+}
+.legislation .legislation-content > div .toc-detail {
+  padding: 0 1rem 1rem 0;
+}
+.legislation .legislation-content > div .toc-detail h3,
+.legislation .legislation-content > div .toc-detail h4,
+.legislation .legislation-content > div .toc-detail h5,
+.legislation .legislation-content > div .toc-detail h6 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.2em;
+}
+.legislation .legislation-content > div .toc-detail .crossheading a {
+  font-weight: 400;
+  font-style: italic;
+}
+.legislation .legislation-content > div .toc-detail ul {
+  list-style: none;
+}
+.legislation .legislation-content > div .toc-detail ul,
+.legislation .legislation-content > div .toc-detail ol {
+  margin: 0.5em 0 0 1rem;
+}
+.legislation .legislation-content > div .toc-detail ul li,
+.legislation .legislation-content > div .toc-detail ol li {
+  margin: 0 0 0.5rem 0;
+  padding: 0 0 0 0.25rem;
+  font-weight: 300;
+}
+.legislation .legislation-content > div .toc-detail ul li::marker,
+.legislation .legislation-content > div .toc-detail ol li::marker {
+  color: var(--link);
+}
+.legislation .legislation-content > div .toc-detail ul li .extent,
+.legislation .legislation-content > div .toc-detail ol li .extent {
+  display: flex;
+  margin: 0.15rem 0 0 0;
+}
+.legislation .legislation-content > div .toc-detail ul li .extent.hidden,
+.legislation .legislation-content > div .toc-detail ol li .extent.hidden {
+  display: none;
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span:first-of-type,
+.legislation .legislation-content > div .toc-detail ol li .extent > span:first-of-type {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span,
+.legislation .legislation-content > div .toc-detail ol li .extent > span {
+  display: inline-block;
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span:before {
+  background: var(--subtleBg);
+  border: 0.0625rem solid var(--lessSubtleBorder);
+  display: inline-block;
+  margin: 0 0 0 0.25rem;
+  padding: 0 0.4rem;
+  border-radius: 0.25rem;
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.e:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.e:before {
+  content: "E" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.e-w:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.e-w:before {
+  content: "E&W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.ni:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.ni:before {
+  content: "NI" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.s:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.s:before {
+  content: "S" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.w:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.w:before {
+  content: "W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.eni:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.eni:before {
+  content: "E, NI" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.es:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.es:before {
+  content: "E, S" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.ew:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.ew:before {
+  content: "E, W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.e-wni:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.e-wni:before {
+  content: "E&W, NI" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.e-ws:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.e-ws:before {
+  content: "E&W, S" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.nis:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.nis:before {
+  content: "NI, S" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.sw:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.sw:before {
+  content: "S, W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.enis:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.enis:before {
+  content: "E, NI, S" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.eniw:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.eniw:before {
+  content: "E, NI, W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.esw:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.esw:before {
+  content: "E, S, W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.nisw:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.nisw:before {
+  content: "NI, S, W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.e-wnis:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.e-wnis:before {
+  content: "E&W, NI, S" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span.enisw:before,
+.legislation .legislation-content > div .toc-detail ol li .extent > span.enisw:before {
+  content: "E, NI, S, W" / "";
+}
+.legislation .legislation-content > div .toc-detail ul li .extent > span span,
+.legislation .legislation-content > div .toc-detail ol li .extent > span span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.legislation .legislation-content > div .toc-detail ul li a:hover .prefix,
+.legislation .legislation-content > div .toc-detail ol li a:hover .prefix {
+  text-decoration: inherit;
+}
+.legislation .legislation-content > div .toc-detail ul li .prefix,
+.legislation .legislation-content > div .toc-detail ol li .prefix {
+  position: absolute;
+  width: 4.5rem;
+  margin: 0 0 0 -4.5rem;
+  text-align: right;
+  padding: 0 0.5rem 0 0;
+}
+.legislation .legislation-content > div .toc-detail ul li:has(.prefix)::marker,
+.legislation .legislation-content > div .toc-detail ol li:has(.prefix)::marker {
+  color: rgba(30, 30, 30, 0);
+}
+.legislation .legislation-content > div .toc-detail ul ul,
+.legislation .legislation-content > div .toc-detail ol ul {
+  margin: 0.5rem 0 0 0.75rem;
+}
+.legislation .legislation-content > div .toc-detail button {
+  background: transparent;
+  padding: 0.75rem 1rem 0.75rem 2rem;
+  margin: 0.15rem 0.15rem 0.25rem 0.15rem;
+  height: 100%;
+  min-width: 3.5rem;
+  border-color: transparent;
+  color: var(--link);
+}
+.legislation .legislation-content > div .toc-detail button:before {
+  position: absolute;
+  margin: -0.2rem 0 0 -2rem;
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.legislation .legislation-content > div .toc-detail button:hover,
+.legislation .legislation-content > div .toc-detail button:focus,
+.legislation .legislation-content > div .toc-detail button:active {
+  -webkit-box-shadow: unset;
+  -moz-box-shadow: unset;
+  box-shadow: unset;
+  text-decoration: underline;
+  outline-color: transparent;
+}
+.legislation .legislation-content > div .toc-detail button:focus-visible {
+  outline-color: var(--link);
+}
+.legislation .legislation-content > div .toc-detail button 90 span {
+  position: unset;
+  width: unset;
+  height: unset;
+  padding: unset;
+  margin: unset;
+  overflow: unset;
+  clip: unset;
+  white-space: unset;
+  border: unset;
+}
+.legislation .legislation-content > div .toc-detail details summary {
+  display: block;
+  padding: 0 1rem 0.5rem 0;
+  height: 100%;
+  min-width: 3.5rem;
+  border-color: transparent;
+  color: var(--link);
+}
+.legislation .legislation-content > div .toc-detail details summary:before {
+  position: absolute;
+  margin: -0.2rem 0 0 -2rem;
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.legislation .legislation-content > div .toc-detail details ol,
+.legislation .legislation-content > div .toc-detail details ul {
+  margin: 0 0 0 1rem;
+}
+.legislation .legislation-content > div .toc-detail details ol:has(details),
+.legislation .legislation-content > div .toc-detail details ul:has(details) {
+  margin: 0.5rem 0 0 1rem;
+}
+.legislation .legislation-content > div .toc-detail details:has(details) > summary {
+  padding: 0 1rem 0.5rem 0;
+}
+.legislation .legislation-content > div .status-panel-anchor {
+  width: 5rem;
+  height: 5rem;
+  display: block;
+  position: absolute;
+}
+.legislation .legislation-content > div .status-panel {
+  font-weight: 300;
+}
+.legislation .legislation-content > div .status-panel.pinned {
+  position: sticky;
+  top: -4px;
+  z-index: 100;
+}
+.legislation .legislation-content > div .status-panel.stuck:after {
+  position: relative;
+  content: "";
+  height: 0.4rem;
+  overflow: hidden;
+  display: block;
+  margin: 0 0 -0.4rem 0;
+  z-index: 10;
+  background: var(--altBg);
+  background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+  margin: -1rem 0 0.6rem 0;
+}
+.legislation .legislation-content > div .status-panel.stuck > div h2,
+.legislation .legislation-content > div .status-panel.stuck > div p {
+  height: 0;
+  visibility: hidden;
+}
+.legislation .legislation-content > div .status-panel:not(.pinned) button {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  background: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  padding: 0.3rem 1rem;
+}
+.legislation .legislation-content > div .status-panel:not(.pinned) button.ghost-button {
+  background: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+}
+.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):hover,
+.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):active,
+.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):focus {
+  background: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.legislation .legislation-content > div .status-panel.pinned button,
+.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):hover,
+.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):focus {
+  background-image: url('images/pin-on.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0.8rem;
+}
+.legislation .legislation-content > div .status-panel > div {
+  padding: 0.5rem 1rem 0 1rem;
+  position: relative;
+  background: var(--verySubtleFixedBg);
+  border-left: 0.45rem solid var(--warningBg);
+}
+.legislation .legislation-content > div .status-panel > div h2 {
+  position: unset;
+  width: unset;
+  height: unset;
+  padding: unset;
+  margin: unset;
+  overflow: unset;
+  clip: unset;
+  white-space: unset;
+  border: unset;
+  padding: 0.25rem 0 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: unset;
+}
+.legislation .legislation-content > div .status-panel > div p {
+  margin: 0;
+}
+.legislation .legislation-content > div .status-panel > div p a {
+  font-weight: 500;
+}
+.legislation .legislation-content > div .status-panel > div button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.3rem 1rem;
+  margin: 0 0.35rem -2.05rem 0;
+  min-height: 1.9rem;
+}
+.legislation .legislation-content > div .status-panel > div button span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.legislation .legislation-content > div .status-panel details {
+  margin: 0 0 1em 0;
+  background: var(--verySubtleFixedBg);
+  border-left: 0.45rem solid var(--warningBg);
+  timeline-scope: --scroll;
+  animation: --scroll forwards;
+  animation-timeline: --scroll;
+  container-name: --scroll;
+}
+.legislation .legislation-content > div .status-panel details summary {
+  margin: 0.15em 0 0 0;
+  padding: 0 1rem 0.75rem 1rem;
+  font-weight: 500;
+  color: var(--buttonBg);
+  display: inline-block;
+}
+.legislation .legislation-content > div .status-panel details summary:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  width: 0.35em;
+  height: 0.35em;
+  border-top-width: 0;
+  border-right-width: 0.15rem;
+  border-bottom-width: 0.15rem;
+  margin: 0 0.35em 0.185em 0.5em;
+}
+.legislation .legislation-content > div .status-panel details[open]:before {
+  position: relative;
+  content: "";
+  height: 0.4rem;
+  overflow: hidden;
+  display: block;
+  margin: 0 0 -0.4rem 0;
+  z-index: 10;
+  background: var(--altBg);
+  background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+  top: 2.4rem;
+}
+.legislation .legislation-content > div .status-panel details[open] summary:after {
+  border-top-width: 0.15rem;
+  border-right: 0;
+  border-bottom: 0;
+  border-left-width: 0.15rem;
+  margin: 0.185em 0.35em 0 0.5em;
+}
+.legislation .legislation-content > div .status-panel details[open] > div {
+  max-height: 25vh;
+  overflow-y: scroll;
+  padding: 0 1rem;
+  scroll-timeline: --scroll;
+}
+.legislation .legislation-content > div .status-panel details[open] > div ul {
+  padding: 0.75rem 0;
+  margin: 0;
+  list-style: none;
+}
+.legislation .legislation-content > div .status-panel details[open] > div ul * {
+  font-family: "Roboto";
+}
+.legislation .legislation-content > div .status-panel details[open] > div ul li {
+  margin: 0 0 0.25rem 0;
+  font-weight: 300;
+}
+.legislation .legislation-content > div .status-panel details[open] > div ul li span,
+.legislation .legislation-content > div .status-panel details[open] > div ul li a {
+  font-weight: 500;
+}
+@keyframes --scroll {
+  0%,
+  to {
+    --scroll: 1;
+  }
+}
+@container --scroll style (--scroll: 1) {
+  .legislation .legislation-content > div .status-panel .status-panel:not(.stuck) details[open]:after {
+    position: relative;
+    content: "";
+    height: 0.4rem;
+    overflow: hidden;
+    display: block;
+    margin: 0 0 -0.4rem 0;
+    background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+    margin: -0.4rem 0 0 0;
+    z-index: 10;
+    background: var(--altBg);
+    background: linear-gradient(0deg, var(--dropShadowEnd) 0%, var(--dropShadowStart) 100%);
+    bottom: 0;
+  }
 }
 /* breakpoints */
 @media (max-width: calc(768px - 1px)) {
@@ -2071,7 +3220,7 @@ main aside:not(.legislation aside) ul li a h3 {
     margin: 1rem 1rem 0 1rem;
     padding: 0 0 0.8rem 0;
     border-bottom: 0.0625rem solid var(--modalBorder);
-    font-size: 1.25em;
+    font-size: 1.25rem;
     font-weight: 700;
   }
   header .hdr-menu:has(details[open]) details {
@@ -2109,21 +3258,20 @@ main aside:not(.legislation aside) ul li a h3 {
     display: block;
     padding: 1em 0 0 0;
   }
-  header .hdr-lang {
+  header .hdr-menu:has(details[open]) .hdr-lang {
     margin: 0.75em 0 0 0;
   }
-  header .hdr-lang span {
-    background: var(--modalButtonBg);
-    color: var(--modalButtonText);
-  }
-  header .hdr-lang a,
-  header .hdr-lang span {
+  header .hdr-menu:has(details[open]) .hdr-lang a {
     border-radius: 0.25rem 0 0 0.25rem;
     border: 0.0625rem solid var(--modalButtonBorder);
     padding: 0.35em 1.35em;
   }
-  header .hdr-lang span + a,
-  header .hdr-lang a + span {
+  header .hdr-menu:has(details[open]) .hdr-lang a[aria-current="page"] {
+    background: var(--modalButtonBg);
+    color: var(--modalButtonText);
+  }
+  header .hdr-menu:has(details[open]) .hdr-lang a[aria-current="page"] + a,
+  header .hdr-menu:has(details[open]) .hdr-lang a + a[aria-current="page"] {
     border-radius: 0 0.25rem 0.25rem 0;
     padding: 0.35em 1.35em;
   }
@@ -2148,6 +3296,70 @@ main aside:not(.legislation aside) ul li a h3 {
   header:has(.hdr-search details[open]) .hdr-search summary {
     background-color: var(--searchBg);
     background-image: url('images/search-w.png');
+  }
+}
+@media (min-width: calc(768px)) and (max-width: calc(1024px - 1px)) {
+  /* timeline and metadata on same row */
+  main.legislation:has(.timeline details:not([open])) .timeline {
+    margin: 0 1rem;
+    position: absolute;
+    padding: 0;
+    z-index: 1;
+  }
+  main.legislation:has(.timeline details:not([open])) .timeline details {
+    width: 17rem;
+  }
+  main.legislation:has(.timeline details:not([open])) .timeline details summary {
+    background: none;
+  }
+  main.legislation:has(.timeline details:not([open])) .timeline details summary .button {
+    margin: 0.75em auto;
+    padding: 0.65em 0;
+    width: calc(100% - 3rem);
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type {
+    display: flex;
+    flex-direction: column;
+    min-height: 16.3rem;
+    padding: 0 0 0 17rem;
+    position: relative;
+    border: 0;
+    background: var(--subtleBg);
+    border-radius: 0;
+    margin: -1rem 0 0 0;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type h2 {
+    margin: 0;
+    padding: 0.75rem 0.5rem 0.25rem 1rem;
+    background-color: var(--verySubtleFixedBg);
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div {
+    padding: 0 0.5rem 0 0.75rem;
+    background-color: var(--verySubtleFixedBg);
+    border: 0;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div:last-of-type {
+    padding: 0 0.5rem 0.75rem 0.75rem;
+    flex-grow: 1;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.up-to-date {
+    background-position: 1em 0.55em;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.extent {
+    background-position: 0.85em 0.55em;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.in-force {
+    background-position: 0.85em 0.55em;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div p {
+    padding: 0.15em 0 0.15rem 2em;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div p:first-of-type {
+    padding: 0.35em 0 0.15rem 2em;
+    border-top: 0.0625rem solid var(--subtleBorder);
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.not-up-to-date p:first-of-type {
+    background-position: 0.05rem 0.3rem;
   }
 }
 @media (max-width: calc(1024px - 1px)) {
@@ -2181,7 +3393,7 @@ main aside:not(.legislation aside) ul li a h3 {
     margin: 1.1rem 1rem 0 1rem;
     padding: 0 0 1rem 0;
     border-bottom: 0.0625rem solid var(--modalBorder);
-    font-size: 1.25em;
+    font-size: 1.25rem;
     line-height: 1.1em;
     font-weight: 700;
   }
@@ -2264,6 +3476,15 @@ main aside:not(.legislation aside) ul li a h3 {
   .legislation .timeline:has(details[open]) details .versions a {
     color: var(--modalText);
   }
+  .legislation .legislation-content > aside {
+    border: 0.0625rem solid var(--subtleBorder);
+    border-radius: 0.35rem;
+    padding: 0.5rem 0.75rem 0.25rem 0.75rem;
+    background: var(--verySubtleBg);
+  }
+  .legislation .legislation-content > aside:has(.not-up-to-date) {
+    border: 0.13rem dashed var(--warningBorder);
+  }
 }
 @media (min-height: 450px) {
   header .hdr-tna {
@@ -2287,20 +3508,37 @@ main aside:not(.legislation aside) ul li a h3 {
     border: 0;
   }
 }
+@media (min-height: 700px) {
+  .legislation .legislation-content > div .status-panel.stuck > div h2,
+  .legislation .legislation-content > div .status-panel.stuck > div p {
+    height: unset;
+    visibility: unset;
+  }
+  .legislation .legislation-content > div .status-panel details[open] > div {
+    max-height: 20vh;
+  }
+}
 @media (min-width: 450px) {
   :root a.hdr-home,
   :root[colour-scheme="light"] a.hdr-home {
     background: url("images/legislation-logo.png") no-repeat 0;
     background-size: 20.5%;
   }
+  :root .legislation .legislation-content .status-panel:not(.pinned) button,
+  :root[colour-scheme="light"] .legislation .legislation-content .status-panel:not(.pinned) button {
+    background-position: 0.45em center;
+  }
   :root[colour-scheme="dark"] a.hdr-home {
     background: url("images/legislation-logo-dm.png") no-repeat 0;
     background-size: 20.5%;
   }
+  :root[colour-scheme="dark"] .legislation .legislation-content .status-panel:not(.pinned) button {
+    background-position: 0.45em center;
+  }
   header a.hdr-home {
     margin: 0.15em auto;
     padding: 0.65em 0.25em 0.65em 2.5em;
-    font-size: 1.25em;
+    font-size: 1.25rem;
   }
   main .cards ul {
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
@@ -2316,20 +3554,56 @@ main aside:not(.legislation aside) ul li a h3 {
     margin: 0.65rem 0 0 0;
     padding: 0.65rem 1.45rem;
   }
-  main .whats-new .articles > .article div {
+  main .whats-new section.articles article div {
     padding: 1.5rem 1.5rem 1rem 1.5rem;
   }
-  main .whats-new .articles > .article:last-of-type {
+  main .whats-new section.articles article:last-of-type {
     padding: 0;
   }
-  main .whats-new .articles > .article:last-of-type > a:last-of-type:not(:has(img)) {
+  main .whats-new section.articles article:last-of-type > a:last-of-type:not(:has(img)) {
     margin: 0 1.5rem 1.5rem 1.5rem;
     display: inline-block;
     padding: 0.65rem 1.45rem;
   }
+  main.legislation .legislation-content > div .status-panel:not(.pinned) button {
+    padding: 0.3em 0.5em 0.3em 1.65em;
+    border-color: transparent;
+  }
+  main.legislation .legislation-content > div .status-panel.pinned button,
+  main.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):hover,
+  main.legislation .legislation-content > div .status-panel:not(.pinned) button:not([disabled]):focus {
+    background-position: 0.45em center;
+  }
+  main.legislation .legislation-content > div .status-panel button {
+    padding: 0.3em 0.5em 0.3em 1.65em;
+    min-height: unset;
+  }
+  main.legislation .legislation-content > div .status-panel button span {
+    position: unset;
+    width: unset;
+    height: unset;
+    padding: unset;
+    margin: unset;
+    overflow: unset;
+    clip: unset;
+    white-space: unset;
+    border: unset;
+  }
+}
+@media (min-width: 510px) {
+  header .hdr-search form fieldset select {
+    width: unset;
+  }
+  header .hdr-search form fieldset .title input {
+    width: 29.9rem;
+  }
+  main.legislation .legislation-content > aside > div > button {
+    width: fit-content;
+  }
 }
 @media (min-width: 700px) {
-  main > section:has(.in-page-nav) ol {
+  main > section:has(.in-page-nav) ol,
+  main > article:has(.in-page-nav) ol {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 1.5rem;
@@ -2342,9 +3616,10 @@ main aside:not(.legislation aside) ul li a h3 {
   }
   main.legislation .legislation-navigation > a,
   main.legislation .legislation-navigation > span {
-    width: 25%;
+    min-width: 10rem;
   }
-  main.legislation .legislation-navigation span:not(.toc-link, span span) {
+  main.legislation .legislation-navigation > a > span,
+  main.legislation .legislation-navigation > span > span {
     position: unset;
     width: unset;
     height: unset;
@@ -2355,29 +3630,33 @@ main aside:not(.legislation aside) ul li a h3 {
     white-space: unset;
     border: unset;
   }
-  main.legislation .legislation-navigation .previous {
+  main.legislation .legislation-navigation > a:first-of-type:not(:nth-last-child(2)) {
     text-align: left;
   }
-  main.legislation .legislation-navigation .next {
+  main.legislation .legislation-navigation > a:first-of-type:not(:nth-last-child(2)):before {
+    width: 0.25em;
+    height: 0.25em;
+    margin: 0 0.35em 0.15em 0.35em;
+  }
+  main.legislation .legislation-navigation > a:last-child:not(:nth-last-child(2)) {
     text-align: right;
   }
-  main.legislation .legislation-navigation a.previous:before {
+  main.legislation .legislation-navigation > a:last-child:not(:nth-last-child(2)):after {
     width: 0.25em;
     height: 0.25em;
     margin: 0 0.35em 0.15em 0.35em;
   }
-  main.legislation .legislation-navigation a.next:after {
-    width: 0.25em;
-    height: 0.25em;
-    margin: 0 0.35em 0.15em 0.35em;
+  main.legislation .legislation-content .toc-detail ul ul,
+  main.legislation .legislation-content .toc-detail ul ol {
+    margin: 0.5rem 0 0 2rem;
   }
-}
-@media (min-width: 510px) {
-  header .hdr-search form select {
-    width: unset;
+  main.legislation .legislation-content .toc-detail details ol,
+  main.legislation .legislation-content .toc-detail details ul {
+    margin: 0 0 0.75rem 1.75rem;
   }
-  header .hdr-search form .title input {
-    width: 29.9rem;
+  main.legislation .legislation-content .toc-detail details ol:has(details),
+  main.legislation .legislation-content .toc-detail details ul:has(details) {
+    margin: 0.5rem 0 0 2.5rem;
   }
 }
 @media (min-width: 768px) {
@@ -2407,13 +3686,13 @@ main aside:not(.legislation aside) ul li a h3 {
   header .top-menu a.hdr-home {
     margin: 0;
     padding: 0.9em 0.25em 0.65em 2.5em;
-    font-size: 2em;
+    font-size: 2rem;
     position: absolute;
   }
   header .top-menu .hdr-tna {
     float: right;
     padding: 0.3rem 0 1.05em 0;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     font-weight: 500;
     text-transform: lowercase;
   }
@@ -2469,13 +3748,13 @@ main aside:not(.legislation aside) ul li a h3 {
   header .hdr-menu:has(details[open]) .hdr-lang {
     float: right;
   }
-  header .hdr-menu:has(details[open]) .hdr-lang span + a,
-  header .hdr-menu:has(details[open]) .hdr-lang a + span {
+  header .hdr-menu:has(details[open]) .hdr-lang a[aria-current="page"] + a,
+  header .hdr-menu:has(details[open]) .hdr-lang a + a[aria-current="page"] {
     border-left: 0.0625rem solid var(--midDark);
     margin: 0 0 0 0.35em;
     padding: 0 0 0 0.5em;
   }
-  header .hdr-menu:has(details[open]) .hdr-lang a + span {
+  header .hdr-menu:has(details[open]) .hdr-lang a + a[aria-current="page"] {
     margin: 0 0 0 0.5em;
   }
   header .hdr-menu:has(details[open]) .hdr-tna {
@@ -2484,24 +3763,24 @@ main aside:not(.legislation aside) ul li a h3 {
   header .hdr-search {
     max-width: unset;
   }
-  header .hdr-search form span.title,
-  header .hdr-search form span.type {
+  header .hdr-search form fieldset span.title,
+  header .hdr-search form fieldset span.type {
     float: left;
   }
-  header .hdr-search form span.title input,
-  header .hdr-search form span.type input,
-  header .hdr-search form span.title select,
-  header .hdr-search form span.type select {
+  header .hdr-search form fieldset span.title input,
+  header .hdr-search form fieldset span.type input,
+  header .hdr-search form fieldset span.title select,
+  header .hdr-search form fieldset span.type select {
     margin: 0 1em 0.85em 0;
     width: 29.75rem;
   }
-  header .hdr-search form span:has(button) {
+  header .hdr-search form fieldset span:has(button) {
     margin: 1.5em 0 0 0;
   }
-  header .hdr-search form span:has(button) button {
+  header .hdr-search form fieldset span:has(button) button {
     padding: 0.81em 0;
   }
-  header .hdr-search form span:has(button) a {
+  header .hdr-search form fieldset span:has(button) a {
     margin: 0;
   }
   header .hdr-search summary {
@@ -2546,15 +3825,18 @@ main aside:not(.legislation aside) ul li a h3 {
     margin: 0 0 0 2em;
     padding: 0;
   }
-  main .whats-new .articles {
+  main .whats-new section.articles ul {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 1.5rem;
   }
-  main .whats-new .articles .article:last-of-type {
+  main .whats-new section.articles ul li {
+    display: flex;
+  }
+  main .whats-new section.articles ul li:last-of-type {
     margin: 1.5rem 0;
   }
-  main .whats-new .articles .article:last-of-type:not(:nth-of-type(even)) {
+  main .whats-new section.articles ul li:last-of-type:not(:nth-of-type(even)) {
     grid-column: span 2;
     margin: 0;
   }
@@ -2574,17 +3856,35 @@ main aside:not(.legislation aside) ul li a h3 {
   main.home section.whats-new:has(.articles) > p {
     grid-column: span 2;
   }
-  main.home section.whats-new:has(.articles) .articles .article:last-of-type:not(:nth-of-type(even)) {
+  main.home section.whats-new:has(.articles) section.articles {
+    display: flex;
+  }
+  main.home section.whats-new:has(.articles) section.articles article:last-of-type:not(:nth-of-type(even)) {
     margin: 1.5rem 0 0 0;
   }
-  main.legislation .legislation-navigation,
   main.legislation .pit-search,
   main.legislation .timeline:has(details:not([open])) {
     padding: 0 1rem;
   }
   main.legislation .legislation-navigation {
-    max-width: var(--maxWidth);
-    margin: 0 auto;
+    margin: 0 1rem;
+  }
+  main.legislation .legislation-content > div .legislation-ftr nav {
+    padding: 0;
+  }
+  main.legislation .legislation-content .toc-detail ol:has( > li > .extent:not(.hidden)) {
+    margin: 0 0 0.75rem 11.5rem;
+  }
+  main.legislation .legislation-content .toc-detail ol:has( > li > .extent:not(.hidden)) li:has( > .extent:not(.hidden)) {
+    position: relative;
+  }
+  main.legislation .legislation-content .toc-detail ol:has( > li > .extent:not(.hidden)) li:has( > .extent:not(.hidden)) .extent {
+    position: absolute;
+    width: 8rem;
+    margin: 0 0 0 -13.25rem;
+    justify-content: right;
+    top: 0;
+    left: 0;
   }
 }
 @media (min-width: 1024px) {
@@ -2596,9 +3896,72 @@ main aside:not(.legislation aside) ul li a h3 {
     background: url("images/tna-logo.png") no-repeat;
     background-size: 100%;
   }
+  :root .legislation .legislation-content aside > div.up-to-date,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.up-to-date {
+    background-position: 0.7em 0.6em;
+    background-size: 1.6em;
+  }
+  :root .legislation .legislation-content aside > div.extent,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.extent {
+    background-position: 0.5em 0.6em;
+    background-size: 2em;
+  }
+  :root .legislation .legislation-content aside > div.in-force,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.in-force {
+    background-position: 0.65em 0.6em;
+    background-size: 1.8em;
+  }
+  :root .legislation .legislation-content aside > div.explanatory-notes,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.explanatory-notes {
+    background-position: 0.6em 0.5em;
+    background-size: 1.6em;
+  }
+  :root .legislation .legislation-content aside > div.associated-documents,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.associated-documents {
+    background-position: 0.65em 0.5em;
+    background-size: 1.5em;
+  }
+  :root .legislation .legislation-content aside > div:has(p).explanatory-notes,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).explanatory-notes {
+    background-position: 0.65em 0.6em;
+    background-size: 1.6em;
+  }
+  :root .legislation .legislation-content aside > div:has(p).associated-documents,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).associated-documents {
+    background-position: 0.55em 0.6em;
+    background-size: 1.8em;
+  }
   :root[colour-scheme="dark"] .hdr-tna a {
     background: url("images/tna-logo-dm.png") no-repeat;
     background-size: 100%;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.up-to-date {
+    background-position: 0.7em 0.6em;
+    background-size: 1.6em;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.extent {
+    background-position: 0.5em 0.6em;
+    background-size: 2em;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.in-force {
+    background-position: 0.65em 0.6em;
+    background-size: 1.8em;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.explanatory-notes {
+    background-position: 0.6em 0.5em;
+    background-size: 1.6em;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.associated-documents {
+    background-position: 0.65em 0.5em;
+    background-size: 1.5em;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div:has(p).explanatory-notes {
+    background-position: 0.65em 0.6em;
+    background-size: 1.6em;
+  }
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div:has(p).associated-documents {
+    background-position: 0.55em 0.6em;
+    background-size: 1.8em;
   }
   header:has(.hdr-menu details[open]) .top-menu .hdr-tna {
     display: block;
@@ -2619,50 +3982,53 @@ main aside:not(.legislation aside) ul li a h3 {
     position: relative;
     overflow: hidden;
   }
-  header .hdr-search form span {
+  header .hdr-search form fieldset span {
     float: left;
   }
-  header .hdr-search form span.year {
+  header .hdr-search form fieldset span.year {
     margin: 0;
   }
-  header .hdr-search form span input {
+  header .hdr-search form fieldset span input {
     margin: 0 1em 0 0;
     width: 4.25em;
   }
-  header .hdr-search form span input::placeholder {
+  header .hdr-search form fieldset span input::placeholder {
     color: transparent;
   }
-  header .hdr-search form span.title input {
+  header .hdr-search form fieldset span.title input {
     width: 14.25rem;
     margin: 0 1em 0 0;
   }
-  header .hdr-search form span.title input::placeholder {
+  header .hdr-search form fieldset span.title input::placeholder {
     color: var(--midDrkBrdr);
   }
-  header .hdr-search form span.type select {
+  header .hdr-search form fieldset span.type select {
     margin: 0 1em 0 0;
     padding: 0.7em 0.5em;
     width: 29rem;
   }
-  header .hdr-search form span:has(button) button {
+  header .hdr-search form fieldset span:has(button) button {
     padding: 0.75em 0;
     margin: 0.25em 0 0 0;
   }
-  header .hdr-search form span:has(button) a {
+  header .hdr-search form fieldset span:has(button) a {
     position: absolute;
     top: 0.75em;
     right: 1rem;
   }
-  main > section:has(.in-page-nav) {
+  main > section:has(.in-page-nav),
+  main > article:has(.in-page-nav) {
     padding: 0 1rem 2rem 20rem;
     position: relative;
   }
-  main > section:has(.in-page-nav) .in-page-nav {
+  main > section:has(.in-page-nav) .in-page-nav,
+  main > article:has(.in-page-nav) .in-page-nav {
     margin: 0;
     padding: 0;
     background: unset;
   }
-  main > section:has(.in-page-nav) .in-page-nav h2 {
+  main > section:has(.in-page-nav) .in-page-nav h2,
+  main > article:has(.in-page-nav) .in-page-nav h2 {
     position: absolute;
     width: 0.0625rem;
     height: 0.0625rem;
@@ -2673,7 +4039,8 @@ main aside:not(.legislation aside) ul li a h3 {
     white-space: nowrap;
     border: 0;
   }
-  main > section:has(.in-page-nav) .in-page-nav ol {
+  main > section:has(.in-page-nav) .in-page-nav ol,
+  main > article:has(.in-page-nav) .in-page-nav ol {
     margin: 0 0 0 1rem;
     padding: 0 0 2rem 0;
     width: 17.5rem;
@@ -2683,19 +4050,23 @@ main aside:not(.legislation aside) ul li a h3 {
     grid-template-columns: unset;
     column-gap: unset;
   }
-  main > section:has(.in-page-nav) .in-page-nav ol li {
+  main > section:has(.in-page-nav) .in-page-nav ol li,
+  main > article:has(.in-page-nav) .in-page-nav ol li {
     margin: 0.25rem 0 0.5rem 0;
   }
-  main > section:has(.in-page-nav) .in-page-nav ol li a {
+  main > section:has(.in-page-nav) .in-page-nav ol li a,
+  main > article:has(.in-page-nav) .in-page-nav ol li a {
     border-left: 0.25em solid transparent;
   }
-  main > section:has(.in-page-nav) .in-page-nav ol li a[aria-current="page"] {
+  main > section:has(.in-page-nav) .in-page-nav ol li a[aria-current="page"],
+  main > article:has(.in-page-nav) .in-page-nav ol li a[aria-current="page"] {
     color: var(--text);
     font-weight: 500;
     border-left: 0.25em solid var(--text);
     background: var(--inPageNav);
   }
-  main > section:has(.in-page-nav) .in-page-nav ol li:first-of-type {
+  main > section:has(.in-page-nav) .in-page-nav ol li:first-of-type,
+  main > article:has(.in-page-nav) .in-page-nav ol li:first-of-type {
     display: block;
   }
   main aside:not(.legislation aside) ul {
@@ -2711,7 +4082,7 @@ main aside:not(.legislation aside) ul li a h3 {
   main .whats-new:has(.articles) > p {
     grid-column: span 2;
   }
-  main .whats-new:has(.articles) .articles {
+  main .whats-new:has(.articles) section.articles ul {
     display: block;
   }
   main.home section.whats-new:not(:has(.articles)) .newly-published {
@@ -2720,10 +4091,11 @@ main aside:not(.legislation aside) ul li a h3 {
   main.home section.whats-new:not(:has(.articles)) .newly-published ul {
     display: flex;
     flex-wrap: wrap;
+    column-gap: 1rem;
   }
   main.home section.whats-new:not(:has(.articles)) .newly-published ul li {
     margin: 0 0 1em 0;
-    width: 50%;
+    width: calc(50% - 1rem);
   }
   main.home section.whats-new:not(:has(.articles)) .newly-published ul li h4 {
     margin: 0;
@@ -2755,15 +4127,15 @@ main aside:not(.legislation aside) ul li a h3 {
     flex-grow: 0;
     min-width: unset;
   }
-  main.new-legislation > div > section nav ul li a {
+  main.new-legislation > div > section nav ul li a:not([disabled]) {
     display: inline;
     padding: 0;
     border: 0;
     background: none;
   }
-  main.new-legislation > div > section nav ul li a:hover,
-  main.new-legislation > div > section nav ul li a:active,
-  main.new-legislation > div > section nav ul li a:focus {
+  main.new-legislation > div > section nav ul li a:not([disabled]):hover,
+  main.new-legislation > div > section nav ul li a:not([disabled]):active,
+  main.new-legislation > div > section nav ul li a:not([disabled]):focus {
     color: var(--link);
     background: none;
     border: 0;
@@ -2771,16 +4143,16 @@ main aside:not(.legislation aside) ul li a h3 {
     -webkit-box-shadow: 0 0 0 transparent;
     box-shadow: 0 0 0 transparent;
   }
-  main.new-legislation > div > section nav ul li a:hover {
+  main.new-legislation > div > section nav ul li a:not([disabled]):hover {
     outline: unset;
     text-decoration: underline;
     text-decoration-thickness: 0.05em;
   }
-  main.new-legislation > div > section nav ul li a:active,
-  main.new-legislation > div > section nav ul li a:focus {
+  main.new-legislation > div > section nav ul li a:not([disabled]):active,
+  main.new-legislation > div > section nav ul li a:not([disabled]):focus {
     outline-color: var(--link);
   }
-  main.new-legislation > div > section nav ul li a[aria-current="page"] {
+  main.new-legislation > div > section nav ul li a:not([disabled])[aria-current="page"] {
     position: relative;
     padding: 1.2em 1.6em 0.95em 1.6em;
     border-radius: 0.2em 0.2em 0 0;
@@ -2790,7 +4162,7 @@ main aside:not(.legislation aside) ul li a h3 {
     border-right: 0.0625em solid var(--subtleBorder);
     color: var(--text);
   }
-  main.new-legislation > div > section nav ul li a[aria-current="page"]:before {
+  main.new-legislation > div > section nav ul li a:not([disabled])[aria-current="page"]:before {
     position: absolute;
     margin: -1.2em 0 0 -1.6em;
     content: "";
@@ -2799,8 +4171,22 @@ main aside:not(.legislation aside) ul li a h3 {
     background: var(--text);
     border-radius: 0.2em 0.2em 0 0;
   }
+  main.new-legislation > div > section nav ul li a:not([disabled])[aria-current="page"]:after {
+    position: absolute;
+    margin: 0 0 -0.0625em 0;
+    content: "";
+    height: 0.0625em;
+    width: 100%;
+    background: var(--bg);
+    bottom: 0;
+    left: 0;
+  }
   main.new-legislation > div > section nav ul li:has([aria-current="page"]) {
     padding: 1.1em 0 0.8em 0;
+  }
+  main.legislation .legislation-navigation {
+    max-width: calc(var(--maxWidth) - 2rem);
+    margin: 0 auto;
   }
   main.legislation .timeline {
     overflow: unset;
@@ -2844,6 +4230,7 @@ main aside:not(.legislation aside) ul li a h3 {
   main.legislation .timeline:has(details:not([open])) summary:hover > span:before,
   main.legislation .timeline:has(details:not([open])) summary:focus > span:before {
     background: var(--focusButtonBg);
+    color: var(--buttonText);
     border-color: var(--focusOutline);
     outline-color: var(--focusOutline);
     outline-style: solid;
@@ -2918,6 +4305,7 @@ main aside:not(.legislation aside) ul li a h3 {
   main.legislation .timeline:has(details[open]) summary:hover,
   main.legislation .timeline:has(details[open]) summary:focus {
     background: var(--focusButtonBg);
+    color: var(--buttonText);
     border-color: var(--focusOutline);
     outline-color: var(--focusOutline);
     outline-style: solid;
@@ -3210,6 +4598,7 @@ main aside:not(.legislation aside) ul li a h3 {
   main.legislation .timeline:has(details[open]) .versions ol li:not([aria-current="page"]):hover > a .date:before,
   main.legislation .timeline:has(details[open]) .versions ol li:not([aria-current="page"]):focus > a .date:before {
     background: var(--focusButtonBg);
+    color: var(--buttonText);
     border-color: var(--focusOutline);
     outline-color: var(--focusOutline);
     outline-style: solid;
@@ -3465,6 +4854,7 @@ main aside:not(.legislation aside) ul li a h3 {
   main.legislation .timeline:has(details[open]) .scrollable .versions .scrollbar .drag-strip .drag:hover,
   main.legislation .timeline:has(details[open]) .scrollable .versions .scrollbar .drag-strip .drag:focus {
     background: var(--focusButtonBg);
+    color: var(--buttonText);
     border-color: var(--focusOutline);
     outline-color: var(--focusOutline);
     outline-style: solid;
@@ -3492,26 +4882,132 @@ main aside:not(.legislation aside) ul li a h3 {
     width: calc(100% - 22rem);
   }
   main.legislation .legislation-content {
-    display: flex;
-    flex-direction: row-reverse;
-    width: 100%;
     padding: 0 1rem 1rem 1rem;
+    display: grid;
+    grid-template-columns: 1fr fit-content(22rem);
+    grid-template-rows: fit-content(22rem) 1fr;
   }
-  main.legislation .legislation-content aside {
+  main.legislation .legislation-content > aside {
     width: 16rem;
   }
-  main.legislation .legislation-content aside:before {
+  main.legislation .legislation-content > aside h2 {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  main.legislation .legislation-content > aside:last-of-type {
+    order: 3;
+  }
+  main.legislation .legislation-content > aside:first-of-type {
+    order: 2;
+    margin: 1rem 0 0 0;
+  }
+  main.legislation .legislation-content > aside > div {
+    border: 0.0625rem solid var(--lessSubtleBorder);
+    border-radius: 0.25rem;
+    display: block;
+    margin: 0 0 0.5rem 0;
+    padding: 0;
+  }
+  main.legislation .legislation-content > aside > div:last-of-type {
+    margin: 0 0 1rem 0;
+  }
+  main.legislation .legislation-content > aside > div p:first-of-type {
+    flex-grow: 1;
+    padding: 0.5em 0.5em 0.5em 3em;
+    display: table-cell;
+    height: 2.85rem;
+    vertical-align: middle;
+  }
+  main.legislation .legislation-content > aside > div p:first-of-type + p {
+    margin: 0 0.75em 0.5em 0.75em;
+    padding: 0.65em 0.25rem 0 0.25rem;
+    border-top: 0.0625em solid var(--lessSubtleBorder);
+  }
+  main.legislation .legislation-content > aside > div > a {
+    display: block;
+    padding: 0.7em 0 0.5em 2.75em;
+    border-radius: 0 0 0.25rem 0.25rem;
+  }
+  main.legislation .legislation-content > aside > div button {
+    font-weight: 500;
+    color: var(--text);
+    border-radius: 0.1875rem;
+    background: var(--buttonBg);
+    color: var(--buttonText);
+    border: 0.0625rem solid transparent;
+    padding: 0.5em 1.5em;
+    text-align: center;
+    font-weight: 300;
+    width: calc(100% - 2rem);
+    margin: 0.1rem 1rem 1rem 1rem;
+    padding: 0.75rem 0;
+  }
+  main.legislation .legislation-content > aside > div button.ghost-button {
+    background: transparent;
+    color: var(--buttonBg);
+    border: 0.0625rem solid var(--buttonBg);
+  }
+  main.legislation .legislation-content > aside > div button:not([disabled]):hover,
+  main.legislation .legislation-content > aside > div button:not([disabled]):active,
+  main.legislation .legislation-content > aside > div button:not([disabled]):focus {
+    background: var(--focusButtonBg);
+    color: var(--buttonText);
+    border-color: var(--focusOutline);
+    outline-color: var(--focusOutline);
+    outline-style: solid;
+    outline-width: 0.1rem;
+    text-decoration: none;
+    -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  }
+  main.legislation .legislation-content > aside > div:has(p) {
+    margin: 0 0 1rem 0;
+  }
+  main.legislation .legislation-content > aside > div:has(p) > a {
+    padding: 0.5em 0.85em 0.5em 0.85em;
+    background: var(--moreSubtleBg);
+    border-top: 0.05em solid var(--subtleBorder);
+  }
+  main.legislation .legislation-content > aside > div.not-up-to-date {
+    border: 0.13rem dashed var(--warningBorder);
+  }
+  main.legislation .legislation-content > aside > div.not-up-to-date p:first-of-type {
+    background-position: 0.5rem 0.45rem;
+    background-size: 1rem;
+  }
+  main.legislation .legislation-content > aside details {
+    margin: 0;
+  }
+  main.legislation .legislation-content > aside + aside {
+    margin: 0;
+  }
+  main.legislation .legislation-content > div {
+    order: 1;
+    grid-row: span 2;
+    width: 100%;
+    margin: 1em 0 0 0;
+    padding: 0 1em 0 0;
+  }
+  main.legislation:has(.timeline details[open]) .legislation-content aside:before {
+    padding: 0;
+  }
+  main:has(.timeline details:not([open])) .legislation-content > aside:first-of-type {
+    margin: 0;
+  }
+  main:has(.timeline details:not([open])) .legislation-content > aside:first-of-type:before {
     content: "";
     display: block;
     padding: 12.5rem 0 0 1rem;
     background: var(--verySubtleBg);
     margin: 0 0 1rem 0;
-  }
-  main.legislation .legislation-content section {
-    flex-grow: 1;
-  }
-  main.legislation:has(.timeline details[open]) .legislation-content aside:before {
-    padding: 0;
   }
 }
 @media (min-width: 1280px) {
@@ -3521,26 +5017,26 @@ main aside:not(.legislation aside) ul li a h3 {
   header .hdr-search form {
     position: unset;
   }
-  header .hdr-search form span input {
+  header .hdr-search form fieldset span input {
     margin: 0 0.85em 0 0;
     padding: 0.75em;
     width: 5.75em;
   }
-  header .hdr-search form span input::placeholder {
+  header .hdr-search form fieldset span input::placeholder {
     color: var(--midDrkBrdr);
   }
-  header .hdr-search form span.title input {
+  header .hdr-search form fieldset span.title input {
     width: 19.4rem;
     margin: 0 0.85em 0 0;
   }
-  header .hdr-search form span.type select {
+  header .hdr-search form fieldset span.type select {
     margin: 0 0.85em 0 0;
   }
-  header .hdr-search form span:has(button) button {
+  header .hdr-search form fieldset span:has(button) button {
     margin: 0.25em 0.75em 0 0;
     width: 5.95em;
   }
-  header .hdr-search form span:has(button) a {
+  header .hdr-search form fieldset span:has(button) a {
     position: unset;
     top: unset;
     right: unset;

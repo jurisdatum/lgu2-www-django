@@ -1,22 +1,22 @@
 <header>
-    <section>
-        <ul class="skip-links">
-            <li><a href="#main-content-h">Skip to content</a></li>
-        </ul>
-        <div class="top-menu">
-            <a href="/" aria-current="page" class="hdr-home"><span>legislation</span>.gov.uk</a>
-            <div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
-        </div>
-        <div class="hdr-menu">
-            <h2>Main menu</h2>
-            <details>
-                <summary>
-                    <span class="open-menu"><span>Show </span>menu</span>
-                    <span class="close-menu">Close menu</span>
-                </summary>
-                <div class="hdr-links">
-                    <nav aria-label="Main">
-                        <ul>
+		<section>
+			<ul class="skip-links">
+				<li><a href="#main-content-h">Skip to content</a></li>
+			</ul>
+			<div class="top-menu">
+				<a href="/" aria-current="page" class="hdr-home"><span>legislation</span>.gov.uk</a>
+				<div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
+			</div>
+			<div class="hdr-menu">
+				<h2 id="mainMenu">Main menu</h2>
+				<details>
+					<summary>
+						<span class="open-menu"><span>Show </span>menu</span>
+						<span class="close-menu">Close menu</span>
+					</summary>
+					<div class="hdr-links">
+						<nav aria-labelledby="mainMenu">
+							<ul>
                             <li>
                                 <a href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
                             </li>
@@ -26,94 +26,98 @@
                             <li><a href="{% url 'new' %}" {% if request.path == '/new/' %}aria-current="page"{% endif %}>What's new</a></li>
                             <li><a href="{% url 'about-us' %}" {% if request.path == '/about-us/' %}aria-current="page"{% endif %}>About us</a></li>
                         </ul>
-                    </nav>
-                    <div class="hdr-lang"><a href="/cy" aria-label="Gosod iaith i'r Cymraeg" lang="cy"><span>Change language to </span>Cymraeg</a><span><span>Language set to </span>English </span></div>
-                    <div class="hdr-tna initialise" hidden>Delivered by <a href="/tna/"><span>The National Archives</span></a></div>
-                </div>
-            </details>
-        </div>
-    </section>
-    <section class="hdr-search">
-        <h2>Search for legislation</h2>
-        <details open>
-            <summary><span>Search</span></summary>
-            <form role="search" method="post">
-                <span class="title">
-                    <label for="title">Words in legislation title:</label>
-                    <input type="text" id="title" name="title" placeholder="e.g. equality 2010">
-                </span>
-                <span>
-                    <span class="year">
-                        <label for="year">Year:</label>
-                        <input type="text" id="year" name="year" placeholder="e.g. 2010">
-                    </span>
-                    <span class="number">
-                        <label for="number">Number:</label>
-                        <input type="text" id="number" name="number" placeholder="e.g. 15">
-                    </span>
-                </span>
-                <span class="type">
-                    <label for="type">Type of legislation:</label>
-                    <select id="type" name="type">
-                        <option value="primary+secondary" selected="selected">All UK Legislation (excluding originating from the EU)</option>
-                        <option value="all">All Legislation (including originating from the EU)</option>
-                        <optgroup label="Primary Legislation">
-                            <option value="primary">All Primary Legislation</option>
-                            <option value="ukpga">UK Public General Acts</option>
-                            <option value="ukla">UK Local Acts</option>
-                            <option value="ukppa">UK Private and Personal Acts</option>
-                            <option value="asp">Acts of the Scottish Parliament</option>
-                            <option value="asc">Acts of Senedd Cymru</option>
-                            <option value="anaw">Acts of the National Assembly for Wales</option>
-                            <option value="mwa">Measures of the National Assembly for Wales</option>
-                            <option value="ukcm">Church Measures</option>
-                            <option value="nia">Acts of the Northern Ireland Assembly</option>
-                            <option value="aosp">Acts of the Old Scottish Parliament</option>
-                            <option value="aep">Acts of the English Parliament</option>
-                            <option value="aip">Acts of the Old Irish Parliament</option>
-                            <option value="apgb">Acts of the Parliament of Great Britain</option>
-                            <option value="gbla">Local Acts of the Parliament of Great Britain</option>
-                            <option value="gbppa">Private and Personal Acts of the Parliament of Great Britain</option>
-                            <option value="nisi">Northern Ireland Orders in Council</option>
-                            <option value="mnia">Measures of the Northern Ireland Assembly</option>
-                            <option value="apni">Acts of the Northern Ireland Parliament</option>
-                        </optgroup>
-                        <optgroup label="Secondary Legislation">
-                            <option value="secondary">All Secondary Legislation</option>
-                            <option value="uksi">UK Statutory Instruments</option>
-                            <option value="wsi">Wales Statutory Instruments</option>
-                            <option value="ssi">Scottish Statutory Instruments</option>
-                            <option value="nisr">Northern Ireland Statutory Rules</option>
-                            <option value="ukci">Church Instruments</option>
-                            <option value="ukmd">UK Ministerial Directions</option>
-                            <option value="ukmo">UK Ministerial Orders</option>
-                            <option value="uksro">UK Statutory Rules and Orders</option>
-                            <option value="nisro">Northern Ireland Statutory Rules and Orders</option>
-                        </optgroup>
-                        <optgroup label="Legislation originating from the EU">
-                            <option value="eu-origin">All Legislation originating from the EU</option>
-                            <option value="eur">Regulations originating from the EU</option>
-                            <option value="eudn">Decisions originating from the EU</option>
-                            <option value="eudr">Directives originating from the EU</option>
-                            <option value="eut">European Union Treaties</option>
-                        </optgroup>
-                        <optgroup label="Draft Legislation">
-                            <option value="draft">All Draft Legislation</option>
-                            <option value="ukdsi">UK Draft Statutory Instruments</option>
-                            <option value="sdsi">Scottish Draft Statutory Instruments</option>
-                            <option value="nidsr">Northern Ireland Draft Statutory Rules</option>
-                        </optgroup>
-                        <optgroup label="Impact Assessments">
-                            <option value="ukia">All Impact Assessments</option>
-                            <option value="ukia">UK Impact Assessments</option>
-                        </optgroup>
-                    </select>
-                </span>
-                <span>
-                    <button type="submit">Search</button>
-                    <a href="#">Advanced Search</a>
-                </span>
-            </form>
-        </details>
-    </section>
-</header>
+						</nav>
+						<div class="hdr-lang">
+							<h3>Change language</h3>
+							<a href="/cy" lang="cy">Cymraeg</a><a href="/" aria-current="page"><span>Language set to </span>English</a></div>
+						<div class="hdr-tna initialise" hidden>Delivered by <a href="/tna/"><span>The National Archives</span></a></div>
+					</div>
+				</details>
+			</div>
+		</section>
+		<section class="hdr-search">
+			<h2>Search for legislation</h2>
+			<details open>
+				<summary><span>Search</span></summary>
+				<form role="search" method="post">
+					<fieldset>
+						<legend>Legislation search</legend>
+						<span class="title">
+							<label for="title">Words in legislation title:</label>
+							<input type="text" id="title" name="title" placeholder="e.g. equality 2010">
+						</span>
+						<span>
+							<span class="year">
+								<label for="year">Year:</label>
+								<input type="text" id="year" name="year" placeholder="e.g. 2010">
+							</span>
+							<span class="number">
+								<label for="number">Number:</label>
+								<input type="text" id="number" name="number" placeholder="e.g. 15">
+							</span>
+						</span>
+						<span class="type">
+							<label for="type">Type of legislation:</label>
+							<select id="type" name="type">
+								<option value="primary+secondary" selected="selected">All UK Legislation (excluding originating from the EU)</option>
+								<option value="all">All Legislation (including originating from the EU)</option>
+								<optgroup label="Primary Legislation">
+									<option value="primary">All Primary Legislation</option>
+									<option value="ukpga">UK Public General Acts</option>
+									<option value="ukla">UK Local Acts</option>
+									<option value="ukppa">UK Private and Personal Acts</option>
+									<option value="asp">Acts of the Scottish Parliament</option>
+									<option value="asc">Acts of Senedd Cymru</option>
+									<option value="anaw">Acts of the National Assembly for Wales</option>
+									<option value="mwa">Measures of the National Assembly for Wales</option>
+									<option value="ukcm">Church Measures</option>
+									<option value="nia">Acts of the Northern Ireland Assembly</option>
+									<option value="aosp">Acts of the Old Scottish Parliament</option>
+									<option value="aep">Acts of the English Parliament</option>
+									<option value="aip">Acts of the Old Irish Parliament</option>
+									<option value="apgb">Acts of the Parliament of Great Britain</option>
+									<option value="gbla">Local Acts of the Parliament of Great Britain</option>
+									<option value="gbppa">Private and Personal Acts of the Parliament of Great Britain</option>
+									<option value="nisi">Northern Ireland Orders in Council</option>
+									<option value="mnia">Measures of the Northern Ireland Assembly</option>
+									<option value="apni">Acts of the Northern Ireland Parliament</option>
+								</optgroup>
+								<optgroup label="Secondary Legislation">
+									<option value="secondary">All Secondary Legislation</option>
+									<option value="uksi">UK Statutory Instruments</option>
+									<option value="wsi">Wales Statutory Instruments</option>
+									<option value="ssi">Scottish Statutory Instruments</option>
+									<option value="nisr">Northern Ireland Statutory Rules</option>
+									<option value="ukci">Church Instruments</option>
+									<option value="ukmd">UK Ministerial Directions</option>
+									<option value="ukmo">UK Ministerial Orders</option>
+									<option value="uksro">UK Statutory Rules and Orders</option>
+									<option value="nisro">Northern Ireland Statutory Rules and Orders</option>
+								</optgroup>
+								<optgroup label="Legislation originating from the EU">
+									<option value="eu-origin">All Legislation originating from the EU</option>
+									<option value="eur">Regulations originating from the EU</option>
+									<option value="eudn">Decisions originating from the EU</option>
+									<option value="eudr">Directives originating from the EU</option>
+									<option value="eut">European Union Treaties</option>
+								</optgroup>
+								<optgroup label="Draft Legislation">
+									<option value="draft">All Draft Legislation</option>
+									<option value="ukdsi">UK Draft Statutory Instruments</option>
+									<option value="sdsi">Scottish Draft Statutory Instruments</option>
+									<option value="nidsr">Northern Ireland Draft Statutory Rules</option>
+								</optgroup>
+								<optgroup label="Impact Assessments">
+									<option value="ukia">All Impact Assessments</option>
+									<option value="ukia">UK Impact Assessments</option>
+							</select>
+						</span>
+						<span>
+							<button type="submit">Search</button>
+							<a href="#">Advanced Search</a>
+						</span>
+					</fieldset>
+				</form>
+			</details>
+		</section>
+	</header>
