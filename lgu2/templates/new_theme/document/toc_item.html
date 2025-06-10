@@ -1,12 +1,12 @@
 {% load heading_tags %}
-<li>
+<li value="{{ item.number }}">
     {% if item.children %}
         <details open>  <!-- Only open details for items with children -->
             <summary>
                 <{{ level|heading_tag }} class="crossheading">
                     <a href="{{ item.link }}">
                         {% if item.number and item.title %}
-                            {{ item.number }}. {{ item.title|safe }}
+                            {{ item.title|safe }}
                         {% elif item.number %}
                             {{ item.number }}
                         {% else %}
