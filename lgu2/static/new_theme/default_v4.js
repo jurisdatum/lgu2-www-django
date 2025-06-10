@@ -7,7 +7,7 @@
 	var animateInterval = 0
 
 	$(document).ready(function() {
-	// to undo hiding of functionality unavailable to people who do not have JS enabled
+	// to undo hiding of functionality unavailable to user agents that do not have JS enabled
 		$('.initialise').each(function() {
 			if($(this).attr('hidden')) {
 				$(this).removeAttr('hidden')
@@ -209,7 +209,6 @@
 			})
 		}
 		
-		
 	// if there is legislation text
 		if($('.legislation-text').length != 0 || $('.toc-detail').length != 0) {
 		// set up markers
@@ -272,6 +271,41 @@
 			})
 		}
 		
+		
+	// if there is a status panel
+		if($('.status-panel').length != 0) {
+			$('.status-panel button').on('click', function() {
+				pinStatusPanel()
+			})
+
+			if(localStorage.getItem('statusPanel')) {
+				var pinStatus = localStorage.getItem('statusPanel')
+				if(pinStatus == 'pinned') {
+					$('.status-panel').addClass('pinned')
+					$('.status-panel button span').text('Unpin this panel')
+				}
+			}
+			$('.status-panel summary').on('click', function() {
+				if($('.status-panel details').is('[open]')) {
+					hideStatusPanel()
+				}
+				else {
+					showStatusPanel()
+				}
+			})
+			
+			$('.legislation-content > aside > div.not-up-to-date button').on('click', function() {
+				if($('.status-panel details').is('[open]')) {
+					$('.status-panel details').removeAttr('open')
+					hideStatusPanel()
+				}
+				else {
+					$('.status-panel details').prop('open',true)
+					showStatusPanel()
+				}
+			})
+		}
+		
 
 	// escape key functions
 		$(document).keydown(function(e) {
@@ -297,8 +331,23 @@
 			if($('.in-page-nav ol').length != 0 && $(window).width() > 1023) {
 				setDynamicLeftHandNav()
 			}
+			
+		// if status panel is pinned
+			if($('.status-panel.pinned').length != 0) {
+				if($(window).scrollTop() >= ($('.legislation-content > div').offset().top)) {
+					setTimeout(function() {
+						$('.status-panel').addClass('stuck')
+					},10)
+				}
+				else {
+					setTimeout(function() {
+						$('.status-panel').removeClass('stuck')
+					},10)
+				}
+			}
 		})
-
+		
+		
 	// on window resize
 		$(window).resize(function() {
 		// hide search on small header
@@ -326,20 +375,20 @@
 			
 		// and retrigger on higher breakpoints
 			else if($('.in-page-nav ol').length != 0) {
-				if($(window).scrollTop() < $('main section h2:first-of-type:not(nav h2)').offset().top) {
+				if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 					setDynamicLeftHandNav()
 				}
-			}
+			}		
 		})
 	})
 
 	function setDynamicLeftHandNav() {
-		if($(window).scrollTop() >= $('.in-page-nav ol').closest('section').offset().top && $(window).scrollTop() > ($('aside').offset().top) - $('.in-page-nav ol').outerHeight()) {
+		if($(window).scrollTop() >= $('.in-page-nav ol').closest('article').offset().top && $(window).scrollTop() > ($('aside').offset().top) - $('.in-page-nav ol').outerHeight()) {
 			$('.in-page-nav ol').css('top','')
-			$('.in-page-nav ol').css('bottom',$('.in-page-nav ol').closest('section').css('bottom'))
+			$('.in-page-nav ol').css('bottom',$('.in-page-nav ol').closest('article').css('bottom'))
 		}
-		else if($(window).scrollTop() >= $('.in-page-nav ol').closest('section').offset().top && $('.in-page-nav ol').css('bottom').replace("px", "") < $('aside').offset().top) {
-			$('.in-page-nav ol').css('top',$(window).scrollTop() - $('.in-page-nav ol').closest('section').offset().top)
+		else if($(window).scrollTop() >= $('.in-page-nav ol').closest('article').offset().top && $('.in-page-nav ol').css('bottom').replace("px", "") < $('aside').offset().top) {
+			$('.in-page-nav ol').css('top',$(window).scrollTop() - $('.in-page-nav ol').closest('article').offset().top)
 			$('.in-page-nav ol').css('bottom','')
 		}
 		else {
@@ -347,7 +396,7 @@
 			$('.in-page-nav ol').css('bottom','')
 		}
 
-		$('main section h2:not(nav h2)').each(function() {
+		$('main article h2:not(nav h2)').each(function() {
 			if($(window).scrollTop() >= $(this).offset().top - 1) {
 				var subHeadId = $(this).attr("id")
 				var subHeadNo = 'lnk'+ subHeadId
@@ -356,7 +405,7 @@
 			}
 		})
 
-		if($(window).scrollTop() < $('main section h2:first-of-type:not(nav h2)').offset().top) {
+		if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 			$('.in-page-nav a').removeAttr('aria-current','page')
 			$('.in-page-nav li:first-of-type a').attr('aria-current','page')
 		}
@@ -495,4 +544,30 @@
 				$(this).removeClass('hidden')
 			})
 		}
+	}
+
+	function pinStatusPanel() {
+		if($('.status-panel.pinned').length != 0) {
+			$('.status-panel').removeClass('pinned')
+			$('.status-panel').removeClass('stuck')
+			$('.status-panel button span').text('Pin this panel')
+			localStorage.removeItem('statusPanel')
+		}
+		else {
+			$('.status-panel').addClass('pinned')
+			$('.status-panel button span').text('Unpin this panel')
+			localStorage.setItem('statusPanel', 'pinned')
+		}
+	}
+
+	function showStatusPanel() {
+		$('.legislation-content > aside > div.not-up-to-date button').text('Hide detail of these changes')
+		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',true)
+		$('.status-panel summary').text('Hide detail of these changes')
+	}
+
+	function hideStatusPanel() {
+		$('.status-panel summary').text('See what these changes are')
+		$('.legislation-content > aside > div.not-up-to-date button').text('See what these changes are')
+		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',false)
 	}

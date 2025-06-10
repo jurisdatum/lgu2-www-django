@@ -4,8 +4,8 @@
 {% block content %}
 <main>
     <section>
-        <nav aria-label="Breadcrumb">
-            <h2>Where this page sits</h2>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this page sits</h2>
             <ol>
                 <li><a href="{% url 'homepage' %}">Home</a></li>
                 <li><a href="{% url 'new' %}" aria-current="page">What's new</a></li>
@@ -21,51 +21,42 @@
             most out of the legislation data. As always, we continue to publish newly enacted or made legislation.
         </p>
 
-        <div class="newly-published">
+        <section class="newly-published">
             <h2>Legislation published on {{ today|date:"d M Y" }}</h2>
 
             <h3>UK Statutory Instruments</h3>
             <ul>
-                <li><a href="#"><span>SI 2024/773</span> - The Air Navigation (Restriction of Flying) (Herne Bay, Kent) (Emergency) Regulations 2024</a></li>
-                <li><a href="#"><span>SI 2024/766</span> - The Air Navigation (Restriction of Flying) (Notting Hill) (Amendment) Regulations 2024</a></li>
-                <li><a href="#"><span>SI 2024/765</span> - The Air Navigation (Restriction of Flying) (Oxford) Regulations 2024</a></li>
-                <li><a href="#"><span>SI 2024/764</span> - The Air Navigation (Restriction of Flying) (Longleat) Regulations 2024</a></li>
+                <li><article><a href="#"><span>SI 2024/773</span> - The Air Navigation (Restriction of Flying) (Herne Bay, Kent) (Emergency) Regulations 2024</a></article></li>
+                <li><article><a href="#"><span>SI 2024/766</span> - The Air Navigation (Restriction of Flying) (Notting Hill) (Amendment) Regulations 2024</a></article></li>
+                <li><article><a href="#"><span>SI 2024/765</span> - The Air Navigation (Restriction of Flying) (Oxford) Regulations 2024</a></article></li>
+                <li><article><a href="#"><span>SI 2024/764</span> - The Air Navigation (Restriction of Flying) (Longleat) Regulations 2024</a></article></li>
             </ul>
 
             <h3>Northern Ireland Statutory Rules</h3>
             <ul>
-                <li>
-                    <a href="#"><span>SR 2024/140</span> - The Local Government (Remote Meetings) Regulations (Northern Ireland) 2024</a>
-                    <p>These Regulations are made under section 2(1) to (4) of the Local Government (Meetings and Performance) Act (Northern Ireland) 2021...</p>
-                </li>
-                <li>
-                    <a href="#"><span>SR 2024/139</span> - The Proceeds of Crime Act 2002... (Northern Ireland) 2024</a>
-                    <p>This Order brings into operation two revised codes of practice and one new code of practice issued by the Department of Justice...</p>
-                </li>
+                <li><article><a href="#"><span>SR 2024/140</span> - The Local Government (Remote Meetings) Regulations (Northern Ireland) 2024</a><p>These Regulations are made under section 2(1) to (4) of the Local Government (Meetings and Performance) Act (Northern Ireland) 2021...</p></article></li>
+                <li><article><a href="#"><span>SR 2024/139</span> - The Proceeds of Crime Act 2002... (Northern Ireland) 2024</a><p>This Order brings into operation two revised codes of practice and one new code of practice issued by the Department of Justice...</p></article></li>
             </ul>
 
             <h3>Scottish Statutory Instruments</h3>
             <ul>
-                <li><a href="#"><span>SSI 2024/193</span> - The Scottish Pubs Code Regulations 2024</a><p>These Regulations are made under powers conferred by the Tied Pubs (Scotland) Act 2021...</p></li>
+                <li><article><a href="#"><span>SSI 2024/193</span> - The Scottish Pubs Code Regulations 2024</a><p>These Regulations are made under powers conferred by the Tied Pubs (Scotland) Act 2021...</p></article></li>
                 <!-- More SSI entries go here -->
             </ul>
 
             <h3>Acts of Senedd Cymru</h3>
             <ul>
-                <li>
-                    <a href="#"><span>2024 asc 4</span> - Senedd Cymru (Members and Elections) Act 2024 / Deddf Senedd Cymru (Aelodau ac Etholiadau) 2024</a>
-                    <p>An Act of Senedd Cymru to make provision about Members of the Senedd and offices held by those Members...</p>
-                </li>
+                <li><article><a href="#"><span>2024 asc 4</span> - Senedd Cymru (Members and Elections) Act 2024 / Deddf Senedd Cymru (Aelodau ac Etholiadau) 2024</a><p>An Act of Senedd Cymru to make provision about Members of the Senedd and offices held by those Members...</p></article></li>
             </ul>
 
             <h3>Wales Statutory Instruments</h3>
             <ul>
-                <li><a href="#"><span>SI 2024/768</span> - The M4 Motorway... Order 2024</a></li>
-                <li><a href="#"><span>SI 2024/768</span> - Gorchymyn Traffordd yr M4... 2024</a></li>
+                <li><article><a href="#"><span>SI 2024/768</span> - The M4 Motorway... Order 2024</a></article></li>
+                <li><article><a href="#"><span>SI 2024/768</span> - Gorchymyn Traffordd yr M4... 2024</a></article></li>
             </ul>
 
             <a href="{% url 'new-legislation' %}">See all legislation published this week</a>
-        </div>
+        </section>
     </section>
 </main>
 

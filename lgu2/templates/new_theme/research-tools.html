@@ -2,8 +2,8 @@
 {% block content %}
 <main class="content">
     <section>
-        <nav aria-label="Breadcrumb">
-            <h2>Where this page sits</h2>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this page sits</h2>
             <ol>
                 <li><a href="{% url 'homepage' %}">Home</a></li>
                 <li><a href="{% url 'research-tools' %}" aria-current="page">Research tools</a></li>
