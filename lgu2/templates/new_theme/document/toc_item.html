@@ -19,11 +19,9 @@
             {% include "new_theme/document/toc_children.html" with children=item.children level=level|add:"1" %}
         </details>
     {% else %}
-        <{{ level|heading_tag }} class="crossheading">
-            <a href="{{ item.link }}">
-                
+            <a href="{{ item.link }}">                
                 {% if item.number and item.title %}
-                    {{ item.number }}. {{ item.title|safe }}
+                    {{ item.title|safe }}
                 {% elif item.number %}
                     {{ item.number }}
                 {% else %}
@@ -37,7 +35,6 @@
                 <span class="{{extent|lower}}"><span>{{extent}}</span></span>
                 {% endfor %}
                 {% endif %}
-            </span>
-        </{{ level|heading_tag }}>
+            </span>        
     {% endif %}
 </li>

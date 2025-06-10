@@ -4889,8 +4889,6 @@ main aside:not(.legislation aside) ul li article a h3 {
   }
   main.legislation .legislation-content > aside {
     width: 16rem;
-    background: none;
-    border: 0;
   }
   main.legislation .legislation-content > aside h2 {
     position: absolute;
