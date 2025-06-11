@@ -52,7 +52,6 @@ def _add_all_links(contents, prefix: str, suffix: str):
 def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = api.get_toc(type, year, number, version, lang)
-
     meta = data['meta']
 
     rdrct = _should_redirect(type, version, lang, meta)
@@ -111,7 +110,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
-    template = loader.get_template('document/toc.html')
+    template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
 
 
