@@ -1,15 +1,15 @@
 {% if children %}
-    {% if level > 2 %}
+    {% if level > 2 or children.0.name == "item" %}
         <ol>
     {% else %}
         <ul>
     {% endif %}
 
-    {% for child in children %}
-        {% include "new_theme/document/toc_item.html" with item=child level=level %}
-    {% endfor %}
+        {% for child in children %}
+            {% include "new_theme/document/toc_item.html" with item=child level=level %}
+        {% endfor %}
 
-    {% if level > 2 %}
+        {% if level > 2 or children.0.name == "item" %}
         </ol>
     {% else %}
         </ul>
