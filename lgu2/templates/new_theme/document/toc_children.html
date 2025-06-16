@@ -1,17 +1,12 @@
+{% load ol_ul_tags %}
+
 {% if children %}
-    {% if level > 2 %}
-        <ol>
-    {% else %}
-        <ul>
-    {% endif %}
+    {% render_list_tags children as list_tags %}
+    {{ list_tags.0|safe }}
 
     {% for child in children %}
         {% include "new_theme/document/toc_item.html" with item=child level=level %}
     {% endfor %}
 
-    {% if level > 2 %}
-        </ol>
-    {% else %}
-        </ul>
-    {% endif %}
+    {{ list_tags.1|safe }}
 {% endif %}

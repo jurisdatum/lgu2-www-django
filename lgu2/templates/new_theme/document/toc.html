@@ -27,12 +27,12 @@
     <section class="pit-search">
         <h2>View this legislation at a specific date</h2>
         <details>
-            <summary>You are viewing the table of contents on <span>{{ current_date|date:"d M Y" }}</span><span> Enter a date or choose from the versions below</span></summary>
+            <summary>You are viewing the table of contents on <span>{{ current_date|date:"d M Y" }}</span><span> Enter a date</span></summary>
             <form role="search">
                 <h3>Change the date</h3>
                 <label for="pitDate">Date:</label>
                 <input type="date" id="pitDate" name="pitDate" value="{{ current_date|date:'Y-m-d' }}">
-                <button class="go">Go</button>
+                <button type="submit">Go</button>
             </form>
         </details>
     </section>
@@ -67,13 +67,11 @@
                         <ul>
                             <li><a href="{{ links.content }}">Introduction</a></li>
                             {% for item in contents.body %}
-                                    {% include "new_theme/document/toc_item.html" with item=item level=1 %}                                                         
-                            {% endfor %}      
-                            <!-- <h4>Schedules</h4>                       -->
-                                {% for item in contents.schedules %}                                    
-                                    {% include "new_theme/document/toc_item.html" with item=item level=4 %}
-                                {% endfor %}                            
-                            
+                                {% include "new_theme/document/toc_item.html" with item=item level=1 %}
+                            {% endfor %}
+                            {% for item in contents.schedules %}
+                                {% include "new_theme/document/toc_item.html" with item=item level=4 %}
+                            {% endfor %}                            
                         </ul>
                     </li>
                 </ul>
