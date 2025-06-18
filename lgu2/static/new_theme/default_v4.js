@@ -270,42 +270,6 @@
 				}
 			})
 		}
-		
-		
-	// if there is a status panel
-		if($('.status-panel').length != 0) {
-			$('.status-panel button').on('click', function() {
-				pinStatusPanel()
-			})
-
-			if(localStorage.getItem('statusPanel')) {
-				var pinStatus = localStorage.getItem('statusPanel')
-				if(pinStatus == 'pinned') {
-					$('.status-panel').addClass('pinned')
-					$('.status-panel button span').text('Unpin this panel')
-				}
-			}
-			$('.status-panel summary').on('click', function() {
-				if($('.status-panel details').is('[open]')) {
-					hideStatusPanel()
-				}
-				else {
-					showStatusPanel()
-				}
-			})
-			
-			$('.legislation-content > aside > div.not-up-to-date button').on('click', function() {
-				if($('.status-panel details').is('[open]')) {
-					$('.status-panel details').removeAttr('open')
-					hideStatusPanel()
-				}
-				else {
-					$('.status-panel details').prop('open',true)
-					showStatusPanel()
-				}
-			})
-		}
-		
 
 	// escape key functions
 		$(document).keydown(function(e) {
@@ -544,30 +508,4 @@
 				$(this).removeClass('hidden')
 			})
 		}
-	}
-
-	function pinStatusPanel() {
-		if($('.status-panel.pinned').length != 0) {
-			$('.status-panel').removeClass('pinned')
-			$('.status-panel').removeClass('stuck')
-			$('.status-panel button span').text('Pin this panel')
-			localStorage.removeItem('statusPanel')
-		}
-		else {
-			$('.status-panel').addClass('pinned')
-			$('.status-panel button span').text('Unpin this panel')
-			localStorage.setItem('statusPanel', 'pinned')
-		}
-	}
-
-	function showStatusPanel() {
-		$('.legislation-content > aside > div.not-up-to-date button').text('Hide detail of these changes')
-		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',true)
-		$('.status-panel summary').text('Hide detail of these changes')
-	}
-
-	function hideStatusPanel() {
-		$('.status-panel summary').text('See what these changes are')
-		$('.legislation-content > aside > div.not-up-to-date button').text('See what these changes are')
-		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',false)
 	}
