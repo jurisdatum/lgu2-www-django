@@ -1,0 +1,197 @@
+{% extends "new_theme/base.html" %}
+{% load custom_filters %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main class="search-results">
+	<section>
+		<hgroup>
+			<h1 id="main-content-h" tabindex="-1">We found {{meta_data.counts.total}} documents</h1>
+			<p>{% for key, value in meta_data.query.items %} {{value}} {% endfor %}</p>
+		</hgroup>
+	</section>
+
+	<section class="search-content">
+		<aside aria-labelledby="searchFilters" class="search-filters">
+			<h2 id="search-filters-h">Filter your results</h2>
+			<ul class="skip-links">
+				<li><a href="#search-results-h">Skip to search results</a></li>
+			</ul>
+
+			<details>
+				<summary>
+					<span class="open">Filter your results</span>
+					<span class="close">Close<span> filters</span></span>
+				</summary>
+				<div>
+					<section class="filter-type">
+						<h3>By type</h3>
+						<ul>
+
+							<li aria-current="page"><a href="#">All legislation types <span>({{total_count_by_type}}<span> results</span>)</span></a></li>
+							{% for all_types in meta_data.counts.byType %}
+							<li><a href="#">{{all_types.type|camel_to_words }} <span>({{all_types.count}}<span> results</span>)</span></a></li>
+							{% endfor %}
+							
+						</ul>
+					</section>
+
+					<section class="filter-year">
+						<h3>By year</h3>
+						<ul>
+							<!-- Static year filter sample -->
+							<li aria-current="page"><a href="#">All years <span>({{total_count_by_year}}<span> results</span>)</span></a></li>
+							{% for all_years in meta_data.counts.byYear %}
+							<li><a href="#">{{all_years.year}} <span>({{all_years.count}}<span> result</span>)</span></a></li>
+							{% endfor %}
+							<!-- Continue the rest as needed -->
+						</ul>
+
+						<nav aria-labelledby="pagination" class="pagination">
+							<h2 id="pagination" class="sr-only">Pages of results</h2>
+							<ul>
+								<ul>
+									<li><span>First</span></li>
+									<li><span>Previous</span></li>
+									<li aria-current="page"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#"><span>Next</span></a></li>
+									<li><a href="#"><span>Last</span></a></li>
+								</ul>
+
+							</ul>
+						</nav>
+					</section>
+
+					{% if filterSubjects == "show" %}
+					<section class="filter-subject">
+						<h3>By subject</h3>
+						<h4>Select the first letter of a subject</h4>
+						<ul>
+							<li aria-current="page"><a href="#">All subjects</a></li>
+							<!-- A-Z subject links here -->
+							<li><a href="#">A</a></li>
+							<!-- ... -->
+						</ul>
+
+						<details>
+							{% if searchInitial == "" %}
+								<summary disabled>
+									<h4>Select the first letter to see a list of subjects</h4>
+								</summary>
+							{% else %}
+								<summary>
+									<h4>Choose a specific subject</h4>
+								</summary>
+								<ul>
+									<li><a href="#">All subjects</a></li>
+									<li><a href="#">Magistrates Courts</a></li>
+									<!-- More subject items... -->
+								</ul>
+							{% endif %}
+						</details>
+					</section>
+					{% endif %}
+				</div>
+			</details>
+		</aside>
+
+		<div class="search-header">
+			<div class="sort-by">
+				<label for="sort">Sort by:</label>
+				<select id="sort">
+					<option>Best match</option>
+					<option>Earliest year first</option>
+					<option>Latest year first</option>
+					<option>Title A-Z</option>
+					<option>Title Z-A</option>
+					<option>Lowest no. first</option>
+					<option>Highest no. first</option>
+				</select>
+			</div>
+
+			<nav aria-labelledby="pagination" class="pagination">
+				<h2 id="pagination">Pages of results</h2>
+				<ul>
+					<!-- First -->
+					{% if current_page > 1 %}
+						<li><a href="?page=1">First</a></li>
+					{% else %}
+						<li><span>First</span></li>
+					{% endif %}
+
+					<!-- Previous -->
+					{% if current_page > 1 %}
+						<li><a href="?page={{ current_page|add:-1 }}">Previous</a></li>
+					{% else %}
+						<li><span>Previous</span></li>
+					{% endif %}
+
+					<!-- Page Numbers -->
+					{% for p in page_range %}
+						{% if p == current_page %}
+							<li aria-current="page"><a href="?page={{ p }}">{{ p }}</a></li>
+						{% else %}
+							<li><a href="?page={{ p }}">{{ p }}</a></li>
+						{% endif %}
+					{% endfor %}
+
+					<!-- Next -->
+					{% if current_page < total_pages %}
+						<li><a href="?page={{ current_page|add:1 }}">Next</a></li>
+					{% else %}
+						<li><span>Next</span></li>
+					{% endif %}
+
+					<!-- Last -->
+					{% if current_page < total_pages %}
+						<li><a href="?page={{ total_pages }}">Last</a></li>
+					{% else %}
+						<li><span>Last</span></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
+
+		<div class="search-results-list">
+			<h2 id="search-results-h" tabindex="-1">Search results</h2>
+			<ul class="skip-links">
+				<li><a href="#search-filters-h">Skip to search filters</a></li>
+			</ul>
+			<ul>
+				{% for result in documents_data %}
+				<li>
+					<a href="{{ result.id }}/contents">{{ result.title }}</a>
+					<span>{{ result.cite }}</span>
+					<span>{{ result.longType|camel_to_words }}</span>
+				</li>
+				{% endfor %}
+			</ul>
+			<ul class="skip-links">
+				<li><a href="#search-filters-h">Skip to search filters</a></li>
+			</ul>
+		</div>
+
+		<div class="search-footer">
+			<div class="results-count">{{ total_results }} results</div>
+			<nav aria-labelledby="pagination" class="pagination">
+				<h2 id="pagination" class="sr-only">Pages of results</h2>
+				<ul>
+					<li><span>First</span></li>
+					<li><span>Previous</span></li>
+					<!-- Pagination links here -->
+				</ul>
+			</nav>
+			<div class="results-per-page">
+				<label for="resultsPerPage">Results per page:</label>
+				<input type="number" value="25" id="resultsPerPage">
+				<button>Go</button>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}

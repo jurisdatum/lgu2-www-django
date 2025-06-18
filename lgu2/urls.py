@@ -21,6 +21,7 @@ from .views.general import (
     whats_new, new_legislation, new_legislation_feeds,
     about_us
 )
+from .views.search import  search_results
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -48,7 +49,8 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
-    
+    path('search/', search_results, name='search'),
+
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures', different_legislature, name='different-legislatures'),
     re_path(fr'^explore/legislatures/{COUNTRY}', different_legislature_by_country, name='different-legislatures-country'),
