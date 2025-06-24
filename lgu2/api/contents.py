@@ -1,5 +1,5 @@
 
-from typing import List, Optional, TypedDict
+from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
@@ -16,11 +16,15 @@ class Item(TypedDict):
 
 class Contents(TypedDict):
     title: str
+    introduction: NotRequired[Item]
     body: List[Item]
+    signature: NotRequired[Item]
     appendices: List[Item]
     attachmentsBeforeSchedules: List[Item]  # EU only
     schedules: List[Item]
     attachments: List[Item]
+    explanatoryNote: NotRequired[Item]
+    earlierOrders: NotRequired[Item]
 
 
 class Response(TypedDict):
