@@ -58,11 +58,92 @@
 			var mode = localStorage.getItem('colour-scheme')
 		}
 		else {
-			mode = 'system'			
+			mode = ''			
 		}
 		toggleMode(mode)
 
-	// if there is a left-hand nav, set up the link ids
+	// If a search results page
+		if($('.search-results').length != 0) {
+			if ($(window).width() < 1024 && $('.search-filters > details').attr('open')) {
+				$('.search-filters > details').removeAttr('open')
+			}
+			else if ($(window).width() > 1023 && !$('.search-filters details').attr('open')) {
+				$('.search-filters > details').prop('open',true);
+			}
+			if(!$('.filter-subject > details ul li:first-of-type').is('[aria-current]')) {
+				$('.filter-subject > details').prop('open',true)
+			}
+
+			var theTitle = getUrlVars()["title"];
+			var theYear = getUrlVars()["year"];
+			var theNumber = getUrlVars()["number"];
+			var theType = getUrlVars()["type"];
+			if(typeof theType != 'undefined') {
+				theType = theType.replace("#", "");
+			}
+
+		// Remove 'space' and '+' characters
+			if(typeof theTitle != 'undefined')
+			{
+				theTitle = theTitle.replace(/\+/g, " ");
+				theTitle = theTitle.replace(/%20/g," ");
+				theTitle = theTitle.replace(/%28/g,"(");
+				theTitle = theTitle.replace(/%29/g,")");
+			}
+
+		// If the 'year' parameter is empty, get year from the href
+			if(typeof theYear == 'undefined')
+			{
+			// If the 'title' parameter is empty...
+				if(typeof theTitle == 'undefined')
+				{
+					var testYear = this.location.href.substring(this.location.href.lastIndexOf('/') + 1);
+				}
+			// If the 'title' parameter is not empty...
+				else
+				{
+					testYear = this.location.href.substring(this.location.href.lastIndexOf('/') + 1,this.location.href.indexOf('?'));
+				}
+				if($.isNumeric(testYear) == true)
+				{
+					theYear = testYear;
+				}
+			}
+
+		// If the 'type' parameter is empty, specify default
+			if(typeof theType == 'undefined')
+			{
+				theType = 'all';
+			}
+
+		// Set 'title', 'year' and 'number' inputs
+			$('input#title').val(theTitle);
+			$('input#year').val(theYear);
+			$('input#number').val(theNumber);
+
+		// If the 'type' parameter exists in the 'type' select, set it as the selected option
+			if(theType == 'primary+secondary' || theType == 'primary%2Bsecondary' || theType == '')
+			{
+				$('select#type').val('primary+secondary');
+			}
+			else
+			{
+				var existsInSelect = 0 != $('select#type option[value='+theType+']').length;
+				if(existsInSelect === true)
+				{
+					$('select#type').val(theType);
+				}
+			}
+		// Get the long 'type' name from the select
+			$('.long-type').text(getLongType);
+		}
+
+	// If not a search results page, hide search skip links
+		else {
+			$('header .skip-links li:not(:first-of-type)').remove()			
+		}
+		
+		// if there is a left-hand nav, set up the link ids
 		if($('.in-page-nav ol').length != 0) {
 			$('.in-page-nav ol').children('li:first').children('a').attr('aria-current','page')
 			$('.in-page-nav ol li:not(#main-content-h)').each(function() {
@@ -270,6 +351,42 @@
 				}
 			})
 		}
+		
+		
+	// if there is a status panel
+		if($('.status-panel').length != 0) {
+			$('.status-panel button').on('click', function() {
+				pinStatusPanel()
+			})
+
+			if(localStorage.getItem('statusPanel')) {
+				var pinStatus = localStorage.getItem('statusPanel')
+				if(pinStatus == 'pinned') {
+					$('.status-panel').addClass('pinned')
+					$('.status-panel button span').text('Unpin this panel')
+				}
+			}
+			$('.status-panel summary').on('click', function() {
+				if($('.status-panel details').is('[open]')) {
+					hideStatusPanel()
+				}
+				else {
+					showStatusPanel()
+				}
+			})
+			
+			$('.legislation-content > aside > div.not-up-to-date button').on('click', function() {
+				if($('.status-panel details').is('[open]')) {
+					$('.status-panel details').removeAttr('open')
+					hideStatusPanel()
+				}
+				else {
+					$('.status-panel details').prop('open',true)
+					showStatusPanel()
+				}
+			})
+		}
+		
 
 	// escape key functions
 		$(document).keydown(function(e) {
@@ -285,6 +402,10 @@
 				else if($(window).width() < 1023 && $('.hdr-search details').is('[open]'))
 				{
 					$('.hdr-search details').removeAttr('open')
+				}
+				if($(window).width() < 1023 && $('.search-filters > details').is('[open]'))
+				{
+					$('.search-filters > details').removeAttr('open')
 				}
 			}
 		})
@@ -330,14 +451,22 @@
 				$('.hdr-menu details').prop('open',true)
 			}
 			
-		// remove dynamic left-hand nav on lower breakpoints
+		// show search filters on higher breakpoints
+			if($('.search-filters').length != 0) {
+				if ($(window).width() < 1024 && $('.search-filters > details').attr('open')) {
+					$('.search-filters > details').removeAttr('open')
+				}
+				else if ($(window).width() > 1023 && !$('.search-filters > details').attr('open')) {
+					$('.search-filters > details').prop('open',true)
+				}
+			}
+			
+		// remove dynamic left-hand nav on lower breakpoints and retrigger on higher breakpoints
 			if($('.in-page-nav ol').length != 0 && $(window).width() < 1024) {
 				$('.in-page-nav a').removeAttr('aria-current','page')
 				$('.in-page-nav ol').css('top','')
 				$('.in-page-nav ol').css('bottom','')				
 			}
-			
-		// and retrigger on higher breakpoints
 			else if($('.in-page-nav ol').length != 0) {
 				if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 					setDynamicLeftHandNav()
@@ -345,6 +474,23 @@
 			}		
 		})
 	})
+
+	function getUrlVars() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++)
+		{
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+
+	function getLongType() {
+		var theTypeLong = $("select#type option:selected").text();
+		return theTypeLong;
+	}
 
 	function setDynamicLeftHandNav() {
 		if($(window).scrollTop() >= $('.in-page-nav ol').closest('article').offset().top && $(window).scrollTop() > ($('aside').offset().top) - $('.in-page-nav ol').outerHeight()) {
@@ -376,34 +522,35 @@
 	}
 
 	function toggleMode(mode) {
+		$('.mode button').removeClass('selected')
 		if(mode == 'system' || mode == '') {
-			$('.mode button').removeClass('selected')
+			localStorage.removeItem('colour-scheme')
 			$('#system').addClass('selected')
+		}
+		else {
+			localStorage.setItem('colour-scheme', mode)
+			$('#' + mode).addClass('selected')
+		}
+
+		if((mode == 'system' || mode == '') && localStorage.getItem('colour-scheme') != '') {
 			const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 			if(userPrefersDark) {
 				document.documentElement.setAttribute('colour-scheme', 'dark')
-				localStorage.removeItem('colour-scheme')
 			}
 			else {
 				document.documentElement.setAttribute('colour-scheme', 'light')
-				localStorage.removeItem('colour-scheme')
 			}
 			window.matchMedia('(prefers-color-scheme: dark)').addListener(({ matches }) =>
 			{
 				if((mode == 'system' || mode == '') && matches) {
 				document.documentElement.setAttribute('colour-scheme', 'dark')
-				localStorage.removeItem('colour-scheme')
 				} else if(mode == 'system' || mode == '') {
 				document.documentElement.setAttribute('colour-scheme', 'light')
-				localStorage.removeItem('colour-scheme')
 				}
 			})
 		}
-		else {
+		else if (localStorage.getItem('colour-scheme') != '') {
 			document.documentElement.setAttribute('colour-scheme', mode)
-			localStorage.setItem('colour-scheme', mode)
-			$('.mode button').removeClass('selected')
-			$('#' + mode).addClass('selected')
 		}
 	}
 
@@ -508,4 +655,30 @@
 				$(this).removeClass('hidden')
 			})
 		}
+	}
+
+	function pinStatusPanel() {
+		if($('.status-panel.pinned').length != 0) {
+			$('.status-panel').removeClass('pinned')
+			$('.status-panel').removeClass('stuck')
+			$('.status-panel button span').text('Pin this panel')
+			localStorage.removeItem('statusPanel')
+		}
+		else {
+			$('.status-panel').addClass('pinned')
+			$('.status-panel button span').text('Unpin this panel')
+			localStorage.setItem('statusPanel', 'pinned')
+		}
+	}
+
+	function showStatusPanel() {
+		$('.legislation-content > aside > div.not-up-to-date button').text('Hide detail of these changes')
+		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',true)
+		$('.status-panel summary').text('Hide detail of these changes')
+	}
+
+	function hideStatusPanel() {
+		$('.status-panel summary').text('See what these changes are')
+		$('.legislation-content > aside > div.not-up-to-date button').text('See what these changes are')
+		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',false)
 	}
