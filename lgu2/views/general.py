@@ -142,13 +142,14 @@ def group_documents_for_new_legislation_page(docs):
     groups = defaultdict(list)
     for doc in docs:
         groups[doc['longType']].append(doc)
+    ordered = sorted(groups.items(), key=lambda item: len(item[1]), reverse=True)
     return [
         {
             'longType': lt,
             'label': get_type_label(lt),
             'documents': group_docs
         }
-        for lt, group_docs in groups.items()
+        for lt, group_docs in ordered
     ]
 
 
