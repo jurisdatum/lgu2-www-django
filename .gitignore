@@ -1,5 +1,5 @@
-# Python bytecode files
 __pycache__/
 *.py[cod]
 .env
 local_cache/
+.DS_Store
