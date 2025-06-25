@@ -1,6 +1,6 @@
 
 from datetime import datetime
-from typing import List, TypedDict
+from typing import List, NotRequired, TypedDict
 
 
 class DocumentList(TypedDict):
@@ -45,9 +45,11 @@ class DocEntry(TypedDict):
     year: int
     number: int
     altNumbers: List['AltNumber']
+    isbn: NotRequired[str]
     cite: str
     title: str
-    altTitle: str
+    altTitle: NotRequired[str]
+    description: NotRequired[str]
     published: datetime
     updated: datetime
     version: str

@@ -1,5 +1,5 @@
 
-from typing import List, Optional, TypedDict
+from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
@@ -15,6 +15,7 @@ class CommonMetadata(TypedDict):
     regnalYear: str
     number: int
     altNumbers: List[AltNumber]
+    isbn: NotRequired[str]
     date: str
     cite: str
     version: str
