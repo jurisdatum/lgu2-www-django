@@ -8,6 +8,7 @@ from ..api import contents as api
 from ..api.document import DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
+from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .document import group_effects
@@ -109,6 +110,8 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_only'] = False
         data['pdf_link'] = None
         data['pdf_thumb'] = None
+
+    data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
 
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
