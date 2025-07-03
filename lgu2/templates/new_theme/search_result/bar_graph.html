@@ -1,0 +1,42 @@
+{% if grouped_by_decade %}
+<section class="dataset">
+    <h2><?php echo $fullBrowseType ?> that we hold</h2>
+    <p>We hold all <?php echo $fullBrowseType ?> <?php echo $originalLabel ?> since 1987. Before 1987, our <?php echo $fullBrowseType ?> dataset is not complete.</p>
+    <ul class="skip-links">
+        <li><a href="#search-filters-h">Skip to search filters</a></li>
+        <li><a href="#search-results-h">Skip to search results</a></li>
+    </ul>
+    <div>
+        {% for decade, years in grouped_by_decade.items %}
+            <div>
+                <h3><a href="#">{{ decade }}</a></h3>
+                <dl>
+                    {% for item in years %}
+                        <div>
+                            {% if item.no_data %}
+                                <dt><span>{{ item.year }}</span></dt>
+                                <dd><span>No data</span></dd>
+                            {% else %}
+                                <dt {% if not item.complete %}class="partial-dataset"{% endif %}>
+                                    <a href="?{{ modified_query_links.year }}&year={{ item.year }}" {% if current_year == item.year %} aria-current="page" {% endif %}>
+                                        {{ item.year }}
+                                    </a>
+                                </dt>
+                                <dd>
+                                    {{ item.count }} <span> documents ({% if item.complete %} Complete {% else %} Partial {% endif %} dataset)</span>
+                                </dd>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </dl>
+            </div>
+        {% endfor %}
+    </div>
+        <div hidden class="scrollbar initialise">
+        <h3>Scrollbar to access all versions on the timeline. Keyboard-only users already have access to all versions.</h3>
+        <button class="left" disabled><span>Scroll left</span></button>
+        <div class="drag-strip"><div class="drag" draggable="true"><span>Drag horizontally to scroll timeline</span></div></div>
+        <button class="right"><span>Scroll right</span></button>
+    </div>
+</section>
+{% endif %}
