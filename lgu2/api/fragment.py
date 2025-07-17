@@ -15,8 +15,9 @@ class FragmentMetadata(CommonMetadata):
     fragmentInfo: 'Level'
     ancestors: List['Level']
     descendants: List['Level']
+    pointInTime: Optional[str]
     unappliedEffects: 'FragmentEffects'
-    upToDate: NotRequired[bool]
+    upToDate: Optional[bool]
 
 
 class Level(TypedDict):

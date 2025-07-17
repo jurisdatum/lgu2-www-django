@@ -29,7 +29,9 @@ class CommonMetadata(TypedDict):
 
 
 class DocumentMetadata(CommonMetadata):
+    pointInTime: Optional[str]
     unappliedEffects: List[Effect]
+    upToDate: Optional[bool]
 
 
 class Document(TypedDict):

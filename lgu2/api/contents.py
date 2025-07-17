@@ -1,4 +1,5 @@
 
+from datetime import date
 from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
@@ -42,7 +43,9 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
 
 def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> dict:
     url = _make_url(type, year, number, version)
-    return server.get_json(url, language)
+    toc = server.get_json(url, language)
+    toc['meta']['date'] = date.fromisoformat(toc['meta']['date'])
+    return toc
 
 
 def get_toc_json(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
