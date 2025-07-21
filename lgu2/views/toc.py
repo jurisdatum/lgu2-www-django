@@ -3,6 +3,7 @@ from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
+from django.urls import reverse
 
 from ..api import contents as api
 from ..api.document import DocumentMetadata
@@ -10,6 +11,7 @@ from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
+from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .document import group_effects
 
@@ -48,6 +50,38 @@ def _add_all_links(contents, prefix: str, suffix: str):
         add_links(contents['schedules'])
     if 'attachments' in contents:
         add_links(contents['attachments'])
+
+
+def _make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Optional[str]):
+    doc_type = meta['shortType']
+    year = meta['year']
+    number = str(meta['number'])
+    doc_label = 'Chapter' if get_category(doc_type) == 'primary' else 'Number'
+    doc_label += ' ' + number + ' (Table of Contents)'
+    if version is None:
+        if lang is None:
+            toc_link = reverse('toc', args=[doc_type, year, number])
+        else:
+            toc_link = reverse('toc-lang', args=[doc_type, year, number, lang])
+    else:
+        if lang is None:
+            toc_link = reverse('toc-version', args=[doc_type, year, number, version])
+        else:
+            toc_link = reverse('toc-version-lang', args=[doc_type, year, number, version, lang])
+    return [
+        {
+            'text': get_type_label(doc_type),
+            'link': reverse('browse', args=[doc_type])
+        },
+        {
+            'text': str(year),
+            'link': reverse('browse-year', args=[doc_type, year])
+        },
+        {
+            'text': doc_label,
+            'link': toc_link  # I wish this could be None
+        }
+    ]
 
 
 def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
@@ -111,6 +145,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
+    data['breadcrumbs'] = _make_breadcrumbs(meta, version, lang)
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
 
     template = loader.get_template('new_theme/document/toc.html')

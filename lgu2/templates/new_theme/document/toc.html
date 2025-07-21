@@ -3,14 +3,7 @@
 {% block content %}
 <main class="legislation">
     <section>
-        <nav aria-labelledby="breadcrumbNavigation">
-            <h2 id="breadcrumbNavigation">Where this legislation sits in the Statute Book</h2>
-            <ol>
-                <li><a href="#">UK Public General Acts</a></li>
-                <li><a href="#">{{ meta.cite }}</a></li>
-                <li><a href="#" aria-current="page">(Table of contents)</a></li>
-            </ol>
-        </nav>
+        {% include "new_theme/document/breadcrumbs.html" %}
         <h1 id="main-content-h" tabindex="-1">
             Table of contents 
             <br class="initialise" /><span>{{ meta.title }}</span>
