@@ -22,18 +22,26 @@
 		{% include "new_theme/search_result/left_filter.html" %}
 
 		<div class="search-header">
-			<div class="sort-by">
+			<form method="get" action="/search/">
+				<!-- Preserve existing query parameters -->
+				{% for key, value in query_param.items %}
+					{% if key != 'sort' %}
+						<input type="hidden" name="{{key}}" value="{{value}}">
+					{% endif %}					
+				{% endfor %}
+
 				<label for="sort">Sort by:</label>
-				<select id="sort">
-					<option>Best match</option>
-					<option>Earliest year first</option>
-					<option>Latest year first</option>
-					<option>Title A-Z</option>
-					<option>Title Z-A</option>
-					<option>Lowest no. first</option>
-					<option>Highest no. first</option>
+				<select id="sort" name="sort" onchange="this.form.submit()">
+					<option value="">Select Sort</option>
+					<option {% if meta_data.query.sort|lower == 'relevance' %} selected {% endif %} value="relevance">Best match</option>
+					<option value="year_asc">Earliest year first</option>
+					<option {% if meta_data.query.sort|lower == 'year' %} selected {% endif %} value="year">Latest year first</option>
+					<option {% if meta_data.query.sort|lower == 'title' %} selected {% endif %} value="title">Title A-Z</option>
+					<option value="title_desc">Title Z-A</option>
+					<option value="number_asc">Lowest no. first</option>
+					<option value="number">Highest no. first</option>
 				</select>
-			</div>
+			</form>
 
 			{% include "new_theme/search_result/pagination_top_bottom.html" %}
 		</div>
@@ -43,33 +51,120 @@
 			<ul class="skip-links">
 				<li><a href="#search-filters-h">Skip to search filters</a></li>
 			</ul>
-			<ul>
-				{% for result in documents_data %}
-				<li>
-					<a href="/{{ result.id }}/contents">{{ result.title }}</a>
-					<span>{{ result.cite }}</span>
-					{% with result.longType.type|camel_to_words as converted_type %}
-					<span>{{ converted_type.label_type }}</span>
-					{% endwith %}
-				</li>
+
+			{% if current_subject %}
+				{% for subject, documents in grouped_documents.items %}
+					{% if subject_heading %}
+						{% if subject_heading == subject %}
+
+						<h3>{{ subject }}</h3>
+						<ul>
+							{% for result in documents %}
+								<li>
+									<a href="/{{ result.id }}/contents">{{ result.title }}</a>
+									<span>{{ result.cite }}</span>
+									{% with result.longType|camel_to_words as converted_type %}
+										<span>{{ converted_type.label_type }}</span>
+									{% endwith %}
+								</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					{% else %}
+						{% if subject|slice:":1" == current_subject|upper %}
+						<h3>{{ subject }}</h3>
+						<ul>
+							{% for result in documents %}
+								<li>
+									<a href="/{{ result.id }}/contents">{{ result.title }}</a>
+									<span>{{ result.cite }}</span>
+									{% with result.longType|camel_to_words as converted_type %}
+										<span>{{ converted_type.label_type }}</span>
+									{% endwith %}
+								</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					{% endif %}
 				{% endfor %}
-			</ul>
+			{% else %}
+				<ul>
+					{% for result in documents_data %}
+						<li>
+							<a href="/{{ result.id }}/contents">{{ result.title }}</a>
+							<span>{{ result.cite }}</span>
+							{% with result.longType|camel_to_words as converted_type %}
+								<span>{{ converted_type.label_type }}</span>
+							{% endwith %}
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+
 			<ul class="skip-links">
 				<li><a href="#search-filters-h">Skip to search filters</a></li>
 			</ul>
 		</div>
 
+
 		<div class="search-footer">
 			<div class="results-count">{{meta_data.counts.total}} results</div>
 			
 			{% include "new_theme/search_result/pagination_top_bottom.html" %}
-
+			<form role="search" method="get" action="{% url 'search' %}">
 			<div class="results-per-page">
 				<label for="resultsPerPage">Results per page:</label>
-				<input type="number" value="20" id="resultsPerPage">
-				<button>Go</button>
+				{% for key, value in query_param.items %}
+					{% if key != 'pageSize' %}
+						<input type="hidden" name="{{key}}" value="{{value}}">
+					{% endif %}
+				{% endfor %}
+				<input type="number" name="pageSize" value="{{default_pagesize}}" id="resultsPerPage">
+				<button type="submit">Go</button>
 			</div>
+			</form>
 		</div>
 	</section>
 </main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("comboInput");
+    const list = document.getElementById("comboList");
+    const wrapper = document.getElementById("jsComboWrapper");
+
+    if (list) {
+      list.style.display = "none"; // ensure it's hidden initially
+    }
+
+    if (input && list) {
+      input.addEventListener("input", function () {
+        const filter = input.value.toLowerCase();
+        const items = list.querySelectorAll("li");
+
+        items.forEach((item) => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(filter) ? "" : "none";
+        });
+
+        list.style.display = "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!wrapper.contains(e.target)) {
+          list.style.display = "none";
+        }
+      });
+
+      window.toggleList = function () {
+        list.style.display = list.style.display === "block" ? "none" : "block";
+      };
+    }
+  });
+</script>
+
+
+
 {% endblock %}

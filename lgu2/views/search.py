@@ -36,6 +36,19 @@ def search_results(request):
     by_year_pagination_count = len(api_data['meta']['counts']['byYear'])
     current_year = str(query_params.get("year"))
     current_type = query_params.get("type")
+
+    current_subject = request.GET.get("subject", None)
+
+    page_size = request.GET.get("pageSize", None)
+    if page_size: 
+        default_pagesize = page_size
+    else:
+        default_pagesize = 20
+
+    subject_heading = None
+    if current_subject and len(current_subject) > 1:
+        current_subject = current_subject[0]
+        subject_heading = request.GET.get("subject")
     
     grouped_by_decade = False
     if len(api_data['meta']['counts']['byType']) == 1:
@@ -45,22 +58,38 @@ def search_results(request):
     if 'bySubjectInitial' in api_data['meta']['counts']:  # should not be present and None
         subject_initials = set([i['initial'] for i in api_data['meta']['counts']['bySubjectInitial']])
 
+    documents_data = api_data["documents"]
+
+    grouped_documents = None
+    if current_subject:
+        grouped_documents = defaultdict(list)
+        for doc in documents_data:
+            for subject in doc.get("subjects", []):
+                grouped_documents[subject].append(doc)
+        
+        grouped_documents = dict(grouped_documents)
+    
     context = {
         "meta_data": api_data["meta"],
         "documents_data": api_data["documents"],
+        "grouped_documents": grouped_documents,
         "page_range": page_range,
         "current_page": current_page,
+        "current_subject": current_subject,
+        "subject_heading": subject_heading,
         "total_pages": total_pages,
         "total_count_by_type":total_count_by_type,
         "total_count_by_year":total_count_by_year,
         "modified_query_links": modified_query_links,
         'query_params': f'?{base_query}' if base_query else '',
+        'query_param': query_params,
         "by_year_pagination_count": by_year_pagination_count,
         "current_year": current_year,
         "current_type": current_type,
         "grouped_by_decade": grouped_by_decade,
         "subject_initials": subject_initials,
         'all_lowercase_letters': string.ascii_lowercase,
+        "default_pagesize": default_pagesize
     }
 
     return render(request, 'new_theme/search_result/search_result.html', context)
