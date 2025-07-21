@@ -42,6 +42,7 @@ YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
 NUMBER = r'(?P<number>[0-9]+)'
 SECTION = r'(?P<section>[A-Za-z0-9/-]+?)'  # not sure about ? on the end
+DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|\d{4}-\d{2}-\d{2})'  # ToDo 'created', 'adopted'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
@@ -58,8 +59,11 @@ urlpatterns += i18n_patterns(
     path('research-tools/', research_tools, name='research-tools'),
     path('about-us/', about_us, name='about-us'),
     
-    path('new/', whats_new, name='new'),
-    path('new-legislation/', new_legislation, name='new-legislation'),
+    path('whats-new/', whats_new, name='whats-new'),
+    path('new', new_legislation, name='new-legislation'),
+    re_path(fr'^new/{COUNTRY}$', new_legislation),
+    re_path(fr'^new/{DATE}$', new_legislation),
+    re_path(fr'^new/{COUNTRY}/{DATE}$', new_legislation),
     path('new-legislation-feeds/', new_legislation_feeds, name='new-legislation-feeds'),
     
     path('help/', help_guide, name='help'),

@@ -80,6 +80,26 @@ DATABASES = {
 }
 
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": BASE_DIR / "local_cache",
+        "TIMEOUT": 60 * 60, # one hour
+        "OPTIONS": {
+            "MAX_ENTRIES": 100
+        }
+    },
+    "localfile": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": BASE_DIR / "local_cache",
+        "TIMEOUT": 60 * 60, # one hour
+        "OPTIONS": {
+            "MAX_ENTRIES": 100
+        }
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
