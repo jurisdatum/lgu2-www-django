@@ -1,9 +1,10 @@
 
+from datetime import date
 from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
-from .document import DocumentMetadata, XmlPackage, package_xml
+from .document import CommonMetadata, DocumentMetadata, XmlPackage, package_xml
 
 
 class Item(TypedDict):
@@ -42,7 +43,9 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
 
 def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> dict:
     url = _make_url(type, year, number, version)
-    return server.get_json(url, language)
+    data = server.get_json(url, language)
+    CommonMetadata.convert_dates(data['meta'])
+    return data
 
 
 def get_toc_json(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:

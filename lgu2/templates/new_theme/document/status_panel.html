@@ -1,0 +1,20 @@
+{% if status.up_to_date is not none and not status.up_to_date %}
+<span class="status-panel-anchor"></span>
+<div class="status-panel not-up-to-date">
+    <div>
+        <h2>{{ status.label|capfirst }} has been amended but we need to update the website to reflect the changes.</h2>
+        <p>We are currently updating {{ status.label }} with changes that have been made by new legislation.</p>
+        <button class=""><span>Pin this panel</span></button>
+    </div>
+    <details id="statusPanelDetail">
+        <summary>See what these changes are</summary>
+        <div>
+            <ul>
+                {% for effect in status.effects.direct %}
+                {% include "document/effect.html" with effect=effect %}
+                {% endfor %}
+            </ul>
+        </div>
+    </details>
+</div>
+{% endif %}
