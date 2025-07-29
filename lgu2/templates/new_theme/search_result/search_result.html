@@ -22,27 +22,28 @@
 		{% include "new_theme/search_result/left_filter.html" %}
 
 		<div class="search-header">
-			<form method="get" action="/search/">
-				<!-- Preserve existing query parameters -->
-				{% for key, value in query_param.items %}
-					{% if key != 'sort' %}
-						<input type="hidden" name="{{key}}" value="{{value}}">
-					{% endif %}					
-				{% endfor %}
+			<div class="sort-by">
+				<form method="get" action="/search/">
+					<!-- Preserve existing query parameters -->
+					{% for key, value in query_param.items %}
+						{% if key != 'sort' %}
+							<input type="hidden" name="{{key}}" value="{{value}}">
+						{% endif %}					
+					{% endfor %}
 
-				<label for="sort">Sort by:</label>
-				<select id="sort" name="sort" onchange="this.form.submit()">
-					<option value="">Select Sort</option>
-					<option {% if meta_data.query.sort|lower == 'relevance' %} selected {% endif %} value="relevance">Best match</option>
-					<option value="year_asc">Earliest year first</option>
-					<option {% if meta_data.query.sort|lower == 'year' %} selected {% endif %} value="year">Latest year first</option>
-					<option {% if meta_data.query.sort|lower == 'title' %} selected {% endif %} value="title">Title A-Z</option>
-					<option value="title_desc">Title Z-A</option>
-					<option value="number_asc">Lowest no. first</option>
-					<option value="number">Highest no. first</option>
-				</select>
-			</form>
-
+					<label for="sort">Sort by:</label>
+					<select id="sort" name="sort" onchange="this.form.submit()">
+						<option value="">Select Sort</option>
+						<option {% if meta_data.query.sort|lower == 'relevance' %} selected {% endif %} value="relevance">Best match</option>
+						<option value="year_asc">Earliest year first</option>
+						<option {% if meta_data.query.sort|lower == 'year' %} selected {% endif %} value="year">Latest year first</option>
+						<option {% if meta_data.query.sort|lower == 'title' %} selected {% endif %} value="title">Title A-Z</option>
+						<option value="title_desc">Title Z-A</option>
+						<option value="number_asc">Lowest no. first</option>
+						<option value="number">Highest no. first</option>
+					</select>
+				</form>
+			</div>
 			{% include "new_theme/search_result/pagination_top_bottom.html" %}
 		</div>
 
