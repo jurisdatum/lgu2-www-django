@@ -5,24 +5,37 @@ SERVER = settings.API_BASE_URL
 
 
 def basic_search(query_params):
+    """
+    Perform a basic search by forwarding query parameters to an external API.
 
-    query_param = query_params.GET.dict()
-    query_params = {key: value for key, value in query_param.items() if value}
-    if 'pageSize' in query_params:
+    Args:
+        query_params (HttpRequest.GET): Query parameters from the Django request object.
+
+    Returns:
+        tuple: (API response JSON as dict, original query parameters as dict)
+    """
+    # Extract query parameters from the request
+    raw_params = query_params.GET.dict()
+
+    # Filter out empty values
+    cleaned_params = {key: value for key, value in raw_params.items() if value}
+
+    # Attempt to convert 'pageSize' to int, fallback to default if conversion fails
+    if 'pageSize' in cleaned_params:
         try:
-            query_params['pageSize'] = int(query_params['pageSize'])
+            cleaned_params['pageSize'] = int(cleaned_params['pageSize'])
         except ValueError:
-            query_params['pageSize'] = 20  # or some default/fallback value
-    api_url = SERVER+'/search'
-    
-    response = requests.get(api_url, params=query_params)
-    api_data = response.json() if response.status_code == 200 else {}
-    print("================================================")
-    print(query_params)
-    print("================================================")
-    print(api_data)
-    print("================================================")
-    query_params = {key: value for key, value in query_param.items()}
-    print(query_params)
-    print("================================================")
-    return api_data, query_params
+            cleaned_params['pageSize'] = 20  # Default fallback value
+
+    api_url = f"{SERVER}/search"
+
+    try:
+        response = requests.get(api_url, params=cleaned_params)
+        response.raise_for_status()
+        api_data = response.json()
+    except requests.RequestException as e:
+        api_data = {"error": str(e)}
+
+    return api_data, dict(raw_params)
+
+
