@@ -13,11 +13,15 @@
     <span>{{ effect.type }}</span>
     <span>by</span>
     <a href="/{{ effect.source.id }}">{{ effect.source.cite }}</a>
+    {% spaceless %}
     {% for node in effect.source.provisions.rich %}
         {% if node.type == 'link' %}
             <a href="/{{ node.href }}">{{ node.text }}</a>
-        {% else %}
+        {% elif node.text.strip %}
             <span>{{ node.text }}</span>
+        {% else %}
+            <span>&nbsp;</span>
         {% endif %}
     {% endfor %}
+    {% endspaceless %}
 </li>

@@ -1,4 +1,5 @@
 
+from datetime import date
 from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
@@ -27,6 +28,13 @@ class CommonMetadata(TypedDict):
     versions: List[str]
     schedules: bool
     formats: List[str]
+    pointInTime: Optional[str]
+    upToDate: Optional[bool]
+
+    @classmethod
+    def convert_dates(cls, meta: 'CommonMetadata'):
+        if meta['pointInTime'] is not None:
+            meta['pointInTime'] = date.fromisoformat(meta['pointInTime'])
 
 
 class DocumentMetadata(CommonMetadata):
@@ -60,7 +68,9 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
 
 def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Document:
     url = _make_url(type, year, number, version)
-    return server.get_json(url, language)
+    doc = server.get_json(url, language)
+    CommonMetadata.convert_dates(doc['meta'])
+    return doc
 
 
 def package_xml(response) -> XmlPackage:

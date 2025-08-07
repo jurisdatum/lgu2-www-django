@@ -8,12 +8,11 @@ from django.urls import reverse
 from ..api import contents as api
 from ..api.document import DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
-from ..messages.status import get_status_message
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
-from .document import group_effects
+from .helper.status import make_status_data
 
 
 # ToDo fix to use response headers
@@ -104,16 +103,6 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     _add_all_links(data['contents'], link_prefix, link_suffix)
 
-    data['status'] = {
-        'message': get_status_message(data['meta']),
-        'label': meta['title'],
-        'effects': {
-            'direct': group_effects(meta['unappliedEffects'])
-        },
-        'direct_effects': meta['unappliedEffects'],
-        'larger_effects': []
-    }
-
     data['links'] = {
         'toc': link_prefix + '/contents' + link_suffix,
         'content': link_prefix + '/introduction' + link_suffix,
@@ -147,6 +136,8 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     data['breadcrumbs'] = _make_breadcrumbs(meta, version, lang)
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
+
+    data['status'] = make_status_data(meta)
 
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
