@@ -14,6 +14,11 @@
                     {% endif %}
                 </span>
                 <span class="date">from <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
+                {% if timeline.pointInTime %}
+                    <span class="point-in-time{% if timeline.pointInTime < timeline.viewing.date %} previous-point-in-time{% endif %}">
+                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                    </span>
+                {% endif %}
                 <span class="button">See all versions</span>
             </span>
             <span class="close">Close</span>
@@ -28,6 +33,11 @@
                                 <span class="prefix">You are viewing </span>
                                 <span class="version"><span class="title">the original version</span></span>
                                 <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
+                                {% if timeline.pointInTime and timeline.pointInTime != timeline.original.date %}
+                                    <span class="point-in-time{% if timeline.pointInTime < timeline.original.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
                             </a>
                         </li>
                         {% else %}
@@ -47,6 +57,11 @@
                                 <span class="prefix">You are viewing </span>
                                 <span class="version"><span class="title">a historical version</span></span>
                                 <span class="date">from <span>{{ v.date|date:'d F Y' }}</span></span>
+                                {% if timeline.pointInTime and timeline.pointInTime != v.date  %}
+                                    <span class="point-in-time{% if timeline.pointInTime < v.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
                             </a>
                         </li>
                         {% else %}
@@ -65,9 +80,14 @@
                             <a href="javascript:void(0);">
                                 <span class="version">
                                     <span class="prefix">You are viewing </span>
-                                    <span class="title">the current version</span>
+                                    <span class="title">the current version</span>                                    
                                 </span>
                                 <span class="date">from <span>{{ timeline.current.date|date:'d F Y' }}</span></span>
+                                {% if timeline.pointInTime and timeline.pointInTime != timeline.current.date %}
+                                    <span class="point-in-time{% if timeline.pointInTime < timeline.current.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
                             </a>
                         </li>
                         {% else %}

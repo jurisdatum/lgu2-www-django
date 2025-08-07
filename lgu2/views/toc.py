@@ -12,7 +12,7 @@ from ..util.labels import get_type_label
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .document import group_effects
 from .timeline import make_timeline_data
-
+from django.shortcuts import render
 
 # ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
@@ -53,6 +53,8 @@ def _add_all_links(contents, prefix: str, suffix: str):
 def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = api.get_toc(type, year, number, version, lang)
+    if data is None:
+        return render(request, 'new_theme/404.html', status=404)
     meta = data['meta']
 
     rdrct = _should_redirect(type, version, lang, meta)

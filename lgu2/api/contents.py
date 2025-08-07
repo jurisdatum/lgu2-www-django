@@ -44,6 +44,10 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
 def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> dict:
     url = _make_url(type, year, number, version)
     toc = server.get_json(url, language)
+    # Check if response is a "404" document-not-found type
+    if toc.get('status') == 404 and toc.get('error') == "Document Not Found":
+        return None
+
     toc['meta']['date'] = date.fromisoformat(toc['meta']['date'])
     return toc
 

@@ -26,6 +26,12 @@ _ISO_DATE_RE = re.compile(r'\d{4}-\d{2}-\d{2}')
 def make_timeline_data(meta: CommonMetadata) -> TimelineData:
     versions = meta['versions'].copy()
     original = None
+
+    # Parse pointInTime to date object
+    point_in_time = None
+    if meta.get("pointInTime"):
+        point_in_time = date.fromisoformat(meta["pointInTime"])
+
     if versions and not _ISO_DATE_RE.fullmatch(versions[0]):
         version = versions.pop(0)
         original = {
@@ -57,5 +63,6 @@ def make_timeline_data(meta: CommonMetadata) -> TimelineData:
         'original': original,
         'historical': historical,
         'current': current,
-        'viewing': viewing
+        'viewing': viewing,
+        'pointInTime': point_in_time
     }
