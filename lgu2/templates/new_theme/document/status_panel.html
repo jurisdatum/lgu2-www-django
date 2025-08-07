@@ -9,11 +9,30 @@
     <details id="statusPanelDetail">
         <summary>See what these changes are</summary>
         <div>
+            {% if status.effects.direct.outstanding %}
+            <h3>&mdash; Outstanding &mdash;</h3>
             <ul>
-                {% for effect in status.effects.direct %}
+                {% for effect in status.effects.direct.outstanding %}
                 {% include "document/effect.html" with effect=effect %}
                 {% endfor %}
             </ul>
+            {% endif %}
+            {% if status.effects.direct.prospective %}
+            <h3>&mdash; Prospective (no fixed future date) &mdash;</h3>
+            <ul>
+                {% for effect in status.effects.direct.prospective %}
+                {% include "document/effect.html" with effect=effect %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if status.effects.direct.fixedFuture %}
+            <h3>&mdash; Fixed Future &mdash;</h3>
+            <ul>
+                {% for effect in status.effects.direct.fixedFuture %}
+                {% include "document/effect.html" with effect=effect %}
+                {% endfor %}
+            </ul>
+            {% endif %}
         </div>
     </details>
 </div>

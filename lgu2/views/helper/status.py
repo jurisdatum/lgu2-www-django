@@ -21,11 +21,39 @@ class StatusEffects:
     ancestor: List[Effect]
 
 
+def group_effects(effects):
+    grouped = {
+        'outstanding': [],
+        'prospective': [],
+        'fixedFuture': [],
+        'unrequired': []
+    }
+    for effect in effects:
+        if effect['outstanding']:
+            grouped['outstanding'].append(effect)
+        elif not effect['required']:
+            grouped['unrequired'].append(effect)
+        elif all(ifd['date'] is None for ifd in effect['inForce']):
+            grouped['prospective'].append(effect)
+        else:
+            grouped['fixedFuture'].append(effect)
+    return grouped
+
+
 def make_status_data(meta: CommonMetadata) -> StatusData:
-    if 'fragment' in meta:
-        effects = { 'direct': meta['unappliedEffects']['fragment'], 'ancestor': meta['unappliedEffects']['ancestor'] }
+    print(meta)
+    if meta['upToDate'] is None:
+        effects = None
+    elif 'fragment' in meta:
+        effects = {
+            'direct': group_effects(meta['unappliedEffects']['fragment']),
+            'ancestor': group_effects(meta['unappliedEffects']['ancestor'])
+        }
     else:
-        effects = { 'direct': meta['unappliedEffects'], 'ancestor': [] }
+        effects = {
+            'direct': group_effects(meta['unappliedEffects']),
+            'ancestor': group_effects([])
+        }
     return {
         'up_to_date': meta['upToDate'],
         'label': 'this Act',
