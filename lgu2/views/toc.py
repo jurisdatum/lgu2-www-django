@@ -115,6 +115,20 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     data['timeline'] = make_timeline_data(meta)
 
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+    
+    data['explanatory_notes'] = explanatory_notes
+    data['other_associated_doc'] = other_associated_doc
+
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
 
