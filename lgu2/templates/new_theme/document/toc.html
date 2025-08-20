@@ -33,11 +33,7 @@
     <div class="legislation-content">
         <aside aria-labelledby="legislationStatus">
             <h2 id="legislationStatus">Legislation status</h2>
-            <div class="up-to-date">
-                <h3>Up to date status</h3>
-                <p>This Act is up to date with all changes as of {{ current_date|date:"d M Y" }}</p>
-                <a href="#">See all changes made to or by this Act</a>
-            </div>
+            {% include "new_theme/document/up_to_date.html" %}
             <div class="extent">
                 <h3>Extent information</h3>
                 <p>This Act contains legislation in relation to {{ extent_label }}</p>
@@ -51,7 +47,8 @@
             </div>
         </aside>
 
-        <div>
+        <div>{# this is the main content #}
+            {% include "new_theme/document/status_panel.html" %}
             <section class="toc-detail">
                 <button hidden class="initialise expanded" id="toc"><span>Collapse table of contents</span></button>
                 <h2>Table of contents for this Act</h2>
