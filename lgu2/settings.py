@@ -140,6 +140,10 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'lgu2/static')]
 
+# Static files collection directory
+# NOTE: If this path changes, update .github/workflows/deploy.yml staticfiles directory references
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
