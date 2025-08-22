@@ -10,7 +10,7 @@ env:
   EB_APPLICATION_NAME: LGU2-Front-End
   EB_ENVIRONMENT_NAME: LGU2-Front-End
   S3_BUCKET: lgu2-code
-  STATIC_S3_BUCKET: lgu2-static
+  STATIC_S3_BUCKET: lgu2-django-static
 
 permissions:
   id-token: write
