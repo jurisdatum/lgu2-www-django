@@ -70,7 +70,6 @@ jobs:
     - name: Upload static files to S3
       run: |
         aws s3 sync staticfiles/ s3://${{ env.STATIC_S3_BUCKET }}/ --delete
-        aws s3 website s3://${{ env.STATIC_S3_BUCKET }} --index-document index.html
 
     - name: Create deployment package
       run: |
