@@ -128,8 +128,8 @@ jobs:
 
         echo "Deployment completed with status: $status"
 
-        if [ "$status" != "Ok" ]; then
-          echo "Deployment failed!"
+        if [ "$status" != "Green" ]; then
+          echo "Deployment failed with status: $status"
           exit 1
         fi
 
