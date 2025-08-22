@@ -1,31 +1,36 @@
 from django.conf import settings
 import requests
+from typing import Dict, Any
+
+from .search_types import QueryParams
 
 SERVER = settings.API_BASE_URL
 
 
-def basic_search(query_params):
+def basic_search(query_params: QueryParams) -> Dict[str, Any]:
     """
     Perform a basic search by forwarding query parameters to an external API.
 
     Args:
-        query_params (HttpRequest.GET): Query parameters from the Django request object.
+        query_params (QueryParams): Cleaned query parameters dictionary.
 
     Returns:
-        tuple: (API response JSON as dict, original query parameters as dict)
+        Dict[str, Any]: API response JSON as dictionary.
     """
-    # Extract query parameters from the request
-    raw_params = query_params.GET.dict()
 
-    # Filter out empty values
-    cleaned_params = {key: value for key, value in raw_params.items() if value}
+    # Filter out empty or None values
+    cleaned_params = {
+        key: value
+        for key, value in query_params.items()
+        if value is not None and value != ""
+    }
 
-    # Attempt to convert 'pageSize' to int, fallback to default if conversion fails
-    if 'pageSize' in cleaned_params:
+    # Final fallback in case of invalid data types (should already be handled earlier)
+    if "pageSize" in cleaned_params:
         try:
-            cleaned_params['pageSize'] = int(cleaned_params['pageSize'])
+            cleaned_params["pageSize"] = int(cleaned_params["pageSize"])
         except ValueError:
-            cleaned_params['pageSize'] = 20  # Default fallback value
+            cleaned_params["pageSize"] = 20
 
     api_url = f"{SERVER}/search"
 
@@ -36,6 +41,4 @@ def basic_search(query_params):
     except requests.RequestException as e:
         api_data = {"error": str(e)}
 
-    return api_data, dict(raw_params)
-
-
+    return api_data

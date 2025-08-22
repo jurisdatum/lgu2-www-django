@@ -1,23 +1,60 @@
 from django.shortcuts import render
 from urllib.parse import urlencode
 from collections import defaultdict
-import string
-
 from ..api.search import basic_search
 from ..util.cutoff import get_cutoff
+from ..api.search_types import (
+    QueryParams,
+    SearchResultContext,
+)
+import string
+
+
+def extract_query_params(request) -> QueryParams:
+    params: QueryParams = {}
+
+    if "sort" in request.GET:
+        params["sort"] = request.GET["sort"]
+
+    if "pageSize" in request.GET and request.GET["pageSize"].isdigit():
+        params["pageSize"] = int(request.GET["pageSize"])
+
+    if "page" in request.GET and request.GET["page"].isdigit():
+        params["page"] = int(request.GET["page"])
+
+    if "subject" in request.GET:
+        params["subject"] = request.GET["subject"]
+
+    if "year" in request.GET and request.GET["year"].isdigit():
+        params["year"] = int(request.GET["year"])
+
+    if "type" in request.GET:
+        params["type"] = request.GET["type"]
+
+    if "title" in request.GET:
+        params["title"] = request.GET["title"]
+
+    if "number" in request.GET:
+        params["number"] = request.GET["number"]
+
+    return params
 
 
 def search_results(request):
-    # Step 1: Get search results and query parameters
-    api_data, query_params = basic_search(request)
-    meta = api_data.get("meta", {})
-    documents_data = api_data.get("documents", [])
+    # Step 1: Clean and extract query parameters
+    query_params: QueryParams = extract_query_params(request)
 
-    # Step 2: Count totals by type and year
-    total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))
-    total_count_by_year = sum(item["count"] for item in meta.get("counts", {}).get("byYear", []))
+    # Step 2: Fetch data using cleaned parameters
+    api_data_raw = basic_search(query_params)
 
-    # Step 3: Pagination logic
+    meta = api_data_raw.get("meta", {})
+    documents_data = api_data_raw.get("documents", [])
+
+    # Step 3: Count totals
+    total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))  # type: ignore
+    total_count_by_year = sum(item["count"] for item in meta.get("counts", {}).get("byYear", []))  # type: ignore
+
+    # Step 4: Pagination
     current_page = meta.get("page", 1)
     total_pages = meta.get("totalPages", 1)
 
@@ -28,38 +65,37 @@ def search_results(request):
         end = min(total_pages, start + 9)
         page_range = range(start, end + 1)
 
-    # Step 4: Clean query links (remove individual params for modification)
+    # Step 5: Modified query links
     modified_query_links = {
         key: urlencode({k: v for k, v in query_params.items() if k != key})
         for key in request.GET.dict()
     }
 
-    # Step 5: Base query for pagination & links (without page)
+    # Step 6: Base query string
     query_dict = request.GET.copy()
     query_dict.pop("page", None)
     base_query = urlencode(query_dict)
 
-    # Step 6: Extract current filters
+    # Step 7: Filters
     current_year = str(query_params.get("year", ""))
     current_type = query_params.get("type")
-    current_subject = request.GET.get("subject")
+    current_subject = query_params.get("subject")
     subject_heading = current_subject if current_subject and len(current_subject) > 1 else None
     current_subject = current_subject[0] if current_subject else None
 
-    page_size = request.GET.get("pageSize")
-    default_pagesize = int(page_size) if page_size else 20
+    default_pagesize = query_params.get("pageSize", 20)
 
-    # Step 7: Check for decade grouping if only one type
+    # Step 8: Grouping by decade (if applicable)
     grouped_by_decade = False
     if len(meta.get("counts", {}).get("byType", [])) == 1:
         grouped_by_decade = group_by_decade(meta["counts"]["byYear"], current_type)
 
-    # Step 8: Get subject initials for filtering
+    # Step 9: Subject initials
     subject_initials = None
     if "bySubjectInitial" in meta.get("counts", {}):
         subject_initials = set(i["initial"] for i in meta["counts"]["bySubjectInitial"])
 
-    # Step 9: Group documents by subject (if filtering by subject)
+    # Step 10: Group documents by subject (if filtering by subject)
     grouped_documents = None
     if current_subject:
         grouped_documents = defaultdict(list)
@@ -68,8 +104,8 @@ def search_results(request):
                 grouped_documents[subject].append(doc)
         grouped_documents = dict(grouped_documents)
 
-    # Step 10: Pass context to template
-    context = {
+    # Step 11: Build context
+    context: SearchResultContext = {
         "meta_data": meta,
         "documents_data": documents_data,
         "grouped_documents": grouped_documents,
