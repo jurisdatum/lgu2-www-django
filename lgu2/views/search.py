@@ -1,20 +1,41 @@
 from django.shortcuts import render
 from urllib.parse import urlencode
 from collections import defaultdict
+from typing import TypedDict, Optional, List, Dict, Any
 from ..api.search import basic_search
 from ..util.cutoff import get_cutoff
-from ..api.search_types import (
-    QueryParams,
-    SearchResultContext,
-)
+from ..api.search_types import SearchParams
 import string
 
 
-def extract_query_params(request) -> QueryParams:
-    params: QueryParams = {}
+class SearchResultContext(TypedDict):
+    meta_data: Dict[str, Any]
+    documents_data: List[Any]
+    grouped_documents: Optional[Dict[str, List[Any]]]
+    page_range: range
+    current_page: int
+    total_pages: int
+    current_subject: Optional[str]
+    subject_heading: Optional[str]
+    total_count_by_type: int
+    total_count_by_year: int
+    modified_query_links: Dict[str, str]
+    query_params: str
+    query_param: SearchParams
+    by_year_pagination_count: int
+    current_year: str
+    current_type: Optional[str]
+    grouped_by_decade: bool
+    subject_initials: Optional[set[str]]
+    all_lowercase_letters: str
+    default_pagesize: int
 
-    if "sort" in request.GET:
-        params["sort"] = request.GET["sort"]
+
+def extract_query_params(request) -> SearchParams:
+    params: SearchParams = {}
+
+    if "sort" in request.GET and request.GET["sort"].strip():
+        params["sort"] = request.GET["sort"].strip()
 
     if "pageSize" in request.GET and request.GET["pageSize"].isdigit():
         params["pageSize"] = int(request.GET["pageSize"])
@@ -22,27 +43,27 @@ def extract_query_params(request) -> QueryParams:
     if "page" in request.GET and request.GET["page"].isdigit():
         params["page"] = int(request.GET["page"])
 
-    if "subject" in request.GET:
-        params["subject"] = request.GET["subject"]
+    if "subject" in request.GET and request.GET["subject"].strip():
+        params["subject"] = request.GET["subject"].strip()
 
     if "year" in request.GET and request.GET["year"].isdigit():
         params["year"] = int(request.GET["year"])
 
-    if "type" in request.GET:
-        params["type"] = request.GET["type"]
+    if "type" in request.GET and request.GET["type"].strip():
+        params["type"] = request.GET["type"].strip()
 
-    if "title" in request.GET:
-        params["title"] = request.GET["title"]
+    if "title" in request.GET and request.GET["title"].strip():
+        params["title"] = request.GET["title"].strip()
 
-    if "number" in request.GET:
-        params["number"] = request.GET["number"]
+    if "number" in request.GET and request.GET["number"].strip():
+        params["number"] = request.GET["number"].strip()
 
     return params
 
 
 def search_results(request):
     # Step 1: Clean and extract query parameters
-    query_params: QueryParams = extract_query_params(request)
+    query_params: SearchParams = extract_query_params(request)
 
     # Step 2: Fetch data using cleaned parameters
     api_data_raw = basic_search(query_params)

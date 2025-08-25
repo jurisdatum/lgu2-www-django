@@ -1,38 +1,18 @@
-from typing import TypedDict, Optional, List, Dict, Union, Any
+from typing import NotRequired, TypedDict
 
 
-class QueryParams(TypedDict, total=False):
-    year: Optional[int]
-    type: Optional[str]
-    subject: Optional[str]
-    pageSize: Optional[int]
-    sort: Optional[str]
-    page: Optional[int]
-    title: Optional[str]
-    number: Union[str, int]
+class SearchParams(TypedDict):
+    """Search parameters for the /search API endpoint.
 
-class SearchResultContext(TypedDict):
-    meta_data: Dict[str, Any]
-    documents_data: List[Any]
-    grouped_documents: Optional[Dict[str, List[Any]]]
-    page_range: range
-    current_page: int
-    total_pages: int
-    current_subject: Optional[str]
-    subject_heading: Optional[str]
-    total_count_by_type: int
-    total_count_by_year: int
-    modified_query_links: Dict[str, str]
-    query_params: str
-    query_param: QueryParams
-    by_year_pagination_count: int
-    current_year: str
-    current_type: Optional[str]
-    grouped_by_decade: bool
-    subject_initials: Optional[set[str]]
-    all_lowercase_letters: str
-    default_pagesize: int
-
-
-
-
+    Note: All parameters mirror the external API contract exactly.
+    The 'number' field accepts string-based legislation references
+    (e.g., "1", "w2", "ni15") not just numeric IDs.
+    """
+    year: NotRequired[int]
+    type: NotRequired[str]
+    subject: NotRequired[str]
+    pageSize: NotRequired[int]
+    sort: NotRequired[str]
+    page: NotRequired[int]
+    title: NotRequired[str]
+    number: NotRequired[str]
