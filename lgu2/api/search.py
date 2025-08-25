@@ -19,11 +19,6 @@ def basic_search(query_params: SearchParams) -> Dict[str, Any]:
     """
     api_url = f"{SERVER}/search"
 
-    try:
-        response = requests.get(api_url, params=query_params)
-        response.raise_for_status()
-        api_data = response.json()
-    except requests.RequestException as e:
-        api_data = {"error": str(e)}
-
-    return api_data
+    response = requests.get(api_url, params=query_params)
+    response.raise_for_status()
+    return response.json()
