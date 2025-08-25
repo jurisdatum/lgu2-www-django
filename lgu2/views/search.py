@@ -68,8 +68,8 @@ def search_results(request):
     # Step 2: Fetch data using cleaned parameters
     api_data_raw = basic_search(query_params)
 
-    meta = api_data_raw.get("meta", {})
-    documents_data = api_data_raw.get("documents", [])
+    meta = api_data_raw["meta"]
+    documents_data = api_data_raw["documents"]
 
     # Step 3: Count totals
     total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))  # type: ignore
