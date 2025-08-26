@@ -62,6 +62,7 @@
 
         <div>
             <section class="toc-detail">
+                {% if contents %}
                 <button hidden class="initialise expanded" id="toc"><span>Collapse table of contents</span></button>
                 <h2>Table of contents for this Act</h2>
                 <ul>
@@ -77,6 +78,9 @@
                         </ul>
                     </li>
                 </ul>
+                {% else %}
+                    <h1>There is no Table of contents for this Act</h1>
+                {% endif %}
             </section>
         </div>
 

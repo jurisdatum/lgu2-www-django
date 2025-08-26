@@ -48,7 +48,8 @@ def get_toc(type: str, year, number, version: Optional[str] = None, language: Op
     if toc.get('status') == 404 and toc.get('error') == "Document Not Found":
         return None
 
-    toc['meta']['date'] = date.fromisoformat(toc['meta']['date'])
+    if toc['meta']['date']:
+        toc['meta']['date'] = date.fromisoformat(toc['meta']['date'])
     return toc
 
 
