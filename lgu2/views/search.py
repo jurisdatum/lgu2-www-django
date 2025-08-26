@@ -12,7 +12,8 @@ from ..api.search_types import SearchParams
 from ..api.browse_types import DocEntry
 from ..util.cutoff import get_cutoff
 from ..util.types import to_short_type
-from ..util.version import is_first_version
+from ..util.version import is_first_version, get_first_version
+from ..util.labels import get_type_label
 
 
 class SearchResultContext(TypedDict):
@@ -253,6 +254,8 @@ def search_results_helper(request, query_params: SearchParams):
         "subject_heading_links": subject_heading_links,
         "all_lowercase_letters": string.ascii_lowercase,  # no longer need
         "default_pagesize": default_pagesize,
+        "type_label_plural": get_type_label(query_params['type']) if 'type' in query_params else 'documents',
+        "type_made_verb": get_first_version(query_params['type']) if 'type' in query_params else 'documents'
     }
 
     return render(request, "new_theme/search_result/search_result.html", context)
