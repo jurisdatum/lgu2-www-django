@@ -34,7 +34,8 @@ types = [
 
     ('eur', 'EuropeanUnionRegulation', 'euretained'),
     ('eudn', 'EuropeanUnionDecision', 'euretained'),
-    ('eudr', 'EuropeanUnionDirective', 'euretained')
+    ('eudr', 'EuropeanUnionDirective', 'euretained'),
+    ('eut', 'EuropeanUnionTreaty', 'euretained')
 ]
 
 short_to_long = {item[0]: item[1] for item in types}

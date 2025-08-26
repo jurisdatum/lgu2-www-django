@@ -1,11 +1,18 @@
-from django.shortcuts import render
+import re
+import string
 from urllib.parse import urlencode
 from collections import defaultdict
 from typing import TypedDict, Optional, List, Dict, Any
+
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from ..api.search import basic_search
-from ..util.cutoff import get_cutoff
 from ..api.search_types import SearchParams
-import string
+from ..api.browse_types import DocEntry
+from ..util.cutoff import get_cutoff
+from ..util.types import to_short_type
+from ..util.version import is_first_version
 
 
 class SearchResultContext(TypedDict):
@@ -29,6 +36,17 @@ class SearchResultContext(TypedDict):
     subject_initials: Optional[set[str]]
     all_lowercase_letters: str
     default_pagesize: int
+
+
+def browse(request, type: str, year: Optional[str] = None):
+    params: SearchParams = { 'type': type }
+    if year is not None:
+        params['year'] = int(year)
+    if 'page' in request.GET and request.GET['page'].isdigit():
+        params['page'] = int(request.GET['page'])
+    if 'pageSize' in request.GET and request.GET['pageSize'].isdigit():
+        params['pageSize'] = int(request.GET['pageSize'])
+    return search_results_helper(request, params)
 
 
 def extract_query_params(request) -> SearchParams:
@@ -61,9 +79,51 @@ def extract_query_params(request) -> SearchParams:
     return params
 
 
+TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
+
+def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
+    """Build browse URL if params qualify for clean URL routing, None otherwise."""
+    if ('type' in params and
+        set(params).issubset({'type', 'year', 'page', 'pageSize'}) and
+        re.match(TYPE, params['type'])):
+
+        year = params.get('year')
+        if year:
+            base = reverse('browse-year', kwargs={'type': params['type'], 'year': year})
+        else:
+            base = reverse('browse', kwargs={'type': params['type']})
+
+        query = {k: params[k] for k in ('page', 'pageSize') if k in params}
+        return f"{base}?{urlencode(query, doseq=True)}" if query else base
+
+    return None
+
+def make_smart_link(params: SearchParams):
+    browse_url = build_browse_url_if_possible(params)
+    return browse_url or f"{ reverse('search') }?{ urlencode(params, doseq=True) }"
+
+
+def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
+    new_params = params.copy()
+    new_params[key] = value
+    new_params.pop('page', None)
+    new_params.pop('pageSize', None)
+    return make_smart_link(new_params)
+
+
 def search_results(request):
-    # Step 1: Clean and extract query parameters
-    query_params: SearchParams = extract_query_params(request)
+    params: SearchParams = extract_query_params(request)
+    # redirect to browse URL if possible
+    browse_url = build_browse_url_if_possible(params)
+    if browse_url:
+        return redirect(browse_url)
+    return search_results_helper(request, params)
+
+
+def search_results_helper(request, query_params: SearchParams):
+
+    if query_params.get('type', '').strip() == 'all':
+        del query_params['type']
 
     # Step 2: Fetch data using cleaned parameters
     api_data_raw = basic_search(query_params)
@@ -86,11 +146,12 @@ def search_results(request):
         end = min(total_pages, start + 9)
         page_range = range(start, end + 1)
 
-    # Step 5: Modified query links
-    modified_query_links = {
-        key: urlencode({k: v for k, v in query_params.items() if k != key})
-        for key in request.GET.dict()
-    }
+    # Step 5: Generate "remove filter" links using smart link generation
+    modified_query_links = {}
+    for filter_key in query_params.keys():
+        params_without_filter_key = query_params.copy()
+        params_without_filter_key.pop(filter_key, None)
+        modified_query_links[filter_key] = make_smart_link(params_without_filter_key)
 
     # Step 6: Base query string
     query_dict = request.GET.copy()
@@ -111,10 +172,53 @@ def search_results(request):
     if len(meta.get("counts", {}).get("byType", [])) == 1:
         grouped_by_decade = group_by_decade(meta["counts"]["byYear"], current_type)
 
-    # Step 9: Subject initials
+    # Step 8.5 Add links
+
+    if grouped_by_decade:
+        for years in grouped_by_decade.values():
+            for item in years:
+                item['link'] = replace_param_and_make_smart_link(query_params, 'year', item['year'])
+
+    for byType in meta['counts']['byType']:
+        byType['link'] = replace_param_and_make_smart_link(query_params, 'type', to_short_type(byType['type']))
+
+    for byYear in meta['counts']['byYear']:
+        byYear['link'] = replace_param_and_make_smart_link(query_params, 'year', byYear['year'])
+
+    for byInitial in meta['counts']['bySubjectInitial']:
+        byInitial['link'] = replace_param_and_make_smart_link(query_params, 'subject', byInitial['initial'])
+
+    for doc in documents_data:
+        kw = DocEntry.parse_id(doc['id'])
+        # Welsh versions?
+        if is_first_version(doc['version']):
+            kw['version'] = doc['version']
+            doc['link'] = reverse("toc-version", kwargs=kw)
+        else:
+            doc['link'] = reverse("toc", kwargs=kw)
+        # doc['label'] = get_type_label(doc['longType'])
+
+    # Step 9: Subject initials and links
     subject_initials = None
     if "bySubjectInitial" in meta.get("counts", {}):
         subject_initials = set(i["initial"] for i in meta["counts"]["bySubjectInitial"])
+
+    subject_initial_links = { byInitial['initial']: byInitial['link'] for byInitial in meta['counts']['bySubjectInitial'] }
+    subject_initials_and_links = [
+        {   'letter': letter,
+            'link': subject_initial_links.get(letter),
+            'current': (current_subject.upper() == letter.upper()) if current_subject else False
+        }
+        for letter in string.ascii_lowercase]
+
+    # Generate subject heading links
+    subject_heading_links = []
+    for heading in meta.get('subjects', []):
+        subject_heading_links.append({
+            'name': heading,
+            'link': replace_param_and_make_smart_link(query_params, 'subject', heading),
+            'current': subject_heading == heading
+        })
 
     # Step 10: Group documents by subject (if filtering by subject)
     grouped_documents = None
@@ -144,8 +248,10 @@ def search_results(request):
         "current_year": current_year,
         "current_type": current_type,
         "grouped_by_decade": grouped_by_decade,
-        "subject_initials": subject_initials,
-        "all_lowercase_letters": string.ascii_lowercase,
+        "subject_initials": subject_initials,  # now used only to check for presence of subjects
+        "subject_initials_and_links": subject_initials_and_links,
+        "subject_heading_links": subject_heading_links,
+        "all_lowercase_letters": string.ascii_lowercase,  # no longer need
         "default_pagesize": default_pagesize,
     }
 

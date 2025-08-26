@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.urls import path, re_path
 from .views.doc_types import list_uk
 
-from .views.browse import browse, data as browse_data
+from .views.browse import data as browse_data
 from .views.document import document, data as document_data
 from .views import toc
 from .views.metadata import metadata, combined
@@ -21,7 +21,7 @@ from .views.general import (
     whats_new, new_legislation, new_legislation_feeds,
     about_us
 )
-from .views.search import  search_results
+from .views.search import  browse, search_results
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -38,7 +38,7 @@ if not settings.DEBUG:
     ]
 
 COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
-TYPE = r'(?P<type>[a-z]{3,5})'
+TYPE = r'(?P<type>[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
 NUMBER = r'(?P<number>[0-9]+)'
@@ -49,6 +49,7 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
+    # TODO: Remove trailing slash from search and explore URLs
     path('search/', search_results, name='search'),
 
     path('explore/', explore_collection, name='explore'),

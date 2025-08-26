@@ -16,7 +16,7 @@
                 <ul>
                     <!-- "All types" link -->
                     <li {% if not current_type %}aria-current="page"{% endif %}>
-                        <a href="?{{ modified_query_links.type }}">
+                        <a href="{{ modified_query_links.type }}">
                             All legislation types
                         </a>
                     </li>
@@ -26,7 +26,7 @@
                     {% for all_types in meta_data.counts.byType %}
                         {% with all_types.type|camel_to_words as converted_type %}
                             <li>
-                                <a href="?{{ modified_query_links.type }}&type={{ converted_type.short_type }}">
+                                <a href="{{ all_types.link }}">
                                     {{ converted_type.label_type }}
                                     <span>({{ all_types.count }}<span> results</span>)</span>
                                 </a>
@@ -44,7 +44,7 @@
 
                     <!-- Always show 'All years' link -->
                     <li {% if not current_year %}aria-current="page"{% endif %}>
-                        <a href="?{{ modified_query_links.year }}">
+                        <a href="{{ modified_query_links.year }}">
                             All years
                         </a>
                     </li>
@@ -54,7 +54,7 @@
                         {% for all_years in meta_data.counts.byYear %}
                             {% if current_year == all_years.year|stringformat:"s" %}
                                 <li aria-current="page">
-                                    <a href="?{{ modified_query_links.year }}&year={{ all_years.year }}">
+                                    <a href="{{ all_years.link }}">
                                         {{ all_years.year }} <span>({{ all_years.count }}<span> results</span>)</span>
                                     </a>
                                 </li>
@@ -64,7 +64,7 @@
                         <!-- Show all years if no year is selected -->
                         {% for all_years in meta_data.counts.byYear %}
                             <li>
-                                <a href="?{{ modified_query_links.year }}&year={{ all_years.year }}">
+                                <a href="{{ all_years.link }}">
                                     {{ all_years.year }} <span>({{ all_years.count }}<span> results</span>)</span>
                                 </a>
                             </li>
@@ -89,22 +89,17 @@
 
 
 
-
             {% if subject_initials %}
             <section class="filter-subject">
                 <h3>By subject</h3>
                 <h4>Select the first letter of a subject</h4>
                 <ul>
-                    <li {% if current_subject %} {% else %} aria-current="page" {% endif %}><a href="?{{ modified_query_links.subject }}">All subjects</a></li>
-                    {% for letter in all_lowercase_letters %}
-                        {% if letter in subject_initials %}
-                            {% if current_subject %}
-                                <li {% if current_subject == letter|upper or current_subject == letter %} aria-current="page" {% else %}  {% endif %}><a href="?{{modified_query_links.subject}}&subject={{letter}}">{{ letter|upper }}</a></li>
-                            {% else %}
-                                <li><a href="{{query_params}}&subject={{letter}}">{{ letter|upper }}</a></li>
-                            {% endif %}
+                    <li {% if current_subject %} {% else %} aria-current="page" {% endif %}><a href="{{ modified_query_links.subject }}">All subjects</a></li>
+                    {% for item in subject_initials_and_links %}
+                        {% if item.link %}
+                            <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.letter|upper }}</a></li>
                         {% else %}
-                            <li><span>{{ letter|upper }}</span></li>
+                            <li><span>{{ item.letter|upper }}</span></li>
                         {% endif %}
                     {% endfor %}
                     
@@ -121,8 +116,8 @@
                             <div class="combo-button" onclick="toggleList()">▼</div>
 
                             <ul id="comboList" style="display: none;">
-                                {% for heading in meta_data.subjects %}
-                                <li {% if subject_heading == heading %} aria-current="page" {% else %}  {% endif %}><a href="?{{ modified_query_links.subject }}&subject={{ heading }}">{{ heading }}</a></li>
+                                {% for item in subject_heading_links %}
+                                <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -130,8 +125,8 @@
                             <!-- Non-JS fallback -->
                             <noscript>
                                 <ul>
-                                    {% for heading in meta_data.subjects %}
-                                    <li {% if subject_heading == heading %} aria-current="page" {% else %}  {% endif %}><a href="?{{ modified_query_links.subject }}&subject={{ heading }}">{{ heading }}</a></li>
+                                    {% for item in subject_heading_links %}
+                                    <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </noscript>

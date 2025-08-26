@@ -69,6 +69,20 @@ class DocEntry(TypedDict):
     version: str
     formats: List[str]
 
+    @staticmethod
+    def parse_id(id: str) -> dict:
+
+        first = id.find("/")
+        last = id.rfind("/")
+        if first == -1 or last == -1 or first == last:
+            raise ValueError("String must contain at least two slashes")
+
+        type = id[:first]
+        year = id[first+1:last]
+        number = id[last+1:]
+
+        return { 'type': type, 'year': year, 'number': number }
+
 
 class AltNumber(TypedDict):
     category: str
