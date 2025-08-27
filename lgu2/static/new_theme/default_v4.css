@@ -4610,6 +4610,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0;
   min-width: 16rem;
 }
+
 .combo-wrapper {
   position: relative;
   width: 100%;
@@ -4658,7 +4659,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 #comboList li a:hover {
   background-color: #f0f0f0;
 }
-
 /* breakpoints */
 @media (max-width: calc(768px - 1px)) {
   /* main menu and timeline act as modal */

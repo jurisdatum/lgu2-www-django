@@ -1,5 +1,6 @@
 
 from datetime import datetime, timezone
+from typing import Optional
 
 from . import server
 from .browse_types import DocumentList
@@ -17,6 +18,17 @@ def _convert_dates(doc):
 
 def get_new() -> DocumentList:
     url = '/documents/new/all'
+    response = server.get_json(url)
+    response['meta']['updated'] = _to_utc(response['meta']['updated'])
+    for doc in response['documents']:
+        _convert_dates(doc)
+    return response
+
+
+def get_published_on(date: str, region: Optional[str] = None) -> DocumentList:
+    url = f'/search?published={date}'
+    if region:
+        url += '&type=' + region
     response = server.get_json(url)
     response['meta']['updated'] = _to_utc(response['meta']['updated'])
     for doc in response['documents']:
