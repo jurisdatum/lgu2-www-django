@@ -23,7 +23,7 @@
 
 		<div class="search-header">
 			<div class="sort-by">
-				<form method="get" action="/search/">
+				<form method="get" action="{% url 'search' %}">
 					<!-- Preserve existing query parameters -->
 					{% for key, value in query_param.items %}
 						{% if key != 'sort' %}
@@ -62,7 +62,7 @@
 						<ul>
 							{% for result in documents %}
 								<li>
-									<a href="/{{ result.id }}/contents">{{ result.title }}</a>
+									<a href="{{ result.link }}">{{ result.title }}</a>
 									<span>{{ result.cite }}</span>
 									{% with result.longType|camel_to_words as converted_type %}
 										<span>{{ converted_type.label_type }}</span>
@@ -77,7 +77,7 @@
 						<ul>
 							{% for result in documents %}
 								<li>
-									<a href="/{{ result.id }}/contents">{{ result.title }}</a>
+									<a href="{{ result.link }}">{{ result.title }}</a>
 									<span>{{ result.cite }}</span>
 									{% with result.longType|camel_to_words as converted_type %}
 										<span>{{ converted_type.label_type }}</span>
@@ -92,7 +92,7 @@
 				<ul>
 					{% for result in documents_data %}
 						<li>
-							<a href="/{{ result.id }}/contents">{{ result.title }}</a>
+							<a href="{{ result.link }}">{{ result.title }}</a>
 							<span>{{ result.cite }}</span>
 							{% with result.longType|camel_to_words as converted_type %}
 								<span>{{ converted_type.label_type }}</span>

@@ -126,7 +126,7 @@ def browse(request, type, year=None):
         'current_page': page,
         'last_page': last_page,
         'search_endpoint': reverse('browse', args=[type]) if year is None else reverse('browse-year', args=[type, year])
-        # 'page_last_modified': data['meta']['updated'][:10]
+        # 'page_last_modified': data['meta']['updated'][:10] # if dates are converted, change to data['meta']['updated'].date().isoformat()
     }
     template = loader.get_template('browse/browse.html')
     return HttpResponse(template.render(context, request))
