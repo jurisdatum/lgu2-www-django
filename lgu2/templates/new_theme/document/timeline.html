@@ -1,0 +1,114 @@
+<section class="timeline">
+    <h2>Timeline of versions</h2>
+    <details>
+        <summary>
+            <span class="open">
+                <span class="version">
+                    <span class="prefix">You are viewing </span>
+                    {% if timeline.original and timeline.original.label == timeline.viewing.label %}
+                    <span class="title">the original version</span>
+                    {% elif timeline.current and timeline.current.label == timeline.viewing.label %}
+                    <span class="title">the current version</span>
+                    {% else %}
+                    <span class="title">a historical version</span>
+                    {% endif %}
+                </span>
+                <span class="date">from <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
+                {% if timeline.pointInTime %}
+                    <span class="point-in-time{% if timeline.pointInTime < timeline.viewing.date %} previous-point-in-time{% endif %}">
+                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                    </span>
+                {% endif %}
+                <span class="button">See all versions</span>
+            </span>
+            <span class="close">Close</span>
+        </summary>
+        <div class="versions">
+            <nav aria-label="Timeline of versions">
+                <ol>
+                    {% if timeline.original %}
+                        {% if timeline.original.label == timeline.viewing.label %}
+                        <li aria-current="page">
+                            <a href="javascript:void(0);">
+                                <span class="prefix">You are viewing </span>
+                                <span class="version"><span class="title">the original version</span></span>
+                                <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
+                                {% if timeline.pointInTime and timeline.pointInTime != timeline.original.date %}
+                                    <span class="point-in-time{% if timeline.pointInTime < timeline.original.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ timeline.original.link }}">
+                                <span class="version"><span class="title">The original version</span></span>
+                                <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+
+                    {% for v in timeline.historical %}
+                        {% if v.label == timeline.viewing.label %}
+                        <li aria-current="page">
+                            <a href="javascript:void(0);">
+                                <span class="prefix">You are viewing </span>
+                                <span class="version"><span class="title">a historical version</span></span>
+                                <span class="date">from <span>{{ v.date|date:'d F Y' }}</span></span>
+                                {% if timeline.pointInTime and timeline.pointInTime != v.date  %}
+                                    <span class="point-in-time{% if timeline.pointInTime < v.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ v.link}}">
+                                <span class="version"><span class="title">A historical version</span></span>
+                                <span class="date">from <span>{{ v.date|date:'d F Y' }}</span></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if timeline.current %}
+                        {% if timeline.current.label == timeline.viewing.label %}
+                        <li aria-current="page">
+                            <a href="javascript:void(0);">
+                                <span class="version">
+                                    <span class="prefix">You are viewing </span>
+                                    <span class="title">the current version</span>                                    
+                                </span>
+                                <span class="date">from <span>{{ timeline.current.date|date:'d F Y' }}</span></span>
+                                {% if timeline.pointInTime and timeline.pointInTime != timeline.current.date %}
+                                    <span class="point-in-time{% if timeline.pointInTime < timeline.current.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ timeline.current.link }}">
+                                <span class="version">
+                                    <span class="title">The current version</span>
+                                </span>
+                                <span class="date">from <span>{{ timeline.current.date|date:'d F Y' }}</span></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                </ol>
+            </nav>
+                <div hidden class="scrollbar initialise">
+                <h3>Scrollbar to access all versions on the timeline. Keyboard-only users already have access to all versions.</h3>
+                <button class="left" disabled><span>Scroll left</span></button>
+                <div class="drag-strip"><div class="drag" draggable="true"><span>Drag horizontally to scroll timeline</span></div></div>
+                <button class="right"><span>Scroll right</span></button>
+            </div>
+        </div>
+    </details>
+</section>

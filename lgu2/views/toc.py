@@ -13,7 +13,10 @@ from ..util.labels import get_type_label
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .helper.status import make_status_data
-
+from .document import group_effects
+from .timeline import make_timeline_data
+from django.shortcuts import render
+from ..messages.status import get_status_message
 
 # ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
@@ -85,7 +88,9 @@ def _make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Opti
 
 def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
-    data = api.get_toc(type, year, number, version, lang)
+    data: Optional[api.TableOfContents] = api.get_toc(type, year, number, version, lang)
+    if data is None:
+        return render(request, 'new_theme/404.html', status=404)
     meta = data['meta']
 
     rdrct = _should_redirect(type, version, lang, meta)
@@ -103,6 +108,16 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     _add_all_links(data['contents'], link_prefix, link_suffix)
 
+    # TODO adding fields to server datatype is not ideal; better to create new context object
+    data['status'] = {
+        'message': get_status_message(data['meta']),
+        'label': meta['title'],
+        'effects': {
+            'direct': group_effects(meta['unappliedEffects'])
+        },
+        'direct_effects': meta['unappliedEffects'],
+        'larger_effects': []
+    }
     data['links'] = {
         'toc': link_prefix + '/contents' + link_suffix,
         'content': link_prefix + '/introduction' + link_suffix,
@@ -136,6 +151,21 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     data['breadcrumbs'] = _make_breadcrumbs(meta, version, lang)
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
+    data['timeline'] = make_timeline_data(meta)
+
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+    
+    data['explanatory_notes'] = explanatory_notes
+    data['other_associated_doc'] = other_associated_doc
 
     data['status'] = make_status_data(meta)
 

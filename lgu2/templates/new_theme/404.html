@@ -1,0 +1,29 @@
+{% extends "new_theme/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main>
+    <section>
+        <h2>Page Not Found</h2>
+    
+    
+        <p class="first">The page you requested could not be found.</p>
+        <p>Please check for any of the following if you see this page after a search:
+        <ul>
+            <li>Spelling mistakes in the search phrase</li>
+            <li>Invalid parameter entered e.g 19988 instead of 1998 for a year</li>
+        </ul>
+        </p>
+        <p>Alternatively, the referrer may have passed an invalid URI to this site.</p>
+        <ul xmlns="http://www.w3.org/1999/xhtml">
+            <li>
+                <a href="/ukpga/2023/54/2023-10-26">http://www.legislation.gov.uk/ukpga/2023/54/2023-10-26</a>
+            </li>
+            <li>
+                <a href="/ukpga/2023/54/1991-02-01">http://www.legislation.gov.uk/ukpga/2023/54/1991-02-01</a>
+            </li>
+        </ul>
+    </section>
+</main>
+{% endblock %}

@@ -64,10 +64,11 @@ def _make_timeline_data(meta, pit):
 
 def group_effects(unappliedEffects):
     return {
-        'outstanding': [ effect for effect in unappliedEffects if effect['outstanding'] ],
-        'future': [ effect for effect in unappliedEffects if effect['required'] and not effect['outstanding'] ],
-        'unrequired': [ effect for effect in unappliedEffects if not effect['required'] ]
+        'outstanding': [effect for effect in unappliedEffects if effect.get('outstanding')],
+        'future': [effect for effect in unappliedEffects if effect.get('required') and not effect.get('outstanding')],
+        'unrequired': [effect for effect in unappliedEffects if not effect.get('required')]
     }
+
 
 
 def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
