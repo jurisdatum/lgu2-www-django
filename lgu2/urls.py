@@ -4,6 +4,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, re_path
+
+from .views.robots import robots_txt
 from .views.doc_types import list_uk
 
 from .views.browse import browse, data as browse_data
@@ -48,6 +50,7 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
+    path("robots.txt", robots_txt),
     
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures', different_legislature, name='different-legislatures'),
