@@ -29,6 +29,7 @@ from .views.general import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("robots.txt", robots_txt),
     # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
 
@@ -50,7 +51,6 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
-    path("robots.txt", robots_txt),
     
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures', different_legislature, name='different-legislatures'),
