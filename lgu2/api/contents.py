@@ -1,10 +1,9 @@
 
-from datetime import date
-from typing import List, NotRequired, Optional, TypedDict, Union, Literal
+from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
-from .document import DocumentMetadata, XmlPackage, package_xml, Extent
+from .document import CommonMetadata, DocumentMetadata, XmlPackage, package_xml, Extent
 
 class Item(TypedDict):
     name: str
@@ -47,9 +46,7 @@ def get_toc(type: str, year, number, version: Optional[str] = None, language: Op
     # Check if response is a "404" document-not-found type
     if toc.get('status') == 404 and toc.get('error') == "Document Not Found":
         return None
-
-    if toc['meta']['date']:
-        toc['meta']['date'] = date.fromisoformat(toc['meta']['date'])
+    CommonMetadata.convert_dates(toc['meta'])
     return toc
 
 

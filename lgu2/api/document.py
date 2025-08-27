@@ -58,6 +58,13 @@ class CommonMetadata(TypedDict):
     alternatives: List[AssociatedDocument]
     associated: List[AssociatedDocument]
 
+    @staticmethod
+    def convert_dates(meta: 'CommonMetadata'):
+        meta['date'] = Date.fromisoformat(meta['date'])
+        meta['modified'] = Date.fromisoformat(meta['modified'])
+        if meta.get('pointInTime'):  # can be null
+            meta['pointInTime'] = Date.fromisoformat(meta['pointInTime'])
+
 
 class DocumentMetadata(CommonMetadata):
     unappliedEffects: List[Effect]
