@@ -1,18 +1,18 @@
 
 from datetime import date
-from typing import List, NotRequired, Optional, TypedDict
+from typing import List, NotRequired, Optional, TypedDict, Union, Literal
 from urllib.parse import urlencode
 
 from . import server
-from .document import DocumentMetadata, XmlPackage, package_xml
-
+from .document import DocumentMetadata, XmlPackage, package_xml, Extent
 
 class Item(TypedDict):
     name: str
     number: str
     title: str
     ref: str
-    children: List['Item']
+    extent: NotRequired[List[Extent]]
+    children: NotRequired[List['Item']]
 
 
 class Contents(TypedDict):
@@ -20,17 +20,17 @@ class Contents(TypedDict):
     introduction: NotRequired[Item]
     body: List[Item]
     signature: NotRequired[Item]
-    appendices: List[Item]
-    attachmentsBeforeSchedules: List[Item]  # EU only
-    schedules: List[Item]
-    attachments: List[Item]
+    appendices: NotRequired[List[Item]]
+    attachmentsBeforeSchedules: NotRequired[List[Item]]  # EU only
+    schedules: NotRequired[List[Item]]
+    attachments: NotRequired[List[Item]]
     explanatoryNote: NotRequired[Item]
     earlierOrders: NotRequired[Item]
 
 
-class Response(TypedDict):
+class TableOfContents(TypedDict):
     meta: DocumentMetadata
-    html: str
+    contents: Contents
 
 
 def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
@@ -41,7 +41,7 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
     return url
 
 
-def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> dict:
+def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Optional[TableOfContents]:
     url = _make_url(type, year, number, version)
     toc = server.get_json(url, language)
     # Check if response is a "404" document-not-found type
