@@ -27,10 +27,8 @@ def make_timeline_data(meta: CommonMetadata) -> TimelineData:
     versions = meta['versions'].copy()
     original = None
 
-    # Parse pointInTime to date object
-    point_in_time = None
-    if meta.get("pointInTime"):
-        point_in_time = date.fromisoformat(meta["pointInTime"])
+    # pointInTime is already converted to date object by API layer
+    point_in_time = meta.get("pointInTime")
 
     if versions and not _ISO_DATE_RE.fullmatch(versions[0]):
         version = versions.pop(0)

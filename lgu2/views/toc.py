@@ -52,7 +52,7 @@ def _add_all_links(contents, prefix: str, suffix: str):
 
 def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
-    data = api.get_toc(type, year, number, version, lang)
+    data: Optional[api.TableOfContents] = api.get_toc(type, year, number, version, lang)
     if data is None:
         return render(request, 'new_theme/404.html', status=404)
     meta = data['meta']
@@ -72,6 +72,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     _add_all_links(data['contents'], link_prefix, link_suffix)
 
+    # TODO adding fields to server datatype is not ideal; better to create new context object
     data['status'] = {
         'message': get_status_message(data['meta']),
         'label': meta['title'],
