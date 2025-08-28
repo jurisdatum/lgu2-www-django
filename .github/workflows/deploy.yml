@@ -2,7 +2,7 @@ name: Deploy Django to AWS
 
 on:
   push:
-    branches: [ ci-cd ]  # Change to main after testing
+    branches: [ ci-cd-2 ]  # Testing branch with service role fix
   workflow_dispatch:
 
 env:
