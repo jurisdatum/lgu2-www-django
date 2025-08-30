@@ -104,7 +104,13 @@ jobs:
           --application-name ${{ env.EB_APPLICATION_NAME }} \
           --version-label ${version_label} \
           --source-bundle S3Bucket=${{ env.S3_BUCKET }},S3Key=django/${{ env.ZIP_NAME }} \
-          --description "GitHub Actions deployment at $(date)"
+          --description "GitHub Actions deployment at $(date)" \
+          --process
+
+        aws elasticbeanstalk describe-application-versions \
+          --application-name "$EB_APPLICATION_NAME" \
+          --version-labels "$VERSION_LABEL" \
+          --query 'ApplicationVersions[0].Status' --output text
 
     # - name: Set EB managed update policy
     #   run: |
