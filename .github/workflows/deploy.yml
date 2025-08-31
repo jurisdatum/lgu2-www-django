@@ -108,8 +108,8 @@ jobs:
           --process
 
         aws elasticbeanstalk describe-application-versions \
-          --application-name "$EB_APPLICATION_NAME" \
-          --version-labels "$VERSION_LABEL" \
+          --application-name "${{ env.EB_APPLICATION_NAME }}" \
+          --version-label "${version_label}" \
           --query 'ApplicationVersions[0].Status' --output text
 
     # - name: Set EB managed update policy
