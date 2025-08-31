@@ -77,19 +77,11 @@ jobs:
         zip_name="django-${timestamp}.zip"
         echo "ZIP_NAME=${zip_name}" >> $GITHUB_ENV
 
-        # Create deployment package excluding unnecessary files
+        # Create deployment package excluding development files
         zip -r $zip_name . \
-          -x "*.git*" \
-          -x "*__pycache__*" \
-          -x "*.pyc" \
-          -x "*venv*" \
-          -x "*.env" \
-          -x "*poetry.lock*" \
-          -x "*pyproject.toml*" \
-          -x "*.md" \
-          -x "*jim/*" \
-          -x "*local_cache/*" \
-          -x "db.sqlite3"
+          -x "poetry.lock" \
+          -x "pyproject.toml" \
+          -x "staticfiles/*"
 
     - name: Upload to S3
       run: |
