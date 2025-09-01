@@ -1,11 +1,34 @@
 
-from datetime import date
-from typing import List, NotRequired, Optional, TypedDict
+from datetime import date as Date
+from typing import List, Optional, TypedDict, NotRequired, Literal
 from urllib.parse import urlencode
 
 from . import server
 from .browse_types import AltNumber
 from .responses.effects import Effect
+
+Extent = Literal['E', 'W', 'S', 'NI', 'EU']
+
+AssociatedDocumentType = Literal[
+    'Note', 'PolicyEqualityStatement', 'Alternative', 'CorrectionSlip',
+    'CodeOfPractice', 'CodeOfConduct', 'TableOfOrigins', 'TableOfDestinations',
+    'OrderInCouncil', 'ImpactAssessment', 'Other', 'ExplanatoryDocument',
+    'TranspositionNote', 'UKRPCOpinion'
+]
+
+class AssociatedDocument(TypedDict):
+    type: AssociatedDocumentType
+    uri: str
+    name: NotRequired[str]
+    date: NotRequired[Date]
+    size: NotRequired[int]
+
+
+class Has(TypedDict):
+    introduction: NotRequired[bool]
+    signature: NotRequired[bool]
+    schedules: NotRequired[bool]
+    note: NotRequired[bool]
 
 
 class CommonMetadata(TypedDict):
@@ -13,32 +36,39 @@ class CommonMetadata(TypedDict):
     longType: str
     shortType: str
     year: int
-    regnalYear: str
+    regnalYear: NotRequired[str]
     number: int
-    altNumbers: List[AltNumber]
+    altNumbers: NotRequired[List[AltNumber]]
     isbn: NotRequired[str]
-    date: str
+    date: Date
     cite: str
     version: str
-    status: str
+    status: Literal['final', 'revised']
     title: str
+    extent: List[Extent]
+    subjects: NotRequired[List[str]]
     lang: str
     publisher: str
-    modified: str
-    versions: List[str]
-    schedules: bool
+    modified: Date
+    versions: List[str]  # SortedSet in Java
+    has: Has
+    schedules: bool  # deprecated in Java but still present
     formats: List[str]
-    pointInTime: Optional[str]
-    upToDate: Optional[bool]
+    pointInTime: NotRequired[Date]
+    alternatives: List[AssociatedDocument]
+    associated: List[AssociatedDocument]
 
-    @classmethod
-    def convert_dates(cls, meta: 'CommonMetadata'):
-        if meta['pointInTime'] is not None:
-            meta['pointInTime'] = date.fromisoformat(meta['pointInTime'])
+    @staticmethod
+    def convert_dates(meta: 'CommonMetadata'):
+        meta['date'] = Date.fromisoformat(meta['date'])
+        meta['modified'] = Date.fromisoformat(meta['modified'])
+        if meta.get('pointInTime'):  # can be null
+            meta['pointInTime'] = Date.fromisoformat(meta['pointInTime'])
 
 
 class DocumentMetadata(CommonMetadata):
     unappliedEffects: List[Effect]
+    upToDate: NotRequired[bool]
 
 
 class Document(TypedDict):

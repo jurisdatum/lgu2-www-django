@@ -2,6 +2,7 @@
 from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
 
@@ -12,6 +13,7 @@ from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
+from .timeline import make_timeline_data
 from .helper.status import make_status_data
 
 
@@ -85,7 +87,9 @@ def _make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Opti
 
 def toc(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
-    data = api.get_toc(type, year, number, version, lang)
+    data: Optional[api.TableOfContents] = api.get_toc(type, year, number, version, lang)
+    if data is None:
+        return render(request, 'new_theme/404.html', status=404)
     meta = data['meta']
 
     rdrct = _should_redirect(type, version, lang, meta)
@@ -133,6 +137,22 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_only'] = False
         data['pdf_link'] = None
         data['pdf_thumb'] = None
+
+    data['timeline'] = make_timeline_data(meta)
+
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+    
+    data['explanatory_notes'] = explanatory_notes
+    data['other_associated_doc'] = other_associated_doc
 
     data['breadcrumbs'] = _make_breadcrumbs(meta, version, lang)
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])

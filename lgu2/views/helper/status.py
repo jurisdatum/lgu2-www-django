@@ -41,7 +41,6 @@ def group_effects(effects):
 
 
 def make_status_data(meta: CommonMetadata) -> StatusData:
-    print(meta)
     if meta['upToDate'] is None:
         effects = None
     elif 'fragment' in meta:

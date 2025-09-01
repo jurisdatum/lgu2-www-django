@@ -4,6 +4,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, re_path
+
+from .views.robots import robots_txt
 from .views.doc_types import list_uk
 
 from .views.browse import data as browse_data
@@ -28,6 +30,7 @@ from .views.search import  browse, search_results
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("robots.txt", robots_txt),
     # path('hello', lambda r: HttpResponse("Hello world!"), name='hello'),
 ]
 
