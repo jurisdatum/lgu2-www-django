@@ -50,7 +50,9 @@ def _make_url(type: str, year, number, section: str, version: Optional[str] = No
 
 def get(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> Fragment:
     url = _make_url(type, year, number, section, version)
-    return server.get_json(url, language)
+    frag = server.get_json(url, language)
+    CommonMetadata.convert_dates(frag['meta'])
+    return frag
 
 
 def get_clml(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:

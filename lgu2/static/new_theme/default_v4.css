@@ -178,6 +178,7 @@
   --searchBg: rgba(0, 0, 0, 0.82);
   --searchText: var(--contrastText);
   --searchInput: var(--bg);
+  --hdrSearchInput: var(--bg);
   --searchInputBorder: transparent;
   --modalBg: var(--text);
   --modalText: var(--contrastText);
@@ -219,6 +220,20 @@
   --timelineEnactedVersionIconHover: url('images/timeline-enacted-version-active.png') no-repeat center;
   --timelineEnactedVersionIconActive: url('images/timeline-enacted-version-active.png') no-repeat center;
   --annotation: #af4bb4;
+}
+:root .search-results > section:first-of-type hgroup p a:after,
+:root[colour-scheme="light"] .search-results > section:first-of-type hgroup p a:after {
+  background: url(images/remove-filter-off.png) center no-repeat;
+  background-size: 100%;
+}
+:root .search-results > section:first-of-type hgroup p a:hover:after,
+:root[colour-scheme="light"] .search-results > section:first-of-type hgroup p a:hover:after,
+:root .search-results > section:first-of-type hgroup p a:focus:after,
+:root[colour-scheme="light"] .search-results > section:first-of-type hgroup p a:focus:after,
+:root .search-results > section:first-of-type hgroup p a:active:after,
+:root[colour-scheme="light"] .search-results > section:first-of-type hgroup p a:active:after {
+  background: url(images/remove-filter-on.png) center no-repeat;
+  background-size: 100%;
 }
 :root .icon-cards li a.icon_what_legislation_we_hold,
 :root[colour-scheme="light"] .icon-cards li a.icon_what_legislation_we_hold {
@@ -488,6 +503,7 @@
   --searchBg: rgba(255, 255, 255, 0.05);
   --searchText: var(--contrastText);
   --searchInput: rgba(255, 255, 255, 0.1);
+  --hdrSearchInput: #373e46;
   --searchInputBorder: rgba(255, 255, 255, 0.1);
   --modalBg: #0a141e;
   --modalText: var(--contrastText);
@@ -528,6 +544,16 @@
   --timelineEnactedVersionIconHover: url('images/timeline-enacted-version-active.png') no-repeat center;
   --timelineEnactedVersionIconActive: url('images/timeline-enacted-version.png') no-repeat center;
   --annotation: #c364c8;
+}
+:root[colour-scheme="dark"] .search-results > section:first-of-type hgroup p a:after {
+  background: url(images/remove-filter-off-dm.png) center no-repeat;
+  background-size: 100%;
+}
+:root[colour-scheme="dark"] .search-results > section:first-of-type hgroup p a:hover:after,
+:root[colour-scheme="dark"] .search-results > section:first-of-type hgroup p a:focus:after,
+:root[colour-scheme="dark"] .search-results > section:first-of-type hgroup p a:active:after {
+  background: url(images/remove-filter-on-dm.png) center no-repeat;
+  background-size: 100%;
 }
 :root[colour-scheme="dark"] .icon-cards li a.icon_what_legislation_we_hold {
   background-image: url('images/icon_what_legislation_we_hold-dm.png');
@@ -928,6 +954,9 @@ button:active,
   -moz-box-shadow: 0 0 0.375rem 0 transparent;
   box-shadow: 0 0 0.375rem 0 transparent;
 }
+[hidden] {
+  display: none;
+}
 summary {
   cursor: pointer;
   display: block;
@@ -1287,6 +1316,163 @@ summary::-webkit-details-marker {
   white-space: nowrap;
   border: 0;
 }
+.scrollbar-controls {
+  margin: -4rem 0 0 2.5rem;
+  padding: 0.5rem 0 3.5rem 0;
+  height: 2.5rem;
+  position: relative;
+  text-align: center;
+  display: flex;
+  width: calc(100% - 18.5rem);
+}
+.scrollbar-controls:before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 1.875rem);
+  height: 0.25rem;
+  background: var(--timelineVersionActive);
+  display: block;
+  margin: 1.15rem 0.9375rem;
+}
+.scrollbar-controls h3 {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.scrollbar-controls button {
+  width: 2.85rem;
+  position: relative;
+  margin: 0 0.9375rem 0 0.1rem;
+  padding: 0;
+  height: 2.5rem;
+}
+.scrollbar-controls button:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0.15rem 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-color: var(--buttonText);
+}
+.scrollbar-controls button:first-of-type {
+  margin: 0 0.1rem 0 0.9375rem;
+}
+.scrollbar-controls button:first-of-type:after {
+  margin: 0.15rem 0 0.15em 0.25rem;
+  border: 0;
+  border-bottom: 0.0625rem solid var(--buttonText);
+  border-left: 0.0625rem solid var(--buttonText);
+}
+.scrollbar-controls button:disabled {
+  background: var(--disabledButtonBorder);
+}
+.scrollbar-controls button span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.scrollbar-controls .drag-strip {
+  position: relative;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0 0.0625rem 0;
+}
+.scrollbar-controls .drag-strip .drag {
+  margin: 0 0 -0.0625rem 0;
+  width: 5rem;
+  height: 2.5rem;
+  background: var(--buttonBg);
+  border-radius: 0.15em;
+  position: absolute !important;
+}
+.scrollbar-controls .drag-strip .drag:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  position: absolute;
+  left: 1rem;
+  margin: 1rem 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border: 0;
+  border-bottom: 0.0625rem solid var(--buttonText);
+  border-left: 0.0625rem solid var(--buttonText);
+}
+.scrollbar-controls .drag-strip .drag:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  position: absolute;
+  right: 1rem;
+  margin: 1rem 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-color: var(--buttonText);
+}
+.scrollbar-controls .drag-strip .drag:hover,
+.scrollbar-controls .drag-strip .drag:focus {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.scrollbar-controls .drag-strip .drag span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 /* navigation */
 nav ol,
 nav ul {
@@ -1509,6 +1695,11 @@ header .hdr-search form fieldset select {
   border: 0.0625rem solid var(--searchInputBorder);
   margin: 0 0 0.85em 0;
   width: 6.5em;
+}
+header .hdr-search form fieldset option,
+header .hdr-search form fieldset optgroup {
+  color: var(--text);
+  background: var(--hdrSearchInput);
 }
 header .hdr-search form fieldset input {
   padding: 0.75em 0.9em;
@@ -2288,6 +2479,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   display: contents;
   font-weight: 800;
 }
+.search-results > section:first-of-type hgroup h1 span span {
+  font-weight: 300;
+}
 .search-results > section:first-of-type hgroup p {
   margin: 0.25rem 0 0 0;
 }
@@ -2308,8 +2502,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .search-results > section:first-of-type hgroup p a:after {
   content: "";
   position: absolute;
-  background: url(images/remove-filter-off.png) center no-repeat;
-  background-size: 100%;
   width: 1rem;
   height: 1rem;
   right: 0.65rem;
@@ -2320,14 +2512,322 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .search-results > section:first-of-type hgroup p a:active {
   border-color: var(--link);
 }
-.search-results > section:first-of-type hgroup p a:hover:after,
-.search-results > section:first-of-type hgroup p a:focus:after,
-.search-results > section:first-of-type hgroup p a:active:after {
-  background: url(images/remove-filter-on.png) center no-repeat;
-  background-size: 100%;
-}
 .search-results > section:first-of-type hgroup p a span {
   font-weight: 500;
+}
+.search-results > section:first-of-type hgroup p > span {
+  margin: 0.35rem 0 0 0;
+  font-size: 1rem;
+  font-weight: 300;
+  border: 0.0625em solid var(--subtleBg);
+  background: var(--verySubtleBg);
+  padding: 0.125em 0.5em;
+  display: inline-block;
+  border-radius: 0.1875rem;
+  position: relative;
+}
+.search-results .dataset {
+  width: 100vW;
+}
+.search-results .dataset h2 {
+  font-size: 1.25rem;
+  margin: 0.15em 0;
+  font-weight: 700;
+}
+.search-results .dataset h2:first-letter {
+  text-transform: uppercase;
+}
+.search-results .dataset .skip-links a {
+  margin: 1rem 0 0 0;
+}
+.search-results .dataset > div:first-of-type {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin: 1rem 0 0 0;
+  border-radius: 0.3rem;
+  -moz-box-shadow: 0 0 0.25rem var(--boxShadow);
+  -webkit-box-shadow: 0 0 0.25rem var(--boxShadow);
+  box-shadow: 0 0 0.25rem var(--boxShadow);
+  color: unset;
+}
+.search-results .dataset > div:first-of-type::-webkit-scrollbar {
+  margin: 0;
+  display: none;
+}
+.search-results .dataset > div:first-of-type > div {
+  position: relative;
+}
+.search-results .dataset > div:first-of-type > div:before {
+  content: "";
+  background: var(--moreSubtleBg);
+  width: 100%;
+  height: 1.75rem;
+  position: absolute;
+}
+.search-results .dataset > div:first-of-type > div:nth-of-type(odd) {
+  background: var(--moreSubtleBg);
+}
+.search-results .dataset > div:first-of-type > div h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  position: sticky;
+  left: 0;
+  display: inline-block;
+}
+.search-results .dataset > div:first-of-type > div h3 a {
+  display: block;
+  padding: 0.35rem 0.5rem;
+}
+.search-results .dataset > div:first-of-type > div dl {
+  display: flex;
+  margin: 3.25rem 0 0 0;
+}
+.search-results .dataset > div:first-of-type > div dl div {
+  padding: 0 0.175rem;
+  position: relative;
+  height: 7.5rem;
+  width: 3.5rem;
+  text-align: center;
+  align-content: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.search-results .dataset > div:first-of-type > div dl div dt:not(:has(> span)) {
+  border: 0.0625rem solid var(--link);
+  background: var(--link);
+  flex-grow: 1;
+  display: flex;
+  min-height: 1.5rem;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+.search-results .dataset > div:first-of-type > div dl div dt:not(:has(> span)) a {
+  flex-grow: 1;
+  align-content: flex-end;
+  color: var(--bg);
+}
+.search-results .dataset > div:first-of-type > div dl div dt:not(:has(> span)):has(a[aria-current="page"]) {
+  background: var(--text);
+  border-color: var(--text);
+}
+.search-results .dataset > div:first-of-type > div dl div dt:not(:has(> span)):has(> span) {
+  background: unset;
+}
+.search-results .dataset > div:first-of-type > div dl div dt:not(:has(> span)) a:hover,
+.search-results .dataset > div:first-of-type > div dl div dt:not(:has(> span)) a:focus {
+  background: var(--focusButtonBg);
+}
+.search-results .dataset > div:first-of-type > div dl div dd {
+  order: -1;
+  min-height: 1rem;
+  align-content: flex-end;
+  line-height: 1.35rem;
+  width: 100%;
+}
+.search-results .dataset > div:first-of-type > div dl span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.search-results .dataset > div:first-of-type > div dl.partial-dataset dt:not(:has(> span)),
+.search-results .dataset > div:first-of-type > div dl dt.partial-dataset {
+  border: 0.0625rem dashed var(--link);
+  background: var(--bg);
+  border-bottom: 0;
+}
+.search-results .dataset > div:first-of-type > div dl.partial-dataset dt:not(:has(> span)) a,
+.search-results .dataset > div:first-of-type > div dl dt.partial-dataset a {
+  color: var(--link);
+}
+.search-results .dataset > div:first-of-type > div dl.partial-dataset dt:not(:has(> span)) a:hover,
+.search-results .dataset > div:first-of-type > div dl dt.partial-dataset a:hover,
+.search-results .dataset > div:first-of-type > div dl.partial-dataset dt:not(:has(> span)) a:focus,
+.search-results .dataset > div:first-of-type > div dl dt.partial-dataset a:focus {
+  color: var(--bg);
+}
+.search-results .dataset > div:first-of-type > div dl.partial-dataset dt:not(:has(> span)):has(a[aria-current="page"]),
+.search-results .dataset > div:first-of-type > div dl dt.partial-dataset:has(a[aria-current="page"]) {
+  border-color: var(--bg);
+}
+.search-results .dataset > div:first-of-type > div dl.partial-dataset dt:not(:has(> span)):has(a[aria-current="page"]) a,
+.search-results .dataset > div:first-of-type > div dl dt.partial-dataset:has(a[aria-current="page"]) a {
+  color: var(--bg);
+}
+.search-results .dataset .scrollbar {
+  margin: -4rem 0 0 2.5rem;
+  padding: 0.5rem 0 3.5rem 0;
+  height: 2.5rem;
+  position: relative;
+  text-align: center;
+  display: flex;
+  width: calc(100% - 18.5rem);
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+  width: 100%;
+}
+.search-results .dataset .scrollbar:before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 1.875rem);
+  height: 0.25rem;
+  background: var(--timelineVersionActive);
+  display: block;
+  margin: 1.15rem 0.9375rem;
+}
+.search-results .dataset .scrollbar h3 {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.search-results .dataset .scrollbar button {
+  width: 2.85rem;
+  position: relative;
+  margin: 0 0.9375rem 0 0.1rem;
+  padding: 0;
+  height: 2.5rem;
+}
+.search-results .dataset .scrollbar button:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0.15rem 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-color: var(--buttonText);
+}
+.search-results .dataset .scrollbar button:first-of-type {
+  margin: 0 0.1rem 0 0.9375rem;
+}
+.search-results .dataset .scrollbar button:first-of-type:after {
+  margin: 0.15rem 0 0.15em 0.25rem;
+  border: 0;
+  border-bottom: 0.0625rem solid var(--buttonText);
+  border-left: 0.0625rem solid var(--buttonText);
+}
+.search-results .dataset .scrollbar button:disabled {
+  background: var(--disabledButtonBorder);
+}
+.search-results .dataset .scrollbar button span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.search-results .dataset .scrollbar .drag-strip {
+  position: relative;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0 0.0625rem 0;
+}
+.search-results .dataset .scrollbar .drag-strip .drag {
+  margin: 0 0 -0.0625rem 0;
+  width: 5rem;
+  height: 2.5rem;
+  background: var(--buttonBg);
+  border-radius: 0.15em;
+  position: absolute !important;
+}
+.search-results .dataset .scrollbar .drag-strip .drag:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  position: absolute;
+  left: 1rem;
+  margin: 1rem 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border: 0;
+  border-bottom: 0.0625rem solid var(--buttonText);
+  border-left: 0.0625rem solid var(--buttonText);
+}
+.search-results .dataset .scrollbar .drag-strip .drag:after {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  position: absolute;
+  right: 1rem;
+  margin: 1rem 0;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-color: var(--buttonText);
+}
+.search-results .dataset .scrollbar .drag-strip .drag:hover,
+.search-results .dataset .scrollbar .drag-strip .drag:focus {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.search-results .dataset .scrollbar .drag-strip .drag span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.search-results .dataset .scrollbar[hidden] {
+  display: none;
+}
+.search-results .dataset .scrollbar button {
+  margin: 0 0 0 0.1rem;
+}
+.search-results .dataset .scrollbar button:first-of-type {
+  margin: 0 0.1rem 0 0;
 }
 .search-results .search-content {
   padding: 0 1rem;
@@ -2459,7 +2959,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   font-weight: 500;
   color: var(--Text);
 }
-.search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a span {
+.search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a span:not(.long-type) {
   font-weight: 300;
 }
 .search-results .search-content .search-filters > details[open] > div section:not(:first-of-type) h3 {
@@ -2614,10 +3114,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   padding: 0.65rem 0.25rem;
   line-height: 1.3rem;
 }
-.search-results .search-content .search-results-list ul:not(.skip-links) li:first-of-type {
-  padding: 0 0.25rem 0.65rem 0.25rem;
-  border: 0;
-}
 .search-results .search-content .search-results-list ul:not(.skip-links) li a {
   font-weight: 500;
 }
@@ -2627,6 +3123,11 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .search-results .search-content .search-results-list ul:not(.skip-links) li span:nth-of-type(2) {
   color: var(--lightText);
+}
+.search-results .search-content .search-results-list h3 + ul:not(.skip-links) li:first-of-type,
+.search-results .search-content .search-results-list .skip-links + ul:not(.skip-links) li:first-of-type {
+  padding: 0 0.25rem 0.65rem 0.25rem;
+  border: 0;
 }
 .search-results .search-content .search-results-list ul.skip-links:first-of-type a {
   margin: -1rem 0 0 0;
@@ -4109,6 +4610,55 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0;
   min-width: 16rem;
 }
+.combo-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.combo-input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.combo-button {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  background: none;
+  border: none;
+}
+
+#comboList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none; /* shown via JS */
+}
+
+#comboList li a {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: #333;
+}
+
+#comboList li a:hover {
+  background-color: #f0f0f0;
+}
+
 /* breakpoints */
 @media (max-width: calc(768px - 1px)) {
   /* main menu and timeline act as modal */
@@ -5694,6 +6244,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     width: 13.5rem;
   }
   main.legislation .timeline:has(details:not([open])) summary > span:after {
+    border-color: transparent;
     border-bottom: 0.1rem solid var(--buttonText);
     border-left: 0.1rem solid var(--buttonText);
     margin: calc(50% - 0.75rem) -1.35rem;
@@ -5804,6 +6355,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     display: none;
   }
   main.legislation .timeline:has(details[open]) summary > span:after {
+    border-color: transparent;
     border-top: 0.1rem solid var(--buttonText);
     border-right: 0.1rem solid var(--buttonText);
     margin: 6rem 0.85rem;

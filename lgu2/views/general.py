@@ -1,15 +1,24 @@
 
+from collections import defaultdict
+import datetime
 import json
 import os
 
 from django.conf import settings
+from django.core.cache import caches
 from django.shortcuts import render
-from django.views.decorators.cache import cache_page
+
+from lgu2.util.links import make_contents_link
+# from django.views.decorators.cache import cache_page
 
 from ..api import documents as api
 from ..api.doc_types import get_types, Response
+from ..api.dates import get_recently_published_dates
 from ..api.wagtail_api import get_wagtail_content
-from lgu2.util.labels import get_singular_type_label, get_long_type_label
+from lgu2.util.labels import get_singular_type_label, get_long_type_label, get_type_label
+
+local_cache = caches["localfile"]
+
 
 # @cache_page(60 * 15)
 def homepage(request):
@@ -129,8 +138,35 @@ def whats_new(request):
     return render(request, 'new_theme/whats_new/whats_new.html')
 
 
-def new_legislation(request):
-    return render(request, 'new_theme/whats_new/new-legislation.html')
+def group_documents_for_new_legislation_page(docs):
+    groups = defaultdict(list)
+    for doc in docs:
+        groups[doc['longType']].append(doc)
+    ordered = sorted(groups.items(), key=lambda item: len(item[1]), reverse=True)
+    return [
+        {
+            'longType': lt,
+            'label': get_type_label(lt),
+            'documents': group_docs
+        }
+        for lt, group_docs in ordered
+    ]
+
+
+def new_legislation(request, country=None, date=None):
+    dates = local_cache.get_or_set('recently_published_dates', get_recently_published_dates, 3600)
+    date = dates[0]['date'] if date is None else datetime.date.fromisoformat(date)
+    data = api.get_published_on(date.isoformat(), country)
+    for doc in data['documents']:
+        doc['link'] = make_contents_link(doc, request.LANGUAGE_CODE)
+    document_groups = group_documents_for_new_legislation_page(data['documents'])
+    context = {
+        'country': country,
+        'date': date,
+        'dates': dates,
+        'document_groups': document_groups
+    }
+    return render(request, 'new_theme/whats_new/new-legislation.html', context)
 
 
 def new_legislation_feeds(request):

@@ -1,0 +1,145 @@
+{% load custom_filters %}
+<aside aria-labelledby="searchFilters" class="search-filters">
+    <h2 id="search-filters-h">Filter your results</h2>
+    <ul class="skip-links">
+        <li><a href="#search-results-h">Skip to search results</a></li>
+    </ul>
+
+    <details>
+        <summary>
+            <span class="open">Filter your results</span>
+            <span class="close">Close<span> filters</span></span>
+        </summary>
+        <div>
+            <section class="filter-type">
+                <h3>By type</h3>
+                <ul>
+                    <!-- "All types" link -->
+                    <li {% if not current_type %}aria-current="page"{% endif %}>
+                        <a href="{{ modified_query_links.type }}">
+                            All legislation types
+                        </a>
+                    </li>
+
+                    
+                    <!-- Show all types if no type is selected -->
+                    {% for all_types in meta_data.counts.byType %}
+                        {% with all_types.type|camel_to_words as converted_type %}
+                            <li>
+                                <a href="{{ all_types.link }}">
+                                    {{ converted_type.label_type }}
+                                    <span>({{ all_types.count }}<span> results</span>)</span>
+                                </a>
+                            </li>
+                        {% endwith %}
+                    {% endfor %}
+                
+                </ul>
+            </section>
+
+
+            <section class="filter-year">
+                <h3>By year</h3>
+                <ul class="year-list">
+
+                    <!-- Always show 'All years' link -->
+                    <li {% if not current_year %}aria-current="page"{% endif %}>
+                        <a href="{{ modified_query_links.year }}">
+                            All years
+                        </a>
+                    </li>
+
+                    {% if current_year %}
+                        <!-- Only show the selected year -->
+                        {% for all_years in meta_data.counts.byYear %}
+                            {% if current_year == all_years.year|stringformat:"s" %}
+                                <li aria-current="page">
+                                    <a href="{{ all_years.link }}">
+                                        {{ all_years.year }} <span>({{ all_years.count }}<span> results</span>)</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <!-- Show all years if no year is selected -->
+                        {% for all_years in meta_data.counts.byYear %}
+                            <li>
+                                <a href="{{ all_years.link }}">
+                                    {{ all_years.year }} <span>({{ all_years.count }}<span> results</span>)</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                </ul>
+
+                {% if not current_year and by_year_pagination_count > 19 %}
+                    <!-- Show pagination only if no specific year is selected -->
+                    <nav class="pagination custom_pagination" aria-labelledby="pagination">
+                        <h2 id="pagination" class="sr-only">Pages of results</h2>
+                        <ul>
+                            <li><a href="#">First</a></li>
+                            <li><a href="#">Previous</a></li>
+                            <li><a href="#">Next</a></li>
+                            <li><a href="#">Last</a></li>
+                        </ul>
+                    </nav>
+                {% endif %}
+            </section>
+
+
+
+            {% if subject_initials %}
+            <section class="filter-subject">
+                <h3>By subject</h3>
+                <h4>Select the first letter of a subject</h4>
+                <ul>
+                    <li {% if current_subject %} {% else %} aria-current="page" {% endif %}><a href="{{ modified_query_links.subject }}">All subjects</a></li>
+                    {% for item in subject_initials_and_links %}
+                        {% if item.link %}
+                            <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.letter|upper }}</a></li>
+                        {% else %}
+                            <li><span>{{ item.letter|upper }}</span></li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                </ul>
+
+                <details>
+                    {% if current_subject %}
+                        <summary>
+                            <h4>Choose a specific subject</h4>
+                        </summary>
+
+                        <div class="combo-wrapper" id="jsComboWrapper">
+                            <input type="text" class="combo-input" placeholder="Start typing subject..." id="comboInput">
+                            <div class="combo-button" onclick="toggleList()">▼</div>
+
+                            <ul id="comboList" style="display: none;">
+                                {% for item in subject_heading_links %}
+                                <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                            <!-- Non-JS fallback -->
+                            <noscript>
+                                <ul>
+                                    {% for item in subject_heading_links %}
+                                    <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </noscript>
+
+                    {% else %}
+                        <summary disabled>
+                            <h4>Select the first letter to see a list of subjects</h4>
+                        </summary>                        
+                    {% endif %}
+                </details>
+
+            </section>
+            {% endif %}
+        </div>
+    </details>
+</aside>

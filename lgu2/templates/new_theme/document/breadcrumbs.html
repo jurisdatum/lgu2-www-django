@@ -1,0 +1,11 @@
+<nav aria-labelledby="breadcrumbNavigation">
+    <h2 id="breadcrumbNavigation">Where this legislation sits in the Statute Book</h2>
+    <ol>
+        {% for bc in breadcrumbs %}
+        <li>
+            {# I wish the last one weren't a link at all #}
+            <a href="{{ bc.link }}"{% if forloop.last %} aria-current="page"{% endif %}>{{ bc.text }}</a>
+        </li>
+        {% endfor %}
+    </ol>
+</nav>

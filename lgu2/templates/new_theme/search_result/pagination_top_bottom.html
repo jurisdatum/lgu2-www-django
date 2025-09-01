@@ -1,0 +1,54 @@
+<nav aria-labelledby="pagination" class="pagination">
+    <h2 id="pagination">Pages of results</h2>
+    <ul>
+        <!-- First -->
+        {% if current_page > 1 %}
+            <li>
+                <a href="{% if query_params %}{{ query_params }}&page=1{% else %}?page=1{% endif %}">First</a>
+            </li>
+        {% else %}
+            <li><span>First</span></li>
+        {% endif %}
+
+        <!-- Previous -->
+        {% if current_page > 1 %}
+            <li>
+                <a href="{% if query_params %}{{ query_params }}&page={{ current_page|add:-1 }}{% else %}?page={{ current_page|add:-1 }}{% endif %}">Previous</a>
+            </li>
+        {% else %}
+            <li><span>Previous</span></li>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        {% for p in page_range %}
+            {% if p == current_page %}
+                <li aria-current="page">
+                    <a href="{% if query_params %}{{ query_params }}&page={{ p }}{% else %}?page={{ p }}{% endif %}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% if query_params %}{{ query_params }}&page={{ p }}{% else %}?page={{ p }}{% endif %}">{{ p }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Next -->
+        {% if current_page < total_pages %}
+            <li>
+                <a href="{% if query_params %}{{ query_params }}&page={{ current_page|add:1 }}{% else %}?page={{ current_page|add:1 }}{% endif %}">Next</a>
+            </li>
+        {% else %}
+            <li><span>Next</span></li>
+        {% endif %}
+
+        <!-- Last -->
+        {% if current_page < total_pages %}
+            <li>
+                <a href="{% if query_params %}{{ query_params }}&page={{ total_pages }}{% else %}?page={{ total_pages }}{% endif %}">Last</a>
+            </li>
+        {% else %}
+            <li><span>Last</span></li>
+        {% endif %}
+
+    </ul>
+    </nav>

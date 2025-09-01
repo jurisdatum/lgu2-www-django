@@ -7,6 +7,10 @@
 	var animateInterval = 0
 
 	$(document).ready(function() {
+	// to undo hiding of browse dataset unavailable to user agents that do not have JS enabled
+		$('.scrollbar.initialise').removeAttr('hidden')
+		$('.scrollbar.initialise').removeClass('initialise')
+
 	// to undo hiding of functionality unavailable to user agents that do not have JS enabled
 		$('.initialise').each(function() {
 			if($(this).attr('hidden')) {
@@ -81,6 +85,9 @@
 			if(typeof theType != 'undefined') {
 				theType = theType.replace("#", "");
 			}
+			else {
+				theType = "";
+			}
 
 		// Remove 'space' and '+' characters
 			if(typeof theTitle != 'undefined')
@@ -138,6 +145,59 @@
 			$('.long-type').text(getLongType);
 		}
 
+	// If a browse page with dataset visualisation
+		if($('.dataset').length != 0) {
+			var allDocsDd = $('.dataset div div dl dd');
+			var dds = []
+			$(allDocsDd).each(function () {
+				var dd = $(this).clone() .children() .remove() .end() .text().replace(",", "");
+				dds.push(dd);
+			});
+
+			dds.sort(function(a, b) { return a - b });
+			var dtMax = dds[dds.length - 1];
+
+			$(allDocsDd).each(function () {
+				var dd = $(this).clone() .children() .remove() .end() .text().replace(",", "");
+				if (dd == 'undefined' || dd == false) {
+					dd = "0";
+				}
+				dd = ((dd/dtMax) * 100) + 20;
+				$(this).prev().css('height',dd + "%")
+			});
+
+		// scroll to the selected year
+			setTimeout(function() { 
+				loadVersion('all','noanim')
+				var theYear = getUrlVars()["year"];
+				if(theYear !== 'undefined' && theYear !== '' && theYear !== false) {
+					$('.dataset dt a').each(function() {
+						var attr = $(this).attr('aria-current')
+						if (typeof attr !== 'undefined' && attr !== false) {
+							$(this).removeAttr('aria-current')
+						}
+						if ($(this).text() == theYear) {
+							$(this).attr('aria-current','page')
+							loadVersion($(this),'noanim')
+						}
+					})
+				}
+				else {
+					$('.dataset dt a').each(function() {
+						var attr = $(this).attr('aria-current')
+						if (typeof attr !== 'undefined' && attr !== false){
+							loadVersion($(this),'noanim')
+						}
+					})
+				}
+			},20)
+
+		// selecting a year from the dataset
+			$('.dataset > div:first-of-type dt a').on('click', function() {
+				loadVersion(this)
+			})
+		}
+		
 	// If not a search results page, hide search skip links
 		else {
 			$('header .skip-links li:not(:first-of-type)').remove()			
@@ -188,7 +248,19 @@
 				loadVersion(this)
 			})
 
-		// timeline scrollbar controls
+
+		// open timeline if historical version is selected 
+			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
+			{
+				setTimeout(function() { 
+					$('.timeline details').prop('open',true)
+					openTimeline()
+				},150)
+			}
+		}
+		
+		// if scrollbar exists
+		if($('.scrollbar').length != 0) {
 			var down = false
 
 			$('.timeline ol').scroll(function() {
@@ -207,7 +279,33 @@
 				if(!down) {
 					$('.drag').css('left',scrollx * thefactor)
 				}
+				if(scrollx >= olwidth) {
+					$('.right').prop('disabled',true)
+				}
+				else {
+					$('.right').removeAttr('disabled')
+				}
 
+				if(scrollx == 0) {
+					$('.left').prop('disabled',true)
+				}
+				else {
+					$('.left').removeAttr('disabled')
+				}
+			})
+
+			$('.dataset > div:first-of-type').scroll(function() {
+				var scrollbarwidth = $('.scrollbar').width()
+				var liwidth = $('.dataset > div:first-of-type > div').width()
+				var olwidth = $('.dataset > div:first-of-type > div').length * liwidth - scrollbarwidth
+				var scrollx = $('.dataset > div:first-of-type').scrollLeft()
+				var dragwidth = $('.drag').width()
+				var dragstripwidth = $('.drag-strip').width()
+				var thefactor = ((dragstripwidth - dragwidth) / olwidth)
+				
+				if(!down) {
+					$('.drag').css('left',scrollx * thefactor)
+				}
 				if(scrollx >= olwidth) {
 					$('.right').prop('disabled',true)
 				}
@@ -225,24 +323,58 @@
 
 			$('.right').on('click', function() {
 				var scrollbarwidth = $('.scrollbar').width()
-				var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-				var scrollx = $('.timeline ol').scrollLeft()
+				var liwidth;
+				var scrollx;
+				if($('.timeline').length != 0) 
+				{
+					liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
+					scrollx = $('.timeline ol').scrollLeft()
+				}
+				else if($('.dataset').length != 0) 
+				{
+					liwidth = $('.dataset dl:first-of-type dd:first-of-type').width()
+					scrollx = $('.dataset > div:first-of-type').scrollLeft()
+				}
 
 				if (reducedMotion && !reducedMotion.matches) {
 					animateInterval = 400
 				}
-				$('.timeline ol').animate({scrollLeft: scrollx + scrollbarwidth - liwidth}, animateInterval)
+				if($('.timeline').length != 0) 
+				{
+					$('.timeline ol').animate({scrollLeft: scrollx + scrollbarwidth - liwidth}, animateInterval)
+				}
+				else if($('.dataset').length != 0) 
+				{
+					$('.dataset > div:first-of-type').animate({scrollLeft: scrollx + scrollbarwidth - liwidth}, animateInterval)
+				}
 			})
 
 			$('.left').on('click', function() {
 				var scrollbarwidth = $('.scrollbar').width()
-				var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-				var scrollx = $('.timeline ol').scrollLeft()
+				var liwidth;
+				var scrollx;
+				if($('.timeline').length != 0) 
+				{
+					liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
+					scrollx = $('.timeline ol').scrollLeft()
+				}
+				else if($('.dataset').length != 0) 
+				{
+					liwidth = $('.dataset dl:first-of-type dd:first-of-type').width()
+					scrollx = $('.dataset > div:first-of-type').scrollLeft()
+				}
 
 				if (reducedMotion && !reducedMotion.matches) {
 					animateInterval = 400
 				}
-				$('.timeline ol').animate({scrollLeft: scrollx - scrollbarwidth + liwidth}, animateInterval)
+				if($('.timeline').length != 0) 
+				{
+					$('.timeline ol').animate({scrollLeft: scrollx - scrollbarwidth + liwidth}, animateInterval)
+				}
+				else if($('.dataset').length != 0) 
+				{
+					$('.dataset > div:first-of-type').animate({scrollLeft: scrollx - scrollbarwidth + liwidth}, animateInterval)
+				}
 			})
 
 			$(function() {
@@ -252,34 +384,46 @@
 			$('.drag').on('drag', function() {
 				down = true
 				var scrollbarwidth = $('.scrollbar').width()
-				var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-				var liOriginalWidth = $('.timeline ol').children('li:first-of-type').width()
-				var liOriginalMargin = Number($('.timeline ol').children('li:first-of-type').css("margin-right").replace("px", ""))
-				var noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
-				var addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
-				var olwidth = liOriginalWidth + liOriginalMargin + ($('.timeline ol').children('li').length - 2) * liwidth - scrollbarwidth + (addForPiT * noOfPiTs)
+				var liwidth;
+				var liOriginalWidth;
+				var liOriginalMargin;
+				var noOfPiTs;
+				var addForPiT;
+				var olwidth;
+				if($('.timeline').length != 0) 
+				{
+					liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
+					liOriginalWidth = $('.timeline ol').children('li:first-of-type').width()
+					liOriginalMargin = Number($('.timeline ol').children('li:first-of-type').css("margin-right").replace("px", ""))
+					noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
+					addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
+					olwidth = liOriginalWidth + liOriginalMargin + ($('.timeline ol').children('li').length - 2) * liwidth - scrollbarwidth + (addForPiT * noOfPiTs)
+				}
+				else if($('.dataset').length != 0) 
+				{
+					liwidth = $('.dataset > div:first-of-type > div').width()
+					olwidth = $('.dataset > div:first-of-type > div').length * liwidth - scrollbarwidth
+				}
 				var dragwidth = $('.drag').width()
 				var dragstripwidth = $('.drag-strip').width()
 				var thefactor = ((dragstripwidth - dragwidth) / olwidth)
 				var dragleft = $('.drag').css('left').replace("px", "")
 
-				$('.timeline ol').scrollLeft(dragleft / thefactor)
+				if($('.timeline').length != 0) 
+				{
+					$('.timeline ol').scrollLeft(dragleft / thefactor)
+				}
+				else if($('.dataset').length != 0) 
+				{
+					$('.dataset > div:first-of-type').scrollLeft(dragleft / thefactor)
+				}
 			})
 
 			$('.drag').on('dragstop', function() {
 				down = false
 			})
+	}
 
-		// open timeline if historical version is selected 
-			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
-			{
-				setTimeout(function() { 
-					$('.timeline details').prop('open',true)
-					openTimeline()
-				},150)
-			}
-		}
-		
 	// if a table of contents
 		if($('.legislation .toc-detail').length != 0) {
 			$('#toc').on('click', function() {
@@ -351,7 +495,6 @@
 				}
 			})
 		}
-		
 		
 	// if there is a status panel
 		if($('.status-panel').length != 0) {
@@ -461,6 +604,19 @@
 				}
 			}
 			
+		// scroll to the selected year
+			if($('.dataset').length != 0) 
+			{
+				setTimeout(function() { 
+					$('.dataset dt a').each(function() {
+						var attr = $(this).attr('aria-current')
+						if (typeof attr !== 'undefined' && attr !== false){
+							loadVersion($(this),'noanim')
+						}
+					})
+				},20)
+			}
+
 		// remove dynamic left-hand nav on lower breakpoints and retrigger on higher breakpoints
 			if($('.in-page-nav ol').length != 0 && $(window).width() < 1024) {
 				$('.in-page-nav a').removeAttr('aria-current','page')
@@ -471,7 +627,7 @@
 				if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 					setDynamicLeftHandNav()
 				}
-			}		
+			}
 		})
 	})
 
@@ -575,40 +731,69 @@
 
 	function loadVersion(version,anim) {
 		animateInterval = 0
-		version = $(version).parent()
-
-		$('.versions li').each(function() {
-			$(this).removeAttr('aria-current')
-			$('.versions li a .prefix').remove()
-
-		})
-		$(version).attr('aria-current','page')
-		$(version).find('.version').prepend($('<span class="prefix">You are viewing </span>'))
-		
-		$('.timeline summary .title').text($(version).find('.title').text().toLowerCase())
-		$('.timeline summary .date').text($(version).find('.date').contents().first().text())
-		$('.timeline summary .date').append($('<span>' + ($(version).find('.date span').text()) + '</span>'))
-		
-		var scrollbarwidth = $('.scrollbar').width()
-		var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-		var noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
-		var addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
-		var index = $(version).index()
-
 		if (reducedMotion && !reducedMotion.matches && anim != 'noanim') {
 			animateInterval = 400
 		}
+		var scrollbarwidth;
+		var index;
 		
-		setTimeout(function(){
-			$('.timeline ol').animate({scrollLeft: ((index * liwidth) + (addForPiT * noOfPiTs) + (liwidth / 2) - (scrollbarwidth * 0.5))}, animateInterval)
-		},1)
-
-		if($(window).width() < 1023)
+		if($('.timeline').length != 0) 
 		{
-			$('.timeline details').removeAttr('open')
+			version = $(version).parent()
+			$('.versions li').each(function() {
+				$(this).removeAttr('aria-current')
+				$('.versions li a .prefix').remove()
+			})
+			$(version).attr('aria-current','page')
+			$(version).find('.version').prepend($('<span class="prefix">You are viewing </span>'))
+
+			$('.timeline summary .title').text($(version).find('.title').text().toLowerCase())
+			$('.timeline summary .date').text($(version).find('.date').contents().first().text())
+			$('.timeline summary .date').append($('<span>' + ($(version).find('.date span').text()) + '</span>'))
+
+			scrollbarwidth = $('.scrollbar').width()
+			index = $(version).index()
+			var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
+			var noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
+			var addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
+			
+			setTimeout(function(){
+				$('.timeline ol').animate({scrollLeft: ((index * liwidth) + (addForPiT * noOfPiTs) + (liwidth / 2) - (scrollbarwidth * 0.5))}, animateInterval)
+			},1)
+			
+			if($(window).width() < 1023)
+			{
+				$('.timeline details').removeAttr('open')
+			}
+		}
+		else if($('.dataset').length != 0) 
+		{
+			if(version == 'all') {
+				setTimeout(function(){
+					var containerwidth = $('.dataset > div:first-of-type')[0].scrollWidth
+					$('.dataset > div:first-of-type').animate({scrollLeft: containerwidth}, animateInterval)
+				},20)
+			}
+			else {
+				version = $(version)
+				$('.dataset dt a').each(function() {
+					$(this).removeAttr('aria-current')
+				})
+				$(version).attr('aria-current','page')
+
+				scrollbarwidth = $('.scrollbar').width()
+				var divwidth = $('.dataset > div:first-of-type > div > dl > div').outerWidth()
+
+				var aIndex = $(version).parent().parent().index()
+				var dtIndex = $(version).parent().parent().parent().parent().index()*10
+				index = aIndex + dtIndex
+
+				setTimeout(function(){
+					$('.dataset > div:first-of-type').animate({scrollLeft: ((index * divwidth) + (divwidth / 2) - (scrollbarwidth * 0.5))}, animateInterval)
+				},20)
+			}
 		}
 	}
-
 	function romanise(num) {
 		if (isNaN(num))
 			return NaN

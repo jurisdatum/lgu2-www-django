@@ -1,0 +1,21 @@
+{% if status.up_to_date is none %}
+<div class="up-to-date">
+    <h3>Up to date status</h3>
+    <p>What do we say here when the version shown is not the current revised version?</p>
+    <a href="{{ status.changes_link }}">See all changes made to this Act</a>
+</div>
+{% elif status.up_to_date %}
+<div class="up-to-date">
+    <h3>Up to date status</h3>
+    <p>{{ status.label|capfirst }} is up to date with all changes as of {{ status.point_in_time|date:"d M Y" }}</p>
+    <a href="{{ status.changes_link }}">See all changes made to this Act</a>
+</div>
+{% else %}
+<div class="up-to-date not-up-to-date">
+    <h3>Up to date status</h3>
+    <p>{{ status.label|capfirst }} is not up to date</p>
+    <p>This legislation has been amended but we still need to update the website to reflect these changes.</p>
+    <button aria-expanded="false" aria-controls="statusPanelDetail" class="">See what these changes are</button>
+    <a href="{{ status.changes_link }}">See all changes made to this Act</a>
+</div>
+{% endif %}
