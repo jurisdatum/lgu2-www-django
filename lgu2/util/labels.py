@@ -169,6 +169,11 @@ labels = {
         'plural':      'Directives originating from the EU',
         'long_plural': 'Directives originating from the EU',
     },
+    'eut': {
+        'singular':    'EU Treaty',
+        'plural':      'European Union Treaties',
+        'long_plural': 'European Union Treaties'
+    }
 }
 
 for short, long in short_to_long.items():

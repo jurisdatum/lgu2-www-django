@@ -41,7 +41,8 @@
 			<h2>Search for legislation</h2>
 			<details open>
 				<summary><span>Search</span></summary>
-				<form role="search" method="post">
+				<form role="search" method="get" action="{% url 'search' %}">
+					<!-- {% csrf_token %} -->
 					<fieldset>
 						<legend>Legislation search</legend>
 						<span class="title">
