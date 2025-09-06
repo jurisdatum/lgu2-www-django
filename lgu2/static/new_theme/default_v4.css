@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body:not(:-moz-handler-blocked) fieldset {
+  display: table-cell;
+}
 /* Roboto font */
 @font-face {
   font-family: 'Roboto';
@@ -169,6 +172,8 @@
   --disabledModalText: #c8c8c8;
   --disabledButtonBorder: #8a8a8a;
   --disabledButtonBg: #ebebeb;
+  --activeBg: var(--searchBg);
+  --activeText: var(--contrastText);
   --alert: #ffaf28;
   --alertBg: rgba(255, 175, 40, 0.25);
   --warningText: #d2004b;
@@ -398,6 +403,16 @@
   background: url('images/in-force.png') no-repeat 0.125em 0.575em;
   background-size: 1.5em;
 }
+:root .legislation .legislation-content aside > div.confers-power,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.confers-power {
+  background: url('images/confers-power.png') no-repeat 0.25em 0.625em;
+  background-size: 1.1em;
+}
+:root .legislation .legislation-content aside > div.blanket-amendments,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.blanket-amendments {
+  background: url('images/blanket-amendments.png') no-repeat 0.15em 0.5em;
+  background-size: 1.45em;
+}
 :root .legislation .legislation-content aside > div.explanatory-notes,
 :root[colour-scheme="light"] .legislation .legislation-content aside > div.explanatory-notes {
   background: url('images/explanatory-notes.png') no-repeat 0.25em 0.6em;
@@ -494,6 +509,8 @@
   --disabledModalText: #c8c8c8;
   --disabledButtonBorder: #8a8a8a;
   --disabledButtonBg: #141414;
+  --activeBg: var(--searchBg);
+  --activeText: var(--contrastText);
   --alert: #ffaf28;
   --alertBg: #372d00;
   --warningText: #d2004b;
@@ -677,6 +694,14 @@
 :root[colour-scheme="dark"] .legislation .legislation-content aside > div.in-force {
   background: url('images/in-force-dm.png') no-repeat 0 0.575em;
   background-size: 1.5em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.confers-power {
+  background: url('images/confers-power-dm.png') no-repeat 0.25em 0.625em;
+  background-size: 1.1em;
+}
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.blanket-amendments {
+  background: url('images/blanket-amendments-dm.png') no-repeat 0.15em 0.5em;
+  background-size: 1.45em;
 }
 :root[colour-scheme="dark"] .legislation .legislation-content aside > div.explanatory-notes {
   background: url('images/explanatory-notes-dm.png') no-repeat 0.125em 0.6em;
@@ -953,6 +978,75 @@ button:active,
   -webkit-box-shadow: 0 0 0.375rem 0 transparent;
   -moz-box-shadow: 0 0 0.375rem 0 transparent;
   box-shadow: 0 0 0.375rem 0 transparent;
+}
+.toggle {
+  list-style: none;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.toggle li a {
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background-color: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  position: relative;
+  display: block;
+  padding: 0.35em 0.65em;
+  border-radius: 0.1875rem;
+  font-weight: 300;
+  white-space: nowrap;
+}
+.toggle li a:focus,
+.toggle li a:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.toggle li a:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.toggle li a[aria-current="page"] {
+  padding: 0.35em 0.65em 0.35em 1.85em;
+  background: var(--activeBg);
+  color: var(--activeText);
+  border: 0.0625rem solid var(--activeBg);
+  font-weight: 500;
+}
+.toggle li a[aria-current="page"]:before {
+  position: absolute;
+  content: "";
+  margin: 0.5rem 0 0 -1.3em;
+  border-top: 0.175rem solid var(--activeText);
+  border-right: 0.175rem solid var(--activeText);
+  transform: rotate(135deg);
+  width: 0.65rem;
+  height: 0.225em;
 }
 [hidden] {
   display: none;
@@ -2957,7 +3051,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a {
   font-weight: 500;
-  color: var(--Text);
 }
 .search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a span:not(.long-type) {
   font-weight: 300;
@@ -2979,6 +3072,15 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .search-results .search-content .search-filters > details[open] > div section.filter-subject > h4 {
   padding: 0.35rem 0 0 0;
+}
+.search-results .search-content .search-filters > details[open] > div section.filter-subject label {
+  display: block;
+  margin: 0.5rem 0 0.25rem 0;
+}
+.search-results .search-content .search-filters > details[open] > div section.filter-subject input {
+  display: block;
+  width: 22.5rem;
+  margin: 0 0 0.75rem 0;
 }
 .search-results .search-content .search-filters > details[open] > div section.filter-subject > ul {
   font-size: 0;
@@ -3077,6 +3179,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 transparent;
   background-color: var(--disabledButtonBg);
   color: var(--text);
+}
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details .dynamic-subjects-results div {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .search-results .search-content .search-header {
   overflow: unset;
@@ -3259,7 +3372,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   gap: 0.85rem 1.15rem;
   width: calc(100% - 2rem);
   padding: 1.2rem 0;
-  border-top: 1px solid var(--subtleBorder);
+  border-top: 0.0625rem solid var(--subtleBorder);
 }
 .new-legislation > div section nav ul li {
   margin: 0;
@@ -3304,9 +3417,168 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .new-legislation-feeds .narrow-lists ul li ul {
   margin: 0 0 0 1.25rem;
 }
+/* changes to legislation page */
+.changes-to-legislation > section:has(form) {
+  background: var(--altBg);
+  max-width: unset;
+  padding: 0 1rem;
+}
+.changes-to-legislation > section:has(form) form {
+  padding: 2rem 1rem;
+  margin: 0 auto;
+  max-width: var(--maxWidth);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1.5em;
+}
+.changes-to-legislation > section:has(form) form fieldset {
+  background: var(--bg);
+  border-radius: 0.3rem;
+  -moz-box-shadow: 0 0 0.25rem var(--boxShadow);
+  -webkit-box-shadow: 0 0 0.25rem var(--boxShadow);
+  box-shadow: 0 0 0.25rem var(--boxShadow);
+  color: unset;
+  padding: 1.25rem;
+  position: relative;
+}
+.changes-to-legislation > section:has(form) form fieldset legend {
+  position: absolute;
+}
+.changes-to-legislation > section:has(form) form fieldset > label {
+  margin: 1.25rem 0 0.35rem 0;
+  display: block;
+}
+.changes-to-legislation > section:has(form) form fieldset > label:first-of-type {
+  margin: 2.5rem 0 0.35rem 0;
+}
+.changes-to-legislation > section:has(form) form fieldset > input[type="text"]:first-of-type,
+.changes-to-legislation > section:has(form) form fieldset select {
+  width: 100%;
+}
+.changes-to-legislation > section:has(form) form fieldset > input[type="text"]:last-of-type {
+  width: 4.5rem;
+}
+.changes-to-legislation > section:has(form) form fieldset [role="group"] {
+  display: flow-root;
+}
+.changes-to-legislation > section:has(form) form fieldset [role="group"] h3 {
+  margin: 1.25rem 0 0.35rem 0;
+  font-weight: 400;
+  font-size: 1rem;
+}
+.changes-to-legislation > section:has(form) form fieldset [role="group"] label {
+  display: inline-block;
+  float: left;
+  clear: both;
+  padding: 0.5em 0.75em;
+  line-height: 1.2rem;
+  border: 0.0625rem solid var(--link);
+  border-right: 0;
+  border-radius: 0.1875rem 0 0 0.1875rem;
+  background: var(--subtleBg);
+}
+.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type {
+  margin: 0.75rem 0 0 0;
+}
+.changes-to-legislation > section:has(form) form fieldset [role="group"] input {
+  display: inline-block;
+  float: left;
+  width: 4rem;
+  border-left: 0;
+  padding: 0.5em 0.75em;
+  line-height: 1.2rem;
+  border-radius: 0 0.1875rem 0.1875rem 0;
+  clear: right;
+}
+.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type {
+  margin: 0.75rem 0 0 0;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type legend:before {
+  content: "Show..." / "";
+  font-size: 1.625rem;
+  font-weight: 800;
+  line-height: 1.2em;
+  margin: 0 0 0.4em 0;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type legend span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div {
+  padding: 0.8rem 1.25rem;
+  border-top: 0.0625rem solid transparent;
+  border-bottom: 0.0625rem solid transparent;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div label {
+  margin: 0 0 0 1.65rem;
+  display: block;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div label span {
+  font-weight: 500;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div input {
+  position: absolute;
+  margin: 0.22rem 0 0 0;
+  width: 1rem;
+  height: 1rem;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:first-of-type {
+  margin: 3.75rem 0 0 0;
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:nth-of-type(2) {
+  border-top-color: var(--subtleBg);
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:has(input:checked) + div:nth-of-type(2) {
+  border-top-color: transparent;
+  border-bottom-color: var(--subtleBg);
+}
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:has(input:checked) {
+  background: var(--subtleBg);
+  border-top-color: var(--subtleBorder);
+  border-bottom-color: var(--subtleBorder);
+}
+.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]) {
+  padding: 0;
+}
+.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]) legend {
+  padding: 1.25rem;
+}
+.changes-to-legislation > section:has(form) form > div {
+  padding: 1.25rem;
+  background: var(--bg);
+  border-radius: 0.3rem;
+  -moz-box-shadow: 0 0 0.25rem var(--boxShadow);
+  -webkit-box-shadow: 0 0 0.25rem var(--boxShadow);
+  box-shadow: 0 0 0.25rem var(--boxShadow);
+  color: unset;
+}
+.changes-to-legislation > section:has(form) form > div span span {
+  font-weight: 500;
+}
+.changes-to-legislation > section:has(form) form > div p {
+  margin: 0.25rem 0 1rem 0;
+}
+.changes-to-legislation > section:has(form) form > div button {
+  width: 100%;
+}
+.changes-to-legislation > section:has(form) + section {
+  padding: 2rem 1rem;
+}
 /* legislation pages */
 .legislation section {
   overflow: unset;
+}
+.legislation section:has(h1) p {
+  margin: 0.75rem 0 0 0;
+  padding: 0.5rem 0 0 0;
+  border-top: 0.0625rem solid var(--lessSubtleBorder);
 }
 .legislation .legislation-navigation {
   text-align: center;
@@ -3785,6 +4057,76 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .legislation-content > aside > div.not-up-to-date button:focus {
   background: var(--focusWarningBg);
 }
+.legislation .legislation-content > aside > div.up-to-date ul {
+  list-style: none;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0.35rem 1em 0.5em 2em;
+}
+.legislation .legislation-content > aside > div.up-to-date ul li a {
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background-color: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  position: relative;
+  display: block;
+  padding: 0.35em 0.65em;
+  border-radius: 0.1875rem;
+  font-weight: 300;
+  white-space: nowrap;
+}
+.legislation .legislation-content > aside > div.up-to-date ul li a:focus,
+.legislation .legislation-content > aside > div.up-to-date ul li a:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.legislation .legislation-content > aside > div.up-to-date ul li a:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.legislation .legislation-content > aside > div.up-to-date ul li a[aria-current="page"] {
+  padding: 0.35em 0.65em 0.35em 1.85em;
+  background: var(--activeBg);
+  color: var(--activeText);
+  border: 0.0625rem solid var(--activeBg);
+  font-weight: 500;
+}
+.legislation .legislation-content > aside > div.up-to-date ul li a[aria-current="page"]:before {
+  position: absolute;
+  content: "";
+  margin: 0.5rem 0 0 -1.3em;
+  border-top: 0.175rem solid var(--activeText);
+  border-right: 0.175rem solid var(--activeText);
+  transform: rotate(135deg);
+  width: 0.65rem;
+  height: 0.225em;
+}
 .legislation .legislation-content > aside details {
   margin: 0.5rem 0.25rem 0.65rem 0.25rem;
 }
@@ -4101,7 +4443,13 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   padding: 1.25rem 0;
 }
 .legislation .legislation-content > div .toc-detail {
-  padding: 0 1rem 1rem 0;
+  padding: 0 0 1rem 0;
+}
+.legislation .legislation-content > div .toc-detail .status-panel {
+  margin: 0 0 1rem 0;
+}
+.legislation .legislation-content > div .toc-detail:has(button) .status-panel {
+  margin: 0 0 0.25rem 0;
 }
 .legislation .legislation-content > div .toc-detail h3,
 .legislation .legislation-content > div .toc-detail h4,
@@ -4271,6 +4619,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .legislation-content > div .toc-detail ol ul {
   margin: 0.5rem 0 0 0.75rem;
 }
+.legislation .legislation-content > div .toc-detail > ul,
+.legislation .legislation-content > div .toc-detail > ol {
+  margin: 0.5rem 1rem 0 1rem;
+}
 .legislation .legislation-content > div .toc-detail button {
   background: transparent;
   padding: 0.75rem 1rem 0.75rem 2rem;
@@ -4338,6 +4690,19 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .legislation .legislation-content > div .toc-detail:not(:has(details)) button {
   display: none;
+}
+.legislation .legislation-content > div .confers-power,
+.legislation .legislation-content > div .blanket-amendments {
+  padding: 0 0 1rem 0;
+}
+.legislation .legislation-content > div .confers-power ul,
+.legislation .legislation-content > div .blanket-amendments ul {
+  list-style: none;
+  margin: 0;
+}
+.legislation .legislation-content > div .confers-power ul li,
+.legislation .legislation-content > div .blanket-amendments ul li {
+  margin: 0 0 1em 0;
 }
 .legislation .legislation-content > div .status-panel-anchor {
   width: 5rem;
@@ -4416,10 +4781,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background-image: url('images/pin-on.png');
 }
 .legislation .legislation-content > div .status-panel > div {
-  padding: 0.5rem 1rem 0 1rem;
+  padding: 0.5rem 1rem;
   position: relative;
   background: var(--verySubtleFixedBg);
-  border-left: 0.45rem solid var(--warningBg);
+  border-left: 0.45rem solid var(--activeBg);
 }
 .legislation .legislation-content > div .status-panel > div h2 {
   position: unset;
@@ -4464,10 +4829,13 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   white-space: nowrap;
   border: 0;
 }
+.legislation .legislation-content > div .status-panel > div:has(button) {
+  padding: 0.5rem 1rem 0 1rem;
+}
 .legislation .legislation-content > div .status-panel details {
   margin: 0 0 1em 0;
   background: var(--verySubtleFixedBg);
-  border-left: 0.45rem solid var(--warningBg);
+  border-left: 0.45rem solid var(--activeBg);
   timeline-scope: --scroll;
   animation: --scroll forwards;
   animation-timeline: --scroll;
@@ -4563,6 +4931,27 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     bottom: 0;
   }
 }
+.legislation .legislation-content > div .status-panel.not-up-to-date > div,
+.legislation .legislation-content > div .status-panel.not-up-to-date details {
+  border-left-color: var(--warningBg);
+}
+.legislation:not(:has(.pit-search)) .legislation-navigation {
+  position: relative;
+}
+.legislation:not(:has(.pit-search)) .legislation-navigation:after {
+  position: relative;
+  content: "";
+  height: 0.4rem;
+  overflow: hidden;
+  display: block;
+  margin: 0 0 -0.4rem 0;
+  z-index: 10;
+  background: var(--altBg);
+  background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 .compact-search {
   position: unset;
 }
@@ -4610,56 +4999,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0;
   min-width: 16rem;
 }
-.combo-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-}
-
-.combo-input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.combo-button {
-  position: absolute;
-  right: 10px;
-  top: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  background: none;
-  border: none;
-}
-
-#comboList {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 10;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: none; /* shown via JS */
-}
-
-#comboList li a {
-  display: block;
-  padding: 8px;
-  text-decoration: none;
-  color: #333;
-}
-
-#comboList li a:hover {
-  background-color: #f0f0f0;
-}
-
 /* breakpoints */
+@media (min-width: calc(450px)) and (max-width: calc(768px - 1px)) {
+  main.legislation .legislation-content > div .confers-power ul:has(li:nth-of-type(1)),
+  main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(1)) {
+    columns: 0 1;
+  }
+  main.legislation .legislation-content > div .confers-power ul:has(li:nth-of-type(11)),
+  main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(11)) {
+    columns: 0 2;
+  }
+}
 @media (max-width: calc(768px - 1px)) {
   /* main menu and timeline act as modal */
   body:has(.hdr-menu details[open]) *:not(:has(.hdr-menu)):not(.hdr-menu):not(.hdr-menu *) {
@@ -5005,6 +5355,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 0.85em 0.55em;
   }
   main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.in-force {
+    background-position: 0.85em 0.55em;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.confers-power {
+    background-position: 1em 0.55em;
+  }
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.blanket-amendments {
     background-position: 0.85em 0.55em;
   }
   main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div p {
@@ -5587,6 +5943,21 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     text-align: right;
     margin: 0 0 1rem 0;
   }
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] label {
+    clear: none;
+  }
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type {
+    margin: 0 0 0 1.25rem;
+  }
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] input {
+    clear: none;
+  }
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type {
+    margin: 0;
+  }
+  main.changes-to-legislation > section:has(form) form > div button {
+    width: unset;
+  }
 }
 @media (min-width: 510px) {
   header .hdr-search form fieldset select {
@@ -5647,6 +6018,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .legislation-content .toc-detail ul ul,
   main.legislation .legislation-content .toc-detail ul ol {
     margin: 0.5rem 0 0 2rem;
+  }
+  main.legislation .legislation-content .toc-detail > ul,
+  main.legislation .legislation-content .toc-detail > ol {
+    margin: 0.5rem 1rem 0 2rem;
   }
   main.legislation .legislation-content .toc-detail details ol,
   main.legislation .legislation-content .toc-detail details ul {
@@ -5867,6 +6242,18 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .legislation-navigation {
     margin: 0 1rem;
   }
+  main.legislation .legislation-content > div .confers-power ul:has(li:nth-of-type(1)),
+  main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(1)) {
+    columns: 0 1;
+  }
+  main.legislation .legislation-content > div .confers-power ul:has(li:nth-of-type(21)),
+  main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(21)) {
+    columns: 0 2;
+  }
+  main.legislation .legislation-content > div .confers-power ul:has(li:nth-of-type(41)),
+  main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(41)) {
+    columns: 0 3;
+  }
   main.legislation .legislation-content > div .legislation-ftr nav {
     padding: 0;
   }
@@ -5884,6 +6271,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     top: 0;
     left: 0;
   }
+  main.changes-to-legislation > section:has(form) form {
+    grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem);
+  }
+  main.changes-to-legislation > section:has(form) form > fieldset:last-of-type {
+    grid-column-start: span 2;
+    grid-column-end: 3;
+  }
+  main.changes-to-legislation > section:has(form) form > div {
+    grid-column-start: span 2;
+    grid-column-end: 3;
+  }
 }
 @media (min-width: 1024px) {
   html {
@@ -5894,69 +6292,60 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background: url("images/tna-logo.png") no-repeat;
     background-size: 100%;
   }
-  :root .legislation .legislation-content aside > div.up-to-date,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.up-to-date {
-    background-position: 0.7em 0.6em;
-    background-size: 1.6em;
-  }
-  :root .legislation .legislation-content aside > div.extent,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.extent {
-    background-position: 0.5em 0.6em;
-    background-size: 2em;
-  }
-  :root .legislation .legislation-content aside > div.in-force,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.in-force {
-    background-position: 0.65em 0.6em;
-    background-size: 1.8em;
-  }
-  :root .legislation .legislation-content aside > div.explanatory-notes,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.explanatory-notes {
-    background-position: 0.6em 0.5em;
-    background-size: 1.6em;
-  }
-  :root .legislation .legislation-content aside > div.associated-documents,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.associated-documents {
-    background-position: 0.65em 0.5em;
-    background-size: 1.5em;
-  }
-  :root .legislation .legislation-content aside > div:has(p).explanatory-notes,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).explanatory-notes {
-    background-position: 0.65em 0.6em;
-    background-size: 1.6em;
-  }
-  :root .legislation .legislation-content aside > div:has(p).associated-documents,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).associated-documents {
-    background-position: 0.55em 0.6em;
-    background-size: 1.8em;
-  }
   :root[colour-scheme="dark"] .hdr-tna a {
     background: url("images/tna-logo-dm.png") no-repeat;
     background-size: 100%;
   }
+  :root .legislation .legislation-content aside > div.up-to-date,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.up-to-date,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div.up-to-date {
     background-position: 0.7em 0.6em;
     background-size: 1.6em;
   }
+  :root .legislation .legislation-content aside > div.extent,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.extent,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div.extent {
     background-position: 0.5em 0.6em;
     background-size: 2em;
   }
+  :root .legislation .legislation-content aside > div.in-force,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.in-force,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div.in-force {
     background-position: 0.65em 0.6em;
     background-size: 1.8em;
   }
+  :root .legislation .legislation-content aside > div.confers-power,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.confers-power,
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.confers-power {
+    background-position: 0.85em 0.625em;
+    background-size: 1.35em;
+  }
+  :root .legislation .legislation-content aside > div.blanket-amendments,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.blanket-amendments,
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.blanket-amendments {
+    background-position: 0.45em 0.675em;
+    background-size: 2em;
+  }
+  :root .legislation .legislation-content aside > div.explanatory-notes,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.explanatory-notes,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div.explanatory-notes {
     background-position: 0.6em 0.5em;
     background-size: 1.6em;
   }
+  :root .legislation .legislation-content aside > div.associated-documents,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.associated-documents,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div.associated-documents {
     background-position: 0.65em 0.5em;
     background-size: 1.5em;
   }
+  :root .legislation .legislation-content aside > div:has(p).explanatory-notes,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).explanatory-notes,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div:has(p).explanatory-notes {
     background-position: 0.65em 0.6em;
     background-size: 1.6em;
   }
+  :root .legislation .legislation-content aside > div:has(p).associated-documents,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).associated-documents,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div:has(p).associated-documents {
     background-position: 0.55em 0.6em;
     background-size: 1.8em;
@@ -7023,6 +7412,76 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 0.5rem 0.45rem;
     background-size: 1rem;
   }
+  main.legislation .legislation-content > aside > div.up-to-date ul {
+    list-style: none;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 0 1em 0.75em 1em;
+  }
+  main.legislation .legislation-content > aside > div.up-to-date ul li a {
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    background-color: var(--buttonBg);
+    color: var(--buttonText);
+    border: 0.0625rem solid transparent;
+    padding: 0.5em 1.5em;
+    text-align: center;
+    background-color: transparent;
+    color: var(--buttonBg);
+    border: 0.0625rem solid var(--buttonBg);
+    position: relative;
+    display: block;
+    padding: 0.35em 0.65em;
+    border-radius: 0.1875rem;
+    font-weight: 300;
+    white-space: nowrap;
+  }
+  main.legislation .legislation-content > aside > div.up-to-date ul li a:focus,
+  main.legislation .legislation-content > aside > div.up-to-date ul li a:hover {
+    background-color: var(--focusButtonBg);
+    color: var(--buttonText);
+    border-color: var(--focusOutline);
+    outline-color: var(--focusOutline);
+    outline-style: solid;
+    outline-width: 0.1rem;
+    text-decoration: none;
+    -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  }
+  main.legislation .legislation-content > aside > div.up-to-date ul li a:active {
+    background-color: var(--focusButtonBg);
+    color: var(--buttonText);
+    border-color: var(--focusOutline);
+    outline-color: var(--focusOutline);
+    outline-style: solid;
+    outline-width: 0.1rem;
+    text-decoration: none;
+    -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    background-color: var(--modalBg);
+    color: var(--modalText);
+  }
+  main.legislation .legislation-content > aside > div.up-to-date ul li a[aria-current="page"] {
+    padding: 0.35em 0.65em 0.35em 1.85em;
+    background: var(--activeBg);
+    color: var(--activeText);
+    border: 0.0625rem solid var(--activeBg);
+    font-weight: 500;
+  }
+  main.legislation .legislation-content > aside > div.up-to-date ul li a[aria-current="page"]:before {
+    position: absolute;
+    content: "";
+    margin: 0.5rem 0 0 -1.3em;
+    border-top: 0.175rem solid var(--activeText);
+    border-right: 0.175rem solid var(--activeText);
+    transform: rotate(135deg);
+    width: 0.65rem;
+    height: 0.225em;
+  }
   main.legislation .legislation-content > aside details {
     margin: 0;
   }
@@ -7090,6 +7549,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.search-results .search-content:has(aside > details[open]) .search-filters > details > summary .close {
     display: unset;
   }
+  main.search-results .search-content:has(aside > details[open]) .search-filters > details > div section ul li[aria-current="page"] a {
+    color: var(--text);
+  }
   main.search-results .search-content:has(aside > details[open]) .search-filters div section h3 {
     padding: 0.5rem 0 0 0;
   }
@@ -7103,6 +7565,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.search-results .search-content:has(aside > details[open]) .search-filters div section .pagination {
     margin: 0.85rem auto 0 auto;
     border-bottom: 0;
+  }
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject input {
+    width: 100%;
   }
   main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a {
     font-weight: 500;
@@ -7242,6 +7707,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.search-results .search-content .search-header {
     order: -1;
   }
+  main.changes-to-legislation > section:has(form) form {
+    grid-template-columns: calc(37% - 1.5rem) calc(37% - 1.5rem) 26%;
+  }
+  main.changes-to-legislation > section:has(form) form > fieldset:last-of-type {
+    grid-column-start: unset;
+    grid-column-end: unset;
+  }
+  main.changes-to-legislation > section:has(form) form > div {
+    grid-column-start: span 3;
+    grid-column-end: 4;
+  }
 }
 @media (min-width: calc(1024px)) and (max-width: calc(1280px - 1px)) {
   main.search-results .search-content:not(:has(.pagination li:nth-child(24))) {
@@ -7350,6 +7826,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.home section.whats-new:has(.articles) {
     grid-template-columns: 1fr fit-content(25rem);
   }
+  main.legislation .legislation-content > div .confers-power ul:has(li:nth-of-type(61)),
+  main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(61)) {
+    columns: 0 4;
+  }
   main.search-results .search-content:not(:has(.pagination li:nth-child(29))) {
     position: unset;
   }
@@ -7415,5 +7895,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.search-results .search-content:has(aside details[open]) .search-filters {
     min-width: 18rem;
     max-width: 18rem;
+  }
+  main.changes-to-legislation > section:has(form) form {
+    grid-template-columns: calc(39% - 1rem) calc(39% - 1rem) 22%;
+  }
+  main.changes-to-legislation > section:has(form) form > div {
+    grid-column-start: span 3;
+    grid-column-end: 4;
   }
 }

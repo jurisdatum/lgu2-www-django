@@ -143,6 +143,48 @@
 			}
 		// Get the long 'type' name from the select
 			$('.long-type').text(getLongType);
+		
+		// If filter by subjects is available
+			if($('#subjectsResults').length != 0) {
+				var subjectsPlaceholder = $('#subjectsResults').children('li:last-child').children('a').text().replace(/ .*/,'').toLowerCase();
+				$('#subjectsFilter').attr('placeholder', 'e.g. ' + subjectsPlaceholder);
+
+				var theSubject = decodeURIComponent(getUrlVars()["subject"]);
+				if(theSubject != 'undefined') {
+					$('#subjectsResults li').removeAttr('aria-current','page')
+					$("#subjectsResults li a").filter(function() {
+						return this.innerHTML === theSubject;
+					}).parent().attr('aria-current', 'page');
+				}
+
+				$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+					return function( elem ) {
+						return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+					};
+				});
+
+				$('#subjectsFilter').on('keyup change', function() {
+					var subjectsValue = $('#subjectsFilter').val().toLowerCase();
+					$('.dynamic-subjects-results ul li').remove();
+					$('.dynamic-subjects-results ul').append($('#subjectsResults li:contains("' + subjectsValue + '")').clone());
+					
+					var indexCount = $('.dynamic-subjects-results ul').children('li:last-child').index() + 1;
+					var resultsSuffix = '';
+					if(indexCount == 1) {
+						resultsSuffix = ' subject is available';
+					}
+					else {
+						resultsSuffix = ' subjects are available';
+					}
+					if(indexCount > 0) {
+						$('.dynamic-subjects-results div').text(indexCount + resultsSuffix + ' below');
+					}
+					else {
+						$('.dynamic-subjects-results div').text('No' + resultsSuffix);
+					}
+				})
+				$('.dynamic-subjects-results ul').append($('#subjectsResults li').clone());
+			}
 		}
 
 	// If a browse page with dataset visualisation
@@ -202,8 +244,16 @@
 		else {
 			$('header .skip-links li:not(:first-of-type)').remove()			
 		}
-		
-		// if there is a left-hand nav, set up the link ids
+        
+	// If on the changes to legislation search page
+		if($('.changes-to-legislation').length != 0) {
+			$('.changes-to-legislation form').on('input', '*', function() {
+                compileChangesSearch();
+            })
+            compileChangesSearch();
+        }
+            
+    // if there is a left-hand nav, set up the link ids
 		if($('.in-page-nav ol').length != 0) {
 			$('.in-page-nav ol').children('li:first').children('a').attr('aria-current','page')
 			$('.in-page-nav ol li:not(#main-content-h)').each(function() {
@@ -247,7 +297,6 @@
 				$('.versions li .point-in-time').remove()
 				loadVersion(this)
 			})
-
 
 		// open timeline if historical version is selected 
 			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
@@ -675,6 +724,136 @@
 			$('.in-page-nav a').removeAttr('aria-current','page')
 			$('.in-page-nav li:first-of-type a').attr('aria-current','page')
 		}
+	}
+
+	function compileChangesSearch() {
+        var affectedTitle = $('#affected-title').val()
+        var affectedType = $('#affected-type option:selected').text()
+        var affectedBetween = actualAffectedBetween = $('#affected-between').val()
+        var affectedAnd = actualAffectedAnd = $('#affected-and').val()
+        var affectedNumber = $('#affected-number').val()
+
+        var affectingTitle = $('#affecting-title').val()
+        var affectingType = $('#affecting-type option:selected').text()
+        var affectingBetween = actualAffectingBetween = $('#affecting-between').val()
+        var affectingAnd = actualAffectingAnd = $('#affecting-and').val()
+        var affectingNumber = $('#affecting-number').val()
+
+        var showChanges = "All changes";
+        if($('#all-changes').is(':checked')) {
+            showChanges = "All changes";
+        }
+        else if($('#applied-changes').is(':checked')) {
+            showChanges = "Changes that have been applied to the text";
+        }
+        else if($('#unapplied-changes').is(':checked')) {
+            showChanges = "Changes not yet applied to the text";
+        }
+        
+        var thisYear = new Date().getFullYear();
+
+        if(affectedBetween != '' && affectedBetween < 1268) {
+            var actualAffectedBetween = '1267';
+        }
+        else if(affectedBetween != '' && affectedBetween > thisYear) {
+            actualAffectedBetween = thisYear;
+        }
+        if(affectedAnd != '' && affectedAnd < 1268) {
+            var actualAffectedAnd = '1267';
+        }
+        else if(affectedAnd != '' && affectedAnd > thisYear) {
+            actualAffectedAnd = thisYear;
+        }
+        if(actualAffectedBetween > actualAffectedAnd) {
+            actualAffectedAnd = actualAffectedBetween;
+        }
+
+        if(affectingBetween != '' && affectingBetween < 2003) {
+            var actualAffectingBetween = '2002';
+        }
+        else if(affectingBetween != '' && affectingBetween > thisYear) {
+            actualAffectingBetween = thisYear;
+        }
+        if(affectingAnd != '' && affectingAnd < 2003) {
+            var actualAffectingAnd = '2002';
+        }
+        else if(affectingAnd != '' && affectingAnd > thisYear) {
+            actualAffectingAnd = thisYear;
+        }
+        if(actualAffectingBetween > actualAffectingAnd) {
+            actualAffectingAnd = actualAffectingBetween;
+        }
+        
+        if($('#applied-changes').is(':checked') || $('#unapplied-changes').is(':checked')) {
+            $('#showChanges').html('<span>' + showChanges + '</span>' + ' of ');
+        }
+        else {
+            $('#showChanges').html('<span>' + showChanges + '</span>' + ' to ');
+        }
+
+        $('#affectedTitle span').text(affectedTitle);
+        if(affectedTitle == '') {
+            $('#affectedTitle').attr('hidden','')
+        }
+        else {
+            $('#affectedTitle').removeAttr('hidden')
+        }
+          
+        $('#affectedType span').text(affectedType);
+
+        if(actualAffectedBetween == actualAffectedAnd){
+            $('#affectedYear span').text('in ' + actualAffectedBetween);
+        }
+        else {
+            $('#affectedYear span').text('between ' + actualAffectedBetween + ' and ' + actualAffectedAnd);
+        }
+
+        if(affectedBetween == '' && affectedAnd == '') {
+            $('#affectedYear').attr('hidden','')
+        }
+        else {
+            $('#affectedYear').removeAttr('hidden')
+        }
+
+        $('#affectedNumber span').text(affectedNumber);        
+        if(affectedNumber == '') {
+            $('#affectedNumber').attr('hidden','')
+        }
+        else {
+            $('#affectedNumber').removeAttr('hidden')
+        }
+
+        $('#affectingTitle span').text(affectingTitle);
+        if(affectingTitle == '') {
+            $('#affectingTitle').attr('hidden','')
+        }
+        else {
+            $('#affectingTitle').removeAttr('hidden')
+        }
+    
+        $('#affectingType span').text(affectingType);
+
+        if(actualAffectingBetween == actualAffectingAnd){
+            $('#affectingYear span').text('in ' + actualAffectingBetween);
+        }
+        else {
+            $('#affectingYear span').text('between ' + actualAffectingBetween + ' and ' + actualAffectingAnd);
+        }
+
+        if(affectingBetween == '' && affectingAnd == '') {
+            $('#affectingYear').attr('hidden','')
+        }
+        else {
+            $('#affectingYear').removeAttr('hidden')
+        }
+
+        $('#affectingNumber span').text(affectingNumber);        
+        if(affectingNumber == '') {
+            $('#affectingNumber').attr('hidden','')
+        }
+        else {
+            $('#affectingNumber').removeAttr('hidden')
+        }
 	}
 
 	function toggleMode(mode) {
