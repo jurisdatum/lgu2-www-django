@@ -9,10 +9,12 @@ from .document import CommonMetadata, XmlPackage, package_xml
 
 
 class FragmentMetadata(CommonMetadata):
-    fragment: str
-    prev: Optional[str]
-    next: Optional[str]
+    fragment: str  # deprecated
+    prev: Optional[str]  # deprecated
+    next: Optional[str]  # deprecated
     fragmentInfo: 'Level'
+    prevInfo: Optional['LabelledLink']
+    nextInfo: Optional['LabelledLink']
     ancestors: List['Level']
     descendants: List['Level']
     pointInTime: Optional[str]
@@ -26,6 +28,11 @@ class Level(TypedDict):
     href: str
     number: str
     title: str
+    label: str
+
+
+class LabelledLink(TypedDict):
+    href: str
     label: str
 
 
