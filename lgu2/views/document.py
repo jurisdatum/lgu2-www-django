@@ -11,6 +11,9 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
 from .redirect import redirect_current, redirect_version, make_data_redirect
+from .timeline import make_timeline_data
+from ..util.extent import make_combined_extent_label
+from ..util.breadcrumbs import make_breadcrumbs
 
 
 # ToDo fix to use response headers
@@ -98,7 +101,20 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     except (TypeError, ValueError):
         pit = None
 
-    timeline = _make_timeline_data(data['meta'], pit)
+    timeline = make_timeline_data(data['meta'])
+    extent_label = make_combined_extent_label(data['meta']['extent'])
+    breadcrumbs = make_breadcrumbs(meta, version, lang)
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+
 
     status = {
         'message': get_status_message(data['meta']),
@@ -126,6 +142,10 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'pit': pit,
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
+        'extent_label': extent_label,
+        'breadcrumbs': breadcrumbs,
+        'explanatory_notes': explanatory_notes,
+        'other_associated_doc': other_associated_doc,
         'status': status,
         'article': data['html'],
         'links': {
@@ -141,7 +161,9 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'pdf_link': pdf_link,
         'pdf_thumb': pdf_thumb
     }
-    template = loader.get_template('document/document.html')
+    # template = loader.get_template('document/document.html')
+    print("triggered")
+    template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
 
 

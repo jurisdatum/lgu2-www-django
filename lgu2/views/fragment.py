@@ -11,7 +11,9 @@ from ..util.labels import get_type_label
 from ..util.types import get_category
 from .document import _make_timeline_data, group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
-
+from .timeline import make_timeline_data
+from ..util.extent import make_combined_extent_label
+from ..util.breadcrumbs import make_breadcrumbs
 
 # ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
@@ -61,7 +63,21 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     except (TypeError, ValueError):
         pit = None
 
-    timeline = _make_timeline_data(data['meta'], pit)
+    timeline = make_timeline_data(data['meta'])
+    extent_label = make_combined_extent_label(data['meta']['extent'])
+    breadcrumbs = make_breadcrumbs(meta, version, lang)
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+    
+    
 
     status_message = get_status_message_for_fragment(data['meta'])
 
@@ -72,6 +88,10 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
         'pit': pit,
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
+        'extent_label': extent_label,
+        'breadcrumbs': breadcrumbs,
+        'explanatory_notes': explanatory_notes,
+        'other_associated_doc': other_associated_doc,
         'status': {
             'message': status_message,
             'label': meta['fragmentInfo']['label'],
@@ -93,7 +113,9 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
             'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
         }
     }
-    template = loader.get_template('document/document.html')
+    # template = loader.get_template('document/document.html')
+    print(timeline)
+    template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
 
 
