@@ -40,3 +40,8 @@ class TestSmartUrlGeneration(TestCase):
         self.assertTrue(result.startswith('/search/?'))
         self.assertIn('type=ukpga', result)
         self.assertIn('title=housing', result)
+
+    def test_type_and_subject_initial(self):
+        params = {'type': 'uksi', 'subject': 'a'}
+        result = make_smart_link(params)
+        self.assertEqual(result, '/uksi/a')

@@ -39,10 +39,12 @@ class SearchResultContext(TypedDict):
     default_pagesize: int
 
 
-def browse(request, type: str, year: Optional[str] = None):
+def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None):
     params: SearchParams = { 'type': type }
     if year is not None:
         params['year'] = int(year)
+    if subject is not None:
+        params['subject'] = subject
     if 'page' in request.GET and request.GET['page'].isdigit():
         params['page'] = int(request.GET['page'])
     if 'pageSize' in request.GET and request.GET['pageSize'].isdigit():
@@ -83,21 +85,43 @@ def extract_query_params(request) -> SearchParams:
 TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
 
 def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
-    """Build browse URL if params qualify for clean URL routing, None otherwise."""
-    if ('type' in params and
-        set(params).issubset({'type', 'year', 'page', 'pageSize'}) and
-        re.match(TYPE, params['type'])):
+    """Build browse URL if params qualify for clean URL routing, None otherwise.
 
-        year = params.get('year')
-        if year:
-            base = reverse('browse-year', kwargs={'type': params['type'], 'year': year})
+    Only supports the type/year/subject/page/pageSize keys and enforces the
+    validation rules each clean URL requires; returns None whenever the input
+    falls outside those constraints.
+    """
+
+    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize'}
+    if not set(params).issubset(allowed_keys):
+        return None
+
+    tpe = params.get('type')
+    if not tpe or not re.match(TYPE, tpe):
+        return None
+
+    year = params.get('year')
+    if year is not None and (year < 1000 or year > 9999):
+        return None
+
+    subject = params.get('subject')
+    if subject is not None and not re.match('^[a-z]$', subject):
+        return None
+
+    if year:
+        if subject:
+            base = reverse('browse-year-subject', kwargs={'type': tpe, 'year': year, 'subject': subject})
         else:
-            base = reverse('browse', kwargs={'type': params['type']})
+            base = reverse('browse-year', kwargs={'type': tpe, 'year': year})
+    else:
+        if subject:
+            base = reverse('browse-subject', kwargs={'type': tpe, 'subject': subject})
+        else:
+            base = reverse('browse', kwargs={'type': tpe})
 
-        query = {k: params[k] for k in ('page', 'pageSize') if k in params}
-        return f"{base}?{urlencode(query, doseq=True)}" if query else base
+    query = {k: params[k] for k in ('page', 'pageSize') if k in params}
+    return f"{base}?{urlencode(query, doseq=True)}" if query else base
 
-    return None
 
 def make_smart_link(params: SearchParams):
     browse_url = build_browse_url_if_possible(params)
