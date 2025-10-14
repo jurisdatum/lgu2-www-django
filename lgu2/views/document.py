@@ -27,42 +27,42 @@ def _should_redirect(type: str, version: Optional[str], lang: Optional[str], met
         return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
 
 
-def _make_timeline_data(meta, pit):
+# def _make_timeline_data(meta, pit):
 
-    min_list_width = 717
-    max_item_width = 637
-    min_item_width = 142
+#     min_list_width = 717
+#     max_item_width = 637
+#     min_item_width = 142
 
-    versions = meta['versions']
-    versions = filter(lambda v: v != 'enacted', versions)
-    versions = filter(lambda v: v != 'made', versions)
-    versions = filter(lambda v: v != 'prospective', versions)  # ?
-    versions = sorted(versions)
-    versions = list(map(lambda v: {'date': v}, versions))
+#     versions = meta['versions']
+#     versions = filter(lambda v: v != 'enacted', versions)
+#     versions = filter(lambda v: v != 'made', versions)
+#     versions = filter(lambda v: v != 'prospective', versions)  # ?
+#     versions = sorted(versions)
+#     versions = list(map(lambda v: {'date': v}, versions))
 
-    if not versions:
-        return None
-    elif len(versions) == 1:
-        item_width = max_item_width
-    elif len(versions) > 4:  # 5?
-        item_width = min_item_width
-    else:
-        item_width = int((min_list_width - 50) / len(versions))
-    list_width = len(versions) * item_width + 50
-    if list_width < min_list_width:
-        list_width = min_list_width
+#     if not versions:
+#         return None
+#     elif len(versions) == 1:
+#         item_width = max_item_width
+#     elif len(versions) > 4:  # 5?
+#         item_width = min_item_width
+#     else:
+#         item_width = int((min_list_width - 50) / len(versions))
+#     list_width = len(versions) * item_width + 50
+#     if list_width < min_list_width:
+#         list_width = min_list_width
 
-    for version in versions:
-        date = datetime.strptime(version['date'], '%Y-%m-%d')
-        version['label'] = date.strftime("%d/%m/%Y")
-        version['width'] = item_width
-        version['current'] = version['date'] == meta['version']
-    versions[-1]['width'] = item_width - 40
-    return {
-        'width': list_width,
-        'versions': versions,
-        'scroll': list_width > min_list_width
-    }
+#     for version in versions:
+#         date = datetime.strptime(version['date'], '%Y-%m-%d')
+#         version['label'] = date.strftime("%d/%m/%Y")
+#         version['width'] = item_width
+#         version['current'] = version['date'] == meta['version']
+#     versions[-1]['width'] = item_width - 40
+#     return {
+#         'width': list_width,
+#         'versions': versions,
+#         'scroll': list_width > min_list_width
+#     }
 
 
 def group_effects(unappliedEffects):

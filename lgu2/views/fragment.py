@@ -9,7 +9,7 @@ from ..api import fragment as api
 from ..messages.status import get_status_message_for_fragment
 from ..util.labels import get_type_label
 from ..util.types import get_category
-from .document import _make_timeline_data, group_effects
+from .document import group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
@@ -114,7 +114,6 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
         }
     }
     # template = loader.get_template('document/document.html')
-    print(timeline)
     template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
 
