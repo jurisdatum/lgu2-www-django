@@ -11,7 +11,7 @@ from ..util.labels import get_type_label
 from ..util.types import get_category
 from .document import group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
-from .timeline import make_timeline_data
+from .timeline import make_timeline_data_for_fragment
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
 
@@ -63,7 +63,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     except (TypeError, ValueError):
         pit = None
 
-    timeline = make_timeline_data(data['meta'])
+    timeline = make_timeline_data_for_fragment(data['meta'])
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents

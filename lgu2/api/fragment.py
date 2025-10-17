@@ -1,4 +1,5 @@
 
+from datetime import date as Date
 from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
@@ -19,14 +20,33 @@ class FragmentMetadata(CommonMetadata):
     unappliedEffects: 'FragmentEffects'
     upToDate: Optional[bool]
 
+    @staticmethod
+    def convert_dates(meta: 'FragmentMetadata'):
+        CommonMetadata.convert_dates(meta)
+        Level.convert_dates(meta['fragmentInfo'])
+        for level in meta['ancestors']:
+            Level.convert_dates(level)
+        for level in meta['descendants']:
+            Level.convert_dates(level)
+
 
 class Level(TypedDict):
     element: str
-    id: str
-    href: str
+    id: str  # the internal id, e.g., section-1
+    href: str  # the full id with slashes, e.g., ukpga/2024/1/section/1
     number: str
     title: str
     label: str
+    prospective: NotRequired[bool]
+    start: NotRequired[Date]
+    end: NotRequired[Date]
+
+    @staticmethod
+    def convert_dates(level: 'Level'):
+        if 'start' in level:
+            level['start'] = Date.fromisoformat(level['start'])
+        if 'end' in level:
+            level['end'] = Date.fromisoformat(level['end'])
 
 
 class FragmentEffects(TypedDict):
@@ -51,7 +71,7 @@ def _make_url(type: str, year, number, section: str, version: Optional[str] = No
 def get(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> Fragment:
     url = _make_url(type, year, number, section, version)
     frag = server.get_json(url, language)
-    CommonMetadata.convert_dates(frag['meta'])
+    FragmentMetadata.convert_dates(frag['meta'])
     return frag
 
 

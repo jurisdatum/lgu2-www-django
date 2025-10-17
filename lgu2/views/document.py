@@ -11,7 +11,7 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.types import get_category
 from .redirect import redirect_current, redirect_version, make_data_redirect
-from .timeline import make_timeline_data
+from .timeline import make_timeline_data_for_document
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
 
@@ -101,7 +101,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     except (TypeError, ValueError):
         pit = None
 
-    timeline = make_timeline_data(data['meta'])
+    timeline = make_timeline_data_for_document(data['meta'])
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents

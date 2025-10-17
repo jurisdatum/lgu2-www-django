@@ -13,7 +13,7 @@ from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
-from .timeline import make_timeline_data
+from .timeline import make_timeline_data_for_toc
 from .helper.status import make_status_data
 
 
@@ -138,7 +138,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
-    data['timeline'] = make_timeline_data(meta)
+    data['timeline'] = make_timeline_data_for_toc(meta)
 
     # associated documents
     explanatory_notes = []
