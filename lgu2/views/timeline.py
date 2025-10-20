@@ -36,12 +36,10 @@ def make_timeline_data_for_document(meta: DocumentMetadata) -> TimelineData:
 
 def make_timeline_data_for_fragment(meta: FragmentMetadata) -> TimelineData:
     def make_link(version: Optional[str]):
-        # FixMe does this work?
-        # if meta['fragment'] get deprecated, use meta['fragmentInfo']['id'].replace('-','/')
         if version:
-            return reverse('fragment-version', args=[ meta['shortType'], meta['year'], meta['number'], meta['fragment'], version ])
+            return reverse('fragment-version', args=[ meta['shortType'], meta['year'], meta['number'], meta['fragmentInfo']['href'], version ])
         else:
-            return reverse('fragment', args=[ meta['shortType'], meta['year'], meta['number'], meta['fragment'] ])
+            return reverse('fragment', args=[ meta['shortType'], meta['year'], meta['number'], meta['fragmentInfo']['href'] ])
     return _make_timeline_data(meta, make_link)
 
 

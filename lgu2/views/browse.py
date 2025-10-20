@@ -12,6 +12,7 @@ from ..api.browse import browse_by_type, browse_by_type_and_year
 from ..util.cutoff import get_cutoff
 from ..util.labels import get_type_label
 from ..util.types import to_short_type
+from ..util.links import make_contents_link_for_list_entry
 
 
 def _group_counts_for_timeline(yearly_counts, complete_cutoff: Optional[int]):
@@ -72,12 +73,7 @@ def browse(request, type, year=None):
 
     link_prefix = '/cy' if request.LANGUAGE_CODE == 'cy' else ''
     for doc in data['documents']:
-        if doc['version'] == 'enacted':
-            doc['link'] = link_prefix + '/' + doc['id'] + '/contents/' + doc['version']
-        elif doc['version'] == 'made':
-            doc['link'] = link_prefix + '/' + doc['id'] + '/contents/' + doc['version']
-        else:
-            doc['link'] = link_prefix + '/' + doc['id'] + '/contents'
+        doc['link'] = make_contents_link_for_list_entry(doc)
         doc['label'] = get_type_label(doc['longType'])
 
     yearly_counts = data['meta']['counts']['byYear']

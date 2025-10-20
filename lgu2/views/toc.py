@@ -11,6 +11,7 @@ from ..api.document import DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
+from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .timeline import make_timeline_data_for_toc
@@ -28,13 +29,14 @@ def _should_redirect(type: str, version: Optional[str], lang: Optional[str], met
         return redirect_version('toc', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
 
 
-def _add_all_links(contents, prefix: str, suffix: str):
+def _add_all_links(contents, type: str, year: str, number: str, version: Optional[str], lang: Optional[str]):
+
     if contents is None:
         return
 
     def add_link(item):
-        middle = item['ref'].replace('-', '/')
-        item['link'] = prefix + '/' + middle + suffix
+        fragment = item['href']
+        item['link'] = make_fragment_link(type, year, number, fragment, version, lang)
         if 'children' in item:
             add_links(item['children'])
 
@@ -96,25 +98,18 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
     if rdrct is not None:
         return rdrct
 
-    link_prefix = '/' + data['meta']['id']
-    if request.LANGUAGE_CODE == 'cy':
-        link_prefix = '/cy' + link_prefix
-    link_suffix = ''
-    if version:
-        link_suffix += '/' + version
-    if lang:
-        link_suffix += '/' + lang
+    _add_all_links(data['contents'], type, year, number, version, lang)
 
-    _add_all_links(data['contents'], link_prefix, link_suffix)
+    data['meta']['next'] = make_fragment_link(type, year, number, 'introduction', version, lang)
 
     data['links'] = {
-        'toc': link_prefix + '/contents' + link_suffix,
-        'content': link_prefix + '/introduction' + link_suffix,
+        'toc': make_contents_link(type, year, number, version, lang),
+        'content': make_fragment_link(type, year, number, 'introduction', version, lang),
         'notes': '/',
         'resources': '/',
-        'whole': link_prefix + link_suffix,
-        'body': link_prefix + '/body' + link_suffix,
-        'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
+        'whole': make_document_link(type, year, number, version, lang),
+        'body': make_fragment_link(type, year, number, 'body', version, lang),
+        'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
     }
 
     if data['contents'] is None:
