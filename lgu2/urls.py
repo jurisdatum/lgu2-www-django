@@ -80,10 +80,13 @@ urlpatterns += i18n_patterns(
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
 
+    # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),
     re_path(fr'^{TYPE}/{YEAR4}$', browse, name='browse-year'),
     re_path(fr'^{TYPE}/{YEAR4}/{DATA}$', browse_data),
+    re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
+    re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),
 
     # documents
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}$', document, name='document'),
