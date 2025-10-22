@@ -110,26 +110,17 @@
                         <summary>
                             <h4>Choose a specific subject</h4>
                         </summary>
-
-                        <div class="combo-wrapper" id="jsComboWrapper">
-                            <input type="text" class="combo-input" placeholder="Start typing subject..." id="comboInput">
-                            <div class="combo-button" onclick="toggleList()">▼</div>
-
-                            <ul id="comboList" style="display: none;">
+                        <ul id="subjectsResults" class="initialise">
                                 {% for item in subject_heading_links %}
                                 <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
                                 {% endfor %}
-                            </ul>
+                        </ul>
+                        <div class="dynamic-subjects-results initialise" hidden>
+                            <label for="subjectsFilter">Filter the list of results for {{ current_subject|upper }}</label>
+                            <input type="text" id="subjectsFilter">
+                            <div role="status" aria-live="polite" aria-atomic="true"></div>
+                            <ul></ul>
                         </div>
-
-                            <!-- Non-JS fallback -->
-                            <noscript>
-                                <ul>
-                                    {% for item in subject_heading_links %}
-                                    <li {% if item.current %} aria-current="page" {% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </noscript>
 
                     {% else %}
                         <summary disabled>

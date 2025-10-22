@@ -16,7 +16,8 @@ class DocumentList(TypedDict):
     def convert_dates(doc_list: 'DocumentList'):
         doc_list['meta']['updated'] = _to_utc(doc_list['meta']['updated'])
         for doc in doc_list['documents']:
-            doc['published'] = _to_utc(doc['published'])
+            if doc.get('published'):  # None in aip
+                doc['published'] = _to_utc(doc['published'])
             doc['updated'] = _to_utc(doc['updated'])
 
 
@@ -64,7 +65,7 @@ class DocEntry(TypedDict):
     altTitle: NotRequired[str]
     description: NotRequired[str]
     subjects: NotRequired[List[str]]
-    published: datetime
+    published: Optional[datetime]
     updated: datetime
     version: str
     formats: List[str]

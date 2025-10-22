@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body:not(:-moz-handler-blocked) fieldset {
+  display: table-cell;
+}
 
 /* Roboto font */
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
@@ -39,6 +42,8 @@
 		--disabledModalText: rgba(200,200,200,1);
 		--disabledButtonBorder: rgba(138,138,138,1);
 		--disabledButtonBg: rgba(235,235,235,1);
+		--activeBg: var(--searchBg);
+		--activeText: var(--contrastText);
 		
 		--alert: rgba(255,175,40,1);
 		--alertBg: rgba(255,175,40,0.25);
@@ -50,6 +55,7 @@
 		--searchBg: rgba(0,0,0,0.82);
 		--searchText: var(--contrastText);
 		--searchInput: var(--bg);
+		--hdrSearchInput: var(--bg);
 		--searchInputBorder: transparent;
 
 		--modalBg: var(--text);
@@ -99,6 +105,11 @@
 		--timelineEnactedVersionIconActive: url('images/timeline-enacted-version-active.png') no-repeat center;
 
 		--annotation: rgba(175,75,180,1);
+
+		.search-results > section:first-of-type hgroup p a {
+			&:after {background: url(images/remove-filter-off.png) center no-repeat; background-size: 100%;}
+			&:hover, &:focus, &:active {&:after {background: url(images/remove-filter-on.png) center no-repeat; background-size: 100%}}
+		}
 
 		.icon-cards li a {
 			&.icon_what_legislation_we_hold {background-image: url('images/icon_what_legislation_we_hold.png')}
@@ -151,6 +162,8 @@
 						&.up-to-date {background: url('images/up-to-date.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 						&.extent {background: url('images/extent.png') no-repeat 0.125em 0.625em; background-size: 1.5em}
 						&.in-force {background: url('images/in-force.png') no-repeat 0.125em 0.575em; background-size: 1.5em}
+						&.confers-power {background: url('images/confers-power.png') no-repeat 0.25em 0.625em; background-size: 1.1em}
+						&.blanket-amendments {background: url('images/blanket-amendments.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 						&.explanatory-notes {background: url('images/explanatory-notes.png') no-repeat 0.25em 0.6em; background-size: 1.3em}
 						&.associated-documents {background: url('images/associated-documents.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 					}
@@ -219,6 +232,8 @@
 		--disabledModalText: rgba(200,200,200,1);
 		--disabledButtonBorder: rgba(138,138,138,1);
 		--disabledButtonBg: rgba(20,20,20,1);
+		--activeBg: var(--searchBg);
+		--activeText: var(--contrastText);
 		
 		--alert: rgba(255,175,40,1);
 		--alertBg: rgba(55,45,0,1);
@@ -230,6 +245,7 @@
 		--searchBg: rgba(255,255,255,0.05);
 		--searchText: var(--contrastText);
 		--searchInput: rgba(255,255,255,0.1);
+		--hdrSearchInput: rgba(55,62,70,1);
 		--searchInputBorder: rgba(255,255,255,0.1);
 
 		--modalBg: rgba(10,20,30,1);
@@ -279,6 +295,11 @@
 		--timelineEnactedVersionIconActive: url('images/timeline-enacted-version.png') no-repeat center;
 
 		--annotation: rgba(195,100,200,1);
+
+		.search-results > section:first-of-type hgroup p a {
+			&:after {background: url(images/remove-filter-off-dm.png) center no-repeat; background-size: 100%;}
+			&:hover, &:focus, &:active {&:after {background: url(images/remove-filter-on-dm.png) center no-repeat; background-size: 100%}}
+		}
 
 		.icon-cards li a {
 			&.icon_what_legislation_we_hold {background-image: url('images/icon_what_legislation_we_hold-dm.png')}
@@ -331,6 +352,8 @@
 						&.up-to-date {background: url('images/up-to-date-dm.png') no-repeat 0 0.6em; background-size: 1.3em}
 						&.extent {background: url('images/extent-dm.png') no-repeat 0 0.625em; background-size: 1.5em}
 						&.in-force {background: url('images/in-force-dm.png') no-repeat 0 0.575em; background-size: 1.5em}
+						&.confers-power {background: url('images/confers-power-dm.png') no-repeat 0.25em 0.625em; background-size: 1.1em}
+						&.blanket-amendments {background: url('images/blanket-amendments-dm.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 						&.explanatory-notes {background: url('images/explanatory-notes-dm.png') no-repeat 0.125em 0.6em; background-size: 1.3em}
 						&.associated-documents {background: url('images/associated-documents-dm.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 					}
@@ -403,6 +426,23 @@
 	}
 	.no-focus {border-color: transparent; outline-color: transparent; outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 transparent; -moz-box-shadow: 0 0 0.375rem 0 transparent; box-shadow: 0 0 0.375rem 0 transparent}
 
+	.toggle {
+		list-style: none; display: flex; gap: 0.75rem; flex-wrap: wrap;
+		li {
+			a {
+				.ghost-button; position: relative; display: block; padding: 0.35em 0.65em; border-radius: 0.1875rem; font-weight: 300; white-space: nowrap;
+				&[aria-current="page"] {
+					padding: 0.35em 0.65em 0.35em 1.85em; background: var(--activeBg); color: var(--activeText); border: 0.0625rem solid var(--activeBg); font-weight: 500;
+					&:before {
+						position: absolute; content: ""; margin: 0.5rem 0 0 -1.3em; border-top: 0.175rem solid var(--activeText); border-right: 0.175rem solid var(--activeText); transform: rotate(135deg); width: 0.65rem; height: 0.225em;
+					}
+				}
+			}
+		}
+	}
+
+	[hidden] {display: none}
+
 	summary {cursor: pointer; display: block}
 	summary::marker, summary::-webkit-details-marker {display: none; content: ""}
 
@@ -458,6 +498,32 @@
 				content: ""; position: absolute; width: 1.5rem; height: 1.5rem; margin: -0.0625rem; overflow: hidden; border-radius: 50%; background: url(images/help.png) no-repeat center; background-size: 35%;
 			}
 			.open {.sr-only()}
+		}
+	}
+
+	.scrollbar-controls {
+		margin: -4rem 0 0 2.5rem; padding: 0.5rem 0 3.5rem 0; height: 2.5rem; position: relative; text-align: center; display: flex; width: calc(100% - 18.5rem);
+		&:before {content: ''; position: absolute; width: calc(100% - 1.875rem); height: 0.25rem; background: var(--timelineVersionActive); display: block; margin: 1.15rem 0.9375rem} 
+		h3 {.sr-only()}
+		button {
+			width: 2.85rem; position: relative; margin: 0 0.9375rem 0 0.1rem; padding: 0; height: 2.5rem;
+			&:after {.chevron(); margin: 0.15rem 0; width: 0.35rem; height: 0.35rem; border-color: var(--buttonText)}
+			&:first-of-type {
+				margin: 0 0.1rem 0 0.9375rem;
+				&:after {margin: 0.15rem 0 0.15em 0.25rem; border: 0; border-bottom: 0.0625rem solid var(--buttonText); border-left: 0.0625rem solid var(--buttonText)}
+			}
+			&:disabled {background: var(--disabledButtonBorder)}
+			span {.sr-only()}
+		}
+		.drag-strip {
+			position: relative; width: 100%; height: 2.5rem; padding: 0 0 0.0625rem 0;
+			.drag {
+				margin: 0 0 -0.0625rem 0; width: 5rem; height: 2.5rem; background: var(--buttonBg); border-radius: 0.15em; position: absolute !important;
+				&:before {.chevron(); position: absolute; left: 1rem; margin: 1rem 0; width: 0.35rem; height: 0.35rem; border: 0; border-bottom: 0.0625rem solid var(--buttonText); border-left: 0.0625rem solid var(--buttonText)}
+				&:after {.chevron(); position: absolute; right: 1rem; margin: 1rem 0; width: 0.35rem; height: 0.35rem; border-color: var(--buttonText)}
+				&:hover, &:focus {.button-focus()}
+				span  {.sr-only()}
+			}
 		}
 	}
 
@@ -553,6 +619,7 @@
 					legend {.sr-only()}
 					label {color: var(--searchText); display: block; margin: 0 1em 0.25em 0}
 					input, select {background: var(--searchInput); border: 0; border: 0.0625rem solid var(--searchInputBorder); margin: 0 0 0.85em 0; width: 6.5em}
+					option, optgroup {color: var(--text); background: var(--hdrSearchInput)}
 					input {padding: 0.75em 0.9em}
 					select {padding: 0.75em 0.535em; height: 2.8125rem}
 					select, .title input {width: 100%}
@@ -854,20 +921,85 @@
 			hgroup {
 				h1 {
 					font-weight: 300;
-					span {display: contents; font-weight: 800}
+					span {
+						display: contents; font-weight: 800;
+						span {font-weight: 300}
+					}
 				}
 				p {
 					margin: 0.25rem 0 0 0;
 					#legType {display: contents}
 					a {
 						margin: 0.35rem 0 0 0; font-size: 1rem; font-weight: 300; border: 0.0625em solid var(--subtleBg); background: var(--verySubtleBg); padding: 0.125em 2.25em 0.125em 0.5em; display: inline-block; border-radius: 0.1875rem; position: relative;
-						&:after {content: ""; position: absolute; background: url(images/remove-filter-off.png) center no-repeat; background-size: 100%; width: 1rem; height: 1rem; right: 0.65rem; top: 0.35rem}
-						&:hover, &:focus, &:active {
-							border-color: var(--link);
-							&:after {background: url(images/remove-filter-on.png) center no-repeat; background-size: 100%}
-						}
+						&:after {content: ""; position: absolute; width: 1rem; height: 1rem; right: 0.65rem; top: 0.35rem}
+						&:hover, &:focus, &:active {border-color: var(--link)}
 						span {font-weight: 500}
 					}
+					> span {margin: 0.35rem 0 0 0; font-size: 1rem; font-weight: 300; border: 0.0625em solid var(--subtleBg); background: var(--verySubtleBg); padding: 0.125em 0.5em; display: inline-block; border-radius: 0.1875rem; position: relative;}
+				}
+			}
+		}
+		
+		.dataset {
+			width: 100vW;
+			h2 {
+				font-size: 1.25rem; margin: 0.15em 0; font-weight: 700;
+				&:first-letter {text-transform: uppercase}
+			}
+			.skip-links a {margin: 1rem 0 0 0}
+			> div:first-of-type {
+				display: flex; overflow-x: scroll; overflow-y: hidden; margin: 1rem 0 0 0; .content-box;
+				&::-webkit-scrollbar {margin: 0; display: none}
+				> div {
+					position: relative;
+					&:before {content: ""; background: var(--moreSubtleBg); width: 100%; height: 1.75rem; position: absolute}
+					&:nth-of-type(odd) {
+						background: var(--moreSubtleBg)
+					}
+					h3 {
+						margin: 0; font-size: 1.1rem; position: sticky; left: 0; display: inline-block;
+						a {
+							display: block; padding: 0.35rem 0.5rem;
+						}
+					}
+					dl {
+						display: flex; margin: 3.25rem 0 0 0;
+						div {
+							padding: 0 0.175rem; position: relative; height: 7.5rem; width: 3.5rem; text-align: center; align-content: flex-end; display: flex; flex-wrap: wrap; flex-direction: row;
+							dt:not(:has(> span)) {
+								border: 0.0625rem solid var(--link); background: var(--link); flex-grow: 1; display: flex; min-height: 1.5rem; border-radius: 0.25rem 0.25rem 0 0;
+								a {flex-grow: 1; align-content: flex-end; color: var(--bg)}
+								&:has(a[aria-current="page"]) {
+									background: var(--text); border-color: var(--text);
+								}
+								&:has(> span) {background: unset}
+								a:hover, a:focus {background: var(--focusButtonBg)}
+							}
+							dd {
+								order: -1; min-height: 1rem; align-content: flex-end; line-height: 1.35rem; width: 100%;
+							}
+						}
+						span {.sr-only}
+						&.partial-dataset dt:not(:has(> span)), dt.partial-dataset {
+							border: 0.0625rem dashed var(--link); background: var(--bg); border-bottom: 0;
+							a {
+								color:  var(--link);
+								&:hover, &:focus {color: var(--bg)}
+							}
+							&:has(a[aria-current="page"]) {
+								border-color: var(--bg);
+								a {color: var(--bg)}
+							}
+						}
+					}
+				}
+			}
+			.scrollbar {
+				.scrollbar-controls; margin: 0.5rem 0 0 0; padding: 0; width: 100%;
+				&[hidden] {display: none}
+				button {
+					margin: 0 0 0 0.1rem; 
+					&:first-of-type {margin: 0 0.1rem 0 0}
 				}
 			}
 		}
@@ -892,8 +1024,8 @@
 										margin: 0 0 0.4rem 0; line-height: 1.35rem;
 										a span span {.sr-only}
 										&[aria-current="page"] a {
-											font-weight: 500; color: var(--Text);
-											span {font-weight: 300}
+											font-weight: 500;
+											span:not(.long-type) {font-weight: 300}
 										}
 									}
 								}
@@ -905,6 +1037,8 @@
 								&.filter-subject {
 									h4 {font-size: 1rem; font-weight: 300}
 									> h4 {padding: 0.35rem 0 0 0}
+									label {display: block; margin: 0.5rem 0 0.25rem 0}
+									input {display: block; width: 22.5rem; margin: 0 0 0.75rem 0}
 									> ul {
 										font-size: 0; margin: 0.35rem 0; max-width: 23rem;
 										li {
@@ -921,6 +1055,7 @@
 									> details {
 										> summary {.button; max-width: 22.5rem}
 										&:not(:has(ul)) > summary {.disabled}
+										.dynamic-subjects-results div {.sr-only}
 									}
 								}
 							}
@@ -942,7 +1077,6 @@
 					list-style: none; margin: 0;
 					li {
 						border-top: 0.0625rem solid var(--subtleBorder); padding: 0.65rem 0.25rem; line-height: 1.3rem;
-						&:first-of-type {padding: 0 0.25rem 0.65rem 0.25rem; border: 0}
 						a {font-weight: 500}
 						span {
 							display: block; margin: 0.35rem 0 0 0;
@@ -950,6 +1084,9 @@
 						}
 					}
 				}
+				h3 + ul:not(.skip-links), .skip-links + ul:not(.skip-links) {
+					li:first-of-type {padding: 0 0.25rem 0.65rem 0.25rem; border: 0}
+				} 
 				ul.skip-links:first-of-type a {margin: -1rem 0 0 0}
 			}
 			.search-footer {
@@ -985,7 +1122,7 @@
 				nav {
 					width: 100%; h2 {.sr-only()}
 					ul {
-						margin: 0 0 0 1em; display: inline-flex; flex-flow: wrap; list-style: none; gap: 0.85rem 1.15rem; width: calc(100% - 2rem); padding: 1.2rem 0; border-top: 1px solid var(--subtleBorder);
+						margin: 0 0 0 1em; display: inline-flex; flex-flow: wrap; list-style: none; gap: 0.85rem 1.15rem; width: calc(100% - 2rem); padding: 1.2rem 0; border-top: 0.0625rem solid var(--subtleBorder);
 						li {margin: 0; padding: 0; font-size: 1.1rem; flex-grow: 1; min-width: 30%}
 					}
 				}
@@ -1009,9 +1146,76 @@
 	}
 
 
+/* changes to legislation page */
+	.changes-to-legislation {
+		> section:has(form) {
+			background: var(--altBg); max-width: unset; padding: 0 1rem;
+			form {
+				padding: 2rem 1rem; margin: 0 auto; max-width: var(--maxWidth); display: grid; grid-template-columns: 1fr; grid-gap: 1.5em;
+				fieldset {
+					background: var(--bg); .content-box; padding: 1.25rem; position: relative;
+					legend {position: absolute}
+                    > label {
+                        margin: 1.25rem 0 0.35rem 0; display: block;
+                        &:first-of-type {margin: 2.5rem 0 0.35rem 0}
+                    }
+                    > input[type="text"]:first-of-type, select {width: 100%}
+                    > input[type="text"]:last-of-type {width: 4.5rem}
+                    [role="group"] {
+                        display: flow-root;
+                        h3 {margin: 1.25rem 0 0.35rem 0; font-weight: 400; font-size: 1rem}
+                        label {
+                            display: inline-block; float: left; clear: both; padding: 0.5em 0.75em; line-height: 1.2rem; border: 0.0625rem solid var(--link); border-right: 0; border-radius: 0.1875rem 0 0 0.1875rem; background: var(--subtleBg);
+                            &:last-of-type {margin: 0.75rem 0 0 0}
+                        }
+                        input {
+                            display: inline-block; float: left; width: 4rem; border-left: 0; padding: 0.5em 0.75em; line-height: 1.2rem; border-radius: 0 0.1875rem 0.1875rem 0; clear: right;
+                            &:last-of-type {margin: 0.75rem 0 0 0}
+                        }
+                    }
+					&:last-of-type {
+						legend {
+							&:before {content: "Show..." / ""; font-size: 1.625rem; font-weight: 800; line-height: 1.2em; margin: 0 0 0.4em 0}
+							span {.sr-only}
+						}
+                        div {
+                            padding: 0.8rem 1.25rem; border-top: 0.0625rem solid transparent; border-bottom: 0.0625rem solid transparent;
+                            label {
+                                margin: 0 0 0 1.65rem; display: block;
+                                span {font-weight: 500}
+                            }
+                            input {position: absolute; margin: 0.22rem 0 0 0; width: 1rem; height: 1rem}
+                            &:first-of-type {margin: 3.75rem 0 0 0}
+                            &:nth-of-type(2) {border-top-color: var(--subtleBg)}
+                            &:has(input:checked) + div:nth-of-type(2) {border-top-color: transparent; border-bottom-color: var(--subtleBg)}
+                            &:has(input:checked) {background: var(--subtleBg); border-top-color: var(--subtleBorder); border-bottom-color: var(--subtleBorder)}
+                        }
+					}
+                    &:has(input[type="radio"]) {
+                        padding: 0;
+                        legend {padding: 1.25rem}
+                    }
+                }
+				> div {
+                    padding: 1.25rem; background: var(--bg); .content-box;
+                    span span {font-weight: 500}
+                    p {margin: 0.25rem 0 1rem 0}
+                    button {width: 100%}
+                }
+			}
+			+ section {
+				padding: 2rem 1rem;
+			}
+		}
+	}
+
+
 /* legislation pages */
 	.legislation {
-		section {overflow: unset}
+		section {
+			overflow: unset;
+			&:has(h1) p {margin: 0.75rem 0 0 0; padding: 0.5rem 0 0 0; border-top: 0.0625rem solid var(--lessSubtleBorder)}
+		}
 		.legislation-navigation {
 			text-align: center; display: flex; background: var(--verySubtleBg);
 			h2 {.sr-only()}
@@ -1179,6 +1383,7 @@
 							&:hover, &:active, &:focus {background: var(--focusWarningBg)}
 						}
 					}
+					&.up-to-date ul {.toggle; margin: 0.35rem 1em 0.5em 2em}
 				}
 				details {
 					margin: 0.5rem 0.25rem 0.65rem 0.25rem;
@@ -1293,7 +1498,9 @@
 					}
 				}
 				.toc-detail {
-					padding: 0 1rem 1rem 0;
+					padding: 0 0 1rem 0;
+					.status-panel {margin: 0 0 1rem 0}
+					&:has(button) .status-panel {margin: 0 0 0.25rem 0}
 					h3, h4, h5, h6 {
 						font-size: 1rem; font-weight: 500; margin: 0; line-height: 1.2em;
 					}
@@ -1344,6 +1551,7 @@
 						}
 						ul {margin: 0.5rem 0 0 0.75rem}
 					}
+					> ul, > ol {margin: 0.5rem 1rem 0 1rem}
 					button {
 						background: transparent; padding: 0.75rem 1rem 0.75rem 2rem; margin: 0.15rem 0.15rem 0.25rem 0.15rem; height: 100%; min-width: 3.5rem; border-color: transparent; color: var(--link);
 						&:before {position: absolute; margin: -0.2rem 0 0 -2rem; content: ""; width: 1.5rem; height: 1.5rem}
@@ -1366,6 +1574,13 @@
 					}
 					&:not(:has(details)) button {display: none}
 				}
+				.confers-power, .blanket-amendments {
+					padding: 0 0 1rem 0;
+					ul {
+						list-style: none; margin: 0;
+						li {margin: 0 0 1em 0}
+					}
+				}
 				.status-panel-anchor {width: 5rem; height: 5rem; display: block;  position: absolute}
 				.status-panel {
 					font-weight: 300;
@@ -1379,7 +1594,7 @@
 					&:not(.pinned) button {.ghost-button; padding: 0.3rem 1rem}
 					&.pinned button {background-image: url('images/pin-on.png')}
 					> div {
-						padding: 0.5rem 1rem 0 1rem; position: relative; background: var(--verySubtleFixedBg); border-left: 0.45rem solid var(--warningBg);
+						padding: 0.5rem 1rem; position: relative; background: var(--verySubtleFixedBg); border-left: 0.45rem solid var(--activeBg);
 						h2 {.sr-unset(); padding: 0.25rem 0 0 0; font-size: 1.05rem; font-weight: 600; line-height: unset}
 						p {
 							margin: 0;
@@ -1389,9 +1604,10 @@
 							position: absolute; bottom: 0; right: 0; padding: 0.3rem 1rem; margin: 0 0.35rem -2.05rem 0; min-height: 1.9rem; background-repeat: no-repeat; background-position: center; background-size: 0.8rem;
 							span {.sr-only()}
 						}
+						&:has(button) {padding: 0.5rem 1rem 0 1rem}
 					}
 					details {
-						margin: 0 0 1em 0; background: var(--verySubtleFixedBg); border-left: 0.45rem solid var(--warningBg); timeline-scope: --scroll; animation: --scroll forwards; animation-timeline: --scroll; container-name: --scroll;
+						margin: 0 0 1em 0; background: var(--verySubtleFixedBg); border-left: 0.45rem solid var(--activeBg); timeline-scope: --scroll; animation: --scroll forwards; animation-timeline: --scroll; container-name: --scroll;
 						summary {
 							margin: 0.15em 0 0 0; padding: 0 1rem 0.75rem 1rem; font-weight: 500; color: var(--buttonBg); display: inline-block;
 							&:after {.chevron(); width: 0.35em; height: 0.35em; border-top-width: 0; border-right-width: 0.15rem; border-bottom-width: 0.15rem; margin: 0 0.35em 0.185em 0.5em}
@@ -1419,8 +1635,15 @@
 					@container --scroll style(--scroll: 1) {
 						.status-panel:not(.stuck) details[open]:after {.drop-shadow-reverse(); bottom: 0}
 					}
+					&.not-up-to-date {
+						> div, details {border-left-color: var(--warningBg)}
+					}
 				}
 			}
+		}
+		&:not(:has(.pit-search)) .legislation-navigation {
+			position: relative;
+			&:after {.drop-shadow; position: absolute; bottom: 0; width: 100%}
 		}
 	}
 
@@ -1444,6 +1667,17 @@
 	}
 
 /* breakpoints */
+	@media (min-width: calc(@mobileLandscape)) and (max-width: calc(@tabletPortrait - 1px)) {
+		main {
+			&.legislation .legislation-content > div {
+				.confers-power, .blanket-amendments {
+					ul:has(li:nth-of-type(1)) {columns: 0 1}
+					ul:has(li:nth-of-type(11)) {columns: 0 2}
+				}
+			}				
+		}
+	}
+
 	@media (max-width: calc(@tabletPortrait - 1px)) {
 	/* main menu and timeline act as modal */
 		body:has(.hdr-menu details[open]) *:not(:has(.hdr-menu)):not(.hdr-menu):not(.hdr-menu *) {display: none}
@@ -1523,6 +1757,8 @@
 							&.up-to-date {background-position: 1em 0.55em}
 							&.extent {background-position: 0.85em 0.55em}
 							&.in-force {background-position: 0.85em 0.55em}
+							&.confers-power {background-position: 1em 0.55em}
+							&.blanket-amendments {background-position: 0.85em 0.55em}
 							p {
 								padding: 0.15em 0 0.15rem 2em;
 								&:first-of-type {padding: 0.35em 0 0.15rem 2em; border-top: 0.0625rem solid var(--subtleBorder)}
@@ -1679,19 +1915,21 @@
 					}
 				}
 			}
-			&.legislation .legislation-content > div .status-panel {
-				&:not(.pinned) {
-					button {
-						padding: 0.3em 0.5em 0.3em 1.65em; border-color: transparent
+			&.legislation .legislation-content > div {
+				.status-panel {
+					&:not(.pinned) {
+						button {
+							padding: 0.3em 0.5em 0.3em 1.65em; border-color: transparent
+						}
 					}
+					&.pinned button, &:not(.pinned) button:hover, &:not(.pinned) button:focus {
+						background-position: 0.45em center
+					}
+					button {
+						padding: 0.3em 0.5em 0.3em 1.65em; min-height: unset;
+						span {.sr-unset()}
+					}			
 				}
-				&.pinned button, &:not(.pinned) button:hover, &:not(.pinned) button:focus {
-					background-position: 0.45em center
-				}
-				button {
-					padding: 0.3em 0.5em 0.3em 1.65em; min-height: unset;
-					span {.sr-unset()}
-				}			
 			}
 			&.search-results {
 				.search-content {
@@ -1718,7 +1956,27 @@
 					}
 				}
 			}
-		}
+
+            &.changes-to-legislation {
+                > section:has(form) {
+                    form {
+                        fieldset {
+                            [role="group"] {
+                                label {
+                                    clear: none;
+                                     &:last-of-type {margin: 0 0 0 1.25rem}
+                                }
+                                input {
+                                    clear: none;
+                                     &:last-of-type {margin: 0}
+                                }
+                            }
+                        }
+                        > div button {width: unset}
+                    }
+                }
+            }
+        }
 	}
 
 	@media (min-width: @mobileSearchSelect) {
@@ -1764,6 +2022,7 @@
 				.legislation-content {
 					.toc-detail {
 						ul ul, ul ol {margin: 0.5rem 0 0 2rem}
+						> ul, > ol {margin: 0.5rem 1rem 0 2rem}
 						details {
 							ol, ul {
 								margin: 0 0 0.75rem 1.75rem;
@@ -1910,7 +2169,14 @@
 				.pit-search, .timeline:has(details:not([open])) {padding: 0 1rem}
 				.legislation-navigation {margin: 0 1rem}
 				.legislation-content {
-					> div .legislation-ftr nav {padding: 0}
+					> div {
+						.confers-power, .blanket-amendments {
+							ul:has(li:nth-of-type(1)) {columns: 0 1}
+							ul:has(li:nth-of-type(21)) {columns: 0 2}
+							ul:has(li:nth-of-type(41)) {columns: 0 3}
+						}
+						.legislation-ftr nav {padding: 0}
+					}
 					.toc-detail ol:has(> li > .extent:not(.hidden)) {
 						margin: 0 0 0.75rem 11.5rem;
 						li:has(> .extent:not(.hidden)) {
@@ -1927,6 +2193,16 @@
 					}
 				}
 			}
+
+            &.changes-to-legislation {
+                > section:has(form) {
+                    form {
+                        grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem);
+                        > fieldset:last-of-type {grid-column-start: span 2; grid-column-end: 3}
+                        > div {grid-column-start: span 2; grid-column-end: 3}
+                    }
+                }
+            }
 		}
 	}
 
@@ -1934,30 +2210,19 @@
 		html {--maxWidth: @desktopSmall;}
 		:root, :root[colour-scheme="light"] {
 			.hdr-tna a {background: url("images/tna-logo.png") no-repeat; background-size: 100%}
-			.legislation .legislation-content {
-				aside {
-					> div {
-						&.up-to-date {background-position: 0.7em 0.6em; background-size: 1.6em}
-						&.extent {background-position: 0.5em 0.6em; background-size: 2em}
-						&.in-force {background-position: 0.65em 0.6em; background-size: 1.8em}
-						&.explanatory-notes {background-position: 0.6em 0.5em; background-size: 1.6em}
-						&.associated-documents {background-position: 0.65em 0.5em; background-size: 1.5em}
-						&:has(p) {
-							&.explanatory-notes {background-position: 0.65em 0.6em; background-size: 1.6em}
-							&.associated-documents {background-position: 0.55em 0.6em; background-size: 1.8em}
-						}
-					}
-				}
-			}
 		}
 		:root[colour-scheme="dark"] {
 			.hdr-tna a {background: url("images/tna-logo-dm.png") no-repeat; background-size: 100%}
+		}
+		:root, :root[colour-scheme="light"], :root[colour-scheme="dark"] {
 			.legislation .legislation-content {
 				aside {
 					> div {
 						&.up-to-date {background-position: 0.7em 0.6em; background-size: 1.6em}
 						&.extent {background-position: 0.5em 0.6em; background-size: 2em}
 						&.in-force {background-position: 0.65em 0.6em; background-size: 1.8em}
+						&.confers-power {background-position: 0.85em 0.625em; background-size: 1.35em}
+						&.blanket-amendments {background-position: 0.45em 0.675em; background-size: 2em}
 						&.explanatory-notes {background-position: 0.6em 0.5em; background-size: 1.6em}
 						&.associated-documents {background-position: 0.65em 0.5em; background-size: 1.5em}
 						&:has(p) {
@@ -2104,7 +2369,7 @@
 						&:hover, &:focus {> span:before {.button-focus()}}
 						> span {
 							display: block; margin: 0 0 0 2.5em; width: 13.5rem;
-							&:after {border-bottom: 0.1rem solid var(--buttonText); border-left: 0.1rem solid var(--buttonText); margin: calc(50% - 0.75rem) -1.35rem; top: 0; left: 0}
+							&:after {border-color: transparent; border-bottom: 0.1rem solid var(--buttonText); border-left: 0.1rem solid var(--buttonText); margin: calc(50% - 0.75rem) -1.35rem; top: 0; left: 0}
 							.version {padding: 0.45em 0 0 0}
 							.button {.sr-only()}
 						}
@@ -2127,7 +2392,7 @@
 							&:hover, &:focus {.button-focus()}
 							> span {
 								&:before {display: none}
-								&:after {border-top: 0.1rem solid var(--buttonText); border-right: 0.1rem solid var(--buttonText); margin: 6rem 0.85rem}
+								&:after {border-color: transparent; border-top: 0.1rem solid var(--buttonText); border-right: 0.1rem solid var(--buttonText); margin: 6rem 0.85rem}
 								*:not(.close) {display: none}
 							}
 							.close {.sr-only()}
@@ -2320,31 +2585,7 @@
 										&[aria-current="page"]:has(.point-in-time) .point-in-time {top: calc(50% + 0.45rem)}
 									}
 								}
-								.scrollbar {
-									margin: -4rem 0 0 2.5rem; padding: 0.5rem 0 3.5rem 0; height: 2.5rem; position: relative; text-align: center; display: flex; width: calc(100% - 18.5rem);
-									&:before {content: ''; position: absolute; width: calc(100% - 1.875rem); height: 0.25rem; background: var(--timelineVersionActive); display: block; margin: 1.15rem 0.9375rem} 
-									h3 {.sr-only()}
-									button {
-										width: 2.85rem; position: relative; margin: 0 0.9375rem 0 0.1rem; padding: 0; height: 2.5rem;
-										&:after {.chevron(); margin: 0.15rem 0; width: 0.35rem; height: 0.35rem; border-color: var(--buttonText)}
-										&:first-of-type {
-											margin: 0 0.1rem 0 0.9375rem;
-											&:after {margin: 0.15rem 0 0.15em 0.25rem; border: 0; border-bottom: 0.0625rem solid var(--buttonText); border-left: 0.0625rem solid var(--buttonText)}
-										}
-										&:disabled {background: var(--disabledButtonBorder)}
-										span {.sr-only()}
-									}
-									.drag-strip {
-										position: relative; width: 100%; height: 2.5rem; padding: 0 0 0.0625rem 0;
-										.drag {
-											margin: 0 0 -0.0625rem 0; width: 5rem; height: 2.5rem; background: var(--buttonBg); border-radius: 0.15em; position: absolute !important;
-											&:before {.chevron(); position: absolute; left: 1rem; margin: 1rem 0; width: 0.35rem; height: 0.35rem; border: 0; border-bottom: 0.0625rem solid var(--buttonText); border-left: 0.0625rem solid var(--buttonText)}
-											&:after {.chevron(); position: absolute; right: 1rem; margin: 1rem 0; width: 0.35rem; height: 0.35rem; border-color: var(--buttonText)}
-											&:hover, &:focus {.button-focus()}
-											span  {.sr-only()}
-										}
-									}
-								}
+								.scrollbar {.scrollbar-controls}
 							}
 						}
 						&:has(.scrollable) {
@@ -2386,13 +2627,14 @@
 								border: 0.13rem dashed var(--warningBorder);
 								p:first-of-type {background-position: 0.5rem 0.45rem; background-size: 1rem}
 							}
+							&.up-to-date ul {.toggle; margin: 0 1em 0.75em 1em}
 						}
 						details {margin: 0}
 						+ aside {margin: 0}
 					}
 					> div {order: -1; grid-row: span 2; width: 100%; margin: 1em 0 0 0; padding: 0 1em 0 0}
 				}
-				
+
 				&:has(.timeline details[open]) {
 					.legislation-content aside:before {padding: 0}
 				}
@@ -2420,6 +2662,7 @@
 								/* to remove the 'close' option, remove the lines above and include the following line
 									display: none */
 								}
+								> div section ul li[aria-current="page"] a {color: var(--text)}
 							}
 							div {
 								section {
@@ -2428,6 +2671,7 @@
 									ul {margin: 0.5em 0 0.75em 0}
 									.pagination {margin: 0.85rem auto 0 auto; border-bottom: 0}
 									&.filter-subject {
+										input {width: 100%}
 										> ul li:not(:first-of-type) {
 											a {.ghost-button; padding: 0; border-radius: 0}
 											span {color: var(--text)}
@@ -2482,6 +2726,16 @@
 					.search-header {order: -1}
 				}
 			}
+
+            &.changes-to-legislation {
+                > section:has(form) {
+                    form {
+                        grid-template-columns: calc(37% - 1.5rem) calc(37% - 1.5rem) 26%;
+                        > fieldset:last-of-type {grid-column-start: unset; grid-column-end: unset}
+                        > div {grid-column-start: span 3; grid-column-end: 4}
+                    }
+                }
+            }
 		}
 	}
 
@@ -2548,6 +2802,13 @@
 					}
 				}
 			}
+			&.legislation {
+				.legislation-content > div {
+					.confers-power, .blanket-amendments {
+						ul:has(li:nth-of-type(61)) {columns: 0 4}
+					}
+				} 
+			}
 			&.search-results {
 				.search-content {
 					&:not(:has(.pagination li:nth-child(29))) {
@@ -2571,5 +2832,14 @@
 					}
 				}
 			}
+
+            &.changes-to-legislation {
+                > section:has(form) {
+                    form {
+                        grid-template-columns: calc(39% - 1rem) calc(39% - 1rem) 22%;
+                        > div {grid-column-start: span 3; grid-column-end: 4}
+                    }
+                }
+            }
 		}
 	}

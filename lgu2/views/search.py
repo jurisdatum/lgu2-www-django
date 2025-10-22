@@ -272,7 +272,7 @@ def group_by_decade(year_data, doc_type):
     for entry in year_data:
         year = entry["year"]
         count = entry["count"]
-        complete = year > cut_off
+        complete = cut_off is not None and year > cut_off
 
         decade_start = (year // 10) * 10
         decade_label = f"{decade_start}-{decade_start + 9}"
