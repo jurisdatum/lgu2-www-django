@@ -12,8 +12,9 @@ from ..api.search_types import SearchParams
 from ..api.browse_types import DocEntry
 from ..util.cutoff import get_cutoff
 from ..util.types import to_short_type
-from ..util.version import is_first_version, get_first_version
+from ..util.version import get_first_version
 from ..util.labels import get_type_label
+from ..util.links import make_contents_link_for_list_entry
 
 
 class SearchResultContext(TypedDict):
@@ -190,13 +191,7 @@ def search_results_helper(request, query_params: SearchParams):
         byInitial['link'] = replace_param_and_make_smart_link(query_params, 'subject', byInitial['initial'])
 
     for doc in documents_data:
-        kw = DocEntry.parse_id(doc['id'])
-        # Welsh versions?
-        if is_first_version(doc['version']):
-            kw['version'] = doc['version']
-            doc['link'] = reverse("toc-version", kwargs=kw)
-        else:
-            doc['link'] = reverse("toc", kwargs=kw)
+        doc['link'] = make_contents_link_for_list_entry(doc)
         # doc['label'] = get_type_label(doc['longType'])
 
     # Step 9: Subject initials and links

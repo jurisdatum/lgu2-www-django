@@ -9,9 +9,10 @@ from ..api.document import get_akn, get_clml, get_document, DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
+from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
 from .redirect import redirect_current, redirect_version, make_data_redirect
-from .timeline import make_timeline_data
+from .timeline import make_timeline_data_for_document
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
 
@@ -88,12 +89,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     if rdrct is not None:
         return rdrct
 
-    link_prefix = '/' + data['meta']['id']
-    if request.LANGUAGE_CODE == 'cy':
-        link_prefix = '/cy' + link_prefix
-    link_suffix = '/' + version if version else ''
-
-    data['meta']['link'] = link_prefix + link_suffix
+    data['meta']['link'] = make_document_link(type, year, number, version, lang)
 
     try:
         version_date = datetime.strptime(version, '%Y-%m-%d')
@@ -101,7 +97,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     except (TypeError, ValueError):
         pit = None
 
-    timeline = make_timeline_data(data['meta'])
+    timeline = make_timeline_data_for_document(data['meta'])
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents
@@ -149,13 +145,13 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'status': status,
         'article': data['html'],
         'links': {
-            'toc': link_prefix + '/contents' + link_suffix,
-            'content': link_prefix + '/introduction' + link_suffix,
+            'toc': make_contents_link(type, year, number, version, lang),
+            'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
             'resources': '/',
             'whole': None,
-            'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
-            'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
+            'body': make_fragment_link(type, year, number, 'body', version, lang),
+            'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
         },
         'pdf_only': pdf_only,
         'pdf_link': pdf_link,

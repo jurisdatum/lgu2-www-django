@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.cache import caches
 from django.shortcuts import render
 
-from lgu2.util.links import make_contents_link
+from lgu2.util.links import make_contents_link_for_list_entry
 # from django.views.decorators.cache import cache_page
 
 from ..api import documents as api
@@ -25,12 +25,7 @@ def homepage(request):
     data = api.get_new()
     for doc in data['documents'][:5]:
         doc['typeLabel'] = get_singular_type_label(doc['longType'])
-        if doc['version'] == 'enacted':
-            doc['link'] = '/' + doc['id'] + '/contents/' + doc['version']
-        elif doc['version'] == 'made':
-            doc['link'] = '/' + doc['id'] + '/contents/' + doc['version']
-        else:
-            doc['link'] = '/' + doc['id'] + '/contents'
+        doc['link'] = make_contents_link_for_list_entry(doc)
 
     context = {
         'new_legislation': data['documents'][:5]
@@ -158,7 +153,7 @@ def new_legislation(request, country=None, date=None):
     date = dates[0]['date'] if date is None else datetime.date.fromisoformat(date)
     data = api.get_published_on(date.isoformat(), country)
     for doc in data['documents']:
-        doc['link'] = make_contents_link(doc, request.LANGUAGE_CODE)
+        doc['link'] = make_contents_link_for_list_entry(doc)
     document_groups = group_documents_for_new_legislation_page(data['documents'])
     context = {
         'country': country,
