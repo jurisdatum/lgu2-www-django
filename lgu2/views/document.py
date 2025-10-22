@@ -1,9 +1,9 @@
 
-from datetime import datetime
 from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
+from django.utils import timezone
 
 from ..api.document import get_akn, get_clml, get_document, DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
@@ -91,12 +91,6 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     data['meta']['link'] = make_document_link(type, year, number, version, lang)
 
-    try:
-        version_date = datetime.strptime(version, '%Y-%m-%d')
-        pit = version_date.strftime("%d/%m/%Y")
-    except (TypeError, ValueError):
-        pit = None
-
     timeline = make_timeline_data_for_document(data['meta'])
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
@@ -135,7 +129,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     context = {
         'meta': data['meta'],
-        'pit': pit,
+        'view_date': meta.get('pointInTime') or timezone.localdate(),
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
         'extent_label': extent_label,
@@ -158,7 +152,6 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'pdf_thumb': pdf_thumb
     }
     # template = loader.get_template('document/document.html')
-    print("triggered")
     template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
 

@@ -1,9 +1,9 @@
 
-from datetime import datetime
 from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.template import loader
+from django.utils import timezone
 
 from ..api import fragment as api
 from ..messages.status import get_status_message_for_fragment
@@ -53,11 +53,14 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     if data['meta']['nextInfo']:
         data['meta']['next'] = make_fragment_link(type, year, number, data['meta']['nextInfo']['href'], version, lang)
 
-    try:
-        version_date = datetime.strptime(version, '%Y-%m-%d')
-        pit = version_date.strftime("%d/%m/%Y")
-    except (TypeError, ValueError):
-        pit = None
+    frag_info = data['meta']['fragmentInfo']
+
+    if frag_info['label'] == frag_info['title']:
+        frag_info['longLabel'] = frag_info['title']
+    elif frag_info['title']:  # label is never None
+        frag_info['longLabel'] = frag_info['label'] + ': ' + frag_info['title']
+    else:
+        frag_info['longLabel'] = frag_info['label']
 
     timeline = make_timeline_data_for_fragment(data['meta'])
     extent_label = make_combined_extent_label(data['meta']['extent'])
@@ -81,7 +84,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
 
     context = {
         'meta': data['meta'],
-        'pit': pit,
+        'view_date': meta.get('pointInTime') or timezone.localdate(),
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
         'extent_label': extent_label,
