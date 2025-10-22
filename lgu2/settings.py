@@ -152,4 +152,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # API
-API_BASE_URL = env('API_BASE_URL')
+API_BASE_URL = 'http://api.lgu2.tna.jurisdatum.com'

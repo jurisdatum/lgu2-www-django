@@ -1,0 +1,25 @@
+<aside aria-labelledby="legislationStatus">
+    <h2 id="legislationStatus">Legislation status</h2>
+    {% include "new_theme/document/up_to_date.html" %}
+    <div class="extent">
+        <h3>Extent information</h3>
+        <p>This Act contains legislation in relation to {{ extent_label }}</p>
+        <button hidden class="initialise">Show geographical extent</button>
+        <a href="#">How we communicate territorial extent and application</a>
+    </div>
+    <div class="in-force">
+        <h3>In force status</h3>
+        <p>This Act is partially in force</p>
+        <a href="#">Commencement and repeal history of this Act</a>
+    </div>
+    <div class="confers-power">
+        <h3>Confers Power</h3>
+        <p>Section 7 confers power to make secondary legislation</p>
+        <a href="confers-power.php">See all provisions in this Act that confer power</a>
+    </div>
+    <div class="blanket-amendments">
+        <h3>Blanket Amendments</h3>
+        <p>Section 7 makes 'blanket amendments' that affect other legislation in a general way</p>
+        <a href="blanket-amendments.php">See all provisions in this Act that make blanket amendments</a>
+    </div>
+</aside>

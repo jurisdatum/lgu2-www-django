@@ -1,17 +1,20 @@
 
-from datetime import datetime
 from typing import Optional, Union
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.template import loader
+from django.utils import timezone
 
 from ..api import fragment as api
 from ..messages.status import get_status_message_for_fragment
 from ..util.labels import get_type_label
+from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
-from .document import _make_timeline_data, group_effects
+from .document import group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
-
+from .timeline import make_timeline_data_for_fragment
+from ..util.extent import make_combined_extent_label
+from ..util.breadcrumbs import make_breadcrumbs
 
 # ToDo fix to use response headers
 def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
@@ -44,24 +47,36 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     if rdrct is not None:
         return rdrct
 
-    link_prefix = '/' + data['meta']['id']
-    if request.LANGUAGE_CODE == 'cy':
-        link_prefix = '/cy' + link_prefix
-    link_suffix = '/' + version if version else ''
+    data['meta']['link'] = make_document_link(type, year, number, version, lang)
+    if data['meta']['prevInfo']:
+        data['meta']['prev'] = make_fragment_link(type, year, number, data['meta']['prevInfo']['href'], version, lang)
+    if data['meta']['nextInfo']:
+        data['meta']['next'] = make_fragment_link(type, year, number, data['meta']['nextInfo']['href'], version, lang)
 
-    data['meta']['link'] = link_prefix + link_suffix
-    if data['meta']['prev']:
-        data['meta']['prev'] = link_prefix + '/' + data['meta']['prev'] + link_suffix
-    if data['meta']['next']:
-        data['meta']['next'] = link_prefix + '/' + data['meta']['next'] + link_suffix
+    frag_info = data['meta']['fragmentInfo']
 
-    try:
-        version_date = datetime.strptime(version, '%Y-%m-%d')
-        pit = version_date.strftime("%d/%m/%Y")
-    except (TypeError, ValueError):
-        pit = None
+    if frag_info['label'] == frag_info['title']:
+        frag_info['longLabel'] = frag_info['title']
+    elif frag_info['title']:  # label is never None
+        frag_info['longLabel'] = frag_info['label'] + ': ' + frag_info['title']
+    else:
+        frag_info['longLabel'] = frag_info['label']
 
-    timeline = _make_timeline_data(data['meta'], pit)
+    timeline = make_timeline_data_for_fragment(data['meta'])
+    extent_label = make_combined_extent_label(data['meta']['extent'])
+    breadcrumbs = make_breadcrumbs(meta, version, lang)
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+    
+    
 
     status_message = get_status_message_for_fragment(data['meta'])
 
@@ -69,9 +84,13 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
 
     context = {
         'meta': data['meta'],
-        'pit': pit,
+        'view_date': meta.get('pointInTime') or timezone.localdate(),
         'type_label_plural': get_type_label(data['meta']['longType']),
         'timeline': timeline,
+        'extent_label': extent_label,
+        'breadcrumbs': breadcrumbs,
+        'explanatory_notes': explanatory_notes,
+        'other_associated_doc': other_associated_doc,
         'status': {
             'message': status_message,
             'label': meta['fragmentInfo']['label'],
@@ -84,16 +103,17 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
         },
         'article': data['html'],
         'links': {
-            'toc': link_prefix + '/contents' + link_suffix,
-            'content': link_prefix + '/introduction' + link_suffix,
+            'toc': make_contents_link(type, year, number, version, lang),
+            'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
             'resources': '/',
-            'whole': link_prefix + link_suffix,
-            'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else link_prefix + '/body' + link_suffix,
-            'schedules': None if data['meta']['schedules'] is None else link_prefix + '/schedules' + link_suffix
+            'whole': make_document_link(type, year, number, version, lang),
+            'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else make_fragment_link(type, year, number, 'body', version, lang),
+            'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
         }
     }
-    template = loader.get_template('document/document.html')
+    # template = loader.get_template('document/document.html')
+    template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
 
 

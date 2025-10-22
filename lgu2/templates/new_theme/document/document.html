@@ -1,0 +1,105 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<main class="legislation">
+    <section>
+        {% include "new_theme/document/breadcrumbs.html" %}
+        <h1 id="main-content-h" tabindex="-1">
+            {% if meta.fragmentInfo %}
+            {{ meta.fragmentInfo.longLabel }}
+            <br class="initialise"><span class="initialise" hidden>of the </span>
+            {% endif %}
+            <span>{{ meta.title }}</span>
+        </h1>
+    </section>
+
+    <nav aria-labelledby="legislationNavigation" class="legislation-navigation">
+        <h2 id="legislationNavigation">Table of contents, previous and next provisions</h2>
+        {% if meta.prevInfo %}
+        <a href="{{ meta.prev }}"><span><span>Previous: </span>{{ meta.prevInfo.label }}</span></a>
+        {% else %}
+        <span><span>{# this is currently necessary for the positioning of the ToC link #}</span></span>
+        {% endif %}
+        <a href="{{ links.toc }}">Table of Contents</a>
+        {% if meta.nextInfo %}
+        <a href="{{ meta.next }}"><span><span>Next: </span>{{ meta.nextInfo.label }}</span></a>
+        {% else %}
+        <span><span>{# this is currently necessary for the positioning of the ToC link #}</span></span>
+        {% endif %}
+    </nav>
+
+    <section class="pit-search">
+        <h2>View this legislation at a specific date</h2>
+        <details>
+            <summary>
+                You are viewing {% if meta.fragmentInfo %}{{ meta.fragmentInfo.label }}{% else %}this legislation{% endif %} on <span>{{ view_date|date:'d M Y' }}</span>
+                <span> Enter a date or choose from the versions on the timeline</span>
+            </summary>
+            <form role="search">
+                <h3>Change the date</h3>
+                <label for="pitDate">Date:</label>
+                <input type="date" id="pitDate" name="pitDate" value="{{ view_date|date:'Y-m-d' }}">
+                <button type="submit">Go</button>
+            </form>
+        </details>
+    </section>
+
+    {% include "new_theme/document/timeline.html" %}
+
+    <div class="legislation-content">
+
+        {% include "new_theme/document/right_side_panel.html" %}
+
+        <!-- {% include "new_theme/document/status_panel.html" %} -->
+
+        <div>
+            <section class="legislation-text parenthesis">
+                {% if pdf_only %}
+				{% include "document/pdf.html" %}
+				{% else %}
+				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt;padding-bottom:12pt">
+					<template shadowrootmode="open">
+						{% if meta.category == 'secondary' %}
+						<style type="text/css"> @import "{% static 'secondary.css' %}"; </style>
+						{% else %}
+						<style type="text/css"> @import "{% static 'primary.css' %}"; </style>
+						{% endif %}
+						{{ article|safe }}
+					</template>
+				</div>
+				{% endif %}
+            </section>
+
+            <section class="legislation-ftr">
+                
+
+                <!-- <h2 id="legislationChanges">Changes to section 7 since it was enacted</h2>
+                <aside aria-labelledby="legislationChanges">
+                    <h3 class="in-force">Changes to the commencement of section 7 since it was enacted</h3>
+                    <dl class="commencement-annotation">
+                        <dt>12 Apr 2025</dt>
+                        <dd>Section 7 in force at Royal Assent, see <a href="#" class="primary">s. 10(2)</a></dd>
+                    </dl>
+                </aside> -->
+
+                <nav aria-label="Table of contents, previous and next provisions (after the legislation text)" class="legislation-navigation">
+                    <h2>Table of contents, previous and next provisions</h2>
+                    {% if meta.prevInfo %}
+                    <a href="{{ meta.prev }}"><span><span>Previous: </span>{{ meta.prevInfo.label }}</span></a>
+                    {% else %}
+                    <span><span>{# this is currently necessary for the positioning of the ToC link #}</span></span>
+                    {% endif %}
+                    <a href="{{ links.toc }}">Table of Contents</a>
+                    {% if meta.nextInfo %}
+                    <a href="{{ meta.next }}"><span><span>Next: </span>{{ meta.nextInfo.label }}</span></a>
+                    {% else %}
+                    <span><span>{# this is currently necessary for the positioning of the ToC link #}</span></span>
+                    {% endif %}
+                </nav>
+            </section>
+        </div>
+        {% include "new_theme/document/related_info.html" %}
+    </div>
+</main>
+{% endblock %}
