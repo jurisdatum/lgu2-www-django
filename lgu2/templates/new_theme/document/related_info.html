@@ -1,0 +1,22 @@
+<aside aria-labelledby="relatedInfo">
+    <h2 id="relatedInfo">Related information</h2>
+    {% if explanatory_notes %}
+    <div class="explanatory-notes">
+        <h3>Explanatory Notes</h3>
+        <a href="#">See the explanatory notes</a>
+    </div>
+    {% endif %}
+
+    {% if other_associated_doc %}
+    <div class="associated-documents">
+        <h3>Associated documents</h3>
+        <a href="#">See associated documents</a>
+    </div>
+    {% endif %}
+    <details class="other-formats">
+        <summary>
+            <h3>PDFs and other formats</h3>
+        </summary>
+        <div>[Legislation in different formats and links to PDFs, including whole Act and KPV will go here.]</div>
+    </details>
+</aside>

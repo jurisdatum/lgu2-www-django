@@ -47,7 +47,7 @@ YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
 NUMBER = r'(?P<number>[0-9]+)'
 SECTION = r'(?P<section>[A-Za-z0-9/-]+?)'  # not sure about ? on the end
 DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
-VERSION = r'(?P<version>enacted|made|\d{4}-\d{2}-\d{2})'  # ToDo 'created', 'adopted'
+VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 

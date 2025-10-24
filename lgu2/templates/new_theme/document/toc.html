@@ -14,7 +14,7 @@
         <h2 id="legislationNavigation">Table of contents, previous and next provisions</h2>
         <span></span>
         <span></span>
-        <a href="#"><span><span>Next: </span>Introduction</span></a>
+        <a href="{{ meta.next }}"><span><span>Next: </span>Introduction</span></a>
     </nav>
 
     <section class="pit-search">
@@ -33,21 +33,7 @@
     {% include "new_theme/document/timeline.html" %}
 
     <div class="legislation-content">
-        <aside aria-labelledby="legislationStatus">
-            <h2 id="legislationStatus">Legislation status</h2>
-            {% include "new_theme/document/up_to_date.html" %}
-            <div class="extent">
-                <h3>Extent information</h3>
-                <p>This Act contains legislation in relation to {{ extent_label }}</p>
-                <button hidden class="initialise">Show geographical extent</button>
-                <a href="#">How we communicate territorial extent and application</a>
-            </div>
-            <div class="in-force">
-                <h3>In force status</h3>
-                <p>This Act is partially in force</p>
-                <a href="#">Commencement and repeal history of this Act</a>
-            </div>
-        </aside>
+        {% include "new_theme/document/right_side_panel.html" %}
 
         <div>{# this is the main content #}
             {% include "new_theme/document/status_panel.html" %}
@@ -56,7 +42,7 @@
                 <button hidden class="initialise expanded" id="toc"><span>Collapse table of contents</span></button>
                 <h2>Table of contents for this Act</h2>
                 <ul>
-                    <li><h3><a href="#">The whole Act</a></h3>
+                    <li><h3><a href="{{ links.whole }}">The whole Act</a></h3>
                         <ul>
                             <li><a href="{{ links.content }}">Introduction</a></li>
                             {% for item in contents.body %}
@@ -73,29 +59,7 @@
                 {% endif %}
             </section>
         </div>
-
-        <aside aria-labelledby="relatedInfo">
-            <h2 id="relatedInfo">Related information</h2>
-            {% if explanatory_notes %}
-            <div class="explanatory-notes">
-                <h3>Explanatory Notes</h3>
-                <a href="#">See the explanatory notes</a>
-            </div>
-            {% endif %}
-
-            {% if other_associated_doc %}
-            <div class="associated-documents">
-                <h3>Associated documents</h3>
-                <a href="#">See associated documents</a>
-            </div>
-            {% endif %}
-            <details class="other-formats">
-                <summary>
-                    <h3>PDFs and other formats</h3>
-                </summary>
-                <div>[Legislation in different formats and links to PDFs, including whole Act and KPV will go here.]</div>
-            </details>
-        </aside>
+        {% include "new_theme/document/related_info.html" %}        
     </div>
 </main>
 {% endblock %}
