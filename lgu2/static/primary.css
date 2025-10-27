@@ -528,6 +528,15 @@ article.asp .referenceNote {
 /* schedule paragraphs P1 class=schProv1 */
 /* schedule subparagraphs P2 class=schProv2 */
 /* tables */
+table {
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+}
+
+tbody {
+  border-bottom: solid 1px black;
+}
+
 thead th, thead td {
   font-weight: normal;
   font-style: italic;
@@ -552,18 +561,18 @@ blockquote:not(.secondary) .section {
   margin-left: 3.75em;
 }
 blockquote:not(.secondary) .section > h2 {
+  margin-left: -3.75em;
   font-weight: bold;
 }
 blockquote:not(.secondary) .section > h2 > .num {
-  display: block;
-  position: absolute;
-  margin-left: -3.75em;
+  display: inline-block;
+  min-width: calc(3.75em - 1ch);
+  padding-right: 1ch;
 }
 
 blockquote:not(.secondary) .subsection {
   margin-left: 2.5em;
 }
-
 .tblock.formula > div:first-child {
   margin-top: 1em;
   text-align: center;
@@ -573,10 +582,8 @@ blockquote:not(.secondary) .subsection {
   text-align: center;
   font-weight: normal;
   font-size: 1.35em;
-  margin-bottom: 1em;
 }
 .preface > .number {
-  margin-top: 0 !important;
   text-align: center;
   font-weight: bold;
 }
@@ -613,12 +620,13 @@ blockquote:not(.secondary) .subsection {
   padding-left: 3.75em;
 }
 .section > h2 {
+  margin-left: -3.75em;
   font-weight: bold;
 }
 .section > h2 > .num {
-  display: block;
-  position: absolute;
-  margin-left: -3.75em;
+  display: inline-block;
+  min-width: calc(3.75em - 1ch);
+  padding-right: 1ch;
 }
 
 .section.prospective {

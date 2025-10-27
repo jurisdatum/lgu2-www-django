@@ -66,7 +66,7 @@ th > *:last-child, td > *:last-child {
 .fnRef {
   position: relative;
   top: -0.5em;
-  font-size: small;
+  font-size: 12pt;
 }
 
 .footnotes {
@@ -160,8 +160,14 @@ ins.last:after, del.last:after {
 .annotations > div > div > p > span.marker {
   display: inline-block;
   text-indent: initial;
-  min-width: 2em;
+  min-width: 2em; /* text-indent - padding-right */
   padding-right: 1em;
+}
+
+body {
+  margin: 1cm 1in;
+  font-family: arial, helvetica, verdana, sans-serif;
+  font-size: 16pt;
 }
 
 h1 {
@@ -275,6 +281,7 @@ a:hover {
 cite {
   font-style: normal;
 }
+
 cite.operative {
   font-weight: bold;
 }
@@ -407,25 +414,25 @@ section.subheading:first-of-type {
 }
 
 /* compact format */
-.article, .regulation, .rule {
+.section {
   margin-top: 2em;
 }
-.article > h2, .regulation > h2, .rule > h2 {
+.section > h2 {
   display: inline;
 }
-.article > h2 > .heading, .regulation > h2 > .heading, .rule > h2 > .heading {
+.section > h2 > .heading {
   display: block;
   font-weight: bold;
   margin-bottom: 1em;
 }
-.article > h2 > .num, .regulation > h2 > .num, .rule > h2 > .num {
+.section > h2 > .num {
   padding-left: 1em;
   font-weight: bold;
 }
-.article > .intro, .regulation > .intro, .rule > .intro, .article > .content, .regulation > .content, .rule > .content {
+.section > .intro, .section > .content {
   display: inline;
 }
-.article > .intro > p:first-child, .regulation > .intro > p:first-child, .rule > .intro > p:first-child, .article > .intro .p:first-child, .regulation > .intro .p:first-child, .rule > .intro .p:first-child, .article > .content > p:first-child, .regulation > .content > p:first-child, .rule > .content > p:first-child, .article > .content .p:first-child, .regulation > .content .p:first-child, .rule > .content .p:first-child {
+.section > .intro > p:first-child, .section > .intro .p:first-child, .section > .content > p:first-child, .section > .content .p:first-child {
   display: inline;
   padding-left: 1ch;
 }
@@ -552,118 +559,48 @@ blockquote:not(.secondary) .section > h2 > .num {
 blockquote:not(.secondary) .subsection {
   margin-left: 2.5em;
 }
-
 .tblock.formula > div:first-child {
   margin-top: 1em;
   text-align: center;
 }
 
-.correctionRubric {
-  margin-top: 1em;
-  font-style: italic;
-}
-
-.proceduralRubric {
-  margin-top: 1em;
-}
-
-.banner {
-  margin-top: 1em;
-  padding: 1ex;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5ch;
-}
-
 .preface > h1 {
   text-align: center;
   font-weight: normal;
-  font-size: 1.35em;
+  font-size: 21.6pt;
 }
 .preface > .number {
-  margin-top: 1em;
   text-align: center;
-  /* font-weight: bold; */
+  font-weight: bold;
+}
+.preface > .block {
+  margin-top: 1em;
+}
+.preface > .dateOfEnactment {
+  margin-top: 0;
+  text-align: right;
 }
 
-.subject.block {
-  margin-top: 1em;
-  margin-bottom: 1em;
+.preface > .crest {
   text-align: center;
-  /* font-weight: bold; */
-  text-transform: uppercase;
-}
-
-.subsubject {
-  margin-top: 1em;
-  text-align: center;
-  /* font-weight: bold; */
-  text-transform: uppercase;
-}
-
-.approval {
-  margin-top: 1em;
-  text-align: center;
-}
-
-.laidInDraft, .madeDate, .laidDate, .commenceDate {
-  position: relative;
-  margin: 1em 25%;
-  font-style: italic;
-}
-.laidInDraft > *:nth-child(2), .madeDate > *:nth-child(2), .laidDate > *:nth-child(2), .commenceDate > *:nth-child(2) {
-  position: absolute;
-  right: 0;
 }
 
 /* P1 */
 /* P2 */
-.body .paragraph:not(.para1) > h2,
-.body .SIParagraph > h2,
-.article > section > h2,
-.regulation > section > h2,
-.rule > section > h2,
+.subsection > h2,
 .prov2 > h2 {
   display: inline;
 }
-.body .paragraph:not(.para1) > h2 > .num,
-.body .SIParagraph > h2 > .num,
-.article > section > h2 > .num,
-.regulation > section > h2 > .num,
-.rule > section > h2 > .num,
+.subsection > h2 > .num,
 .prov2 > h2 > .num {
   padding-left: 1em;
 }
-.body .paragraph:not(.para1) > .intro, .body .paragraph:not(.para1) > .content,
-.body .SIParagraph > .intro,
-.body .SIParagraph > .content,
-.article > section > .intro,
-.article > section > .content,
-.regulation > section > .intro,
-.regulation > section > .content,
-.rule > section > .intro,
-.rule > section > .content,
+.subsection > .intro, .subsection > .content,
 .prov2 > .intro,
 .prov2 > .content {
   display: inline;
 }
-.body .paragraph:not(.para1) > .intro > p:first-child, .body .paragraph:not(.para1) > .intro .p:first-child, .body .paragraph:not(.para1) > .content > p:first-child, .body .paragraph:not(.para1) > .content .p:first-child,
-.body .SIParagraph > .intro > p:first-child,
-.body .SIParagraph > .intro .p:first-child,
-.body .SIParagraph > .content > p:first-child,
-.body .SIParagraph > .content .p:first-child,
-.article > section > .intro > p:first-child,
-.article > section > .intro .p:first-child,
-.article > section > .content > p:first-child,
-.article > section > .content .p:first-child,
-.regulation > section > .intro > p:first-child,
-.regulation > section > .intro .p:first-child,
-.regulation > section > .content > p:first-child,
-.regulation > section > .content .p:first-child,
-.rule > section > .intro > p:first-child,
-.rule > section > .intro .p:first-child,
-.rule > section > .content > p:first-child,
-.rule > section > .content .p:first-child,
+.subsection > .intro > p:first-child, .subsection > .intro .p:first-child, .subsection > .content > p:first-child, .subsection > .content .p:first-child,
 .prov2 > .intro > p:first-child,
 .prov2 > .intro .p:first-child,
 .prov2 > .content > p:first-child,
@@ -673,129 +610,22 @@ blockquote:not(.secondary) .subsection {
 }
 
 /* first P2 within a P1 */
-.article > h2 + section,
-.regulation > h2 + section,
-.rule > h2 + section,
+.section > h2 + section,
 h2 + .prov2 {
   display: inline;
 }
-.article > h2 + section > h2 > .num,
-.regulation > h2 + section > h2 > .num,
-.rule > h2 + section > h2 > .num,
+.section > h2 + section > h2 > .num,
 h2 + .prov2 > h2 > .num {
   padding-left: 0 !important;
 }
-.article > h2 + section > h2 > .num::before,
-.regulation > h2 + section > h2 > .num::before,
-.rule > h2 + section > h2 > .num::before,
+.section > h2 + section > h2 > .num::before,
 h2 + .prov2 > h2 > .num::before {
   content: "—";
 }
 
 /* P3 */
 /* extra indent because secondary P2s are not indented  */
-.body .paragraph:not(.para1) > .level,
-.body .SIParagraph > .level,
+.subsection > .level,
 .para1 {
   margin-left: 5em;
-}
-
-/* P3 as first child of a block quote */
-blockquote > .level,
-blockquote > .para1 {
-  margin-left: 2.5em;
-}
-
-/* P4 as first child of a block quote */
-blockquote > .para2 {
-  margin-left: 5em;
-}
-
-/* signatures */
-.signatures {
-  margin-top: 1em;
-}
-
-.signatureBlock {
-  position: relative;
-  margin-top: 1em;
-}
-
-.signatureBlock > .content > div {
-  text-align: right;
-}
-
-.signatureBlock > .content > div.seal {
-  margin-top: 0.5em;
-  text-align: left;
-}
-
-.signatureBlock > .content > .signature {
-  font-style: italic;
-}
-
-.signatureBlock > .content > .address > * {
-  margin-top: 0;
-  text-align: left;
-}
-
-.signatureBlock > .content > .date {
-  text-align: left;
-}
-
-/* schedules */
-.schedule > h2 .heading {
-  font-style: italic;
-}
-
-.schProv1 > h2 > .num,
-.schedule > .paragraph > h2 > .num,
-.schedule > .part > .paragraph > h2 > .num,
-blockquote[data-ukl-Context=schedule] > .paragraph > h2 > .num {
-  font-weight: bold;
-}
-
-/* explanatory notes */
-.explanatoryNote, .explanatoryNotes,
-.commencementHistory, .earlierOrders {
-  margin-top: 4em;
-}
-.explanatoryNote > .heading, .explanatoryNotes > .heading,
-.commencementHistory > .heading, .earlierOrders > .heading {
-  margin-top: 1em;
-  text-align: center;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.explanatoryNote .subheading, .explanatoryNotes .subheading,
-.commencementHistory .subheading, .earlierOrders .subheading {
-  margin-top: 0.5em;
-  text-align: center;
-  font-style: italic;
-}
-
-.blockContainer.para1, .tblock.para1 {
-  margin-left: 5em;
-}
-.blockContainer.para1 > .num, .tblock.para1 > .num {
-  position: absolute;
-  margin-left: -2.5em;
-}
-
-.blockContainer.para2, .blockContainer.para3, .blockContainer.para4,
-.tblock.para2, .tblock.para3, .tblock.para4 {
-  margin-left: 2.5em;
-}
-.blockContainer.para2 > .num, .blockContainer.para3 > .num, .blockContainer.para4 > .num,
-.tblock.para2 > .num, .tblock.para3 > .num, .tblock.para4 > .num {
-  position: absolute;
-  margin-left: -2.5em;
-}
-
-.blockContainer[data-ukl-name=P1] {
-  margin-left: 2.5em;
-}
-.blockContainer[data-ukl-name=P1] > .num {
-  position: absolute;
-  margin-left: -2.5em;
 }
