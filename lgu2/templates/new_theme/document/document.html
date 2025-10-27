@@ -60,7 +60,11 @@
 				{% else %}
 				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt;padding-bottom:12pt">
 					<template shadowrootmode="open">
-						{% if meta.category == 'secondary' %}
+						{% if meta.category == 'euretained' %}
+						<style type="text/css"> @import "{% static 'euretained.css' %}"; </style>
+						{% elif meta.shortType == 'nia' %}
+						<style type="text/css"> @import "{% static 'nia.css' %}"; </style>
+						{% elif meta.category == 'secondary' %}
 						<style type="text/css"> @import "{% static 'secondary.css' %}"; </style>
 						{% else %}
 						<style type="text/css"> @import "{% static 'primary.css' %}"; </style>

@@ -26,10 +26,10 @@
         <p>For more information see <a href="{% url 'explore-eu-exit-and-uk-law' %}">EU Exit and UK law</a>.</p>
 
         <ul>
-            <li><a href="#">All Legislation originating from the EU</a></li>
-            <li><a href="#">Regulations originating from the EU</a></li>
-            <li><a href="#">Decisions originating from the EU</a></li>
-            <li><a href="#">Directives originating from the EU</a></li>
+            <li><a href="{% url 'browse' 'eu-origin' %}">All Legislation originating from the EU</a></li>
+            <li><a href="{% url 'browse' 'eur' %}">Regulations originating from the EU</a></li>
+            <li><a href="{% url 'browse' 'eudn' %}">Decisions originating from the EU</a></li>
+            <li><a href="{% url 'browse' 'eudr' %}">Directives originating from the EU</a></li>
             <li><a href="#">European Union Treaties</a></li>
         </ul>
     </section>
