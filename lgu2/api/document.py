@@ -40,7 +40,7 @@ class CommonMetadata(TypedDict):
     number: int
     altNumbers: NotRequired[List[AltNumber]]
     isbn: NotRequired[str]
-    date: Date
+    date: Optional[Date]
     cite: str
     version: str
     status: Literal['final', 'revised']
@@ -60,7 +60,8 @@ class CommonMetadata(TypedDict):
 
     @staticmethod
     def convert_dates(meta: 'CommonMetadata'):
-        meta['date'] = Date.fromisoformat(meta['date'])
+        if meta.get('date'):  # can be null
+            meta['date'] = Date.fromisoformat(meta['date'])
         meta['modified'] = Date.fromisoformat(meta['modified'])
         if meta.get('pointInTime'):  # can be null
             meta['pointInTime'] = Date.fromisoformat(meta['pointInTime'])

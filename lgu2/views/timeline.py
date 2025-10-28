@@ -64,7 +64,7 @@ def _make_timeline_data(meta: CommonMetadata, make_link) -> TimelineData:
         version = versions.pop(0)
         original = {
             'label': version,
-            'date': meta['date'],
+            'date': meta['date'],  # can be None
             'link': make_link(version)
         }
     current = None

@@ -20,9 +20,13 @@
                 {% if timeline.viewing.label == 'prospective' %}
                     <span class="date">not yet in force</span>
                 {% else %}
-                    <span class="date">from <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
+                    {% if timeline.viewing.date %}
+                        <span class="date">from <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
+                    {% else %}
+                        <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
+                    {% endif %}
                     {% if timeline.pointInTime %}
-                        <span class="point-in-time{% if timeline.pointInTime < timeline.viewing.date %} previous-point-in-time{% endif %}">
+                        <span class="point-in-time{% if timeline.viewing.date and timeline.pointInTime < timeline.viewing.date %} previous-point-in-time{% endif %}">
                             as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
                         </span>
                     {% endif %}
@@ -40,11 +44,17 @@
                             <a href="javascript:void(0);">
                                 <span class="prefix">You are viewing </span>
                                 <span class="version"><span class="title">the original version</span></span>
-                                <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
-                                {% if timeline.pointInTime and timeline.pointInTime != timeline.original.date %}
-                                    <span class="point-in-time{% if timeline.pointInTime < timeline.original.date %} previous-point-in-time{% endif %}">
+                                {% if timeline.original.date %}
+                                    <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
+                                {% else %}
+                                    <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
+                                {% endif %}
+                                {% if timeline.pointInTime %}
+                                    {% if not timeline.original.date or timeline.pointInTime != timeline.original.date %}
+                                    <span class="point-in-time{% if timeline.original.date and timeline.pointInTime < timeline.original.date %} previous-point-in-time{% endif %}">
                                         as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
                                     </span>
+                                    {% endif %}
                                 {% endif %}
                             </a>
                         </li>
@@ -52,7 +62,11 @@
                         <li>
                             <a href="{{ timeline.original.link }}">
                                 <span class="version"><span class="title">The original version</span></span>
-                                <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
+                                {% if timeline.original.date %}
+                                    <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
+                                {% else %}
+                                    <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
+                                {% endif %}
                             </a>
                         </li>
                         {% endif %}
