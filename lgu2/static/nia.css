@@ -66,7 +66,7 @@ th > *:last-child, td > *:last-child {
 .fnRef {
   position: relative;
   top: -0.5em;
-  font-size: small;
+  font-size: 12pt;
 }
 
 .footnotes {
@@ -160,8 +160,14 @@ ins.last:after, del.last:after {
 .annotations > div > div > p > span.marker {
   display: inline-block;
   text-indent: initial;
-  min-width: 2em;
+  min-width: 2em; /* text-indent - padding-right */
   padding-right: 1em;
+}
+
+body {
+  margin: 1cm 1in;
+  font-family: arial, helvetica, verdana, sans-serif;
+  font-size: 16pt;
 }
 
 h1 {
@@ -275,6 +281,7 @@ a:hover {
 cite {
   font-style: normal;
 }
+
 cite.operative {
   font-weight: bold;
 }
@@ -407,48 +414,27 @@ section.subheading:first-of-type {
 }
 
 /* compact format */
-blockquote .article {
+.section {
   margin-top: 2em;
 }
-blockquote .article > h2 {
+.section > h2 {
   display: inline;
 }
-blockquote .article > h2 > .heading {
+.section > h2 > .heading {
   display: block;
   font-weight: bold;
   margin-bottom: 1em;
 }
-blockquote .article > h2 > .num {
+.section > h2 > .num {
   padding-left: 1em;
   font-weight: bold;
 }
-blockquote .article > .intro, blockquote .article > .content {
+.section > .intro, .section > .content {
   display: inline;
 }
-blockquote .article > .intro > p:first-child, blockquote .article > .intro .p:first-child, blockquote .article > .content > p:first-child, blockquote .article > .content .p:first-child {
-  display: inline;
-  padding-left: 1ch;
-}
-
-blockquote.secondary .paragraph > h2, blockquote .article > .paragraph > h2, blockquote .article > .paragraph:first-of-type > h2 {
-  display: inline;
-}
-blockquote.secondary .paragraph > .intro, blockquote .article > .paragraph > .intro, blockquote.secondary .paragraph > .content, blockquote .article > .paragraph > .content {
-  display: inline;
-}
-blockquote.secondary .paragraph > .intro > p:first-child, blockquote .article > .paragraph > .intro > p:first-child, blockquote.secondary .paragraph > .intro .p:first-child, blockquote .article > .paragraph > .intro .p:first-child, blockquote.secondary .paragraph > .content > p:first-child, blockquote .article > .paragraph > .content > p:first-child, blockquote.secondary .paragraph > .content .p:first-child, blockquote .article > .paragraph > .content .p:first-child {
+.section > .intro > p:first-child, .section > .intro .p:first-child, .section > .content > p:first-child, .section > .content .p:first-child {
   display: inline;
   padding-left: 1ch;
-}
-
-blockquote .article > .paragraph:first-of-type {
-  display: inline;
-}
-blockquote .article > .paragraph:first-of-type > h2 > .num {
-  padding-left: 0 !important;
-}
-blockquote .article > .paragraph:first-of-type > h2 > .num::before {
-  content: "—";
 }
 
 .level, .para1, .para2, .para3, .para4 {
@@ -456,7 +442,7 @@ blockquote .article > .paragraph:first-of-type > h2 > .num::before {
   margin-left: 2.5em;
 }
 
-.subsection > h2, blockquote:not(.secondary) .subsection > h2, .level > h6.with-heading > .num, .para1 > h6.with-heading > .num, .para2 > h6.with-heading > .num, .para3 > h6.with-heading > .num, .para4 > h6.with-heading > .num, .level > h5.with-heading > .num, .para1 > h5.with-heading > .num, .para2 > h5.with-heading > .num, .para3 > h5.with-heading > .num, .para4 > h5.with-heading > .num, .level > h4.with-heading > .num, .para1 > h4.with-heading > .num, .para2 > h4.with-heading > .num, .para3 > h4.with-heading > .num, .para4 > h4.with-heading > .num, .level > h3.with-heading > .num, .para1 > h3.with-heading > .num, .para2 > h3.with-heading > .num, .para3 > h3.with-heading > .num, .para4 > h3.with-heading > .num, .level > h6:not(.with-heading), .para1 > h6:not(.with-heading), .para2 > h6:not(.with-heading), .para3 > h6:not(.with-heading), .para4 > h6:not(.with-heading), .level > h5:not(.with-heading), .para1 > h5:not(.with-heading), .para2 > h5:not(.with-heading), .para3 > h5:not(.with-heading), .para4 > h5:not(.with-heading), .level > h4:not(.with-heading), .para1 > h4:not(.with-heading), .para2 > h4:not(.with-heading), .para3 > h4:not(.with-heading), .para4 > h4:not(.with-heading), .level > h3:not(.with-heading), .para1 > h3:not(.with-heading), .para2 > h3:not(.with-heading), .para3 > h3:not(.with-heading), .para4 > h3:not(.with-heading) {
+blockquote:not(.secondary) .subsection > h2, .level > h6.with-heading > .num, .para1 > h6.with-heading > .num, .para2 > h6.with-heading > .num, .para3 > h6.with-heading > .num, .para4 > h6.with-heading > .num, .level > h5.with-heading > .num, .para1 > h5.with-heading > .num, .para2 > h5.with-heading > .num, .para3 > h5.with-heading > .num, .para4 > h5.with-heading > .num, .level > h4.with-heading > .num, .para1 > h4.with-heading > .num, .para2 > h4.with-heading > .num, .para3 > h4.with-heading > .num, .para4 > h4.with-heading > .num, .level > h3.with-heading > .num, .para1 > h3.with-heading > .num, .para2 > h3.with-heading > .num, .para3 > h3.with-heading > .num, .para4 > h3.with-heading > .num, .level > h6:not(.with-heading), .para1 > h6:not(.with-heading), .para2 > h6:not(.with-heading), .para3 > h6:not(.with-heading), .para4 > h6:not(.with-heading), .level > h5:not(.with-heading), .para1 > h5:not(.with-heading), .para2 > h5:not(.with-heading), .para3 > h5:not(.with-heading), .para4 > h5:not(.with-heading), .level > h4:not(.with-heading), .para1 > h4:not(.with-heading), .para2 > h4:not(.with-heading), .para3 > h4:not(.with-heading), .para4 > h4:not(.with-heading), .level > h3:not(.with-heading), .para1 > h3:not(.with-heading), .para2 > h3:not(.with-heading), .para3 > h3:not(.with-heading), .para4 > h3:not(.with-heading) {
   position: absolute;
   margin-left: -5em;
   width: 4em;
@@ -581,7 +567,7 @@ blockquote:not(.secondary) .subsection {
 .preface > h1 {
   text-align: center;
   font-weight: normal;
-  font-size: 1.35em;
+  font-size: 21.6pt;
 }
 .preface > .number {
   text-align: center;
@@ -599,49 +585,47 @@ blockquote:not(.secondary) .subsection {
   text-align: center;
 }
 
-.asp .dateOfEnactment,
-.asp .DateOfEnactment {
-  margin-top: 1em;
-  text-align: left;
-  font-weight: bold;
+/* P1 */
+/* P2 */
+.subsection > h2,
+.prov2 > h2 {
+  display: inline;
+}
+.subsection > h2 > .num,
+.prov2 > h2 > .num {
+  padding-left: 1em;
+}
+.subsection > .intro, .subsection > .content,
+.prov2 > .intro,
+.prov2 > .content {
+  display: inline;
+}
+.subsection > .intro > p:first-child, .subsection > .intro .p:first-child, .subsection > .content > p:first-child, .subsection > .content .p:first-child,
+.prov2 > .intro > p:first-child,
+.prov2 > .intro .p:first-child,
+.prov2 > .content > p:first-child,
+.prov2 > .content .p:first-child {
+  display: inline;
+  padding-left: 1ch;
 }
 
-/* structure */
-.part > h2 > .num {
-  font-variant: small-caps;
-  font-weight: bold;
+/* first P2 within a P1 */
+.section > h2 + section,
+h2 + .prov2 {
+  display: inline;
 }
-.part > h2 > .heading {
-  font-variant: small-caps;
+.section > h2 + section > h2 > .num,
+h2 + .prov2 > h2 > .num {
+  padding-left: 0 !important;
 }
-
-.section {
-  margin-top: 1.5em;
-  padding-left: 3.75em;
-}
-.section > h2 {
-  margin-left: -3.75em;
-  font-weight: bold;
-}
-.section > h2 > .num {
-  display: inline-block;
-  min-width: calc(3.75em - 1ch);
-  padding-right: 1ch;
+.section > h2 + section > h2 > .num::before,
+h2 + .prov2 > h2 > .num::before {
+  content: "—";
 }
 
-.section.prospective {
-  padding-left: 4.25em !important;
-}
-
-.section.prospective::before {
-  margin-left: -3.75em;
-}
-
-.schedule > h2 .heading {
-  font-variant: small-caps;
-}
-
-/* amendments */
-blockquote .article > .paragraph > .para1 {
-  margin-left: 5em; /* parent is inline, so its margin is ineffective (or maybe it's just not set) */
+/* P3 */
+/* extra indent because secondary P2s are not indented  */
+.subsection > .level,
+.para1 {
+  margin-left: 5em;
 }

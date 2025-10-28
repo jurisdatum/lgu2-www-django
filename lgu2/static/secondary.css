@@ -363,8 +363,8 @@ cite.operative {
 }
 
 section.prospective {
-  border: 1px solid #ddd;
-  background-color: rgb(250, 250, 250);
+  border: 1px solid var(--lessSubtleBorder);
+  background-color: var(--altBg);
   margin-left: -0.5em;
   padding-left: 0.5em;
   margin-right: -0.5em;
@@ -378,7 +378,7 @@ section.prospective::before {
   left: -0.5em;
   margin-right: -1em;
   margin-bottom: 0.5em;
-  background-color: rgb(235, 235, 235);
+  background-color: var(--altBg);
   padding: 0.5em;
   font-family: Roboto, sans-serif;
   font-weight: lighter;
@@ -487,10 +487,15 @@ blockquote:not(.secondary) .subsection > h2, .level > h6.with-heading > .num, .p
   text-transform: uppercase;
 }
 
-.referenceNote {
+article:not(.asp) .referenceNote {
   position: absolute;
   top: -1em;
   right: 0;
+  font-size: smaller;
+}
+
+article.asp .referenceNote {
+  text-align: center;
   font-size: smaller;
 }
 
