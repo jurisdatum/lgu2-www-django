@@ -60,6 +60,7 @@ jobs:
       env:
         SECRET_KEY: dummy-key-for-collectstatic
         API_BASE_URL: dummy-url-for-collectstatic
+        DEBUG: True
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
