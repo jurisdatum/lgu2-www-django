@@ -5,10 +5,10 @@
 				<li><a href="#search-filters-h">Skip to search filters</a></li>
 				<li><a href="#search-results-h">Skip to search results</a></li>
 			</ul>
-			<div class="top-menu">
-				<a href="/" aria-current="page" class="hdr-home"><span>legislation</span>.gov.uk</a>
+			<nav aria-label="Organisation links">
+				<a href="/" class="hdr-home"><span>legislation</span>.gov.uk</a>
 				<div class="hdr-tna">Delivered by <a href="https://www.nationalarchives.gov.uk/"><span>The National Archives</span></a></div>
-			</div>
+			</nav>
 			<div class="hdr-menu">
 				<h2 id="mainMenu">Main menu</h2>
 				<details>
@@ -17,7 +17,7 @@
 						<span class="close">Close</span>
 					</summary>
 					<div class="hdr-links">
-						<nav aria-labelledby="mainMenu">
+						<nav aria-labelledby="mainMenu"  class="main-menu">
 							<ul>
                             <li>
                                 <a href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
@@ -29,9 +29,14 @@
                             <li><a href="{% url 'about-us' %}" {% if request.path == '/about-us/' %}aria-current="page"{% endif %}>About us</a></li>
                         </ul>
 						</nav>
-						<div class="hdr-lang">
-							<h3>Change language</h3>
-							<a href="/cy" lang="cy">Cymraeg</a><a href="/" aria-current="page"><span>Language set to </span>English</a></div>
+						<nav aria-labelledby="changeLanguage" class="hdr-lang">
+							<h3 id="changeLanguage">Change language</h3>
+                            <ul>
+                                <li><a href="/cy" lang="cy">Cymraeg</a></li>
+                                <li><a href="/" aria-current="page"><span>Language set to </span>English</a></li>
+                            </ul>
+                        </nav>
+						
 						<div class="hdr-tna initialise" hidden>Delivered by <a href="/tna/"><span>The National Archives</span></a></div>
 					</div>
 				</details>

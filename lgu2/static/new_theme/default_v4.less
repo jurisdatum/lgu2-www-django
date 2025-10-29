@@ -7,6 +7,7 @@ body:not(:-moz-handler-blocked) fieldset {
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* breakpoints */
+    @mobilePortrait: ~"350px";
 	@mobileLandscape: ~"450px";
 	@mobileSearchSelect: ~"510px";
 	@phablet: ~"700px";
@@ -602,15 +603,21 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 		h2 {.sr-only()}
 		a.hdr-home {
-			color: unset; text-decoration: none;
+            color: unset; text-decoration: none;
 			span {font-weight: 500}
 		}
 		.hdr-lang {
 			h3 {.sr-only()}
-			a[aria-current="page"] {
-				font-weight: 500;
-				span {.sr-only()}
-			}
+            ul {
+                display: block;
+                li {
+                    display: table-cell; padding: 0;
+                    a[aria-current="page"] {
+                        font-weight: 500;
+                        span {.sr-only()}
+                    }
+                }
+            }
 		}
 		.hdr-search {text-align: center; padding: 0; background: var(--searchBg);
 			form {
@@ -643,8 +650,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		display: table-row; height: 1%; background: var(--ftrBg); color: var(--ftrText);
 		.section {padding: 1rem}
 		nav ul {
-			max-height: 8em;
-			li {max-width: 45vw; width: 14em; padding: 0 0 0.5em 0}
+			li {padding: 0 0 0.5em 0}
 		}
 		a {color: var(--ftrLink); font-weight: 300}
 		.mode {
@@ -1511,6 +1517,10 @@ body:not(:-moz-handler-blocked) fieldset {
 						li {
 							margin: 0 0 0.5rem 0; padding: 0 0 0 0.25rem; font-weight: 300;
 							&::marker {color: var(--link)}
+                            &[value="0"] {
+                                &::marker {display: none}
+                                .prefix {display: none}
+                            }
 							.extent {
 								display: flex; margin: 0.15rem 0 0 0;
 								&.hidden {display: none}
@@ -1561,8 +1571,9 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 					details {
 						summary {
-							display: block; padding: 0 1rem 0.5rem 0; height: 100%; min-width: 3.5rem; border-color: transparent; color: var(--link);
-							&:before {position: absolute; margin: -0.2rem 0 0 -2rem; content: ""; width: 1.5rem; height: 1.5rem}
+							padding: 0 1rem 0.5rem 0; border-color: transparent; color: var(--link);
+							&:before {position: absolute; margin: -1.4rem 0 0 -2rem; content: ""; width: 1.5rem; height: 1.5rem}
+                            span {.sr-only}
 						}
 						ol, ul {
 							margin: 0 0 0 1rem;
@@ -1570,7 +1581,6 @@ body:not(:-moz-handler-blocked) fieldset {
 								margin: 0.5rem 0 0 1rem;
 							}
 						}
-						&:has(details) > summary {padding: 0 1rem 0.5rem 0}
 					}
 					&:not(:has(details)) button {display: none}
 				}
@@ -1667,7 +1677,7 @@ body:not(:-moz-handler-blocked) fieldset {
 	}
 
 /* breakpoints */
-	@media (min-width: calc(@mobileLandscape)) and (max-width: calc(@tabletPortrait - 1px)) {
+	@media only screen and (min-width: calc(@mobileLandscape)) and (max-width: calc(@tabletPortrait - 1px)) {
 		main {
 			&.legislation .legislation-content > div {
 				.confers-power, .blanket-amendments {
@@ -1678,16 +1688,19 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	@media (max-width: calc(@tabletPortrait - 1px)) {
+	@media only screen and (max-width: calc(@tabletPortrait - 1px)) {
 	/* main menu and timeline act as modal */
 		body:has(.hdr-menu details[open]) *:not(:has(.hdr-menu)):not(.hdr-menu):not(.hdr-menu *) {display: none}
 		header {
 			background: var(--hdrBg);
-			.top-menu {
+			section > nav {
 				display: flex; flex-wrap: wrap; overflow: auto;
 				.hdr-tna {display: none}
 			}
-			a.hdr-home {display: table-cell; margin: 0.85em auto; padding: 0.15em 0.25em; text-align: center; font-weight: 300}
+			a.hdr-home {
+                display: table-cell; margin: 0.85em auto; padding: 0.15em 0.25em; text-align: center; font-weight: 300;
+                [aria-current="page"] {font-weight: 300}
+            }
 
 			.hdr-menu {
 				.modal;
@@ -1706,9 +1719,13 @@ body:not(:-moz-handler-blocked) fieldset {
 					.hdr-links {display: flex; flex-direction: column; height: 100%}
 					.hdr-lang {
 						flex-grow: 1; margin: 0.75em 0 0 0;
-						a {border-radius: 0.25rem 0 0 0.25rem; border: 0.0625rem solid var(--modalButtonBorder); padding: 0.35em 1.35em}
-						a[aria-current="page"] {background: var(--modalButtonBg); color: var(--modalButtonText)}
-						a[aria-current="page"] + a, a + a[aria-current="page"] {border-radius: 0 0.25rem 0.25rem 0; padding: 0.35em 1.35em}
+                        ul {
+                            li {
+                                a {border-radius: 0.25rem 0 0 0.25rem; border: 0.0625rem solid var(--modalButtonBorder); padding: 0.35em 1.35em}
+                                a[aria-current="page"] {background: var(--modalButtonBg); color: var(--modalButtonText)}
+                                &:nth-child(2) a {border-radius: 0 0.25rem 0.25rem 0; padding: 0.35em 1.35em}                            
+                            }
+                        }
 					}
 					.hdr-tna {display: block; padding: 1em 0 0 0}
 				}
@@ -1733,7 +1750,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	@media (min-width: calc(@tabletPortrait)) and (max-width: calc(@desktopSmall - 1px)) {
+	@media print and (orientation: portrait), screen and (min-width: calc(@tabletPortrait)) and (max-width: calc(@desktopSmall - 1px)) {
 	/* timeline and metadata on same row */
 		main {
 			&.legislation:has(.timeline details:not([open])) {
@@ -1784,10 +1801,12 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	@media (max-width: calc(@desktopSmall - 1px)) {
+	@media screen and (max-width: calc(@desktopSmall - 1px)) {
 	/* main menu and timeline act as modal */
 		body:has(.timeline details[open]) *:not(:has(.timeline)):not(.timeline):not(.timeline *), 
 		body:has(.search-filters > details[open]) *:not(:has(.search-filters)):not(.search-filters):not(.search-filters *) {display: none}
+    }
+	@media print and (orientation: portrait), screen and (max-width: calc(@desktopSmall - 1px)) {
 		main {
 			&.legislation {
 				.timeline {
@@ -1882,6 +1901,12 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
+	@media (min-width: @mobilePortrait) {
+        footer {
+            nav ul {display: grid; grid-auto-flow: column; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(2, 1fr); column-gap: 0.5rem}
+        }
+	}
+
 	@media (min-width: @mobileLandscape) {
 		:root, :root[colour-scheme="light"] {
 			a.hdr-home {background: url("images/legislation-logo.png") no-repeat 0; background-size: 20.5%}
@@ -1894,7 +1919,6 @@ body:not(:-moz-handler-blocked) fieldset {
 		header {
 			a.hdr-home {margin: 0.15em auto; padding: 0.65em 0.25em 0.65em 2.5em; font-size: 1.25rem}
 		}
-		
 		main {
 			.cards {
 				ul {grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))}
@@ -1990,6 +2014,12 @@ body:not(:-moz-handler-blocked) fieldset {
 	}
 
 	@media (min-width: @phablet) {
+    	footer {
+            nav ul {
+                display: inline-flex; flex-flow: column wrap; max-height: 8em;
+    			li {max-width: 45vw; width: 14em}
+            }
+        }
 		main {
 			> section, > article {
 				&:has(.in-page-nav) {
@@ -2037,7 +2067,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	@media (min-width: @tabletPortrait) {
+	@media print, screen and (min-width: @tabletPortrait) {
 		:root, :root[colour-scheme="light"], :root[colour-scheme="dark"] {
 			header {
 				&:has(.hdr-search details[open]) .hdr-search summary {background: var(--searchBg)}
@@ -2049,7 +2079,7 @@ body:not(:-moz-handler-blocked) fieldset {
 			background: var(--verySubtleBg);
 			section {padding: 0 1rem}
 			a {font-weight: 300}
-			.top-menu {
+			section > nav {
 				margin: 0.4rem 0 0 0; min-height: 4.6rem;
 				a.hdr-home {margin: 0; padding: 0.9em 0.25em 0.65em 2.5em; font-size: 2rem; position: absolute}
 				.hdr-tna {
@@ -2074,7 +2104,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					a {color: unset}
 					.hdr-links {
 						overflow: auto; margin: 0 0 0.725em 0;
-						nav {
+						.main-menu {
 							ul {
 								flex-direction: row;
 								li {
@@ -2088,8 +2118,11 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 					.hdr-lang {
 						float: right;
-						a[aria-current="page"] + a, a + a[aria-current="page"] {border-left: 0.0625rem solid var(--midDark); margin: 0 0 0 0.35em; padding: 0 0 0 0.5em}
-						a + a[aria-current="page"] {margin: 0 0 0 0.5em}
+                        ul {
+                            li {
+                                &:last-of-type a {border-left: 0.0625rem solid var(--midDark); margin: 0 0 0 0.5em; padding: 0 0 0 0.5em}
+                            }
+                        }
 					}
 					.hdr-tna {display: none}
 				}
@@ -2119,7 +2152,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 			.hdr-lang {position: absolute; top: 2.25rem; right: 1rem}
 			&:has(details[open]) {
-				.top-menu .hdr-tna {display: none}
+				section > nav .hdr-tna {display: none}
 			}
 		}
 		footer {
@@ -2143,7 +2176,10 @@ body:not(:-moz-handler-blocked) fieldset {
 						display: flex;
 						&:last-of-type {
 							margin: 1.5rem 0;
-							&:not(:nth-of-type(even)) {grid-column: span 2; margin: 0}
+							&:not(:nth-of-type(even)) {
+                                grid-column: span 2; margin: 0;
+                                article {width: -webkit-fill-available}
+                            }
 						}
 					}
 				}
@@ -2177,13 +2213,24 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 						.legislation-ftr nav {padding: 0}
 					}
-					.toc-detail ol:has(> li > .extent:not(.hidden)) {
-						margin: 0 0 0.75rem 11.5rem;
-						li:has(> .extent:not(.hidden)) {
-							position: relative;
-							.extent {position: absolute; width: 8rem; margin: 0 0 0 -13.25rem; justify-content: right; top: 0; left: 0}
-						}
-					}
+                    .toc-detail {
+                        ol:has(> li > .extent:not(.hidden)) {
+                            margin: 0 0 0.75rem 11.5rem;
+                            .extent {margin: 0 0 0 -13.25rem}
+                        }
+                        ul:has(> li > .extent:not(.hidden)) {
+                            margin: 0.5rem 0 0 8.5rem;
+                            .extent {margin: 0 0 0 -10.25rem}
+                        }
+                        ol, ul {
+                            &:has(> li > .extent:not(.hidden)) {
+						        li:has(> .extent:not(.hidden)) {
+							        position: relative;
+							        .extent {position: absolute; width: 8rem; justify-content: right; top: 0; left: 0}
+						        }
+                            }
+                        }
+                    }
 				}
 			}
 			&.search-results {
@@ -2206,7 +2253,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	@media (min-width: @desktopSmall) {
+	@media print and (orientation: landscape), screen and (min-width: @desktopSmall) {
 		html {--maxWidth: @desktopSmall;}
 		:root, :root[colour-scheme="light"] {
 			.hdr-tna a {background: url("images/tna-logo.png") no-repeat; background-size: 100%}
@@ -2236,8 +2283,8 @@ body:not(:-moz-handler-blocked) fieldset {
 		
 		header {
 			&:has(.hdr-menu details[open]) {
-				.top-menu .hdr-tna {display: block}
-				nav {float: left}
+				section > nav .hdr-tna {display: block}
+				.hdr-links .main-menu {float: left}
 			}
 			.hdr-lang {position: unset; top: unset; right: unset}
 			.hdr-search {
@@ -2400,7 +2447,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						.versions {
 							ol {
 								flex-flow: row; overflow-x: auto; overflow-y: hidden; margin: 0 16rem 0 2.5rem; width: calc(100% - 18.5rem); height: 12.5rem; background: var(--verySubtleBg);
-								&::-webkit-scrollbar {margin: 0}
+								&::-webkit-scrollbar {margin: 0; display: none}
 								&:before {content: ""; background: var(--timelineVersion); width: calc(var(--maxWidth) - 40.75rem); height: 0.5rem; position: absolute; margin: 6.05rem 0 0 20.25rem}
 								&:has(li:nth-of-type(2) .previous-point-in-time):before {width: calc(var(--maxWidth) - 44rem); margin: 6.05rem 0 0 26rem}
 								&:has(li:last-of-type .point-in-time):before {width: calc(var(--maxWidth) - 44.25rem)}
@@ -2843,3 +2890,93 @@ body:not(:-moz-handler-blocked) fieldset {
             }
 		}
 	}
+
+    @media print {
+        html {--maxWidth: 100vw; font-size: 0.85rem}
+        header:has(.hdr-menu details[open]) section > nav .hdr-tna, .hdr-menu, .hdr-search, .legislation .legislation-navigation, .legislation-content div + aside, footer nav, footer .mode, footer .copyright p, .legislation .timeline:has(details:not([open])) summary .button, main.legislation .timeline:has(details:not([open])) summary > span:after, .legislation .legislation-content > div .toc-detail button, .legislation .legislation-content > div .toc-detail details summary, main.search-results .search-content .search-filters > details > summary, main .whats-new .newly-published > a:last-of-type, main section.articles article div > a, main .whats-new section.articles article:last-of-type > a:last-of-type:not(:has(img)) {display: none}
+        
+        :root a.hdr-home, :root[colour-scheme="light"] a.hdr-home {background: unset}
+        header {
+            margin: 1rem 0 0 0;
+            section, .section {padding-left: 0; padding-right: 0}
+             section > nav {
+                 margin: 0 auto; min-height: unset; text-align: center;
+                 a.hdr-home {padding: 0.5em 0; position: unset; display: block; font-size: 1rem}
+            }
+        }
+        
+        main {
+            section h1, article h1 {font-size: 1.75rem}
+            > section:first-of-type:has(nav), > section:last-of-type, > article:last-of-type, section, .section, > section:first-of-type {padding-left: 0; padding-right: 0}
+        }
+        
+        main.legislation {
+            .legislation-content, .pit-search, .timeline:has(details:not([open])) {padding-left: 0; padding-right: 0}
+            &:has(.timeline details:not([open])) .legislation-content > aside:first-of-type, &:has(.timeline details[open]) .legislation-content > aside:first-of-type {
+                min-height: 12.5rem;
+            }
+            &:has(.timeline details:not([open])) .legislation-content > aside:first-of-type, &:has(.timeline details[open]) .legislation-content > aside:first-of-type, .legislation-content > aside {
+                 > div { 
+                     &.up-to-date, &.extent, &.in-force, &.blanket-amendments, &.confers-power {
+                         > a, button {display: none}                         
+                     }
+                }
+            }
+            &:has(.timeline details:not([open])) .timeline, .timeline {margin: 0}
+        }
+        
+        .legislation .legislation-content > div .toc-detail {
+            h4, h5, h6 {padding-bottom: 0.5rem}
+        }
+        
+        main.search-results .search-content .search-header .sort-by {position: unset}
+        .search-results .search-content {padding-left: 0; padding-right: 0}
+        
+        .changes-to-legislation > section:has(form) {
+            + section, 
+            form {padding-left: 0; padding-right: 0}
+        }
+
+        footer {
+            background: unset; color: unset;
+            section, .section {padding-left: 0; padding-right: 0}
+            .copyright {
+                border-color: var(--text); margin: 0; padding: 0;
+                div {background-image: url('images/ogl-logo-print.png')}
+            }
+        }
+    }
+
+    @media print and (orientation: portrait) {
+        .legislation .legislation-content > aside > div {min-height: 2rem}
+        main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div {
+            &.up-to-date {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
+            &.extent, &.in-force {background-position: 1rem 0.45rem; background-size: 1.25rem}
+            &.blanket-amendments {background-position: 0.9rem 0.45rem; background-size: 1.25rem}
+            &.confers-power {background-position: 1.15rem 0.45rem; background-size: 0.8rem}
+        }
+        :root .legislation .legislation-content aside > div, :root[colour-scheme="light"] .legislation .legislation-content aside > div {
+            &.up-to-date {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
+            &.extent, &.in-force {background-position: 0.4rem 0.45rem; background-size: 1.25rem}
+            &.blanket-amendments {background-position: 0.25rem 0.45rem; background-size: 1.25rem}
+            &.confers-power {background-position: 0.5rem 0.45rem; background-size: 0.8rem}
+        }
+        .legislation .legislation-content > aside > div.not-up-to-date p:first-of-type {background-size: 0.65rem}
+
+        main.search-results .search-content .search-filters:has(> details[open]) {display: none}
+    }
+
+    @media print and (orientation: landscape) {
+        main.legislation .timeline:has(details[open]) {
+            padding-left: 0; padding-right: 0;
+            .versions ol {
+                &:before {margin: 6.01rem 0 0 22.25rem}
+                li > a .version:before, li > div .version:before {margin: 3.98rem 50% -3.98rem 0}
+                li > a .version:after, li > div .version:after {margin: 2.24rem 0 0 50%}
+                li:last-of-type {
+                    margin: 0 0 0 calc(var(--maxWidth) - 18.5rem); background: rgba(250,250,250,1);
+                    > a .version:before {margin: 3.98rem 50% -3.98rem -2.5rem}
+                }
+            }
+        }
+    }
