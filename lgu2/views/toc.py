@@ -11,7 +11,7 @@ from ..api.document import DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
-from ..util.links import make_contents_link, make_document_link, make_fragment_link
+from ..util.links import make_contents_link, make_document_link, make_fragment_link, make_document_resources_link
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
 from .timeline import make_timeline_data_for_toc
@@ -106,7 +106,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         'toc': make_contents_link(type, year, number, version, lang),
         'content': make_fragment_link(type, year, number, 'introduction', version, lang),
         'notes': '/',
-        'resources': '/',
+        'resources': make_document_resources_link(type, year, number),
         'whole': make_document_link(type, year, number, version, lang),
         'body': make_fragment_link(type, year, number, 'body', version, lang),
         'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
@@ -134,21 +134,6 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_thumb'] = None
 
     data['timeline'] = make_timeline_data_for_toc(meta)
-
-    # associated documents
-    explanatory_notes = []
-    other_associated_doc = []
-
-    if len(meta['associated']) > 0:
-        for associated_documents in meta['associated']:
-            if associated_documents['type'] == 'Note':
-                explanatory_notes.append(associated_documents)
-            else:
-                other_associated_doc.append(associated_documents)
-    
-    data['explanatory_notes'] = explanatory_notes
-    data['other_associated_doc'] = other_associated_doc
-
     data['breadcrumbs'] = _make_breadcrumbs(meta, version, lang)
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
 

@@ -72,3 +72,7 @@ def make_document_link(type: str, year: str, number: str, version: Optional[str]
             return reverse('document-version', args=[ type, year, number, version ])
         else:
             return reverse('document', args=[ type, year, number ])
+
+
+def make_document_resources_link(type: str, year: str, number: str):
+    return reverse('more-resources', args=[ type, year, number ])

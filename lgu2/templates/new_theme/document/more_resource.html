@@ -1,0 +1,187 @@
+{% extends "new_theme/base.html" %}
+{% block extra_header %}
+<style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+ 
+    /* Tabs container */
+    .tabs {
+      display: flex;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      width: fit-content;
+    }
+ 
+    .tabs li {
+      list-style: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-right: 1px solid #ccc;
+    }
+ 
+    .tabs li.active {
+      background: #000;
+      color: #fff;
+      font-weight: bold;
+    }
+ 
+    .tabs li:not(.active) {
+      color: #0077cc;
+    }
+ 
+    .tab-content {
+      border: 1px solid #ccc;
+      border-top: none;
+      padding: 0;
+      width: 100%;
+    }
+ 
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+ 
+    table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+<main class="legislation-resources">
+    <section>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this page sits</h2>
+            <ol>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li aria-current="page">More Resources</li>
+            </ol>
+        </nav>
+        <!-- <h1 id="main-content-h" tabindex="-1">Armed Forces Commissioner Act 2025 — More Resources</h1> -->
+    </section>
+
+    <section class="resources-content">
+        <h2>Original Print PDF of King's Printer Version</h2>
+        <p xmlns="http://www.w3.org/1999/xhtml" style="border-top: 0.0625rem solid var(--ftrBorder);padding-top: 10px;">This is the original PDF of the as enacted version that was used to publish the official printed copy. It therefore does not include any changes made by correction slips issued after it was published. Correction slips if issued will be listed separately under 'Associated Documents' and will have been applied to the HTML version viewable via the content tab.</p>
+        <ul style="list-style: none;">
+            {% for pdf in data.alternatives %}
+                <li><a href="{{pdf.uri}}" target="_blank">Download PDF</a></li>
+            {% endfor %}
+        </ul>
+
+
+        <h2>Associated Documents</h2>
+        {% if associated_documents %}
+            <ul style="list-style: none;">
+                {% for associated_document in associated_documents %}
+                    <li><a href="{{associated_document.uri}}" target="_blank">{{associated_document.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="border-top: 0.0625rem solid var(--ftrBorder);padding-top: 10px;">There are no associated documents for this legislation.</p>
+        {% endif %}
+
+        <h2>Impact Assessments</h3>
+        {% if impact_assessment %}            
+            <ul style="list-style: none;">
+                {% for impact_document in impact_assessment %}
+                    <li><a href="{{impact_document.uri}}" target="_blank">{{impact_document.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="border-top: 0.0625rem solid var(--ftrBorder);padding-top: 10px;">There are no associated impact assessments for this legislation.</p>
+        {% endif %}
+
+        <!-- <h2>List of all changes <em class="aside">(made to the revised version after 2002)</em></h2>
+        <p xmlns="http://www.w3.org/1999/xhtml" style="border-top: 0.0625rem solid var(--ftrBorder);padding-top: 10px;">Link(s) to the Changes to Legislation facility which provides access to lists detailing changes made by all legislation enacted from 2002 - present to the revised legislation held on legislation.gov.uk, along with details about those changes which have and have not been applied by the legislation.gov.uk editorial team to this legislation item. Details of changes are only available back to 2002. Changes made before 2002 are already incorporated into the text of the revised legislation on legislation.gov.uk</p>
+        <ul style="list-style: none;">
+            <li><a href="/changes/affected/ukpga/2025/23"><strong>Affecting the Armed Forces Commissioner Act 2025</strong></a></li>
+            <li><a href="/changes/affecting/ukpga/2025/23"><strong>Made by the Armed Forces Commissioner Act 2025 affecting other legislation</strong></a></li>
+        </ul> -->
+
+        <h2>Sections that:</h2>
+        <p style="border-top: 0.0625rem solid var(--ftrBorder);padding-top: 10px;">These lists are based on information contained in latest available (revised) version as recorded by the legislation.gov.uk editorial team. For legislation enacted before the basedate (1/1/2006 for Northern Ireland legislation and 1/2/1991 for all other revised legislation) this information may not be available.</p>
+        <div>
+            <ul class="tabs">
+                <li class="active" data-tab="tab1">Confers power</li>
+                <li data-tab="tab2">Apply Blanket Amendments</li>
+            </ul>
+            
+            <div class="tab-content">
+                <div id="tab1" class="tab-panel">
+                {% if data.confersPower %}
+                    <table>
+                        <tr>
+                            {% for confer in data.confersPower %}
+                                <td><a href="{{confer.href}}">{{confer.label}}</a></td>                                
+                            {% endfor %}
+                        </tr>
+                    </table>
+                {% else %}
+                    <p xmlns="http://www.w3.org/1999/xhtml">There are currently no matches for this criteria.</p>
+                {% endif %}
+                </div>
+                <div id="tab2" class="tab-panel" style="display:none;">
+                {% if data.blanketAmendments %}
+                    <table>
+                        <tr>
+                            {% for amendment in data.blanketAmendments %}
+                                <td><a href="{{amendment.href}}">{{amendment.label}}</a></td>                                
+                            {% endfor %}
+                        </tr>
+                    </table>
+                {% else %}
+                    <p xmlns="http://www.w3.org/1999/xhtml">There are currently no matches for this criteria.</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <aside>
+        <h2>You might also be interested in</h2>
+        <ul>
+            <li>
+                <a href="https://www.parliament.uk" target="_blank" rel="noopener">
+                    <h3>UK Parliament Website</h3>
+                    <p>Visit the UK Parliament for debates and bill progress information.</p>
+                </a>
+            </li>
+            <li>
+                <a href="/ukpga">
+                    <h3>More UK Public General Acts</h3>
+                </a>
+            </li>
+            <li>
+                <a href="/ukpga/2025">
+                    <h3>More UK Public General Acts from 2025</h3>
+                </a>
+            </li>
+            <li>
+                <a href="/search">
+                    <h3>Advanced Search</h3>
+                </a>
+            </li>
+        </ul>
+    </aside>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+    const tabs = document.querySelectorAll(".tabs li");
+    const panels = document.querySelectorAll(".tab-panel");
+ 
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        panels.forEach(p => p.style.display = "none");
+ 
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).style.display = "block";
+      });
+    });
+</script>
+
+{% endblock %}

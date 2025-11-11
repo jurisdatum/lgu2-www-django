@@ -9,12 +9,13 @@ from ..api.document import get_akn, get_clml, get_document, DocumentMetadata
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
-from ..util.links import make_contents_link, make_document_link, make_fragment_link
+from ..util.links import make_contents_link, make_document_link, make_fragment_link, make_document_resources_link
 from ..util.types import get_category
 from .redirect import redirect_current, redirect_version, make_data_redirect
 from .timeline import make_timeline_data_for_document
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
+from ..api.metadata import get_metadata
 
 
 # ToDo fix to use response headers
@@ -142,7 +143,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
             'toc': make_contents_link(type, year, number, version, lang),
             'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
-            'resources': '/',
+            'resources': make_document_resources_link(type, year, number),
             'whole': None,
             'body': make_fragment_link(type, year, number, 'body', version, lang),
             'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
@@ -153,6 +154,34 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     }
     # template = loader.get_template('document/document.html')
     template = loader.get_template('new_theme/document/document.html')
+    return HttpResponse(template.render(context, request))
+
+
+def document_resources(request, type: str, year: str, number: str):
+
+    data = get_metadata(type, year, number)
+
+    if 'error' in data:
+        template = loader.get_template('404.html')
+        return HttpResponseNotFound(template.render({}, request))
+
+    associated_documents = []
+    impact_assessment = []
+    if data["associated"]:
+        for document in data["associated"]:
+            if document["type"] == 'ImpactAssessment':
+                impact_assessment.append(document)
+            else:
+                associated_documents.append(document)
+
+
+    context = {
+        "data": data,
+        "associated_documents": associated_documents,
+        "impact_assessment": impact_assessment
+    }
+
+    template = loader.get_template('new_theme/document/more_resource.html')
     return HttpResponse(template.render(context, request))
 
 

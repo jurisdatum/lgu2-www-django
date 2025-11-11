@@ -8,7 +8,7 @@ from django.utils import timezone
 from ..api import fragment as api
 from ..messages.status import get_status_message_for_fragment
 from ..util.labels import get_type_label
-from ..util.links import make_contents_link, make_document_link, make_fragment_link
+from ..util.links import make_contents_link, make_document_link, make_fragment_link, make_document_resources_link
 from ..util.types import get_category
 from .document import group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
@@ -106,7 +106,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
             'toc': make_contents_link(type, year, number, version, lang),
             'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
-            'resources': '/',
+            'resources': make_document_resources_link(type, year, number),
             'whole': make_document_link(type, year, number, version, lang),
             'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else make_fragment_link(type, year, number, 'body', version, lang),
             'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)

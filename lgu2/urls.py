@@ -9,7 +9,7 @@ from .views.robots import robots_txt
 from .views.doc_types import list_uk
 
 from .views.browse import data as browse_data
-from .views.document import document, data as document_data
+from .views.document import document, data as document_data, document_resources
 from .views import toc
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
@@ -78,6 +78,9 @@ urlpatterns += i18n_patterns(
     
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
+
+    # More resources
+    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/resources$', document_resources, name='more-resources'),
 
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
