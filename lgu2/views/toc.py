@@ -13,20 +13,10 @@ from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
-from .redirect import make_data_redirect, redirect_current, redirect_version
+from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
 from .helper.status import make_status_data
-
-
-# ToDo fix to use response headers
-def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
-    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
-    if version is None and meta['status'] == 'final':
-        return redirect_version('toc', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
-    if version is None and meta['shortType'] != type:
-        return redirect_current('toc', meta['shortType'], year, meta['number'], lang=lang)
-    if meta['shortType'] != type:
-        return redirect_version('toc', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
+from ..util.redirects import should_redirect
 
 
 def _add_all_links(contents, type: str, year: str, number: str, version: Optional[str], lang: Optional[str]):
@@ -94,7 +84,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         return render(request, 'new_theme/404.html', status=404)
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, lang, meta)
+    rdrct = should_redirect('toc', type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 

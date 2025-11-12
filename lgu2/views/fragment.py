@@ -11,20 +11,11 @@ from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
 from .document import group_effects
-from .redirect import make_data_redirect, redirect_current, redirect_version
+from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
-
-# ToDo fix to use response headers
-def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: api.FragmentMetadata) -> Optional[HttpResponseRedirect]:
-    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
-    if version is None and meta['status'] == 'final':
-        return redirect_version('fragment', meta['shortType'], year, meta['number'], section=meta['fragment'], version=meta['version'], lang=lang)
-    if version is None and meta['shortType'] != type:
-        return redirect_current('fragment', meta['shortType'], year, meta['number'], section=meta['fragment'], lang=lang)
-    if meta['shortType'] != type:
-        return redirect_version('fragment', meta['shortType'], year, meta['number'], section=meta['fragment'], version=meta['version'], lang=lang)
+from ..util.redirects import should_redirect
 
 
 def fragment(request, type: str, year: str, number: str, section: str, version: Optional[str] = None, lang: Optional[str] = None):
@@ -43,7 +34,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
 
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, lang, meta)
+    rdrct = should_redirect('fragment', type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 

@@ -11,20 +11,11 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
-from .redirect import redirect_current, redirect_version, make_data_redirect
+from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
-
-
-def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
-    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
-    if version is None and meta['status'] == 'final':
-        return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
-    if version is None and meta['shortType'] != type:
-        return redirect_current('document', meta['shortType'], year, meta['number'], lang=lang)
-    if meta['shortType'] != type:
-        return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
+from ..util.redirects import should_redirect
 
 
 def group_effects(unappliedEffects):
@@ -33,7 +24,6 @@ def group_effects(unappliedEffects):
         'future': [effect for effect in unappliedEffects if effect.get('required') and not effect.get('outstanding')],
         'unrequired': [effect for effect in unappliedEffects if not effect.get('required')]
     }
-
 
 
 def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
@@ -46,7 +36,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, lang, meta)
+    rdrct = should_redirect('document', type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 
