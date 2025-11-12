@@ -14,7 +14,7 @@ from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
 from .redirect import make_data_redirect, redirect_current, redirect_version
-from .timeline import make_timeline_data_for_toc
+from ..util.timeline import make_timeline_data
 from .helper.status import make_status_data
 
 
@@ -133,7 +133,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
-    data['timeline'] = make_timeline_data_for_toc(meta)
+    data['timeline'] = make_timeline_data(meta, "toc")
 
     # associated documents
     explanatory_notes = []

@@ -12,7 +12,7 @@ from ..util.links import make_contents_link, make_document_link, make_fragment_l
 from ..util.types import get_category
 from .document import group_effects
 from .redirect import make_data_redirect, redirect_current, redirect_version
-from .timeline import make_timeline_data_for_fragment
+from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
 
@@ -62,7 +62,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     else:
         frag_info['longLabel'] = frag_info['label']
 
-    timeline = make_timeline_data_for_fragment(data['meta'])
+    timeline = make_timeline_data(data['meta'], "fragment")
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents
