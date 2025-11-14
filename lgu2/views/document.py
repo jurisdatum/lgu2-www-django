@@ -42,7 +42,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     data['meta']['link'] = make_document_link(type, year, number, version, lang)
 
-    timeline = make_timeline_data(data['meta'], "document")
+    timeline = make_timeline_data(data['meta'], "document", lang)
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents

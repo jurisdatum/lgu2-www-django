@@ -53,7 +53,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     else:
         frag_info['longLabel'] = frag_info['label']
 
-    timeline = make_timeline_data(data['meta'], "fragment")
+    timeline = make_timeline_data(data['meta'], "fragment", lang)
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents

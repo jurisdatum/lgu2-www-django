@@ -123,7 +123,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
-    data['timeline'] = make_timeline_data(meta, "toc")
+    data['timeline'] = make_timeline_data(meta, "toc", lang)
 
     # associated documents
     explanatory_notes = []

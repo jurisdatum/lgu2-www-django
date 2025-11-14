@@ -27,6 +27,7 @@ _ISO_DATE_RE = re.compile(r'\d{4}-\d{2}-\d{2}')
 def make_timeline_data(
     meta: Union[DocumentMetadata, FragmentMetadata, CommonMetadata],
     target: str,  # 'document', 'fragment', or 'toc'
+    lang: Optional[str] = None,
 ) -> TimelineData:
     """
     Generic function to build timeline data for documents, fragments, or TOCs.
@@ -38,14 +39,20 @@ def make_timeline_data(
     """
 
     def make_link(version: Optional[str]) -> str:
-        args = [meta['shortType'], meta['year'], meta['number']]
+        year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
+
+        args = [meta['shortType'], year, meta['number']]
 
         # Only fragments need an extra argument
         if target == 'fragment':
             args.append(meta['fragmentInfo']['href'])
 
         # Build route name dynamically
-        suffix = "-version" if version else ""
+        suffix = ""
+        if version:
+            suffix += "-version"
+        if lang:
+            suffix += "-lang"
         route_name = f"{target}{suffix}"
 
         # Append version if needed
