@@ -43,7 +43,7 @@ def make_timeline_data(
 
         args = [meta['shortType'], year, meta['number']]
 
-        # Only fragments need an extra argument
+        # Fragment timelines include the fragment href before optional version/lang args
         if target == 'fragment':
             args.append(meta['fragmentInfo']['href'])
 
@@ -58,6 +58,8 @@ def make_timeline_data(
         # Append version if needed
         if version:
             args.append(version)
+        if lang:
+            args.append(lang)
 
         return reverse(route_name, args=args)
 
