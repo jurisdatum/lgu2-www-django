@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',  # must stay first
+    'lgu2.middleware.central_logging.CentralRequestLoggingMiddleware', # to get accurate timing best place to be here
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -178,3 +179,35 @@ SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_PRELOAD = False
 X_FRAME_OPTIONS = 'DENY'
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        # Middleware already send json string, keeping it plane so file gets raw json
+        "plain": {"format": "%(message)s"},
+    },
+    "handlers": {
+        "central_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(BASE_DIR / "access.log"), # file same as manage.py level
+            "maxBytes": 10 * 2024 * 2024, # rotate at 10 mb
+            "backupCount": 5,
+            "formatter": "plain",
+            "encoding": "utf-8",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "plain",
+        },
+    },
+    "loggers": {
+        "central_request_logger": {
+            "handlers": ["central_file", "console"], # writes to access.log and stdout
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+
+}
