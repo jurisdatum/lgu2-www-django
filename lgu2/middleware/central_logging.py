@@ -1,47 +1,35 @@
-import time
 import json
-import os
 import logging
+import time
+
 from django.utils import timezone
-from django.utils.deprecation import MiddlewareMixin
 
 
-def _env_true(name: str) -> bool:
-    return os.getenv(name, "").lower() == 'true'
+logger = logging.getLogger("central_request_logger")
 
-ENABLE_LOG = _env_true("CENTRAL_LOGGING")
+class CentralRequestLoggingMiddleware:
 
-class CentralRequestLoggingMiddleware(MiddlewareMixin):
+    def __init__(self, get_response):
+        self.get_response = get_response
 
-    def __init__(self, get_response=None):
-        super().__init__(get_response)        
-        self.logger = logging.getLogger("central_request_logger")
-
-    def process_request(self, request):
-        if not ENABLE_LOG:
-            return None
-        
-        # stash start time on request object
-        request._central_log_start = time.perf_counter()
-        return None
-    
-    def process_response(self, request, response):
-        if not ENABLE_LOG:
-            return response
-        
-        start = getattr(request, "_central_log_start", None)
-        if start is None:
-            duration_ms = None
+    def __call__(self, request):
+        start = time.perf_counter()
+        try:
+            response = self.get_response(request)
+        except Exception as e:
+            self._emit(request, getattr(e, "status_code", 500), start)
+            raise
         else:
-            duration_ms = int((time.perf_counter() - start) * 1000)
+            self._emit(request, getattr(response, "status_code", None), start)
+            return response
 
+    def _emit(self, request, status_code, start):
+        duration_ms = int((time.perf_counter() - start) * 1000)
         payload = {
             "event_time": timezone.now().isoformat(),
             "path": request.path,
             "method": request.method,
-            "status_code": getattr(response, "status_code", None),
+            "status_code": status_code,
             "duration_ms": duration_ms,
         }
-
-        self.logger.info(json.dumps(payload, ensure_ascii=False))
-        return response
+        logger.debug(json.dumps(payload, ensure_ascii=False))
