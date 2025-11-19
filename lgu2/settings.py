@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',  # must stay first
+    'lgu2.middleware.central_logging.CentralRequestLoggingMiddleware', # to get accurate timing best place to be here
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -178,3 +179,29 @@ SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_PRELOAD = False
 X_FRAME_OPTIONS = 'DENY'
+
+CENTRAL_LOG_LEVEL = env("CENTRAL_LOG_LEVEL", default="WARNING").upper()
+# request logging stays silent unless the environment explicitly opts in via CENTRAL_LOG_LEVEL=DEBUG
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        # Middleware already send json string, keeping it plain so file gets raw json
+        "plain": {"format": "%(message)s"},
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "plain",
+        },
+    },
+    "loggers": {
+        "central_request_logger": {
+            "handlers": ["console"],
+            "level": CENTRAL_LOG_LEVEL,
+            "propagate": False,
+        },
+    },
+
+}
