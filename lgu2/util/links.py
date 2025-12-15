@@ -11,6 +11,9 @@ first_versions = { 'enacted', 'made', 'created', 'adopted' }
 
 
 def make_contents_link_for_list_entry(doc: DocEntry):
+    # TODO: need to discuss this
+    if doc['number'] is None:
+        doc['number'] = doc['isbn']
     if doc['id'].endswith('.pdf'):  # correction slips
         return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], doc['number'] ])
     elif doc['version'] in first_versions:

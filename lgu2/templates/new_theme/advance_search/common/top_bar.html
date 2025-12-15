@@ -1,0 +1,12 @@
+<section>
+    <nav>
+        <h2>Advanced searches</h2>
+        <ul>
+            <li><a href="{% url 'advance-search' %}" {% if request.path == '/advance-search' %}aria-current="page"{% endif %}>Full search</a></li>
+            <li><a href="{% url 'extent-search' %}" {% if request.path == '/search/extent' %}aria-current="page"{% endif %}>Geographical extent</a></li>
+            <li><a href="{% url 'point-in-time-search' %}" {% if request.path == '/search/point-in-time' %}aria-current="page"{% endif %}>Point in time</a></li>
+            <li><a href="{% url 'draft-legislation-search' %}" {% if request.path == '/search/draft-legislation' %}aria-current="page"{% endif %}>Draft legislation</a></li>
+            <li><a href="{% url 'impacts-search' %}" {% if request.path == '/search/impacts' %}aria-current="page"{% endif %}>Impact assessments</a></li>
+        </ul>
+    </nav>
+</section>

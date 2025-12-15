@@ -1,0 +1,29 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+	<main class="advanced-searches">
+        <div>
+			{% include 'new_theme/advance_search/common/top_bar.html' %}
+		</div>
+        <section>
+			<h1 id="main-content-h" tabindex="-1">Draft Legislation Advanced Search</h1>
+		</section>
+        <section>
+            <form role="search" method="get" action="{% url 'search' %}">
+                {% include 'new_theme/advance_search/common/search-keyword.html' %}
+                {% include 'new_theme/advance_search/common/enacted-made.html' %}
+                <fieldset class="search-type">
+                    <legend><h2>Legislation type</h2></legend>
+                    <div role="group" aria-label="Draft legislation types">
+                        <span><label for="uk">UK Draft Statutory Instruments</label><input id="uk" value="ukdsi" name="type" type="checkbox" checked /></span>
+                        <span><label for="scotland">Scottish Draft Statutory Instruments</label><input id="scotland" name="type" value="sdsi" type="checkbox" checked /></span>
+                        <span><label for="ni">Northern Ireland Draft Statutory Rules</label><input id="ni" value="nidsr" name="type" type="checkbox" checked /></span>
+                    </div>
+                </fieldset>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+		
+	</main>
+{% endblock %}

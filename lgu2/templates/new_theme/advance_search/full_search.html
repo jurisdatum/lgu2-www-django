@@ -1,0 +1,24 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+	<main class="advanced-searches">
+        <div>
+			{% include 'new_theme/advance_search/common/top_bar.html' %}
+		</div>
+        <section>
+			<h1 id="main-content-h" tabindex="-1">Full Advanced Search</h1>
+		</section>
+        <section>
+            <form role="search" method="get" action="{% url 'search' %}">
+                {% include 'new_theme/advance_search/common/search-keyword.html' %}
+                {% include 'new_theme/advance_search/common/search-language.html' %}
+                {% include 'new_theme/advance_search/common/enacted-made.html' %}
+                {% include 'new_theme/advance_search/common/series-number.html' %}
+                {% include 'new_theme/advance_search/common/search-type.html' with secondary="true"  %}
+                <button type="submit">Search</button>
+            </form>
+        </section>
+		</div>
+	</main>
+{% endblock %}

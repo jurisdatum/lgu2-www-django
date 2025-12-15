@@ -1,0 +1,46 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+	<main class="advanced-searches">
+        <div>
+			{% include 'new_theme/advance_search/common/top_bar.html' %}
+		</div>
+        <section>
+			<h1 id="main-content-h" tabindex="-1">Impact Assessment Advanced Search</h1>
+		</section>
+        <section>
+            <form role="search" method="get" action="/tna/search.php">
+                {% include 'new_theme/advance_search/common/search-keyword.html' %}
+                <fieldset class="search-ia-attributes">
+                    <legend><h2>Impact Assessment attributes</h2></legend>
+                    <span>
+                        <label for="stage">Stage:</label>
+                        <select id="stage" name="stage">
+                            <option>Consultation</option>
+                            <option>Development</option>
+                            <option>Enactment</option>
+                            <option>Final</option>
+                            <option>Implementation</option>
+                            <option>Options</option>
+                            <option>Post Implementation</option>
+                        </select>
+                    </span>
+                    <span>
+                        <label for="department">Department <span>(the whole name of the department is required)</span></label>
+                        <input type="text" id="department" name="department" placeholder="e.g. Department of Agriculture, Environment and Rural Affairs">
+                    </span>
+                </fieldset>
+                <fieldset class="search-date">
+                    <legend><h2>Dates</h2></legend>
+                    <p>We hold all impact assessments from 2008 to the present day, as well as selected impact assessments from 2005.</p>
+                    <div role="group" aria-label="Enacted or made dates">
+                        <span><label for="from-date">between:</label><input id="from-date" type="text" name="startYear" placeholder="2008" /></span>
+                        <span><label for="to-date">and:</label><input id="to-date" type="text" name="endYear" placeholder="2025" /></span>
+                    </div>
+                </fieldset>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+	</main>
+{% endblock %}

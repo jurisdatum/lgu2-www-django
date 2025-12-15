@@ -23,6 +23,7 @@ from .views.general import (
     about_us
 )
 from .views.search import  browse, search_results
+from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -55,6 +56,12 @@ urlpatterns += i18n_patterns(
     # TODO: Remove trailing slash from search and explore URLs
     path('search/', search_results, name='search'),
 
+    path('advance-search', advance_search, name='advance-search'),
+    path('search/extent', extent_search, name='extent-search'),
+    path('search/point-in-time', point_in_time_search, name='point-in-time-search'),
+    path('search/draft-legislation', draft_search, name='draft-legislation-search'),
+    path('search/impacts', impact_search, name='impacts-search'),
+    
     path('explore/', explore_collection, name='explore'),
     path('explore/legislatures', different_legislature, name='different-legislatures'),
     re_path(fr'^explore/legislatures/{COUNTRY}', different_legislature_by_country, name='different-legislatures-country'),

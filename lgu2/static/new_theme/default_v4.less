@@ -43,7 +43,9 @@ body:not(:-moz-handler-blocked) fieldset {
 		--disabledModalText: rgba(200,200,200,1);
 		--disabledButtonBorder: rgba(138,138,138,1);
 		--disabledButtonBg: rgba(235,235,235,1);
+		--inactiveButtonBg: var(--disabledButtonBg);
 		--activeBg: var(--searchBg);
+		--activeBgSolid: rgba(46,46,46,1);
 		--activeText: var(--contrastText);
 		
 		--alert: rgba(255,175,40,1);
@@ -52,8 +54,10 @@ body:not(:-moz-handler-blocked) fieldset {
 		--warningBg: rgba(235,0,85,1);
 		--focusWarningBg: rgba(235,12,115,1);
 		--warningBorder: var(--warningBg);
+        --repealed: rgba(120,30,100);
 		
 		--searchBg: rgba(0,0,0,0.82);
+		--advSearchBg: rgba(0,0,0,0.05);
 		--searchText: var(--contrastText);
 		--searchInput: var(--bg);
 		--hdrSearchInput: var(--bg);
@@ -161,6 +165,10 @@ body:not(:-moz-handler-blocked) fieldset {
 				aside {
 					> div {
 						&.up-to-date {background: url('images/up-to-date.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
+						&.repealed {background: url('images/repealed.png') no-repeat 0.25em 0.575em; background-size: 1.35em}
+						&.dated-version {background: url('images/dated-version.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
+						&.as-enacted-formats {background: url('images/timeline-version.png') no-repeat 0.35em 0.65em; background-size: 1em}
+						&.as-enacted-formats.pdf {background: url('images/kpv-pdf.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
 						&.extent {background: url('images/extent.png') no-repeat 0.125em 0.625em; background-size: 1.5em}
 						&.in-force {background: url('images/in-force.png') no-repeat 0.125em 0.575em; background-size: 1.5em}
 						&.confers-power {background: url('images/confers-power.png') no-repeat 0.25em 0.625em; background-size: 1.1em}
@@ -177,6 +185,17 @@ body:not(:-moz-handler-blocked) fieldset {
 							summary {
 								&:hover, &:focus, &:active {
 									h3:before {background: url('images/print-active.png') no-repeat; background-size: 1.45em}
+								}
+							}
+						}
+						&.opening-options {
+							h3:before {background: url('images/opening-options.png') no-repeat; background-size: 1.45em}
+							&[open] {
+								h3:before {background: url('images/opening-options-active.png') no-repeat; background-size: 1.45em}
+							}
+							summary {
+								&:hover, &:focus, &:active {
+									h3:before {background: url('images/opening-options-active.png') no-repeat; background-size: 1.45em}
 								}
 							}
 						}
@@ -233,7 +252,9 @@ body:not(:-moz-handler-blocked) fieldset {
 		--disabledModalText: rgba(200,200,200,1);
 		--disabledButtonBorder: rgba(138,138,138,1);
 		--disabledButtonBg: rgba(20,20,20,1);
+		--inactiveButtonBg: rgba(70,75,85,1);
 		--activeBg: var(--searchBg);
+		--activeBgSolid: rgba(22,32,42,1);
 		--activeText: var(--contrastText);
 		
 		--alert: rgba(255,175,40,1);
@@ -242,8 +263,10 @@ body:not(:-moz-handler-blocked) fieldset {
 		--warningBg: rgba(235,0,85,1);
 		--focusWarningBg: rgba(235,12,115,1);
 		--warningBorder: rgba(255,41,119,1);
+        --repealed: rgba(190,50,170);
 		
 		--searchBg: rgba(255,255,255,0.05);
+		--advSearchBg: rgba(255,255,255,0.05);
 		--searchText: var(--contrastText);
 		--searchInput: rgba(255,255,255,0.1);
 		--hdrSearchInput: rgba(55,62,70,1);
@@ -351,6 +374,10 @@ body:not(:-moz-handler-blocked) fieldset {
 				aside {
 					> div {
 						&.up-to-date {background: url('images/up-to-date-dm.png') no-repeat 0 0.6em; background-size: 1.3em}
+						&.repealed {background: url('images/repealed-dm.png') no-repeat 0.25em 0.575em; background-size: 1.35em}
+						&.dated-version {background: url('images/dated-version-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
+						&.as-enacted-formats {background: url('images/timeline-version-active.png') no-repeat 0.35em 0.65em; background-size: 1em}
+						&.as-enacted-formats.pdf {background: url('images/kpv-pdf-dm.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
 						&.extent {background: url('images/extent-dm.png') no-repeat 0 0.625em; background-size: 1.5em}
 						&.in-force {background: url('images/in-force-dm.png') no-repeat 0 0.575em; background-size: 1.5em}
 						&.confers-power {background: url('images/confers-power-dm.png') no-repeat 0.25em 0.625em; background-size: 1.1em}
@@ -441,6 +468,55 @@ body:not(:-moz-handler-blocked) fieldset {
 			}
 		}
 	}
+
+    .tabs {
+        margin: 0 auto; background: var(--subtleBg); border-top: 0.0625em solid  var(--subtleBorder); border-bottom: 0.0625em solid  var(--subtleBorder);	
+        section {
+            padding: 0; display: flex; flex-wrap: wrap;
+            nav {
+                width: 100%; h2 {.sr-only()}
+                ul {
+                    margin: 0 0 0 1em; display: inline-flex; flex-flow: wrap; list-style: none; gap: 0.85rem 1.15rem; width: calc(100% - 2rem); padding: 1.2rem 0;
+                    li {
+                        margin: 0; padding: 0; font-size: 1.1rem; flex-grow: 1; min-width: 30%;
+                        a {
+                            .ghost-button(); display: block; padding: 0.65em 0.75em;
+                            &[aria-current="page"] {
+                                background: var(--text); border-color: transparent; color: var(--bg);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .tabs-wide {
+        > section {
+            overflow: visible;
+            nav {
+                width: unset;
+                ul {
+                    gap: 0; width: unset; margin: 0 0 0 1rem; padding: 0; border: 0;
+                    li {
+                        padding: 1.1em 1.2em 0.8em 1.2em; flex-grow: 0; min-width: unset;
+                        a {
+                            display: inline; padding: 0; border: 0; background: none;
+                            &:hover, &:active, &:focus {color: var(--link); background: none; border: 0; -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent; box-shadow: 0 0 0 transparent}
+                            &:hover {outline: unset; text-decoration: underline; text-decoration-thickness: 0.05em}
+                            &:active, &:focus {outline-color: var(--link)}
+                            &[aria-current="page"] {
+                                position: relative; padding: 1.2em 1.6em 0.95em 1.6em; border-radius: 0.2em 0.2em 0 0; text-align: unset; background: var(--bg); border-left: 0.0625em solid var(--subtleBorder); border-right: 0.0625em solid var(--subtleBorder); color: var(--text);
+                                &:before {position: absolute; margin: -1.2em 0 0 -1.6em; content: ""; height: 0.35em; width: 100%; background: var(--text); border-radius: 0.2em 0.2em 0 0}
+                                &:after {position: absolute; margin: 0 0 -0.0625em 0; content: ""; height: 0.0625em; width: 100%; background: var(--bg); bottom: 0; left: 0}
+                            }
+                        }
+                        &:has([aria-current="page"]) {padding: 1.1em 0 0.8em 0}
+                    }
+                }
+            }
+        }
+    }
 
 	[hidden] {display: none}
 
@@ -619,7 +695,8 @@ body:not(:-moz-handler-blocked) fieldset {
                 }
             }
 		}
-		.hdr-search {text-align: center; padding: 0; background: var(--searchBg);
+		.hdr-search {
+            text-align: center; padding: 0; background: var(--searchBg);
 			form {
 				max-width: var(--maxWidth); margin: 0 auto; padding: 0.75em 1em; width: 100%; text-align: left;
 				fieldset {
@@ -1107,34 +1184,295 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	.new-legislation {
-		 > div {
-			margin: 0 auto; padding: 1.1rem 0 0 0; background: var(--verySubtleBg); border-top: 0.0625em solid  var(--subtleBorder); border-bottom: 0.0625em solid  var(--subtleBorder);	
+	.advanced-searches {
+        > div {
+            .tabs;
+		}
+        hgroup p {margin: 0.125rem 0 0.5rem 0}
+        section {
+            fieldset {
+                margin: 0 0 1.25rem 0; padding: 0 0 1.5rem 0; border-bottom: 0.0625rem solid var(--subtleBorder);
+                legend h2 {font-size: 1.2rem; margin: 0}
+                p {
+                    margin: 0.25rem 0 0 0;
+                    span {
+                        font-style: italic;
+                        span {font-weight: 500}
+                    }
+                }
+            }
+            .search-keywords {
+                details {
+                    summary {
+                        display: inline-block; padding: 0.75em 1.5em 0 1.35em; color: var(--link); font-weight: 500;
+                        &:before {.chevron; position: absolute; transform: rotate(135deg); width: 0.35em; height: 0.35em; border-top-width: 0.15rem; border-right-width: 0.15rem; margin: 0.38em 0.7rem 0.25em -1.15em}
+                        &:hover {text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.05em}
+                    }
+                    &[open] summary:before {transform: rotate(315deg); margin: 0.6em 0.7rem 0.25em -1.15em}
+                    p:first-of-type {margin: 0.5rem 0 0 0}
+                    p:last-of-type {margin: 0.25rem 0 0.85rem 0; padding: 0 0 1rem 0; border-bottom: 1px solid var(--subtleBorder)}
+                }
+                p + details {
+                    summary {
+                        padding: 0.5em 1.5em 0 1.35em;
+                    }
+                }
+                > span {
+                    display: block;
+                    label {
+                        display: block; margin: 0 0 0.25em 0; font-weight: 500;
+                    }
+                    &:first-of-type label {margin: 0.5rem 0 0.25em 0}
+                    input {width: 100%; max-width: 40rem; margin: 0 0 1rem 0; padding: 0.75rem 0.9rem}
+                    &:last-of-type input {margin: 0}
+                }
+            }
+            .search-language {
+                > span {
+                    display: block; position: relative; margin: 0.75rem 0 0 0;
+                    label {
+                        display: block; font-weight: 500; padding: 0.75rem 1rem 0.75rem 3rem; border-radius: 0.375rem; cursor: pointer; background: var(--bg); position: relative; z-index: 1; border: 0.0625rem solid var(--link);
+                        &:before {content: ""; position: absolute; margin: 0 0 0 -2.2em; width: 1.5em; height: 1.5em; background: var(--subtleBorder); position: absolute; border-radius: 50%}
+                        span {
+                            display: block; font-weight: 300;
+                        }
+                    }
+                    input {position: absolute; top: 1rem; left: 0.9rem}
+                    &:last-of-type {margin: 0.65rem 0 0 0}
+                    &:has(input:checked) {
+                        label {
+                            background: var(--activeBgSolid); border-color: var(--activeBgSolid); color: var(--contrastText);
+                            &:before {background: var(--contrastText)}
+                            span:before {.chevron; margin: 0 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgSolid); top: 1.25rem}
+                        }
+                    }
+                    &:has(input:focus) {
+                        label {
+                            background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                            span:before {border-color: var(--focusButtonBg)}
+                        }
+                    }
+                }
+            }
+            .search-date {
+                &:has(div[role="group"]) {
+                    > div[role="group"] {
+                        margin: 0.75rem 0 0 0;
+                        > span {
+                            display: block; font-weight: 500; padding: 0.75rem 1rem 0.75rem 3rem; border-radius: 0.375rem; background: var(--bg); position: relative; border: 0.0625rem solid var(--link);
+                            > label {
+                                display: block; cursor: pointer; margin: 0 0 0.5rem 0;
+                                &:before {content: ""; position: absolute; margin: 0 0 0 -2.2em; width: 1.5em; height: 1.5em; background: var(--inactiveButtonBg); position: absolute; z-index: 1; border-radius: 50%}
+                            }
+                            span {
+                                display: block;
+                                &:nth-of-type(2) {margin: 0.75rem 0 0 0}
+                                label {font-weight: 300; margin: 0 0.5rem 0 0; min-width: 2.5rem; display: inline-block}
+                                input {width: 6rem; padding: 0.5em 0.75em; color: var(--lightText)}
+                            }
+                            > input[type="radio"] {position: absolute; top: 1.15rem; left: 1.15rem; outline-offset: 0}
+                        }
+                        &:last-of-type {margin: 0.65rem 0 0 0}
+                        &:has(> span > input:checked) {
+                            > span {
+                                background: var(--activeBgSolid); border-color: var(--activeBgSolid); color: var(--contrastText);
+                                > label:before {background: var(--contrastText)}
+                                > span:first-of-type:before {.chevron; margin: 0 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; z-index: 1; border-color: var(--activeBgSolid); top: 1.25rem}
+                                span input {color: var(--text)}
+                            }
+                        }
+                        &:has(> span > input:focus) {
+                            > span {
+                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                                > span:first-of-type:before {border-color: var(--focusButtonBg)}
+                            }
+                        }
+                    }
+                }
+                &:not(:has(div[role="group"])) {
+                    label {display: inline-block; float: left; padding: 0.5em 0.75em; line-height: 1.2rem}
+                    span {
+                        display: inline-block; float: left; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; margin: 0.75rem 0 0 0; background: var(--subtleBg);
+                        input {width: 5.5rem; padding: 0.5em 0.75em; border: 0}
+                        &:first-of-type {margin: 0.75rem 1rem 0 0}
+                    }
+                }
+            }
+            .search-number {
+                label {display: inline-block; float: left; padding: 0.5em 0.75em; line-height: 1.2rem}
+                span {
+                    display: inline-block; float: left; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; margin: 0.75rem 0 0 0; background: var(--subtleBg);
+                    &:has(input) {
+                        input {width: 5.5rem; padding: 0.5em 0.75em; border: 0}
+                    }
+                    &:has(select) {
+                        select {width: 100%; max-width: fit-content; padding: 0.445em 0 0.445em 0.75em; border: 0}
+                    }
+                    &:first-of-type {margin: 0.75rem 1rem 0 0}
+                }
+            }
+            .search-number-current {
+                label {.sr-only}
+                input {width: 5.5rem; padding: 0.5em 0.75em; border: 0; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; margin: 0.5rem 0 0 0}
+            }
+            .search-type {
+                > label {.sr-only}
+                select {margin: 0.5em 0 0 0; width: 100%; max-width: fit-content}
+                [role="group"] {
+                    margin: 0.65rem 0 0 0;
+                    h3 {margin: 1rem 0 0.5rem 0; font-weight: 600; font-size: 1.1rem}
+                    > span {
+                        display: block; position: relative; margin: 0.25rem 0 0 0; border-radius: 0.375rem;
+                        &:before {content: ""; position: absolute; margin: 0.075rem 0 0 0; width: 1.5em; height: 1.5em; position: absolute; z-index: 1; border-radius: 0.375rem; background: var(--bg); border: 0.0625rem solid var(--link)}
+                        label {display: inline-block; font-weight: 400; padding: 0.25rem 1rem 0.25rem 2.2rem; cursor: pointer; position: relative; z-index: 1}
+                        input {position: absolute; top: 0.45rem; left: 0.4rem}
+                        &:has(input:checked) {
+                            &:before {background: var(--activeBgSolid); border-color: var(--activeBgSolid)}
+                            label:before {.chevron; margin: 0.3rem 0 0 -1.8em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--contrastText)}
+                        }
+                        &:has(input:focus) {
+                            &:before {
+                                color: var(--buttonText); border-color: var(--focusButtonBg); outline-color: var(--focusButtonBg); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)                                
+                            }
+                        }
+                        &:has(input:checked:focus) {
+                            &:before {
+                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)                                
+                            }
+                        }
+                    }
+                }
+                details {
+                    summary {
+                        .ghost-button; display: inline-block; margin: 1rem 0 0 0; padding: 0.5em 1.5em 0.5em 2.5em;
+                        &:before {.chevron; transform: rotate(135deg); width: 0.35em; height: 0.35em; border-top-width: 0.15rem; border-right-width: 0.15rem; margin: 0 0.8rem 0.25em -1.3em}
+                        &:active, &:focus, &:hover {
+                            &:before {border-color: var(--modalText)}
+                        }
+                    }
+                    &[open] summary:before {transform: rotate(315deg); margin: 0 0.8rem 0 -1.3em}
+                }
+            }
+            .search-pit-date {
+                legend h2 {margin: 0 0 0.75rem 0}
+                span {
+                    display: inline-block; float: left; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; background: var(--subtleBg);
+                    label {display: inline-block; float: left; padding: 0.6em 0.75em; line-height: 1.2rem}
+                    input {padding: 0.6em 0.75em; border: 0}
+                }
+            }
+            .search-ia-attributes {
+                > span {
+                    display: block;
+                    label {display: block}
+                    &:has(select) {
+                        display: inline-block; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; margin: 0.75rem 0 0 0; background: var(--subtleBg);
+                        label {display: inline-block; line-height: 1.2em; float: left; padding: 0.5em 0.75em}
+                        select {display: inline-block; float: left; border: 0; padding: 0.445em 0 0.445em 0.75em; width: 100%; max-width: fit-content}
+                    }
+                    &:has(input) {
+                        label {
+                            display: block; font-weight: 500; margin: 0.75rem 0 0.25em 0;
+                            span {font-weight: 300}
+                        }
+                        input {width: 100%; max-width: 40rem; padding: 0.75rem 0.9rem}
+                    }
+                }
+            }
+            .search-extent {
+                h3 {font-size: 1.1rem; margin: 0.9em 0 0 0}
+                [role="group"]:has(input[type="radio"]) {
+                    display: flow-root;
+                    > span {
+                        display: block; position: relative; margin: 0.65rem 0 0 0;
+                        label {
+                            display: block; max-width: 29rem; font-weight: 500; padding: 0.75rem 1rem 0.75rem 3rem; border-radius: 0.375rem; cursor: pointer; background: var(--bg); position: relative; z-index: 1; border: 0.0625rem solid var(--link);
+                            &:before {content: ""; position: absolute; margin: 0 0 0 -2.2em; width: 1.5em; height: 1.5em; background: var(--subtleBorder); position: absolute; border-radius: 50%}
+                            span {
+                                display: block; font-weight: 300;
+                            }
+                        }
+                        input {position: absolute; top: 1rem; left: 0.9rem}
+                        &:last-of-type {margin: 0.75rem 0 0 0}
+                        &:has(input:checked) {
+                            label {
+                                background: var(--activeBgSolid); border-color: var(--activeBgSolid); color: var(--contrastText);
+                                &:before {background: var(--contrastText)}
+                                //&:after {content: ""; width: 0.85rem; height: 0.85rem; background: var(--activeBgSolid); position: absolute; bottom: -0.35rem; left: calc(50% - 0.475rem); transform: rotate(45deg)}
+                                span:before {.chevron; margin: -1em 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgSolid)}
+                            }
+                        }
+                        &:has(input:focus) {
+                            label {
+                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                                //&:after {background: var(--focusButtonBg)}
+                                span:before {border-color: var(--focusButtonBg)}
+                            }
+                        }
+                    }
+                }
+                [role="group"]:has(input[type="checkbox"]) {
+                    margin: 0.25rem auto 0 auto; display: grid; grid-template-columns: 1fr; grid-gap: 0.5rem;
+                    > h3 {margin: 0.9em 0 0.15rem 0}
+                    > span {margin: 0; background: var(--bg); border: 0.0625rem solid var(--link); white-space: nowrap; position: relative; border-radius: 0.375rem;
+                        &:before {content: ""; position: absolute; margin: 0.7rem 0 0 0.65rem; width: 1.5em; height: 1.5em; position: absolute; z-index: 1; border-radius: 0.375rem; background: var(--bg); border: 0.0625rem solid var(--link)}
+                        label {display: block; font-weight: 400; padding: 0.75rem 1.65rem 0.75rem 2.85rem; cursor: pointer; position: relative; z-index: 1}
+                        input {position: absolute; top: 1rem; left: 1rem}
+                        &:has(input:checked) {background: var(--activeBgSolid); border-color: var(--activeBgSolid); 
+                            &:before {background: var(--contrastText); border-color: var(--contrastText)}
+                            label {
+                                color: var(--contrastText);
+                                &:before {.chevron; margin: 0.475rem 0 0 -1.8em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgSolid)}
+                            }
+                        }
+                        &:has(input:focus) {
+                            &:before {
+                                color: var(--buttonText); border-color: var(--focusButtonBg); outline-color: var(--focusButtonBg); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)
+                            }
+                        }
+                        &:has(input:checked:focus) {
+                            &:before {
+                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)                                
+                            }
+                            label:before {border-color: var(--contrastText)}
+                        }
+                    }
+                }
+                details {
+                    summary {
+                        display: inline-block; padding: 0.75em 1.5em 0 1.35em; color: var(--link); font-weight: 500;
+                        &:before {.chevron; position: absolute; transform: rotate(135deg); width: 0.35em; height: 0.35em; border-top-width: 0.15rem; border-right-width: 0.15rem; margin: 0.38em 0.7rem 0.25em -1.15em}
+                        &:hover {text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.05em}
+                    }
+                    &[open] summary:before {transform: rotate(315deg); margin: 0.6em 0.7rem 0.25em -1.15em}
+                    ul {
+                        margin: 1rem 0 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem;
+                        li {
+                            list-style: none; margin: 0; padding: 0.25rem 0.75rem; border: 0.0625rem solid var(--subtleBorder); border-radius: 0.1875rem; background: var(--subtleBg); font-weight: 500;
+                            span {padding: 0 0.125rem; font-weight: 300}
+                        }
+                    }
+                }
+            }
+        }
+	}
+    .new-legislation {
+        > div {
+            .tabs; margin: 0 auto; padding: 1.1rem 0 0 0; background: var(--verySubtleBg); border-top: 0.0625em solid  var(--subtleBorder); border-bottom: 0.0625em solid  var(--subtleBorder);	
 			section {
-				padding: 0; display: flex; flex-wrap: wrap;
 				label {margin: auto 0.85em 1em 1em; line-height: 2.5em}
 				select {margin: auto 0.25em 1em 0; height: 2.5rem; color: var(--link)}
-				a {
-					.ghost-button(); display: block; padding: 0.65em 0.75em;
-					&[aria-current="page"] {
-						font-weight: 500; background: var(--text); border-color: transparent; color: var(--bg);
-					}
-				}
 				noscript {
 					ul {display: flex; flex-wrap: wrap; gap: 0.75em; margin: 0 0 1rem 1rem; list-style: none}
 					h2 {font-size: 1rem; font-weight: 400; margin: 0 0 0.75rem 1rem}
 					li {margin: 0}
 				}		
 				nav {
-					width: 100%; h2 {.sr-only()}
-					ul {
-						margin: 0 0 0 1em; display: inline-flex; flex-flow: wrap; list-style: none; gap: 0.85rem 1.15rem; width: calc(100% - 2rem); padding: 1.2rem 0; border-top: 0.0625rem solid var(--subtleBorder);
-						li {margin: 0; padding: 0; font-size: 1.1rem; flex-grow: 1; min-width: 30%}
-					}
+					ul {border-top: 0.0625rem solid var(--subtleBorder)}
 				}
 			}
 		}
-		.newly-published {h2 {.sr-only()}}
+        .newly-published {h2 {.sr-only()}}
 	}
 
 	.new-legislation-feeds {
@@ -1280,7 +1618,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					.button {display: table; margin: 0.75em auto; padding: 0.65em 3em}
 					&[disabled] {
 						> span {
-							.button {.disabled();}							
+							.button {.disabled(); border: 0}							
 						}
 					}
 					.version {
@@ -1377,24 +1715,37 @@ body:not(:-moz-handler-blocked) fieldset {
 							&.date {white-space: nowrap; font-weight: inherit}
 						}
 					}
-					> a {display: inline-block; padding: 0.4em 0 0.5em 2em; line-height: 1.35em}
+					> a {
+                        display: inline-block; padding: 0.4em 0 0.5em 2em; line-height: 1.35em;
+                    }
 					> button {.button(); margin: 0.35rem 0 0.45rem 2rem; padding: 0.65rem 1rem; width: calc(100% - 2rem); font-weight: 300}
-					&:has(p) {
-						> a {padding: 0 0 0.35em 2em}
+					&:has(p):not(.repealed) {
+						> a {
+                            padding: 0 0 0.35em 2em;
+                            &:has(+ a) {.button(); margin: 0.35rem 0 0.45rem 2rem; padding: 0.65rem 1rem; font-weight: 300}
+                        }
 					}
 					&.not-up-to-date {
 						p:first-of-type {background: url('images/not-up-to-date.png') no-repeat 0.1rem 0.15rem; background-size: 0.85rem}
 						button {
 							background: var(--warningBg);
 							&:hover, &:active, &:focus {background: var(--focusWarningBg)}
-						}
+						} 
+					}
+					&.repealed {
+						> a:first-of-type {padding: 0.4em 0 0 2em}
 					}
 					&.up-to-date ul {.toggle; margin: 0.35rem 1em 0.5em 2em}
+                    &.as-enacted-formats {
+                        display: table;
+                        p {height: 2.25rem; padding: 0.15rem 0 0.15rem 2rem; display: table-cell; display: table-cell; vertical-align: middle}    
+                        a {font-weight: 500}
+                    }
 				}
 				details {
 					margin: 0.5rem 0.25rem 0.65rem 0.25rem;
 					summary {
-						.ghost-button(); padding: 0.8em 0.75em 0.8em; text-align: center;
+						.ghost-button(); padding: 0.8em 0.75em; text-align: center;
 						h3 {
 							font-size: 1rem; font-weight: 500; line-height: 1.2em; display: inline-block;
 							&:after {.chevron(); width: 0.35em; height: 0.35em; border-top-width: 0; border-bottom-width: 0.0625rem; margin: 0 0.25em 0.2em 0.6em}
@@ -1410,12 +1761,18 @@ body:not(:-moz-handler-blocked) fieldset {
 							h3:after {border-bottom: 0; border-right: 0; border-top-width: 0.0625rem; border-left-width: 0.0625rem; border-color: var(--buttonText); margin: 0.2em 0.25em 0 0.6em}
 
 						}
-						> div {background: var(--bg); border: 0.0625rem solid var(--buttonBg); border-top: 0; border-radius: 0 0 0.1875rem 0.1875rem; padding: 0.65rem 0.85rem}
+						> div, > ul {
+                            background: var(--bg); border: 0.0625rem solid var(--buttonBg); border-top: 0; border-radius: 0 0 0.1875rem 0.1875rem; padding: 0.65rem 0.85rem; font-weight: 300;
+                            li {
+                                margin: 0 0 0.45em 0; list-style: none; line-height: 1.35rem;
+                                &:last-of-type {margin: 0}
+                            }
+                        }
 					}
-					&.other-formats summary {
-						h3 {
+					&.other-formats, &.opening-options {
+						summary h3 {
 							padding: 0 0 0 2rem;
-							&:before {content: ""; position: absolute; margin: -0.065em 0 0 -2.1em; height: 1.45em; width: 1.45em}
+							&:before {content: ""; position: absolute; margin: 0 0 0 -2.1em; height: 1.45em; width: 1.45em}
 						}
 					}
 				}
@@ -1473,6 +1830,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						position: absolute; margin: 0 0 0 -8em; width: 7.5em; text-align: right;
 						.wrapper {display: inline-block; line-height: 1.2em}
 					}
+                    iframe {width: 100%; height: 90vH}
 				}
 				.legislation-ftr {
 					padding: 0;
@@ -1593,7 +1951,7 @@ body:not(:-moz-handler-blocked) fieldset {
 				}
 				.status-panel-anchor {width: 5rem; height: 5rem; display: block;  position: absolute}
 				.status-panel {
-					font-weight: 300;
+					margin: 0 0 1rem 0; font-weight: 300;
 					&.pinned {position: sticky; top: -4px; z-index: 100}
 					&.stuck {
 						&:after {.drop-shadow(); margin: -1rem 0 0.6rem 0}
@@ -1603,6 +1961,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 					&:not(.pinned) button {.ghost-button; padding: 0.3rem 1rem}
 					&.pinned button {background-image: url('images/pin-on.png')}
+                    &:has(details) {margin: 0}
 					> div {
 						padding: 0.5rem 1rem; position: relative; background: var(--verySubtleFixedBg); border-left: 0.45rem solid var(--activeBg);
 						h2 {.sr-unset(); padding: 0.25rem 0 0 0; font-size: 1.05rem; font-weight: 600; line-height: unset}
@@ -1772,6 +2131,8 @@ body:not(:-moz-handler-blocked) fieldset {
 							padding: 0 0.5rem 0 0.75rem; background-color: var(--verySubtleFixedBg); border: 0;
 							&:last-of-type {padding: 0 0.5rem 0.75rem 0.75rem; flex-grow: 1}
 							&.up-to-date {background-position: 1em 0.55em}
+						    &.repealed {background-position: 0.25em 0.575em}
+    						&.dated-version {background-position: 1em 0.55em}
 							&.extent {background-position: 0.85em 0.55em}
 							&.in-force {background-position: 0.85em 0.55em}
 							&.confers-power {background-position: 1em 0.55em}
@@ -1781,6 +2142,13 @@ body:not(:-moz-handler-blocked) fieldset {
 								&:first-of-type {padding: 0.35em 0 0.15rem 2em; border-top: 0.0625rem solid var(--subtleBorder)}
 							}
 							&.not-up-to-date p:first-of-type {background-position: 0.05rem 0.3rem}
+                            &.as-enacted-formats, &.as-enacted-formats.pdf {
+                                background-position: 1.25em 0.55em; flex-grow: unset;
+                                p {min-height: 2.25rem; padding: 0.5rem 0 0.15rem 2rem}
+                            }
+                            &.as-enacted-formats.pdf {
+                                background-position: 0.75em 0.55em;
+                            }
 						}
 					}
 				}
@@ -1955,6 +2323,19 @@ body:not(:-moz-handler-blocked) fieldset {
 					}			
 				}
 			}
+            &.advanced-searches {
+                section .search-extent {
+                    [role="group"]:has(input[type="checkbox"]) {
+                        grid-template-columns: 1fr 1fr;
+                        > h3 {grid-column-start: 1; grid-column-end: 3}
+                    }
+                }
+                section .search-date:has(div[role="group"]) div[role="group"] > span span {
+                    display: inline-block;
+                    &:nth-of-type(2) {margin: 0 0.5rem}
+                    label {min-width: unset}
+                }
+            }
 			&.search-results {
 				.search-content {
 					position: relative;
@@ -2010,7 +2391,17 @@ body:not(:-moz-handler-blocked) fieldset {
 				.title input {width: 29.9rem}
 			}
 		}
-		main.legislation .legislation-content > aside > div > button {width: fit-content}
+        main {
+            &.legislation .legislation-content > aside > div > {
+                button, a:has(+ a) {width: fit-content}
+            }
+            &.advanced-searches {
+                .search-language > span, .search-extent [role="group"]:has(input[type="radio"]) > span, .search-date:has(div[role="group"]) div[role="group"] {
+                    float: left; max-width: unset; width: 30rem;
+                    &:first-of-type {margin: 0.65rem 1rem 0 0}
+                }
+            }
+        }
 	}
 
 	@media (min-width: @phablet) {
@@ -2134,7 +2525,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					span {
 						&.title, &.type {
 							float: left;
-							input, select {margin: 0 1em 0.85em 0; width: 29.75rem}
+							input, select {margin: 0 1em 0.85em 0; width: 28.75rem}
 						}
 						&:has(button) {
 							margin: 1.5em 0 0 0;
@@ -2200,6 +2591,22 @@ body:not(:-moz-handler-blocked) fieldset {
 					}					
 				}
 			}
+            
+            &.advanced-searches {
+                > div {background: var(--advSearchBg); border-top: 0.0625em solid  var(--subtleBg); border-bottom: 0.0625em solid  var(--subtleBg)}
+                section {
+                    .search-type {
+                        details[open]::details-content {display: grid; grid-template-columns: repeat(2, 1fr)}
+                        [role="group"]:first-of-type {grid-row: span 3}
+                    }
+                    .search-extent {
+                        [role="group"]:has(input[type="checkbox"]) {
+                            grid-template-columns: 1fr 1fr 1fr 1fr;
+                            > h3 {grid-column-start: 1; grid-column-end: 5}
+                        }
+                    }
+                }
+            }
 
 			&.legislation {
 				.pit-search, .timeline:has(details:not([open])) {padding: 0 1rem}
@@ -2266,6 +2673,13 @@ body:not(:-moz-handler-blocked) fieldset {
 				aside {
 					> div {
 						&.up-to-date {background-position: 0.7em 0.6em; background-size: 1.6em}
+				        &.repealed {background-position: 0.7em 0.6em; background-size: 1.75em}
+						&.dated-version {background-position: 0.7em 0.6em; background-size: 1.6em}
+                        &.as-enacted-formats {
+                            background-position: 0.85em 0.65em; background-size: 1.1em;
+                            p {padding: 0.5em 0.5em 0.35em 3em}
+                        }
+                        &.as-enacted-formats.pdf {background-position: 0.45em 0.6em; background-size: 1.8em}
 						&.extent {background-position: 0.5em 0.6em; background-size: 2em}
 						&.in-force {background-position: 0.65em 0.6em; background-size: 1.8em}
 						&.confers-power {background-position: 0.85em 0.625em; background-size: 1.35em}
@@ -2368,33 +2782,16 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				}
 			}
-			&.new-legislation {
+			&.advanced-searches {
 				> div {
-					border-top: 0;
+                    .tabs-wide; padding: 1.1rem 0 0 0;
+				}
+            }
+            &.new-legislation {
+				> div {
+					.tabs-wide; border-top: 0;
 					> section {
-						overflow: visible;
 						noscript ul {margin: 0 0 1.5rem 1rem}
-						nav {
-							width: unset;
-							ul {
-								gap: 0; width: unset; margin: 0 0 0 1rem; padding: 0; border: 0;
-								li {
-									padding: 1.1em 1.2em 0.8em 1.2em; flex-grow: 0; min-width: unset;
-									a {
-										display: inline; padding: 0; border: 0; background: none;
-										&:hover, &:active, &:focus {color: var(--link); background: none; border: 0; -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent; box-shadow: 0 0 0 transparent}
-										&:hover {outline: unset; text-decoration: underline; text-decoration-thickness: 0.05em}
-										&:active, &:focus {outline-color: var(--link)}
-										&[aria-current="page"] {
-											position: relative; padding: 1.2em 1.6em 0.95em 1.6em; border-radius: 0.2em 0.2em 0 0; text-align: unset; background: var(--bg); border-left: 0.0625em solid var(--subtleBorder); border-right: 0.0625em solid var(--subtleBorder); color: var(--text);
-											&:before {position: absolute; margin: -1.2em 0 0 -1.6em; content: ""; height: 0.35em; width: 100%; background: var(--text); border-radius: 0.2em 0.2em 0 0}
-											&:after {position: absolute; margin: 0 0 -0.0625em 0; content: ""; height: 0.0625em; width: 100%; background: var(--bg); bottom: 0; left: 0}
-										}
-									}
-									&:has([aria-current="page"]) {padding: 1.1em 0 0.8em 0}
-								}
-							}
-						}
 					}
 				}
 			}
@@ -2421,8 +2818,9 @@ body:not(:-moz-handler-blocked) fieldset {
 							.button {.sr-only()}
 						}
 						&[disabled] {
+                            border: 0;
 							> span {
-								&:before {.disabled()}
+								&:before {.disabled(); border: 0}
 								&:after {border: 0; border-bottom: 0.1rem solid var(--disabledButtonBorder); border-left: 0.1rem solid var(--disabledButtonBorder)}
 							}
 							&:active, &:focus, &:hover  {
@@ -2661,14 +3059,27 @@ body:not(:-moz-handler-blocked) fieldset {
 							p {
 								&:first-of-type {
 									flex-grow: 1; padding: 0.5em 0.5em 0.5em 3em; display: table-cell; height: 2.85rem; vertical-align: middle;
-									+ p {margin: 0 0.75em 0.5em 0.75em; padding: 0.65em 0.25rem 0 0.25rem; border-top: 0.0625em solid var(--lessSubtleBorder)}
+									+ p {
+                                        margin: 0 0.75em 0.5em 0.75em; padding: 0.65em 0.25rem 0 0.25rem; border-top: 0.0625em solid var(--lessSubtleBorder);
+                                            + p {margin: 0 0.75em 0.5em 0.75em; padding: 0.15em 0.25rem 0 0.25rem}
+                                    }
 								}
 							}
 							> a {display: block; padding: 0.7em 0 0.5em 2.75em; border-radius: 0 0 0.25rem 0.25rem}
 							button {.button(); font-weight: 300; width: calc(100% - 2rem); margin: 0.1rem 1rem 1rem 1rem; padding: 0.75rem 0}
-							&:has(p) {
+							&:has(p):not(.repealed) {
 								margin: 0 0 1rem 0;
-								> a {padding: 0.5em 0.85em 0.5em 0.85em; background: var(--moreSubtleBg); border-top: 0.05em solid var(--subtleBorder)}
+								> a {
+                                    padding: 0.5em 0.85em 0.5em 0.85em; background: var(--moreSubtleBg); border-top: 0.05em solid var(--subtleBorder);
+                                    &:has(+ a) {.button(); margin: 0.1rem 1rem 1rem 1rem; padding: 0.65rem 0.65rem; width: calc(100% - 2rem); font-weight: 300}
+                                }
+							}
+							&.repealed {
+								margin: 0 0 1rem 0; border: 0.15rem solid var(--repealed);
+								> a {
+                                    padding: 0.5em 0.85em 0.5em 0.85em; background: var(--moreSubtleBg); line-height: 1.25em;
+                                    &:not(:last-of-type) {padding: 0.5em 0.85em 0.25em 0.85em; border-top: 0.05em solid var(--subtleBorder)}
+                                }
 							}
 							&.not-up-to-date {
 								border: 0.13rem dashed var(--warningBorder);
@@ -2676,7 +3087,11 @@ body:not(:-moz-handler-blocked) fieldset {
 							}
 							&.up-to-date ul {.toggle; margin: 0 1em 0.75em 1em}
 						}
-						details {margin: 0}
+						details {
+                            margin: 0;
+                            summary {padding: 0.8em 0 0.8em 1em; text-align: unset}
+                            & + details {margin: 1rem 0 0 0}
+                        }
 						+ aside {margin: 0}
 					}
 					> div {order: -1; grid-row: span 2; width: 100%; margin: 1em 0 0 0; padding: 0 1em 0 0}
@@ -2815,7 +3230,7 @@ body:not(:-moz-handler-blocked) fieldset {
 								margin: 0 0.85em 0 0; padding: 0.75em; width: 5.75em;
 								&::placeholder {color: var(--midDrkBrdr)}
 							}
-							&.title input {width: 19.4rem; margin: 0 0.85em 0 0}
+							&.title input {width: 18.5rem; margin: 0 0.85em 0 0}
 							&.type select {margin: 0 0.85em 0 0}
 							&:has(button) {
 								button {margin: 0.25em 0.75em 0 0; width: 5.95em}
@@ -2951,12 +3366,18 @@ body:not(:-moz-handler-blocked) fieldset {
         .legislation .legislation-content > aside > div {min-height: 2rem}
         main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div {
             &.up-to-date {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
+            &.dated-version {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
+            &.as-enacted-formats {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
+            &.as-enacted-formats.pdf {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
             &.extent, &.in-force {background-position: 1rem 0.45rem; background-size: 1.25rem}
             &.blanket-amendments {background-position: 0.9rem 0.45rem; background-size: 1.25rem}
             &.confers-power {background-position: 1.15rem 0.45rem; background-size: 0.8rem}
         }
         :root .legislation .legislation-content aside > div, :root[colour-scheme="light"] .legislation .legislation-content aside > div {
             &.up-to-date {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
+            &.dated-version {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
+            &.as-enacted-formats {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
+            &.as-enacted-formats.pdf {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
             &.extent, &.in-force {background-position: 0.4rem 0.45rem; background-size: 1.25rem}
             &.blanket-amendments {background-position: 0.25rem 0.45rem; background-size: 1.25rem}
             &.confers-power {background-position: 0.5rem 0.45rem; background-size: 0.8rem}
@@ -2980,3 +3401,5 @@ body:not(:-moz-handler-blocked) fieldset {
             }
         }
     }
+
+body:has(.advanced-searches) header .hdr-search {display: none}

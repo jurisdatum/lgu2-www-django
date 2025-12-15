@@ -68,9 +68,6 @@ def extract_query_params(request) -> SearchParams:
     if "subject" in request.GET and request.GET["subject"].strip():
         params["subject"] = request.GET["subject"].strip()
 
-    if "year" in request.GET and request.GET["year"].isdigit():
-        params["year"] = int(request.GET["year"])
-
     if "type" in request.GET and request.GET["type"].strip():
         params["type"] = request.GET["type"].strip()
 
@@ -79,6 +76,35 @@ def extract_query_params(request) -> SearchParams:
 
     if "number" in request.GET and request.GET["number"].strip():
         params["number"] = request.GET["number"].strip()
+
+    if "leg_text" in request.GET and request.GET["leg_text"].strip():
+        params["q"] = request.GET["leg_text"]
+
+    if "language" in request.GET and request.GET["language"].strip():
+        params["language"] = request.GET["language"]
+    
+    if "exclusiveExtent" in request.GET and request.GET["exclusiveExtent"].strip():
+        params["exclusiveExtent"] = request.GET["exclusiveExtent"]
+    
+    if "extent" in request.GET and request.GET.getlist('extent'):
+        params["extent"] = request.GET.getlist('extent')
+
+    if "pointInTime" in request.GET and request.GET["pointInTime"]:
+        params["pointInTime"] = request.GET["pointInTime"]
+
+    if "specifi_years" in request.GET and request.GET["specifi_years"]:
+        if request.GET["specifi_years"] == 'true':
+            if "year" in request.GET and request.GET["year"].isdigit():
+                params["year"] = int(request.GET["year"])
+        else:
+            if "startYear" in request.GET and request.GET["startYear"].isdigit():
+                params["startYear"] = int(request.GET["startYear"])
+
+            if "endYear" in request.GET and request.GET["endYear"].isdigit():
+                params["endYear"] = int(request.GET["endYear"])
+    else:
+        if "year" in request.GET and request.GET["year"].isdigit():
+            params["year"] = int(request.GET["year"])
 
     return params
 
