@@ -20,11 +20,11 @@ class AdvanceSearchViewsTests(SimpleTestCase):
         self.assertTemplateUsed(response, 'new_theme/advance_search/point_in_time.html')
 
     def test_draft_search_view(self):
-        response = self.client.get(reverse('draft-search'))
+        response = self.client.get(reverse('draft-legislation-search'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'new_theme/advance_search/draft.html')
 
     def test_impact_search_view(self):
-        response = self.client.get(reverse('impact-search'))
+        response = self.client.get(reverse('impacts-search'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'new_theme/advance_search/impact.html')
