@@ -11,15 +11,20 @@ first_versions = { 'enacted', 'made', 'created', 'adopted' }
 
 
 def make_contents_link_for_list_entry(doc: DocEntry):
-    # TODO: need to discuss this
-    if doc['number'] is None:
-        doc['number'] = doc['isbn']
+    # Use isbn as fallback identifier if number is None
+    # Some documents (e.g., older legislation) use ISBN instead of a number
+    number = doc['number'] if doc['number'] is not None else doc.get('isbn')
+
+    if number is None:
+        # This shouldn't happen in valid data, but handle it gracefully
+        raise ValueError(f"Document {doc['id']} has neither 'number' nor 'isbn' field")
+
     if doc['id'].endswith('.pdf'):  # correction slips
-        return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], doc['number'] ])
+        return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], number ])
     elif doc['version'] in first_versions:
-        return reverse('toc-version', args=[ to_short_type(doc['longType']), doc['year'], doc['number'], doc['version'] ])
+        return reverse('toc-version', args=[ to_short_type(doc['longType']), doc['year'], number, doc['version'] ])
     else:
-        return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], doc['number'] ])
+        return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], number ])
 
 
 def make_contents_link(type: str, year: str, number: str, version: Optional[str], lang: Optional[str]):
