@@ -4,6 +4,11 @@
 from .types import short_to_long
 
 labels = {
+    'ukia':{
+        'singular':    'UK impact assessment',
+        'plural':      'UK impact assessments',
+        'long_plural': 'UK impact assessments',
+    },
     'ukpga': {
         'singular':    'UK Public General Act',
         'plural':      'UK Public General Acts',

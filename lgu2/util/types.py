@@ -1,5 +1,6 @@
 
 types = [
+    ('ukia', 'UnitedKingdomImpactAssessment', 'primary'),
     ('ukpga', 'UnitedKingdomPublicGeneralAct', 'primary'),
     ('ukla', 'UnitedKingdomLocalAct', 'primary'),
     ('ukppa', 'UnitedKingdomPrivateOrPersonalAct', 'primary'),

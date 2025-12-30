@@ -106,6 +106,12 @@ def extract_query_params(request) -> SearchParams:
         if "year" in request.GET and request.GET["year"].isdigit():
             params["year"] = int(request.GET["year"])
 
+    if 'stage' in request.GET and request.GET['stage'].strip():
+        params['stage'] = request.GET['stage']
+
+    if 'department' in request.GET and request.GET['department']:
+        params['department'] = request.GET['department']
+
     return params
 
 

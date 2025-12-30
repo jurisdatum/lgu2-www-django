@@ -11,6 +11,8 @@ first_versions = { 'enacted', 'made', 'created', 'adopted' }
 
 
 def make_contents_link_for_list_entry(doc: DocEntry):
+    print('===============longtype==================')
+    print(doc['longType'])
     # TODO: need to discuss this
     if doc['number'] is None:
         doc['number'] = doc['isbn']

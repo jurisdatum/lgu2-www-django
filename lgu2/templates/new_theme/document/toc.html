@@ -55,7 +55,20 @@
                     </li>
                 </ul>
                 {% else %}
-                    <h1>There is no Table of contents for this Act</h1>
+                    <div>
+                        <section class="legislation-text">
+                            <div class="status-panel">
+                                <div>
+                                    <h2>This is the King's Printer Version. It is the exact text that received Royal Assent when it was enacted.</h2>
+                                    <p>A version of this text with commencement and extent information should be available by <?php echo date('d M Y', strtotime(date('d M Y'). ' + 14 days')); ?>.</p>
+                                </div>
+                            </div>
+                            <h2>Legislation text for the whole Act </h2>
+                            <a class="pdfLink" href="/{{meta.id}}">
+                                <img src="{{altFormats.0.thumbnail}}" alt="{{meta.title}}"></img>
+                            </a>
+                        </section>
+                    </div>
                 {% endif %}
             </section>
         </div>
