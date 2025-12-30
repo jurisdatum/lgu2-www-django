@@ -4,7 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, re_path
-
+from django.http import JsonResponse
 from .views.robots import robots_txt
 from .views.doc_types import list_uk
 
@@ -53,6 +53,8 @@ DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
+    path("health/", lambda request: JsonResponse({"status": "ok"})),
+
     # TODO: Remove trailing slash from search and explore URLs
     path('search/', search_results, name='search'),
 
