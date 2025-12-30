@@ -1,0 +1,71 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+	<main class="advanced-searches">
+        <div>
+			{% include 'new_theme/advance_search/common/top_bar.html' %}
+		</div>
+        <section>
+            <hgroup>
+                <h1 id="main-content-h" tabindex="-1">Geographical Extent Advanced Search</h1>
+                <p>See revised legislation as it extends or applies to different parts of the UK</p>
+            </hgroup>
+		</section>
+        <section>
+            <form role="search" method="get" action="{% url 'search' %}">
+               
+                <div class="recommended-approach">
+                    <fieldset class="search-extent">
+                        <legend><h2>Geographical extent</h2></legend>
+                        <p>Geographical extent searches are only available for revised legislation. Find out <a href="#">how we communicate territorial extent and application</a>.</p>
+                        <div role="group" aria-label="Aplies or extends to">
+                            <h3>Find legislation that...</h3>
+                            <span>
+                                <label for="applicable">Is applicable to... <span>(legislation that applies to specified parts of the UK)</span></label>
+                                <input type="radio" id="applicable" name="exclusiveExtent" checked value="False">
+                            </span>
+                            <span>
+                                <label for="extends">Exclusively extends to... <span>(legislation that extends to specified parts of the UK)</span></label>
+                                <input type="radio" id="extends" name="exclusiveExtent" value="True">
+                            </span>
+                        </div>
+                        <div role="group" aria-label="Parts of the UK">
+                            <h3>The following parts of the UK...</h3>
+                            <span><label for="England">England</label><input id="England" name="extent" value="E" type="checkbox" checked /></span>
+                            <span><label for="NI">Northern Ireland</label><input id="NI" name="extent" value="NI" type="checkbox" checked /></span>
+                            <span><label for="Scotland">Scotland</label><input id="Scotland" name="extent" value="S" type="checkbox" checked /></span>
+                            <span><label for="Wales">Wales</label><input id="Wales" name="extent" value="W" type="checkbox" checked /></span>
+                        </div>
+                        <details  open>
+                            <summary>Legislation returned for the above combination</summary>
+                            <ul>
+                                <li>E</li>
+                                <li>W</li>
+                                <li>S</li>
+                                <li>E<span>+</span>W</li>
+                                <li>E<span>+</span>S</li>
+                                <li>W<span>+</span>S</li>
+                                <li>N.I.</li>
+                                <li>E<span>+</span>W<span>+</span>S</li>
+                                <li>E<span>+</span>N.I.</li>
+                                <li>W<span>+</span>N.I.</li>
+                                <li>S<span>+</span>N.I.</li>
+                                <li>E<span>+</span>W<span>+</span>N.I.</li>
+                                <li>E<span>+</span>S<span>+</span>N.I.</li>
+                                <li>W<span>+</span>S<span>+</span>N.I.</li>
+                                <li>E<span>+</span>W<span>+</span>S<span>+</span>N.I.</li>
+                            </ul>
+                      </details>
+                    </fieldset>
+                    {% include 'new_theme/advance_search/common/search-keyword.html' %}
+                    {% include 'new_theme/advance_search/common/search-language.html' %}
+                    {% include 'new_theme/advance_search/common/enacted-made.html' %}
+                    {% include 'new_theme/advance_search/common/series-number.html' with number="true"  %}
+                    {% include 'new_theme/advance_search/common/search-type.html' %}
+                </div>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+	</main>
+{% endblock %}

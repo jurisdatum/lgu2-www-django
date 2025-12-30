@@ -1,0 +1,20 @@
+
+<fieldset class="search-keywords">
+    <legend><h2>Keywords</h2></legend>
+    <details>
+        <summary>How to search with keywords</summary>
+        <p>You can enter full and partial titles, for example, '<span>Data protection</span>' will return '<span><span>Data Protection</span> Act</span>' and '<span>The <span>Data</span> Retention Regulations</span>'. </p>
+        <p>Use a minus to exclude a word, for example, '<span>Data -protection</span>' will return '<span>The <span>Data</span> Retention Regulations</span>' but not the '<span><span>Data Protection</span> Act</span>'. </p>
+        <p>Use quotes for an exact match, for example, <span>"Data Protection"</span> will return '<span>The <span>Data Protection</span> Act</span>' but not the '<span>The <span>Protection</span> of Vulnerable Groups (<span>Data</span> Handling) Regulations</span>'.</p>
+    </details>
+    <span>
+        <label for="title">Search for words in the legislation title...</label>
+        <input type="text" id="title" name="title" placeholder="e.g. equality, equality 15, equality 2010, 15 2010">
+    </span>
+    {% if not title %}
+    <span>
+        <label for="content">...and/or words in the legislation text</label>
+        <input type="text" id="content" name="leg_text" placeholder='e.g. data retention, "data retention"'>
+    </span>
+    {% endif %}
+</fieldset>

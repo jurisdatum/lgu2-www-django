@@ -1,4 +1,4 @@
-from typing import NotRequired, TypedDict
+from typing import List, NotRequired, TypedDict, Union
 
 
 class SearchParams(TypedDict):
@@ -9,7 +9,7 @@ class SearchParams(TypedDict):
     (e.g., "1", "w2", "ni15") not just numeric IDs.
     """
     year: NotRequired[int]
-    type: NotRequired[str]
+    type: NotRequired[Union[str, List[str]]]
     subject: NotRequired[str]
     pageSize: NotRequired[int]
     sort: NotRequired[str]

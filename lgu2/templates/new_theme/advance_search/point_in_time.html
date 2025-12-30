@@ -1,0 +1,30 @@
+{% extends "new_theme/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+	<main class="advanced-searches">
+        <div>
+			{% include 'new_theme/advance_search/common/top_bar.html' %}
+		</div>
+        <section>
+            <hgroup>
+                <h1 id="main-content-h" tabindex="-1">Point-in-time Advanced Search</h1>
+                <p>See how specific revised legislation stood at a particular point in time</p>
+            </hgroup>
+		</section>
+        <section>
+            <form role="search" method="get" action="{% url 'search' %}">
+                <div class="recommended-approach">
+                    {% include 'new_theme/advance_search/common/search-keyword.html' with title="true" %}
+                    {% include 'new_theme/advance_search/common/enacted-made.html' with yearNumber="true" %}
+                    {% include 'new_theme/advance_search/common/search-type.html' %}
+                </div>
+                <fieldset class="search-pit-date">
+                    <legend><h2>Point in time you want to see this legislation at</h2></legend>
+                    <span><label for="pitDate">Date:</label><input type="date" id="pitDate" name="pointInTime"></span>
+                </fieldset>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+	</main>
+{% endblock %}

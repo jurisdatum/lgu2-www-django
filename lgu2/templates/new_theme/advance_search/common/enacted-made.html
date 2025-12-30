@@ -1,0 +1,26 @@
+{% if yearNumber %}
+    <fieldset class="search-date">
+        <legend><h2>Year and number</h2></legend>
+        <p>We hold revised versions of all Primary legislation and selected Secondary legislation from the <a href="#">base date</a>. For most revised legislation the base date is 01 Feb 1991; for Northern Ireland legislation the base date is 01 Jan 2006.</p>
+        <span><label for="from-date">Year:</label><input id="from-date" type="text" name="year" placeholder="1991" /></span>
+        <span><label for="number">Number:</label><input id="number" type="text" name="number" placeholder="e.g. 15" /></span>
+    </fieldset>
+{% else %}
+    <fieldset class="search-date current-design">
+        <legend><h2>Enacted or made dates</h2></legend>
+        <p>We hold legislation from 1267 to the present day, including all Primary legislation from 1988 and all Secondary legislation from 1987 - see a comprehensive list of <a href="#">what legislation we hold</a>.</p>
+        <div role="group" aria-label="Specific year">
+            <span>
+                <label for="specific">Search within a specific year</label><input id="specific" type="radio" name="specifi_years" value="true" checked />
+                <span><label for="specific-date">Specific year:</label><input id="specific-date" type="text" name='year' placeholder="e.g. 2025" /></span>
+            </span>
+        </div>
+        <div role="group" aria-label="Range of years">
+            <span>
+                <label for="range">Search across a range of years</label><input id="range" type="radio" value="false" name="specifi_years" />
+                <span><label for="from-date">from:</label><input id="from-date" type="text" name="startYear" placeholder="1267" /></span>
+                <span><label for="to-date">to:</label><input id="to-date" type="text" name="endYear" placeholder="2025>" /></span>
+            </span>
+        </div>
+    </fieldset>
+{% endif %}

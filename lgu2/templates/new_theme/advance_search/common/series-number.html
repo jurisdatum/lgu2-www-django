@@ -1,0 +1,25 @@
+{% if number %}
+<fieldset class="search-number-current">
+    <legend><h2>Number</h2></legend>
+    <span><label for="number">Number:</label><input id="number" type="text" placeholder="e.g. 15" /></span>
+</fieldset>
+{% else %}
+<fieldset class="search-number">
+    <legend><h2>Series and number</h2></legend>
+    <p>Some legislation is assigned multiple numbers from different numbering systems. If you are unsure which number series to use, select 'Main series'.</p>
+    <span>
+        <label for="series">Series:</label>
+        <select id="series" name="series">
+            <option value="">Main series</option>
+            <option value="w">Welsh</option>
+            <option value="s">Scottish</option>
+            <option value="ni">N.I.</option>
+            <option value="c">Commencement</option>
+            <option value="l">Legal</option>
+        </select>
+    </span>
+    <span>
+        <label for="number">Number:</label><input id="number" name="number" type="text" placeholder="e.g. 15" />
+    </span>
+</fieldset>
+{% endif %}

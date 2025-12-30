@@ -1,0 +1,55 @@
+<fieldset class="search-type">
+    <legend><h2>Legislation type</h2></legend>
+    <div role="group" aria-label="Main legislation types">
+        <span><label for="primary">All Primary legislation</label><input id="primary" name="type" value="primary" type="checkbox" /></span>
+        {% if secondary %}
+            <span><label for="secondary">All Secondary legislation</label><input id="secondary" name="type" value="secondary" type="checkbox" /></span>
+        {% endif %}
+        <span><label for="eu">All Legislation originating from the EU</label><input id="eu" name="type" value="eu" type="checkbox" /></span>
+    </div>
+    <details>
+        <summary>Select specific legislation types</summary>
+        <div role="group" aria-labelledby="h-primary" id="primary-types">
+            <h3 id="h-primary">Primary legislation</h3>
+            <span><label for="ukpga">UK Public General Acts</label><input id="ukpga" name="type" value="ukpga" type="checkbox" /></span>
+            <span><label for="ukla">UK Local Acts</label><input id="ukla" name="type" value="ukla" type="checkbox" /></span>
+            <span><label for="ukppa">UK Private and Personal Acts</label><input id="ukppa" name="type" value="ukppa" type="checkbox" /></span>
+            <span><label for="asp">Acts of the Scottish Parliament</label><input id="asp" name="type" value="asp" type="checkbox" /></span>
+            <span><label for="asc">Acts of Senedd Cymru</label><input id="asc" name="type" value="asc" type="checkbox" /></span>
+            <span><label for="anaw">Acts of the National Assembly for Wales</label><input id="anaw" name="type" value="anaw" type="checkbox" /></span>
+            <span><label for="mwa">Measures of the National Assembly for Wales</label><input id="mwa" name="type" value="mwa" type="checkbox" /></span>
+            <span><label for="ukcm">Church Measures</label><input id="ukcm" name="type" value="ukcm" type="checkbox" /></span>
+            <span><label for="nia">Acts of the Northern Ireland Assembly</label><input id="nia" name="type" value="nia" type="checkbox" /></span>
+            <span><label for="aosp">Acts of the Old Scottish Parliament</label><input id="aosp" name="type" value="aosp" type="checkbox" /></span>
+            <span><label for="aep">Acts of the English Parliament</label><input id="aep" name="type" value="aep" type="checkbox" /></span>
+            <span><label for="aip">Acts of the Old Irish Parliament</label><input id="aip" name="type" value="aip" type="checkbox" /></span>
+            <span><label for="apgb">Acts of the Parliament of Great Britain</label><input id="apgb" name="type" value="apgb" type="checkbox" /></span>
+            <span><label for="gbla">Local Acts of the Parliament of Great Britain</label><input id="gbla" name="type" value="gbla" type="checkbox" /></span>
+            <span><label for="gbppa">Private and Personal Acts of the Parliament of Great Britain</label><input id="gbppa" name="type" value="gbppa" type="checkbox" /></span>
+            <span><label for="nisi">Northern Ireland Orders in Council</label><input id="nisi" name="type" value="nisi" type="checkbox" /></span>
+            <span><label for="mnia">Measures of the Northern Ireland Assembly</label><input id="mnia" name="type" value="mnia" type="checkbox" /></span>
+            <span><label for="apni">Acts of the Northern Ireland Parliament</label><input id="apni" name="type" value="apni" type="checkbox" /></span>
+        </div>
+        {% if secondary %}
+            <div role="group" aria-labelledby="h-secondary" id="secondary-types">
+                <h3 id="h-secondary">Secondary legislation</h3>
+                <span><label for="uksi">UK Statutory Instruments</label><input id="uksi" name="type" value="uksi" type="checkbox" /></span>
+                <span><label for="wsi">Wales Statutory Instruments</label><input id="wsi" name="type" value="wsi" type="checkbox" /></span>
+                <span><label for="ssi">Scottish Statutory Instruments</label><input id="ssi" name="type" value="ssi" type="checkbox" /></span>
+                <span><label for="nisr">Northern Ireland Statutory Rules</label><input id="nisr" name="type" value="nisr" type="checkbox" /></span>
+                <span><label for="ukci">Church Instruments</label><input id="ukci" name="type" value="ukci" type="checkbox" /></span>
+                <span><label for="ukmd">UK Ministerial Directions</label><input id="ukmd" name="type" value="ukmd" type="checkbox" /></span>
+                <span><label for="ukmo">UK Ministerial Orders</label><input id="ukmo" name="type" value="ukmo" type="checkbox" /></span>
+                <span><label for="uksro">UK Statutory Rules and Orders</label><input id="uksro" name="type" value="uksro" type="checkbox" /></span>
+                <span><label for="nisro">Northern Ireland Statutory Rules and Orders</label><input id="nisro" name="type" value="nisro" type="checkbox" /></span>
+            </div>
+        {% endif %}
+        <div role="group" aria-labelledby="h-eu" id="eu-types">
+            <h3 id="h-eu">Legislation originating from the EU</h3>
+            <span><label for="eur">Regulations originating from the EU</label><input id="eur" name="type" value="eur" type="checkbox" /></span>
+            <span><label for="eudn">Decisions originating from the EU</label><input id="eudn" name="type" value="eudn" type="checkbox" /></span>
+            <span><label for="eudr">Directives originating from the EU</label><input id="eudr" name="type" value="eudr" type="checkbox" /></span>
+            <span><label for="eut">European Union Treaties</label><input id="eut" name="type" value="eut" type="checkbox" /></span>
+        </div>
+    </details>
+</fieldset>
