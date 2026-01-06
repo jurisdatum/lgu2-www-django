@@ -2,7 +2,7 @@ import re
 import string
 from urllib.parse import urlencode
 from collections import defaultdict
-from typing import TypedDict, Optional, List, Dict, Any
+from typing import TypedDict, Optional, List, Dict, Any, Union
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -33,7 +33,7 @@ class SearchResultContext(TypedDict):
     query_param: SearchParams
     by_year_pagination_count: int
     current_year: str
-    current_type: Optional[str]
+    current_type: Optional[Union[str, List[str]]]
     grouped_by_decade: bool
     subject_initials: Optional[set[str]]
     all_lowercase_letters: str
@@ -68,8 +68,9 @@ def extract_query_params(request) -> SearchParams:
     if "subject" in request.GET and request.GET["subject"].strip():
         params["subject"] = request.GET["subject"].strip()
 
-    if "type" in request.GET and request.GET["type"].strip():
-        params["type"] = request.GET["type"].strip()
+    types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
+    if types:
+        params["type"] = types[0] if len(types) == 1 else types
 
     if "title" in request.GET and request.GET["title"].strip():
         params["title"] = request.GET["title"].strip()
@@ -130,6 +131,8 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
         return None
 
     tpe = params.get('type')
+    if isinstance(tpe, list):
+        return None
     if not tpe or not re.match(TYPE, tpe):
         return None
 
@@ -180,8 +183,15 @@ def search_results(request):
 
 def search_results_helper(request, query_params: SearchParams):
 
-    if query_params.get('type', '').strip() == 'all':
-        del query_params['type']
+    current_type = query_params.get('type')
+    if isinstance(current_type, list):
+        filtered_types = [t for t in current_type if t != 'all']
+        if not filtered_types:
+            query_params.pop('type', None)
+        else:
+            query_params['type'] = filtered_types[0] if len(filtered_types) == 1 else filtered_types
+    elif isinstance(current_type, str) and current_type.strip() == 'all':
+        query_params.pop('type', None)
 
     # Step 2: Fetch data using cleaned parameters
     api_data_raw = basic_search(query_params)
@@ -219,6 +229,11 @@ def search_results_helper(request, query_params: SearchParams):
     # Step 7: Filters
     current_year = str(query_params.get("year", ""))
     current_type = query_params.get("type")
+    single_type = None
+    if isinstance(current_type, list):
+        single_type = current_type[0] if len(current_type) == 1 else None
+    elif current_type:
+        single_type = current_type
     current_subject = query_params.get("subject")
     subject_heading = current_subject if current_subject and len(current_subject) > 1 else None
     current_subject = current_subject[0] if current_subject else None
@@ -228,7 +243,7 @@ def search_results_helper(request, query_params: SearchParams):
     # Step 8: Grouping by decade (if applicable)
     grouped_by_decade = False
     if len(meta.get("counts", {}).get("byType", [])) == 1:
-        grouped_by_decade = group_by_decade(meta["counts"]["byYear"], current_type)
+        grouped_by_decade = group_by_decade(meta["counts"]["byYear"], single_type)
 
     # Step 8.5 Add links
 
@@ -305,8 +320,8 @@ def search_results_helper(request, query_params: SearchParams):
         "subject_heading_links": subject_heading_links,
         "all_lowercase_letters": string.ascii_lowercase,  # no longer need
         "default_pagesize": default_pagesize,
-        "type_label_plural": get_type_label(query_params['type']) if 'type' in query_params else 'documents',
-        "type_made_verb": get_first_version(query_params['type']) if 'type' in query_params else 'documents'
+        "type_label_plural": get_type_label(single_type) if single_type else 'documents',
+        "type_made_verb": get_first_version(single_type) if single_type else 'documents'
     }
 
     return render(request, "new_theme/search_result/search_result.html", context)

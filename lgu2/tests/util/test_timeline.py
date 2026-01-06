@@ -3,11 +3,7 @@ from datetime import date
 from django.test import SimpleTestCase
 from django.urls import reverse
 
-from lgu2.views.timeline import (
-    make_timeline_data_for_document,
-    make_timeline_data_for_fragment,
-    make_timeline_data_for_toc,
-)
+from lgu2.util.timeline import make_timeline_data
 
 
 class DocumentTimelineTests(SimpleTestCase):
@@ -22,7 +18,7 @@ class DocumentTimelineTests(SimpleTestCase):
             'date': date(2018, 6, 20),
         }
 
-        timeline = make_timeline_data_for_document(meta)
+        timeline = make_timeline_data(meta, 'document')
         current = timeline['current']
 
         self.assertIsNotNone(current)
@@ -43,7 +39,7 @@ class DocumentTimelineTests(SimpleTestCase):
             'date': date(2018, 6, 20),
         }
 
-        timeline = make_timeline_data_for_document(meta)
+        timeline = make_timeline_data(meta, 'document')
         viewing = timeline['viewing']
 
         self.assertEqual(viewing['label'], '2022-01-01')
@@ -66,7 +62,7 @@ class FragmentTimelineTests(SimpleTestCase):
             'date': date(2018, 6, 20),
         }
 
-        timeline = make_timeline_data_for_fragment(meta)
+        timeline = make_timeline_data(meta, 'fragment')
         current = timeline['current']
 
         self.assertIsNone(current['date'])
@@ -89,7 +85,7 @@ class FragmentTimelineTests(SimpleTestCase):
             'date': date(2018, 6, 20),
         }
 
-        timeline = make_timeline_data_for_fragment(meta)
+        timeline = make_timeline_data(meta, 'fragment')
         historical = timeline['historical']
 
         self.assertEqual(len(historical), 1)
@@ -118,7 +114,7 @@ class TocTimelineTests(SimpleTestCase):
             'date': date(2018, 6, 20),
         }
 
-        timeline = make_timeline_data_for_toc(meta)
+        timeline = make_timeline_data(meta, 'toc')
         original = timeline['original']
 
         self.assertIsNotNone(original)

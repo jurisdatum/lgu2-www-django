@@ -11,59 +11,11 @@ from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
-from .redirect import redirect_current, redirect_version, make_data_redirect
-from .timeline import make_timeline_data_for_document
+from .redirect import make_data_redirect
+from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs
-
-
-# ToDo fix to use response headers
-def _should_redirect(type: str, version: Optional[str], lang: Optional[str], meta: DocumentMetadata) -> Optional[HttpResponseRedirect]:
-    year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
-    if version is None and meta['status'] == 'final':
-        return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
-    if version is None and meta['shortType'] != type:
-        return redirect_current('document', meta['shortType'], year, meta['number'], lang=lang)
-    if meta['shortType'] != type:
-        return redirect_version('document', meta['shortType'], year, meta['number'], version=meta['version'], lang=lang)
-
-
-# def _make_timeline_data(meta, pit):
-
-#     min_list_width = 717
-#     max_item_width = 637
-#     min_item_width = 142
-
-#     versions = meta['versions']
-#     versions = filter(lambda v: v != 'enacted', versions)
-#     versions = filter(lambda v: v != 'made', versions)
-#     versions = filter(lambda v: v != 'prospective', versions)  # ?
-#     versions = sorted(versions)
-#     versions = list(map(lambda v: {'date': v}, versions))
-
-#     if not versions:
-#         return None
-#     elif len(versions) == 1:
-#         item_width = max_item_width
-#     elif len(versions) > 4:  # 5?
-#         item_width = min_item_width
-#     else:
-#         item_width = int((min_list_width - 50) / len(versions))
-#     list_width = len(versions) * item_width + 50
-#     if list_width < min_list_width:
-#         list_width = min_list_width
-
-#     for version in versions:
-#         date = datetime.strptime(version['date'], '%Y-%m-%d')
-#         version['label'] = date.strftime("%d/%m/%Y")
-#         version['width'] = item_width
-#         version['current'] = version['date'] == meta['version']
-#     versions[-1]['width'] = item_width - 40
-#     return {
-#         'width': list_width,
-#         'versions': versions,
-#         'scroll': list_width > min_list_width
-#     }
+from ..util.redirects import should_redirect
 
 
 def group_effects(unappliedEffects):
@@ -72,7 +24,6 @@ def group_effects(unappliedEffects):
         'future': [effect for effect in unappliedEffects if effect.get('required') and not effect.get('outstanding')],
         'unrequired': [effect for effect in unappliedEffects if not effect.get('required')]
     }
-
 
 
 def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
@@ -85,13 +36,13 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     meta = data['meta']
 
-    rdrct = _should_redirect(type, version, lang, meta)
+    rdrct = should_redirect('document', type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 
     data['meta']['link'] = make_document_link(type, year, number, version, lang)
 
-    timeline = make_timeline_data_for_document(data['meta'])
+    timeline = make_timeline_data(data['meta'], "document", lang)
     extent_label = make_combined_extent_label(data['meta']['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents
