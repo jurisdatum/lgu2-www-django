@@ -102,7 +102,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'pdf_link': pdf_link,
         'pdf_thumb': pdf_thumb
     }
-    # template = loader.get_template('document/document.html')
+
     template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
 
