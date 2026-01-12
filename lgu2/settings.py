@@ -54,6 +54,29 @@ MIDDLEWARE = [
     'lgu2.middleware.robots_middleware.RobotsTagMiddleware'  # move below security
 ]
 
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
+
+USE_WHITENOISE = env.bool("USE_WHITENOISE", default=False)
+
+if USE_WHITENOISE:
+    # WhiteNoise must come immediately after SecurityMiddleware.
+    idx = MIDDLEWARE.index("django.middleware.security.SecurityMiddleware") + 1
+    MIDDLEWARE.insert(idx, "whitenoise.middleware.WhiteNoiseMiddleware")
+    STORAGES["staticfiles"] = {
+        # Using CompressedStaticFilesStorage instead of CompressedManifestStaticFilesStorage
+        # to avoid validation errors from broken CSS references in legacy lgu1 theme.
+        # Switch back to CompressedManifestStaticFilesStorage after lgu1 is removed.
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    }
+
+
 ROOT_URLCONF = 'lgu2.urls'
 
 TEMPLATES = [
