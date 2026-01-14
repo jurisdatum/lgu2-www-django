@@ -1,7 +1,7 @@
 # ==========================================
 # STAGE 1: Builder
 # ==========================================
-FROM python:3.12.12-slim AS builder
+FROM python:3.12-slim AS builder
 
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # 2. Extract requirements (Cached unless pyproject.toml changes)
 RUN pip install --no-cache-dir poetry==1.8.4 poetry-plugin-export
 COPY pyproject.toml poetry.lock ./
-RUN poetry export --without dev -f requirements.txt --output requirements.txt
+RUN poetry export --without dev --no-interaction -f requirements.txt --output requirements.txt
 
 # 3. Build Wheels (Cached unless requirements.txt changes)
 RUN pip wheel --wheel-dir /wheels -r requirements.txt
@@ -38,28 +38,33 @@ RUN SECRET_KEY=dummy DEBUG=True USE_WHITENOISE=True \
 # ==========================================
 # STAGE 2: Final Runtime
 # ==========================================
-FROM python:3.12.12-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
+# 7. Non-root user (optional but recommended)
 RUN useradd -m -u 10001 appuser
 
-# 7. Install Python Dependencies from Wheels
+# 8. Install Python Dependencies from Wheels
 COPY --from=builder /wheels /wheels
 COPY --from=builder /app/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --no-index --find-links=/wheels -r /app/requirements.txt \
     && rm -rf /wheels
 
-# 8. Copy Application Code & Assets
+# 9. Copy Application Code & Assets
 # COPY --from=builder /app/manage.py /app/manage.py
 COPY --from=builder /app/lgu2 /app/lgu2
 COPY --from=builder /app/staticfiles /app/staticfiles
 COPY --from=builder /app/gunicorn.conf.py /app/gunicorn.conf.py
 
+# 10. Switch to non-root user
 USER appuser
+
+# 11. Expose port
 EXPOSE 8000
 
+# 12. Runtime configuration and command
 ENV PORT=8000 \
     WEB_CONCURRENCY=2 \
     GUNICORN_TIMEOUT=30 \
