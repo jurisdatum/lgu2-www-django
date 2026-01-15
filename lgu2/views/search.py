@@ -41,18 +41,11 @@ class SearchResultContext(TypedDict):
 
 
 def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None):
-    # Split the incoming type string into a list
-    type_list = type.split("+") if type else []
-
-    params: SearchParams = { 'type': type_list }  # <-- pass as list
+    params: SearchParams = { 'type': type }
     if year is not None:
         params['year'] = int(year)
     if subject is not None:
         params['subject'] = subject
-    if 'title' in request.GET and request.GET['title']:
-        params['title'] = request.GET['title']
-    if 'leg_text' in request.GET and request.GET['leg_text']:
-        params['leg_text'] = request.GET['leg_text']
     if 'page' in request.GET and request.GET['page'].isdigit():
         params['page'] = int(request.GET['page'])
     if 'pageSize' in request.GET and request.GET['pageSize'].isdigit():
@@ -125,85 +118,47 @@ def extract_query_params(request) -> SearchParams:
 
     return params
 
-VALID_TYPES = [
-    # Primary
-    "all", "primary\+secondary", "primary", "ukpga", "ukla", "ukppa", "asp", "asc", "anaw", "mwa", "ukcm", "nia", 
-    "aosp", "aep", "aip", "apgb", "gbla", "gbppa", "nisi", "mnia", "apni",
-    # Secondary
-    "secondary", "uksi", "wsi", "ssi", "nisr", "ukci", "ukmd", "ukmo", "uksro", "nisro",
-    # EU
-    "eu-origin", "eu", "eur", "eudn", "eudr", "eut"
-]
-
-TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
-PARAM_RENAME = {
-    'q': 'text',        # rename q -> text
-    # add more if needed, e.g., 'foo': 'bar'
-}
+TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
 
 def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
-    """
-    Build browse URL if params qualify for clean URL routing, None otherwise.
+    """Build browse URL if params qualify for clean URL routing, None otherwise.
 
-    Supports multiple types (as list) and enforces validation for type/year/subject/page/pageSize keys.
+    Only supports the type/year/subject/page/pageSize keys and enforces the
+    validation rules each clean URL requires; returns None whenever the input
+    falls outside those constraints.
     """
-     # Only allow certain keys
-    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize', 'title', 'language', 'q'}
+
+    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize'}
     if not set(params).issubset(allowed_keys):
         return None
 
-    # Normalize type to list
     tpe = params.get('type')
-    if isinstance(tpe, str):
-        tpe_list = [tpe]
-    elif isinstance(tpe, list):
-        tpe_list = tpe
-    else:
+    if isinstance(tpe, list):
+        return None
+    if not tpe or not re.match(TYPE, tpe):
         return None
 
-    # Validate all types: allow 'all' or any type in VALID_TYPES
-    if not tpe_list or any(t not in VALID_TYPES for t in tpe_list):
-        return None
-
-    # Join types for URL
-    tpe_url = '+'.join(tpe_list)
-
-    # Validate year
     year = params.get('year')
     if year is not None and (year < 1000 or year > 9999):
         return None
 
-    # Validate subject
     subject = params.get('subject')
     if subject is not None and not re.match('^[a-z]$', subject):
         return None
 
-    # Build base URL using reverse
     if year:
         if subject:
-            base = reverse('browse-year-subject', kwargs={'type': tpe_url, 'year': year, 'subject': subject})
+            base = reverse('browse-year-subject', kwargs={'type': tpe, 'year': year, 'subject': subject})
         else:
-            base = reverse('browse-year', kwargs={'type': tpe_url, 'year': year})
+            base = reverse('browse-year', kwargs={'type': tpe, 'year': year})
     else:
         if subject:
-            base = reverse('browse-subject', kwargs={'type': tpe_url, 'subject': subject})
+            base = reverse('browse-subject', kwargs={'type': tpe, 'subject': subject})
         else:
-            base = reverse('browse', kwargs={'type': tpe_url})
+            base = reverse('browse', kwargs={'type': tpe})
 
-    # Add optional query params
-    # query = {k: params[k] for k in ('page', 'pageSize', 'title', 'text') if k in params}
-    # Build query string with remaining params and apply renaming
-    query = {}
-    for k, v in params.items():
-        if k in ('year', 'subject', 'type'):
-            continue
-        # Rename if needed
-        new_key = PARAM_RENAME.get(k, k)
-        query[new_key] = v
-
-    if query:
-        return f"{base}?{urlencode(query, doseq=True)}"
-    return base
+    query = {k: params[k] for k in ('page', 'pageSize') if k in params}
+    return f"{base}?{urlencode(query, doseq=True)}" if query else base
 
 
 def make_smart_link(params: SearchParams):
