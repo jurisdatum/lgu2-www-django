@@ -77,7 +77,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         pdf_only = False
         pdf_link = None
         pdf_thumb = None
-    
+
     context = {
         'meta': data['meta'],
         'view_date': meta.get('pointInTime') or timezone.localdate(),
