@@ -14,7 +14,7 @@ from ..util.cutoff import get_cutoff
 from ..util.types import to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
-from ..util.links import make_contents_link_for_list_entry
+from ..util.links import make_contents_link_for_list_entry, make_document_link
 
 
 class SearchResultContext(TypedDict):
@@ -41,11 +41,18 @@ class SearchResultContext(TypedDict):
 
 
 def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None):
-    params: SearchParams = { 'type': type }
+    # Split the incoming type string into a list
+    type_list = type.split("+") if type else []
+
+    params: SearchParams = { 'type': type_list }  # <-- pass as list
     if year is not None:
         params['year'] = int(year)
     if subject is not None:
         params['subject'] = subject
+    if 'title' in request.GET and request.GET['title']:
+        params['title'] = request.GET['title']
+    if 'leg_text' in request.GET and request.GET['leg_text']:
+        params['leg_text'] = request.GET['leg_text']
     if 'page' in request.GET and request.GET['page'].isdigit():
         params['page'] = int(request.GET['page'])
     if 'pageSize' in request.GET and request.GET['pageSize'].isdigit():
@@ -70,7 +77,7 @@ def extract_query_params(request) -> SearchParams:
 
     types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
     if types:
-        params["type"] = types[0] if len(types) == 1 else types
+        params["type"] = types
 
     if "title" in request.GET and request.GET["title"].strip():
         params["title"] = request.GET["title"].strip()
@@ -113,50 +120,90 @@ def extract_query_params(request) -> SearchParams:
     if 'department' in request.GET and request.GET['department']:
         params['department'] = request.GET['department']
 
+    if 'search_type' in request.GET and request.GET['search_type']:
+        params['search_type'] = request.GET['search_type']
+
     return params
 
+VALID_TYPES = [
+    # Primary
+    "all", "primary\+secondary", "primary", "ukpga", "ukla", "ukppa", "asp", "asc", "anaw", "mwa", "ukcm", "nia", 
+    "aosp", "aep", "aip", "apgb", "gbla", "gbppa", "nisi", "mnia", "apni",
+    # Secondary
+    "secondary", "uksi", "wsi", "ssi", "nisr", "ukci", "ukmd", "ukmo", "uksro", "nisro",
+    # EU
+    "eu-origin", "eu", "eur", "eudn", "eudr", "eut"
+]
 
-TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
+TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
+PARAM_RENAME = {
+    'q': 'text',        # rename q -> text
+    # add more if needed, e.g., 'foo': 'bar'
+}
 
 def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
-    """Build browse URL if params qualify for clean URL routing, None otherwise.
-
-    Only supports the type/year/subject/page/pageSize keys and enforces the
-    validation rules each clean URL requires; returns None whenever the input
-    falls outside those constraints.
     """
+    Build browse URL if params qualify for clean URL routing, None otherwise.
 
-    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize'}
+    Supports multiple types (as list) and enforces validation for type/year/subject/page/pageSize keys.
+    """
+     # Only allow certain keys
+    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize', 'title', 'language', 'q'}
     if not set(params).issubset(allowed_keys):
         return None
 
+    # Normalize type to list
     tpe = params.get('type')
-    if isinstance(tpe, list):
-        return None
-    if not tpe or not re.match(TYPE, tpe):
+    if isinstance(tpe, str):
+        tpe_list = [tpe]
+    elif isinstance(tpe, list):
+        tpe_list = tpe
+    else:
         return None
 
+    # Validate all types: allow 'all' or any type in VALID_TYPES
+    if not tpe_list or any(t not in VALID_TYPES for t in tpe_list):
+        return None
+
+    # Join types for URL
+    tpe_url = '+'.join(tpe_list)
+
+    # Validate year
     year = params.get('year')
     if year is not None and (year < 1000 or year > 9999):
         return None
 
+    # Validate subject
     subject = params.get('subject')
     if subject is not None and not re.match('^[a-z]$', subject):
         return None
 
+    # Build base URL using reverse
     if year:
         if subject:
-            base = reverse('browse-year-subject', kwargs={'type': tpe, 'year': year, 'subject': subject})
+            base = reverse('browse-year-subject', kwargs={'type': tpe_url, 'year': year, 'subject': subject})
         else:
-            base = reverse('browse-year', kwargs={'type': tpe, 'year': year})
+            base = reverse('browse-year', kwargs={'type': tpe_url, 'year': year})
     else:
         if subject:
-            base = reverse('browse-subject', kwargs={'type': tpe, 'subject': subject})
+            base = reverse('browse-subject', kwargs={'type': tpe_url, 'subject': subject})
         else:
-            base = reverse('browse', kwargs={'type': tpe})
+            base = reverse('browse', kwargs={'type': tpe_url})
 
-    query = {k: params[k] for k in ('page', 'pageSize') if k in params}
-    return f"{base}?{urlencode(query, doseq=True)}" if query else base
+    # Add optional query params
+    # query = {k: params[k] for k in ('page', 'pageSize', 'title', 'text') if k in params}
+    # Build query string with remaining params and apply renaming
+    query = {}
+    for k, v in params.items():
+        if k in ('year', 'subject', 'type'):
+            continue
+        # Rename if needed
+        new_key = PARAM_RENAME.get(k, k)
+        query[new_key] = v
+
+    if query:
+        return f"{base}?{urlencode(query, doseq=True)}"
+    return base
 
 
 def make_smart_link(params: SearchParams):
@@ -261,9 +308,22 @@ def search_results_helper(request, query_params: SearchParams):
     for byInitial in meta['counts']['bySubjectInitial']:
         byInitial['link'] = replace_param_and_make_smart_link(query_params, 'subject', byInitial['initial'])
 
+    for byStage in meta['counts']['byStage']:
+        byStage['link'] = replace_param_and_make_smart_link(query_params, 'stage', byStage['stage'])
+
+    for byDepartment in meta['counts']['byDepartment']:
+        byDepartment['link'] = replace_param_and_make_smart_link(query_params, 'department', byDepartment['department'])
+
     for doc in documents_data:
-        doc['link'] = make_contents_link_for_list_entry(doc)
-        # doc['label'] = get_type_label(doc['longType'])
+        if 'search_type' in query_params:
+            number = doc['number'] if doc['number'] is not None else doc.get('isbn')
+            if number is None:
+                raise ValueError(f"Document {doc['id']} has neither 'number' nor 'isbn' field")
+
+            # TODO: need to solidify this after discussion on approach
+            doc['link'] = make_document_link('ukia', doc['year'], number, None, None)
+        else:
+            doc['link'] = make_contents_link_for_list_entry(doc)
 
     # Step 9: Subject initials and links
     subject_initials = None

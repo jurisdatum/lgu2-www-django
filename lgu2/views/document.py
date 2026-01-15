@@ -1,11 +1,9 @@
-
-from typing import Optional, Union
-
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from typing import Optional
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.utils import timezone
 
-from ..api.document import get_akn, get_clml, get_document, DocumentMetadata
+from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
@@ -33,6 +31,11 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     if 'error' in data:
         template = loader.get_template('404.html')
         return HttpResponseNotFound(template.render({}, request))
+
+    if type == 'ukia':
+        ukai_data = make_ukai_data(data, version, lang)
+        template = loader.get_template('new_theme/document/document.html')
+        return HttpResponse(template.render(ukai_data, request))
 
     meta = data['meta']
 
@@ -77,7 +80,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         pdf_only = False
         pdf_link = None
         pdf_thumb = None
-    print("====================Trigger Document==================")
+
     context = {
         'meta': data['meta'],
         'view_date': meta.get('pointInTime') or timezone.localdate(),
@@ -106,6 +109,29 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     # template = loader.get_template('document/document.html')
     template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
+
+
+def make_ukai_data(data, version, lang):
+    meta = data['meta']
+    breadcrumbs = make_breadcrumbs(meta, version, lang)
+    context = {
+        'meta': data['meta'],
+        'view_date': meta.get('pointInTime') or timezone.localdate(),
+        'type_label_plural': get_type_label(data['meta']['longType']),
+        'timeline': '',
+        'extent_label': '',
+        'breadcrumbs': breadcrumbs,
+        'explanatory_notes': '',
+        'other_associated_doc': '',
+        'status': '',
+        'article': '',
+        'pdf_only': True,
+        'pdf_link': '',
+        'pdf_thumb': '',
+        'altFormats' : data['meta']['altFormats']
+    }
+
+    return context
 
 
 def _xml_or_redirect(package, lang: Optional[str], format: str):

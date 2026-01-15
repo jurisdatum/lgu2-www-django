@@ -1,6 +1,7 @@
 <fieldset class="search-type">
     <legend><h2>Legislation type</h2></legend>
     <div role="group" aria-label="Main legislation types">
+        <span><label for="all">All legislation</label><input id="all" name="type" value="all" type="checkbox" checked/></span>
         <span><label for="primary">All Primary legislation</label><input id="primary" name="type" value="primary" type="checkbox" /></span>
         {% if secondary %}
             <span><label for="secondary">All Secondary legislation</label><input id="secondary" name="type" value="secondary" type="checkbox" /></span>

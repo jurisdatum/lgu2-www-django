@@ -28,6 +28,17 @@ from .views.advance_search import advance_search, extent_search, point_in_time_s
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
 
+VALID_TYPES = [
+    # Primary
+    "all", "primary\+secondary", "primary", "ukpga", "ukla", "ukppa", "asp", "asc", "anaw", "mwa", "ukcm", "nia", 
+    "aosp", "aep", "aip", "apgb", "gbla", "gbppa", "nisi", "mnia", "apni",
+    # Secondary
+    "secondary", "uksi", "wsi", "ssi", "nisr", "ukci", "ukmd", "ukmo", "uksro", "nisro",
+    # EU
+    "eu-origin", "eu", "eur", "eudn", "eudr", "eut", "ukia"
+]
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("robots.txt", robots_txt),
@@ -41,7 +52,7 @@ if not settings.DEBUG:
     ]
 
 COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
-TYPE = r'(?P<type>[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)'
+TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
 NUMBER = r'(?P<number>[0-9]+)'
