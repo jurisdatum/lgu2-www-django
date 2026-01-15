@@ -45,8 +45,9 @@
         </details>
     </section>
 
+    {% if timeline %}
     {% include "new_theme/document/timeline.html" %}
-
+    {% endif %}
     <div class="legislation-content">
 
         {% include "new_theme/document/right_side_panel.html" %}
