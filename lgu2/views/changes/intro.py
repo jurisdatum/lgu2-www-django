@@ -17,5 +17,5 @@ def intro(request):
     #     return redirect('changes-intro')
 
     context = { 'types': TYPES, 'affecting_years': AFFECTING_YEARS }
-    template = loader.get_template('changes/intro.html')
+    template = loader.get_template('new_theme/research-tools/changes.html')
     return HttpResponse(template.render(context, request))

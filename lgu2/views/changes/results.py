@@ -125,7 +125,7 @@ def _combined(request, query, link_prefix, format):
         'effects': data['effects']
     }
 
-    template = loader.get_template('changes/results.html')
+    template = loader.get_template('new_theme/research-tools/changes-result.html')
     return HttpResponse(template.render(context, request))
 
 
