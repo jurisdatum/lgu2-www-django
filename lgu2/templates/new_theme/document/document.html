@@ -45,9 +45,8 @@
         </details>
     </section>
 
-    {% if timeline %}
     {% include "new_theme/document/timeline.html" %}
-    {% endif %}
+
     <div class="legislation-content">
 
         {% include "new_theme/document/right_side_panel.html" %}
@@ -57,20 +56,7 @@
         <div>
             <section class="legislation-text parenthesis">
                 {% if pdf_only %}
-                    <div>
-                        <section class="legislation-text">
-                            <div class="status-panel">
-                                <div>
-                                    <h2>This is the King's Printer Version. It is the exact text that received Royal Assent when it was enacted.</h2>
-                                    <p>A version of this text with commencement and extent information should be available by <?php echo date('d M Y', strtotime(date('d M Y'). ' + 14 days')); ?>.</p>
-                                </div>
-                            </div>
-                            <h2>Legislation text for the whole Act </h2>
-                            
-                            <iframe src="{{altFormats.0.url}}" title="{{meta.title}}"></iframe>
-                            
-                        </section>
-                    </div>
+                {% include "document/pdf.html" %}
 				{% else %}
 				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt;padding-bottom:12pt">
 					<template shadowrootmode="open">
