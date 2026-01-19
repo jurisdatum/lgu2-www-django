@@ -1,3 +1,22 @@
+VALID_TYPES = [
+    # Primary
+    "all", "primary\+secondary", "primary", "ukpga", "ukla", "ukppa", "asp", "asc", "anaw", "mwa", "ukcm", "nia", 
+    "aosp", "aep", "aip", "apgb", "gbla", "gbppa", "nisi", "mnia", "apni",
+    # Secondary
+    "secondary", "uksi", "wsi", "ssi", "nisr", "ukci", "ukmd", "ukmo", "uksro", "nisro",
+    # EU
+    "eu-origin", "eu", "eur", "eudn", "eudr", "eut", 
+    # Associated 
+    "ukia"
+]
+
+EXTENT_MAP = {
+    "E": "england",
+    "W": "wales",
+    "S": "scotland",
+    "NI": "ni"
+}
+
 
 types = [
     ('ukpga', 'UnitedKingdomPublicGeneralAct', 'primary'),

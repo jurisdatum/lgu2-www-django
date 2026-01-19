@@ -1,4 +1,3 @@
-import re
 import string
 from urllib.parse import urlencode
 from collections import defaultdict
@@ -9,13 +8,12 @@ from django.urls import reverse
 
 from ..api.search import basic_search
 from ..api.search_types import SearchParams
-from ..api.browse_types import DocEntry
 from ..util.cutoff import get_cutoff
 from ..util.types import to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link_for_list_entry
-
+from ..util.global_redirect import build_browse_url_if_possible
 
 class SearchResultContext(TypedDict):
     meta_data: Dict[str, Any]
@@ -41,11 +39,19 @@ class SearchResultContext(TypedDict):
 
 
 def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None):
-    params: SearchParams = { 'type': type }
+    type_list = type.split("+") if type else []
+    params: SearchParams = { 'type': type_list }
+
     if year is not None:
-        params['year'] = int(year)
+        params.update(parse_year_param(year))
     if subject is not None:
-        params['subject'] = subject
+        params['subject'] = subject        
+    if 'number' in request.GET and request.GET['number']:
+        params['number'] = request.GET['number']
+    if 'title' in request.GET and request.GET['title']:
+        params['title'] = request.GET['title']
+    if 'leg_text' in request.GET and request.GET['leg_text']:
+        params['leg_text'] = request.GET['leg_text']
     if 'page' in request.GET and request.GET['page'].isdigit():
         params['page'] = int(request.GET['page'])
     if 'pageSize' in request.GET and request.GET['pageSize'].isdigit():
@@ -110,47 +116,36 @@ def extract_query_params(request) -> SearchParams:
     return params
 
 
-TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
-
-def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
-    """Build browse URL if params qualify for clean URL routing, None otherwise.
-
-    Only supports the type/year/subject/page/pageSize keys and enforces the
-    validation rules each clean URL requires; returns None whenever the input
-    falls outside those constraints.
+def parse_year_param(year: str):
     """
+    Converts a browse year string into (year, startYear, endYear)
+    Only one of these should be used for API params.
+    """
+    if year.isdigit():
+        return {
+            "year": int(year)
+        }
 
-    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize'}
-    if not set(params).issubset(allowed_keys):
-        return None
+    if "-" in year:
+        start, end = year.split("-", 1)
 
-    tpe = params.get('type')
-    if isinstance(tpe, list):
-        return None
-    if not tpe or not re.match(TYPE, tpe):
-        return None
+        if start.isdigit() and end.isdigit():
+            return {
+                "startYear": int(start),
+                "endYear": int(end)
+            }
 
-    year = params.get('year')
-    if year is not None and (year < 1000 or year > 9999):
-        return None
+        if start.isdigit() and end == "*":
+            return {
+                "startYear": int(start)
+            }
 
-    subject = params.get('subject')
-    if subject is not None and not re.match('^[a-z]$', subject):
-        return None
+        if start == "*" and end.isdigit():
+            return {
+                "endYear": int(end)
+            }
 
-    if year:
-        if subject:
-            base = reverse('browse-year-subject', kwargs={'type': tpe, 'year': year, 'subject': subject})
-        else:
-            base = reverse('browse-year', kwargs={'type': tpe, 'year': year})
-    else:
-        if subject:
-            base = reverse('browse-subject', kwargs={'type': tpe, 'subject': subject})
-        else:
-            base = reverse('browse', kwargs={'type': tpe})
-
-    query = {k: params[k] for k in ('page', 'pageSize') if k in params}
-    return f"{base}?{urlencode(query, doseq=True)}" if query else base
+    return {}
 
 
 def make_smart_link(params: SearchParams):
@@ -168,10 +163,14 @@ def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
 
 def search_results(request):
     params: SearchParams = extract_query_params(request)
-    # redirect to browse URL if possible
-    browse_url = build_browse_url_if_possible(params)
+    
+    # redirect to browse URL if possible    
+    # 🔹 Browse-only params
+    browse_params = normalize_params_for_browse(params)
+    browse_url = build_browse_url_if_possible(browse_params)
     if browse_url:
         return redirect(browse_url)
+    
     return search_results_helper(request, params)
 
 
