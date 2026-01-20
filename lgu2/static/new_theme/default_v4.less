@@ -46,6 +46,8 @@ body:not(:-moz-handler-blocked) fieldset {
 		--inactiveButtonBg: var(--disabledButtonBg);
 		--activeBg: var(--searchBg);
 		--activeBgSolid: rgba(46,46,46,1);
+		--activeLargeBg: var(--bg);
+		--activeBgMarker: var(--bg);
 		--activeText: var(--contrastText);
 		
 		--alert: rgba(255,175,40,1);
@@ -55,6 +57,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		--focusWarningBg: rgba(235,12,115,1);
 		--warningBorder: var(--warningBg);
         --repealed: rgba(120,30,100);
+        --confirmed: rgba(0,128,87,1);
 		
 		--searchBg: rgba(0,0,0,0.82);
 		--advSearchBg: rgba(0,0,0,0.05);
@@ -65,6 +68,10 @@ body:not(:-moz-handler-blocked) fieldset {
 
 		--modalBg: var(--text);
 		--modalText: var(--contrastText);
+		--activeModalBg: rgba(235,235,235,1);
+		--activeModalLargeBg: rgba(235,235,235,0.1);
+		--activeModalText: var(--text);
+		--inactiveModalBg: rgba(rgb(70,70,70,1));
 		--modalBorder: var(--bg);
 		--modalButtonBg: var(--bg);
 		--modalButtonText: var(--text);
@@ -73,11 +80,15 @@ body:not(:-moz-handler-blocked) fieldset {
 		--boxShadow: rgba(0,0,0,0.15);
 		--dropShadowEnd: rgba(0,0,0,0.1);
 		--dropShadowStart: rgba(0,0,0,0);
+		
+		--tableHeaderText: var(--bg);
+		--tableHeaderBg: var(--searchBg);
 
 		--subtleBg: rgba(0,0,0,0.04);
 		--moreSubtleBg: rgba(0,0,0,0.025);
 		--verySubtleBg: rgba(0,0,0,0.02);
 		--verySubtleFixedBg: rgba(250,250,250,1);
+		--verySubtleBorder: rgba(0,0,0,0.05);
 		--subtleBorder: rgba(0,0,0,0.1);
 		--lessSubtleBorder: rgba(0,0,0,0.135);
 		--midDark: rgba(0,0,0,0.75);
@@ -254,7 +265,9 @@ body:not(:-moz-handler-blocked) fieldset {
 		--disabledButtonBg: rgba(20,20,20,1);
 		--inactiveButtonBg: rgba(70,75,85,1);
 		--activeBg: var(--searchBg);
-		--activeBgSolid: rgba(22,32,42,1);
+		--activeBgSolid: var(--contrastText);
+		--activeLargeBg: rgba(255,255,255,0.05);
+		--activeBgMarker: var(--bg);
 		--activeText: var(--contrastText);
 		
 		--alert: rgba(255,175,40,1);
@@ -274,6 +287,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 		--modalBg: rgba(10,20,30,1);
 		--modalText: var(--contrastText);
+		--activeModalText: var(--bg);
 		--modalBorder: rgba(255,255,255,0.1);
 		--modalButtonBg: var(--text);
 		--modalButtonText: var(--bg);
@@ -283,10 +297,14 @@ body:not(:-moz-handler-blocked) fieldset {
 		--dropShadowEnd: rgba(0,0,0,0.1);
 		--dropShadowStart: rgba(0,0,0,0);
 
+		--tableHeaderText: var(--text);
+		--tableHeaderBg: rgba(40,50,60,0.95);
+
 		--subtleBg: var(--altBg);
 		--moreSubtleBg: rgba(255,255,255,0.05);
 		--verySubtleBg: rgba(255,255,255,0.035);
 		--verySubtleFixedBg: rgba(19,28,38,1);
+		--verySubtleBorder: rgba(255,255,255,0.1);
 		--subtleBorder: rgba(255,255,255,0.2);
 		--lessSubtleBorder: rgba(255,255,255,0.235);
 		--midDark: rgba(255,255,255,0.6);
@@ -419,7 +437,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 /* core */
 	* {margin: 0; padding: 0; border: 0; background: none; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; font-size: 1em; font-style: normal; font-family: "Roboto"}
-	html {width: 100%; height: 100%; -moz-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%}
+	html {width: 100%; --maxWidth: 100vW; height: 100%; -moz-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%}
 	body {margin: 0 auto; line-height: 1.5em; min-height: 100vh; min-height: -webkit-fill-available; display: table; width: 100%; font-weight: 400; color: var(--text); background: var(--bg)}
 	section, .section {margin: 0 auto; max-width: var(--maxWidth); overflow: auto}
 
@@ -1009,7 +1027,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						span {font-weight: 300}
 					}
 				}
-				p {
+				p:not(.changes-to-legislation > section:first-of-type hgroup p) {
 					margin: 0.25rem 0 0 0;
 					#legType {display: contents}
 					a {
@@ -1018,7 +1036,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						&:hover, &:focus, &:active {border-color: var(--link)}
 						span {font-weight: 500}
 					}
-					> span {margin: 0.35rem 0 0 0; font-size: 1rem; font-weight: 300; border: 0.0625em solid var(--subtleBg); background: var(--verySubtleBg); padding: 0.125em 0.5em; display: inline-block; border-radius: 0.1875rem; position: relative;}
+					> span {margin: 0.35rem 0 0 0; font-size: 1rem; font-weight: 300; border: 0.0625em solid var(--subtleBg); background: var(--verySubtleBg); padding: 0.125em 0.5em; display: inline-block; border-radius: 0.1875rem; position: relative}
 				}
 			}
 		}
@@ -1098,7 +1116,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					&[open] {
 						> summary {.ghost-button}
 						> div {
-							section {
+							section, fieldset {
 								overflow: unset;
 								h3 {font-size: 1rem; margin: 0; padding: 0}
 								ul {
@@ -1149,7 +1167,10 @@ body:not(:-moz-handler-blocked) fieldset {
 			.search-header {
 				overflow: unset;
 				h2 {.sr-only()}
-				.sort-by {margin: 0.85rem auto}
+				.sort-by {
+                    margin: 0.85rem auto;
+                    label {margin: 0 0.5rem 0 0}
+                }
 			}
 			.search-results-list {
 				h3 {
@@ -1184,23 +1205,8 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	.advanced-searches {
-        > div {
-            .tabs;
-		}
-        hgroup p {margin: 0.125rem 0 0.5rem 0}
+	.advanced-searches, .search-results {
         section {
-            fieldset {
-                margin: 0 0 1.25rem 0; padding: 0 0 1.5rem 0; border-bottom: 0.0625rem solid var(--subtleBorder);
-                legend h2 {font-size: 1.2rem; margin: 0}
-                p {
-                    margin: 0.25rem 0 0 0;
-                    span {
-                        font-style: italic;
-                        span {font-weight: 500}
-                    }
-                }
-            }
             .search-keywords {
                 details {
                     summary {
@@ -1227,12 +1233,61 @@ body:not(:-moz-handler-blocked) fieldset {
                     &:last-of-type input {margin: 0}
                 }
             }
-            .search-language {
+            .search-extent {
+                h3 {font-size: 1.1rem; margin: 0.9em 0 0 0}
+                [role="group"]:has(input[type="radio"]) {
+                    display: flow-root;
+                }
+                [role="group"]:has(input[type="checkbox"]) {
+                    margin: 0.25rem auto 0 auto; display: grid; grid-template-columns: 1fr; grid-gap: 0.5rem;
+                    > h3 {margin: 0.9em 0 0.15rem 0}
+                    > span {margin: 0; background: var(--bg); border: 0.0625rem solid var(--link); white-space: nowrap; position: relative; border-radius: 0.375rem;
+                        &:before {content: ""; position: absolute; margin: 0.7rem 0 0 0.65rem; width: 1.5em; height: 1.5em; position: absolute; z-index: 1; border-radius: 0.375rem; background: var(--bg); border: 0.0625rem solid var(--link)}
+                        label {display: block; font-weight: 400; padding: 0.75rem 1.65rem 0.75rem 2.85rem; cursor: pointer; position: relative; z-index: 1}
+                        input {position: absolute; top: 1rem; left: 1rem}
+                        &:has(input:checked) {
+                            border: 0.125rem solid var(--activeBgSolid); background: var(--activeLargeBg); 
+                            &:before {margin: 0.6rem 0 0 0.55rem; background: var(--activeBgSolid); border-color: var(--activeBgSolid)}
+                            label {
+                                padding: 0.675rem 1.6rem 0.7rem 2.8rem; font-weight: 500;
+                                &:before {.chevron; margin: 0.435rem 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgMarker)}
+                            }
+                        }
+                        &:has(input:focus) {
+                            &:before {
+                                color: var(--buttonText); border-color: var(--focusButtonBg); outline-color: var(--focusButtonBg); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)
+                            }
+                        }
+                        &:has(input:checked:focus) {
+                            &:before {
+                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)                                
+                            }
+                            label:before {border-color: var(--contrastText)}
+                        }
+                    }
+                }
+                details {
+                    summary {
+                        display: inline-block; padding: 0.75em 1.5em 0 1.35em; color: var(--link); font-weight: 500;
+                        &:before {.chevron; position: absolute; transform: rotate(135deg); width: 0.35em; height: 0.35em; border-top-width: 0.15rem; border-right-width: 0.15rem; margin: 0.38em 0.7rem 0.25em -1.15em}
+                        &:hover {text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.05em}
+                    }
+                    &[open] summary:before {transform: rotate(315deg); margin: 0.6em 0.7rem 0.25em -1.15em}
+                    ul {
+                        margin: 1rem 0 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem;
+                        li {
+                            list-style: none; margin: 0; padding: 0.25rem 0.75rem; border: 0.0625rem solid var(--subtleBorder); border-radius: 0.1875rem; background: var(--subtleBg); font-weight: 500;
+                            span {padding: 0 0.125rem; font-weight: 300}
+                        }
+                    }
+                }
+            }
+            .search-language, .search-extent [role="group"]:has(input[type="radio"]) {
                 > span {
                     display: block; position: relative; margin: 0.75rem 0 0 0;
                     label {
                         display: block; font-weight: 500; padding: 0.75rem 1rem 0.75rem 3rem; border-radius: 0.375rem; cursor: pointer; background: var(--bg); position: relative; z-index: 1; border: 0.0625rem solid var(--link);
-                        &:before {content: ""; position: absolute; margin: 0 0 0 -2.2em; width: 1.5em; height: 1.5em; background: var(--subtleBorder); position: absolute; border-radius: 50%}
+                        &:before {content: ""; position: absolute; margin: 0 0 0 -2.2em; width: 1.5rem; height: 1.5rem; background: var(--subtleBorder); position: absolute; border-radius: 50%}
                         span {
                             display: block; font-weight: 300;
                         }
@@ -1241,14 +1296,15 @@ body:not(:-moz-handler-blocked) fieldset {
                     &:last-of-type {margin: 0.65rem 0 0 0}
                     &:has(input:checked) {
                         label {
-                            background: var(--activeBgSolid); border-color: var(--activeBgSolid); color: var(--contrastText);
-                            &:before {background: var(--contrastText)}
-                            span:before {.chevron; margin: 0 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgSolid); top: 1.25rem}
+                            padding: 0.657rem 0.9rem 0.657rem 2.9rem; background: var(--activeLargeBg); border: 0.1625rem solid var(--activeBgSolid);
+                            &:before {background: var(--activeBgSolid)}
+                            span:before {.chevron; margin: 0 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgMarker); top: 1.15rem}
                         }
                     }
                     &:has(input:focus) {
                         label {
                             background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                            &:before {background: var(--contrastText)}
                             span:before {border-color: var(--focusButtonBg)}
                         }
                     }
@@ -1270,20 +1326,21 @@ body:not(:-moz-handler-blocked) fieldset {
                                 label {font-weight: 300; margin: 0 0.5rem 0 0; min-width: 2.5rem; display: inline-block}
                                 input {width: 6rem; padding: 0.5em 0.75em; color: var(--lightText)}
                             }
-                            > input[type="radio"] {position: absolute; top: 1.15rem; left: 1.15rem; outline-offset: 0}
+                            > input[type="radio"] {position: absolute; top: 1rem; left: 1rem; outline-offset: 0}
                         }
                         &:last-of-type {margin: 0.65rem 0 0 0}
                         &:has(> span > input:checked) {
                             > span {
-                                background: var(--activeBgSolid); border-color: var(--activeBgSolid); color: var(--contrastText);
-                                > label:before {background: var(--contrastText)}
-                                > span:first-of-type:before {.chevron; margin: 0 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; z-index: 1; border-color: var(--activeBgSolid); top: 1.25rem}
+                                padding: 0.657rem 0.9rem 0.657rem 2.9rem; background: var(--activeLargeBg); border: 0.1625rem solid var(--activeBgSolid);
+                                > label:before {background: var(--activeBgSolid)}
+                                > span:first-of-type:before {.chevron; margin: 0 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; z-index: 1; border-color: var(--activeBgMarker); top: 1.15rem}
                                 span input {color: var(--text)}
                             }
                         }
                         &:has(> span > input:focus) {
                             > span {
                                 background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                                label:before {background: var(--contrastText)}
                                 > span:first-of-type:before {border-color: var(--focusButtonBg)}
                             }
                         }
@@ -1298,7 +1355,7 @@ body:not(:-moz-handler-blocked) fieldset {
                     }
                 }
             }
-            .search-number {
+            .search-number-series {
                 label {display: inline-block; float: left; padding: 0.5em 0.75em; line-height: 1.2rem}
                 span {
                     display: inline-block; float: left; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; margin: 0.75rem 0 0 0; background: var(--subtleBg);
@@ -1311,7 +1368,7 @@ body:not(:-moz-handler-blocked) fieldset {
                     &:first-of-type {margin: 0.75rem 1rem 0 0}
                 }
             }
-            .search-number-current {
+            .search-number {
                 label {.sr-only}
                 input {width: 5.5rem; padding: 0.5em 0.75em; border: 0; border: 0.0625rem solid var(--link); border-radius: 0.1875rem; margin: 0.5rem 0 0 0}
             }
@@ -1328,12 +1385,13 @@ body:not(:-moz-handler-blocked) fieldset {
                         input {position: absolute; top: 0.45rem; left: 0.4rem}
                         &:has(input:checked) {
                             &:before {background: var(--activeBgSolid); border-color: var(--activeBgSolid)}
-                            label:before {.chevron; margin: 0.3rem 0 0 -1.8em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--contrastText)}
+                            label:before {.chevron; margin: 0.3rem 0 0 -1.8em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgMarker)}
                         }
                         &:has(input:focus) {
                             &:before {
                                 color: var(--buttonText); border-color: var(--focusButtonBg); outline-color: var(--focusButtonBg); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)                                
                             }
+                            label:before {border-color: var(--contrastText)}
                         }
                         &:has(input:checked:focus) {
                             &:before {
@@ -1379,83 +1437,79 @@ body:not(:-moz-handler-blocked) fieldset {
                     }
                 }
             }
-            .search-extent {
-                h3 {font-size: 1.1rem; margin: 0.9em 0 0 0}
-                [role="group"]:has(input[type="radio"]) {
-                    display: flow-root;
-                    > span {
-                        display: block; position: relative; margin: 0.65rem 0 0 0;
-                        label {
-                            display: block; max-width: 29rem; font-weight: 500; padding: 0.75rem 1rem 0.75rem 3rem; border-radius: 0.375rem; cursor: pointer; background: var(--bg); position: relative; z-index: 1; border: 0.0625rem solid var(--link);
-                            &:before {content: ""; position: absolute; margin: 0 0 0 -2.2em; width: 1.5em; height: 1.5em; background: var(--subtleBorder); position: absolute; border-radius: 50%}
-                            span {
-                                display: block; font-weight: 300;
-                            }
-                        }
-                        input {position: absolute; top: 1rem; left: 0.9rem}
-                        &:last-of-type {margin: 0.75rem 0 0 0}
-                        &:has(input:checked) {
-                            label {
-                                background: var(--activeBgSolid); border-color: var(--activeBgSolid); color: var(--contrastText);
-                                &:before {background: var(--contrastText)}
-                                //&:after {content: ""; width: 0.85rem; height: 0.85rem; background: var(--activeBgSolid); position: absolute; bottom: -0.35rem; left: calc(50% - 0.475rem); transform: rotate(45deg)}
-                                span:before {.chevron; margin: -1em 0 0 -1.9em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgSolid)}
-                            }
-                        }
-                        &:has(input:focus) {
-                            label {
-                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-                                //&:after {background: var(--focusButtonBg)}
-                                span:before {border-color: var(--focusButtonBg)}
-                            }
-                        }
-                    }
-                }
-                [role="group"]:has(input[type="checkbox"]) {
-                    margin: 0.25rem auto 0 auto; display: grid; grid-template-columns: 1fr; grid-gap: 0.5rem;
-                    > h3 {margin: 0.9em 0 0.15rem 0}
-                    > span {margin: 0; background: var(--bg); border: 0.0625rem solid var(--link); white-space: nowrap; position: relative; border-radius: 0.375rem;
-                        &:before {content: ""; position: absolute; margin: 0.7rem 0 0 0.65rem; width: 1.5em; height: 1.5em; position: absolute; z-index: 1; border-radius: 0.375rem; background: var(--bg); border: 0.0625rem solid var(--link)}
-                        label {display: block; font-weight: 400; padding: 0.75rem 1.65rem 0.75rem 2.85rem; cursor: pointer; position: relative; z-index: 1}
-                        input {position: absolute; top: 1rem; left: 1rem}
-                        &:has(input:checked) {background: var(--activeBgSolid); border-color: var(--activeBgSolid); 
-                            &:before {background: var(--contrastText); border-color: var(--contrastText)}
-                            label {
-                                color: var(--contrastText);
-                                &:before {.chevron; margin: 0.475rem 0 0 -1.8em; width: 0.75em; height: 0.25em; border-top-width: 0.15rem; border-right-width: 0.15rem; transform: rotate(130deg); position: absolute; border-color: var(--activeBgSolid)}
-                            }
-                        }
-                        &:has(input:focus) {
-                            &:before {
-                                color: var(--buttonText); border-color: var(--focusButtonBg); outline-color: var(--focusButtonBg); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)
-                            }
-                        }
-                        &:has(input:checked:focus) {
-                            &:before {
-                                background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow)                                
-                            }
-                            label:before {border-color: var(--contrastText)}
-                        }
-                    }
-                }
-                details {
-                    summary {
-                        display: inline-block; padding: 0.75em 1.5em 0 1.35em; color: var(--link); font-weight: 500;
-                        &:before {.chevron; position: absolute; transform: rotate(135deg); width: 0.35em; height: 0.35em; border-top-width: 0.15rem; border-right-width: 0.15rem; margin: 0.38em 0.7rem 0.25em -1.15em}
-                        &:hover {text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.05em}
-                    }
-                    &[open] summary:before {transform: rotate(315deg); margin: 0.6em 0.7rem 0.25em -1.15em}
-                    ul {
-                        margin: 1rem 0 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem;
-                        li {
-                            list-style: none; margin: 0; padding: 0.25rem 0.75rem; border: 0.0625rem solid var(--subtleBorder); border-radius: 0.1875rem; background: var(--subtleBg); font-weight: 500;
-                            span {padding: 0 0.125rem; font-weight: 300}
-                        }
+        }
+	}
+	.advanced-searches {
+        > div {
+            .tabs;
+		}
+        hgroup p {margin: 0.125rem 0 0.5rem 0}
+        section {
+            fieldset {
+                margin: 0 0 1.25rem 0; padding: 0 0 1.5rem 0; border-bottom: 0.0625rem solid var(--subtleBorder);
+                legend h2 {font-size: 1.2rem; margin: 0}
+                p {
+                    margin: 0.25rem 0 0 0;
+                    span {
+                        font-style: italic;
+                        span {font-weight: 500}
                     }
                 }
             }
         }
-	}
+    }
+    .search-results {
+        section {
+            fieldset {
+                margin: 0 0 1rem 0; padding: 0;
+                legend {width: -webkit-fill-available}
+                &.search-keywords {
+                    legend {.sr-only}
+                    input {
+                        width: -webkit-fill-available; max-width: 27rem; margin: 0.5rem 0;
+                        &:last-of-type {margin: 0.5rem 0 0 0}
+                    }
+                }
+                &.search-type [role="group"] {
+                    h4 {margin: 1rem 0 0.5rem 0; font-size: 1rem}
+                }
+                &.search-language, &.search-extent [role="group"]:has(input[type="radio"]) {
+                    > span:has(input:checked) {
+                        label {
+                            padding: 0.7rem 0.95rem 0.7rem 2.95rem; border-width: 0.125rem;
+                            span:before {top: 1.2rem}
+                        }
+                    }
+                }
+                &.search-extent {
+                    [role="group"]:has(input[type="checkbox"]) {
+                        margin: 0.75rem 0 0 0;
+                        > span, span:has(input:checked) {
+                            border: 0; background: none; margin: 0 0 0.25rem 0;
+                            &:before {margin: 0}
+                            label {padding: 0.085rem 0 0 2.25rem}
+                            input {top: 0.5rem; left: 0.5rem}
+                        }
+                    }
+                }
+                &.search-date {
+                    &:has(div[role="group"]) {
+                        > div[role="group"] {
+                            &:has(> span > input:checked) {
+                                > span {
+                                    padding: 0.7rem 0.95rem 0.7rem 2.95rem; border-width: 0.125rem;
+                                    > span:first-of-type:before {top: 1.2rem}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .search-filters {
+                button, .search-type summary {width: -webkit-fill-available; max-width: 16rem}
+            }
+        }
+    }
     .new-legislation {
         > div {
             .tabs; margin: 0 auto; padding: 1.1rem 0 0 0; background: var(--verySubtleBg); border-top: 0.0625em solid  var(--subtleBorder); border-bottom: 0.0625em solid  var(--subtleBorder);	
@@ -1491,14 +1545,18 @@ body:not(:-moz-handler-blocked) fieldset {
 
 
 /* changes to legislation page */
-	.changes-to-legislation {
-		> section:has(form) {
-			background: var(--altBg); max-width: unset; padding: 0 1rem;
-			form {
-				padding: 2rem 1rem; margin: 0 auto; max-width: var(--maxWidth); display: grid; grid-template-columns: 1fr; grid-gap: 1.5em;
-				fieldset {
-					background: var(--bg); .content-box; padding: 1.25rem; position: relative;
-					legend {position: absolute}
+    .changes-to-legislation {
+        > section:first-of-type hgroup {
+            h1 {font-weight: 300}
+            p {margin: 0.25rem 0; font-weight: 300}
+        }
+        > section:has(form), details section {
+            background: var(--altBg); max-width: unset; padding: 0; margin: 0 0 1rem 0;
+            form {
+                padding: 2rem 1rem; margin: 0 auto; max-width: var(--maxWidth); display: grid; grid-template-columns: 1fr; grid-gap: 1.5em;
+                fieldset {
+                    background: var(--bg); .content-box; padding: 1.25rem; position: relative;
+                    legend {position: absolute}
                     > label {
                         margin: 1.25rem 0 0.35rem 0; display: block;
                         &:first-of-type {margin: 2.5rem 0 0.35rem 0}
@@ -1517,11 +1575,11 @@ body:not(:-moz-handler-blocked) fieldset {
                             &:last-of-type {margin: 0.75rem 0 0 0}
                         }
                     }
-					&:last-of-type {
-						legend {
-							&:before {content: "Show..." / ""; font-size: 1.625rem; font-weight: 800; line-height: 1.2em; margin: 0 0 0.4em 0}
-							span {.sr-only}
-						}
+                    &:last-of-type {
+                        legend {
+                            &:before {content: "Show..." / ""; font-size: 1.625rem; font-weight: 800; line-height: 1.2em; margin: 0 0 0.4em 0}
+                            span {.sr-only}
+                        }
                         div {
                             padding: 0.8rem 1.25rem; border-top: 0.0625rem solid transparent; border-bottom: 0.0625rem solid transparent;
                             label {
@@ -1534,25 +1592,76 @@ body:not(:-moz-handler-blocked) fieldset {
                             &:has(input:checked) + div:nth-of-type(2) {border-top-color: transparent; border-bottom-color: var(--subtleBg)}
                             &:has(input:checked) {background: var(--subtleBg); border-top-color: var(--subtleBorder); border-bottom-color: var(--subtleBorder)}
                         }
-					}
+                    }
                     &:has(input[type="radio"]) {
                         padding: 0;
                         legend {padding: 1.25rem}
                     }
                 }
-				> div {
+                > div {
                     padding: 1.25rem; background: var(--bg); .content-box;
                     span span {font-weight: 500}
                     p {margin: 0.25rem 0 1rem 0}
                     button {width: 100%}
                 }
-			}
-			+ section {
-				padding: 2rem 1rem;
-			}
-		}
-	}
-
+            }
+        }
+        > section:has(form), details {
+            + section {padding: 1rem 1rem 2rem 1rem}
+        }
+        details {
+            summary {
+                display: block; .button; margin: 0 1rem;
+                &:before {.chevron; border-color: var(--buttonText); transform: rotate(135deg); margin: 0 0.75em 0.3em -0.5em}
+            }
+            &[open] {
+                summary {
+                    border-radius: 0.1875rem  0.1875rem 0 0;
+                    &:before {transform: rotate(315deg); margin: 0 0.75em 0.1em -0.5em}
+                }
+            }
+        }
+        .search-content {
+            .search-header {
+                > a {.ghost-button; display: block; margin: 1rem 0 0 0}
+                > .sort-by {
+                    margin: 0.85rem auto; /*display: flex; align-items: center;
+                    label {margin: 0 0.5rem 0 0}
+                    select {flex-grow: 1}*/
+                }
+                .search-actions {background: var(--disabledButtonBg); color: var(--lightText); position: absolute; right: 0; top: -200px}
+            }
+            #changes-to-legislation-results {
+                td {
+                    span {
+                        display: block; margin: 0.25rem 0 0 0;
+                        &.applied {
+                            color: var(--confirmed);
+                            &:before {.chevron; margin: 0 0.4rem 0.22em 0; width: 0.85em; height: 0.3em; border-top-width: 0.175rem; border-right-width: 0.175rem; border-color: var(--confirmed); transform: rotate(130deg)}
+                        }
+                        &.not-applicable {color: var(--lightText)}
+                    }
+                    &:first-of-type span {margin: 0; font-weight: 400; color: var(--lightText)}
+                }
+                details {
+                    summary {
+                        display: block; .ghost-button; margin: 0;
+                        &:before {.chevron; transform: rotate(135deg); margin: 0 0.75em 0.3em -0.5em}
+                        &:hover, &:active, &:focus {
+                            &:before {border-color: var(--buttonText)}
+                        }
+                    }
+                    &[open] {
+                        summary {
+                            .button; border-radius: 0.1875rem  0.1875rem 0 0;
+                            &:before {border-color: var(--buttonText); transform: rotate(315deg); margin: 0 0.75em 0.1em -0.5em}
+                        }
+                        > div {padding: 0.75rem 1rem; border: 0.0625rem solid var(--link); border-radius: 0 0 0.1875rem 0.1875rem; background: var(--bg)}
+                    }
+                }
+            }
+        }
+    }
 
 /* legislation pages */
 	.legislation {
@@ -1924,7 +2033,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						background: transparent; padding: 0.75rem 1rem 0.75rem 2rem; margin: 0.15rem 0.15rem 0.25rem 0.15rem; height: 100%; min-width: 3.5rem; border-color: transparent; color: var(--link);
 						&:before {position: absolute; margin: -0.2rem 0 0 -2rem; content: ""; width: 1.5rem; height: 1.5rem}
 						&:hover, &:focus, &:active {-webkit-box-shadow: unset; -moz-box-shadow: unset; box-shadow: unset; text-decoration: underline; outline-color: transparent}
-						&:focus-visible {outline-color: var(--link)}90
+						&:focus-visible {outline-color: var(--link)}
 						span {.sr-unset()}
 					}
 					details {
@@ -2173,7 +2282,37 @@ body:not(:-moz-handler-blocked) fieldset {
 	/* main menu and timeline act as modal */
 		body:has(.timeline details[open]) *:not(:has(.timeline)):not(.timeline):not(.timeline *), 
 		body:has(.search-filters > details[open]) *:not(:has(.search-filters)):not(.search-filters):not(.search-filters *) {display: none}
+        .changes-to-legislation .search-content #changes-to-legislation-results {
+            display: block; border-collapse: collapse; width: 100%;
+            caption {.sr-only}
+            thead {display: none}
+            tbody {display: block}
+            tr {
+                display: block; padding: 1rem 1rem 0 1rem; margin: 1rem 0; .content-box; background: var(--verySubtleBg);
+                td {
+                    display: block; padding: 0 0 0.5rem 0; font-weight: 500;
+                    &:has(details) {padding: 0.15rem 0 1rem 0}
+                    .not-applicable {font-weight: 400}
+                    details {
+                        summary {text-align: left}
+                        &[open] {
+                            summary {text-align: left}
+                            &::details-content {font-weight: 300}
+                        }
+                    }
+                    &:before {display: block; font-weight: 300}
+                    &:nth-of-type(1):before {content: "Changed legislation title: "}
+                    &:nth-of-type(2):before {content: "Year and number: "}
+                    &:nth-of-type(3):before {content: "Changed provision: "}
+                    &:nth-of-type(4):before {content: "Type of effect: "}
+                    &:nth-of-type(5):before {content: "Affecting legislation title: "}
+                    &:nth-of-type(6):before {content: "Year and number: "}
+                    &:nth-of-type(7):before {content: "Affecting provision: "}
+                }
+            }
+        }
     }
+
 	@media print and (orientation: portrait), screen and (max-width: calc(@desktopSmall - 1px)) {
 		main {
 			&.legislation {
@@ -2243,10 +2382,87 @@ body:not(:-moz-handler-blocked) fieldset {
 								padding: 0.5em; margin: 0.85rem 0; border-top: 0.0625rem solid var(--modalBorder);
 								h2 {.sr-only}
 							}
-						}
+                            div fieldset.search-extent {
+                                details {
+                                    summary {padding: 0.5em 1.5em 0 1.35em; position: relative}
+                                    ul {
+                                        margin: 0.5em 0 0 0;
+                                        li {margin: 0; padding: 0.15rem 0.5rem; background: var(--activeModalLargeBg); border-color: var(--activeModalLargeBg)}
+                                    }
+                                }
+                            }
+                        }
 					}
 				}
-			}
+                section {
+                    fieldset {
+                        &.search-language > span, &.search-extent [role="group"]:has(input[type="radio"]) > span {
+                            max-width: 27rem;
+                            label {
+                                background: var(--modalBg); color: var(--modalText);
+                                &:before {background: var(--inactiveModalBg)}
+                            }
+                            input {top: 1.15rem; left: 1.2rem; outline-style: inherit}
+                            &:has(input:checked) {
+                                label {
+                                    background: var(--activeModalLargeBg); border-color: var(--activeModalBg);
+                                    &:before {background: var(--activeModalBg)}
+                                    span:before {border-color: var(--activeModalText)}
+                                }
+                            }
+                            &:has(input:focus) {
+                                label {
+                                    background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                                    &:before {background: var(--activeModalBg)}
+                                   span:before {border-color: var(--focusButtonBg)}
+                                }
+                            }
+                        }
+                        &.search-date:has(div[role="group"]) > div[role="group"] {
+                            max-width: 27rem;
+                            > span {
+                                background: var(--modalBg); color: var(--modalText);
+                                > label:before {background: var(--inactiveModalBg)}
+                                > span:first-of-type:before {border-color: var(--activeModalBg)}
+                            }
+                            &:has(> span > input:checked) {
+                                > span {
+                                    background: var(--activeModalLargeBg); border-color: var(--activeModalBg);
+                                    > label:before {background: var(--activeModalBg)}
+                                    > span:first-of-type:before {border-color: var(--activeModalText)}
+                                    span input {color: var(--text)}
+                                }
+                            }
+                            &:has(> span > input:focus) {
+                                > span {
+                                    background-color: var(--focusButtonBg); color: var(--buttonText); border-color: var(--focusOutline); outline-color: var(--focusOutline); outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+                                    label:before {background: var(--activeModalBg)}
+                                    > span:first-of-type:before {border-color: var(--focusButtonBg)}
+                                }
+                            }
+                        }
+                        &.search-type [role="group"] {
+                            > span {
+                                &:before {background: var(--modalBg)}
+                            }
+                            > span:has(input:checked) {
+                                &:before {background: var(--activeModalBg)}
+                                label:before {border-color: var(--activeModalText)}
+                            }
+                            > span:has(input:focus) {
+                                label:before {border-color: var(--activeModalBg)}
+                            }
+                        }
+                    }
+                }
+            }
+            &.changes-to-legislation:has(> details[open]) {
+                .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
+                    .pagination {margin: 0 auto 0.85rem auto; border-top: 0.0625rem solid var(--subtleBorder); padding: 0 0 0.85rem 0}
+                    a {position: unset; margin: 1rem 0 0 0}
+                    .sort-by {position: unset; margin: 0 0 1rem 0}
+                }
+            }
 		}
 	}
 
@@ -2273,9 +2489,60 @@ body:not(:-moz-handler-blocked) fieldset {
         footer {
             nav ul {display: grid; grid-auto-flow: column; grid-template-rows: repeat(4, 1fr); grid-template-columns: repeat(2, 1fr); column-gap: 0.5rem}
         }
+        .search-results {
+            section {
+                fieldset.search-date:has(div[role="group"]) {
+                    > div[role="group"]:has(input#specific-date) span span label {.sr-only}
+                    > div[role="group"]:has(input#from-date) {
+                        > span {
+                            padding: 0.75rem 1rem;
+                            > label {padding: 0 0 0 2rem}
+                            span {
+                                display: contents;
+                                &:before {margin: 0 0 0 0.1em}
+                                &:nth-of-type(2) {
+                                    margin: 0;
+                                    label {margin: 0 0.5rem 0 0.35rem}
+                                }
+                                label {
+                                    min-width: unset;
+                                }
+                                input[type="text"] {width: 4rem}
+                            }
+                        }
+                        &:has(> span > input:checked) > span {
+                            padding: 0.7rem 0.95rem;
+                        }
+                    }
+                }
+            }
+        }
 	}
 
-	@media (min-width: @mobileLandscape) {
+	@media screen and (min-width: @mobileLandscape) and (max-width: calc(@desktopSmall - 1px)) {
+        main.changes-to-legislation {
+            .search-content {
+                .search-results-list {
+                    #changes-to-legislation-results {
+                        tr {
+                            td {
+                                display: grid;
+                                a {padding: 0 0.35rem 0 0}
+                                &:after {content: ""}
+                                grid-template-columns: 12em auto minmax(0,1fr);
+                                &:last-of-type, &:nth-last-of-type(2) {
+                                    grid-template-columns: auto;
+                                    &:after {display: none}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+        
+    @media (min-width: @mobileLandscape) {
 		:root, :root[colour-scheme="light"] {
 			a.hdr-home {background: url("images/legislation-logo.png") no-repeat 0; background-size: 20.5%}
 			.legislation .legislation-content .status-panel:not(.pinned) button {background-position: 0.45em center}			
@@ -2355,7 +2622,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 					.search-footer {
 						display: grid; grid-template-columns: auto;
-						.results-count {padding: 0; text-align: unset;  border: none; margin: 0.4rem 0 0 0}
+						.results-count {padding: 0; text-align: unset; border: none; margin: 0.4rem 0 0 0}
 						.pagination {order: -1; grid-column: span 2}
 						.results-per-page {text-align: right; margin: 0 0 1rem 0}
 					}
@@ -2363,7 +2630,7 @@ body:not(:-moz-handler-blocked) fieldset {
 			}
 
             &.changes-to-legislation {
-                > section:has(form) {
+                > section:has(form), details section {
                     form {
                         fieldset {
                             [role="group"] {
@@ -2378,6 +2645,17 @@ body:not(:-moz-handler-blocked) fieldset {
                             }
                         }
                         > div button {width: unset}
+                    }
+                }
+                details summary {display: inline-block}
+                .search-content:not(:has(.pagination li:nth-child(24)))
+                {
+                    overflow: visible;
+                    .search-header {
+                        position: relative;
+                        > a {position: absolute; margin: -3.635rem 0 0 0; right: 0}
+						.sort-by {margin: 0; position: absolute; top: -3.625rem; right: 0}
+                        .pagination {margin: 1rem auto 0.85rem auto}
                     }
                 }
             }
@@ -2648,13 +2926,11 @@ body:not(:-moz-handler-blocked) fieldset {
 				}
 			}
 
-            &.changes-to-legislation {
-                > section:has(form) {
-                    form {
-                        grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem);
-                        > fieldset:last-of-type {grid-column-start: span 2; grid-column-end: 3}
-                        > div {grid-column-start: span 2; grid-column-end: 3}
-                    }
+            &.changes-to-legislation > section:has(form), &.changes-to-legislation details section {
+                form {
+                    grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem);
+                    > fieldset:last-of-type {grid-column-start: span 2; grid-column-end: 3}
+                    > div {grid-column-start: span 2; grid-column-end: 3}
                 }
             }
 		}
@@ -2786,6 +3062,24 @@ body:not(:-moz-handler-blocked) fieldset {
 				> div {
                     .tabs-wide; padding: 1.1rem 0 0 0;
 				}
+            }
+            &.search-results {
+                section {
+                    .search-type [role="group"] {
+                        margin: 0.5rem 0 0 0;
+                         > span {
+                             display: flex; margin: 0 0 0.25rem 0; padding: 0; min-height: 2.125rem;
+                             &:before {top: 0.25rem; margin: 0}
+                             label {
+                                 padding: 0 1rem 0 2.2rem; display: flex; align-items: center;
+                                 &:before {top: 0.45rem}
+                             }
+                        }
+                    }
+                    .search-filters {
+                        button, .search-type summary {width: -webkit-fill-available}
+                    }
+                }
             }
             &.new-legislation {
 				> div {
@@ -3127,7 +3421,7 @@ body:not(:-moz-handler-blocked) fieldset {
 								> div section ul li[aria-current="page"] a {color: var(--text)}
 							}
 							div {
-								section {
+								section, fieldset {
 									h3 {padding: 0.5rem 0 0 0}
 									&:not(:first-of-type) h3 {padding: 0.65rem 0 0 0; border-top: 0.0625rem solid var(--subtleBorder)}
 									ul {margin: 0.5em 0 0.75em 0}
@@ -3139,15 +3433,24 @@ body:not(:-moz-handler-blocked) fieldset {
 											span {color: var(--text)}
 											&[aria-current="page"] a {background-color: var(--modalBg); border-color: var(--modalBg); color: var(--modalText); font-weight: 500}
 										}
-									}								
+									}
+                                    &.search-extent {
+                                        details {
+                                            summary {padding: 0.5em 1.5em 0 1.35em; position: relative}
+                                            ul {
+                                                margin: 0.5em 0 0 0;
+                                                li {margin: 0; padding: 0.15rem 0.5rem}
+                                            }
+                                        }
+                                    }
 								}
 							}
 						}
 					}
-					.search-header, .search-footer {
+                    .search-header, .search-footer {
 						grid-column: span 2; width: 100%;
 						.pagination {
-							padding: 1.35rem 0 1.25rem 0;
+							padding: 1.35rem 0 1.5rem 0;
 							ul li {
 								&:first-of-type, &:nth-of-type(2), &:nth-last-of-type(2), &:last-of-type {
 									display: table-cell;
@@ -3189,12 +3492,89 @@ body:not(:-moz-handler-blocked) fieldset {
 				}
 			}
 
+            &.changes-to-legislation > section:has(form), &.changes-to-legislation details section {
+                form {
+                    grid-template-columns: calc(37% - 1.5rem) calc(37% - 1.5rem) 26%;
+                    > fieldset:last-of-type {grid-column-start: unset; grid-column-end: unset}
+                    > div {grid-column-start: span 3; grid-column-end: 4}
+                }
+            }
+            &.changes-to-legislation details {
+                summary {margin: 0.75rem 0 0 calc(((100vW - var(--maxWidth)) / 2) + 1rem)}
+            }
             &.changes-to-legislation {
-                > section:has(form) {
-                    form {
-                        grid-template-columns: calc(37% - 1.5rem) calc(37% - 1.5rem) 26%;
-                        > fieldset:last-of-type {grid-column-start: unset; grid-column-end: unset}
-                        > div {grid-column-start: span 3; grid-column-end: 4}
+                details summary {position: relative; z-index: 1}
+                .search-content:not(:has(.pagination li:nth-child(24))) {
+                    .search-header {
+                        display: flow-root; width: 100%; margin: 0.5rem 0 1.5rem 0;  
+                        > a {margin: -3.1rem 0 0 0; z-index: 1}
+						.sort-by {top: -3.1rem; right: 0; z-index: 1}
+                        .pagination {position: absolute; margin: -4.05rem 0 0 0}
+                    }
+                    .search-footer {
+                        display: flex; align-items: center; border-top: 0.0625rem solid var(--subtleBorder);
+                        .pagination {margin: 0 auto; order: unset; border: 0}
+                        .results-count, .results-per-page {flex-shrink: 0; margin: 0}
+                    }
+                }
+                &:has(> details[open]) {
+                    .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
+                        margin: 0.5rem 0 4.5rem 0;
+                        .pagination {margin: -1.05rem 0 0 0}
+                        > a {margin: 0}
+                        .sort-by {top: 0}
+                    }
+                }
+                .search-content {
+                    .search-results-list {
+                        #changes-to-legislation-results {
+                            border-collapse: collapse; width: -webkit-fill-available;
+                            caption {.sr-only}
+                            tr {
+                                display: grid; grid-template-columns: 1fr repeat(2, 6rem) 8rem 1fr repeat(2, 6rem); column-gap: 0.35rem; padding: 0.5rem;
+                                &:nth-child(even) {
+                                    background: var(--subtleBg); border-top: 0.0625rem solid var(--verySubtleBorder); border-bottom: 0.0625rem solid var(--verySubtleBorder);
+                                    &:last-of-type {border-bottom: 0}
+                                }
+                                th {
+                                    text-align: left; padding: 0.5rem 0; color: var(--tableHeaderText);
+                                    &:nth-last-of-type(2), &:last-of-type, span {.sr-only}
+                                }
+                                td {
+                                    &:nth-last-of-type(2) {grid-column: span 7; text-align: right}
+                                    &:first-of-type, &:nth-of-type(5) 
+                                    {
+                                        font-weight: 500;
+                                        span {font-weight: 400; color: var(--lightText)}
+                                    }
+                                    &:last-of-type {grid-column-start: 1; grid-column-end: 8}
+                                    details {
+                                        margin: 0.5rem 0;
+                                        summary {
+                                            width: 5.75rem; padding: 0.5rem 1rem;
+                                            &:before {margin: 0 0.65rem 0.3rem 0}
+                                        }
+                                        &[open] {
+                                            summary {
+                                                &:before {margin: 0 0.65rem 0.1rem 0}
+                                            }
+                                        }
+                                        div {clear: both}
+                                    }
+                                }
+                                &:has(details) {
+                                    td:nth-last-of-type(2) {grid-column: span 6; margin: 0.6rem 0 0 0}
+                                    details {
+                                        position: relative;
+                                        summary {position: absolute; right: 0; margin: -2.6rem 0 0 0}
+                                    }
+                                }
+                            }
+                            thead {
+                                position: sticky; top: 0; z-index: 10; border-radius: 0.2em 0.2em 0 0; &:after {.drop-shadow};
+                                tr {background: var(--tableHeaderBg); border-radius: 0.25em 0.25em 0 0; padding: 0 0.5rem; align-items: end}
+                            }
+                        }
                     }
                 }
             }
@@ -3202,7 +3582,7 @@ body:not(:-moz-handler-blocked) fieldset {
 	}
 
 	@media (min-width: calc(@desktopSmall)) and (max-width: calc(@desktopLarge - 1px)) {
-		main.search-results .search-content {
+		main.search-results:not(.changes-to-legislation) .search-content {
 			&:not(:has(.pagination li:nth-child(24))) {
 				.compact-search;
 				&:has(aside > details[open]) {
@@ -3271,7 +3651,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				} 
 			}
-			&.search-results {
+			&.search-results:not(.changes-to-legislation) {
 				.search-content {
 					&:not(:has(.pagination li:nth-child(29))) {
 						.compact-search;
@@ -3295,11 +3675,48 @@ body:not(:-moz-handler-blocked) fieldset {
 				}
 			}
 
+            &.changes-to-legislation > section:has(form), &.changes-to-legislation details section {
+                form {
+                    grid-template-columns: calc(39% - 1rem) calc(39% - 1rem) 22%;
+                    > div {grid-column-start: span 3; grid-column-end: 4}
+                }
+            }
             &.changes-to-legislation {
-                > section:has(form) {
-                    form {
-                        grid-template-columns: calc(39% - 1rem) calc(39% - 1rem) 22%;
-                        > div {grid-column-start: span 3; grid-column-end: 4}
+                .search-content {
+                    .search-results-list {
+                        #changes-to-legislation-results {
+                            tr {
+                                grid-template-columns: 1fr repeat(2, 6rem) 8rem 1fr repeat(2, 6rem) 7.5rem 6.5rem;
+                                th {
+                                    &:nth-last-of-type(2), &:last-of-type {
+                                        .sr-unset; padding: 0.5rem 0;
+                                        span {.sr-unset}
+                                    }
+                                }
+                                td {
+                                    &:nth-last-of-type(2) {grid-column: unset; text-align: unset}
+                                    &:last-of-type {grid-column-start: unset; grid-column-end: unset}
+                                    span {
+                                        margin: 0;
+                                        + span {margin: 0.35rem 0 0 0}
+                                    }
+                                }
+                                &:has(details) {
+                                    td:nth-last-of-type(2) {grid-column: unset; margin: unset}
+                                    td:last-of-type {position: relative}
+                                    details {
+                                        position: unset;
+                                        summary {position: absolute; width: 6.475rem; bottom: 0; margin: 0}
+                                    }
+                                }
+                                &:has(details[open]) {
+                                    td:last-of-type {grid-column-start: 1; grid-column-end: 10}
+                                    details {
+                                        summary {bottom: unset; margin: -3.1rem 0 0 0; padding: 0.5rem 1rem 1rem 1rem}
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -3347,8 +3764,8 @@ body:not(:-moz-handler-blocked) fieldset {
         main.search-results .search-content .search-header .sort-by {position: unset}
         .search-results .search-content {padding-left: 0; padding-right: 0}
         
-        .changes-to-legislation > section:has(form) {
-            + section, 
+        main.changes-to-legislation > section:has(form), main.changes-to-legislation details {
+            + section,
             form {padding-left: 0; padding-right: 0}
         }
 
