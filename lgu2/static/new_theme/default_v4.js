@@ -1,13 +1,13 @@
 // legislation.gov.uk v4 js
 
-// detect reducedMotion preference
+// Detect reducedMotion preference
 	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
-// set default timeout intervals
+// Set default timeout intervals
 	var animateInterval = 0
 
 	$(document).ready(function() {
-    // for demo purposes only - show/hide design approaches
+    // For demo purposes only - show/hide design approaches
         var urlParams = new URLSearchParams(window.location.search);
         if(urlParams.has('approach')) {
             var theApproach = getUrlVars()["approach"];
@@ -33,13 +33,13 @@
         else if($('.current-design').length != 0) {
             $('.proposed-design').remove();
         }
-    // end demo
+    // Eend demo
 
-	// to undo hiding of browse dataset unavailable to user agents that do not have JS enabled
+	// To undo hiding of browse dataset unavailable to user agents that do not have JS enabled
 		$('.scrollbar.initialise').removeAttr('hidden')
 		$('.scrollbar.initialise').removeClass('initialise')
 
-	// to undo hiding of functionality unavailable to user agents that do not have JS enabled
+	// To undo hiding of functionality unavailable to user agents that do not have JS enabled
 		$('.initialise').each(function() {
 			if($(this).attr('hidden')) {
 				$(this).removeAttr('hidden')
@@ -50,14 +50,14 @@
 			$(this).removeClass('initialise')
 		})
 
-	// if a Table of Contents
+	// If a Table of Contents
 		if($('.legislation .toc-detail').length != 0) {
 			$('.toc-detail li .extent').each(function() {
 				$(this).addClass('hidden')
 			})
 		}
 
-	// hide search on small header
+	// Hide search on small header
 		if ($(window).width() > 1023) {
 			setTimeout(function(){
 				$('.hdr-search details').prop('open',true)
@@ -69,7 +69,7 @@
 			},10)
 		}
 		
-	// show menu on large header
+	// Show menu on large header
 		if ($(window).width() > 767) {
 			setTimeout(function(){
 				$('.hdr-menu details').prop('open',true)
@@ -81,7 +81,7 @@
 			},10)
 		}
 
-	// light/dark mode
+	// Light/dark mode
 		$('.mode button').on('click', function() {
 			var theButtonId = $(this).attr('id')
 			toggleMode(theButtonId)
@@ -215,25 +215,44 @@
 			}
 		}
 
+	// If on the advanced search or results pages
+        if($('.advanced-searches').length != 0 || $('.search-results').length != 0) {
+            $('.search-date input#specific-date').on('input', function() {
+                $('.search-date input#specific').prop('checked', true);
+            })
+            $('.search-date input#from-date').on('input', function() {
+                $('.search-date input#range').prop('checked', true);
+            })
+            $('.search-date input#to-date').on('input', function() {
+                $('.search-date input#range').prop('checked', true);
+            })            
+            $('.search-date input#specific-date').click(function() {
+                $('.search-date input#specific').prop('checked', true);
+            })
+            $('.search-date input#from-date').click(function() {
+                $('.search-date input#range').prop('checked', true);
+            })
+            $('.search-date input#to-date').click(function() {
+                $('.search-date input#range').prop('checked', true);
+            })   
+        }
+
 	// If on the advanced search page
         if($('.advanced-searches').length != 0) {
             $('.search-type input#primary').change(function() {
                 if($('.search-type input#primary').is(':checked')) {
                     $('#primary-types input').prop('checked', false);
                 }
-                
             })
             $('.search-type input#secondary').change(function() {
                 if($('.search-type input#secondary').is(':checked')) {
                     $('#secondary-types input').prop('checked', false);
                 }
-                
             })
             $('.search-type input#eu').change(function() {
                 if($('.search-type input#eu').is(':checked')) {
                     $('#eu-types input').prop('checked', false);
                 }
-                
             })
             $('.search-type #primary-types input').change(function() {
                 if($(this).is(':checked')) {
@@ -263,7 +282,7 @@
                 }
             })
         }
-
+        
     // If a browse page with dataset visualisation
 		if($('.dataset').length != 0) {
 			var allDocsDd = $('.dataset div div dl dd');
@@ -285,7 +304,7 @@
 				$(this).prev().css('height',dd + "%")
 			});
 
-		// scroll to the selected year
+		// Scroll to the selected year
 			setTimeout(function() { 
 				loadVersion('all','noanim')
 				var theYear = getUrlVars()["year"];
@@ -311,14 +330,20 @@
 				}
 			},20)
 
-		// selecting a year from the dataset
+		// Selecting a year from the dataset
 			$('.dataset > div:first-of-type dt a').on('click', function() {
 				loadVersion(this)
 			})
 		}
 		
-	// If not a search results page, hide search skip links
-		else {
+	// Hide search skip links
+		else if($('.search-results').length != 0 && $('.changes-to-legislation').length != 0) {
+			$('header .skip-links li:not(:nth-of-type(1),:nth-of-type(3),:nth-of-type(4))').remove()			
+		}
+		else if($('.search-results').length != 0) {
+			$('header .skip-links li:not(:nth-of-type(1),:nth-of-type(2),:nth-of-type(4))').remove()			
+		}
+		else  {
 			$('header .skip-links li:not(:first-of-type)').remove()			
 		}
         
@@ -329,8 +354,28 @@
             })
             compileChangesSearch();
         }
+        
+    // If on the changes to legislation results page
+		if($('#changes-to-legislation-results').length != 0) {
+            $('#changes-to-legislation-results').attr('role','table')
+            $('#changes-to-legislation-results tr').each(function() {
+                $(this).attr('role','row')
+            })
+            $('#changes-to-legislation-results th').each(function() {
+                $(this).attr('role','columnheader')
+            })
+            $('#changes-to-legislation-results th[scope=row]').each(function() {
+                $(this).attr('role','rowheader')
+            })
+            $('#changes-to-legislation-results td').each(function() {
+                $(this).attr('role','cell')
+            })
+            $('#changes-to-legislation-results').children('thead, tbody, tfoot').each(function() {
+                $(this).attr('role','rowgroup')
+            })
+        }        
             
-    // if there is a left-hand nav, set up the link ids
+    // If there is a left-hand nav, set up the link ids
 		if($('.in-page-nav ol').length != 0) {
 			$('.in-page-nav ol').children('li:first').children('a').attr('aria-current','page')
 			$('.in-page-nav ol li:not(#main-content-h)').each(function() {
@@ -339,7 +384,7 @@
 			})
 		}
 			
-	// if timeline exists
+	// If timeline exists
 		if($('.timeline').length != 0) {
 			if($('.timeline summary[disabled]').length != 0) {
 				$('.timeline summary[disabled]').each(function() {
@@ -347,7 +392,7 @@
 				})
 			}
 
-		// if timeline is open on page load, set scrollbar
+		// If timeline is open on page load, set scrollbar
 			if($('.timeline details').is('[open]'))
 			{
 				setTimeout(function(){
@@ -355,7 +400,7 @@
 				},1)
 			}
 
-		// timeline controls
+		// Timeline controls
 			$('.timeline summary').on('click', function() {
 				if ($(window).width() > 1023) {
 					openTimeline()
@@ -368,14 +413,14 @@
 				}
 			})
 
-		// selecting a version from the timeline
+		// Selecting a version from the timeline
 			$('.versions li a').on('click', function() {
 				$('.timeline summary .point-in-time').remove()
 				$('.versions li .point-in-time').remove()
 				loadVersion(this)
 			})
 
-		// open timeline if historical version is selected 
+		// Open timeline if historical version is selected 
 			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
 			{
 				setTimeout(function() { 
@@ -385,7 +430,7 @@
 			}
 		}
 		
-		// if scrollbar exists
+		// If scrollbar exists
 		if($('.scrollbar').length != 0) {
 			var down = false
 
@@ -550,7 +595,7 @@
 			})
 	}
 
-	// if a Table of Contents
+	// If a Table of Contents
 		if($('.legislation .toc-detail').length != 0) {
 			$('#toc').on('click', function() {
 				expandToc($(this))
@@ -560,7 +605,7 @@
 			})
 		}
 		
-	// if there is legislation text
+	// If there is legislation text
 		if($('.legislation-text').length != 0 || $('.toc-detail').length != 0) {
 		// set up markers
 			$('.legislation-text li, .toc-detail li').each(function() {
@@ -622,7 +667,7 @@
 			})
 		}
 		
-	// if there is a status panel
+	// If there is a status panel
 		if($('.status-panel').length != 0) {
 			$('.status-panel button').on('click', function() {
 				pinStatusPanel()
@@ -657,7 +702,7 @@
 		}
 		
 
-	// escape key functions
+	// Escape key functions
 		$(document).keydown(function(e) {
 			if(e.keyCode == 27) {
 				if($(window).width() < 768 && $('.hdr-menu details').is('[open]'))
@@ -679,14 +724,14 @@
 			}
 		})
 
-	// on scroll
+	// On scroll
 		$(window).scroll(function() {
 		// if there is a left-hand nav, set the current page attribute
 			if($('.in-page-nav ol').length != 0 && $(window).width() > 1023) {
 				setDynamicLeftHandNav()
 			}
 			
-		// if status panel is pinned
+		// If status panel is pinned
 			if($('.status-panel.pinned').length != 0) {
 				if($(window).scrollTop() >= ($('.legislation-content > div').offset().top)) {
 					setTimeout(function() {
@@ -702,7 +747,7 @@
 		})
 		
 		
-	// on window resize
+	// On window resize
 		$(window).resize(function() {
 		// hide search on small header
 			if ($(window).width() < 1024 && $('.hdr-search details').attr('open')) {
@@ -712,7 +757,7 @@
 				$('.hdr-search details').prop('open',true)
 			}
 			
-		// show menu on large header
+		// Show menu on large header
 			if ($(window).width() < 768 && $('.hdr-menu details').attr('open')) {
 				$('.hdr-menu details').removeAttr('open')
 			}
@@ -720,7 +765,7 @@
 				$('.hdr-menu details').prop('open',true)
 			}
 			
-		// show search filters on higher breakpoints
+		// Show search filters on higher breakpoints
 			if($('.search-filters').length != 0) {
 				if ($(window).width() < 1024 && $('.search-filters > details').attr('open')) {
 					$('.search-filters > details').removeAttr('open')
@@ -730,7 +775,7 @@
 				}
 			}
 			
-		// scroll to the selected year
+		// Scroll to the selected year
 			if($('.dataset').length != 0) 
 			{
 				setTimeout(function() { 
@@ -743,7 +788,7 @@
 				},20)
 			}
 
-		// remove dynamic left-hand nav on lower breakpoints and retrigger on higher breakpoints
+		// Remove dynamic left-hand nav on lower breakpoints and retrigger on higher breakpoints
 			if($('.in-page-nav ol').length != 0 && $(window).width() < 1024) {
 				$('.in-page-nav a').removeAttr('aria-current','page')
 				$('.in-page-nav ol').css('top','')

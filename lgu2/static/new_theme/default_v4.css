@@ -175,6 +175,8 @@ body:not(:-moz-handler-blocked) fieldset {
   --inactiveButtonBg: var(--disabledButtonBg);
   --activeBg: var(--searchBg);
   --activeBgSolid: #2e2e2e;
+  --activeLargeBg: var(--bg);
+  --activeBgMarker: var(--bg);
   --activeText: var(--contrastText);
   --alert: #ffaf28;
   --alertBg: rgba(255, 175, 40, 0.25);
@@ -183,6 +185,7 @@ body:not(:-moz-handler-blocked) fieldset {
   --focusWarningBg: #eb0c73;
   --warningBorder: var(--warningBg);
   --repealed: rgba(120, 30, 100);
+  --confirmed: #008057;
   --searchBg: rgba(0, 0, 0, 0.82);
   --advSearchBg: rgba(0, 0, 0, 0.05);
   --searchText: var(--contrastText);
@@ -191,6 +194,10 @@ body:not(:-moz-handler-blocked) fieldset {
   --searchInputBorder: transparent;
   --modalBg: var(--text);
   --modalText: var(--contrastText);
+  --activeModalBg: #ebebeb;
+  --activeModalLargeBg: rgba(235, 235, 235, 0.1);
+  --activeModalText: var(--text);
+  --inactiveModalBg: #464646;
   --modalBorder: var(--bg);
   --modalButtonBg: var(--bg);
   --modalButtonText: var(--text);
@@ -198,10 +205,13 @@ body:not(:-moz-handler-blocked) fieldset {
   --boxShadow: rgba(0, 0, 0, 0.15);
   --dropShadowEnd: rgba(0, 0, 0, 0.1);
   --dropShadowStart: rgba(0, 0, 0, 0);
+  --tableHeaderText: var(--bg);
+  --tableHeaderBg: var(--searchBg);
   --subtleBg: rgba(0, 0, 0, 0.04);
   --moreSubtleBg: rgba(0, 0, 0, 0.025);
   --verySubtleBg: rgba(0, 0, 0, 0.02);
   --verySubtleFixedBg: #fafafa;
+  --verySubtleBorder: rgba(0, 0, 0, 0.05);
   --subtleBorder: rgba(0, 0, 0, 0.1);
   --lessSubtleBorder: rgba(0, 0, 0, 0.135);
   --midDark: rgba(0, 0, 0, 0.75);
@@ -554,7 +564,9 @@ body:not(:-moz-handler-blocked) fieldset {
   --disabledButtonBg: #141414;
   --inactiveButtonBg: #464b55;
   --activeBg: var(--searchBg);
-  --activeBgSolid: #16202a;
+  --activeBgSolid: var(--contrastText);
+  --activeLargeBg: rgba(255, 255, 255, 0.05);
+  --activeBgMarker: var(--bg);
   --activeText: var(--contrastText);
   --alert: #ffaf28;
   --alertBg: #372d00;
@@ -571,6 +583,7 @@ body:not(:-moz-handler-blocked) fieldset {
   --searchInputBorder: rgba(255, 255, 255, 0.1);
   --modalBg: #0a141e;
   --modalText: var(--contrastText);
+  --activeModalText: var(--bg);
   --modalBorder: rgba(255, 255, 255, 0.1);
   --modalButtonBg: var(--text);
   --modalButtonText: var(--bg);
@@ -578,10 +591,13 @@ body:not(:-moz-handler-blocked) fieldset {
   --boxShadow: rgba(255, 255, 255, 0.15);
   --dropShadowEnd: rgba(0, 0, 0, 0.1);
   --dropShadowStart: rgba(0, 0, 0, 0);
+  --tableHeaderText: var(--text);
+  --tableHeaderBg: rgba(40, 50, 60, 0.95);
   --subtleBg: var(--altBg);
   --moreSubtleBg: rgba(255, 255, 255, 0.05);
   --verySubtleBg: rgba(255, 255, 255, 0.035);
   --verySubtleFixedBg: #131c26;
+  --verySubtleBorder: rgba(255, 255, 255, 0.1);
   --subtleBorder: rgba(255, 255, 255, 0.2);
   --lessSubtleBorder: rgba(255, 255, 255, 0.235);
   --midDark: rgba(255, 255, 255, 0.6);
@@ -830,6 +846,7 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 html {
   width: 100%;
+  --maxWidth: 100vW;
   height: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -2805,13 +2822,13 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .search-results > section:first-of-type hgroup h1 span span {
   font-weight: 300;
 }
-.search-results > section:first-of-type hgroup p {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) {
   margin: 0.25rem 0 0 0;
 }
-.search-results > section:first-of-type hgroup p #legType {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) #legType {
   display: contents;
 }
-.search-results > section:first-of-type hgroup p a {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) a {
   margin: 0.35rem 0 0 0;
   font-size: 1rem;
   font-weight: 300;
@@ -2822,7 +2839,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0.1875rem;
   position: relative;
 }
-.search-results > section:first-of-type hgroup p a:after {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) a:after {
   content: "";
   position: absolute;
   width: 1rem;
@@ -2830,15 +2847,15 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   right: 0.65rem;
   top: 0.35rem;
 }
-.search-results > section:first-of-type hgroup p a:hover,
-.search-results > section:first-of-type hgroup p a:focus,
-.search-results > section:first-of-type hgroup p a:active {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) a:hover,
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) a:focus,
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) a:active {
   border-color: var(--link);
 }
-.search-results > section:first-of-type hgroup p a span {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) a span {
   font-weight: 500;
 }
-.search-results > section:first-of-type hgroup p > span {
+.search-results > section:first-of-type hgroup p:not(.changes-to-legislation > section:first-of-type hgroup p) > span {
   margin: 0.35rem 0 0 0;
   font-size: 1rem;
   font-weight: 300;
@@ -3251,23 +3268,28 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background-color: var(--modalBg);
   color: var(--modalText);
 }
-.search-results .search-content .search-filters > details[open] > div section {
+.search-results .search-content .search-filters > details[open] > div section,
+.search-results .search-content .search-filters > details[open] > div fieldset {
   overflow: unset;
 }
-.search-results .search-content .search-filters > details[open] > div section h3 {
+.search-results .search-content .search-filters > details[open] > div section h3,
+.search-results .search-content .search-filters > details[open] > div fieldset h3 {
   font-size: 1rem;
   margin: 0;
   padding: 0;
 }
-.search-results .search-content .search-filters > details[open] > div section ul {
+.search-results .search-content .search-filters > details[open] > div section ul,
+.search-results .search-content .search-filters > details[open] > div fieldset ul {
   list-style: none;
   margin: 0.75em 0;
 }
-.search-results .search-content .search-filters > details[open] > div section ul li {
+.search-results .search-content .search-filters > details[open] > div section ul li,
+.search-results .search-content .search-filters > details[open] > div fieldset ul li {
   margin: 0 0 0.4rem 0;
   line-height: 1.35rem;
 }
-.search-results .search-content .search-filters > details[open] > div section ul li a span span {
+.search-results .search-content .search-filters > details[open] > div section ul li a span span,
+.search-results .search-content .search-filters > details[open] > div fieldset ul li a span span {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -3278,61 +3300,77 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   white-space: nowrap;
   border: 0;
 }
-.search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a {
+.search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a,
+.search-results .search-content .search-filters > details[open] > div fieldset ul li[aria-current="page"] a {
   font-weight: 500;
 }
-.search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a span:not(.long-type) {
+.search-results .search-content .search-filters > details[open] > div section ul li[aria-current="page"] a span:not(.long-type),
+.search-results .search-content .search-filters > details[open] > div fieldset ul li[aria-current="page"] a span:not(.long-type) {
   font-weight: 300;
 }
-.search-results .search-content .search-filters > details[open] > div section:not(:first-of-type) h3 {
+.search-results .search-content .search-filters > details[open] > div section:not(:first-of-type) h3,
+.search-results .search-content .search-filters > details[open] > div fieldset:not(:first-of-type) h3 {
   padding: 1rem 0 0 0;
   border-top: 0.0625rem solid var(--modalBorder);
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-year ul:has(li:first-of-type[aria-current="page"]) {
+.search-results .search-content .search-filters > details[open] > div section.filter-year ul:has(li:first-of-type[aria-current="page"]),
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-year ul:has(li:first-of-type[aria-current="page"]) {
   columns: 6rem 3;
   max-width: 24rem;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-year .pagination {
+.search-results .search-content .search-filters > details[open] > div section.filter-year .pagination,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-year .pagination {
   max-width: 24rem;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject h4 {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject h4,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject h4 {
   font-size: 1rem;
   font-weight: 300;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > h4 {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > h4,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > h4 {
   padding: 0.35rem 0 0 0;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject label {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject label,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject label {
   display: block;
   margin: 0.5rem 0 0.25rem 0;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject input {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject input,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject input {
   display: block;
   width: 22.5rem;
   margin: 0 0 0.75rem 0;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul {
   font-size: 0;
   margin: 0.35rem 0;
   max-width: 23rem;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li {
   font-size: 1rem;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type),
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li:not(:first-of-type) {
   display: contents;
   line-height: 1.5rem;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) a {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) a,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li:not(:first-of-type) a {
   border: 0.0625rem solid var(--modalText);
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) span {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) span,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li:not(:first-of-type) span {
   border: 0.0625rem solid var(--disabledButtonBorder);
   background: var(--verySubtleBg);
   color: var(--disabledModalText);
 }
 .search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) a,
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) span {
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li:not(:first-of-type) a,
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type) span,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li:not(:first-of-type) span {
   display: inline-block;
   margin: 0 0.25rem 0 0;
   width: 1.5rem;
@@ -3340,13 +3378,15 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   text-align: center;
   font-weight: 400;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type)[aria-current="page"] a {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > ul li:not(:first-of-type)[aria-current="page"] a,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > ul li:not(:first-of-type)[aria-current="page"] a {
   background-color: var(--modalText);
   border-color: var(--modalText);
   color: var(--modalBg);
   font-weight: 500;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details > summary {
   font-weight: 500;
   color: var(--text);
   border-radius: 0.1875rem;
@@ -3359,7 +3399,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   max-width: 22.5rem;
 }
 .search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary:focus,
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary:hover {
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details > summary:focus,
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary:hover,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details > summary:hover {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -3371,7 +3413,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary:active {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details > summary:active,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details > summary:active {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -3385,19 +3428,24 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background-color: var(--modalBg);
   color: var(--modalText);
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details:not(:has(ul)) > summary {
   cursor: default;
   background-color: var(--disabledButtonBg);
   color: var(--text);
   border: 0.0625rem solid transparent;
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary.ghost-button {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary.ghost-button,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details:not(:has(ul)) > summary.ghost-button {
   color: var(--text);
   border: 0.0625rem solid var(--disabledButtonBorder);
 }
 .search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary:active,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details:not(:has(ul)) > summary:active,
 .search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary:focus,
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary:hover {
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details:not(:has(ul)) > summary:focus,
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details:not(:has(ul)) > summary:hover,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details:not(:has(ul)) > summary:hover {
   border-color: transparent;
   outline-color: transparent;
   outline-style: solid;
@@ -3409,7 +3457,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background-color: var(--disabledButtonBg);
   color: var(--text);
 }
-.search-results .search-content .search-filters > details[open] > div section.filter-subject > details .dynamic-subjects-results div {
+.search-results .search-content .search-filters > details[open] > div section.filter-subject > details .dynamic-subjects-results div,
+.search-results .search-content .search-filters > details[open] > div fieldset.filter-subject > details .dynamic-subjects-results div {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -3436,6 +3485,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .search-results .search-content .search-header .sort-by {
   margin: 0.85rem auto;
+}
+.search-results .search-content .search-header .sort-by label {
+  margin: 0 0.5rem 0 0;
 }
 .search-results .search-content .search-results-list h3 {
   padding: 0.65rem 0.25rem 0.25rem 0.25rem;
@@ -3493,6 +3545,865 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .search-results .search-content .search-footer .results-per-page button {
   padding: 0.5rem 1.2rem;
   border-radius: 0 0.1875rem 0.1875rem 0;
+}
+.advanced-searches section .search-keywords details summary,
+.search-results section .search-keywords details summary {
+  display: inline-block;
+  padding: 0.75em 1.5em 0 1.35em;
+  color: var(--link);
+  font-weight: 500;
+}
+.advanced-searches section .search-keywords details summary:before,
+.search-results section .search-keywords details summary:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  position: absolute;
+  transform: rotate(135deg);
+  width: 0.35em;
+  height: 0.35em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  margin: 0.38em 0.7rem 0.25em -1.15em;
+}
+.advanced-searches section .search-keywords details summary:hover,
+.search-results section .search-keywords details summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 0.05em;
+}
+.advanced-searches section .search-keywords details[open] summary:before,
+.search-results section .search-keywords details[open] summary:before {
+  transform: rotate(315deg);
+  margin: 0.6em 0.7rem 0.25em -1.15em;
+}
+.advanced-searches section .search-keywords details p:first-of-type,
+.search-results section .search-keywords details p:first-of-type {
+  margin: 0.5rem 0 0 0;
+}
+.advanced-searches section .search-keywords details p:last-of-type,
+.search-results section .search-keywords details p:last-of-type {
+  margin: 0.25rem 0 0.85rem 0;
+  padding: 0 0 1rem 0;
+  border-bottom: 1px solid var(--subtleBorder);
+}
+.advanced-searches section .search-keywords p + details summary,
+.search-results section .search-keywords p + details summary {
+  padding: 0.5em 1.5em 0 1.35em;
+}
+.advanced-searches section .search-keywords > span,
+.search-results section .search-keywords > span {
+  display: block;
+}
+.advanced-searches section .search-keywords > span label,
+.search-results section .search-keywords > span label {
+  display: block;
+  margin: 0 0 0.25em 0;
+  font-weight: 500;
+}
+.advanced-searches section .search-keywords > span:first-of-type label,
+.search-results section .search-keywords > span:first-of-type label {
+  margin: 0.5rem 0 0.25em 0;
+}
+.advanced-searches section .search-keywords > span input,
+.search-results section .search-keywords > span input {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 0 1rem 0;
+  padding: 0.75rem 0.9rem;
+}
+.advanced-searches section .search-keywords > span:last-of-type input,
+.search-results section .search-keywords > span:last-of-type input {
+  margin: 0;
+}
+.advanced-searches section .search-extent h3,
+.search-results section .search-extent h3 {
+  font-size: 1.1rem;
+  margin: 0.9em 0 0 0;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]),
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) {
+  display: flow-root;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]),
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) {
+  margin: 0.25rem auto 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.5rem;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > h3,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > h3 {
+  margin: 0.9em 0 0.15rem 0;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span {
+  margin: 0;
+  background: var(--bg);
+  border: 0.0625rem solid var(--link);
+  white-space: nowrap;
+  position: relative;
+  border-radius: 0.375rem;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before {
+  content: "";
+  margin: 0.7rem 0 0 0.65rem;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  z-index: 1;
+  border-radius: 0.375rem;
+  background: var(--bg);
+  border: 0.0625rem solid var(--link);
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span label,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span label {
+  display: block;
+  font-weight: 400;
+  padding: 0.75rem 1.65rem 0.75rem 2.85rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span input,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span input {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked),
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) {
+  border: 0.125rem solid var(--activeBgSolid);
+  background: var(--activeLargeBg);
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before {
+  margin: 0.6rem 0 0 0.55rem;
+  background: var(--activeBgSolid);
+  border-color: var(--activeBgSolid);
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label {
+  padding: 0.675rem 1.6rem 0.7rem 2.8rem;
+  font-weight: 500;
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0.435rem 0 0 -1.9em;
+  width: 0.75em;
+  height: 0.25em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  transform: rotate(130deg);
+  position: absolute;
+  border-color: var(--activeBgMarker);
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before {
+  color: var(--buttonText);
+  border-color: var(--focusButtonBg);
+  outline-color: var(--focusButtonBg);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before,
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before {
+  border-color: var(--contrastText);
+}
+.advanced-searches section .search-extent details summary,
+.search-results section .search-extent details summary {
+  display: inline-block;
+  padding: 0.75em 1.5em 0 1.35em;
+  color: var(--link);
+  font-weight: 500;
+}
+.advanced-searches section .search-extent details summary:before,
+.search-results section .search-extent details summary:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  position: absolute;
+  transform: rotate(135deg);
+  width: 0.35em;
+  height: 0.35em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  margin: 0.38em 0.7rem 0.25em -1.15em;
+}
+.advanced-searches section .search-extent details summary:hover,
+.search-results section .search-extent details summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 0.05em;
+}
+.advanced-searches section .search-extent details[open] summary:before,
+.search-results section .search-extent details[open] summary:before {
+  transform: rotate(315deg);
+  margin: 0.6em 0.7rem 0.25em -1.15em;
+}
+.advanced-searches section .search-extent details ul,
+.search-results section .search-extent details ul {
+  margin: 1rem 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.advanced-searches section .search-extent details ul li,
+.search-results section .search-extent details ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  border: 0.0625rem solid var(--subtleBorder);
+  border-radius: 0.1875rem;
+  background: var(--subtleBg);
+  font-weight: 500;
+}
+.advanced-searches section .search-extent details ul li span,
+.search-results section .search-extent details ul li span {
+  padding: 0 0.125rem;
+  font-weight: 300;
+}
+.advanced-searches section .search-language > span,
+.search-results section .search-language > span,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span {
+  display: block;
+  position: relative;
+  margin: 0.75rem 0 0 0;
+}
+.advanced-searches section .search-language > span label,
+.search-results section .search-language > span label,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label {
+  display: block;
+  font-weight: 500;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  border: 0.0625rem solid var(--link);
+}
+.advanced-searches section .search-language > span label:before,
+.search-results section .search-language > span label:before,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label:before,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label:before {
+  content: "";
+  margin: 0 0 0 -2.2em;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--subtleBorder);
+  position: absolute;
+  border-radius: 50%;
+}
+.advanced-searches section .search-language > span label span,
+.search-results section .search-language > span label span,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label span,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label span {
+  display: block;
+  font-weight: 300;
+}
+.advanced-searches section .search-language > span input,
+.search-results section .search-language > span input,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span input,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span input {
+  position: absolute;
+  top: 1rem;
+  left: 0.9rem;
+}
+.advanced-searches section .search-language > span:last-of-type,
+.search-results section .search-language > span:last-of-type,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type {
+  margin: 0.65rem 0 0 0;
+}
+.advanced-searches section .search-language > span:has(input:checked) label,
+.search-results section .search-language > span:has(input:checked) label,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label {
+  padding: 0.657rem 0.9rem 0.657rem 2.9rem;
+  background: var(--activeLargeBg);
+  border: 0.1625rem solid var(--activeBgSolid);
+}
+.advanced-searches section .search-language > span:has(input:checked) label:before,
+.search-results section .search-language > span:has(input:checked) label:before,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before {
+  background: var(--activeBgSolid);
+}
+.advanced-searches section .search-language > span:has(input:checked) label span:before,
+.search-results section .search-language > span:has(input:checked) label span:before,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0 0 0 -1.9em;
+  width: 0.75em;
+  height: 0.25em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  transform: rotate(130deg);
+  position: absolute;
+  border-color: var(--activeBgMarker);
+  top: 1.15rem;
+}
+.advanced-searches section .search-language > span:has(input:focus) label,
+.search-results section .search-language > span:has(input:focus) label,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-language > span:has(input:focus) label:before,
+.search-results section .search-language > span:has(input:focus) label:before,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before {
+  background: var(--contrastText);
+}
+.advanced-searches section .search-language > span:has(input:focus) label span:before,
+.search-results section .search-language > span:has(input:focus) label span:before,
+.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before,
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before {
+  border-color: var(--focusButtonBg);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"],
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] {
+  margin: 0.75rem 0 0 0;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span {
+  display: block;
+  font-weight: 500;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border-radius: 0.375rem;
+  background: var(--bg);
+  position: relative;
+  border: 0.0625rem solid var(--link);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > label,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > label {
+  display: block;
+  cursor: pointer;
+  margin: 0 0 0.5rem 0;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before {
+  content: "";
+  margin: 0 0 0 -2.2em;
+  width: 1.5em;
+  height: 1.5em;
+  background: var(--inactiveButtonBg);
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span {
+  display: block;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2),
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2) {
+  margin: 0.75rem 0 0 0;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span label,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span label {
+  font-weight: 300;
+  margin: 0 0.5rem 0 0;
+  min-width: 2.5rem;
+  display: inline-block;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span input,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span input {
+  width: 6rem;
+  padding: 0.5em 0.75em;
+  color: var(--lightText);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"],
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"] {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  outline-offset: 0;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type {
+  margin: 0.65rem 0 0 0;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span {
+  padding: 0.657rem 0.9rem 0.657rem 2.9rem;
+  background: var(--activeLargeBg);
+  border: 0.1625rem solid var(--activeBgSolid);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before {
+  background: var(--activeBgSolid);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0 0 0 -1.9em;
+  width: 0.75em;
+  height: 0.25em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  transform: rotate(130deg);
+  position: absolute;
+  z-index: 1;
+  border-color: var(--activeBgMarker);
+  top: 1.15rem;
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input {
+  color: var(--text);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before {
+  background: var(--contrastText);
+}
+.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before,
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before {
+  border-color: var(--focusButtonBg);
+}
+.advanced-searches section .search-date:not(:has(div[role="group"])) label,
+.search-results section .search-date:not(:has(div[role="group"])) label {
+  display: inline-block;
+  float: left;
+  padding: 0.5em 0.75em;
+  line-height: 1.2rem;
+}
+.advanced-searches section .search-date:not(:has(div[role="group"])) span,
+.search-results section .search-date:not(:has(div[role="group"])) span {
+  display: inline-block;
+  float: left;
+  border: 0.0625rem solid var(--link);
+  border-radius: 0.1875rem;
+  margin: 0.75rem 0 0 0;
+  background: var(--subtleBg);
+}
+.advanced-searches section .search-date:not(:has(div[role="group"])) span input,
+.search-results section .search-date:not(:has(div[role="group"])) span input {
+  width: 5.5rem;
+  padding: 0.5em 0.75em;
+  border: 0;
+}
+.advanced-searches section .search-date:not(:has(div[role="group"])) span:first-of-type,
+.search-results section .search-date:not(:has(div[role="group"])) span:first-of-type {
+  margin: 0.75rem 1rem 0 0;
+}
+.advanced-searches section .search-number-series label,
+.search-results section .search-number-series label {
+  display: inline-block;
+  float: left;
+  padding: 0.5em 0.75em;
+  line-height: 1.2rem;
+}
+.advanced-searches section .search-number-series span,
+.search-results section .search-number-series span {
+  display: inline-block;
+  float: left;
+  border: 0.0625rem solid var(--link);
+  border-radius: 0.1875rem;
+  margin: 0.75rem 0 0 0;
+  background: var(--subtleBg);
+}
+.advanced-searches section .search-number-series span:has(input) input,
+.search-results section .search-number-series span:has(input) input {
+  width: 5.5rem;
+  padding: 0.5em 0.75em;
+  border: 0;
+}
+.advanced-searches section .search-number-series span:has(select) select,
+.search-results section .search-number-series span:has(select) select {
+  width: 100%;
+  max-width: fit-content;
+  padding: 0.445em 0 0.445em 0.75em;
+  border: 0;
+}
+.advanced-searches section .search-number-series span:first-of-type,
+.search-results section .search-number-series span:first-of-type {
+  margin: 0.75rem 1rem 0 0;
+}
+.advanced-searches section .search-number label,
+.search-results section .search-number label {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.advanced-searches section .search-number input,
+.search-results section .search-number input {
+  width: 5.5rem;
+  padding: 0.5em 0.75em;
+  border: 0;
+  border: 0.0625rem solid var(--link);
+  border-radius: 0.1875rem;
+  margin: 0.5rem 0 0 0;
+}
+.advanced-searches section .search-type > label,
+.search-results section .search-type > label {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.advanced-searches section .search-type select,
+.search-results section .search-type select {
+  margin: 0.5em 0 0 0;
+  width: 100%;
+  max-width: fit-content;
+}
+.advanced-searches section .search-type [role="group"],
+.search-results section .search-type [role="group"] {
+  margin: 0.65rem 0 0 0;
+}
+.advanced-searches section .search-type [role="group"] h3,
+.search-results section .search-type [role="group"] h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.advanced-searches section .search-type [role="group"] > span,
+.search-results section .search-type [role="group"] > span {
+  display: block;
+  position: relative;
+  margin: 0.25rem 0 0 0;
+  border-radius: 0.375rem;
+}
+.advanced-searches section .search-type [role="group"] > span:before,
+.search-results section .search-type [role="group"] > span:before {
+  content: "";
+  margin: 0.075rem 0 0 0;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  z-index: 1;
+  border-radius: 0.375rem;
+  background: var(--bg);
+  border: 0.0625rem solid var(--link);
+}
+.advanced-searches section .search-type [role="group"] > span label,
+.search-results section .search-type [role="group"] > span label {
+  display: inline-block;
+  font-weight: 400;
+  padding: 0.25rem 1rem 0.25rem 2.2rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.advanced-searches section .search-type [role="group"] > span input,
+.search-results section .search-type [role="group"] > span input {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.4rem;
+}
+.advanced-searches section .search-type [role="group"] > span:has(input:checked):before,
+.search-results section .search-type [role="group"] > span:has(input:checked):before {
+  background: var(--activeBgSolid);
+  border-color: var(--activeBgSolid);
+}
+.advanced-searches section .search-type [role="group"] > span:has(input:checked) label:before,
+.search-results section .search-type [role="group"] > span:has(input:checked) label:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0.3rem 0 0 -1.8em;
+  width: 0.75em;
+  height: 0.25em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  transform: rotate(130deg);
+  position: absolute;
+  border-color: var(--activeBgMarker);
+}
+.advanced-searches section .search-type [role="group"] > span:has(input:focus):before,
+.search-results section .search-type [role="group"] > span:has(input:focus):before {
+  color: var(--buttonText);
+  border-color: var(--focusButtonBg);
+  outline-color: var(--focusButtonBg);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-type [role="group"] > span:has(input:focus) label:before,
+.search-results section .search-type [role="group"] > span:has(input:focus) label:before {
+  border-color: var(--contrastText);
+}
+.advanced-searches section .search-type [role="group"] > span:has(input:checked:focus):before,
+.search-results section .search-type [role="group"] > span:has(input:checked:focus):before {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-type details summary,
+.search-results section .search-type details summary {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background-color: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  display: inline-block;
+  margin: 1rem 0 0 0;
+  padding: 0.5em 1.5em 0.5em 2.5em;
+}
+.advanced-searches section .search-type details summary:focus,
+.search-results section .search-type details summary:focus,
+.advanced-searches section .search-type details summary:hover,
+.search-results section .search-type details summary:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.advanced-searches section .search-type details summary:active,
+.search-results section .search-type details summary:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.advanced-searches section .search-type details summary:before,
+.search-results section .search-type details summary:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  transform: rotate(135deg);
+  width: 0.35em;
+  height: 0.35em;
+  border-top-width: 0.15rem;
+  border-right-width: 0.15rem;
+  margin: 0 0.8rem 0.25em -1.3em;
+}
+.advanced-searches section .search-type details summary:active:before,
+.search-results section .search-type details summary:active:before,
+.advanced-searches section .search-type details summary:focus:before,
+.search-results section .search-type details summary:focus:before,
+.advanced-searches section .search-type details summary:hover:before,
+.search-results section .search-type details summary:hover:before {
+  border-color: var(--modalText);
+}
+.advanced-searches section .search-type details[open] summary:before,
+.search-results section .search-type details[open] summary:before {
+  transform: rotate(315deg);
+  margin: 0 0.8rem 0 -1.3em;
+}
+.advanced-searches section .search-pit-date legend h2,
+.search-results section .search-pit-date legend h2 {
+  margin: 0 0 0.75rem 0;
+}
+.advanced-searches section .search-pit-date span,
+.search-results section .search-pit-date span {
+  display: inline-block;
+  float: left;
+  border: 0.0625rem solid var(--link);
+  border-radius: 0.1875rem;
+  background: var(--subtleBg);
+}
+.advanced-searches section .search-pit-date span label,
+.search-results section .search-pit-date span label {
+  display: inline-block;
+  float: left;
+  padding: 0.6em 0.75em;
+  line-height: 1.2rem;
+}
+.advanced-searches section .search-pit-date span input,
+.search-results section .search-pit-date span input {
+  padding: 0.6em 0.75em;
+  border: 0;
+}
+.advanced-searches section .search-ia-attributes > span,
+.search-results section .search-ia-attributes > span {
+  display: block;
+}
+.advanced-searches section .search-ia-attributes > span label,
+.search-results section .search-ia-attributes > span label {
+  display: block;
+}
+.advanced-searches section .search-ia-attributes > span:has(select),
+.search-results section .search-ia-attributes > span:has(select) {
+  display: inline-block;
+  border: 0.0625rem solid var(--link);
+  border-radius: 0.1875rem;
+  margin: 0.75rem 0 0 0;
+  background: var(--subtleBg);
+}
+.advanced-searches section .search-ia-attributes > span:has(select) label,
+.search-results section .search-ia-attributes > span:has(select) label {
+  display: inline-block;
+  line-height: 1.2em;
+  float: left;
+  padding: 0.5em 0.75em;
+}
+.advanced-searches section .search-ia-attributes > span:has(select) select,
+.search-results section .search-ia-attributes > span:has(select) select {
+  display: inline-block;
+  float: left;
+  border: 0;
+  padding: 0.445em 0 0.445em 0.75em;
+  width: 100%;
+  max-width: fit-content;
+}
+.advanced-searches section .search-ia-attributes > span:has(input) label,
+.search-results section .search-ia-attributes > span:has(input) label {
+  display: block;
+  font-weight: 500;
+  margin: 0.75rem 0 0.25em 0;
+}
+.advanced-searches section .search-ia-attributes > span:has(input) label span,
+.search-results section .search-ia-attributes > span:has(input) label span {
+  font-weight: 300;
+}
+.advanced-searches section .search-ia-attributes > span:has(input) input,
+.search-results section .search-ia-attributes > span:has(input) input {
+  width: 100%;
+  max-width: 40rem;
+  padding: 0.75rem 0.9rem;
 }
 .advanced-searches > div {
   margin: 0 auto;
@@ -3604,308 +4515,14 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .advanced-searches section fieldset p span span {
   font-weight: 500;
 }
-.advanced-searches section .search-keywords details summary {
-  display: inline-block;
-  padding: 0.75em 1.5em 0 1.35em;
-  color: var(--link);
-  font-weight: 500;
-}
-.advanced-searches section .search-keywords details summary:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  height: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  position: absolute;
-  transform: rotate(135deg);
-  width: 0.35em;
-  height: 0.35em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  margin: 0.38em 0.7rem 0.25em -1.15em;
-}
-.advanced-searches section .search-keywords details summary:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
-  text-decoration-thickness: 0.05em;
-}
-.advanced-searches section .search-keywords details[open] summary:before {
-  transform: rotate(315deg);
-  margin: 0.6em 0.7rem 0.25em -1.15em;
-}
-.advanced-searches section .search-keywords details p:first-of-type {
-  margin: 0.5rem 0 0 0;
-}
-.advanced-searches section .search-keywords details p:last-of-type {
-  margin: 0.25rem 0 0.85rem 0;
-  padding: 0 0 1rem 0;
-  border-bottom: 1px solid var(--subtleBorder);
-}
-.advanced-searches section .search-keywords p + details summary {
-  padding: 0.5em 1.5em 0 1.35em;
-}
-.advanced-searches section .search-keywords > span {
-  display: block;
-}
-.advanced-searches section .search-keywords > span label {
-  display: block;
-  margin: 0 0 0.25em 0;
-  font-weight: 500;
-}
-.advanced-searches section .search-keywords > span:first-of-type label {
-  margin: 0.5rem 0 0.25em 0;
-}
-.advanced-searches section .search-keywords > span input {
-  width: 100%;
-  max-width: 40rem;
+.search-results section fieldset {
   margin: 0 0 1rem 0;
-  padding: 0.75rem 0.9rem;
+  padding: 0;
 }
-.advanced-searches section .search-keywords > span:last-of-type input {
-  margin: 0;
+.search-results section fieldset legend {
+  width: -webkit-fill-available;
 }
-.advanced-searches section .search-language > span {
-  display: block;
-  position: relative;
-  margin: 0.75rem 0 0 0;
-}
-.advanced-searches section .search-language > span label {
-  display: block;
-  font-weight: 500;
-  padding: 0.75rem 1rem 0.75rem 3rem;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  background: var(--bg);
-  position: relative;
-  z-index: 1;
-  border: 0.0625rem solid var(--link);
-}
-.advanced-searches section .search-language > span label:before {
-  content: "";
-  margin: 0 0 0 -2.2em;
-  width: 1.5em;
-  height: 1.5em;
-  background: var(--subtleBorder);
-  position: absolute;
-  border-radius: 50%;
-}
-.advanced-searches section .search-language > span label span {
-  display: block;
-  font-weight: 300;
-}
-.advanced-searches section .search-language > span input {
-  position: absolute;
-  top: 1rem;
-  left: 0.9rem;
-}
-.advanced-searches section .search-language > span:last-of-type {
-  margin: 0.65rem 0 0 0;
-}
-.advanced-searches section .search-language > span:has(input:checked) label {
-  background: var(--activeBgSolid);
-  border-color: var(--activeBgSolid);
-  color: var(--contrastText);
-}
-.advanced-searches section .search-language > span:has(input:checked) label:before {
-  background: var(--contrastText);
-}
-.advanced-searches section .search-language > span:has(input:checked) label span:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  margin: 0 0 0 -1.9em;
-  width: 0.75em;
-  height: 0.25em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(130deg);
-  position: absolute;
-  border-color: var(--activeBgSolid);
-  top: 1.25rem;
-}
-.advanced-searches section .search-language > span:has(input:focus) label {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-language > span:has(input:focus) label span:before {
-  border-color: var(--focusButtonBg);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] {
-  margin: 0.75rem 0 0 0;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span {
-  display: block;
-  font-weight: 500;
-  padding: 0.75rem 1rem 0.75rem 3rem;
-  border-radius: 0.375rem;
-  background: var(--bg);
-  position: relative;
-  border: 0.0625rem solid var(--link);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > label {
-  display: block;
-  cursor: pointer;
-  margin: 0 0 0.5rem 0;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before {
-  content: "";
-  margin: 0 0 0 -2.2em;
-  width: 1.5em;
-  height: 1.5em;
-  background: var(--inactiveButtonBg);
-  position: absolute;
-  z-index: 1;
-  border-radius: 50%;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span {
-  display: block;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2) {
-  margin: 0.75rem 0 0 0;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span label {
-  font-weight: 300;
-  margin: 0 0.5rem 0 0;
-  min-width: 2.5rem;
-  display: inline-block;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span input {
-  width: 6rem;
-  padding: 0.5em 0.75em;
-  color: var(--lightText);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"] {
-  position: absolute;
-  top: 1.15rem;
-  left: 1.15rem;
-  outline-offset: 0;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type {
-  margin: 0.65rem 0 0 0;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span {
-  background: var(--activeBgSolid);
-  border-color: var(--activeBgSolid);
-  color: var(--contrastText);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before {
-  background: var(--contrastText);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  margin: 0 0 0 -1.9em;
-  width: 0.75em;
-  height: 0.25em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(130deg);
-  position: absolute;
-  z-index: 1;
-  border-color: var(--activeBgSolid);
-  top: 1.25rem;
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input {
-  color: var(--text);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before {
-  border-color: var(--focusButtonBg);
-}
-.advanced-searches section .search-date:not(:has(div[role="group"])) label {
-  display: inline-block;
-  float: left;
-  padding: 0.5em 0.75em;
-  line-height: 1.2rem;
-}
-.advanced-searches section .search-date:not(:has(div[role="group"])) span {
-  display: inline-block;
-  float: left;
-  border: 0.0625rem solid var(--link);
-  border-radius: 0.1875rem;
-  margin: 0.75rem 0 0 0;
-  background: var(--subtleBg);
-}
-.advanced-searches section .search-date:not(:has(div[role="group"])) span input {
-  width: 5.5rem;
-  padding: 0.5em 0.75em;
-  border: 0;
-}
-.advanced-searches section .search-date:not(:has(div[role="group"])) span:first-of-type {
-  margin: 0.75rem 1rem 0 0;
-}
-.advanced-searches section .search-number label {
-  display: inline-block;
-  float: left;
-  padding: 0.5em 0.75em;
-  line-height: 1.2rem;
-}
-.advanced-searches section .search-number span {
-  display: inline-block;
-  float: left;
-  border: 0.0625rem solid var(--link);
-  border-radius: 0.1875rem;
-  margin: 0.75rem 0 0 0;
-  background: var(--subtleBg);
-}
-.advanced-searches section .search-number span:has(input) input {
-  width: 5.5rem;
-  padding: 0.5em 0.75em;
-  border: 0;
-}
-.advanced-searches section .search-number span:has(select) select {
-  width: 100%;
-  max-width: fit-content;
-  padding: 0.445em 0 0.445em 0.75em;
-  border: 0;
-}
-.advanced-searches section .search-number span:first-of-type {
-  margin: 0.75rem 1rem 0 0;
-}
-.advanced-searches section .search-number-current label {
+.search-results section fieldset.search-keywords legend {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -3916,491 +4533,60 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   white-space: nowrap;
   border: 0;
 }
-.advanced-searches section .search-number-current input {
-  width: 5.5rem;
-  padding: 0.5em 0.75em;
-  border: 0;
-  border: 0.0625rem solid var(--link);
-  border-radius: 0.1875rem;
+.search-results section fieldset.search-keywords input {
+  width: -webkit-fill-available;
+  max-width: 27rem;
+  margin: 0.5rem 0;
+}
+.search-results section fieldset.search-keywords input:last-of-type {
   margin: 0.5rem 0 0 0;
 }
-.advanced-searches section .search-type > label {
-  position: absolute;
-  width: 0.0625rem;
-  height: 0.0625rem;
-  padding: 0;
-  margin: -0.0625rem;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-.advanced-searches section .search-type select {
-  margin: 0.5em 0 0 0;
-  width: 100%;
-  max-width: fit-content;
-}
-.advanced-searches section .search-type [role="group"] {
-  margin: 0.65rem 0 0 0;
-}
-.advanced-searches section .search-type [role="group"] h3 {
+.search-results section fieldset.search-type [role="group"] h4 {
   margin: 1rem 0 0.5rem 0;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
-.advanced-searches section .search-type [role="group"] > span {
-  display: block;
-  position: relative;
-  margin: 0.25rem 0 0 0;
-  border-radius: 0.375rem;
+.search-results section fieldset.search-language > span:has(input:checked) label,
+.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label {
+  padding: 0.7rem 0.95rem 0.7rem 2.95rem;
+  border-width: 0.125rem;
 }
-.advanced-searches section .search-type [role="group"] > span:before {
-  content: "";
-  margin: 0.075rem 0 0 0;
-  width: 1.5em;
-  height: 1.5em;
-  position: absolute;
-  z-index: 1;
-  border-radius: 0.375rem;
-  background: var(--bg);
-  border: 0.0625rem solid var(--link);
+.search-results section fieldset.search-language > span:has(input:checked) label span:before,
+.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before {
+  top: 1.2rem;
 }
-.advanced-searches section .search-type [role="group"] > span label {
-  display: inline-block;
-  font-weight: 400;
-  padding: 0.25rem 1rem 0.25rem 2.2rem;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-}
-.advanced-searches section .search-type [role="group"] > span input {
-  position: absolute;
-  top: 0.45rem;
-  left: 0.4rem;
-}
-.advanced-searches section .search-type [role="group"] > span:has(input:checked):before {
-  background: var(--activeBgSolid);
-  border-color: var(--activeBgSolid);
-}
-.advanced-searches section .search-type [role="group"] > span:has(input:checked) label:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  margin: 0.3rem 0 0 -1.8em;
-  width: 0.75em;
-  height: 0.25em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(130deg);
-  position: absolute;
-  border-color: var(--contrastText);
-}
-.advanced-searches section .search-type [role="group"] > span:has(input:focus):before {
-  color: var(--buttonText);
-  border-color: var(--focusButtonBg);
-  outline-color: var(--focusButtonBg);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-type [role="group"] > span:has(input:checked:focus):before {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-type details summary {
-  font-weight: 500;
-  color: var(--text);
-  border-radius: 0.1875rem;
-  cursor: pointer;
-  background-color: var(--buttonBg);
-  color: var(--buttonText);
-  border: 0.0625rem solid transparent;
-  padding: 0.5em 1.5em;
-  text-align: center;
-  background-color: transparent;
-  color: var(--buttonBg);
-  border: 0.0625rem solid var(--buttonBg);
-  display: inline-block;
-  margin: 1rem 0 0 0;
-  padding: 0.5em 1.5em 0.5em 2.5em;
-}
-.advanced-searches section .search-type details summary:focus,
-.advanced-searches section .search-type details summary:hover {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-type details summary:active {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  background-color: var(--modalBg);
-  color: var(--modalText);
-}
-.advanced-searches section .search-type details summary:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  height: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  transform: rotate(135deg);
-  width: 0.35em;
-  height: 0.35em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  margin: 0 0.8rem 0.25em -1.3em;
-}
-.advanced-searches section .search-type details summary:active:before,
-.advanced-searches section .search-type details summary:focus:before,
-.advanced-searches section .search-type details summary:hover:before {
-  border-color: var(--modalText);
-}
-.advanced-searches section .search-type details[open] summary:before {
-  transform: rotate(315deg);
-  margin: 0 0.8rem 0 -1.3em;
-}
-.advanced-searches section .search-pit-date legend h2 {
-  margin: 0 0 0.75rem 0;
-}
-.advanced-searches section .search-pit-date span {
-  display: inline-block;
-  float: left;
-  border: 0.0625rem solid var(--link);
-  border-radius: 0.1875rem;
-  background: var(--subtleBg);
-}
-.advanced-searches section .search-pit-date span label {
-  display: inline-block;
-  float: left;
-  padding: 0.6em 0.75em;
-  line-height: 1.2rem;
-}
-.advanced-searches section .search-pit-date span input {
-  padding: 0.6em 0.75em;
-  border: 0;
-}
-.advanced-searches section .search-ia-attributes > span {
-  display: block;
-}
-.advanced-searches section .search-ia-attributes > span label {
-  display: block;
-}
-.advanced-searches section .search-ia-attributes > span:has(select) {
-  display: inline-block;
-  border: 0.0625rem solid var(--link);
-  border-radius: 0.1875rem;
-  margin: 0.75rem 0 0 0;
-  background: var(--subtleBg);
-}
-.advanced-searches section .search-ia-attributes > span:has(select) label {
-  display: inline-block;
-  line-height: 1.2em;
-  float: left;
-  padding: 0.5em 0.75em;
-}
-.advanced-searches section .search-ia-attributes > span:has(select) select {
-  display: inline-block;
-  float: left;
-  border: 0;
-  padding: 0.445em 0 0.445em 0.75em;
-  width: 100%;
-  max-width: fit-content;
-}
-.advanced-searches section .search-ia-attributes > span:has(input) label {
-  display: block;
-  font-weight: 500;
-  margin: 0.75rem 0 0.25em 0;
-}
-.advanced-searches section .search-ia-attributes > span:has(input) label span {
-  font-weight: 300;
-}
-.advanced-searches section .search-ia-attributes > span:has(input) input {
-  width: 100%;
-  max-width: 40rem;
-  padding: 0.75rem 0.9rem;
-}
-.advanced-searches section .search-extent h3 {
-  font-size: 1.1rem;
-  margin: 0.9em 0 0 0;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) {
-  display: flow-root;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span {
-  display: block;
-  position: relative;
-  margin: 0.65rem 0 0 0;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label {
-  display: block;
-  max-width: 29rem;
-  font-weight: 500;
-  padding: 0.75rem 1rem 0.75rem 3rem;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  background: var(--bg);
-  position: relative;
-  z-index: 1;
-  border: 0.0625rem solid var(--link);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label:before {
-  content: "";
-  margin: 0 0 0 -2.2em;
-  width: 1.5em;
-  height: 1.5em;
-  background: var(--subtleBorder);
-  position: absolute;
-  border-radius: 50%;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label span {
-  display: block;
-  font-weight: 300;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span input {
-  position: absolute;
-  top: 1rem;
-  left: 0.9rem;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type {
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) {
   margin: 0.75rem 0 0 0;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label {
-  background: var(--activeBgSolid);
-  border-color: var(--activeBgSolid);
-  color: var(--contrastText);
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) > span,
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) span:has(input:checked) {
+  border: 0;
+  background: none;
+  margin: 0 0 0.25rem 0;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before {
-  background: var(--contrastText);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  margin: -1em 0 0 -1.9em;
-  width: 0.75em;
-  height: 0.25em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(130deg);
-  position: absolute;
-  border-color: var(--activeBgSolid);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before {
-  border-color: var(--focusButtonBg);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) {
-  margin: 0.25rem auto 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 0.5rem;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > h3 {
-  margin: 0.9em 0 0.15rem 0;
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span {
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) > span:before,
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) span:has(input:checked):before {
   margin: 0;
-  background: var(--bg);
-  border: 0.0625rem solid var(--link);
-  white-space: nowrap;
-  position: relative;
-  border-radius: 0.375rem;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before {
-  content: "";
-  margin: 0.7rem 0 0 0.65rem;
-  width: 1.5em;
-  height: 1.5em;
-  position: absolute;
-  z-index: 1;
-  border-radius: 0.375rem;
-  background: var(--bg);
-  border: 0.0625rem solid var(--link);
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) > span label,
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) span:has(input:checked) label {
+  padding: 0.085rem 0 0 2.25rem;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span label {
-  display: block;
-  font-weight: 400;
-  padding: 0.75rem 1.65rem 0.75rem 2.85rem;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) > span input,
+.search-results section fieldset.search-extent [role="group"]:has(input[type="checkbox"]) span:has(input:checked) input {
+  top: 0.5rem;
+  left: 0.5rem;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span input {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
+.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span {
+  padding: 0.7rem 0.95rem 0.7rem 2.95rem;
+  border-width: 0.125rem;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) {
-  background: var(--activeBgSolid);
-  border-color: var(--activeBgSolid);
+.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before {
+  top: 1.2rem;
 }
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before {
-  background: var(--contrastText);
-  border-color: var(--contrastText);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label {
-  color: var(--contrastText);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  margin: 0.475rem 0 0 -1.8em;
-  width: 0.75em;
-  height: 0.25em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(130deg);
-  position: absolute;
-  border-color: var(--activeBgSolid);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before {
-  color: var(--buttonText);
-  border-color: var(--focusButtonBg);
-  outline-color: var(--focusButtonBg);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before {
-  background-color: var(--focusButtonBg);
-  color: var(--buttonText);
-  border-color: var(--focusOutline);
-  outline-color: var(--focusOutline);
-  outline-style: solid;
-  outline-width: 0.1rem;
-  text-decoration: none;
-  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
-}
-.advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before {
-  border-color: var(--contrastText);
-}
-.advanced-searches section .search-extent details summary {
-  display: inline-block;
-  padding: 0.75em 1.5em 0 1.35em;
-  color: var(--link);
-  font-weight: 500;
-}
-.advanced-searches section .search-extent details summary:before {
-  content: "";
-  display: inline-block;
-  margin: 0.15em 0 0.15em 0.35em;
-  width: 0.25em;
-  height: 0.25em;
-  border-style: solid;
-  border-top-width: 0.0625rem;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0.0625rem;
-  border-color: var(--link);
-  transform: rotate(45deg);
-  position: absolute;
-  transform: rotate(135deg);
-  width: 0.35em;
-  height: 0.35em;
-  border-top-width: 0.15rem;
-  border-right-width: 0.15rem;
-  margin: 0.38em 0.7rem 0.25em -1.15em;
-}
-.advanced-searches section .search-extent details summary:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
-  text-decoration-thickness: 0.05em;
-}
-.advanced-searches section .search-extent details[open] summary:before {
-  transform: rotate(315deg);
-  margin: 0.6em 0.7rem 0.25em -1.15em;
-}
-.advanced-searches section .search-extent details ul {
-  margin: 1rem 0 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.advanced-searches section .search-extent details ul li {
-  list-style: none;
-  margin: 0;
-  padding: 0.25rem 0.75rem;
-  border: 0.0625rem solid var(--subtleBorder);
-  border-radius: 0.1875rem;
-  background: var(--subtleBg);
-  font-weight: 500;
-}
-.advanced-searches section .search-extent details ul li span {
-  padding: 0 0.125rem;
-  font-weight: 300;
+.search-results section .search-filters button,
+.search-results section .search-filters .search-type summary {
+  width: -webkit-fill-available;
+  max-width: 16rem;
 }
 .new-legislation > div {
   background: var(--subtleBg);
@@ -4557,12 +4743,22 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0 0 0 1.25rem;
 }
 /* changes to legislation page */
-.changes-to-legislation > section:has(form) {
+.changes-to-legislation > section:first-of-type hgroup h1 {
+  font-weight: 300;
+}
+.changes-to-legislation > section:first-of-type hgroup p {
+  margin: 0.25rem 0;
+  font-weight: 300;
+}
+.changes-to-legislation > section:has(form),
+.changes-to-legislation details section {
   background: var(--altBg);
   max-width: unset;
-  padding: 0 1rem;
+  padding: 0;
+  margin: 0 0 1rem 0;
 }
-.changes-to-legislation > section:has(form) form {
+.changes-to-legislation > section:has(form) form,
+.changes-to-legislation details section form {
   padding: 2rem 1rem;
   margin: 0 auto;
   max-width: var(--maxWidth);
@@ -4570,7 +4766,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   grid-template-columns: 1fr;
   grid-gap: 1.5em;
 }
-.changes-to-legislation > section:has(form) form fieldset {
+.changes-to-legislation > section:has(form) form fieldset,
+.changes-to-legislation details section form fieldset {
   background: var(--bg);
   border-radius: 0.3rem;
   -moz-box-shadow: 0 0 0.25rem var(--boxShadow);
@@ -4580,32 +4777,41 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   padding: 1.25rem;
   position: relative;
 }
-.changes-to-legislation > section:has(form) form fieldset legend {
+.changes-to-legislation > section:has(form) form fieldset legend,
+.changes-to-legislation details section form fieldset legend {
   position: absolute;
 }
-.changes-to-legislation > section:has(form) form fieldset > label {
+.changes-to-legislation > section:has(form) form fieldset > label,
+.changes-to-legislation details section form fieldset > label {
   margin: 1.25rem 0 0.35rem 0;
   display: block;
 }
-.changes-to-legislation > section:has(form) form fieldset > label:first-of-type {
+.changes-to-legislation > section:has(form) form fieldset > label:first-of-type,
+.changes-to-legislation details section form fieldset > label:first-of-type {
   margin: 2.5rem 0 0.35rem 0;
 }
 .changes-to-legislation > section:has(form) form fieldset > input[type="text"]:first-of-type,
-.changes-to-legislation > section:has(form) form fieldset select {
+.changes-to-legislation details section form fieldset > input[type="text"]:first-of-type,
+.changes-to-legislation > section:has(form) form fieldset select,
+.changes-to-legislation details section form fieldset select {
   width: 100%;
 }
-.changes-to-legislation > section:has(form) form fieldset > input[type="text"]:last-of-type {
+.changes-to-legislation > section:has(form) form fieldset > input[type="text"]:last-of-type,
+.changes-to-legislation details section form fieldset > input[type="text"]:last-of-type {
   width: 4.5rem;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] {
+.changes-to-legislation > section:has(form) form fieldset [role="group"],
+.changes-to-legislation details section form fieldset [role="group"] {
   display: flow-root;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] h3 {
+.changes-to-legislation > section:has(form) form fieldset [role="group"] h3,
+.changes-to-legislation details section form fieldset [role="group"] h3 {
   margin: 1.25rem 0 0.35rem 0;
   font-weight: 400;
   font-size: 1rem;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] label {
+.changes-to-legislation > section:has(form) form fieldset [role="group"] label,
+.changes-to-legislation details section form fieldset [role="group"] label {
   display: inline-block;
   float: left;
   clear: both;
@@ -4616,10 +4822,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0.1875rem 0 0 0.1875rem;
   background: var(--subtleBg);
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type {
+.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type,
+.changes-to-legislation details section form fieldset [role="group"] label:last-of-type {
   margin: 0.75rem 0 0 0;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] input {
+.changes-to-legislation > section:has(form) form fieldset [role="group"] input,
+.changes-to-legislation details section form fieldset [role="group"] input {
   display: inline-block;
   float: left;
   width: 4rem;
@@ -4629,17 +4837,20 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0 0.1875rem 0.1875rem 0;
   clear: right;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type {
+.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type,
+.changes-to-legislation details section form fieldset [role="group"] input:last-of-type {
   margin: 0.75rem 0 0 0;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type legend:before {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type legend:before,
+.changes-to-legislation details section form fieldset:last-of-type legend:before {
   content: "Show..." / "";
   font-size: 1.625rem;
   font-weight: 800;
   line-height: 1.2em;
   margin: 0 0 0.4em 0;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type legend span {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type legend span,
+.changes-to-legislation details section form fieldset:last-of-type legend span {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -4650,46 +4861,57 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   white-space: nowrap;
   border: 0;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div,
+.changes-to-legislation details section form fieldset:last-of-type div {
   padding: 0.8rem 1.25rem;
   border-top: 0.0625rem solid transparent;
   border-bottom: 0.0625rem solid transparent;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div label {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div label,
+.changes-to-legislation details section form fieldset:last-of-type div label {
   margin: 0 0 0 1.65rem;
   display: block;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div label span {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div label span,
+.changes-to-legislation details section form fieldset:last-of-type div label span {
   font-weight: 500;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div input {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div input,
+.changes-to-legislation details section form fieldset:last-of-type div input {
   position: absolute;
   margin: 0.22rem 0 0 0;
   width: 1rem;
   height: 1rem;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div:first-of-type {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:first-of-type,
+.changes-to-legislation details section form fieldset:last-of-type div:first-of-type {
   margin: 3.75rem 0 0 0;
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div:nth-of-type(2) {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:nth-of-type(2),
+.changes-to-legislation details section form fieldset:last-of-type div:nth-of-type(2) {
   border-top-color: var(--subtleBg);
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div:has(input:checked) + div:nth-of-type(2) {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:has(input:checked) + div:nth-of-type(2),
+.changes-to-legislation details section form fieldset:last-of-type div:has(input:checked) + div:nth-of-type(2) {
   border-top-color: transparent;
   border-bottom-color: var(--subtleBg);
 }
-.changes-to-legislation > section:has(form) form fieldset:last-of-type div:has(input:checked) {
+.changes-to-legislation > section:has(form) form fieldset:last-of-type div:has(input:checked),
+.changes-to-legislation details section form fieldset:last-of-type div:has(input:checked) {
   background: var(--subtleBg);
   border-top-color: var(--subtleBorder);
   border-bottom-color: var(--subtleBorder);
 }
-.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]) {
+.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]),
+.changes-to-legislation details section form fieldset:has(input[type="radio"]) {
   padding: 0;
 }
-.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]) legend {
+.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]) legend,
+.changes-to-legislation details section form fieldset:has(input[type="radio"]) legend {
   padding: 1.25rem;
 }
-.changes-to-legislation > section:has(form) form > div {
+.changes-to-legislation > section:has(form) form > div,
+.changes-to-legislation details section form > div {
   padding: 1.25rem;
   background: var(--bg);
   border-radius: 0.3rem;
@@ -4698,17 +4920,291 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.25rem var(--boxShadow);
   color: unset;
 }
-.changes-to-legislation > section:has(form) form > div span span {
+.changes-to-legislation > section:has(form) form > div span span,
+.changes-to-legislation details section form > div span span {
   font-weight: 500;
 }
-.changes-to-legislation > section:has(form) form > div p {
+.changes-to-legislation > section:has(form) form > div p,
+.changes-to-legislation details section form > div p {
   margin: 0.25rem 0 1rem 0;
 }
-.changes-to-legislation > section:has(form) form > div button {
+.changes-to-legislation > section:has(form) form > div button,
+.changes-to-legislation details section form > div button {
   width: 100%;
 }
-.changes-to-legislation > section:has(form) + section {
-  padding: 2rem 1rem;
+.changes-to-legislation > section:has(form) + section,
+.changes-to-legislation details + section {
+  padding: 1rem 1rem 2rem 1rem;
+}
+.changes-to-legislation details summary {
+  display: block;
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  margin: 0 1rem;
+}
+.changes-to-legislation details summary:focus,
+.changes-to-legislation details summary:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.changes-to-legislation details summary:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.changes-to-legislation details summary:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  border-color: var(--buttonText);
+  transform: rotate(135deg);
+  margin: 0 0.75em 0.3em -0.5em;
+}
+.changes-to-legislation details[open] summary {
+  border-radius: 0.1875rem 0.1875rem 0 0;
+}
+.changes-to-legislation details[open] summary:before {
+  transform: rotate(315deg);
+  margin: 0 0.75em 0.1em -0.5em;
+}
+.changes-to-legislation .search-content .search-header > a {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background-color: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  display: block;
+  margin: 1rem 0 0 0;
+}
+.changes-to-legislation .search-content .search-header > a:focus,
+.changes-to-legislation .search-content .search-header > a:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.changes-to-legislation .search-content .search-header > a:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.changes-to-legislation .search-content .search-header > .sort-by {
+  margin: 0.85rem auto;
+  /*display: flex; align-items: center;
+                    label {margin: 0 0.5rem 0 0}
+                    select {flex-grow: 1}*/
+}
+.changes-to-legislation .search-content .search-header .search-actions {
+  background: var(--disabledButtonBg);
+  color: var(--lightText);
+  position: absolute;
+  right: 0;
+  top: -200px;
+}
+.changes-to-legislation .search-content #changes-to-legislation-results td span {
+  display: block;
+  margin: 0.25rem 0 0 0;
+}
+.changes-to-legislation .search-content #changes-to-legislation-results td span.applied {
+  color: var(--confirmed);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results td span.applied:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  margin: 0 0.4rem 0.22em 0;
+  width: 0.85em;
+  height: 0.3em;
+  border-top-width: 0.175rem;
+  border-right-width: 0.175rem;
+  border-color: var(--confirmed);
+  transform: rotate(130deg);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results td span.not-applicable {
+  color: var(--lightText);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results td:first-of-type span {
+  margin: 0;
+  font-weight: 400;
+  color: var(--lightText);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details summary {
+  display: block;
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background-color: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  margin: 0;
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:focus,
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:before {
+  content: "";
+  display: inline-block;
+  margin: 0.15em 0 0.15em 0.35em;
+  width: 0.25em;
+  height: 0.25em;
+  border-style: solid;
+  border-top-width: 0.0625rem;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0.0625rem;
+  border-color: var(--link);
+  transform: rotate(45deg);
+  transform: rotate(135deg);
+  margin: 0 0.75em 0.3em -0.5em;
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:hover:before,
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:active:before,
+.changes-to-legislation .search-content #changes-to-legislation-results details summary:focus:before {
+  border-color: var(--buttonText);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details[open] summary {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  border-radius: 0.1875rem 0.1875rem 0 0;
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details[open] summary:focus,
+.changes-to-legislation .search-content #changes-to-legislation-results details[open] summary:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details[open] summary:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details[open] summary:before {
+  border-color: var(--buttonText);
+  transform: rotate(315deg);
+  margin: 0 0.75em 0.1em -0.5em;
+}
+.changes-to-legislation .search-content #changes-to-legislation-results details[open] > div {
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid var(--link);
+  border-radius: 0 0 0.1875rem 0.1875rem;
+  background: var(--bg);
 }
 /* legislation pages */
 .legislation section {
@@ -5873,7 +6369,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .legislation-content > div .toc-detail button:focus-visible {
   outline-color: var(--link);
 }
-.legislation .legislation-content > div .toc-detail button 90 span {
+.legislation .legislation-content > div .toc-detail button span {
   position: unset;
   width: unset;
   height: unset;
@@ -6691,6 +7187,84 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   body:has(.search-filters > details[open]) *:not(:has(.search-filters)):not(.search-filters):not(.search-filters *) {
     display: none;
   }
+  .changes-to-legislation .search-content #changes-to-legislation-results {
+    display: block;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results caption {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results thead {
+    display: none;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tbody {
+    display: block;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr {
+    display: block;
+    padding: 1rem 1rem 0 1rem;
+    margin: 1rem 0;
+    border-radius: 0.3rem;
+    -moz-box-shadow: 0 0 0.25rem var(--boxShadow);
+    -webkit-box-shadow: 0 0 0.25rem var(--boxShadow);
+    box-shadow: 0 0 0.25rem var(--boxShadow);
+    color: unset;
+    background: var(--verySubtleBg);
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td {
+    display: block;
+    padding: 0 0 0.5rem 0;
+    font-weight: 500;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:has(details) {
+    padding: 0.15rem 0 1rem 0;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td .not-applicable {
+    font-weight: 400;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td details summary {
+    text-align: left;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td details[open] summary {
+    text-align: left;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td details[open]::details-content {
+    font-weight: 300;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:before {
+    display: block;
+    font-weight: 300;
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(1):before {
+    content: "Changed legislation title: ";
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(2):before {
+    content: "Year and number: ";
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(3):before {
+    content: "Changed provision: ";
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(4):before {
+    content: "Type of effect: ";
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(5):before {
+    content: "Affecting legislation title: ";
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(6):before {
+    content: "Year and number: ";
+  }
+  .changes-to-legislation .search-content #changes-to-legislation-results tr td:nth-of-type(7):before {
+    content: "Affecting provision: ";
+  }
 }
 @media print and (orientation: portrait), screen and (max-width: calc(1024px - 1px)) {
   main.legislation .timeline > summary {
@@ -7055,6 +7629,141 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     white-space: nowrap;
     border: 0;
   }
+  main.search-results .search-content .search-filters:has(> details[open]) div fieldset.search-extent details summary {
+    padding: 0.5em 1.5em 0 1.35em;
+    position: relative;
+  }
+  main.search-results .search-content .search-filters:has(> details[open]) div fieldset.search-extent details ul {
+    margin: 0.5em 0 0 0;
+  }
+  main.search-results .search-content .search-filters:has(> details[open]) div fieldset.search-extent details ul li {
+    margin: 0;
+    padding: 0.15rem 0.5rem;
+    background: var(--activeModalLargeBg);
+    border-color: var(--activeModalLargeBg);
+  }
+  main.search-results section fieldset.search-language > span,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span {
+    max-width: 27rem;
+  }
+  main.search-results section fieldset.search-language > span label,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span label {
+    background: var(--modalBg);
+    color: var(--modalText);
+  }
+  main.search-results section fieldset.search-language > span label:before,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span label:before {
+    background: var(--inactiveModalBg);
+  }
+  main.search-results section fieldset.search-language > span input,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span input {
+    top: 1.15rem;
+    left: 1.2rem;
+    outline-style: inherit;
+  }
+  main.search-results section fieldset.search-language > span:has(input:checked) label,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label {
+    background: var(--activeModalLargeBg);
+    border-color: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-language > span:has(input:checked) label:before,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before {
+    background: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-language > span:has(input:checked) label span:before,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before {
+    border-color: var(--activeModalText);
+  }
+  main.search-results section fieldset.search-language > span:has(input:focus) label,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label {
+    background-color: var(--focusButtonBg);
+    color: var(--buttonText);
+    border-color: var(--focusOutline);
+    outline-color: var(--focusOutline);
+    outline-style: solid;
+    outline-width: 0.1rem;
+    text-decoration: none;
+    -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  }
+  main.search-results section fieldset.search-language > span:has(input:focus) label:before,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before {
+    background: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-language > span:has(input:focus) label span:before,
+  main.search-results section fieldset.search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before {
+    border-color: var(--focusButtonBg);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"] {
+    max-width: 27rem;
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"] > span {
+    background: var(--modalBg);
+    color: var(--modalText);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"] > span > label:before {
+    background: var(--inactiveModalBg);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"] > span > span:first-of-type:before {
+    border-color: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span {
+    background: var(--activeModalLargeBg);
+    border-color: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before {
+    background: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before {
+    border-color: var(--activeModalText);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input {
+    color: var(--text);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span {
+    background-color: var(--focusButtonBg);
+    color: var(--buttonText);
+    border-color: var(--focusOutline);
+    outline-color: var(--focusOutline);
+    outline-style: solid;
+    outline-width: 0.1rem;
+    text-decoration: none;
+    -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+    box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before {
+    background: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before {
+    border-color: var(--focusButtonBg);
+  }
+  main.search-results section fieldset.search-type [role="group"] > span:before {
+    background: var(--modalBg);
+  }
+  main.search-results section fieldset.search-type [role="group"] > span:has(input:checked):before {
+    background: var(--activeModalBg);
+  }
+  main.search-results section fieldset.search-type [role="group"] > span:has(input:checked) label:before {
+    border-color: var(--activeModalText);
+  }
+  main.search-results section fieldset.search-type [role="group"] > span:has(input:focus) label:before {
+    border-color: var(--activeModalBg);
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination {
+    margin: 0 auto 0.85rem auto;
+    border-top: 0.0625rem solid var(--subtleBorder);
+    padding: 0 0 0.85rem 0;
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header a {
+    position: unset;
+    margin: 1rem 0 0 0;
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .sort-by {
+    position: unset;
+    margin: 0 0 1rem 0;
+  }
 }
 @media (min-height: 450px) {
   header .hdr-tna {
@@ -7095,6 +7804,64 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: repeat(2, 1fr);
     column-gap: 0.5rem;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#specific-date) span span label {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span {
+    padding: 0.75rem 1rem;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span > label {
+    padding: 0 0 0 2rem;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span span {
+    display: contents;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span span:before {
+    margin: 0 0 0 0.1em;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span span:nth-of-type(2) {
+    margin: 0;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span span:nth-of-type(2) label {
+    margin: 0 0.5rem 0 0.35rem;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span span label {
+    min-width: unset;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date) > span span input[type="text"] {
+    width: 4rem;
+  }
+  .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date):has(> span > input:checked) > span {
+    padding: 0.7rem 0.95rem;
+  }
+}
+@media screen and (min-width: 450px) and (max-width: calc(1024px - 1px)) {
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td {
+    display: grid;
+    grid-template-columns: 12em auto minmax(0, 1fr);
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td a {
+    padding: 0 0.35rem 0 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:after {
+    content: "";
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:last-of-type,
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-last-of-type(2) {
+    grid-template-columns: auto;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:last-of-type:after,
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-last-of-type(2):after {
+    display: none;
   }
 }
 @media (min-width: 450px) {
@@ -7222,20 +7989,48 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     text-align: right;
     margin: 0 0 1rem 0;
   }
-  main.changes-to-legislation > section:has(form) form fieldset [role="group"] label {
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] label,
+  main.changes-to-legislation details section form fieldset [role="group"] label {
     clear: none;
   }
-  main.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type {
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type,
+  main.changes-to-legislation details section form fieldset [role="group"] label:last-of-type {
     margin: 0 0 0 1.25rem;
   }
-  main.changes-to-legislation > section:has(form) form fieldset [role="group"] input {
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] input,
+  main.changes-to-legislation details section form fieldset [role="group"] input {
     clear: none;
   }
-  main.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type {
+  main.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type,
+  main.changes-to-legislation details section form fieldset [role="group"] input:last-of-type {
     margin: 0;
   }
-  main.changes-to-legislation > section:has(form) form > div button {
+  main.changes-to-legislation > section:has(form) form > div button,
+  main.changes-to-legislation details section form > div button {
     width: unset;
+  }
+  main.changes-to-legislation details summary {
+    display: inline-block;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) {
+    overflow: visible;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
+    position: relative;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header > a {
+    position: absolute;
+    margin: -3.635rem 0 0 0;
+    right: 0;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header .sort-by {
+    margin: 0;
+    position: absolute;
+    top: -3.625rem;
+    right: 0;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination {
+    margin: 1rem auto 0.85rem auto;
   }
 }
 @media (min-width: 510px) {
@@ -7600,14 +8395,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     top: 0;
     left: 0;
   }
-  main.changes-to-legislation > section:has(form) form {
+  main.changes-to-legislation > section:has(form) form,
+  main.changes-to-legislation details section form {
     grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem);
   }
-  main.changes-to-legislation > section:has(form) form > fieldset:last-of-type {
+  main.changes-to-legislation > section:has(form) form > fieldset:last-of-type,
+  main.changes-to-legislation details section form > fieldset:last-of-type {
     grid-column-start: span 2;
     grid-column-end: 3;
   }
-  main.changes-to-legislation > section:has(form) form > div {
+  main.changes-to-legislation > section:has(form) form > div,
+  main.changes-to-legislation details section form > div {
     grid-column-start: span 2;
     grid-column-end: 3;
   }
@@ -7925,6 +8723,31 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.advanced-searches > div > section nav ul li:has([aria-current="page"]) {
     padding: 1.1em 0 0.8em 0;
+  }
+  main.search-results section .search-type [role="group"] {
+    margin: 0.5rem 0 0 0;
+  }
+  main.search-results section .search-type [role="group"] > span {
+    display: flex;
+    margin: 0 0 0.25rem 0;
+    padding: 0;
+    min-height: 2.125rem;
+  }
+  main.search-results section .search-type [role="group"] > span:before {
+    top: 0.25rem;
+    margin: 0;
+  }
+  main.search-results section .search-type [role="group"] > span label {
+    padding: 0 1rem 0 2.2rem;
+    display: flex;
+    align-items: center;
+  }
+  main.search-results section .search-type [role="group"] > span label:before {
+    top: 0.45rem;
+  }
+  main.search-results section .search-filters button,
+  main.search-results section .search-filters .search-type summary {
+    width: -webkit-fill-available;
   }
   main.new-legislation > div {
     border-top: 0;
@@ -9059,24 +9882,30 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.search-results .search-content:has(aside > details[open]) .search-filters > details > div section ul li[aria-current="page"] a {
     color: var(--text);
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section h3 {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section h3,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset h3 {
     padding: 0.5rem 0 0 0;
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section:not(:first-of-type) h3 {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section:not(:first-of-type) h3,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset:not(:first-of-type) h3 {
     padding: 0.65rem 0 0 0;
     border-top: 0.0625rem solid var(--subtleBorder);
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section ul {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section ul,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset ul {
     margin: 0.5em 0 0.75em 0;
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section .pagination {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section .pagination,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset .pagination {
     margin: 0.85rem auto 0 auto;
     border-bottom: 0;
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject input {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject input,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject input {
     width: 100%;
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject > ul li:not(:first-of-type) a {
     font-weight: 500;
     color: var(--text);
     border-radius: 0.1875rem;
@@ -9093,7 +9922,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     border-radius: 0;
   }
   main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a:focus,
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a:hover {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject > ul li:not(:first-of-type) a:focus,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a:hover,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject > ul li:not(:first-of-type) a:hover {
     background-color: var(--focusButtonBg);
     color: var(--buttonText);
     border-color: var(--focusOutline);
@@ -9105,7 +9936,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
     box-shadow: 0 0 0.375rem 0 var(--focusShadow);
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a:active {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) a:active,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject > ul li:not(:first-of-type) a:active {
     background-color: var(--focusButtonBg);
     color: var(--buttonText);
     border-color: var(--focusOutline);
@@ -9119,14 +9951,30 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-color: var(--modalBg);
     color: var(--modalText);
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) span {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type) span,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject > ul li:not(:first-of-type) span {
     color: var(--text);
   }
-  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type)[aria-current="page"] a {
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.filter-subject > ul li:not(:first-of-type)[aria-current="page"] a,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.filter-subject > ul li:not(:first-of-type)[aria-current="page"] a {
     background-color: var(--modalBg);
     border-color: var(--modalBg);
     color: var(--modalText);
     font-weight: 500;
+  }
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.search-extent details summary,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.search-extent details summary {
+    padding: 0.5em 1.5em 0 1.35em;
+    position: relative;
+  }
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.search-extent details ul,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.search-extent details ul {
+    margin: 0.5em 0 0 0;
+  }
+  main.search-results .search-content:has(aside > details[open]) .search-filters div section.search-extent details ul li,
+  main.search-results .search-content:has(aside > details[open]) .search-filters div fieldset.search-extent details ul li {
+    margin: 0;
+    padding: 0.15rem 0.5rem;
   }
   main.search-results .search-content .search-header,
   main.search-results .search-content .search-footer {
@@ -9135,7 +9983,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.search-results .search-content .search-header .pagination,
   main.search-results .search-content .search-footer .pagination {
-    padding: 1.35rem 0 1.25rem 0;
+    padding: 1.35rem 0 1.5rem 0;
   }
   main.search-results .search-content .search-header .pagination ul li:first-of-type,
   main.search-results .search-content .search-footer .pagination ul li:first-of-type,
@@ -9214,55 +10062,225 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.search-results .search-content .search-header {
     order: -1;
   }
-  main.changes-to-legislation > section:has(form) form {
+  main.changes-to-legislation > section:has(form) form,
+  main.changes-to-legislation details section form {
     grid-template-columns: calc(37% - 1.5rem) calc(37% - 1.5rem) 26%;
   }
-  main.changes-to-legislation > section:has(form) form > fieldset:last-of-type {
+  main.changes-to-legislation > section:has(form) form > fieldset:last-of-type,
+  main.changes-to-legislation details section form > fieldset:last-of-type {
     grid-column-start: unset;
     grid-column-end: unset;
   }
-  main.changes-to-legislation > section:has(form) form > div {
+  main.changes-to-legislation > section:has(form) form > div,
+  main.changes-to-legislation details section form > div {
     grid-column-start: span 3;
     grid-column-end: 4;
   }
+  main.changes-to-legislation details summary {
+    margin: 0.75rem 0 0 calc(((100vW - var(--maxWidth)) / 2) + 1rem);
+  }
+  main.changes-to-legislation details summary {
+    position: relative;
+    z-index: 1;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
+    display: flow-root;
+    width: 100%;
+    margin: 0.5rem 0 1.5rem 0;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header > a {
+    margin: -3.1rem 0 0 0;
+    z-index: 1;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header .sort-by {
+    top: -3.1rem;
+    right: 0;
+    z-index: 1;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination {
+    position: absolute;
+    margin: -4.05rem 0 0 0;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-footer {
+    display: flex;
+    align-items: center;
+    border-top: 0.0625rem solid var(--subtleBorder);
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .pagination {
+    margin: 0 auto;
+    order: unset;
+    border: 0;
+  }
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .results-count,
+  main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .results-per-page {
+    flex-shrink: 0;
+    margin: 0;
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
+    margin: 0.5rem 0 4.5rem 0;
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination {
+    margin: -1.05rem 0 0 0;
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header > a {
+    margin: 0;
+  }
+  main.changes-to-legislation:has(> details[open]) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .sort-by {
+    top: 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results {
+    border-collapse: collapse;
+    width: -webkit-fill-available;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results caption {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr {
+    display: grid;
+    grid-template-columns: 1fr repeat(2, 6rem) 8rem 1fr repeat(2, 6rem);
+    column-gap: 0.35rem;
+    padding: 0.5rem;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:nth-child(even) {
+    background: var(--subtleBg);
+    border-top: 0.0625rem solid var(--verySubtleBorder);
+    border-bottom: 0.0625rem solid var(--verySubtleBorder);
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:nth-child(even):last-of-type {
+    border-bottom: 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th {
+    text-align: left;
+    padding: 0.5rem 0;
+    color: var(--tableHeaderText);
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th:nth-last-of-type(2),
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th:last-of-type,
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th span {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-last-of-type(2) {
+    grid-column: span 7;
+    text-align: right;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:first-of-type,
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-of-type(5) {
+    font-weight: 500;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:first-of-type span,
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-of-type(5) span {
+    font-weight: 400;
+    color: var(--lightText);
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:last-of-type {
+    grid-column-start: 1;
+    grid-column-end: 8;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td details {
+    margin: 0.5rem 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td details summary {
+    width: 5.75rem;
+    padding: 0.5rem 1rem;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td details summary:before {
+    margin: 0 0.65rem 0.3rem 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td details[open] summary:before {
+    margin: 0 0.65rem 0.1rem 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td details div {
+    clear: both;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) td:nth-last-of-type(2) {
+    grid-column: span 6;
+    margin: 0.6rem 0 0 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) details {
+    position: relative;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) details summary {
+    position: absolute;
+    right: 0;
+    margin: -2.6rem 0 0 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-radius: 0.2em 0.2em 0 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results thead:after {
+    position: relative;
+    content: "";
+    height: 0.4rem;
+    overflow: hidden;
+    display: block;
+    margin: 0 0 -0.4rem 0;
+    z-index: 10;
+    background: var(--altBg);
+    background: linear-gradient(0deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results thead tr {
+    background: var(--tableHeaderBg);
+    border-radius: 0.25em 0.25em 0 0;
+    padding: 0 0.5rem;
+    align-items: end;
+  }
 }
 @media (min-width: calc(1024px)) and (max-width: calc(1280px - 1px)) {
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) {
     position: unset;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) aside > details > summary {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) aside > details > summary {
     position: absolute;
     z-index: 1;
     margin: 0.85rem auto;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination,
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination,
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .pagination {
     margin: 0 auto 0.85rem auto;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-header {
     position: relative;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-header .sort-by {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .sort-by {
     top: 0.85rem;
     right: 0;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-header .pagination {
     padding: 1.35rem 5.5rem 1.25rem 0;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-footer {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-footer {
     display: flex;
     align-items: center;
     padding: 0.85rem 0;
     border-top: 0.0625rem solid var(--subtleBorder);
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .results-count {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .results-count {
     margin: 0;
     padding: 0;
     text-align: unset;
     border: 0;
     white-space: nowrap;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .pagination {
     order: unset;
     margin: 0;
     padding: 0;
@@ -9270,17 +10288,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     flex-grow: 1;
     width: unset;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .results-per-page {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) .search-footer .results-per-page {
     margin: 0;
     min-width: 16rem;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(24))):has(aside > details[open]) .search-filters > details > summary {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))):has(aside > details[open]) .search-filters > details > summary {
     margin: -5.85rem 0 0 0;
   }
-  main.search-results .search-content:has(.pagination li:nth-child(24)):has(aside > details[open]) .search-filters > details > summary {
+  main.search-results:not(.changes-to-legislation) .search-content:has(.pagination li:nth-child(24)):has(aside > details[open]) .search-filters > details > summary {
     margin: -10.1rem 0 0 0;
   }
-  main.search-results .search-content:has(.pagination li:nth-child(24)):has(aside > details[open]) .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:has(.pagination li:nth-child(24)):has(aside > details[open]) .pagination {
     margin: 3.48rem auto 0.85rem auto;
   }
 }
@@ -9337,42 +10355,42 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(61)) {
     columns: 0 4;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) {
     position: unset;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) aside > details > summary {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) aside > details > summary {
     position: absolute;
     z-index: 1;
     margin: 0.85rem auto;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-header .pagination,
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-header .pagination,
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .pagination {
     margin: 0 auto 0.85rem auto;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-header {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-header {
     position: relative;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-header .sort-by {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-header .sort-by {
     top: 0.85rem;
     right: 0;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-header .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-header .pagination {
     padding: 1.35rem 5.5rem 1.25rem 0;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-footer {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-footer {
     display: flex;
     align-items: center;
     padding: 0.85rem 0;
     border-top: 0.0625rem solid var(--subtleBorder);
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .results-count {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .results-count {
     margin: 0;
     padding: 0;
     text-align: unset;
     border: 0;
     white-space: nowrap;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .pagination {
     order: unset;
     margin: 0;
     padding: 0;
@@ -9380,35 +10398,104 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     flex-grow: 1;
     width: unset;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .results-per-page {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))) .search-footer .results-per-page {
     margin: 0;
     min-width: 16rem;
   }
-  main.search-results .search-content:not(:has(.pagination li:nth-child(29))):has(aside > details[open]) aside > details > summary {
+  main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(29))):has(aside > details[open]) aside > details > summary {
     margin: -5.85rem 0 0 0;
   }
-  main.search-results .search-content:has(.pagination li:nth-child(29)):has(aside > details[open]) aside > details > summary {
+  main.search-results:not(.changes-to-legislation) .search-content:has(.pagination li:nth-child(29)):has(aside > details[open]) aside > details > summary {
     margin: -10.1rem 0 0 0;
   }
-  main.search-results .search-content:has(.pagination li:nth-child(29)):has(aside > details[open]) .pagination {
+  main.search-results:not(.changes-to-legislation) .search-content:has(.pagination li:nth-child(29)):has(aside > details[open]) .pagination {
     margin: 3.48rem auto 0.85rem auto;
   }
-  main.search-results .search-content .search-footer .results-count {
+  main.search-results:not(.changes-to-legislation) .search-content .search-footer .results-count {
     min-width: 16rem;
   }
-  main.search-results .search-content:has(aside details[open]) {
+  main.search-results:not(.changes-to-legislation) .search-content:has(aside details[open]) {
     grid-template-columns: fit-content(18rem) 1fr;
   }
-  main.search-results .search-content:has(aside details[open]) .search-filters {
+  main.search-results:not(.changes-to-legislation) .search-content:has(aside details[open]) .search-filters {
     min-width: 18rem;
     max-width: 18rem;
   }
-  main.changes-to-legislation > section:has(form) form {
+  main.changes-to-legislation > section:has(form) form,
+  main.changes-to-legislation details section form {
     grid-template-columns: calc(39% - 1rem) calc(39% - 1rem) 22%;
   }
-  main.changes-to-legislation > section:has(form) form > div {
+  main.changes-to-legislation > section:has(form) form > div,
+  main.changes-to-legislation details section form > div {
     grid-column-start: span 3;
     grid-column-end: 4;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr {
+    grid-template-columns: 1fr repeat(2, 6rem) 8rem 1fr repeat(2, 6rem) 7.5rem 6.5rem;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th:nth-last-of-type(2),
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th:last-of-type {
+    position: unset;
+    width: unset;
+    height: unset;
+    padding: unset;
+    margin: unset;
+    overflow: unset;
+    clip: unset;
+    white-space: unset;
+    border: unset;
+    padding: 0.5rem 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th:nth-last-of-type(2) span,
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr th:last-of-type span {
+    position: unset;
+    width: unset;
+    height: unset;
+    padding: unset;
+    margin: unset;
+    overflow: unset;
+    clip: unset;
+    white-space: unset;
+    border: unset;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-last-of-type(2) {
+    grid-column: unset;
+    text-align: unset;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:last-of-type {
+    grid-column-start: unset;
+    grid-column-end: unset;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td span {
+    margin: 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td span + span {
+    margin: 0.35rem 0 0 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) td:nth-last-of-type(2) {
+    grid-column: unset;
+    margin: unset;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) td:last-of-type {
+    position: relative;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) details {
+    position: unset;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details) details summary {
+    position: absolute;
+    width: 6.475rem;
+    bottom: 0;
+    margin: 0;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details[open]) td:last-of-type {
+    grid-column-start: 1;
+    grid-column-end: 10;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr:has(details[open]) details summary {
+    bottom: unset;
+    margin: -3.1rem 0 0 0;
+    padding: 0.5rem 1rem 1rem 1rem;
   }
 }
 @media print {
@@ -9528,8 +10615,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     padding-left: 0;
     padding-right: 0;
   }
-  .changes-to-legislation > section:has(form) + section,
-  .changes-to-legislation > section:has(form) form {
+  main.changes-to-legislation > section:has(form) + section,
+  main.changes-to-legislation details + section,
+  main.changes-to-legislation > section:has(form) form,
+  main.changes-to-legislation details form {
     padding-left: 0;
     padding-right: 0;
   }
