@@ -12,6 +12,9 @@ Django = "^5.1.2"
 requests = "^2.32.3"
 django-environ = "^0.11.2"
 
+gunicorn = "^22.0.0" # WSGI server used in containerized deployment
+whitenoise = "^6.7.0" # Optional: serve app static assets in-container (enabled via USE_WHITENOISE)
+
 [tool.poetry.group.dev.dependencies]
 black = "^24.10.0"
 flake8 = "^7.1.1"
