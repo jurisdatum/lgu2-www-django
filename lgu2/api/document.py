@@ -62,7 +62,8 @@ class CommonMetadata(TypedDict):
     def convert_dates(meta: 'CommonMetadata'):
         if meta.get('date'):  # can be null
             meta['date'] = Date.fromisoformat(meta['date'])
-        meta['modified'] = Date.fromisoformat(meta['modified'])
+        if meta.get('modified'):
+            meta['modified'] = Date.fromisoformat(meta['modified'])
         if meta.get('pointInTime'):  # can be null
             meta['pointInTime'] = Date.fromisoformat(meta['pointInTime'])
 

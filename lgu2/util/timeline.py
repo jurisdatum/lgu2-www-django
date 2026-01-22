@@ -101,10 +101,19 @@ def _make_timeline_data(meta: CommonMetadata, make_link: Callable) -> TimelineDa
     else:
         viewing = next(v for v in historical if v['label'] == meta['version'])
 
+    
+    # NEW: detect single-version timeline
+    version_count = (
+        (1 if original else 0)
+        + len(historical)
+        + (1 if current else 0)
+    )
+
     return {
         'original': original,
         'historical': historical,
         'current': current,
         'viewing': viewing,
         'pointInTime': point_in_time,
+        'single_version': version_count == 1,  # ✅
     }

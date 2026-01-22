@@ -1,6 +1,46 @@
 <section class="timeline">
     <h2>Timeline of versions</h2>
+    
     <details>
+        {% if timeline.single_version %}
+            <summary disabled>
+                        <span class="open">
+                            <span class="version">
+                                <span class="prefix">You are viewing </span>
+                            
+                                {% if timeline.original and timeline.original.label == timeline.viewing.label %}
+                                    <span class="title">the original version</span>
+                                {% elif timeline.current and timeline.current.label == timeline.viewing.label %}
+                                {% if timeline.current.label == 'prospective'%}
+                                    <span class="title">a prospective version</span>
+                                {% else %}
+                                    <span class="title">the current version</span>
+                                {% endif %}
+                                {% else %}
+                                <span class="title">a historical version</span>
+                                {% endif %}
+                            </span>
+                            
+                            {% if timeline.viewing.label == 'prospective' %}
+                                <span class="date">not yet in force</span>
+                            {% else %}
+                                {% if timeline.viewing.date %}
+                                    <span class="date">from <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
+                                {% else %}
+                                    <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
+                                {% endif %}
+                                {% if timeline.pointInTime %}
+                                    <span class="point-in-time{% if timeline.viewing.date and timeline.pointInTime < timeline.viewing.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                {% endif %}
+                            {% endif %}
+                            
+                            <span class="button">See all versions</span>
+                        </span>
+                        <span class="close">Close</span>
+            </summary>
+        {% else %}
         <summary>
             <span class="open">
                 <span class="version">
@@ -153,5 +193,6 @@
                 <button class="right"><span>Scroll right</span></button>
             </div>
         </div>
+        {% endif %}
     </details>
 </section>
