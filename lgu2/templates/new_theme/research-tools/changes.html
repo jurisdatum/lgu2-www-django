@@ -16,66 +16,7 @@
         <p>Details of changes made to and by legislation - including repeals, amendments and other effects, such as modifications and commencement information. See <a href="#changes-detail">below</a> for details of what changes will be included in your results.</p>
     </section>
     <section>
-        <form role="search" action="/changes">
-            <fieldset>
-                <legend><h2>Show changes to...</h2></legend>
-                <label for="affected-title">Title:</label>
-                <input id="affected-title" type="text" name="affected-title" placeholder="any legislation (or enter a title)" />
-                <label for="affected-type">Legistlation type:</label>
-                <select id="affected-type" name="affected-type">
-                    <option value="" selected="selected">any legislation</option>                    
-                    {% for key, value in types.items %}
-                    <option value="{{ key }}" {% if key == query.affected_type %}selected{% endif %}>{{ value }}</option>
-                    {% endfor %}
-                </select>
-                <div role="group" aria-labelledby="affected-enacted">
-                    <h3 id="affected-enacted">Enacted or made</h3>
-                    <label for="affected-between">between:</label><input name="affected-start-year" id="affected-between" type="text" placeholder="1267" />
-                    <label for="affected-and">and:</label><input name="affected-end-year" id=affected-and type="text" placeholder="<?php echo date("Y") ?>" />
-                </div>
-                <label for="affected-number">Number:</label>
-                <input id="affected-number" name="affected-number" type="text" placeholder="(any)" />
-            </fieldset>
-            <fieldset>
-                <legend><h2>...that are made by...</h2></legend>
-                <label for="affecting-title">Title:</label>
-                <input id="affecting-title" name="affecting-title" type="text" placeholder="any legislation (or enter a title)" />
-                <label for="affecting-type">Legistlation type:</label>
-                <select id="affecting-type" name="affecting-type">
-                    <option value="" selected="selected">any legislation</option>
-                    {% for key, value in types.items %}
-                    <option value="{{ key }}" {% if key == query.affecting_type %}selected{% endif %}>{{ value }}</option>
-                    {% endfor %}
-                </select>
-                <div role="group" aria-labelledby="affecting-enacted">
-                    <h3 id="affecting-enacted">Enacted or made</h3>
-                    <label for="affecting-between">between:</label><input name="affecting-start-year" id="affecting-between" type="text" placeholder="2002" />
-                    <label for="affecting-and">and:</label><input name="affecting-end-year" id=affecting-and type="text" placeholder="<?php echo date("Y") ?>" />
-                </div>
-                <label for="affecting-number">Number:</label>
-                <input id="affecting-number" name="affecting-number" type="text" placeholder="(any)" />
-            </fieldset>
-            <fieldset>
-                <legend><h2><span>Show these types of changes</span></h2></legend>
-                <div>
-                    <input type="radio" name="changes" value="all-changes" id="all-changes" checked />
-                    <label for="all-changes"><span>All changes</span>, regardless of whether the text of the legislation on this website has been updated or not.</label>
-                </div>
-                <div>
-                    <input type="radio" name="changes" value="applied-changes" id="applied-changes" />
-                    <label for="applied-changes"><span>Only changes which have been applied</span> to the website by the editorial team.</label>
-                </div>
-                <div>
-                    <input type="radio" name="changes" value="unapplied-changes" id="unapplied-changes" />
-                    <label for="unapplied-changes"><span>Only changes which have not yet been applied</span> to the website by the editorial team.</label>
-                </div>
-            </fieldset>
-            <div>
-                <h2 class="initialise" hidden>This is what you are searching for...</h2>
-                <p id="changesSummary" class="initialise" hidden><span id="showChanges"><span>All changes</span></span><span id="affectedType"><span>any legislation</span></span><span id="affectedTitle"> with the title "<span></span>"</span><span id="affectedYear">, enacted or made <span></span></span><span id="affectedNumber">, with the number "<span></span>"</span>, made by <span id="affectingType"><span>any legislation</span></span><span id="affectingTitle"> with the title <span></span></span><span id="affectingYear">, enacted or made <span></span></span><span id="affectingNumber">, with the number <span></span></span>.</p>
-                <button>Show me the list of changes</button>
-            </div>
-        </form>
+        {% include "new_theme/research-tools/search-form.html" %}
     </section>
     <section id="changes-detail" tabindex="-1">
         <h2>What changes will I be able to explore with this changes to legislation search?</h2>

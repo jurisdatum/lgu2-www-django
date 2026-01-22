@@ -12,169 +12,14 @@
             </ol>
         </nav>
         <hgroup>
-            <h1 id="main-content-h" tabindex="-1">We found 49 changes to legislation</h1>
+            <h1 id="main-content-h" tabindex="-1">We found {{meta.totalResults}} changes to legislation</h1>
             <p id="changes-detail" class="initialise" hidden>for <span id="showChanges"><span>all changes</span></span><span id="affectedType"><span>any legislation</span></span><span id="affectedTitle"> with the title "<span></span>"</span><span id="affectedYear">, enacted or made <span></span></span><span id="affectedNumber">, with the number "<span></span>"</span>, made by <span id="affectingType"><span>any legislation</span></span><span id="affectingTitle"> with the title <span></span></span><span id="affectingYear">, enacted or made <span></span></span><span id="affectingNumber">, with the number <span></span></span>.</p>
         </hgroup>
     </section>
     <details>
         <summary id="search-edit-h">Edit your search</summary>
         <section>
-            <form>
-                <fieldset>
-                    <legend><h2>Show changes to...</h2></legend>
-                    <label for="affected-title">Title:</label>
-                    <input id="affected-title" type="text" placeholder="any legislation (or enter a title)" />
-                    <label for="affected-type">Legistlation type:</label>
-                    <select id="affected-type" name="type">
-                        <option value="" selected="selected">any legislation</option>
-                        <option value="primary+secondary">any UK Legislation (excluding originating from the EU)</option>
-                        <option value="all">any Legislation (including originating from the EU)</option>
-                        <optgroup label="Primary Legislation">
-                            <option value="primary">any Primary Legislation</option>
-                            <option value="ukpga">UK Public General Acts</option>
-                            <option value="ukla">UK Local Acts</option>
-                            <option value="ukppa">UK Private and Personal Acts</option>
-                            <option value="asp">Acts of the Scottish Parliament</option>
-                            <option value="asc">Acts of Senedd Cymru</option>
-                            <option value="anaw">Acts of the National Assembly for Wales</option>
-                            <option value="mwa">Measures of the National Assembly for Wales</option>
-                            <option value="ukcm">Church Measures</option>
-                            <option value="nia">Acts of the Northern Ireland Assembly</option>
-                            <option value="aosp">Acts of the Old Scottish Parliament</option>
-                            <option value="aep">Acts of the English Parliament</option>
-                            <option value="aip">Acts of the Old Irish Parliament</option>
-                            <option value="apgb">Acts of the Parliament of Great Britain</option>
-                            <option value="gbla">Local Acts of the Parliament of Great Britain</option>
-                            <option value="gbppa">Private and Personal Acts of the Parliament of Great Britain</option>
-                            <option value="nisi">Northern Ireland Orders in Council</option>
-                            <option value="mnia">Measures of the Northern Ireland Assembly</option>
-                            <option value="apni">Acts of the Northern Ireland Parliament</option>
-                        </optgroup>
-                        <optgroup label="Secondary Legislation">
-                            <option value="secondary">any Secondary Legislation</option>
-                            <option value="uksi">UK Statutory Instruments</option>
-                            <option value="wsi">Wales Statutory Instruments</option>
-                            <option value="ssi">Scottish Statutory Instruments</option>
-                            <option value="nisr">Northern Ireland Statutory Rules</option>
-                            <option value="ukci">Church Instruments</option>
-                            <option value="ukmd">UK Ministerial Directions</option>
-                            <option value="ukmo">UK Ministerial Orders</option>
-                            <option value="uksro">UK Statutory Rules and Orders</option>
-                            <option value="nisro">Northern Ireland Statutory Rules and Orders</option>
-                        </optgroup>
-                        <optgroup label="Legislation originating from the EU">
-                            <option value="eu-origin">any Legislation originating from the EU</option>
-                            <option value="eur">Regulations originating from the EU</option>
-                            <option value="eudn">Decisions originating from the EU</option>
-                            <option value="eudr">Directives originating from the EU</option>
-                            <option value="eut">European Union Treaties</option>
-                        </optgroup>
-                        <optgroup label="Draft Legislation">
-                            <option value="draft">any Draft Legislation</option>
-                            <option value="ukdsi">UK Draft Statutory Instruments</option>
-                            <option value="sdsi">Scottish Draft Statutory Instruments</option>
-                            <option value="nidsr">Northern Ireland Draft Statutory Rules</option>
-                        </optgroup>
-                        <optgroup label="Impact Assessments">
-                            <option value="ia">any Impact Assessments</option>
-                            <option value="ukia">UK Impact Assessments</option>
-                    </select>
-                    <div role="group" aria-labelledby="affected-enacted">
-                        <h3 id="affected-enacted">Enacted or made</h3>
-                        <label for="affected-between">between:</label><input id="affected-between" type="text" placeholder="1267" />
-                        <label for="affected-and">and:</label><input id=affected-and type="text" placeholder="<?php echo date("Y") ?>" />
-                    </div>
-                    <label for="affected-number">Number:</label>
-                    <input id="affected-number" type="text" placeholder="(any)" />
-                </fieldset>
-                <fieldset>
-                    <legend><h2>...that are made by...</h2></legend>
-                    <label for="affecting-title">Title:</label>
-                    <input id="affecting-title" type="text" placeholder="any legislation (or enter a title)" />
-                    <label for="affecting-type">Legistlation type:</label>
-                    <select id="affecting-type" name="type">
-                        <option value="" selected="selected">any legislation</option>
-                        <option value="primary+secondary">any UK Legislation (excluding originating from the EU)</option>
-                        <option value="all">any Legislation (including originating from the EU)</option>
-                        <optgroup label="Primary Legislation">
-                            <option value="primary">any Primary Legislation</option>
-                            <option value="ukpga">UK Public General Acts</option>
-                            <option value="ukla">UK Local Acts</option>
-                            <option value="ukppa">UK Private and Personal Acts</option>
-                            <option value="asp">Acts of the Scottish Parliament</option>
-                            <option value="asc">Acts of Senedd Cymru</option>
-                            <option value="anaw">Acts of the National Assembly for Wales</option>
-                            <option value="mwa">Measures of the National Assembly for Wales</option>
-                            <option value="ukcm">Church Measures</option>
-                            <option value="nia">Acts of the Northern Ireland Assembly</option>
-                            <option value="aosp">Acts of the Old Scottish Parliament</option>
-                            <option value="aep">Acts of the English Parliament</option>
-                            <option value="aip">Acts of the Old Irish Parliament</option>
-                            <option value="apgb">Acts of the Parliament of Great Britain</option>
-                            <option value="gbla">Local Acts of the Parliament of Great Britain</option>
-                            <option value="gbppa">Private and Personal Acts of the Parliament of Great Britain</option>
-                            <option value="nisi">Northern Ireland Orders in Council</option>
-                            <option value="mnia">Measures of the Northern Ireland Assembly</option>
-                            <option value="apni">Acts of the Northern Ireland Parliament</option>
-                        </optgroup>
-                        <optgroup label="Secondary Legislation">
-                            <option value="secondary">any Secondary Legislation</option>
-                            <option value="uksi">UK Statutory Instruments</option>
-                            <option value="wsi">Wales Statutory Instruments</option>
-                            <option value="ssi">Scottish Statutory Instruments</option>
-                            <option value="nisr">Northern Ireland Statutory Rules</option>
-                            <option value="ukci">Church Instruments</option>
-                            <option value="ukmd">UK Ministerial Directions</option>
-                            <option value="ukmo">UK Ministerial Orders</option>
-                            <option value="uksro">UK Statutory Rules and Orders</option>
-                            <option value="nisro">Northern Ireland Statutory Rules and Orders</option>
-                        </optgroup>
-                        <optgroup label="Legislation originating from the EU">
-                            <option value="eu-origin">any Legislation originating from the EU</option>
-                            <option value="eur">Regulations originating from the EU</option>
-                            <option value="eudn">Decisions originating from the EU</option>
-                            <option value="eudr">Directives originating from the EU</option>
-                            <option value="eut">European Union Treaties</option>
-                        </optgroup>
-                        <optgroup label="Draft Legislation">
-                            <option value="draft">any Draft Legislation</option>
-                            <option value="ukdsi">UK Draft Statutory Instruments</option>
-                            <option value="sdsi">Scottish Draft Statutory Instruments</option>
-                            <option value="nidsr">Northern Ireland Draft Statutory Rules</option>
-                        </optgroup>
-                        <optgroup label="Impact Assessments">
-                            <option value="ia">any Impact Assessments</option>
-                            <option value="ukia">UK Impact Assessments</option>
-                    </select>
-                    <div role="group" aria-labelledby="affecting-enacted">
-                        <h3 id="affecting-enacted">Enacted or made</h3>
-                        <label for="affecting-between">between:</label><input id="affecting-between" type="text" placeholder="2002" />
-                        <label for="affecting-and">and:</label><input id=affecting-and type="text" placeholder="<?php echo date("Y") ?>" />
-                    </div>
-                    <label for="affecting-number">Number:</label>
-                    <input id="affecting-number" type="text" placeholder="(any)" />
-                </fieldset>
-                <fieldset>
-                    <legend><h2><span>Show these types of changes</span></h2></legend>
-                    <div>
-                        <input type="radio" name="changes" value="all-changes" id="all-changes" checked />
-                        <label for="all-changes"><span>All changes</span>, regardless of whether the text of the legislation on this website has been changed or not.</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="changes" value="applied-changes" id="applied-changes" />
-                        <label for="applied-changes"><span>Only changes which have been applied</span> to the website by the editorial team.</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="changes" value="unapplied-changes" id="unapplied-changes" />
-                        <label for="unapplied-changes"><span>Only changes which have not yet been applied</span> to the website by the editorial team.</label>
-                    </div>
-                </fieldset>
-                <div>
-                    <h2 class="initialise" hidden>This is what you are searching for...</h2>
-                    <p id="changesSummary" class="initialise" hidden><span id="showChanges"><span>All changes</span></span><span id="affectedType"><span>any legislation</span></span><span id="affectedTitle"> with the title "<span></span>"</span><span id="affectedYear">, enacted or made <span></span></span><span id="affectedNumber">, with the number "<span></span>"</span>, made by <span id="affectingType"><span>any legislation</span></span><span id="affectingTitle"> with the title <span></span></span><span id="affectingYear">, enacted or made <span></span></span><span id="affectingNumber">, with the number <span></span></span>.</p>
-                    <button>Show me the list of changes</button>
-                </div>
-            </form>
+            {% include "new_theme/research-tools/search-form.html" %}
         </section>
     </details>
     <section class="search-content">
@@ -206,25 +51,7 @@
                     </optgroup>
                 </select>
             </div>
-            <nav aria-labelledby="pagination" class="pagination">
-                <h2 id="pagination">Pages of results</h2>
-                <ul>
-                    <li><span>First</span></li>
-                    <li><span>Previous</span></li>
-                    <li aria-current="page"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
-                    <li><span>Skip a few pages</span></li>
-                    <li><a href="#">12</a></li>
-                    <li><a href="#">13</a></li>
-                    <li><a href="#"><span>Next</span></a></li>
-                    <li><a href="#"><span>Last</span></a></li>
-                </ul>
-            </nav>
+            {% include "new_theme/research-tools/pagination.html" %}
         </div>
         <div class="search-results-list">
             <h2 id="search-results-h" tabindex="-1">Changes to legislation results list</h2>

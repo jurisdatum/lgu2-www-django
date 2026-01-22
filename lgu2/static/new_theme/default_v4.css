@@ -2264,15 +2264,16 @@ main > section:first-of-type nav h2 {
 }
 main > section:first-of-type nav ol {
   display: block;
-  font-size: 0;
   line-height: 1rem;
+  font-size: 0;
 }
 main > section:first-of-type nav ol li {
   display: contents;
-  font-size: 1rem;
+  font-size: 0;
 }
 main > section:first-of-type nav ol li a {
   color: unset;
+  font-size: 1rem;
 }
 main > section:first-of-type nav ol li a:not(li:last-child a) {
   font-weight: 300;
@@ -3547,14 +3548,16 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0 0.1875rem 0.1875rem 0;
 }
 .advanced-searches section .search-keywords details summary,
-.search-results section .search-keywords details summary {
+.search-results section .search-keywords details summary,
+.changes-to-legislation section .search-keywords details summary {
   display: inline-block;
   padding: 0.75em 1.5em 0 1.35em;
   color: var(--link);
   font-weight: 500;
 }
 .advanced-searches section .search-keywords details summary:before,
-.search-results section .search-keywords details summary:before {
+.search-results section .search-keywords details summary:before,
+.changes-to-legislation section .search-keywords details summary:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -3576,77 +3579,92 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0.38em 0.7rem 0.25em -1.15em;
 }
 .advanced-searches section .search-keywords details summary:hover,
-.search-results section .search-keywords details summary:hover {
+.search-results section .search-keywords details summary:hover,
+.changes-to-legislation section .search-keywords details summary:hover {
   text-decoration: underline;
   text-underline-offset: 0.25em;
   text-decoration-thickness: 0.05em;
 }
 .advanced-searches section .search-keywords details[open] summary:before,
-.search-results section .search-keywords details[open] summary:before {
+.search-results section .search-keywords details[open] summary:before,
+.changes-to-legislation section .search-keywords details[open] summary:before {
   transform: rotate(315deg);
   margin: 0.6em 0.7rem 0.25em -1.15em;
 }
 .advanced-searches section .search-keywords details p:first-of-type,
-.search-results section .search-keywords details p:first-of-type {
+.search-results section .search-keywords details p:first-of-type,
+.changes-to-legislation section .search-keywords details p:first-of-type {
   margin: 0.5rem 0 0 0;
 }
 .advanced-searches section .search-keywords details p:last-of-type,
-.search-results section .search-keywords details p:last-of-type {
+.search-results section .search-keywords details p:last-of-type,
+.changes-to-legislation section .search-keywords details p:last-of-type {
   margin: 0.25rem 0 0.85rem 0;
   padding: 0 0 1rem 0;
   border-bottom: 1px solid var(--subtleBorder);
 }
 .advanced-searches section .search-keywords p + details summary,
-.search-results section .search-keywords p + details summary {
+.search-results section .search-keywords p + details summary,
+.changes-to-legislation section .search-keywords p + details summary {
   padding: 0.5em 1.5em 0 1.35em;
 }
 .advanced-searches section .search-keywords > span,
-.search-results section .search-keywords > span {
+.search-results section .search-keywords > span,
+.changes-to-legislation section .search-keywords > span {
   display: block;
 }
 .advanced-searches section .search-keywords > span label,
-.search-results section .search-keywords > span label {
+.search-results section .search-keywords > span label,
+.changes-to-legislation section .search-keywords > span label {
   display: block;
   margin: 0 0 0.25em 0;
   font-weight: 500;
 }
 .advanced-searches section .search-keywords > span:first-of-type label,
-.search-results section .search-keywords > span:first-of-type label {
+.search-results section .search-keywords > span:first-of-type label,
+.changes-to-legislation section .search-keywords > span:first-of-type label {
   margin: 0.5rem 0 0.25em 0;
 }
 .advanced-searches section .search-keywords > span input,
-.search-results section .search-keywords > span input {
+.search-results section .search-keywords > span input,
+.changes-to-legislation section .search-keywords > span input {
   width: 100%;
   max-width: 40rem;
   margin: 0 0 1rem 0;
   padding: 0.75rem 0.9rem;
 }
 .advanced-searches section .search-keywords > span:last-of-type input,
-.search-results section .search-keywords > span:last-of-type input {
+.search-results section .search-keywords > span:last-of-type input,
+.changes-to-legislation section .search-keywords > span:last-of-type input {
   margin: 0;
 }
 .advanced-searches section .search-extent h3,
-.search-results section .search-extent h3 {
+.search-results section .search-extent h3,
+.changes-to-legislation section .search-extent h3 {
   font-size: 1.1rem;
   margin: 0.9em 0 0 0;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]),
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]),
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) {
   display: flow-root;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]),
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]),
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) {
   margin: 0.25rem auto 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 0.5rem;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > h3,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > h3 {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > h3,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > h3 {
   margin: 0.9em 0 0.15rem 0;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span {
   margin: 0;
   background: var(--bg);
   border: 0.0625rem solid var(--link);
@@ -3655,7 +3673,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0.375rem;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:before {
   content: "";
   margin: 0.7rem 0 0 0.65rem;
   width: 1.5em;
@@ -3667,7 +3686,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border: 0.0625rem solid var(--link);
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span label,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span label {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span label,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span label {
   display: block;
   font-weight: 400;
   padding: 0.75rem 1.65rem 0.75rem 2.85rem;
@@ -3676,29 +3696,34 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   z-index: 1;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span input,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span input {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span input,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span input {
   position: absolute;
   top: 1rem;
   left: 1rem;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked),
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked),
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) {
   border: 0.125rem solid var(--activeBgSolid);
   background: var(--activeLargeBg);
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked):before {
   margin: 0.6rem 0 0 0.55rem;
   background: var(--activeBgSolid);
   border-color: var(--activeBgSolid);
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label {
   padding: 0.675rem 1.6rem 0.7rem 2.8rem;
   font-weight: 500;
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked) label:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -3720,7 +3745,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-color: var(--activeBgMarker);
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:focus):before {
   color: var(--buttonText);
   border-color: var(--focusButtonBg);
   outline-color: var(--focusButtonBg);
@@ -3732,7 +3758,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus):before {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -3745,18 +3772,21 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 .advanced-searches section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before,
-.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before {
+.search-results section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="checkbox"]) > span:has(input:checked:focus) label:before {
   border-color: var(--contrastText);
 }
 .advanced-searches section .search-extent details summary,
-.search-results section .search-extent details summary {
+.search-results section .search-extent details summary,
+.changes-to-legislation section .search-extent details summary {
   display: inline-block;
   padding: 0.75em 1.5em 0 1.35em;
   color: var(--link);
   font-weight: 500;
 }
 .advanced-searches section .search-extent details summary:before,
-.search-results section .search-extent details summary:before {
+.search-results section .search-extent details summary:before,
+.changes-to-legislation section .search-extent details summary:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -3778,25 +3808,29 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0.38em 0.7rem 0.25em -1.15em;
 }
 .advanced-searches section .search-extent details summary:hover,
-.search-results section .search-extent details summary:hover {
+.search-results section .search-extent details summary:hover,
+.changes-to-legislation section .search-extent details summary:hover {
   text-decoration: underline;
   text-underline-offset: 0.25em;
   text-decoration-thickness: 0.05em;
 }
 .advanced-searches section .search-extent details[open] summary:before,
-.search-results section .search-extent details[open] summary:before {
+.search-results section .search-extent details[open] summary:before,
+.changes-to-legislation section .search-extent details[open] summary:before {
   transform: rotate(315deg);
   margin: 0.6em 0.7rem 0.25em -1.15em;
 }
 .advanced-searches section .search-extent details ul,
-.search-results section .search-extent details ul {
+.search-results section .search-extent details ul,
+.changes-to-legislation section .search-extent details ul {
   margin: 1rem 0 0 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 .advanced-searches section .search-extent details ul li,
-.search-results section .search-extent details ul li {
+.search-results section .search-extent details ul li,
+.changes-to-legislation section .search-extent details ul li {
   list-style: none;
   margin: 0;
   padding: 0.25rem 0.75rem;
@@ -3806,22 +3840,27 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   font-weight: 500;
 }
 .advanced-searches section .search-extent details ul li span,
-.search-results section .search-extent details ul li span {
+.search-results section .search-extent details ul li span,
+.changes-to-legislation section .search-extent details ul li span {
   padding: 0 0.125rem;
   font-weight: 300;
 }
 .advanced-searches section .search-language > span,
 .search-results section .search-language > span,
+.changes-to-legislation section .search-language > span,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span {
   display: block;
   position: relative;
   margin: 0.75rem 0 0 0;
 }
 .advanced-searches section .search-language > span label,
 .search-results section .search-language > span label,
+.changes-to-legislation section .search-language > span label,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span label {
   display: block;
   font-weight: 500;
   padding: 0.75rem 1rem 0.75rem 3rem;
@@ -3834,8 +3873,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .advanced-searches section .search-language > span label:before,
 .search-results section .search-language > span label:before,
+.changes-to-legislation section .search-language > span label:before,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label:before,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label:before {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span label:before {
   content: "";
   margin: 0 0 0 -2.2em;
   width: 1.5rem;
@@ -3846,43 +3887,55 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .advanced-searches section .search-language > span label span,
 .search-results section .search-language > span label span,
+.changes-to-legislation section .search-language > span label span,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span label span,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label span {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span label span,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span label span {
   display: block;
   font-weight: 300;
 }
 .advanced-searches section .search-language > span input,
 .search-results section .search-language > span input,
+.changes-to-legislation section .search-language > span input,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span input,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span input {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span input,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span input {
   position: absolute;
   top: 1rem;
   left: 0.9rem;
 }
 .advanced-searches section .search-language > span:last-of-type,
 .search-results section .search-language > span:last-of-type,
+.changes-to-legislation section .search-language > span:last-of-type,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:last-of-type {
   margin: 0.65rem 0 0 0;
 }
 .advanced-searches section .search-language > span:has(input:checked) label,
 .search-results section .search-language > span:has(input:checked) label,
+.changes-to-legislation section .search-language > span:has(input:checked) label,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label {
   padding: 0.657rem 0.9rem 0.657rem 2.9rem;
   background: var(--activeLargeBg);
   border: 0.1625rem solid var(--activeBgSolid);
 }
 .advanced-searches section .search-language > span:has(input:checked) label:before,
 .search-results section .search-language > span:has(input:checked) label:before,
+.changes-to-legislation section .search-language > span:has(input:checked) label:before,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label:before {
   background: var(--activeBgSolid);
 }
 .advanced-searches section .search-language > span:has(input:checked) label span:before,
 .search-results section .search-language > span:has(input:checked) label span:before,
+.changes-to-legislation section .search-language > span:has(input:checked) label span:before,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:checked) label span:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -3906,8 +3959,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .advanced-searches section .search-language > span:has(input:focus) label,
 .search-results section .search-language > span:has(input:focus) label,
+.changes-to-legislation section .search-language > span:has(input:focus) label,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -3921,22 +3976,35 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .advanced-searches section .search-language > span:has(input:focus) label:before,
 .search-results section .search-language > span:has(input:focus) label:before,
+.changes-to-legislation section .search-language > span:has(input:focus) label:before,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label:before {
   background: var(--contrastText);
 }
 .advanced-searches section .search-language > span:has(input:focus) label span:before,
 .search-results section .search-language > span:has(input:focus) label span:before,
+.changes-to-legislation section .search-language > span:has(input:focus) label span:before,
 .advanced-searches section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before,
-.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before {
+.search-results section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before,
+.changes-to-legislation section .search-extent [role="group"]:has(input[type="radio"]) > span:has(input:focus) label span:before {
   border-color: var(--focusButtonBg);
 }
+.advanced-searches section .search-date:has(div[role="group"]) h3,
+.search-results section .search-date:has(div[role="group"]) h3,
+.changes-to-legislation section .search-date:has(div[role="group"]) h3 {
+  margin: 1.25rem 0 0.35rem 0;
+  font-weight: 400;
+  font-size: 1rem;
+}
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"],
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"],
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] {
   margin: 0.75rem 0 0 0;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span {
   display: block;
   font-weight: 500;
   padding: 0.75rem 1rem 0.75rem 3rem;
@@ -3946,13 +4014,15 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border: 0.0625rem solid var(--link);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > label,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > label {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > label,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span > label {
   display: block;
   cursor: pointer;
   margin: 0 0 0.5rem 0;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span > label:before {
   content: "";
   margin: 0 0 0 -2.2em;
   width: 1.5em;
@@ -3963,49 +4033,58 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 50%;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span span {
   display: block;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2),
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2) {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2),
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span span:nth-of-type(2) {
   margin: 0.75rem 0 0 0;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span label,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span label {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span label,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span span label {
   font-weight: 300;
   margin: 0 0.5rem 0 0;
   min-width: 2.5rem;
   display: inline-block;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span span input,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span input {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span span input,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span span input {
   width: 6rem;
   padding: 0.5em 0.75em;
   color: var(--lightText);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"],
-.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"] {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"],
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"] > span > input[type="radio"] {
   position: absolute;
   top: 1rem;
   left: 1rem;
   outline-offset: 0;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:last-of-type {
   margin: 0.65rem 0 0 0;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span {
   padding: 0.657rem 0.9rem 0.657rem 2.9rem;
   background: var(--activeLargeBg);
   border: 0.1625rem solid var(--activeBgSolid);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > label:before {
   background: var(--activeBgSolid);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span > span:first-of-type:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -4029,11 +4108,13 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   top: 1.15rem;
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:checked) > span span input {
   color: var(--text);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -4046,22 +4127,26 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span label:before {
   background: var(--contrastText);
 }
 .advanced-searches section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before,
-.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before {
+.search-results section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before,
+.changes-to-legislation section .search-date:has(div[role="group"]) > div[role="group"]:has(> span > input:focus) > span > span:first-of-type:before {
   border-color: var(--focusButtonBg);
 }
 .advanced-searches section .search-date:not(:has(div[role="group"])) label,
-.search-results section .search-date:not(:has(div[role="group"])) label {
+.search-results section .search-date:not(:has(div[role="group"])) label,
+.changes-to-legislation section .search-date:not(:has(div[role="group"])) label {
   display: inline-block;
   float: left;
   padding: 0.5em 0.75em;
   line-height: 1.2rem;
 }
 .advanced-searches section .search-date:not(:has(div[role="group"])) span,
-.search-results section .search-date:not(:has(div[role="group"])) span {
+.search-results section .search-date:not(:has(div[role="group"])) span,
+.changes-to-legislation section .search-date:not(:has(div[role="group"])) span {
   display: inline-block;
   float: left;
   border: 0.0625rem solid var(--link);
@@ -4070,24 +4155,28 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background: var(--subtleBg);
 }
 .advanced-searches section .search-date:not(:has(div[role="group"])) span input,
-.search-results section .search-date:not(:has(div[role="group"])) span input {
+.search-results section .search-date:not(:has(div[role="group"])) span input,
+.changes-to-legislation section .search-date:not(:has(div[role="group"])) span input {
   width: 5.5rem;
   padding: 0.5em 0.75em;
   border: 0;
 }
 .advanced-searches section .search-date:not(:has(div[role="group"])) span:first-of-type,
-.search-results section .search-date:not(:has(div[role="group"])) span:first-of-type {
+.search-results section .search-date:not(:has(div[role="group"])) span:first-of-type,
+.changes-to-legislation section .search-date:not(:has(div[role="group"])) span:first-of-type {
   margin: 0.75rem 1rem 0 0;
 }
 .advanced-searches section .search-number-series label,
-.search-results section .search-number-series label {
+.search-results section .search-number-series label,
+.changes-to-legislation section .search-number-series label {
   display: inline-block;
   float: left;
   padding: 0.5em 0.75em;
   line-height: 1.2rem;
 }
 .advanced-searches section .search-number-series span,
-.search-results section .search-number-series span {
+.search-results section .search-number-series span,
+.changes-to-legislation section .search-number-series span {
   display: inline-block;
   float: left;
   border: 0.0625rem solid var(--link);
@@ -4096,24 +4185,28 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background: var(--subtleBg);
 }
 .advanced-searches section .search-number-series span:has(input) input,
-.search-results section .search-number-series span:has(input) input {
+.search-results section .search-number-series span:has(input) input,
+.changes-to-legislation section .search-number-series span:has(input) input {
   width: 5.5rem;
   padding: 0.5em 0.75em;
   border: 0;
 }
 .advanced-searches section .search-number-series span:has(select) select,
-.search-results section .search-number-series span:has(select) select {
+.search-results section .search-number-series span:has(select) select,
+.changes-to-legislation section .search-number-series span:has(select) select {
   width: 100%;
   max-width: fit-content;
   padding: 0.445em 0 0.445em 0.75em;
   border: 0;
 }
 .advanced-searches section .search-number-series span:first-of-type,
-.search-results section .search-number-series span:first-of-type {
+.search-results section .search-number-series span:first-of-type,
+.changes-to-legislation section .search-number-series span:first-of-type {
   margin: 0.75rem 1rem 0 0;
 }
 .advanced-searches section .search-number label,
-.search-results section .search-number label {
+.search-results section .search-number label,
+.changes-to-legislation section .search-number label {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -4125,7 +4218,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border: 0;
 }
 .advanced-searches section .search-number input,
-.search-results section .search-number input {
+.search-results section .search-number input,
+.changes-to-legislation section .search-number input {
   width: 5.5rem;
   padding: 0.5em 0.75em;
   border: 0;
@@ -4134,7 +4228,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0.5rem 0 0 0;
 }
 .advanced-searches section .search-type > label,
-.search-results section .search-type > label {
+.search-results section .search-type > label,
+.changes-to-legislation section .search-type > label {
   position: absolute;
   width: 0.0625rem;
   height: 0.0625rem;
@@ -4146,30 +4241,35 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border: 0;
 }
 .advanced-searches section .search-type select,
-.search-results section .search-type select {
+.search-results section .search-type select,
+.changes-to-legislation section .search-type select {
   margin: 0.5em 0 0 0;
   width: 100%;
   max-width: fit-content;
 }
 .advanced-searches section .search-type [role="group"],
-.search-results section .search-type [role="group"] {
+.search-results section .search-type [role="group"],
+.changes-to-legislation section .search-type [role="group"] {
   margin: 0.65rem 0 0 0;
 }
 .advanced-searches section .search-type [role="group"] h3,
-.search-results section .search-type [role="group"] h3 {
+.search-results section .search-type [role="group"] h3,
+.changes-to-legislation section .search-type [role="group"] h3 {
   margin: 1rem 0 0.5rem 0;
   font-weight: 600;
   font-size: 1.1rem;
 }
 .advanced-searches section .search-type [role="group"] > span,
-.search-results section .search-type [role="group"] > span {
+.search-results section .search-type [role="group"] > span,
+.changes-to-legislation section .search-type [role="group"] > span {
   display: block;
   position: relative;
   margin: 0.25rem 0 0 0;
   border-radius: 0.375rem;
 }
 .advanced-searches section .search-type [role="group"] > span:before,
-.search-results section .search-type [role="group"] > span:before {
+.search-results section .search-type [role="group"] > span:before,
+.changes-to-legislation section .search-type [role="group"] > span:before {
   content: "";
   margin: 0.075rem 0 0 0;
   width: 1.5em;
@@ -4181,7 +4281,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border: 0.0625rem solid var(--link);
 }
 .advanced-searches section .search-type [role="group"] > span label,
-.search-results section .search-type [role="group"] > span label {
+.search-results section .search-type [role="group"] > span label,
+.changes-to-legislation section .search-type [role="group"] > span label {
   display: inline-block;
   font-weight: 400;
   padding: 0.25rem 1rem 0.25rem 2.2rem;
@@ -4190,18 +4291,21 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   z-index: 1;
 }
 .advanced-searches section .search-type [role="group"] > span input,
-.search-results section .search-type [role="group"] > span input {
+.search-results section .search-type [role="group"] > span input,
+.changes-to-legislation section .search-type [role="group"] > span input {
   position: absolute;
   top: 0.45rem;
   left: 0.4rem;
 }
 .advanced-searches section .search-type [role="group"] > span:has(input:checked):before,
-.search-results section .search-type [role="group"] > span:has(input:checked):before {
+.search-results section .search-type [role="group"] > span:has(input:checked):before,
+.changes-to-legislation section .search-type [role="group"] > span:has(input:checked):before {
   background: var(--activeBgSolid);
   border-color: var(--activeBgSolid);
 }
 .advanced-searches section .search-type [role="group"] > span:has(input:checked) label:before,
-.search-results section .search-type [role="group"] > span:has(input:checked) label:before {
+.search-results section .search-type [role="group"] > span:has(input:checked) label:before,
+.changes-to-legislation section .search-type [role="group"] > span:has(input:checked) label:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -4223,7 +4327,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-color: var(--activeBgMarker);
 }
 .advanced-searches section .search-type [role="group"] > span:has(input:focus):before,
-.search-results section .search-type [role="group"] > span:has(input:focus):before {
+.search-results section .search-type [role="group"] > span:has(input:focus):before,
+.changes-to-legislation section .search-type [role="group"] > span:has(input:focus):before {
   color: var(--buttonText);
   border-color: var(--focusButtonBg);
   outline-color: var(--focusButtonBg);
@@ -4235,11 +4340,13 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 .advanced-searches section .search-type [role="group"] > span:has(input:focus) label:before,
-.search-results section .search-type [role="group"] > span:has(input:focus) label:before {
+.search-results section .search-type [role="group"] > span:has(input:focus) label:before,
+.changes-to-legislation section .search-type [role="group"] > span:has(input:focus) label:before {
   border-color: var(--contrastText);
 }
 .advanced-searches section .search-type [role="group"] > span:has(input:checked:focus):before,
-.search-results section .search-type [role="group"] > span:has(input:checked:focus):before {
+.search-results section .search-type [role="group"] > span:has(input:checked:focus):before,
+.changes-to-legislation section .search-type [role="group"] > span:has(input:checked:focus):before {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -4252,7 +4359,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 .advanced-searches section .search-type details summary,
-.search-results section .search-type details summary {
+.search-results section .search-type details summary,
+.changes-to-legislation section .search-type details summary {
   font-weight: 500;
   color: var(--text);
   border-radius: 0.1875rem;
@@ -4271,8 +4379,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .advanced-searches section .search-type details summary:focus,
 .search-results section .search-type details summary:focus,
+.changes-to-legislation section .search-type details summary:focus,
 .advanced-searches section .search-type details summary:hover,
-.search-results section .search-type details summary:hover {
+.search-results section .search-type details summary:hover,
+.changes-to-legislation section .search-type details summary:hover {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -4285,7 +4395,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   box-shadow: 0 0 0.375rem 0 var(--focusShadow);
 }
 .advanced-searches section .search-type details summary:active,
-.search-results section .search-type details summary:active {
+.search-results section .search-type details summary:active,
+.changes-to-legislation section .search-type details summary:active {
   background-color: var(--focusButtonBg);
   color: var(--buttonText);
   border-color: var(--focusOutline);
@@ -4300,7 +4411,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   color: var(--modalText);
 }
 .advanced-searches section .search-type details summary:before,
-.search-results section .search-type details summary:before {
+.search-results section .search-type details summary:before,
+.changes-to-legislation section .search-type details summary:before {
   content: "";
   display: inline-block;
   margin: 0.15em 0 0.15em 0.35em;
@@ -4322,23 +4434,29 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .advanced-searches section .search-type details summary:active:before,
 .search-results section .search-type details summary:active:before,
+.changes-to-legislation section .search-type details summary:active:before,
 .advanced-searches section .search-type details summary:focus:before,
 .search-results section .search-type details summary:focus:before,
+.changes-to-legislation section .search-type details summary:focus:before,
 .advanced-searches section .search-type details summary:hover:before,
-.search-results section .search-type details summary:hover:before {
+.search-results section .search-type details summary:hover:before,
+.changes-to-legislation section .search-type details summary:hover:before {
   border-color: var(--modalText);
 }
 .advanced-searches section .search-type details[open] summary:before,
-.search-results section .search-type details[open] summary:before {
+.search-results section .search-type details[open] summary:before,
+.changes-to-legislation section .search-type details[open] summary:before {
   transform: rotate(315deg);
   margin: 0 0.8rem 0 -1.3em;
 }
 .advanced-searches section .search-pit-date legend h2,
-.search-results section .search-pit-date legend h2 {
+.search-results section .search-pit-date legend h2,
+.changes-to-legislation section .search-pit-date legend h2 {
   margin: 0 0 0.75rem 0;
 }
 .advanced-searches section .search-pit-date span,
-.search-results section .search-pit-date span {
+.search-results section .search-pit-date span,
+.changes-to-legislation section .search-pit-date span {
   display: inline-block;
   float: left;
   border: 0.0625rem solid var(--link);
@@ -4346,27 +4464,32 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background: var(--subtleBg);
 }
 .advanced-searches section .search-pit-date span label,
-.search-results section .search-pit-date span label {
+.search-results section .search-pit-date span label,
+.changes-to-legislation section .search-pit-date span label {
   display: inline-block;
   float: left;
   padding: 0.6em 0.75em;
   line-height: 1.2rem;
 }
 .advanced-searches section .search-pit-date span input,
-.search-results section .search-pit-date span input {
+.search-results section .search-pit-date span input,
+.changes-to-legislation section .search-pit-date span input {
   padding: 0.6em 0.75em;
   border: 0;
 }
 .advanced-searches section .search-ia-attributes > span,
-.search-results section .search-ia-attributes > span {
+.search-results section .search-ia-attributes > span,
+.changes-to-legislation section .search-ia-attributes > span {
   display: block;
 }
 .advanced-searches section .search-ia-attributes > span label,
-.search-results section .search-ia-attributes > span label {
+.search-results section .search-ia-attributes > span label,
+.changes-to-legislation section .search-ia-attributes > span label {
   display: block;
 }
 .advanced-searches section .search-ia-attributes > span:has(select),
-.search-results section .search-ia-attributes > span:has(select) {
+.search-results section .search-ia-attributes > span:has(select),
+.changes-to-legislation section .search-ia-attributes > span:has(select) {
   display: inline-block;
   border: 0.0625rem solid var(--link);
   border-radius: 0.1875rem;
@@ -4374,14 +4497,16 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   background: var(--subtleBg);
 }
 .advanced-searches section .search-ia-attributes > span:has(select) label,
-.search-results section .search-ia-attributes > span:has(select) label {
+.search-results section .search-ia-attributes > span:has(select) label,
+.changes-to-legislation section .search-ia-attributes > span:has(select) label {
   display: inline-block;
   line-height: 1.2em;
   float: left;
   padding: 0.5em 0.75em;
 }
 .advanced-searches section .search-ia-attributes > span:has(select) select,
-.search-results section .search-ia-attributes > span:has(select) select {
+.search-results section .search-ia-attributes > span:has(select) select,
+.changes-to-legislation section .search-ia-attributes > span:has(select) select {
   display: inline-block;
   float: left;
   border: 0;
@@ -4390,17 +4515,20 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   max-width: fit-content;
 }
 .advanced-searches section .search-ia-attributes > span:has(input) label,
-.search-results section .search-ia-attributes > span:has(input) label {
+.search-results section .search-ia-attributes > span:has(input) label,
+.changes-to-legislation section .search-ia-attributes > span:has(input) label {
   display: block;
   font-weight: 500;
   margin: 0.75rem 0 0.25em 0;
 }
 .advanced-searches section .search-ia-attributes > span:has(input) label span,
-.search-results section .search-ia-attributes > span:has(input) label span {
+.search-results section .search-ia-attributes > span:has(input) label span,
+.changes-to-legislation section .search-ia-attributes > span:has(input) label span {
   font-weight: 300;
 }
 .advanced-searches section .search-ia-attributes > span:has(input) input,
-.search-results section .search-ia-attributes > span:has(input) input {
+.search-results section .search-ia-attributes > span:has(input) input,
+.changes-to-legislation section .search-ia-attributes > span:has(input) input {
   width: 100%;
   max-width: 40rem;
   padding: 0.75rem 0.9rem;
@@ -4750,6 +4878,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   margin: 0.25rem 0;
   font-weight: 300;
 }
+.changes-to-legislation > section:first-of-type hgroup p span span {
+  font-weight: 500;
+}
 .changes-to-legislation > section:has(form),
 .changes-to-legislation details section {
   background: var(--altBg);
@@ -4800,18 +4931,18 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .changes-to-legislation details section form fieldset > input[type="text"]:last-of-type {
   width: 4.5rem;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"],
-.changes-to-legislation details section form fieldset [role="group"] {
+.changes-to-legislation > section:has(form) form fieldset [role="group"]:not(.search-date div[role="group"]),
+.changes-to-legislation details section form fieldset [role="group"]:not(.search-date div[role="group"]) {
   display: flow-root;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] h3,
-.changes-to-legislation details section form fieldset [role="group"] h3 {
+.changes-to-legislation > section:has(form) form fieldset [role="group"]:not(.search-date div[role="group"]) h3,
+.changes-to-legislation details section form fieldset [role="group"]:not(.search-date div[role="group"]) h3 {
   margin: 1.25rem 0 0.35rem 0;
   font-weight: 400;
   font-size: 1rem;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] label,
-.changes-to-legislation details section form fieldset [role="group"] label {
+.changes-to-legislation > section:has(form) form fieldset [role="group"]:not(.search-date div[role="group"]) label,
+.changes-to-legislation details section form fieldset [role="group"]:not(.search-date div[role="group"]) label {
   display: inline-block;
   float: left;
   clear: both;
@@ -4822,12 +4953,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0.1875rem 0 0 0.1875rem;
   background: var(--subtleBg);
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] label:last-of-type,
-.changes-to-legislation details section form fieldset [role="group"] label:last-of-type {
+.changes-to-legislation > section:has(form) form fieldset [role="group"]:not(.search-date div[role="group"]) label:last-of-type,
+.changes-to-legislation details section form fieldset [role="group"]:not(.search-date div[role="group"]) label:last-of-type {
   margin: 0.75rem 0 0 0;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] input,
-.changes-to-legislation details section form fieldset [role="group"] input {
+.changes-to-legislation > section:has(form) form fieldset [role="group"]:not(.search-date div[role="group"]) input,
+.changes-to-legislation details section form fieldset [role="group"]:not(.search-date div[role="group"]) input {
   display: inline-block;
   float: left;
   width: 4rem;
@@ -4837,8 +4968,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-radius: 0 0.1875rem 0.1875rem 0;
   clear: right;
 }
-.changes-to-legislation > section:has(form) form fieldset [role="group"] input:last-of-type,
-.changes-to-legislation details section form fieldset [role="group"] input:last-of-type {
+.changes-to-legislation > section:has(form) form fieldset [role="group"]:not(.search-date div[role="group"]) input:last-of-type,
+.changes-to-legislation details section form fieldset [role="group"]:not(.search-date div[role="group"]) input:last-of-type {
   margin: 0.75rem 0 0 0;
 }
 .changes-to-legislation > section:has(form) form fieldset:last-of-type legend:before,
@@ -4902,12 +5033,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border-top-color: var(--subtleBorder);
   border-bottom-color: var(--subtleBorder);
 }
-.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]),
-.changes-to-legislation details section form fieldset:has(input[type="radio"]) {
+.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]):not(:has(.search-date)),
+.changes-to-legislation details section form fieldset:has(input[type="radio"]):not(:has(.search-date)) {
   padding: 0;
 }
-.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]) legend,
-.changes-to-legislation details section form fieldset:has(input[type="radio"]) legend {
+.changes-to-legislation > section:has(form) form fieldset:has(input[type="radio"]):not(:has(.search-date)) legend,
+.changes-to-legislation details section form fieldset:has(input[type="radio"]):not(:has(.search-date)) legend {
   padding: 1.25rem;
 }
 .changes-to-legislation > section:has(form) form > div,
@@ -6736,6 +6867,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .legislation-content > div .blanket-amendments ul:has(li:nth-of-type(11)) {
     columns: 0 2;
   }
+  main.changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span input {
+    width: 6rem;
+  }
 }
 @media only screen and (max-width: calc(768px - 1px)) {
   /* main menu and timeline act as modal */
@@ -7179,6 +7313,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.search-results .search-content:not(:has(.pagination li:nth-child(13))):has(aside > details[open]) .search-filters > details > summary {
     margin: 0;
+  }
+  main.changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span input {
+    width: 5rem;
   }
 }
 @media screen and (max-width: calc(1024px - 1px)) {
@@ -7843,6 +7980,19 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   .search-results section fieldset.search-date:has(div[role="group"]) > div[role="group"]:has(input#from-date):has(> span > input:checked) > span {
     padding: 0.7rem 0.95rem;
   }
+  .changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span label {
+    min-width: unset;
+  }
+  .changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span input {
+    width: 4rem;
+  }
+  .changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span:first-of-type {
+    float: left;
+    margin: 0 0.75rem 0 0;
+  }
+  .changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span:last-of-type {
+    margin: 0;
+  }
 }
 @media screen and (min-width: 450px) and (max-width: calc(1024px - 1px)) {
   main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td {
@@ -7862,6 +8012,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:last-of-type:after,
   main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td:nth-last-of-type(2):after {
     display: none;
+  }
+  main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr td details summary {
+    width: 6.5rem;
   }
 }
 @media (min-width: 450px) {
@@ -8012,6 +8165,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.changes-to-legislation details summary {
     display: inline-block;
   }
+  main.changes-to-legislation .search-content .search-header .sort-by label {
+    margin: 0;
+  }
+  main.changes-to-legislation .search-content .search-header .sort-by select {
+    padding: 0.6rem 0 0.6rem 0.6rem;
+  }
   main.changes-to-legislation .search-content:not(:has(.pagination li:nth-child(24))) {
     overflow: visible;
   }
@@ -8055,6 +8214,15 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.advanced-searches .search-extent [role="group"]:has(input[type="radio"]) > span:first-of-type,
   main.advanced-searches .search-date:has(div[role="group"]) div[role="group"]:first-of-type {
     margin: 0.65rem 1rem 0 0;
+  }
+  main.changes-to-legislation details summary {
+    display: inline-block;
+  }
+  main.changes-to-legislation .search-content .search-header .sort-by label {
+    margin: 0 0.5rem 0 0;
+  }
+  main.changes-to-legislation .search-content .search-header .sort-by select {
+    padding: 0.6rem;
   }
 }
 @media (min-width: 700px) {
@@ -10243,6 +10411,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     padding: 0 0.5rem;
     align-items: end;
   }
+  main.changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span input {
+    width: 4.5rem;
+  }
 }
 @media (min-width: calc(1024px)) and (max-width: calc(1280px - 1px)) {
   main.search-results:not(.changes-to-legislation) .search-content:not(:has(.pagination li:nth-child(24))) {
@@ -10429,6 +10600,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.changes-to-legislation details section form > div {
     grid-column-start: span 3;
     grid-column-end: 4;
+  }
+  main.changes-to-legislation section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) > span span input {
+    width: 6rem;
   }
   main.changes-to-legislation .search-content .search-results-list #changes-to-legislation-results tr {
     grid-template-columns: 1fr repeat(2, 6rem) 8rem 1fr repeat(2, 6rem) 7.5rem 6.5rem;
