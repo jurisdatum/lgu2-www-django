@@ -59,6 +59,7 @@ DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
+VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
@@ -95,6 +96,19 @@ urlpatterns += i18n_patterns(
     
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
+
+    
+    # New extent URL
+    # Combined browse pattern for extent
+    re_path(
+        fr'^{TYPE}/(?P<extent_segment>=?[a-zA-Z\+]+)$',
+        browse,
+        name='browse-extent'
+    ),
+
+    re_path(fr'^{TYPE}/{YEAR}/(?P<extent_segment>=?[a-zA-Z\+]+)$', browse, name='browse-year-extent'),
+
+
 
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),

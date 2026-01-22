@@ -7,7 +7,9 @@ VALID_TYPES = [
     # EU
     "eu-origin", "eu", "eur", "eudn", "eudr", "eut", 
     # Associated 
-    "ukia"
+    "ukia",
+    # draft
+    "ukdsi", "sdsi", "nidsr"
 ]
 
 EXTENT_MAP = {
