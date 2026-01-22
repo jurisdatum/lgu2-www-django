@@ -11,6 +11,7 @@
             <span class="close">Close<span> filters</span></span>
         </summary>
         <div>
+            {% if meta_data.counts.byType %}
             <section class="filter-type">
                 <h3>By type</h3>
                 <ul>
@@ -36,6 +37,33 @@
                 
                 </ul>
             </section>
+            {% endif %}
+
+            {% if meta_data.counts.byStage %}
+            <section class="filter-type">
+                <h3>Impact Assessments by Stage</h3>
+                <ul>
+                    <!-- "All types" link -->
+                    <li {% if not current_type %}aria-current="page"{% endif %}>
+                        <a href="{{ modified_query_links.stage }}">
+                            All Stage types
+                        </a>
+                    </li>
+
+                    
+                    <!-- Show all types if no type is selected -->
+                    {% for all_stage in meta_data.counts.byStage %}
+                            <li>
+                                <a href="{{ all_stage.link }}">
+                                    {{ all_stage.stage|upper }}
+                                    <span>({{ all_stage.count }}<span> results</span>)</span>
+                                </a>
+                            </li>
+                    {% endfor %}
+                
+                </ul>
+            </section>
+            {% endif %}
 
 
             <section class="filter-year">
@@ -86,9 +114,30 @@
                     </nav>
                 {% endif %}
             </section>
+            
+            {% if meta_data.counts.byDepartment %}
+            <section class="filter-type">
+                <h3>Impact Assessments by Department</h3>
+                <ul>
+                    <!-- "All types" link -->
+                    <li {% if not current_type %}aria-current="page"{% endif %}>
+                        <a href="{{ modified_query_links.department }}">
+                            All Stage types
+                        </a>
+                    </li>
 
-
-
+                    <!-- Show all types if no type is selected -->
+                    {% for all_department in meta_data.counts.byDepartment %}
+                            <li>
+                                <a href="{{ all_department.link }}">
+                                    {{ all_department.department }}
+                                    <span>({{ all_department.count }}<span> results</span>)</span>
+                                </a>
+                            </li>
+                    {% endfor %}                
+                </ul>
+            </section>
+            {% endif %}
             {% if subject_initials %}
             <section class="filter-subject">
                 <h3>By subject</h3>

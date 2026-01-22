@@ -144,6 +144,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     data['status'] = make_status_data(meta)
 
+    data['altFormats'] = data['meta']['altFormats']
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
 
