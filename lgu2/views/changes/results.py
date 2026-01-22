@@ -174,11 +174,20 @@ def _combined(request, query, link_prefix, format, applied):
     nav = _make_nav(data['meta'], link_prefix, _get_extra_query_params(request, applied))
 
     # Build form values dynamically
-    form_values = {**{f'{side}_{attr}': query[f'{side}_{attr}'] or ('all' if attr == 'type' else None)
-                      for side in ['affected', 'affecting'] for attr in ['type','year','start_year','end_year','number']},
-                   'affected_title': request.GET.get('affected-title',''),
-                   'affecting_title': request.GET.get('affecting-title',''),
-                   'applied': applied}
+    form_values = {
+        **{
+            f'{side}_{attr}': (
+                query.get(f'{side}_{attr}') 
+                or ('all' if attr == 'type' else '')
+            )
+            for side in ['affected', 'affecting']
+            for attr in ['type', 'year', 'start_year', 'end_year', 'number']
+        },
+        'affected_title': request.GET.get('affected-title', ''),
+        'affecting_title': request.GET.get('affecting-title', ''),
+        'applied': applied
+    }
+
 
     context = {
         'query': query,
