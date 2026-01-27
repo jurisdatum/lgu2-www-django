@@ -120,27 +120,8 @@
             </table>
         </div>
         <div class="search-footer">
-            <div class="results-count">44 results</div>
-            <nav aria-labelledby="pagination" class="pagination">
-                <h2 id="pagination" class="sr-only">Pages of results</h2>
-                <ul>
-                    <li><span>First</span></li>
-                    <li><span>Previous</span></li>
-                    <li aria-current="page"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
-                    <li><span>Skip a few pages</span></li>
-                    <li><a href="#">12</a></li>
-                    <li><a href="#">13</a></li>
-                    <li><a href="#"><span>Next</span></a></li>
-                    <li><a href="#"><span>Last</span></a></li>
-                </ul>
-            </nav>
-            <div class="results-per-page"><label for="resultsPerPage">Results per page:</label><input type="number" value="50" id="resultsPerPage"><button>Go</button></div>
+            <div class="results-count">{{meta.totalResults}} results</div>
+            {% include "new_theme/research-tools/pagination.html" %}
         </div>
     </section>
 </main>
