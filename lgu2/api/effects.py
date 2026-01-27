@@ -15,12 +15,17 @@ def _make_url(**kwargs) -> str:
 def fetch(
     targetType: Optional[str] = None,
     targetYear: Optional[int] = None,
+    targetStartYear: Optional[int] = None,
+    targetEndYear: Optional[int] = None,
     targetNumber: Optional[int] = None,
     targetTitle: Optional[str] = None,
     sourceType: Optional[str] = None,
     sourceYear: Optional[int] = None,
+    sourceStartYear: Optional[int] = None,
+    sourceEndYear: Optional[int] = None,
     sourceNumber: Optional[int] = None,
     sourceTitle: Optional[str] = None,
+    applied: Optional[str] = None,
     page: int = 1
 ) -> Page:
     url = _make_url(**locals())

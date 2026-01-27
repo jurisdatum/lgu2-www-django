@@ -106,7 +106,7 @@ def legislature_eu(request):
 
 
 def research_tools(request):
-    return render(request, 'new_theme/research-tools.html')
+    return render(request, 'new_theme/research-tools/research-tools.html')
 
 
 def help_guide(request):
