@@ -106,10 +106,6 @@ urlpatterns += i18n_patterns(
         name='browse-extent'
     ),
 
-    re_path(fr'^{TYPE}/{YEAR}/(?P<extent_segment>=?[a-zA-Z\+]+)$', browse, name='browse-year-extent'),
-
-
-
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),
