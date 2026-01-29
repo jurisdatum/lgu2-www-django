@@ -15,7 +15,9 @@ from ..api import documents as api
 from ..api.doc_types import get_types, Response
 from ..api.dates import get_recently_published_dates
 from ..api.wagtail_api import get_wagtail_content
+from ..api.health_check import check_health
 from lgu2.util.labels import get_singular_type_label, get_long_type_label, get_type_label
+from django.http import JsonResponse
 
 local_cache = caches["localfile"]
 
@@ -170,3 +172,42 @@ def new_legislation_feeds(request):
 
 def about_us(request):
     return render(request, 'new_theme/about_us/about_us.html')
+
+
+def health_dependencies(request):
+    try:
+        response = check_health()
+
+        if response.status_code == 200:
+            return JsonResponse(
+                {
+                    "status": "ok",
+                    "checks": {
+                        "api": "ok"
+                    }
+                },
+                status=200
+            )
+
+        # Spring responded but unhealthy
+        return JsonResponse(
+            {
+                "status": "unhealthy",
+                "checks": {
+                    "api": "unhealthy"
+                }
+            },
+            status=503
+        )
+
+    except Exception:
+        # Spring is unreachable / timeout / network error
+        return JsonResponse(
+            {
+                "status": "unhealthy",
+                "checks": {
+                    "api": "down"
+                }
+            },
+            status=503
+        )
