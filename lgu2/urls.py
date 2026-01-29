@@ -20,7 +20,7 @@ from .views.general import (
     legislature_eu, legislature_eu_exit_uk_law, research_tools,
     help_guide, how_legislation_work, revised_legislation, secondary_legislation,
     whats_new, new_legislation, new_legislation_feeds,
-    about_us
+    about_us, health_dependencies
 )
 from .views.search import  browse, search_results
 from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
@@ -31,7 +31,8 @@ from .views.advance_search import advance_search, extent_search, point_in_time_s
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("robots.txt", robots_txt),
-    path("health", lambda request: JsonResponse({"status": "ok"}))
+    path("health", lambda request: JsonResponse({"status": "ok"})),
+    path("health/dependencies", health_dependencies),
 ]
 
 # needed because some JavaScript files add links to "/static/..."
