@@ -1,4 +1,3 @@
-import re
 import string
 from urllib.parse import urlencode
 from collections import defaultdict
@@ -9,12 +8,12 @@ from django.urls import reverse
 
 from ..api.search import basic_search
 from ..api.search_types import SearchParams
-from ..api.browse_types import DocEntry
 from ..util.cutoff import get_cutoff
 from ..util.types import to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link_for_list_entry
+from ..util.global_redirect import build_browse_url_if_possible, normalize_params_for_browse, EXTENT_MAP
 
 
 class SearchResultContext(TypedDict):
@@ -36,261 +35,226 @@ class SearchResultContext(TypedDict):
     current_type: Optional[Union[str, List[str]]]
     grouped_by_decade: bool
     subject_initials: Optional[set[str]]
+    subject_initials_and_links: List[Dict[str, Any]]
+    subject_heading_links: List[Dict[str, Any]]
     all_lowercase_letters: str
     default_pagesize: int
+    type_label_plural: str
+    type_made_verb: str
 
 
-def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None):
-    params: SearchParams = { 'type': type }
-    if year is not None:
-        params['year'] = int(year)
-    if subject is not None:
-        params['subject'] = subject
-    if 'page' in request.GET and request.GET['page'].isdigit():
-        params['page'] = int(request.GET['page'])
-    if 'pageSize' in request.GET and request.GET['pageSize'].isdigit():
-        params['pageSize'] = int(request.GET['pageSize'])
-    return search_results_helper(request, params)
+# -------------------------
+# Query param helpers
+# -------------------------
+
+def parse_year_param(year: str) -> SearchParams:
+    if year.isdigit():
+        return {"year": int(year)}
+    if "-" in year:
+        start, end = year.split("-", 1)
+        result = {}
+        if start.isdigit() and end.isdigit():
+            result = {"startYear": int(start), "endYear": int(end)}
+        elif start.isdigit() and end == "*":
+            result = {"startYear": int(start)}
+        elif start == "*" and end.isdigit():
+            result = {"endYear": int(end)}
+        return result
+    return {}
 
 
 def extract_query_params(request) -> SearchParams:
     params: SearchParams = {}
+    mapping = {
+        "sort": str,
+        "subject": str,
+        "title": str,
+        "number": str,
+        "leg_text": lambda v: ("q", v),
+        "language": str,
+        "exclusiveExtent": str,
+        "pointInTime": str,
+        "year": int,
+        "startYear": int,
+        "endYear": int,
+        "page": int,
+        "pageSize": int,
+        "extent": str
+    }
 
-    if "sort" in request.GET and request.GET["sort"].strip():
-        params["sort"] = request.GET["sort"].strip()
+    for key, cast in mapping.items():
+        value = request.GET.get(key)
+        if value and value.strip():
+            if callable(cast):
+                if isinstance(cast(value), tuple):
+                    k, v = cast(value)
+                    params[k] = v
+                else:
+                    params[key] = cast(value)
+            else:
+                params[key] = cast(value)
 
-    if "pageSize" in request.GET and request.GET["pageSize"].isdigit():
-        params["pageSize"] = int(request.GET["pageSize"])
-
-    if "page" in request.GET and request.GET["page"].isdigit():
-        params["page"] = int(request.GET["page"])
-
-    if "subject" in request.GET and request.GET["subject"].strip():
-        params["subject"] = request.GET["subject"].strip()
-
+    # Handle types list
     types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
     if types:
         params["type"] = types[0] if len(types) == 1 else types
 
-    if "title" in request.GET and request.GET["title"].strip():
-        params["title"] = request.GET["title"].strip()
-
-    if "number" in request.GET and request.GET["number"].strip():
-        params["number"] = request.GET["number"].strip()
-
-    if "leg_text" in request.GET and request.GET["leg_text"].strip():
-        params["q"] = request.GET["leg_text"]
-
-    if "language" in request.GET and request.GET["language"].strip():
-        params["language"] = request.GET["language"]
-    
-    if "exclusiveExtent" in request.GET and request.GET["exclusiveExtent"].strip():
-        params["exclusiveExtent"] = request.GET["exclusiveExtent"]
-    
-    if "extent" in request.GET and request.GET.getlist('extent'):
-        params["extent"] = request.GET.getlist('extent')
-
-    if "pointInTime" in request.GET and request.GET["pointInTime"]:
-        params["pointInTime"] = request.GET["pointInTime"]
-
-    if "specifi_years" in request.GET and request.GET["specifi_years"]:
-        if request.GET["specifi_years"] == 'true':
-            if "year" in request.GET and request.GET["year"].isdigit():
-                params["year"] = int(request.GET["year"])
-        else:
-            if "startYear" in request.GET and request.GET["startYear"].isdigit():
-                params["startYear"] = int(request.GET["startYear"])
-
-            if "endYear" in request.GET and request.GET["endYear"].isdigit():
-                params["endYear"] = int(request.GET["endYear"])
+    # Handle years
+    if request.GET.get("specifi_years") == "true" and "year" in request.GET and request.GET["year"].isdigit():
+        params["year"] = int(request.GET["year"])
     else:
-        if "year" in request.GET and request.GET["year"].isdigit():
-            params["year"] = int(request.GET["year"])
+        if "startYear" in request.GET and request.GET["startYear"].isdigit():
+            params["startYear"] = int(request.GET["startYear"])
+        if "endYear" in request.GET and request.GET["endYear"].isdigit():
+            params["endYear"] = int(request.GET["endYear"])
+
+    # Handle multiple extent values
+    extents = request.GET.getlist("extent")
+    if extents:
+        params["extent"] = extents
+
+    # Normalize exclusiveExtent to boolean
+    exclusive = request.GET.get("exclusiveExtent")
+    if exclusive is not None:
+        params["exclusiveExtent"] = str(exclusive).lower() == "true"
 
     return params
 
 
-TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
-
-def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
-    """Build browse URL if params qualify for clean URL routing, None otherwise.
-
-    Only supports the type/year/subject/page/pageSize keys and enforces the
-    validation rules each clean URL requires; returns None whenever the input
-    falls outside those constraints.
-    """
-
-    allowed_keys = {'type', 'year', 'subject', 'page', 'pageSize'}
-    if not set(params).issubset(allowed_keys):
-        return None
-
-    tpe = params.get('type')
-    if isinstance(tpe, list):
-        return None
-    if not tpe or not re.match(TYPE, tpe):
-        return None
-
-    year = params.get('year')
-    if year is not None and (year < 1000 or year > 9999):
-        return None
-
-    subject = params.get('subject')
-    if subject is not None and not re.match('^[a-z]$', subject):
-        return None
-
-    if year:
-        if subject:
-            base = reverse('browse-year-subject', kwargs={'type': tpe, 'year': year, 'subject': subject})
-        else:
-            base = reverse('browse-year', kwargs={'type': tpe, 'year': year})
-    else:
-        if subject:
-            base = reverse('browse-subject', kwargs={'type': tpe, 'subject': subject})
-        else:
-            base = reverse('browse', kwargs={'type': tpe})
-
-    query = {k: params[k] for k in ('page', 'pageSize') if k in params}
-    return f"{base}?{urlencode(query, doseq=True)}" if query else base
-
-
 def make_smart_link(params: SearchParams):
     browse_url = build_browse_url_if_possible(params)
-    return browse_url or f"{ reverse('search') }?{ urlencode(params, doseq=True) }"
+    return browse_url or f"{reverse('search')}?{urlencode(params, doseq=True)}"
 
 
 def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
     new_params = params.copy()
     new_params[key] = value
-    new_params.pop('page', None)
-    new_params.pop('pageSize', None)
+    new_params.pop("page", None)
+    new_params.pop("pageSize", None)
     return make_smart_link(new_params)
 
 
+# -------------------------
+# Browse / search
+# -------------------------
+
+def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None, extent_segment: Optional[str] = None):
+    params: SearchParams = {'type': type.split('+') if type else []}
+
+    EXTENT_MAP_REVERSE = {v: k for k, v in EXTENT_MAP.items()}
+
+    if extent_segment:
+        # Detect exclusiveExtent from '=' prefix
+        if extent_segment.startswith('='):
+            params['exclusiveExtent'] = True
+            extent_segment = extent_segment[1:]  # remove '='
+        else:
+            params['exclusiveExtent'] = False
+
+        # Convert human-readable extent to internal codes
+        extent_codes = [EXTENT_MAP_REVERSE.get(s) for s in extent_segment.split('+') if EXTENT_MAP_REVERSE.get(s)]
+        params['extent'] = extent_codes
+
+    if year:
+        params.update(parse_year_param(year))
+    if subject:
+        params['subject'] = subject
+
+    # Copy other GET params
+    for key in ['number', 'title', 'leg_text', 'language', 'page', 'pageSize']:
+        if key in request.GET and request.GET[key]:
+            params[key] = request.GET[key]
+
+    return search_results_helper(request, params)
+
+
 def search_results(request):
-    params: SearchParams = extract_query_params(request)
-    # redirect to browse URL if possible
-    browse_url = build_browse_url_if_possible(params)
+    params = extract_query_params(request)
+    browse_params = normalize_params_for_browse(params)
+    browse_url = build_browse_url_if_possible(browse_params)
     if browse_url:
         return redirect(browse_url)
     return search_results_helper(request, params)
 
 
+# -------------------------
+# Search results helper
+# -------------------------
+
 def search_results_helper(request, query_params: SearchParams):
-
-    current_type = query_params.get('type')
+    current_type = query_params.get("type")
     if isinstance(current_type, list):
-        filtered_types = [t for t in current_type if t != 'all']
-        if not filtered_types:
-            query_params.pop('type', None)
+        filtered = [t for t in current_type if t != "all"]
+        if filtered:
+            query_params["type"] = filtered[0] if len(filtered) == 1 else filtered
         else:
-            query_params['type'] = filtered_types[0] if len(filtered_types) == 1 else filtered_types
-    elif isinstance(current_type, str) and current_type.strip() == 'all':
-        query_params.pop('type', None)
+            query_params.pop("type", None)
+    elif current_type == "all":
+        query_params.pop("type", None)
 
-    # Step 2: Fetch data using cleaned parameters
-    api_data_raw = basic_search(query_params)
+    api_data = basic_search(query_params)
+    meta = api_data["meta"]
+    documents_data = api_data["documents"]
 
-    meta = api_data_raw["meta"]
-    documents_data = api_data_raw["documents"]
+    total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))
+    total_count_by_year = sum(item["count"] for item in meta.get("counts", {}).get("byYear", []))
 
-    # Step 3: Count totals
-    total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))  # type: ignore
-    total_count_by_year = sum(item["count"] for item in meta.get("counts", {}).get("byYear", []))  # type: ignore
-
-    # Step 4: Pagination
     current_page = meta.get("page", 1)
     total_pages = meta.get("totalPages", 1)
+    start = max(1, current_page - 5)
+    end = min(total_pages, start + 9)
+    page_range = range(1, total_pages + 1) if total_pages <= 10 else range(start, end + 1)
 
-    if total_pages <= 10:
-        page_range = range(1, total_pages + 1)
-    else:
-        start = max(1, current_page - 5)
-        end = min(total_pages, start + 9)
-        page_range = range(start, end + 1)
+    modified_query_links = {k: replace_param_and_make_smart_link(query_params, k, None) for k in query_params.keys()}
 
-    # Step 5: Generate "remove filter" links using smart link generation
-    modified_query_links = {}
-    for filter_key in query_params.keys():
-        params_without_filter_key = query_params.copy()
-        params_without_filter_key.pop(filter_key, None)
-        modified_query_links[filter_key] = make_smart_link(params_without_filter_key)
+    base_query = request.GET.copy()
+    base_query.pop("page", None)
+    base_query_str = urlencode(base_query)
 
-    # Step 6: Base query string
-    query_dict = request.GET.copy()
-    query_dict.pop("page", None)
-    base_query = urlencode(query_dict)
-
-    # Step 7: Filters
     current_year = str(query_params.get("year", ""))
     current_type = query_params.get("type")
-    single_type = None
-    if isinstance(current_type, list):
-        single_type = current_type[0] if len(current_type) == 1 else None
-    elif current_type:
-        single_type = current_type
+    single_type = current_type[0] if isinstance(current_type, list) and len(current_type) == 1 else current_type
     current_subject = query_params.get("subject")
     subject_heading = current_subject if current_subject and len(current_subject) > 1 else None
     current_subject = current_subject[0] if current_subject else None
-
     default_pagesize = query_params.get("pageSize", 20)
 
-    # Step 8: Grouping by decade (if applicable)
     grouped_by_decade = False
     if len(meta.get("counts", {}).get("byType", [])) == 1:
         grouped_by_decade = group_by_decade(meta["counts"]["byYear"], single_type)
+        for year_list in grouped_by_decade.values():
+            for item in year_list:
+                item["link"] = replace_param_and_make_smart_link(query_params, "year", item["year"])
 
-    # Step 8.5 Add links
-
-    if grouped_by_decade:
-        for years in grouped_by_decade.values():
-            for item in years:
-                item['link'] = replace_param_and_make_smart_link(query_params, 'year', item['year'])
-
-    for byType in meta['counts']['byType']:
-        byType['link'] = replace_param_and_make_smart_link(query_params, 'type', to_short_type(byType['type']))
-
-    for byYear in meta['counts']['byYear']:
-        byYear['link'] = replace_param_and_make_smart_link(query_params, 'year', byYear['year'])
-
-    for byInitial in meta['counts']['bySubjectInitial']:
-        byInitial['link'] = replace_param_and_make_smart_link(query_params, 'subject', byInitial['initial'])
-
+    for byType in meta.get("counts", {}).get("byType", []):
+        byType["link"] = replace_param_and_make_smart_link(query_params, "type", to_short_type(byType["type"]))
+    for byYear in meta.get("counts", {}).get("byYear", []):
+        byYear["link"] = replace_param_and_make_smart_link(query_params, "year", byYear["year"])
+    for byInitial in meta.get("counts", {}).get("bySubjectInitial", []):
+        byInitial["link"] = replace_param_and_make_smart_link(query_params, "subject", byInitial["initial"])
     for doc in documents_data:
-        doc['link'] = make_contents_link_for_list_entry(doc)
-        # doc['label'] = get_type_label(doc['longType'])
+        doc["link"] = make_contents_link_for_list_entry(doc)
 
-    # Step 9: Subject initials and links
-    subject_initials = None
-    if "bySubjectInitial" in meta.get("counts", {}):
-        subject_initials = set(i["initial"] for i in meta["counts"]["bySubjectInitial"])
-
-    subject_initial_links = { byInitial['initial']: byInitial['link'] for byInitial in meta['counts']['bySubjectInitial'] }
+    subject_initials = {i["initial"] for i in meta.get("counts", {}).get("bySubjectInitial", [])} or None
+    subject_initial_links = {i["initial"]: i["link"] for i in meta.get("counts", {}).get("bySubjectInitial", [])}
     subject_initials_and_links = [
-        {   'letter': letter,
-            'link': subject_initial_links.get(letter),
-            'current': (current_subject.upper() == letter.upper()) if current_subject else False
-        }
-        for letter in string.ascii_lowercase]
+        {"letter": l, "link": subject_initial_links.get(l), "current": (current_subject and current_subject.upper() == l.upper())}
+        for l in string.ascii_lowercase
+    ]
 
-    # Generate subject heading links
-    subject_heading_links = []
-    for heading in meta.get('subjects', []):
-        subject_heading_links.append({
-            'name': heading,
-            'link': replace_param_and_make_smart_link(query_params, 'subject', heading),
-            'current': subject_heading == heading
-        })
+    subject_heading_links = [
+        {"name": h, "link": replace_param_and_make_smart_link(query_params, "subject", h), "current": subject_heading == h}
+        for h in meta.get("subjects", [])
+    ]
 
-    # Step 10: Group documents by subject (if filtering by subject)
     grouped_documents = None
     if current_subject:
         grouped_documents = defaultdict(list)
         for doc in documents_data:
-            for subject in doc.get("subjects", []):
-                grouped_documents[subject].append(doc)
+            for s in doc.get("subjects", []):
+                grouped_documents[s].append(doc)
         grouped_documents = dict(grouped_documents)
 
-    # Step 11: Build context
     context: SearchResultContext = {
         "meta_data": meta,
         "documents_data": documents_data,
@@ -303,61 +267,47 @@ def search_results_helper(request, query_params: SearchParams):
         "total_count_by_type": total_count_by_type,
         "total_count_by_year": total_count_by_year,
         "modified_query_links": modified_query_links,
-        "query_params": f"?{base_query}" if base_query else "",
+        "query_params": f"?{base_query_str}" if base_query_str else "",
         "query_param": query_params,
         "by_year_pagination_count": len(meta.get("counts", {}).get("byYear", [])),
         "current_year": current_year,
         "current_type": current_type,
         "grouped_by_decade": grouped_by_decade,
-        "subject_initials": subject_initials,  # now used only to check for presence of subjects
+        "subject_initials": subject_initials,
         "subject_initials_and_links": subject_initials_and_links,
         "subject_heading_links": subject_heading_links,
-        "all_lowercase_letters": string.ascii_lowercase,  # no longer need
+        "all_lowercase_letters": string.ascii_lowercase,
         "default_pagesize": default_pagesize,
-        "type_label_plural": get_type_label(single_type) if single_type else 'documents',
-        "type_made_verb": get_first_version(single_type) if single_type else 'documents'
+        "type_label_plural": get_type_label(single_type) if single_type else "documents",
+        "type_made_verb": get_first_version(single_type) if single_type else "documents"
     }
 
     return render(request, "new_theme/search_result/search_result.html", context)
 
 
+# -------------------------
+# Grouping helper
+# -------------------------
+
 def group_by_decade(year_data, doc_type):
-    """
-    Groups year data into decades with padding for missing years.
-    """
     cut_off = get_cutoff(doc_type)
     grouped = defaultdict(dict)
 
-    # Fill in available year data
     for entry in year_data:
         year = entry["year"]
         count = entry["count"]
         complete = cut_off is not None and year > cut_off
-
         decade_start = (year // 10) * 10
         decade_label = f"{decade_start}-{decade_start + 9}"
+        grouped[decade_label][year] = {"year": year, "count": count, "complete": complete}
 
-        grouped[decade_label][year] = {
-            "year": year,
-            "count": count,
-            "complete": complete
-        }
-
-    # Pad missing years with placeholders
     filled_grouped = {}
     for decade_label, years in grouped.items():
         decade_start = int(decade_label.split("-")[0])
-        full_years = []
-        for year in range(decade_start, decade_start + 10):
-            if year in years:
-                full_years.append(years[year])
-            else:
-                full_years.append({
-                    "year": year,
-                    "count": 0,
-                    "complete": False,
-                    "no_data": True
-                })
+        full_years = [
+            years.get(y, {"year": y, "count": 0, "complete": False, "no_data": True})
+            for y in range(decade_start, decade_start + 10)
+        ]
         filled_grouped[decade_label] = full_years
 
-    return dict(sorted(filled_grouped.items()))  # ascending order
+    return dict(sorted(filled_grouped.items()))
