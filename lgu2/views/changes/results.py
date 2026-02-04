@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from ...api import effects as api
 from ...api.responses.effects import Metadata
 from .types import AFFECTING_YEARS, TYPES
-
+import math
 
 # -------------------------
 # Helpers
@@ -110,8 +110,10 @@ def _make_api_parameters(query, page, title_params=None, applied=None):
 
 
 def _make_nav(meta: Metadata, link_prefix: str, extra_params=None):
-    page, last_page = meta['page'], meta['totalPages']
-    first, last = (1 if page < 10 else page - 9), min(last_page, page + 9)
+    page = meta['page']
+
+    page_size = meta.get('pageSize', 20)  # or hardcode 20 if guaranteed
+    last_page = math.ceil(meta['totalResults'] / page_size)
 
     def make_link(p):
         params = {'page': p}
@@ -119,12 +121,26 @@ def _make_nav(meta: Metadata, link_prefix: str, extra_params=None):
             params.update(extra_params)
         return link_prefix + '?' + urlencode(params)
 
-    pages = [{'number': p, 'link': make_link(p), 'class': 'currentPage' if p == page else 'pageLink'}
-             for p in range(first, last + 1)]
+    pages = [
+        {
+            'number': p,
+            'link': make_link(p),
+            'class': 'currentPage' if p == page else 'pageLink'
+        }
+        for p in range(
+            1 if page < 10 else page - 9,
+            min(last_page, page + 9) + 1
+        )
+    ]
 
-    return {'all': pages,
-            'prev': make_link(page - 1) if page > first else None,
-            'next': make_link(page + 1) if page < last else None}
+    return {
+        'all': pages,
+
+        'first': {'number': 1, 'link': make_link(1)} if page > 1 else None,
+        'prev': {'number': page - 1, 'link': make_link(page - 1)} if page > 1 else None,
+        'next': {'number': page + 1, 'link': make_link(page + 1)} if page < last_page else None,
+        'last': {'number': last_page, 'link': make_link(last_page)} if page < last_page else None,
+    }
 
 
 # -------------------------
@@ -172,7 +188,8 @@ def _combined(request, query, link_prefix, format, applied):
 
     data = api.fetch(**api_params)
     nav = _make_nav(data['meta'], link_prefix, _get_extra_query_params(request, applied))
-
+    print("==========================PAGINATION==========================")
+    print(nav)
     # Build form values dynamically
     form_values = {
         **{
