@@ -24,6 +24,7 @@ from .views.general import (
 )
 from .views.search import  browse, search_results
 from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
+from lgu2.util.types import VALID_TYPES
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -42,15 +43,24 @@ if not settings.DEBUG:
     ]
 
 COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
-TYPE = r'(?P<type>[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)'
+TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
-YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
+YEAR = (
+    r'(?P<year>'
+    r'[0-9]{4}'                # 2024
+    r'|[0-9]{4}-[0-9]{4}'      # 2023-2024
+    r'|[0-9]{4}-\*'            # 2024-*
+    r'|\*-[0-9]{4}'            # *-2024
+    r'|[A-Z][A-Za-z0-9]+/[0-9-]+'  # regnal
+    r')'
+)
 NUMBER = r'(?P<number>[0-9]+)'
 SECTION = r'(?P<section>[A-Za-z0-9/-]+?)'  # not sure about ? on the end
 DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
+VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
@@ -88,10 +98,19 @@ urlpatterns += i18n_patterns(
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
 
+    
+    # New extent URL
+    # Combined browse pattern for extent
+    re_path(
+        fr'^{TYPE}/(?P<extent_segment>=?[a-zA-Z\+]+)$',
+        browse,
+        name='browse-extent'
+    ),
+
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),
-    re_path(fr'^{TYPE}/{YEAR4}$', browse, name='browse-year'),
+    re_path(fr'^{TYPE}/{YEAR}$', browse, name='browse-year'),
     re_path(fr'^{TYPE}/{YEAR4}/{DATA}$', browse_data),
     re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
     re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),
