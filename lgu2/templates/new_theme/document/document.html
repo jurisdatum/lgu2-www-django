@@ -56,7 +56,20 @@
         <div>
             <section class="legislation-text parenthesis">
                 {% if pdf_only %}
-				{% include "document/pdf.html" %}
+                    <div>
+                        <section class="legislation-text">
+                            <div class="status-panel">
+                                <div>
+                                    <h2>This is the King's Printer Version. It is the exact text that received Royal Assent when it was enacted.</h2>
+                                    <p>A version of this text with commencement and extent information should be available by <?php echo date('d M Y', strtotime(date('d M Y'). ' + 14 days')); ?>.</p>
+                                </div>
+                            </div>
+                            <h2>Legislation text for the whole Act </h2>
+                            
+                            <iframe src="{{altFormats.0.url}}" title="{{meta.title}}"></iframe>
+                            
+                        </section>
+                    </div>
 				{% else %}
 				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt;padding-bottom:12pt">
 					<template shadowrootmode="open">

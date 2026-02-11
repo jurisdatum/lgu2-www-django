@@ -28,6 +28,7 @@ from .views.advance_search import advance_search, extent_search, point_in_time_s
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("robots.txt", robots_txt),

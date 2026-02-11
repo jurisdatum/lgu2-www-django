@@ -14,7 +14,7 @@ from ..util.cutoff import get_cutoff
 from ..util.types import to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
-from ..util.links import make_contents_link_for_list_entry
+from ..util.links import make_contents_link_for_list_entry, make_document_link
 
 
 class SearchResultContext(TypedDict):
@@ -70,7 +70,7 @@ def extract_query_params(request) -> SearchParams:
 
     types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
     if types:
-        params["type"] = types[0] if len(types) == 1 else types
+        params["type"] = types
 
     if "title" in request.GET and request.GET["title"].strip():
         params["title"] = request.GET["title"].strip()
@@ -107,8 +107,16 @@ def extract_query_params(request) -> SearchParams:
         if "year" in request.GET and request.GET["year"].isdigit():
             params["year"] = int(request.GET["year"])
 
-    return params
+    if 'stage' in request.GET and request.GET['stage'].strip():
+        params['stage'] = request.GET['stage']
 
+    if 'department' in request.GET and request.GET['department']:
+        params['department'] = request.GET['department']
+
+    if 'search_type' in request.GET and request.GET['search_type']:
+        params['search_type'] = request.GET['search_type']
+
+    return params
 
 TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
 
@@ -255,9 +263,22 @@ def search_results_helper(request, query_params: SearchParams):
     for byInitial in meta['counts']['bySubjectInitial']:
         byInitial['link'] = replace_param_and_make_smart_link(query_params, 'subject', byInitial['initial'])
 
+    for byStage in meta['counts']['byStage']:
+        byStage['link'] = replace_param_and_make_smart_link(query_params, 'stage', byStage['stage'])
+
+    for byDepartment in meta['counts']['byDepartment']:
+        byDepartment['link'] = replace_param_and_make_smart_link(query_params, 'department', byDepartment['department'])
+
     for doc in documents_data:
-        doc['link'] = make_contents_link_for_list_entry(doc)
-        # doc['label'] = get_type_label(doc['longType'])
+        if 'search_type' in query_params:
+            number = doc['number'] if doc['number'] is not None else doc.get('isbn')
+            if number is None:
+                raise ValueError(f"Document {doc['id']} has neither 'number' nor 'isbn' field")
+
+            # TODO: need to solidify this after discussion on approach
+            doc['link'] = make_document_link('ukia', doc['year'], number, None, None)
+        else:
+            doc['link'] = make_contents_link_for_list_entry(doc)
 
     # Step 9: Subject initials and links
     subject_initials = None

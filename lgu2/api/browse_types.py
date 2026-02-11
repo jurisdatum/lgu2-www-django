@@ -36,6 +36,8 @@ class Counts(TypedDict):
     byType: List['ByType']
     byYear: List['ByYear']
     bySubjectInitial: List['ByInitial']
+    byStage: List['ByStage']
+    byDepartment: List['ByDepartment']
 
 
 class ByType(TypedDict):
@@ -50,6 +52,16 @@ class ByYear(TypedDict):
 
 class ByInitial(TypedDict):
     initial: str
+    count: int
+
+
+class ByStage(TypedDict):
+    stage: str
+    count: int
+
+
+class ByDepartment(TypedDict):
+    department: str
     count: int
 
 
