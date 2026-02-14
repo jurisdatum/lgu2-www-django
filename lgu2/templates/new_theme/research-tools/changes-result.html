@@ -1,0 +1,128 @@
+{% extends "new_theme/base.html" %}
+{% block content %}
+<main class="changes-to-legislation search-results">
+    <section>
+        <nav aria-labelledby="breadcrumbNavigation">
+            <h2 id="breadcrumbNavigation">Where this page sits</h2>
+            <ol>
+                <li><a href="default.php">Home</a></li>
+                <li><a href="research-tools.php">Research tools</a></li>
+                <li><a href="research-tools-changes-to-legislation.php">Changes to legislation</a></li>
+                <li><a href="research-tools-changes-to-legislation-results.php" aria-current="page">Changes to legislation results</a></li>
+            </ol>
+        </nav>
+        <hgroup>
+            <h1 id="main-content-h" tabindex="-1">We found {{meta.totalResults}} changes to legislation</h1>
+            <p id="changes-detail" class="initialise" hidden>for <span id="showChanges"><span>all changes</span></span><span id="affectedType"><span>any legislation</span></span><span id="affectedTitle"> with the title "<span></span>"</span><span id="affectedYear">, enacted or made <span></span></span><span id="affectedNumber">, with the number "<span></span>"</span>, made by <span id="affectingType"><span>any legislation</span></span><span id="affectingTitle"> with the title <span></span></span><span id="affectingYear">, enacted or made <span></span></span><span id="affectingNumber">, with the number <span></span></span>.</p>
+        </hgroup>
+    </section>
+    <details>
+        <summary id="search-edit-h">Edit your search</summary>
+        <section>
+            {% include "new_theme/research-tools/search-form.html" %}
+        </section>
+    </details>
+    <section class="search-content">
+        <div class="search-header">
+            <ul class="search-actions">
+                <li><a href="#">Download as a CSV</a></li>
+                <li><a href="#">Subscribe with RSS</a></li>
+            </ul>
+            <!-- a href="#">Subscribe to this list</a -->
+            <div class="sort-by">
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <optgroup label="Changed legislation">
+                        <option>Title (A-Z)</option>
+                        <option>Title (Z-A)</option>
+                        <option>Year/number (0-9)</option>
+                        <option>Year/number (9-0)</option>
+                    </optgroup>
+                    <optgroup label="Affecting legislation">
+                        <option>Title (A-Z)</option>
+                        <option>Title (Z-A)</option>
+                        <option>Year/number (0-9)</option>
+                        <option>Year/number (9-0)</option>
+                    </optgroup>
+                    <optgroup label="Website changes">
+                        <option>Changed</option>
+                        <option>Not changed</option>
+                        <option>Partially</option>
+                    </optgroup>
+                </select>
+            </div>
+            {% include "new_theme/research-tools/pagination.html" %}
+        </div>
+        <div class="search-results-list">
+            <h2 id="search-results-h" tabindex="-1">Changes to legislation results list</h2>
+            <table id="changes-to-legislation-results">
+                <caption>Changes to legislation results list</caption>
+                <thead>
+                <tr>
+                    <th>Changed legislation title</th>
+                    <th>Year and number</th>
+                    <th>Changed provision</th>
+                    <th>Type of effect</th>
+                    <th>Affecting legislation title</th>
+                    <th>Year and number</th>
+                    <th>Affecting provision</th>
+                    <th><span>Change to website text</span></th>
+                    <th><span>Notes</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for effect in effects %}
+                    <tr>
+                        <td>{{ effect.target.title }}</td>
+                        <td><a href="/{{ effect.target.id }}">{{ effect.target.cite }}</a></td>
+                        <td>
+                            {% for node in effect.target.provisions.rich %}
+                                {% if node.type == 'link' %}
+                                    <a href="/{{ node.href }}">{{ node.text }}</a>
+                                {% else %}
+                                    {{ node.text }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ effect.type }}</td>
+                        <td>{{ effect.source.title }}</td>
+                        <td><a href="/{{ effect.source.id }}">{{ effect.source.cite }}</a></td>
+                        <td>
+                            {% for node in effect.source.provisions.rich %}
+                                {% if node.type == 'link' %}
+                                    <a href="/{{ node.href }}">{{ node.text }}</a>
+                                {% else %}
+                                    <span>{{ node.text }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if effect.applied %}
+                                <span class="applied">The website text has been changed</span>
+                            {% elif effect.note %}
+                                <span>See note</span>
+                            {% else %}
+                                <span>The website text has not yet been changed</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if effect.note %}
+                            <details>
+                                <summary>Notes</summary>
+                                <div>{{ effect.note }}</div>
+                            </details>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="search-footer">
+            <div class="results-count">{{meta.totalResults}} results</div>
+            {% include "new_theme/research-tools/pagination.html" %}
+        </div>
+    </section>
+</main>
+{% endblock %}

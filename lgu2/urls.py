@@ -51,7 +51,7 @@ DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
-
+YEAR_PATTERN = r'(?:[0-9]{4}|[0-9]{4}-[0-9]{4}|\*)'
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
 
@@ -132,17 +132,94 @@ urlpatterns += i18n_patterns(
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{DATA}$', fragment.data, name='fragment-data'),
 
 
-    # changes
-    re_path(r'^changes$', changes_intro, name='changes-intro'),
+    # changes Intro
     re_path(
-        r'^changes/affected(?:/(?P<type>[a-z]{3,5}))(?:/(?P<year>[0-9]{4}|\*))?(?:/(?P<number>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
-        changes_affected, name='changes-affected'),
+        r'^changes$',
+        changes_intro,
+        name='changes-intro'
+    ),
+
+    # =========================
+    # AFFECTED (ALL)
+    # =========================
     re_path(
-        r'^changes/affecting(?:/(?P<type>[a-z]{3,5}))(?:/(?P<year>[0-9]{4}|\*))?(?:/(?P<number>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
-        changes_affecting, name='changes-affecting'),
+        rf'^changes/affected(?:/(?P<type>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number>[0-9]+))?'
+        rf'(?:/data\.(?P<format>json|feed))?$',
+        changes_affected,
+        name='changes-affected'
+    ),
+
+    # =========================
+    # AFFECTING (ALL)
+    # =========================
     re_path(
-        r'^changes/affected(?:/(?P<type1>[a-z]{3,5}))(?:/(?P<year1>[0-9]{4}|\*))?(?:/(?P<number1>[0-9]+))?/affecting(?:/(?P<type2>[a-z]{3,5}))(?:/(?P<year2>[0-9]{4}|\*))?(?:/(?P<number2>[0-9]+))?(?:/data\.(?P<format>json|feed))?$',
-        changes_both, name='changes-both'),
+        rf'^changes/affecting(?:/(?P<type>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number>[0-9]+))?'
+        rf'(?:/data\.(?P<format>json|feed))?$',
+        changes_affecting,
+        name='changes-affecting'
+    ),
+
+    # =========================
+    # BOTH (ALL)
+    # =========================
+    re_path(
+        rf'^changes/affected(?:/(?P<type1>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year1>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number1>[0-9]+))?'
+        rf'/affecting(?:/(?P<type2>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year2>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number2>[0-9]+))?'
+        rf'(?:/data\.(?P<format>json|feed))?$',
+        changes_both,
+        name='changes-both'
+    ),
+
+    # ==========================================================
+    # APPLIED / UNAPPLIED — AFFECTED
+    # ==========================================================
+    re_path(
+        rf'^changes/(?P<applied>applied|unapplied)/affected'
+        rf'(?:/(?P<type>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number>[0-9]+))?'
+        rf'(?:/data\.(?P<format>json|feed))?$',
+        changes_affected,
+        name='changes-affected-applied'
+    ),
+
+    # ==========================================================
+    # APPLIED / UNAPPLIED — AFFECTING
+    # ==========================================================
+    re_path(
+        rf'^changes/(?P<applied>applied|unapplied)/affecting'
+        rf'(?:/(?P<type>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number>[0-9]+))?'
+        rf'(?:/data\.(?P<format>json|feed))?$',
+        changes_affecting,
+        name='changes-affecting-applied'
+    ),
+
+    # ==========================================================
+    # APPLIED / UNAPPLIED — BOTH
+    # ==========================================================
+    re_path(
+        rf'^changes/(?P<applied>applied|unapplied)/affected'
+        rf'(?:/(?P<type1>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year1>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number1>[0-9]+))?'
+        rf'/affecting(?:/(?P<type2>[a-z]{{3,5}}))'
+        rf'(?:/(?P<year2>{YEAR_PATTERN}))?'
+        rf'(?:/(?P<number2>[0-9]+))?'
+        rf'(?:/data\.(?P<format>json|feed))?$',
+        changes_both,
+        name='changes-both-applied'
+    ),
+
 
     prefix_default_language=False
 )

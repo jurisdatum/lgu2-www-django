@@ -1,0 +1,153 @@
+<form role="search" action="/changes">
+    <fieldset>
+        <legend><h2>Show changes to...</h2></legend>
+
+        <!-- Affected title -->
+        <label for="affected-title">Title:</label>
+        <input id="affected-title" type="text" name="affected-title" placeholder="any legislation (or enter a title)"
+               value="{{ form_values.affected_title }}" />
+
+        <!-- Affected type -->
+        <label for="affected-type">Legislation type:</label>
+        <select id="affected-type" name="affected-type">
+            <option value="all" {% if form_values.affected_type == 'all' %}selected{% endif %}>any legislation</option>
+            {% for key, value in types.items %}
+            <option value="{{ key }}" {% if form_values.affected_type == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Affected year -->
+        <div class="search-date">
+            <h3>Year:</h3>
+            <div role="group" aria-label="Specific year">
+                <span>
+                    <label for="affected-specific">Within a specific year</label>
+                    <input id="affected-specific" type="radio" name="affected-year-choice" value="specific"
+                        {% if form_values.affected_year and not form_values.affected_start_year %}checked{% endif %}>
+                    <span>
+                        <label for="affected-specific-date">Specific year:</label>
+                        <input id="affected-specific-date" name="affected-year" type="text"
+                               value="{{ form_values.affected_year }}">
+                    </span>
+                </span>
+            </div>
+
+            <div role="group" aria-label="Range of years">
+                <span>
+                    <label for="affected-range">Across a range of years</label>
+                    <input id="affected-range" type="radio" name="affected-year-choice" value="range"
+                        {% if form_values.affected_start_year %}checked{% endif %}>
+                    <span>
+                        <label for="affected-from-date">from:</label>
+                        <input id="affected-from-date" name="affected-start-year" type="text"
+                               value="{{ form_values.affected_start_year }}">
+                    </span>
+                    <span>
+                        <label for="affected-to-date">to:</label>
+                        <input id="affected-to-date" name="affected-end-year" type="text"
+                               value="{{ form_values.affected_end_year }}">
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Affected number -->
+        <label for="affected-number">Number:</label>
+        <input id="affected-number" name="affected-number" type="text"
+               value="{{ form_values.affected_number }}" placeholder="(any)">
+    </fieldset>
+
+    <fieldset>
+        <legend><h2>...that are made by...</h2></legend>
+
+        <!-- Affecting title -->
+        <label for="affecting-title">Title:</label>
+        <input id="affecting-title" name="affecting-title" type="text" placeholder="any legislation (or enter a title)"
+               value="{{ form_values.affecting_title }}" />
+
+        <!-- Affecting type -->
+        <label for="affecting-type">Legislation type:</label>
+        <select id="affecting-type" name="affecting-type">
+            <option value="all" {% if form_values.affecting_type == 'all' %}selected{% endif %}>any legislation</option>
+            {% for key, value in types.items %}
+            <option value="{{ key }}" {% if form_values.affecting_type == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Affecting year -->
+        <div class="search-date">
+            <h3>Year:</h3>
+            <div role="group" aria-label="Specific year">
+                <span>
+                    <label for="affecting-specific">Within a specific year</label>
+                    <input id="affecting-specific" type="radio" name="affecting-year-choice" value="specific"
+                        {% if form_values.affecting_year and not form_values.affecting_start_year %}checked{% endif %}>
+                    <span>
+                        <label for="affecting-specific-date">Specific year:</label>
+                        <input id="affecting-specific-date" name="affecting-year" type="text"
+                               value="{{ form_values.affecting_year }}">
+                    </span>
+                </span>
+            </div>
+
+            <div role="group" aria-label="Range of years">
+                <span>
+                    <label for="affecting-range">Across a range of years</label>
+                    <input id="affecting-range" type="radio" name="affecting-year-choice" value="range"
+                        {% if form_values.affecting_start_year %}checked{% endif %}>
+                    <span>
+                        <label for="affecting-from-date">from:</label>
+                        <input id="affecting-from-date" name="affecting-start-year" type="text"
+                               value="{{ form_values.affecting_start_year }}">
+                    </span>
+                    <span>
+                        <label for="affecting-to-date">to:</label>
+                        <input id="affecting-to-date" name="affecting-end-year" type="text"
+                               value="{{ form_values.affecting_end_year }}">
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Affecting number -->
+        <label for="affecting-number">Number:</label>
+        <input id="affecting-number" name="affecting-number" type="text"
+               value="{{ form_values.affecting_number }}" placeholder="(any)">
+    </fieldset>
+
+    <fieldset>
+        <legend><h2><span>Show these types of changes</span></h2></legend>
+        <div>
+            <input type="radio" name="applied" value="all" id="all-changes"
+                {% if form_values.applied == 'all' or not form_values.applied %}checked{% endif %}>
+            <label for="all-changes"><span>All changes</span>, regardless of whether the text of the legislation on this website has been updated or not.</label>
+        </div>
+        <div>
+            <input type="radio" name="applied" value="applied" id="applied-changes"
+                {% if form_values.applied == 'applied' %}checked{% endif %}>
+            <label for="applied-changes"><span>Only changes which have been applied</span> to the website by the editorial team.</label>
+        </div>
+        <div>
+            <input type="radio" name="applied" value="unapplied" id="unapplied-changes"
+                {% if form_values.applied == 'unapplied' %}checked{% endif %}>
+            <label for="unapplied-changes"><span>Only changes which have not yet been applied</span> to the website by the editorial team.</label>
+        </div>
+    </fieldset>
+
+    <div>
+        <h2 class="initialise" hidden>This is what you are searching for...</h2>
+        <p id="changesSummary" class="initialise" hidden>
+            <span id="showChanges"><span>{{ form_values.applied|default:"All changes" }}</span></span>
+            <span id="affectedType"><span>{{ form_values.affected_type|default:"any legislation" }}</span></span>
+            <span id="affectedTitle"> with the title "<span>{{ form_values.affected_title }}</span>"</span>
+            <span id="affectedYear">, enacted or made <span>{% if form_values.affected_year %}{{ form_values.affected_year }}{% elif form_values.affected_start_year %}{{ form_values.affected_start_year }}–{{ form_values.affected_end_year }}{% endif %}</span></span>
+            <span id="affectedNumber">, with the number "<span>{{ form_values.affected_number }}</span>"</span>
+            , made by
+            <span id="affectingType"><span>{{ form_values.affecting_type|default:"any legislation" }}</span></span>
+            <span id="affectingTitle"> with the title "<span>{{ form_values.affecting_title }}</span>"</span>
+            <span id="affectingYear">, enacted or made <span>{% if form_values.affecting_year %}{{ form_values.affecting_year }}{% elif form_values.affecting_start_year %}{{ form_values.affecting_start_year }}–{{ form_values.affecting_end_year }}{% endif %}</span></span>
+            <span id="affectingNumber">, with the number "<span>{{ form_values.affecting_number }}</span>"</span>.
+        </p>
+        <button>Show me the list of changes</button>
+    </div>
+</form>

@@ -1,0 +1,54 @@
+<nav aria-labelledby="pagination" class="pagination">
+  <h2 id="pagination">Pages of results</h2>
+  <ul>
+
+    {# First #}
+    {% if meta.page == 1 %}
+      <li><span>First</span></li>
+    {% else %}
+      <li><a href="{{ pages.first.link }}">First</a></li>
+    {% endif %}
+
+    {# Previous #}
+    {% if not pages.prev or pages.prev == "None" %}
+      <li><span>Previous</span></li>
+    {% else %}
+      <li><a href="{{ pages.prev.link }}">Previous</a></li>
+    {% endif %}
+
+    {# Page numbers #}
+    {% for page in pages.all %}
+      {% if "currentPage" in page.class %}
+        <li aria-current="page">
+          <a href="{{ page.link }}">{{ page.number }}</a>
+        </li>
+      {% else %}
+        <li>
+          <a href="{{ page.link }}">{{ page.number }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {# Optional skip indicator #}
+    {% if meta.totalPages > pages.all|length %}
+      <li><span>Skip a few pages</span></li>
+    {% endif %}
+
+    {# Next #}
+    {% if pages.next %}
+      <li><a href="{{ pages.next.link }}">Next</a></li>
+    {% else %}
+      <li><span>Next</span></li>
+    {% endif %}
+
+    {# Last #}
+    {% if meta.page == meta.totalPages %}
+      <li><span>Last</span></li>
+    {% else %}
+      <li>
+        <a href="/changes/affected/aep?page={{ meta.totalPages }}">Last</a>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>
