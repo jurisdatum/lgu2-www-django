@@ -80,6 +80,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
                 'direct': group_effects(meta['unappliedEffects']['fragment']),
                 'larger': group_effects(meta['unappliedEffects']['ancestor'])
             },
+            'up_to_date': meta['upToDate'],
             'direct_effects': meta['unappliedEffects']['fragment'],
             'larger_effects': meta['unappliedEffects']['ancestor']
         },

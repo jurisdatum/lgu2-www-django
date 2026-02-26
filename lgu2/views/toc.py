@@ -112,7 +112,32 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
+<<<<<<< Updated upstream
     template = loader.get_template('document/toc.html')
+=======
+    data['timeline'] = make_timeline_data(meta, "toc", lang)
+
+    # associated documents
+    explanatory_notes = []
+    other_associated_doc = []
+
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+    
+    data['explanatory_notes'] = explanatory_notes
+    data['other_associated_doc'] = other_associated_doc
+
+    data['breadcrumbs'] = _make_breadcrumbs(meta, version, lang)
+    data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
+
+    data['status'] = make_status_data(meta)
+    print(data['status'])
+    template = loader.get_template('new_theme/document/toc.html')
+>>>>>>> Stashed changes
     return HttpResponse(template.render(data, request))
 
 

@@ -103,6 +103,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     status = {
         'message': get_status_message(data['meta']),
         'label': meta['title'],
+        'up_to_date': meta['upToDate'],
         'effects': {
             'direct': group_effects(meta['unappliedEffects'])
         },
@@ -120,6 +121,9 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         pdf_only = False
         pdf_link = None
         pdf_thumb = None
+
+    print("====================STATUS========================")
+    print(status)
 
     context = {
         'meta': data['meta'],
