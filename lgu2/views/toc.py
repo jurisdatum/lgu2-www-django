@@ -143,7 +143,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
 
     data['status'] = make_status_data(meta)
-
+    print(data['status'])
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
 

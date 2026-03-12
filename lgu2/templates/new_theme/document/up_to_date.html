@@ -7,7 +7,7 @@
 {% elif status.up_to_date %}
 <div class="up-to-date">
     <h3>Up to date status</h3>
-    <p>{{ status.label|capfirst }} is up to date with all changes as of {{ status.point_in_time|date:"d M Y" }}</p>
+    <p>{{ status.message }}</p>
     <a href="{{ status.changes_link }}">See all changes made to this Act</a>
 </div>
 {% else %}
