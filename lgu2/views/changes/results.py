@@ -188,8 +188,7 @@ def _combined(request, query, link_prefix, format, applied):
 
     data = api.fetch(**api_params)
     nav = _make_nav(data['meta'], link_prefix, _get_extra_query_params(request, applied))
-    print("==========================PAGINATION==========================")
-    print(nav)
+
     # Build form values dynamically
     form_values = {
         **{

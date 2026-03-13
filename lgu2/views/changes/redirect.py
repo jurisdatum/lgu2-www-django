@@ -14,13 +14,20 @@ def _extract_year_range(prefix, request):
     - 'YYYY' if a single year is selected
     - None if nothing selected
     """
+    year_choice = request.GET.get(f"{prefix}-year-choice")
+
+    if year_choice == "specific":
+        return request.GET.get(f'{prefix}-year')
+
     start = request.GET.get(f'{prefix}-start-year')
     end = request.GET.get(f'{prefix}-end-year')
+
+    if not start and not end:
+        return None
 
     if start and end:
         return f'{start}-{end}'
 
-    return request.GET.get(f'{prefix}-year')
 
 
 def _title_query_args(request):
