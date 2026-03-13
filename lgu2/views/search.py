@@ -70,7 +70,7 @@ def extract_query_params(request) -> SearchParams:
 
     types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
     if types:
-        params["type"] = types
+        params["type"] = types[0] if len(types) == 1 else types
 
     if "title" in request.GET and request.GET["title"].strip():
         params["title"] = request.GET["title"].strip()

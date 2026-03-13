@@ -116,8 +116,12 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
         data['pdf_only'] = True
-        data['pdf_link'] = make_pdf_url(type, year, number, version)
-        data['pdf_thumb'] = make_thumbnail_url(type, year, number, version)
+        # data['pdf_link'] = make_pdf_url(type, year, number, version) # TODO : will use when files are on our server
+        # data['pdf_thumb'] = make_thumbnail_url(type, year, number, version) # TODO : will use when files are on our server
+
+        data['pdf_link'] = data['meta']['altFormats'][0]['url'] # TODO : need to verify if it will always be the first element
+        data['pdf_thumb'] = data['meta']['altFormats'][0]['thumbnail'] # TODO : need to verify if it will always be the first element
+
     else:
         data['pdf_only'] = False
         data['pdf_link'] = None
