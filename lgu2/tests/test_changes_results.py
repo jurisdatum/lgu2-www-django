@@ -1,10 +1,21 @@
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, urlencode, urlsplit
 from unittest.mock import Mock, patch
 
 from django.test import SimpleTestCase
 from django.urls import reverse
 
 from lgu2.views.changes.results import _make_nav
+
+
+class ChangesRedirectTests(SimpleTestCase):
+    def test_changes_intro_redirect_accepts_specific_year_without_year_choice(self):
+        response = self.client.get(reverse('changes-intro'), {'affected-year': '1996'})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affected', kwargs={'type': 'all', 'year': '1996'}),
+        )
 
 
 class ChangesResultsNavTests(SimpleTestCase):
@@ -31,6 +42,32 @@ class ChangesResultsNavTests(SimpleTestCase):
 
 
 class ChangesResultsFeedTests(SimpleTestCase):
+    @patch('lgu2.views.changes.results.api.fetch')
+    def test_results_rss_link_preserves_title_filters(self, mock_fetch):
+        mock_fetch.return_value = {
+            'meta': {
+                'page': 1,
+                'pageSize': 20,
+                'totalPages': 1,
+                'totalResults': 1,
+            },
+            'effects': [],
+        }
+
+        response = self.client.get(
+            reverse('changes-affected', kwargs={'type': 'uksi'}),
+            {'affected-title': 'Housing Act'},
+        )
+
+        expected_link = (
+            reverse('changes-affected', kwargs={'type': 'uksi'})
+            + '/data.feed?'
+            + urlencode({'affected-title': 'Housing Act'})
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f'href="{expected_link}"')
+
     @patch('lgu2.api.effects.server.get')
     def test_feed_accepts_year_range_and_applied_filters(self, mock_get):
         mock_get.return_value = Mock(text='<feed/>')
