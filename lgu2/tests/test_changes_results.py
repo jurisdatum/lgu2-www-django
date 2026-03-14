@@ -17,6 +17,29 @@ class ChangesRedirectTests(SimpleTestCase):
             reverse('changes-affected', kwargs={'type': 'all', 'year': '1996'}),
         )
 
+    def test_changes_intro_redirect_preserves_single_ended_year_ranges(self):
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-year-choice': 'range', 'affected-start-year': '1990'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(
+            response['Location'].startswith(reverse('changes-affected', kwargs={'type': 'all'}))
+        )
+        self.assertIn('affected-start-year=1990', response['Location'])
+
+    def test_changes_intro_ignores_invalid_specific_year_instead_of_500ing(self):
+        self.client.raise_request_exception = False
+
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-year-choice': 'specific', 'affected-year': '19x0'},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Changes to legislation')
+
 
 class ChangesResultsNavTests(SimpleTestCase):
     def test_make_nav_returns_template_expected_link_objects(self):
