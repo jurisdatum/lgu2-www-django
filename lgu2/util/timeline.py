@@ -19,6 +19,7 @@ class TimelineData(TypedDict):
     historical: List[TimelineEntry]
     viewing: TimelineEntry
     pointInTime: Optional[date]
+    single_version: bool
 
 
 _ISO_DATE_RE = re.compile(r'\d{4}-\d{2}-\d{2}')
@@ -101,10 +102,13 @@ def _make_timeline_data(meta: CommonMetadata, make_link: Callable) -> TimelineDa
     else:
         viewing = next(v for v in historical if v['label'] == meta['version'])
 
+    version_count = (1 if original else 0) + len(historical) + (1 if current else 0)
+
     return {
         'original': original,
         'historical': historical,
         'current': current,
         'viewing': viewing,
         'pointInTime': point_in_time,
+        'single_version': version_count == 1,
     }
