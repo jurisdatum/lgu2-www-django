@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.urls import reverse
@@ -21,20 +21,29 @@ def _get_page(request):
         return 1
 
 
-def _parse_year(year: Optional[str]):
+def _parse_year(year: Optional[str]) -> Tuple[Optional[int], Optional[int], Optional[int]]:
     """
     Accepts:
       - '1998'
       - '1996-1998'
+      - '1996-*'
+      - '*-1998'
       - '*'
     Returns:
       (year, start_year, end_year)
     """
+
     if not year or year == '*':
         return None, None, None
+
     if '-' in year:
         start, end = year.split('-', 1)
-        return None, int(start), int(end)
+
+        start_year = int(start) if start != '*' else None
+        end_year = int(end) if end != '*' else None
+
+        return None, start_year, end_year
+
     return int(year), None, None
 
 
@@ -80,11 +89,20 @@ def _add_year_params(params, query, prefix, year_key, start_key, end_key):
     """
     Add year params to API request, using exact keys expected by API
     """
-    if query[f'{prefix}_start_year'] and query[f'{prefix}_end_year']:
-        params[start_key] = query[f'{prefix}_start_year']
-        params[end_key] = query[f'{prefix}_end_year']
-    else:
-        params[year_key] = query[f'{prefix}_year']
+
+    year = query.get(f'{prefix}_year')
+    start = query.get(f'{prefix}_start_year')
+    end = query.get(f'{prefix}_end_year')
+
+    if start and end:
+        params[start_key] = start
+        params[end_key] = end
+    elif start:
+        params[start_key] = start
+    elif end:
+        params[end_key] = end
+    elif year:
+        params[year_key] = year
 
 
 def _make_api_parameters(query, page, title_params=None, applied=None):
@@ -187,7 +205,8 @@ def _combined(request, query, link_prefix, format, applied):
         return _data(api_params, format)
 
     data = api.fetch(**api_params)
-    nav = _make_nav(data['meta'], link_prefix, _get_extra_query_params(request, applied))
+    extra_query_param = _get_extra_query_params(request, applied)
+    nav = _make_nav(data['meta'], link_prefix, extra_query_param)
 
     # Build form values dynamically
     form_values = {
@@ -204,14 +223,16 @@ def _combined(request, query, link_prefix, format, applied):
         'applied': applied
     }
 
+    query_string = urlencode(extra_query_param)
 
+    feed_url = f"{link_prefix}/data.feed?{query_string}"
     context = {
         'query': query,
         'types': TYPES,
         'affecting_years': AFFECTING_YEARS,
         'meta': data['meta'],
         'pages': nav,
-        'feed_link': link_prefix + '/data.feed',
+        'feed_link': feed_url,
         'effects': data['effects'],
         'form_values': form_values,
     }

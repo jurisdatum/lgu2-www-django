@@ -7,26 +7,42 @@ from urllib.parse import urlencode
 # Helpers
 # -------------------------
 
+import re
+
 def _extract_year_range(prefix, request):
     """
     Returns:
     - 'YYYY-YYYY' if a range is selected
     - 'YYYY' if a single year is selected
+    - 'YYYY-*' if only start year exists
+    - '*-YYYY' if only end year exists
     - None if nothing selected
     """
-    year_choice = request.GET.get(f"{prefix}-year-choice")
 
-    if year_choice == "specific":
-        return request.GET.get(f'{prefix}-year')
+    year = request.GET.get(f"{prefix}-year")
+    start = request.GET.get(f"{prefix}-start-year")
+    end = request.GET.get(f"{prefix}-end-year")
 
-    start = request.GET.get(f'{prefix}-start-year')
-    end = request.GET.get(f'{prefix}-end-year')
+    year_pattern = r"^\d{4}$"
 
-    if not start and not end:
-        return None
+    # Case 1: Specific year from form OR manual URL
+    if year and re.match(year_pattern, year):
+        return year
 
+    # Case 2: Range
     if start and end:
-        return f'{start}-{end}'
+        if re.match(year_pattern, start) and re.match(year_pattern, end):
+            return f"{start}-{end}"
+
+    # Case 3: Only start year
+    if start and re.match(year_pattern, start):
+        return f"{start}-*"
+
+    # Case 4: Only end year
+    if end and re.match(year_pattern, end):
+        return f"*-{end}"
+
+    return None
 
 
 
