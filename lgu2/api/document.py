@@ -1,9 +1,10 @@
 
 from datetime import date as Date
-from typing import List, Optional, TypedDict, NotRequired, Literal
+from typing import List, Optional, TypedDict, NotRequired, Literal, Union
 from urllib.parse import urlencode
 
 from . import server
+from .associated import ImpactAssessment, ImpactAssessmentMeta
 from .browse_types import AltNumber
 from .responses.effects import Effect
 
@@ -62,8 +63,7 @@ class CommonMetadata(TypedDict):
     def convert_dates(meta: 'CommonMetadata'):
         if meta.get('date'):  # can be null
             meta['date'] = Date.fromisoformat(meta['date'])
-        if meta.get('modified'): 
-            meta['modified'] = Date.fromisoformat(meta['modified']) # in case of ukia this is throwing error as it is not coming 
+        meta['modified'] = Date.fromisoformat(meta['modified'])
         if meta.get('pointInTime'):  # can be null
             meta['pointInTime'] = Date.fromisoformat(meta['pointInTime'])
 
@@ -98,10 +98,13 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
     return url
 
 
-def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Document:
+def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Union[Document, ImpactAssessment]:
     url = _make_url(type, year, number, version)
     doc = server.get_json(url, language)
-    CommonMetadata.convert_dates(doc['meta'])
+    if type == 'ukia':
+        ImpactAssessmentMeta.convert_dates(doc['meta'])
+    else:
+        CommonMetadata.convert_dates(doc['meta'])
     return doc
 
 

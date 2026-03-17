@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.utils import timezone
 
+from ..api.associated import ImpactAssessment
 from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
@@ -119,7 +120,7 @@ def make_document_context(data, type, year, number, version, lang):
     return context
 
 
-def make_ukia_data(data, type, year, number, version, lang):
+def make_ukia_data(data: ImpactAssessment, type, year, number, version, lang):
 
     meta = data['meta']    
     meta['link'] = make_document_link(type, year, number, version, lang)
