@@ -113,9 +113,6 @@ def extract_query_params(request) -> SearchParams:
     if 'department' in request.GET and request.GET['department']:
         params['department'] = request.GET['department']
 
-    if 'search_type' in request.GET and request.GET['search_type']:
-        params['search_type'] = request.GET['search_type']
-
     return params
 
 TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
@@ -270,13 +267,9 @@ def search_results_helper(request, query_params: SearchParams):
         byDepartment['link'] = replace_param_and_make_smart_link(query_params, 'department', byDepartment['department'])
 
     for doc in documents_data:
-        if 'search_type' in query_params:
-            number = doc['number'] if doc['number'] is not None else doc.get('isbn')
-            if number is None:
-                raise ValueError(f"Document {doc['id']} has neither 'number' nor 'isbn' field")
-
-            # TODO: need to solidify this after discussion on approach
-            doc['link'] = make_document_link('ukia', doc['year'], number, None, None)
+        short_type = doc['id'].split('/')[0]
+        if short_type == 'ukia':
+            doc['link'] = make_document_link(short_type, doc['year'], doc['number'], None, None)
         else:
             doc['link'] = make_contents_link_for_list_entry(doc)
 

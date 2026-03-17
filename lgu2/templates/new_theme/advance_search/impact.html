@@ -12,7 +12,6 @@
         <section>
             <form role="search" method="get" action="{% url 'search' %}">
                 <input type="hidden" name="type" value="ukia">
-                <input type="hidden" name="search_type" value="impact_assessment">
                 {% include 'new_theme/advance_search/common/search-keyword.html' %}
                 <fieldset class="search-ia-attributes">
                     <legend><h2>Impact Assessment attributes</h2></legend>
