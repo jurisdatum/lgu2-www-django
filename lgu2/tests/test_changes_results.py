@@ -24,10 +24,10 @@ class ChangesRedirectTests(SimpleTestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(
-            response['Location'].startswith(reverse('changes-affected', kwargs={'type': 'all'}))
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affected', kwargs={'type': 'all', 'year': '1990-*'}),
         )
-        self.assertIn('affected-start-year=1990', response['Location'])
 
     def test_changes_intro_ignores_invalid_specific_year_instead_of_500ing(self):
         self.client.raise_request_exception = False
