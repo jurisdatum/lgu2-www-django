@@ -70,7 +70,7 @@ def extract_query_params(request) -> SearchParams:
         "subject": str,
         "title": str,
         "number": str,
-        "leg_text": lambda v: ("q", v),
+        "text": lambda v: ("q", v),
         "language": str,
         "exclusiveExtent": str,
         "pointInTime": str,
@@ -128,7 +128,13 @@ def make_smart_link(params: SearchParams):
 
 def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
     new_params = params.copy()
-    new_params[key] = value
+    if value is None:
+        # Remove the key entirely instead of setting it to None
+        new_params.pop(key, None)
+    else:
+        new_params[key] = value
+
+    # Always reset pagination
     new_params.pop("page", None)
     new_params.pop("pageSize", None)
     return make_smart_link(new_params)
@@ -161,7 +167,7 @@ def browse(request, type: str, year: Optional[str] = None, subject: Optional[str
         params['subject'] = subject
 
     # Copy other GET params
-    for key in ['number', 'title', 'leg_text', 'language', 'page', 'pageSize']:
+    for key in ['number', 'title', 'text', 'language', 'page', 'pageSize']:
         if key in request.GET and request.GET[key]:
             params[key] = request.GET[key]
 

@@ -67,13 +67,20 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     Build the browse URL if params allow it.
     Handles type(s), year, subject, extent_segment, and exclusiveExtent.
     """
+
+    def is_single_letter(subject: str) -> bool:
+        return isinstance(subject, str) and re.fullmatch(r"[a-z]", subject)
+
     params = normalize_params_for_browse(params)
 
-    allowed_keys = {'type', 'year', 'subject', 'extent_segment', 'page', 'pageSize', 'title', 'language', 'q', 'number'}
+    allowed_keys = {
+        'type', 'year', 'subject', 'extent_segment',
+        'page', 'pageSize', 'title', 'language', 'q', 'number'
+    }
     if not set(params).issubset(allowed_keys):
         return None
 
-    # Prepare type(s) string
+    # Prepare type(s)
     tpe = params.get('type')
     if isinstance(tpe, str):
         tpe_list = [tpe]
@@ -81,34 +88,58 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
         tpe_list = tpe
     else:
         return None
+
     tpe_url = '+'.join(tpe_list)
 
     year = params.get("year")
     subject = params.get("subject")
     extent_segment = params.get("extent_segment")
 
-    # Determine URL pattern
-    if extent_segment:
-        base = reverse('browse-extent', kwargs={'type': tpe_url, 'extent_segment': extent_segment})
-    elif year:
-        if subject:
-            base = reverse('browse-year-subject', kwargs={'type': tpe_url, 'year': year, 'subject': subject})
-        else:
-            base = reverse('browse-year', kwargs={'type': tpe_url, 'year': year})
-    else:
-        if subject:
-            base = reverse('browse-subject', kwargs={'type': tpe_url, 'subject': subject})
-        else:
-            base = reverse('browse', kwargs={'type': tpe_url})
+    subject_is_letter = is_single_letter(subject)
 
-    # Add remaining query params (page, pageSize, title, text, number)
+    # Determine URL pattern safely
+    if extent_segment:
+        base = reverse('browse-extent', kwargs={
+            'type': tpe_url,
+            'extent_segment': extent_segment
+        })
+
+    elif year:
+        if subject_is_letter:
+            base = reverse('browse-year-subject', kwargs={
+                'type': tpe_url,
+                'year': year,
+                'subject': subject
+            })
+        else:
+            base = reverse('browse-year', kwargs={
+                'type': tpe_url,
+                'year': year
+            })
+
+    else:
+        if subject_is_letter:
+            base = reverse('browse-subject', kwargs={
+                'type': tpe_url,
+                'subject': subject
+            })
+        else:
+            base = reverse('browse', kwargs={
+                'type': tpe_url
+            })
+
+    # Build query params
     query = {}
     for k, v in params.items():
-        if k in ('year', 'subject', 'type', 'extent_segment'):
+        if k in ('year', 'type', 'extent_segment'):
+            continue
+        # Only skip subject if it was used in the path
+        if k == 'subject' and subject_is_letter:
             continue
         new_key = PARAM_RENAME.get(k, k)
         query[new_key] = v
 
     if query:
         return f"{base}?{urlencode(query, doseq=True)}"
+
     return base

@@ -59,7 +59,8 @@ DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
-VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
+VALID_EXTENTS = ['E', 'W', 'S', 'NI']
+EXTENT = r'(?P<extent_segment>(?:' + '|'.join(VALID_EXTENTS) + r')(?:\+(?:' + '|'.join(VALID_EXTENTS) + r'))*)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
@@ -97,14 +98,6 @@ urlpatterns += i18n_patterns(
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
 
-    
-    # New extent URL
-    # Combined browse pattern for extent
-    re_path(
-        fr'^{TYPE}/(?P<extent_segment>=?[a-zA-Z\+]+)$',
-        browse,
-        name='browse-extent'
-    ),
 
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
@@ -113,6 +106,13 @@ urlpatterns += i18n_patterns(
     re_path(fr'^{TYPE}/{YEAR4}/{DATA}$', browse_data),
     re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
     re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),
+
+    # ✅ extent AFTER (restricted)
+    re_path(
+        fr'^{TYPE}/{EXTENT}$',
+        browse,
+        name='browse-extent'
+    ),
 
     # documents
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}$', document, name='document'),
