@@ -50,7 +50,7 @@ DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
-YEAR_PATTERN = r'(?:\d{4}|\d{4}-\d{4}|\d{4}-\*|\*-\d{4})'
+YEAR_PATTERN = r'(?:\*|\d{4}|\d{4}-\d{4}|\d{4}-\*|\*-\d{4})'
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
 

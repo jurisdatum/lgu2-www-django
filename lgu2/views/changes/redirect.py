@@ -19,27 +19,37 @@ def _extract_year_range(prefix, request):
     - None if nothing selected
     """
 
+    def is_valid(year):
+        return year and re.match(r"^\d{4}$", year)
+
+    year_choice = request.GET.get(f"{prefix}-year-choice")
+
     year = request.GET.get(f"{prefix}-year")
     start = request.GET.get(f"{prefix}-start-year")
     end = request.GET.get(f"{prefix}-end-year")
 
-    year_pattern = r"^\d{4}$"
-
-    # Case 1: Specific year from form OR manual URL
-    if year and re.match(year_pattern, year):
-        return year
-
-    # Case 2: Range
-    if start and end:
-        if re.match(year_pattern, start) and re.match(year_pattern, end):
+    # ✅ If user explicitly selected RANGE → ignore stale `year`
+    if year_choice == "range":
+        if is_valid(start) and is_valid(end):
             return f"{start}-{end}"
+        if is_valid(start):
+            return f"{start}-*"
+        if is_valid(end):
+            return f"*-{end}"
 
-    # Case 3: Only start year
-    if start and re.match(year_pattern, start):
+    # ✅ If user explicitly selected SPECIFIC
+    if year_choice == "specific":
+        if is_valid(year):
+            return year
+
+    # ✅ Fallback (manual URL or missing year_choice)
+    if is_valid(year):
+        return year
+    if is_valid(start) and is_valid(end):
+        return f"{start}-{end}"
+    if is_valid(start):
         return f"{start}-*"
-
-    # Case 4: Only end year
-    if end and re.match(year_pattern, end):
+    if is_valid(end):
         return f"*-{end}"
 
     return None
