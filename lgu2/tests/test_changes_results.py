@@ -17,6 +17,17 @@ class ChangesRedirectTests(SimpleTestCase):
             reverse('changes-affected', kwargs={'type': 'all', 'year': '1996'}),
         )
 
+    def test_changes_intro_redirect_allows_number_only_searches(self):
+        self.client.raise_request_exception = False
+
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-type': 'uksi', 'affected-number': '123'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['Location'], '/changes/affected/uksi/*/123')
+
     def test_changes_intro_redirect_preserves_single_ended_year_ranges(self):
         response = self.client.get(
             reverse('changes-intro'),
@@ -24,10 +35,28 @@ class ChangesRedirectTests(SimpleTestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(
-            response['Location'].startswith(reverse('changes-affected', kwargs={'type': 'all'}))
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affected', kwargs={'type': 'all', 'year': '1990-*'}),
         )
-        self.assertIn('affected-start-year=1990', response['Location'])
+
+    def test_changes_intro_redirect_prefers_selected_range_over_stale_specific_year(self):
+        response = self.client.get(
+            reverse('changes-intro'),
+            {
+                'affected-type': 'uksi',
+                'affected-year': '1996',
+                'affected-year-choice': 'range',
+                'affected-start-year': '2000',
+                'affected-end-year': '2002',
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affected', kwargs={'type': 'uksi', 'year': '2000-2002'}),
+        )
 
     def test_changes_intro_ignores_invalid_specific_year_instead_of_500ing(self):
         self.client.raise_request_exception = False
