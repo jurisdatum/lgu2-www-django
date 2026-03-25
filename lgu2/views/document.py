@@ -71,8 +71,8 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
 
     if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
         pdf_only = True
-        pdf_link = make_pdf_url(type, year, number, version)
-        pdf_thumb = make_thumbnail_url(type, year, number, version)
+        pdf_link = meta['altFormats'][0]['url']
+        pdf_thumb = meta['altFormats'][0]['thumbnail']
     else:
         pdf_only = False
         pdf_link = None
@@ -100,8 +100,10 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         },
         'pdf_only': pdf_only,
         'pdf_link': pdf_link,
-        'pdf_thumb': pdf_thumb
+        'pdf_thumb': pdf_thumb,
+        'altFormats': meta['altFormats']
     }
+
     # template = loader.get_template('document/document.html')
     template = loader.get_template('new_theme/document/document.html')
     return HttpResponse(template.render(context, request))
