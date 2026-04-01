@@ -7,7 +7,6 @@ from urllib.parse import urlencode
 from ...api import effects as api
 from ...api.responses.effects import Metadata
 from .types import AFFECTING_YEARS, TYPES
-import math
 
 # -------------------------
 # Helpers
@@ -130,8 +129,7 @@ def _make_api_parameters(query, page, title_params=None, applied=None):
 def _make_nav(meta: Metadata, link_prefix: str, extra_params=None):
     page = meta['page']
 
-    page_size = meta.get('pageSize', 20)  # or hardcode 20 if guaranteed
-    last_page = math.ceil(meta['totalResults'] / page_size)
+    last_page = meta.get('totalPages', 1)
 
     def make_link(p):
         params = {'page': p}

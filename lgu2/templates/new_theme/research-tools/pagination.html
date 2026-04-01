@@ -10,7 +10,7 @@
     {% endif %}
 
     {# Previous #}
-    {% if not pages.prev or pages.prev == "None" %}
+    {% if not pages.prev %}
       <li><span>Previous</span></li>
     {% else %}
       <li><a href="{{ pages.prev.link }}">Previous</a></li>
