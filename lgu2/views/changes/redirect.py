@@ -28,7 +28,7 @@ def _extract_year_range(prefix, request):
     start = request.GET.get(f"{prefix}-start-year")
     end = request.GET.get(f"{prefix}-end-year")
 
-    # ✅ If user explicitly selected RANGE → ignore stale `year`
+    # User explicitly selected RANGE -- ignore stale specific-year field
     if year_choice == "range":
         if is_valid(start) and is_valid(end):
             return f"{start}-{end}"
@@ -36,13 +36,15 @@ def _extract_year_range(prefix, request):
             return f"{start}-*"
         if is_valid(end):
             return f"*-{end}"
+        return None
 
-    # ✅ If user explicitly selected SPECIFIC
+    # User explicitly selected SPECIFIC -- ignore range fields
     if year_choice == "specific":
         if is_valid(year):
             return year
+        return None
 
-    # ✅ Fallback (manual URL or missing year_choice)
+    # No radio selected (manual URL or non-JS submission)
     if is_valid(year):
         return year
     if is_valid(start) and is_valid(end):
