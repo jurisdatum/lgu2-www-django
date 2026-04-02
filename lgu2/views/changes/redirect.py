@@ -121,13 +121,17 @@ def _redirect_generic(base, types, years, numbers, applied, request):
 def get_redirect(request):
     applied = request.GET.get('applied')
 
-    # Gather affected params
+    # Gather affected params (treat 'all' as no selection)
     affected_type = request.GET.get('affected-type')
+    if affected_type == 'all':
+        affected_type = None
     affected_year = _extract_year_range('affected', request)
     affected_number = request.GET.get('affected-number')
 
-    # Gather affecting params
+    # Gather affecting params (treat 'all' as no selection)
     affecting_type = request.GET.get('affecting-type')
+    if affecting_type == 'all':
+        affecting_type = None
     affecting_year = _extract_year_range('affecting', request)
     affecting_number = request.GET.get('affecting-number')
 

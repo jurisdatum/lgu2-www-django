@@ -102,6 +102,32 @@ class ChangesRedirectTests(SimpleTestCase):
             reverse('changes-applied-only', kwargs={'applied': 'applied'}),
         )
 
+    def test_changes_intro_redirect_ignores_default_all_type_for_routing(self):
+        """Form always submits affected-type=all; this shouldn't make has_affected truthy."""
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-type': 'all', 'affecting-type': 'all', 'affecting-year': '2020'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affecting', kwargs={'type': 'all', 'year': '2020'}),
+        )
+
+    def test_changes_intro_redirect_applied_only_with_default_all_types(self):
+        """applied-only search should work even when form submits both type=all."""
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-type': 'all', 'affecting-type': 'all', 'applied': 'applied'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-applied-only', kwargs={'applied': 'applied'}),
+        )
+
     def test_changes_intro_ignores_invalid_specific_year_instead_of_500ing(self):
         self.client.raise_request_exception = False
 

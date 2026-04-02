@@ -36,7 +36,7 @@
                 <span>
                     <label for="affected-range">Across a range of years</label>
                     <input id="affected-range" type="radio" name="affected-year-choice" value="range"
-                        {% if form_values.affected_start_year %}checked{% endif %}>
+                        {% if form_values.affected_start_year or form_values.affected_end_year %}checked{% endif %}>
                     <span>
                         <label for="affected-from-date">from:</label>
                         <input id="affected-from-date" name="affected-start-year" type="text"
@@ -94,7 +94,7 @@
                 <span>
                     <label for="affecting-range">Across a range of years</label>
                     <input id="affecting-range" type="radio" name="affecting-year-choice" value="range"
-                        {% if form_values.affecting_start_year %}checked{% endif %}>
+                        {% if form_values.affecting_start_year or form_values.affecting_end_year %}checked{% endif %}>
                     <span>
                         <label for="affecting-from-date">from:</label>
                         <input id="affecting-from-date" name="affecting-start-year" type="text"
