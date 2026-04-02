@@ -20,6 +20,7 @@ class Source(TypedDict):
     longType: str
     year: int
     number: int
+    cite: str
     title: str
     provisions: Provisions
 
@@ -40,7 +41,7 @@ class Effect(TypedDict):
     source: Source
     inForce: List[InForceDate]
     commencement: Provisions
-    notes: Optional[str]
+    # notes: Optional[str]
     outstanding: NotRequired[bool]
 
 
