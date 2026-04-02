@@ -6,6 +6,7 @@ from urllib.parse import urlencode
 
 from ...api import effects as api
 from ...api.responses.effects import Metadata
+from .summary import build_changes_summary
 from .types import AFFECTING_YEARS, TYPES
 
 # -------------------------
@@ -221,6 +222,7 @@ def _combined(request, query, link_prefix, format, applied):
         'applied': applied
     }
 
+    summary = build_changes_summary(form_values, TYPES)
     query_string = urlencode(extra_query_param)
 
     feed_url = f"{link_prefix}/data.feed?{query_string}"
@@ -233,6 +235,7 @@ def _combined(request, query, link_prefix, format, applied):
         'feed_link': feed_url,
         'effects': data['effects'],
         'form_values': form_values,
+        'summary': summary,
         'breadcrumbs': [
             {'text': 'Home', 'link': reverse('homepage')},
             {'text': 'Research tools', 'link': reverse('research-tools')},

@@ -5,7 +5,7 @@
         {% include "new_theme/common/breadcrumbs.html" %}
         <hgroup>
             <h1 id="main-content-h" tabindex="-1">We found {{meta.totalResults}} changes to legislation</h1>
-            <p id="changes-detail" class="initialise" hidden>for <span id="showChanges"><span>all changes</span></span><span id="affectedType"><span>any legislation</span></span><span id="affectedTitle"> with the title "<span></span>"</span><span id="affectedYear">, enacted or made <span></span></span><span id="affectedNumber">, with the number "<span></span>"</span>, made by <span id="affectingType"><span>any legislation</span></span><span id="affectingTitle"> with the title <span></span></span><span id="affectingYear">, enacted or made <span></span></span><span id="affectingNumber">, with the number <span></span></span>.</p>
+            <p>{{ summary.detail_intro }}{% for c in summary.detail_clauses %}{{ c.text }}{% endfor %}.</p>
         </hgroup>
     </section>
     <details>
