@@ -66,6 +66,22 @@ def _get_extra_query_params(request, applied=None):
     return query
 
 
+def _localize_path(path, request):
+    """Prepend the active locale prefix to a bare API path."""
+    prefix = '/cy' if request.LANGUAGE_CODE == 'cy' else ''
+    return f'{prefix}/{path}'
+
+
+def _add_effect_links(effects, request):
+    """Add locale-aware link fields to effect targets, sources, and provisions."""
+    for effect in effects:
+        for side in (effect['target'], effect['source']):
+            side['link'] = _localize_path(side['id'], request)
+            for node in side['provisions']['rich']:
+                if node.get('href'):
+                    node['link'] = _localize_path(node['href'], request)
+
+
 def _capture_side(type_, year, number):
     """Capture one side of query"""
     t = None if type_ == 'all' else type_
@@ -229,6 +245,7 @@ def _combined(request, query, link_prefix, format, applied):
     summary = build_changes_summary(form_values, TYPES)
     query_string = urlencode(extra_query_param)
 
+    _add_effect_links(data['effects'], request)
     feed_url = f"{link_prefix}/data.feed?{query_string}"
     context = {
         'query': query,

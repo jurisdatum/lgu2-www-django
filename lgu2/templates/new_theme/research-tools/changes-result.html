@@ -66,11 +66,11 @@
                     {% for effect in effects %}
                     <tr>
                         <td>{{ effect.target.title }}</td>
-                        <td><a href="/{{ effect.target.id }}">{{ effect.target.cite }}</a></td>
+                        <td><a href="{{ effect.target.link }}">{{ effect.target.cite }}</a></td>
                         <td>
                             {% for node in effect.target.provisions.rich %}
                                 {% if node.type == 'link' %}
-                                    <a href="/{{ node.href }}">{{ node.text }}</a>
+                                    <a href="{{ node.link }}">{{ node.text }}</a>
                                 {% else %}
                                     {{ node.text }}
                                 {% endif %}
@@ -78,11 +78,11 @@
                         </td>
                         <td>{{ effect.type }}</td>
                         <td>{{ effect.source.title }}</td>
-                        <td><a href="/{{ effect.source.id }}">{{ effect.source.cite }}</a></td>
+                        <td><a href="{{ effect.source.link }}">{{ effect.source.cite }}</a></td>
                         <td>
                             {% for node in effect.source.provisions.rich %}
                                 {% if node.type == 'link' %}
-                                    <a href="/{{ node.href }}">{{ node.text }}</a>
+                                    <a href="{{ node.link }}">{{ node.text }}</a>
                                 {% else %}
                                     <span>{{ node.text }}</span>
                                 {% endif %}
