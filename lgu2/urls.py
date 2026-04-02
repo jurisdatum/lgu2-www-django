@@ -139,6 +139,16 @@ urlpatterns += i18n_patterns(
     ),
 
     # =========================
+    # APPLIED / UNAPPLIED ONLY
+    # =========================
+    re_path(
+        r'^changes/(?P<applied>applied|unapplied)'
+        r'(?:/data\.(?P<format>json|feed))?$',
+        changes_both,
+        name='changes-applied-only'
+    ),
+
+    # =========================
     # AFFECTED (ALL)
     # =========================
     re_path(

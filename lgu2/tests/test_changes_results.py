@@ -58,6 +58,50 @@ class ChangesRedirectTests(SimpleTestCase):
             reverse('changes-affected', kwargs={'type': 'uksi', 'year': '2000-2002'}),
         )
 
+    def test_changes_intro_redirect_preserves_affecting_filters_in_combined_searches(self):
+        response = self.client.get(
+            reverse('changes-intro'),
+            {
+                'affected-year': '1990',
+                'affecting-year': '2020',
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse(
+                'changes-both',
+                kwargs={'type1': 'all', 'year1': '1990', 'type2': 'all', 'year2': '2020'},
+            ),
+        )
+
+    def test_changes_intro_redirect_allows_affected_title_only_searches(self):
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-title': 'Housing Act'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affected', kwargs={'type': 'all'})
+            + '?'
+            + urlencode({'affected-title': 'Housing Act'}),
+        )
+
+    def test_changes_intro_redirect_allows_applied_only_searches(self):
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'applied': 'applied'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-applied-only', kwargs={'applied': 'applied'}),
+        )
+
     def test_changes_intro_ignores_invalid_specific_year_instead_of_500ing(self):
         self.client.raise_request_exception = False
 
@@ -94,6 +138,31 @@ class ChangesResultsNavTests(SimpleTestCase):
 
 
 class ChangesResultsFeedTests(SimpleTestCase):
+    @patch('lgu2.views.changes.results.api.fetch')
+    def test_applied_only_redirect_target_renders_results_page(self, mock_fetch):
+        mock_fetch.return_value = {
+            'meta': {
+                'page': 1,
+                'pageSize': 20,
+                'totalPages': 1,
+                'totalResults': 1,
+            },
+            'effects': [],
+        }
+
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'applied': 'applied'},
+            follow=True,
+        )
+
+        self.assertEqual(
+            response.redirect_chain,
+            [(reverse('changes-applied-only', kwargs={'applied': 'applied'}), 302)],
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'We found 1 changes to legislation')
+
     @patch('lgu2.views.changes.results.api.fetch')
     def test_results_rss_link_preserves_title_filters(self, mock_fetch):
         mock_fetch.return_value = {

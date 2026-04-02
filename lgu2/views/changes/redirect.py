@@ -131,8 +131,11 @@ def get_redirect(request):
     affecting_year = _extract_year_range('affecting', request)
     affecting_number = request.GET.get('affecting-number')
 
-    has_affected = affected_type or affected_year or affected_number
-    has_affecting = affecting_type or affecting_year or affecting_number
+    affected_title = request.GET.get('affected-title')
+    affecting_title = request.GET.get('affecting-title')
+
+    has_affected = affected_type or affected_year or affected_number or affected_title
+    has_affecting = affecting_type or affecting_year or affecting_number or affecting_title
 
     if has_affected and has_affecting:
         return _redirect_generic(
@@ -163,3 +166,6 @@ def get_redirect(request):
             applied=applied,
             request=request
         )
+
+    if applied in ('applied', 'unapplied'):
+        return HttpResponseRedirect(reverse('changes-applied-only', kwargs={'applied': applied}))

@@ -185,13 +185,17 @@ def affecting(request, applied=None, type=None, year=None, number=None, format=N
 
 def both(request, applied=None, type1=None, year1=None, number1=None,
          type2=None, year2=None, number2=None, format=None):
-    viewname = 'changes-both-applied' if applied else 'changes-both'
-    link_prefix = _build_link_prefix(
-        viewname, applied=applied,
-        type1=type1, year1=year1, number1=number1,
-        type2=type2, year2=year2, number2=number2,
-        format=format
-    )
+    has_side_filters = type1 or year1 or number1 or type2 or year2 or number2
+    if has_side_filters:
+        viewname = 'changes-both-applied' if applied else 'changes-both'
+        link_prefix = _build_link_prefix(
+            viewname, applied=applied,
+            type1=type1, year1=year1, number1=number1,
+            type2=type2, year2=year2, number2=number2,
+            format=format
+        )
+    else:
+        link_prefix = reverse('changes-applied-only', kwargs={'applied': applied})
     query = _capture_query(type1, year1, number1, type2, year2, number2)
     return _combined(request, query, link_prefix, format, applied)
 
