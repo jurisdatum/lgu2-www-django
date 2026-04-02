@@ -2,15 +2,7 @@
 {% block content %}
 <main class="changes-to-legislation search-results">
     <section>
-        <nav aria-labelledby="breadcrumbNavigation">
-            <h2 id="breadcrumbNavigation">Where this page sits</h2>
-            <ol>
-                <li><a href="default.php">Home</a></li>
-                <li><a href="research-tools.php">Research tools</a></li>
-                <li><a href="research-tools-changes-to-legislation.php">Changes to legislation</a></li>
-                <li><a href="research-tools-changes-to-legislation-results.php" aria-current="page">Changes to legislation results</a></li>
-            </ol>
-        </nav>
+        {% include "new_theme/common/breadcrumbs.html" %}
         <hgroup>
             <h1 id="main-content-h" tabindex="-1">We found {{meta.totalResults}} changes to legislation</h1>
             <p id="changes-detail" class="initialise" hidden>for <span id="showChanges"><span>all changes</span></span><span id="affectedType"><span>any legislation</span></span><span id="affectedTitle"> with the title "<span></span>"</span><span id="affectedYear">, enacted or made <span></span></span><span id="affectedNumber">, with the number "<span></span>"</span>, made by <span id="affectingType"><span>any legislation</span></span><span id="affectingTitle"> with the title <span></span></span><span id="affectingYear">, enacted or made <span></span></span><span id="affectingNumber">, with the number <span></span></span>.</p>

@@ -2,14 +2,7 @@
 {% block content %}
 <main class="changes-to-legislation">
     <section>
-        <nav aria-labelledby="breadcrumbNavigation">
-            <h2 id="breadcrumbNavigation">Where this page sits</h2>
-            <ol>
-                <li><a href="default.php">Home</a></li>
-                <li><a href="research-tools.php">Research tools</a></li>
-                <li><a href="research-tools-changes-to-legislation.php" aria-current="page">Changes to legislation</a></li>
-            </ol>
-        </nav>
+        {% include "new_theme/common/breadcrumbs.html" %}
         <h1 id="main-content-h" tabindex="-1">Changes to legislation</h1>
     </section>
     <section>
@@ -66,7 +59,7 @@
             </li>
             <li>
                 <article>
-                    <a href="search.php">
+                    <a href="{% url 'advance-search' %}">
                         <h3>Advanced search</h3>
                         <p>Search for keywords in content, Welsh language legislation, legislation with specific geographical extent, and more.</p>
                     </a>

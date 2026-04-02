@@ -233,6 +233,12 @@ def _combined(request, query, link_prefix, format, applied):
         'feed_link': feed_url,
         'effects': data['effects'],
         'form_values': form_values,
+        'breadcrumbs': [
+            {'text': 'Home', 'link': reverse('homepage')},
+            {'text': 'Research tools', 'link': reverse('research-tools')},
+            {'text': 'Changes to legislation', 'link': reverse('changes-intro')},
+            {'text': 'Changes to legislation results'},
+        ],
     }
 
     return HttpResponse(loader.get_template('new_theme/research-tools/changes-result.html').render(context, request))
