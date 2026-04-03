@@ -17,29 +17,23 @@
     <section class="search-content">
         <div class="search-header">
             <ul class="search-actions">
-                <li><a href="#">Download as a CSV</a></li>
                 <li><a href="{{ feed_link }}">Subscribe with RSS</a></li>
             </ul>
-            <!-- a href="#">Subscribe to this list</a -->
             <div class="sort-by">
                 <label for="sort">Sort by:</label>
-                <select id="sort">
+                <select id="sort" onchange="var u=new URL(location);u.searchParams.set('sort',this.value);u.searchParams.delete('page');location=u">
+                    <option value="" {% if not sort %}selected{% endif %}>Default</option>
                     <optgroup label="Changed legislation">
-                        <option>Title (A-Z)</option>
-                        <option>Title (Z-A)</option>
-                        <option>Year/number (0-9)</option>
-                        <option>Year/number (9-0)</option>
+                        <option value="affected-title" {% if sort == 'affected-title' %}selected{% endif %}>Title (A-Z)</option>
+                        <option value="-affected-title" {% if sort == '-affected-title' %}selected{% endif %}>Title (Z-A)</option>
+                        <option value="affected-year-number" {% if sort == 'affected-year-number' %}selected{% endif %}>Year/number (0-9)</option>
+                        <option value="-affected-year-number" {% if sort == '-affected-year-number' %}selected{% endif %}>Year/number (9-0)</option>
                     </optgroup>
                     <optgroup label="Affecting legislation">
-                        <option>Title (A-Z)</option>
-                        <option>Title (Z-A)</option>
-                        <option>Year/number (0-9)</option>
-                        <option>Year/number (9-0)</option>
-                    </optgroup>
-                    <optgroup label="Website changes">
-                        <option>Changed</option>
-                        <option>Not changed</option>
-                        <option>Partially</option>
+                        <option value="affecting-title" {% if sort == 'affecting-title' %}selected{% endif %}>Title (A-Z)</option>
+                        <option value="-affecting-title" {% if sort == '-affecting-title' %}selected{% endif %}>Title (Z-A)</option>
+                        <option value="affecting-year-number" {% if sort == 'affecting-year-number' %}selected{% endif %}>Year/number (0-9)</option>
+                        <option value="-affecting-year-number" {% if sort == '-affecting-year-number' %}selected{% endif %}>Year/number (9-0)</option>
                     </optgroup>
                 </select>
             </div>

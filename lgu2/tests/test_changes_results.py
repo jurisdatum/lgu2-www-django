@@ -140,6 +140,70 @@ class ChangesRedirectTests(SimpleTestCase):
         self.assertContains(response, 'Changes to legislation')
 
 
+class ChangesSortTests(SimpleTestCase):
+    @patch('lgu2.views.changes.results.api.fetch')
+    def test_sort_param_reaches_api_with_correct_field_and_order(self, mock_fetch):
+        mock_fetch.return_value = {
+            'meta': {'page': 1, 'pageSize': 20, 'totalPages': 1, 'totalResults': 0},
+            'effects': [],
+        }
+
+        self.client.get(
+            reverse('changes-affected', kwargs={'type': 'uksi'}),
+            {'sort': '-affecting-year-number'},
+        )
+
+        _, kwargs = mock_fetch.call_args
+        self.assertEqual(kwargs['sort'], 'affecting-year-number')
+        self.assertEqual(kwargs['orderBy'], 'descending')
+
+    @patch('lgu2.views.changes.results.api.fetch')
+    def test_ascending_sort_sends_ascending_order(self, mock_fetch):
+        mock_fetch.return_value = {
+            'meta': {'page': 1, 'pageSize': 20, 'totalPages': 1, 'totalResults': 0},
+            'effects': [],
+        }
+
+        self.client.get(
+            reverse('changes-affected', kwargs={'type': 'uksi'}),
+            {'sort': 'affected-title'},
+        )
+
+        _, kwargs = mock_fetch.call_args
+        self.assertEqual(kwargs['sort'], 'affected-title')
+        self.assertEqual(kwargs['orderBy'], 'ascending')
+
+    @patch('lgu2.views.changes.results.api.fetch')
+    def test_invalid_sort_value_is_ignored(self, mock_fetch):
+        mock_fetch.return_value = {
+            'meta': {'page': 1, 'pageSize': 20, 'totalPages': 1, 'totalResults': 0},
+            'effects': [],
+        }
+
+        self.client.get(
+            reverse('changes-affected', kwargs={'type': 'uksi'}),
+            {'sort': 'bogus'},
+        )
+
+        _, kwargs = mock_fetch.call_args
+        self.assertNotIn('sort', kwargs)
+        self.assertNotIn('orderBy', kwargs)
+
+    @patch('lgu2.views.changes.results.api.fetch')
+    def test_sort_preserved_in_pagination_links(self, mock_fetch):
+        mock_fetch.return_value = {
+            'meta': {'page': 1, 'pageSize': 20, 'totalPages': 3, 'totalResults': 60},
+            'effects': [],
+        }
+
+        response = self.client.get(
+            reverse('changes-affected', kwargs={'type': 'uksi'}),
+            {'sort': 'affected-title'},
+        )
+
+        self.assertContains(response, 'sort=affected-title')
+
+
 class ChangesResultsNavTests(SimpleTestCase):
     def test_make_nav_returns_template_expected_link_objects(self):
         meta = {

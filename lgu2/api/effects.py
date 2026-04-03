@@ -26,6 +26,8 @@ def fetch(
     sourceNumber: Optional[int] = None,
     sourceTitle: Optional[str] = None,
     applied: Optional[str] = None,
+    sort: Optional[str] = None,
+    orderBy: Optional[str] = None,
     page: int = 1
 ) -> Page:
     url = _make_url(**locals())
@@ -46,6 +48,8 @@ def fetch_atom(
     sourceNumber: Optional[int] = None,
     sourceTitle: Optional[str] = None,
     applied: Optional[str] = None,
+    sort: Optional[str] = None,
+    orderBy: Optional[str] = None,
     page: int = 1
 ) -> str:
     url = _make_url(**locals())

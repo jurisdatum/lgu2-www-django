@@ -9,6 +9,11 @@ from ...api.responses.effects import Metadata
 from .summary import build_changes_summary
 from .types import AFFECTING_YEARS, TYPES
 
+SORT_FIELDS = {
+    'affected-title', 'affected-year-number',
+    'affecting-title', 'affecting-year-number',
+}
+
 # -------------------------
 # Helpers
 # -------------------------
@@ -55,11 +60,29 @@ def _get_query_titles(request):
     }.items() if v}
 
 
+def _get_sort(request):
+    """Return (sort_key, api_sort, api_order_by) from request, or (None, None, None)."""
+    sort_key = request.GET.get('sort')
+    if not sort_key:
+        return None, None, None
+    if sort_key.startswith('-'):
+        field, order_by = sort_key[1:], 'descending'
+    else:
+        field, order_by = sort_key, 'ascending'
+    if field in SORT_FIELDS:
+        return sort_key, field, order_by
+    return None, None, None
+
+
 def _get_extra_query_params(request, applied=None):
     """Extra query params for pagination links"""
     query = {}
     if applied in ('applied', 'unapplied'):
         query['applied'] = applied
+    sort_key = request.GET.get('sort')
+    field = sort_key[1:] if sort_key and sort_key.startswith('-') else sort_key
+    if field in SORT_FIELDS:
+        query['sort'] = sort_key
     for k in ['affected-title', 'affecting-title']:
         if request.GET.get(k):
             query[k] = request.GET[k]
@@ -121,12 +144,15 @@ def _add_year_params(params, query, prefix, year_key, start_key, end_key):
         params[year_key] = year
 
 
-def _make_api_parameters(query, page, title_params=None, applied=None):
+def _make_api_parameters(query, page, title_params=None, applied=None,
+                         sort=None, orderBy=None):
     params = {
         'targetType': query['affected_type'],
         'targetNumber': query['affected_number'],
         'sourceType': query['affecting_type'],
         'sourceNumber': query['affecting_number'],
+        'sort': sort,
+        'orderBy': orderBy,
         'page': page,
     }
 
@@ -218,7 +244,11 @@ def both(request, applied=None, type1=None, year1=None, number1=None,
 
 def _combined(request, query, link_prefix, format, applied):
     page = _get_page(request)
-    api_params = _make_api_parameters(query, page, _get_query_titles(request), applied)
+    sort_key, api_sort, api_order_by = _get_sort(request)
+    api_params = _make_api_parameters(
+        query, page, _get_query_titles(request), applied,
+        sort=api_sort, orderBy=api_order_by,
+    )
 
     if format:
         return _data(api_params, format)
@@ -257,6 +287,7 @@ def _combined(request, query, link_prefix, format, applied):
         'effects': data['effects'],
         'form_values': form_values,
         'summary': summary,
+        'sort': sort_key or '',
         'breadcrumbs': [
             {'text': 'Home', 'link': reverse('homepage')},
             {'text': 'Research tools', 'link': reverse('research-tools')},
