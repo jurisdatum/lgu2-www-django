@@ -41,7 +41,7 @@ class Effect(TypedDict):
     source: Source
     inForce: List[InForceDate]
     commencement: Provisions
-    # notes: Optional[str]
+    notes: Optional[str]
     outstanding: NotRequired[bool]
 
 

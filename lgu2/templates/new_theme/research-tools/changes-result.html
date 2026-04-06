@@ -85,17 +85,17 @@
                         <td>
                             {% if effect.applied %}
                                 <span class="applied">The website text has been changed</span>
-                            {% elif effect.note %}
+                            {% elif effect.notes %}
                                 <span>See note</span>
                             {% else %}
                                 <span>The website text has not yet been changed</span>
                             {% endif %}
                         </td>
                         <td>
-                            {% if effect.note %}
+                            {% if effect.notes %}
                             <details>
                                 <summary>Notes</summary>
-                                <div>{{ effect.note }}</div>
+                                <div>{{ effect.notes }}</div>
                             </details>
                             {% endif %}
                         </td>
