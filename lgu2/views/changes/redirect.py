@@ -77,6 +77,23 @@ def redirect_with_query(viewname, path_kwargs=None, query_kwargs=None):
     return HttpResponseRedirect(url)
 
 
+def _is_default_form_submission(request):
+    """True only when the form was submitted with all default values unchanged."""
+    return (
+        request.GET.get('affected-type') == 'all'
+        and request.GET.get('affecting-type') == 'all'
+        and request.GET.get('applied') == 'all'
+        and not request.GET.get('affected-title')
+        and not request.GET.get('affecting-title')
+        and not request.GET.get('affected-number')
+        and not request.GET.get('affecting-number')
+        and not request.GET.get('affected-year-choice')
+        and not request.GET.get('affecting-year-choice')
+        and not _extract_year_range('affected', request)
+        and not _extract_year_range('affecting', request)
+    )
+
+
 def _get_viewname(base, applied):
     """Return correct view name depending on applied/unapplied"""
     if applied in ('applied', 'unapplied'):
@@ -173,3 +190,13 @@ def get_redirect(request):
 
     if applied in ('applied', 'unapplied'):
         return HttpResponseRedirect(reverse('changes-applied-only', kwargs={'applied': applied}))
+
+    if _is_default_form_submission(request):
+        return _redirect_generic(
+            'changes-affected',
+            types={'type': None},
+            years={'year': None},
+            numbers={'number': None},
+            applied=applied,
+            request=request
+        )

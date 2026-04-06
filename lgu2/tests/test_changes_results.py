@@ -128,6 +128,19 @@ class ChangesRedirectTests(SimpleTestCase):
             reverse('changes-applied-only', kwargs={'applied': 'applied'}),
         )
 
+    def test_changes_intro_redirect_unfiltered_all_changes_search(self):
+        """Submitting the form with all defaults should redirect to results, not re-show intro."""
+        response = self.client.get(
+            reverse('changes-intro'),
+            {'affected-type': 'all', 'affecting-type': 'all', 'applied': 'all'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response['Location'],
+            reverse('changes-affected', kwargs={'type': 'all'}),
+        )
+
     def test_changes_intro_ignores_invalid_specific_year_instead_of_500ing(self):
         self.client.raise_request_exception = False
 
