@@ -5,6 +5,8 @@ from ..api.document import DocumentMetadata
 from ..util.labels import get_type_label
 from ..util.types import get_category
 
+LEGISLATION_BREADCRUMB_HEADING = 'Where this legislation sits in the Statute Book'
+
 
 def make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Optional[str]):
     doc_type = meta['shortType']

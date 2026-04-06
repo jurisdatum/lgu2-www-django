@@ -14,7 +14,7 @@ from ..util.types import get_category
 from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
-from ..util.breadcrumbs import make_breadcrumbs
+from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.redirects import should_redirect
 
 
@@ -85,6 +85,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         'timeline': timeline,
         'extent_label': extent_label,
         'breadcrumbs': breadcrumbs,
+        'breadcrumb_heading': LEGISLATION_BREADCRUMB_HEADING,
         'explanatory_notes': explanatory_notes,
         'other_associated_doc': other_associated_doc,
         'status': status,

@@ -808,11 +808,11 @@ body:not(:-moz-handler-blocked) fieldset {
 				margin: 0.2rem 0 0.6rem 0; line-height: 1.35em; max-width: var(--maxWidth);
 				h2 {.sr-only()}
 				ol {
-					display: block; font-size: 0; line-height: 1rem;
+					display: block; line-height: 1rem; font-size: 0;
 					li {
-						display: contents; font-size: 1rem;
+						display: contents; font-size: 0;
 						a {
-							color: unset;
+							color: unset; font-size: 1rem;
 							&:not(li:last-child a) {
 								font-weight: 300;
 								&:after {.chevron(); margin: 0.15em 0.6em 0.15em 0.45em; border-color: var(--text)}
@@ -1205,7 +1205,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
-	.advanced-searches, .search-results {
+	.advanced-searches, .search-results, .changes-to-legislation {
         section {
             .search-keywords {
                 details {
@@ -1312,6 +1312,7 @@ body:not(:-moz-handler-blocked) fieldset {
             }
             .search-date {
                 &:has(div[role="group"]) {
+                    h3 {margin: 1.25rem 0 0.35rem 0; font-weight: 400; font-size: 1rem}
                     > div[role="group"] {
                         margin: 0.75rem 0 0 0;
                         > span {
@@ -1548,7 +1549,10 @@ body:not(:-moz-handler-blocked) fieldset {
     .changes-to-legislation {
         > section:first-of-type hgroup {
             h1 {font-weight: 300}
-            p {margin: 0.25rem 0; font-weight: 300}
+            p {
+                margin: 0.25rem 0; font-weight: 300;
+                span span {font-weight: 500}
+            }
         }
         > section:has(form), details section {
             background: var(--altBg); max-width: unset; padding: 0; margin: 0 0 1rem 0;
@@ -1563,7 +1567,7 @@ body:not(:-moz-handler-blocked) fieldset {
                     }
                     > input[type="text"]:first-of-type, select {width: 100%}
                     > input[type="text"]:last-of-type {width: 4.5rem}
-                    [role="group"] {
+                    [role="group"]:not(.search-date div[role="group"]) {
                         display: flow-root;
                         h3 {margin: 1.25rem 0 0.35rem 0; font-weight: 400; font-size: 1rem}
                         label {
@@ -1593,7 +1597,7 @@ body:not(:-moz-handler-blocked) fieldset {
                             &:has(input:checked) {background: var(--subtleBg); border-top-color: var(--subtleBorder); border-bottom-color: var(--subtleBorder)}
                         }
                     }
-                    &:has(input[type="radio"]) {
+                    &:has(input[type="radio"]):not(:has(.search-date)) {
                         padding: 0;
                         legend {padding: 1.25rem}
                     }
@@ -2152,7 +2156,14 @@ body:not(:-moz-handler-blocked) fieldset {
 					ul:has(li:nth-of-type(1)) {columns: 0 1}
 					ul:has(li:nth-of-type(11)) {columns: 0 2}
 				}
-			}				
+			}
+            &.changes-to-legislation {
+                section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) {
+                    > span {
+                        span input {width: 6rem}
+                    }
+                }
+            }
 		}
 	}
 
@@ -2275,6 +2286,13 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				}
 			}
+            &.changes-to-legislation {
+                section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) {
+                    > span {
+                        span input {width: 5rem}
+                    }
+                }
+            }
 		}
 	}
 
@@ -2517,6 +2535,16 @@ body:not(:-moz-handler-blocked) fieldset {
                 }
             }
         }
+        .changes-to-legislation {
+            section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) {
+                > span {
+                    label {min-width: unset}
+                    span input {width: 4rem}
+                    span:first-of-type {float: left; margin: 0 0.75rem 0 0}
+                    span:last-of-type {margin: 0}
+                }
+            }
+        }
 	}
 
 	@media screen and (min-width: @mobileLandscape) and (max-width: calc(@desktopSmall - 1px)) {
@@ -2534,6 +2562,7 @@ body:not(:-moz-handler-blocked) fieldset {
                                     grid-template-columns: auto;
                                     &:after {display: none}
                                 }
+                                details summary {width: 6.5rem}
                             }
                         }
                     }
@@ -2648,6 +2677,10 @@ body:not(:-moz-handler-blocked) fieldset {
                     }
                 }
                 details summary {display: inline-block}
+                .search-content .search-header .sort-by {
+                    label {margin: 0}
+                    select {padding: 0.6rem 0 0.6rem 0.6rem}
+                }
                 .search-content:not(:has(.pagination li:nth-child(24)))
                 {
                     overflow: visible;
@@ -2677,6 +2710,13 @@ body:not(:-moz-handler-blocked) fieldset {
                 .search-language > span, .search-extent [role="group"]:has(input[type="radio"]) > span, .search-date:has(div[role="group"]) div[role="group"] {
                     float: left; max-width: unset; width: 30rem;
                     &:first-of-type {margin: 0.65rem 1rem 0 0}
+                }
+            }
+            &.changes-to-legislation {
+                details summary {display: inline-block}
+                .search-content .search-header .sort-by {
+                    label {margin: 0 0.5rem 0 0}
+                    select {padding: 0.6rem}
                 }
             }
         }
@@ -3577,6 +3617,11 @@ body:not(:-moz-handler-blocked) fieldset {
                         }
                     }
                 }
+                section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) {
+                    > span {
+                        span input {width: 4.5rem}
+                    }
+                }
             }
 		}
 	}
@@ -3682,6 +3727,11 @@ body:not(:-moz-handler-blocked) fieldset {
                 }
             }
             &.changes-to-legislation {
+                section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) {
+                    > span {
+                        span input {width: 6rem}
+                    }
+                }
                 .search-content {
                     .search-results-list {
                         #changes-to-legislation-results {
