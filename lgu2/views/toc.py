@@ -7,7 +7,7 @@ from django.template import loader
 
 from ..api import contents as api
 from ..api.document import DocumentMetadata
-from ..api.pdf import get_pdf_link_and_thumb, make_pdf_url, make_thumbnail_url
+from ..api.pdf import get_pdf_link_and_thumb
 from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
@@ -83,8 +83,6 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
         data['pdf_only'] = True
-        # data['pdf_link'] = make_pdf_url(type, year, number, version) # TODO : will use when files are on our server
-        # data['pdf_thumb'] = make_thumbnail_url(type, year, number, version) # TODO : will use when files are on our server
         data['pdf_link'], data['pdf_thumb'] = get_pdf_link_and_thumb(meta['altFormats'])
     else:
         data['pdf_only'] = False
@@ -113,7 +111,6 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     data['status'] = make_status_data(meta)
 
-    data['altFormats'] = data['meta']['altFormats']
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
 
