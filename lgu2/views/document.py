@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
-from ..api.pdf import make_pdf_url, make_thumbnail_url
+from ..api.pdf import get_pdf_link_and_thumb, make_pdf_url, make_thumbnail_url
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
@@ -84,8 +84,7 @@ def make_document_context(data, type, year, number, version, lang):
 
     if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
         pdf_only = True
-        pdf_link = meta['altFormats'][0]['url']
-        pdf_thumb = meta['altFormats'][0]['thumbnail']
+        pdf_link, pdf_thumb = get_pdf_link_and_thumb(meta['altFormats'])
     else:
         pdf_only = False
         pdf_link = None
@@ -153,8 +152,7 @@ def make_ukia_data(data: AssociatedDocument, type, year, number, version, lang):
 
     # UKIA documents are PDF-only
     pdf_only = True
-    pdf_link = meta['altFormats'][0]['url']
-    pdf_thumb = meta['altFormats'][0]['thumbnail']
+    pdf_link, pdf_thumb = get_pdf_link_and_thumb(meta['altFormats'])
 
     context = {
         'meta': meta,

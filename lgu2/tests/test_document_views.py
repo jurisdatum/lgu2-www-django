@@ -39,6 +39,7 @@ class DocumentViewTests(SimpleTestCase):
                     {
                         'url': pdf_url,
                         'thumbnail': 'https://example.test/ukia-2024-1.png',
+                        'type': 'application/pdf',
                     }
                 ],
             },

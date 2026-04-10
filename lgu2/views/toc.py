@@ -7,7 +7,7 @@ from django.template import loader
 
 from ..api import contents as api
 from ..api.document import DocumentMetadata
-from ..api.pdf import make_pdf_url, make_thumbnail_url
+from ..api.pdf import get_pdf_link_and_thumb, make_pdf_url, make_thumbnail_url
 from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
@@ -85,10 +85,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_only'] = True
         # data['pdf_link'] = make_pdf_url(type, year, number, version) # TODO : will use when files are on our server
         # data['pdf_thumb'] = make_thumbnail_url(type, year, number, version) # TODO : will use when files are on our server
-
-        data['pdf_link'] = data['meta']['altFormats'][0]['url'] # TODO : need to verify if it will always be the first element
-        data['pdf_thumb'] = data['meta']['altFormats'][0]['thumbnail'] # TODO : need to verify if it will always be the first element
-
+        data['pdf_link'], data['pdf_thumb'] = get_pdf_link_and_thumb(meta['altFormats'])
     else:
         data['pdf_only'] = False
         data['pdf_link'] = None
