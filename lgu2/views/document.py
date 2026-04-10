@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
-from ..api.pdf import get_pdf_link_and_thumb, make_pdf_url, make_thumbnail_url
+from ..api.pdf import get_pdf_link_and_thumb
 from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
@@ -34,7 +34,7 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
         return HttpResponseNotFound(template.render({}, request))
 
     if type == 'ukia':
-        context = make_ukia_data(data, type, year, number, version, lang)
+        context = make_ukia_data(data, version, lang)
     else:
         context = make_document_context(data, type, year, number, version, lang)
 
@@ -120,67 +120,19 @@ def make_document_context(data, type, year, number, version, lang):
     return context
 
 
-def make_ukia_data(data: AssociatedDocument, type, year, number, version, lang):
-
-    meta = data['meta']    
-    meta['link'] = make_document_link(type, year, number, version, lang)
-
-    try:
-        timeline = make_timeline_data(meta, "document", lang) # timeline function needs version but there are not any in meta
-    except:
-        timeline = ""
-    
-    extent_label = ""
-    if meta.get('extent'):
-        extent_label = make_combined_extent_label(meta['extent']) # there is not extent present in meta
-        
-    breadcrumbs = make_breadcrumbs(meta, version, lang)
-
-    explanatory_notes = []
-    other_associated_doc = []
-
-    if meta.get('associated') and len(meta['associated']) > 0:
-        for associated_documents in meta['associated']:
-            if associated_documents['type'] == 'Note':
-                explanatory_notes.append(associated_documents)
-            else:
-                other_associated_doc.append(associated_documents)
-
-    status = {} # making it blank because there is no title or effects in meta
-
-    meta['category'] = get_category(meta['shortType'])
-
-    # UKIA documents are PDF-only
-    pdf_only = True
+def make_ukia_data(data: AssociatedDocument, version, lang):
+    meta = data['meta']
+    breadcrumbs = make_breadcrumbs(meta, version, lang, has_toc=False)
     pdf_link, pdf_thumb = get_pdf_link_and_thumb(meta['altFormats'])
-
-    context = {
+    return {
         'meta': meta,
-        'view_date': meta.get('pointInTime') or timezone.localdate(),
-        'type_label_plural': get_type_label(meta['longType']),
-        'timeline': timeline,
-        'extent_label': extent_label,
         'breadcrumbs': breadcrumbs,
-        'explanatory_notes': explanatory_notes,
-        'other_associated_doc': other_associated_doc,
-        'status': status,
-        'article': data.get('html'),
-        'links': {
-            'toc': make_contents_link(type, year, number, version, lang),
-            'content': make_fragment_link(type, year, number, 'introduction', version, lang),
-            'notes': '/',
-            'resources': '/',
-            'whole': None,
-            'body': make_fragment_link(type, year, number, 'body', version, lang),
-            'schedules': None if meta.get('schedules') is None else make_fragment_link(type, year, number, 'schedules', version, lang)
-        },
-        'pdf_only': pdf_only,
+        # UKIAs are currently always PDF-only. When the API gains html/xml
+        # for impact assessments, derive this from the response shape.
+        'pdf_only': True,
         'pdf_link': pdf_link,
         'pdf_thumb': pdf_thumb,
-        'altFormats': meta['altFormats']
     }
-
-    return context
 
 
 def _xml_or_redirect(package, lang: Optional[str], format: str):
