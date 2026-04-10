@@ -43,15 +43,12 @@
             <section class="filter-type">
                 <h3>Impact Assessments by Stage</h3>
                 <ul>
-                    <!-- "All types" link -->
-                    <li {% if not current_type %}aria-current="page"{% endif %}>
+                    <li {% if not current_stage %}aria-current="page"{% endif %}>
                         <a href="{{ modified_query_links.stage }}">
-                            All Stage types
+                            All stages
                         </a>
                     </li>
 
-                    
-                    <!-- Show all types if no type is selected -->
                     {% for all_stage in meta_data.counts.byStage %}
                             <li>
                                 <a href="{{ all_stage.link }}">
@@ -60,7 +57,6 @@
                                 </a>
                             </li>
                     {% endfor %}
-                
                 </ul>
             </section>
             {% endif %}
@@ -119,14 +115,12 @@
             <section class="filter-type">
                 <h3>Impact Assessments by Department</h3>
                 <ul>
-                    <!-- "All types" link -->
-                    <li {% if not current_type %}aria-current="page"{% endif %}>
+                    <li {% if not current_department %}aria-current="page"{% endif %}>
                         <a href="{{ modified_query_links.department }}">
-                            All Stage types
+                            All departments
                         </a>
                     </li>
 
-                    <!-- Show all types if no type is selected -->
                     {% for all_department in meta_data.counts.byDepartment %}
                             <li>
                                 <a href="{{ all_department.link }}">
@@ -134,7 +128,7 @@
                                     <span>({{ all_department.count }}<span> results</span>)</span>
                                 </a>
                             </li>
-                    {% endfor %}                
+                    {% endfor %}
                 </ul>
             </section>
             {% endif %}

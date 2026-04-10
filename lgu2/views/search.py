@@ -34,6 +34,8 @@ class SearchResultContext(TypedDict):
     by_year_pagination_count: int
     current_year: str
     current_type: Optional[Union[str, List[str]]]
+    current_stage: Optional[str]
+    current_department: Optional[str]
     grouped_by_decade: bool
     subject_initials: Optional[set[str]]
     all_lowercase_letters: str
@@ -68,7 +70,9 @@ def extract_query_params(request) -> SearchParams:
     if "subject" in request.GET and request.GET["subject"].strip():
         params["subject"] = request.GET["subject"].strip()
 
-    types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
+    # 'all' is the form's UI value for "no type filter"; the API expects
+    # the type parameter to be omitted entirely when all types are wanted.
+    types = [t.strip() for t in request.GET.getlist("type") if t.strip() and t.strip() != "all"]
     if types:
         params["type"] = types[0] if len(types) == 1 else types
 
@@ -236,6 +240,8 @@ def search_results_helper(request, query_params: SearchParams):
     current_subject = query_params.get("subject")
     subject_heading = current_subject if current_subject and len(current_subject) > 1 else None
     current_subject = current_subject[0] if current_subject else None
+    current_stage = query_params.get("stage")
+    current_department = query_params.get("department")
 
     default_pagesize = query_params.get("pageSize", 20)
 
@@ -322,6 +328,8 @@ def search_results_helper(request, query_params: SearchParams):
         "by_year_pagination_count": len(meta.get("counts", {}).get("byYear", [])),
         "current_year": current_year,
         "current_type": current_type,
+        "current_stage": current_stage,
+        "current_department": current_department,
         "grouped_by_decade": grouped_by_decade,
         "subject_initials": subject_initials,  # now used only to check for presence of subjects
         "subject_initials_and_links": subject_initials_and_links,

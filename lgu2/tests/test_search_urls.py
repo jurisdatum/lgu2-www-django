@@ -1,6 +1,6 @@
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
-from lgu2.views.search import build_browse_url_if_possible, make_smart_link
+from lgu2.views.search import build_browse_url_if_possible, extract_query_params, make_smart_link
 
 
 class TestSmartUrlGeneration(TestCase):
@@ -45,3 +45,25 @@ class TestSmartUrlGeneration(TestCase):
         params = {'type': 'uksi', 'subject': 'a'}
         result = make_smart_link(params)
         self.assertEqual(result, '/uksi/a')
+
+
+class ExtractQueryParamsTests(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_type_all_is_dropped(self):
+        # The form sends type=all to mean "no type filter"; the API expects
+        # the parameter to be omitted entirely in that case.
+        request = self.factory.get('/search/?type=all')
+        params = extract_query_params(request)
+        self.assertNotIn('type', params)
+
+    def test_type_all_alongside_specific_type_keeps_specific_only(self):
+        request = self.factory.get('/search/?type=all&type=ukpga')
+        params = extract_query_params(request)
+        self.assertEqual(params.get('type'), 'ukpga')
+
+    def test_specific_type_passes_through(self):
+        request = self.factory.get('/search/?type=ukpga')
+        params = extract_query_params(request)
+        self.assertEqual(params.get('type'), 'ukpga')
