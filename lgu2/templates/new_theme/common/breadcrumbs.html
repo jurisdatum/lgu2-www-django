@@ -1,0 +1,16 @@
+<nav aria-labelledby="breadcrumbNavigation">
+    <h2 id="breadcrumbNavigation">{{ breadcrumb_heading|default:"Where this page sits" }}</h2>
+    <ol>
+        {% for bc in breadcrumbs %}
+        <li>
+            {% if bc.link and not forloop.last %}
+            <a href="{{ bc.link }}">{{ bc.text }}</a>
+            {% elif bc.link %}
+            <a href="{{ bc.link }}" aria-current="page">{{ bc.text }}</a>
+            {% else %}
+            <a aria-current="page">{{ bc.text }}</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</nav>

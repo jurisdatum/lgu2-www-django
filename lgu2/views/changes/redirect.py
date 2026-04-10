@@ -1,96 +1,202 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from urllib.parse import urlencode
 
-from django.shortcuts import redirect
 
+# -------------------------
+# Helpers
+# -------------------------
+
+import re
+
+def _extract_year_range(prefix, request):
+    """
+    Returns:
+    - 'YYYY-YYYY' if a range is selected
+    - 'YYYY' if a single year is selected
+    - 'YYYY-*' if only start year exists
+    - '*-YYYY' if only end year exists
+    - None if nothing selected
+    """
+
+    def is_valid(year):
+        return year and re.match(r"^\d{4}$", year)
+
+    year_choice = request.GET.get(f"{prefix}-year-choice")
+
+    year = request.GET.get(f"{prefix}-year")
+    start = request.GET.get(f"{prefix}-start-year")
+    end = request.GET.get(f"{prefix}-end-year")
+
+    # User explicitly selected RANGE -- ignore stale specific-year field
+    if year_choice == "range":
+        if is_valid(start) and is_valid(end):
+            return f"{start}-{end}"
+        if is_valid(start):
+            return f"{start}-*"
+        if is_valid(end):
+            return f"*-{end}"
+        return None
+
+    # User explicitly selected SPECIFIC -- ignore range fields
+    if year_choice == "specific":
+        if is_valid(year):
+            return year
+        return None
+
+    # No radio selected (manual URL or non-JS submission)
+    if is_valid(year):
+        return year
+    if is_valid(start) and is_valid(end):
+        return f"{start}-{end}"
+    if is_valid(start):
+        return f"{start}-*"
+    if is_valid(end):
+        return f"*-{end}"
+
+    return None
+
+
+
+def _title_query_args(request):
+    """Titles are the only allowed query string parameters"""
+    return {k: v for k, v in {
+        'affected-title': request.GET.get('affected-title'),
+        'affecting-title': request.GET.get('affecting-title')
+    }.items() if v}
+
+
+def redirect_with_query(viewname, path_kwargs=None, query_kwargs=None):
+    """Reverse URL and attach query params"""
+    path_kwargs = path_kwargs or {}
+    query_kwargs = query_kwargs or {}
+
+    url = reverse(viewname, kwargs=path_kwargs)
+    if query_kwargs:
+        url += '?' + urlencode(query_kwargs)
+    return HttpResponseRedirect(url)
+
+
+def _is_default_form_submission(request):
+    """True only when the form was submitted with all default values unchanged."""
+    return (
+        request.GET.get('affected-type') == 'all'
+        and request.GET.get('affecting-type') == 'all'
+        and request.GET.get('applied') == 'all'
+        and not request.GET.get('affected-title')
+        and not request.GET.get('affecting-title')
+        and not request.GET.get('affected-number')
+        and not request.GET.get('affecting-number')
+        and not request.GET.get('affected-year-choice')
+        and not request.GET.get('affecting-year-choice')
+        and not _extract_year_range('affected', request)
+        and not _extract_year_range('affecting', request)
+    )
+
+
+def _get_viewname(base, applied):
+    """Return correct view name depending on applied/unapplied"""
+    if applied in ('applied', 'unapplied'):
+        return f'{base}-applied'
+    return base
+
+
+def _normalize_value(value, default='all', allow_star_if_number=False):
+    """Helper to normalize type/year/number for redirect"""
+    if value is None and allow_star_if_number:
+        return '*'  # for year if number exists but year is missing
+    return value or default
+
+
+def _redirect_generic(base, types, years, numbers, applied, request):
+    """
+    Generic redirect function for affected, affecting, or both
+    `types`, `years`, `numbers` are dicts with keys matching URL kwargs
+    """
+    path_args = {}
+    for k, v in types.items():
+        path_args[k] = _normalize_value(v, default='all', allow_star_if_number=False)
+    for k, v in numbers.items():
+        path_args[k] = v or None
+    for k, v in years.items():
+        # Use '*' if number exists but year is missing
+        path_args[k] = _normalize_value(v, default=None, allow_star_if_number=path_args.get(k.replace('year', 'number')) is not None)
+
+    # Remove None values
+    path_args = {k: v for k, v in path_args.items() if v is not None}
+
+    if applied in ('applied', 'unapplied'):
+        path_args['applied'] = applied
+
+    return redirect_with_query(_get_viewname(base, applied), path_args, _title_query_args(request))
+
+
+# -------------------------
+# Main redirect logic
+# -------------------------
 
 def get_redirect(request):
+    applied = request.GET.get('applied')
 
+    # Gather affected params (treat 'all' as no selection)
     affected_type = request.GET.get('affected-type')
-    affected_year = request.GET.get('affected-year')
+    if affected_type == 'all':
+        affected_type = None
+    affected_year = _extract_year_range('affected', request)
     affected_number = request.GET.get('affected-number')
 
+    # Gather affecting params (treat 'all' as no selection)
     affecting_type = request.GET.get('affecting-type')
-    affecting_year = request.GET.get('affecting-year')
+    if affecting_type == 'all':
+        affecting_type = None
+    affecting_year = _extract_year_range('affecting', request)
     affecting_number = request.GET.get('affecting-number')
 
-    if affected_type or affected_year or affected_number:
-        if affecting_type or affecting_year or affecting_number:
-            return _get_redirect_both(affected_type, affected_year, affected_number, affecting_type, affecting_year, affecting_number)
-        else:
-            return _get_redirect_affected(affected_type, affected_year, affected_number)
-    else:
-        if affecting_type or affecting_year or affecting_number:
-            return _get_redirect_affecting(affecting_type, affecting_year, affecting_number)
-        else:
-            pass
+    affected_title = request.GET.get('affected-title')
+    affecting_title = request.GET.get('affecting-title')
 
+    has_affected = affected_type or affected_year or affected_number or affected_title
+    has_affecting = affecting_type or affecting_year or affecting_number or affecting_title
 
-def _get_redirect_affected(affected_type, affected_year, affected_number):
+    if has_affected and has_affecting:
+        return _redirect_generic(
+            'changes-both',
+            types={'type1': affected_type, 'type2': affecting_type},
+            years={'year1': affected_year, 'year2': affecting_year},
+            numbers={'number1': affected_number, 'number2': affecting_number},
+            applied=applied,
+            request=request
+        )
 
-    if not affected_type:
-        affected_type = 'all'
-    if not affected_year:
-        affected_year = None
-    if not affected_number:
-        affected_number = None
-    if affected_year is None and affected_number is not None:
-        affected_year = '*'
+    if has_affected:
+        return _redirect_generic(
+            'changes-affected',
+            types={'type': affected_type},
+            years={'year': affected_year},
+            numbers={'number': affected_number},
+            applied=applied,
+            request=request
+        )
 
-    args = {
-        'type': affected_type,
-        'year': affected_year,
-        'number': affected_number
-    }
-    args = {key: value for key, value in args.items() if value is not None}
-    return redirect('changes-affected', **args)
+    if has_affecting:
+        return _redirect_generic(
+            'changes-affecting',
+            types={'type': affecting_type},
+            years={'year': affecting_year},
+            numbers={'number': affecting_number},
+            applied=applied,
+            request=request
+        )
 
+    if applied in ('applied', 'unapplied'):
+        return HttpResponseRedirect(reverse('changes-applied-only', kwargs={'applied': applied}))
 
-def _get_redirect_affecting(affecting_type, affecting_year, affecting_number):
-
-    if not affecting_type:
-        affecting_type = 'all'
-    if not affecting_year:
-        affecting_year = None
-    if not affecting_number:
-        affecting_number = None
-    if affecting_year is None and affecting_number is not None:
-        affecting_year = '*'
-
-    args = {
-        'type': affecting_type,
-        'year': affecting_year,
-        'number': affecting_number
-    }
-    args = {key: value for key, value in args.items() if value is not None}
-    return redirect('changes-affecting', **args)
-
-
-def _get_redirect_both(affected_type, affected_year, affected_number, affecting_type, affecting_year, affecting_number):
-
-    if not affected_type:
-        affected_type = 'all'
-    if not affected_year:
-        affected_year = None
-    if not affected_number:
-        affected_number = None
-    if affected_year is None and affected_number is not None:
-        affected_year = '*'
-
-    if not affecting_type:
-        affecting_type = 'all'
-    if not affecting_year:
-        affecting_year = None
-    if not affecting_number:
-        affecting_number = None
-    if affecting_year is None and affecting_number is not None:
-        affecting_year = '*'
-
-    args = {
-        'type1': affected_type,
-        'year1': affected_year,
-        'number1': affected_number,
-        'type2': affecting_type,
-        'year2': affecting_year,
-        'number2': affecting_number
-    }
-    args = {key: value for key, value in args.items() if value is not None}
-    return redirect('changes-both', **args)
+    if _is_default_form_submission(request):
+        return _redirect_generic(
+            'changes-affected',
+            types={'type': None},
+            years={'year': None},
+            numbers={'number': None},
+            applied=applied,
+            request=request
+        )

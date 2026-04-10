@@ -100,13 +100,13 @@
                     <td>
                         {% if effect.applied %}
                         <span class="effectsApplied">Yes</span></td>
-                        {% elif effect.note %}
+                        {% elif effect.notes %}
                         <span>See note</span>
                         {% else %}
                         <span>Not yet</span>
                         {% endif %}
                     <td>
-                        {% if effect.note %}
+                        {% if effect.notes %}
                         <a class="helpItem hover" href="#noted{{ forloop.counter }}">
                             <img alt="Note" src="{% static 'lgu1/images/chrome/noteIcon.gif' %}" />
                         </a>
@@ -114,7 +114,7 @@
                             <span class="icon"></span>
                             <div class="content">
                                 <a href="#" class="close"><img alt="Close" src="{% static 'lgu1/images/chrome/closeIcon.gif' %}" /></a>
-                                <span>{{ effect.note }}</span>
+                                <span>{{ effect.notes }}</span>
                             </div>
                         </div>
                         {% endif %}
