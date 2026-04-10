@@ -22,7 +22,7 @@ class DocRef(TypedDict):
     regnalYear: NotRequired[str]
 
 
-class ImpactAssessmentMeta(TypedDict):
+class AssociatedDocumentMeta(TypedDict):
     id: str
     shortType: str
     longType: str
@@ -31,15 +31,18 @@ class ImpactAssessmentMeta(TypedDict):
     regnalYear: NotRequired[str]
     title: str
     modified: Date
-    stage: str
-    department: str
     associatedWith: DocRef
     altFormats: List[AltFormat]
 
     @staticmethod
-    def convert_dates(meta: 'ImpactAssessmentMeta'):
+    def convert_dates(meta: 'AssociatedDocumentMeta'):
         meta['modified'] = Date.fromisoformat(meta['modified'])
 
 
-class ImpactAssessment(TypedDict):
-    meta: ImpactAssessmentMeta
+class ImpactAssessmentMeta(AssociatedDocumentMeta):
+    stage: str
+    department: str
+
+
+class AssociatedDocument(TypedDict):
+    meta: AssociatedDocumentMeta
