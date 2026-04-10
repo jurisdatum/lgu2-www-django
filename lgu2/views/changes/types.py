@@ -1,27 +1,14 @@
-TYPES = {
-    'ukpga': "UK Public General Acts",
-    'ukla': "UK Local Acts",
-    'apgb': "Acts of the Parliament of Great Britain",
-    'aep': "Acts of the English Parliament",
-    'aosp': "Acts of the Old Scottish Parliament",
-    'asp': "Acts of the Scottish Parliament",
-    'aip': "Acts of the Old Irish Parliament",
-    'apni': "Acts of the Northern Ireland Parliament",
-    'mnia': "Measures of the Northern Ireland Assembly",
-    'nia': "Acts of the Northern Ireland Assembly",
-    'ukcm': "Church Measures",
-    'asc': "Acts of Senedd Cymru",
-    'anaw': "Acts of the National Assembly for Wales",
-    'mwa': "Measures of the National Assembly for Wales",
-    'uksi': "UK Statutory Instruments",
-    'ssi': "Scottish Statutory Instruments",
-    'wsi': "Wales Statutory Instruments",
-    'nisr': "Northern Ireland Statutory Rules",
-    'nisi': "Northern Ireland Orders in Council",
-    'nisro': "Northern Ireland Statutory Rules and Orders",
-    'eur': "Regulations originating from the EU",
-    'eudn': "Decisions originating from the EU",
-    'eudr': "Directives originating from the EU",
-}
+from datetime import datetime
 
-AFFECTING_YEARS = range(2002, 2026)
+from lgu2.util.labels import labels
+
+TYPES_CODES = [
+    'ukpga', 'ukla', 'apgb', 'aep', 'aosp', 'asp', 'aip', 'apni',
+    'mnia', 'nia', 'ukcm', 'asc', 'anaw', 'mwa',
+    'uksi', 'ssi', 'wsi', 'nisr', 'nisi', 'nisro',
+    'eur', 'eudn', 'eudr',
+]
+
+TYPES = {code: labels[code]['plural'] for code in TYPES_CODES}
+
+AFFECTING_YEARS = range(2002, datetime.now().year + 1)
