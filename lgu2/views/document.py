@@ -39,7 +39,6 @@ def document(request, type: str, year: str, number: str, version: Optional[str] 
     else:
         context = make_document_context(data, type, year, number, version, lang)
 
-    # NEW: handle redirect
     if isinstance(context, HttpResponse):
         return context
 
