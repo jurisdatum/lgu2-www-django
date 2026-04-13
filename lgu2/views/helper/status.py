@@ -8,12 +8,12 @@ from ...api.document import CommonMetadata
 from ...api.responses.effects import Effect
 
 
-class PdfStatusMessage(TypedDict):
+class StatusMessage(TypedDict):
     heading: str
     body: str
 
 
-def make_pdf_status_message(meta: CommonMetadata) -> Optional[PdfStatusMessage]:
+def make_pdf_status_message(meta: CommonMetadata) -> Optional[StatusMessage]:
     """Return a status message to display alongside a PDF rendering, or None.
 
     Currently the King's Printer copy is shown only for the enacted version

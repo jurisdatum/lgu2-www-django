@@ -114,8 +114,7 @@ def make_document_context(data, type, year, number, version, lang):
         'pdf_only': pdf_only,
         'pdf_link': pdf_link,
         'pdf_thumb': pdf_thumb,
-        'pdf_status_message': make_pdf_status_message(meta),
-        'altFormats': meta['altFormats']
+        'status_message': make_pdf_status_message(meta),
     }
 
     return context

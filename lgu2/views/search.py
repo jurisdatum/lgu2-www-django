@@ -11,7 +11,7 @@ from ..api.search import basic_search
 from ..api.search_types import SearchParams
 from ..api.browse_types import DocEntry
 from ..util.cutoff import get_cutoff
-from ..util.types import to_short_type
+from ..util.types import get_category, to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link_for_list_entry, make_document_link
@@ -274,7 +274,7 @@ def search_results_helper(request, query_params: SearchParams):
 
     for doc in documents_data:
         short_type = doc['id'].split('/')[0]
-        if short_type == 'ukia':
+        if get_category(short_type) == 'associated':
             doc['link'] = make_document_link(short_type, doc['year'], doc['number'], None, None)
         else:
             doc['link'] = make_contents_link_for_list_entry(doc)

@@ -57,15 +57,7 @@
                 {% else %}
                     <div>
                         <section class="legislation-text">
-                            {% if pdf_status_message %}
-                            <div class="status-panel">
-                                <div>
-                                    <h2>{{ pdf_status_message.heading }}</h2>
-                                    <p>{{ pdf_status_message.body }}</p>
-                                </div>
-                            </div>
-                            <h2>Legislation text for the whole Act</h2>
-                            {% endif %}
+                            {% include "new_theme/document/status_message.html" %}
                             <a class="pdfLink" href="{{ links.whole }}">
                                 <img src="{{pdf_thumb}}" alt="{{meta.title}}"></img>
                             </a>

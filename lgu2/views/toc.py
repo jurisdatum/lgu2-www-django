@@ -89,7 +89,7 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_link'] = None
         data['pdf_thumb'] = None
 
-    data['pdf_status_message'] = make_pdf_status_message(meta)
+    data['status_message'] = make_pdf_status_message(meta)
 
     data['timeline'] = make_timeline_data(meta, "toc", lang)
 
