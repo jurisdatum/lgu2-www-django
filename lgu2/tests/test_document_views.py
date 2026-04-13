@@ -101,6 +101,16 @@ class DocumentViewTests(SimpleTestCase):
         self.assertNotContains(response, 'received Royal Assent when it was enacted')
         self.assertNotContains(response, 'Legislation text for the whole Act')
 
+    @patch("lgu2.views.document.get_document")
+    def test_ukia_document_page_breadcrumbs_link_to_clean_results_pages(self, mock_get_document):
+        mock_get_document.return_value = _ukia_response()
+
+        response = self.client.get(reverse('document', args=['ukia', 2024, 1]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f'href="{reverse("browse", args=["ukia"])}"')
+        self.assertContains(response, f'href="{reverse("browse-year", args=["ukia", 2024])}"')
+
 
 class TocViewTests(SimpleTestCase):
 

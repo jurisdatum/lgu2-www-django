@@ -1,6 +1,31 @@
+from unittest.mock import patch
+
 from django.test import RequestFactory, TestCase
+from django.urls import reverse
 
 from lgu2.views.search import build_browse_url_if_possible, extract_query_params, make_smart_link
+
+
+def _search_response(documents=None, counts=None, query=None):
+    documents = documents or []
+    counts = counts or {}
+    return {
+        'meta': {
+            'page': 1,
+            'totalPages': 1,
+            'query': query or {},
+            'subjects': [],
+            'counts': {
+                'total': len(documents),
+                'byType': counts.get('byType', []),
+                'byYear': counts.get('byYear', []),
+                'bySubjectInitial': counts.get('bySubjectInitial', []),
+                'byStage': counts.get('byStage', []),
+                'byDepartment': counts.get('byDepartment', []),
+            },
+        },
+        'documents': documents,
+    }
 
 
 class TestSmartUrlGeneration(TestCase):
@@ -45,6 +70,68 @@ class TestSmartUrlGeneration(TestCase):
         params = {'type': 'uksi', 'subject': 'a'}
         result = make_smart_link(params)
         self.assertEqual(result, '/uksi/a')
+
+    def test_ukia_search_redirects_to_clean_results_url(self):
+        response = self.client.get(reverse('search'), {'type': 'ukia'})
+        self.assertRedirects(response, reverse('browse', args=['ukia']), fetch_redirect_response=False)
+
+    @patch('lgu2.views.search.basic_search')
+    def test_ukia_clean_results_page_uses_document_links(self, mock_basic_search):
+        mock_basic_search.return_value = _search_response(
+            documents=[{
+                'id': 'ukia/2024/1',
+                'year': 2024,
+                'number': 1,
+                'title': 'Example impact assessment',
+                'cite': 'UKIA 2024/1',
+                'longType': 'UnitedKingdomImpactAssessment',
+                'version': 'enacted',
+            }],
+            counts={
+                'byType': [{
+                    'type': 'UnitedKingdomImpactAssessment',
+                    'count': 1,
+                }],
+            },
+            query={'type': 'ukia'},
+        )
+
+        response = self.client.get(reverse('browse', args=['ukia']))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f'href="{reverse("document", args=["ukia", 2024, 1])}"')
+        self.assertNotContains(response, reverse('toc', args=['ukia', 2024, 1]))
+
+    @patch('lgu2.views.search.basic_search')
+    def test_ukia_year_results_page_uses_document_links(self, mock_basic_search):
+        mock_basic_search.return_value = _search_response(
+            documents=[{
+                'id': 'ukia/2024/1',
+                'year': 2024,
+                'number': 1,
+                'title': 'Example impact assessment',
+                'cite': 'UKIA 2024/1',
+                'longType': 'UnitedKingdomImpactAssessment',
+                'version': 'enacted',
+            }],
+            counts={
+                'byType': [{
+                    'type': 'UnitedKingdomImpactAssessment',
+                    'count': 1,
+                }],
+                'byYear': [{
+                    'year': 2024,
+                    'count': 1,
+                }],
+            },
+            query={'type': 'ukia', 'year': 2024},
+        )
+
+        response = self.client.get(reverse('browse-year', args=['ukia', 2024]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f'href="{reverse("document", args=["ukia", 2024, 1])}"')
+        self.assertNotContains(response, reverse('toc', args=['ukia', 2024, 1]))
 
 
 class ExtractQueryParamsTests(TestCase):
