@@ -15,6 +15,7 @@ from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.redirects import should_redirect
+from .helper.status import make_pdf_status_message
 
 
 def group_effects(unappliedEffects):
@@ -114,6 +115,7 @@ def make_document_context(data, type, year, number, version, lang):
         'pdf_only': pdf_only,
         'pdf_link': pdf_link,
         'pdf_thumb': pdf_thumb,
+        'pdf_status_message': make_pdf_status_message(meta),
         'altFormats': meta['altFormats']
     }
 

@@ -14,7 +14,7 @@ from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
-from .helper.status import make_status_data
+from .helper.status import make_pdf_status_message, make_status_data
 from ..util.redirects import should_redirect
 
 
@@ -88,6 +88,8 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_only'] = False
         data['pdf_link'] = None
         data['pdf_thumb'] = None
+
+    data['pdf_status_message'] = make_pdf_status_message(meta)
 
     data['timeline'] = make_timeline_data(meta, "toc", lang)
 
