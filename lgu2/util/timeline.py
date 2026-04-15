@@ -100,7 +100,7 @@ def _make_timeline_data(meta: CommonMetadata, make_link: Callable) -> TimelineDa
     elif current and current['label'] == meta['version']:
         viewing = current
     else:
-        viewing = next(v for v in historical if v['label'] == meta['version'])
+        viewing = next((v for v in historical if v['label'] == meta['version']), None)
 
     version_count = (1 if original else 0) + len(historical) + (1 if current else 0)
 
