@@ -167,4 +167,4 @@ class TestInvalidNumericSearchParams(TestCase):
         self.client.raise_request_exception = False
         response = self.client.get("/search/", {"type": "ukpga", "year": "abcd"})
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)

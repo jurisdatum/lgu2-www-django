@@ -8,11 +8,6 @@ from ..api.search_types import SearchParams
 # Regex to match type(s) in URL
 TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
 
-# Param renames for query string
-PARAM_RENAME = {
-    'q': 'text',
-}
-
 
 def build_extent_segment(extents: list[str], exclusive: bool = False) -> Optional[str]:
     """
@@ -75,7 +70,7 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
 
     allowed_keys = {
         'type', 'year', 'subject', 'extent_segment',
-        'page', 'pageSize', 'title', 'language', 'q', 'number'
+        'page', 'pageSize', 'title', 'language', 'text', 'number'
     }
     if not set(params).issubset(allowed_keys):
         return None
@@ -96,6 +91,10 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     extent_segment = params.get("extent_segment")
 
     subject_is_letter = is_single_letter(subject)
+
+    # After building tpe_list, add this guard before any reverse() call for invalid type
+    if not all(t in VALID_TYPES for t in tpe_list):
+        return None
 
     # Determine URL pattern safely
     if extent_segment:
@@ -136,8 +135,8 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
         # Only skip subject if it was used in the path
         if k == 'subject' and subject_is_letter:
             continue
-        new_key = PARAM_RENAME.get(k, k)
-        query[new_key] = v
+
+        query[k] = v
 
     if query:
         return f"{base}?{urlencode(query, doseq=True)}"

@@ -70,15 +70,10 @@ def extract_query_params(request) -> SearchParams:
         "subject": str,
         "title": str,
         "number": str,
-        "text": lambda v: ("q", v),
+        "text": str,
         "language": str,
         "exclusiveExtent": str,
         "pointInTime": str,
-        "year": int,
-        "startYear": int,
-        "endYear": int,
-        "page": int,
-        "pageSize": int,
         "extent": str
     }
 
@@ -99,7 +94,7 @@ def extract_query_params(request) -> SearchParams:
     if types:
         params["type"] = types[0] if len(types) == 1 else types
 
-    # Handle years
+    # Handle years - single safe parsing path
     if request.GET.get("specifi_years") == "true" and "year" in request.GET and request.GET["year"].isdigit():
         params["year"] = int(request.GET["year"])
     else:
@@ -107,6 +102,12 @@ def extract_query_params(request) -> SearchParams:
             params["startYear"] = int(request.GET["startYear"])
         if "endYear" in request.GET and request.GET["endYear"].isdigit():
             params["endYear"] = int(request.GET["endYear"])
+
+    # Handle page and pageSize safely
+    for key in ("page", "pageSize"):
+        value = request.GET.get(key)
+        if value and value.strip().isdigit():
+            params[key] = int(value)
 
     # Handle multiple extent values
     extents = request.GET.getlist("extent")
@@ -198,7 +199,12 @@ def search_results_helper(request, query_params: SearchParams):
     elif current_type == "all":
         query_params.pop("type", None)
 
-    api_data = basic_search(query_params)
+    # Rename text→q only for API call, never mutate query_params
+    api_params = query_params.copy()
+    if "text" in api_params:
+        api_params["q"] = api_params.pop("text")
+
+    api_data = basic_search(api_params)
     meta = api_data["meta"]
     documents_data = api_data["documents"]
 

@@ -59,8 +59,8 @@ DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
-VALID_EXTENTS = ['E', 'W', 'S', 'NI']
-EXTENT = r'(?P<extent_segment>(?:' + '|'.join(VALID_EXTENTS) + r')(?:\+(?:' + '|'.join(VALID_EXTENTS) + r'))*)'
+VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
+EXTENT = r'(?P<extent_segment>=?(?:' + '|'.join(VALID_EXTENTS) + r')(?:\+(?:' + '|'.join(VALID_EXTENTS) + r'))*)'
 
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
