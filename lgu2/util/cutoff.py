@@ -32,6 +32,7 @@ cutoffs = {
     'ukdsi': 1998,
     'sdsi': 2001,
     'nidsr': 2000,
+    'ukia': 2008,
     'eur': None,
     'eudn': None,
     'eudr': None

@@ -11,10 +11,10 @@ from ..api.search import basic_search
 from ..api.search_types import SearchParams
 from ..api.browse_types import DocEntry
 from ..util.cutoff import get_cutoff
-from ..util.types import to_short_type
+from ..util.types import get_category, to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
-from ..util.links import make_contents_link_for_list_entry
+from ..util.links import make_contents_link_for_list_entry, make_document_link
 
 
 class SearchResultContext(TypedDict):
@@ -34,6 +34,8 @@ class SearchResultContext(TypedDict):
     by_year_pagination_count: int
     current_year: str
     current_type: Optional[Union[str, List[str]]]
+    current_stage: Optional[str]
+    current_department: Optional[str]
     grouped_by_decade: bool
     subject_initials: Optional[set[str]]
     all_lowercase_letters: str
@@ -68,7 +70,9 @@ def extract_query_params(request) -> SearchParams:
     if "subject" in request.GET and request.GET["subject"].strip():
         params["subject"] = request.GET["subject"].strip()
 
-    types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
+    # 'all' is the form's UI value for "no type filter"; the API expects
+    # the type parameter to be omitted entirely when all types are wanted.
+    types = [t.strip() for t in request.GET.getlist("type") if t.strip() and t.strip() != "all"]
     if types:
         params["type"] = types[0] if len(types) == 1 else types
 
@@ -107,8 +111,13 @@ def extract_query_params(request) -> SearchParams:
         if "year" in request.GET and request.GET["year"].isdigit():
             params["year"] = int(request.GET["year"])
 
-    return params
+    if 'stage' in request.GET and request.GET['stage'].strip():
+        params['stage'] = request.GET['stage']
 
+    if 'department' in request.GET and request.GET['department']:
+        params['department'] = request.GET['department']
+
+    return params
 
 TYPE = r'^(?:[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)$'
 
@@ -231,6 +240,8 @@ def search_results_helper(request, query_params: SearchParams):
     current_subject = query_params.get("subject")
     subject_heading = current_subject if current_subject and len(current_subject) > 1 else None
     current_subject = current_subject[0] if current_subject else None
+    current_stage = query_params.get("stage")
+    current_department = query_params.get("department")
 
     default_pagesize = query_params.get("pageSize", 20)
 
@@ -255,9 +266,18 @@ def search_results_helper(request, query_params: SearchParams):
     for byInitial in meta['counts']['bySubjectInitial']:
         byInitial['link'] = replace_param_and_make_smart_link(query_params, 'subject', byInitial['initial'])
 
+    for byStage in meta['counts']['byStage']:
+        byStage['link'] = replace_param_and_make_smart_link(query_params, 'stage', byStage['stage'])
+
+    for byDepartment in meta['counts']['byDepartment']:
+        byDepartment['link'] = replace_param_and_make_smart_link(query_params, 'department', byDepartment['department'])
+
     for doc in documents_data:
-        doc['link'] = make_contents_link_for_list_entry(doc)
-        # doc['label'] = get_type_label(doc['longType'])
+        short_type = doc['id'].split('/')[0]
+        if get_category(short_type) == 'associated':
+            doc['link'] = make_document_link(short_type, doc['year'], doc['number'], None, None)
+        else:
+            doc['link'] = make_contents_link_for_list_entry(doc)
 
     # Step 9: Subject initials and links
     subject_initials = None
@@ -308,6 +328,8 @@ def search_results_helper(request, query_params: SearchParams):
         "by_year_pagination_count": len(meta.get("counts", {}).get("byYear", [])),
         "current_year": current_year,
         "current_type": current_type,
+        "current_stage": current_stage,
+        "current_department": current_department,
         "grouped_by_decade": grouped_by_decade,
         "subject_initials": subject_initials,  # now used only to check for presence of subjects
         "subject_initials_and_links": subject_initials_and_links,
@@ -332,7 +354,7 @@ def group_by_decade(year_data, doc_type):
     for entry in year_data:
         year = entry["year"]
         count = entry["count"]
-        complete = cut_off is not None and year > cut_off
+        complete = cut_off is not None and year >= cut_off
 
         decade_start = (year // 10) * 10
         decade_label = f"{decade_start}-{decade_start + 9}"

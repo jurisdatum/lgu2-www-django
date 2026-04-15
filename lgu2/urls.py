@@ -22,7 +22,7 @@ from .views.general import (
     whats_new, new_legislation, new_legislation_feeds,
     about_us, health_dependencies
 )
-from .views.search import  browse, search_results
+from .views.search import browse, search_results
 from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False

@@ -7,14 +7,14 @@ from django.template import loader
 
 from ..api import contents as api
 from ..api.document import DocumentMetadata
-from ..api.pdf import make_pdf_url, make_thumbnail_url
+from ..api.pdf import get_pdf_link_and_thumb
 from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
-from .helper.status import make_status_data
+from .helper.status import make_pdf_status_message, make_status_data
 from ..util.redirects import should_redirect
 
 
@@ -83,12 +83,13 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
         data['pdf_only'] = True
-        data['pdf_link'] = make_pdf_url(type, year, number, version)
-        data['pdf_thumb'] = make_thumbnail_url(type, year, number, version)
+        data['pdf_link'], data['pdf_thumb'] = get_pdf_link_and_thumb(meta['altFormats'])
     else:
         data['pdf_only'] = False
         data['pdf_link'] = None
         data['pdf_thumb'] = None
+
+    data['status_message'] = make_pdf_status_message(meta)
 
     data['timeline'] = make_timeline_data(meta, "toc", lang)
 
