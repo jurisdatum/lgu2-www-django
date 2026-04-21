@@ -1,3 +1,4 @@
+import re
 
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
@@ -24,7 +25,7 @@ from .views.general import (
 )
 from .views.search import  browse, search_results
 from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
-from lgu2.util.types import VALID_TYPES
+from lgu2.util.types import SEARCH_TYPES
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -42,7 +43,8 @@ if not settings.DEBUG:
     ]
 
 COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
-TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
+_TYPE_ALT = '|'.join(re.escape(t) for t in SEARCH_TYPES)
+TYPE = r'(?P<type>(?:' + _TYPE_ALT + r')(?:\+(?:' + _TYPE_ALT + r'))*)'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = (
     r'(?P<year>'

@@ -2,11 +2,18 @@ import re
 from typing import Optional
 from urllib.parse import urlencode
 from django.urls import reverse
-from ..util.types import VALID_TYPES, EXTENT_MAP
+from ..util.types import SEARCH_TYPES
 from ..api.search_types import SearchParams
 
-# Regex to match type(s) in URL
-TYPE = r'(?P<type>(?:' + '|'.join(VALID_TYPES) + r')(?:\+(?:' + '|'.join(VALID_TYPES) + r'))*)'
+EXTENT_MAP = {
+    "E": "england",
+    "W": "wales",
+    "S": "scotland",
+    "NI": "ni",
+}
+
+_TYPE_ALT = '|'.join(re.escape(t) for t in SEARCH_TYPES)
+TYPE = r'(?P<type>(?:' + _TYPE_ALT + r')(?:\+(?:' + _TYPE_ALT + r'))*)'
 
 
 def build_extent_segment(extents: list[str], exclusive: bool = False) -> Optional[str]:
@@ -92,8 +99,7 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
 
     subject_is_letter = is_single_letter(subject)
 
-    # After building tpe_list, add this guard before any reverse() call for invalid type
-    if not all(t in VALID_TYPES for t in tpe_list):
+    if not all(t in SEARCH_TYPES for t in tpe_list):
         return None
 
     # Determine URL pattern safely

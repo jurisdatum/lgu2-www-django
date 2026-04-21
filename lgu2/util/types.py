@@ -1,25 +1,3 @@
-VALID_TYPES = [
-    # Primary
-    "all", "primary\+secondary", "primary", "ukpga", "ukla", "ukppa", "asp", "asc", "anaw", "mwa", "ukcm", "nia", 
-    "aosp", "aep", "aip", "apgb", "gbla", "gbppa", "nisi", "mnia", "apni",
-    # Secondary
-    "secondary", "uksi", "wsi", "ssi", "nisr", "ukci", "ukmd", "ukmo", "uksro", "nisro",
-    # EU
-    "eu-origin", "eu", "eur", "eudn", "eudr", "eut", 
-    # Associated 
-    "ukia",
-    # draft
-    "ukdsi", "sdsi", "nidsr"
-]
-
-EXTENT_MAP = {
-    "E": "england",
-    "W": "wales",
-    "S": "scotland",
-    "NI": "ni"
-}
-
-
 types = [
     ('ukpga', 'UnitedKingdomPublicGeneralAct', 'primary'),
     ('ukla', 'UnitedKingdomLocalAct', 'primary'),
@@ -64,6 +42,11 @@ short_to_long = {item[0]: item[1] for item in types}
 long_to_short = {item[1]: item[0] for item in types}
 
 categories_by_type = {item[0]: item[2] for item in types} | {item[1]: item[2] for item in types}
+
+SEARCH_TYPES = [item[0] for item in types] + [
+    'all', 'primary', 'secondary', 'primary+secondary',
+    'eu-origin', 'eu', 'ukia',
+]
 
 
 def to_short_type(type):
