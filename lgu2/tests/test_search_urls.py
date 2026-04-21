@@ -171,6 +171,28 @@ class TestModifiedQueryLinksRendering(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "href='/ukpga'")
 
+    @patch("lgu2.views.search.basic_search")
+    def test_text_filter_chip_has_working_removal_link(self, mock_basic_search):
+        # The API reports the keyword filter as q; the template iterates over
+        # meta.query, so the "text" removal link must be reachable under q too.
+        mock_basic_search.return_value = _empty_search_response(q="fire")
+
+        response = self.client.get("/ukpga", {"text": "fire"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["meta_data"]["query"], {"text": "fire"})
+        self.assertIn("text", response.context["modified_query_links"])
+
+
+class TestMultiTypeSearchDoesNotCrash(TestCase):
+    @patch("lgu2.views.search.basic_search")
+    def test_two_type_search_renders_without_error(self, mock_basic_search):
+        mock_basic_search.return_value = _empty_search_response()
+
+        response = self.client.get("/ukpga+uksi")
+
+        self.assertEqual(response.status_code, 200)
+
 
 class TestInvalidNumericSearchParams(TestCase):
     def test_extract_query_params_ignores_invalid_numeric_values(self):

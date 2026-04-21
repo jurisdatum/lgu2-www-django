@@ -252,6 +252,10 @@ def search_results_helper(request, query_params: SearchParams):
 
     api_data = basic_search(api_params)
     meta = api_data["meta"]
+    # Template renders active-filter chips from meta.query; keep keys aligned
+    # with query_params (and modified_query_links) so removal links resolve.
+    if "q" in meta.get("query", {}):
+        meta["query"]["text"] = meta["query"].pop("q")
     documents_data = api_data["documents"]
 
     total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))
@@ -271,7 +275,10 @@ def search_results_helper(request, query_params: SearchParams):
 
     current_year = str(query_params.get("year", ""))
     current_type = query_params.get("type")
-    single_type = current_type[0] if isinstance(current_type, list) and len(current_type) == 1 else current_type
+    if isinstance(current_type, list):
+        single_type = current_type[0] if len(current_type) == 1 else None
+    else:
+        single_type = current_type
     current_subject = query_params.get("subject")
     subject_heading = current_subject if current_subject and len(current_subject) > 1 else None
     current_subject = current_subject[0] if current_subject else None
