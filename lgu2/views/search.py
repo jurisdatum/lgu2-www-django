@@ -94,14 +94,27 @@ def extract_query_params(request) -> SearchParams:
     if types:
         params["type"] = types[0] if len(types) == 1 else types
 
-    # Handle years - single safe parsing path
-    if request.GET.get("specifi_years") == "true" and "year" in request.GET and request.GET["year"].isdigit():
-        params["year"] = int(request.GET["year"])
-    else:
-        if "startYear" in request.GET and request.GET["startYear"].isdigit():
+    # Handle years. The radio button tells us specific vs range mode when the
+    # user submits the advanced form. Hidden year fields on results pages can
+    # arrive without the radio, so treat an absent radio as "parse year if
+    # present, otherwise fall back to range".
+    specifi_years = request.GET.get("specifi_years")
+    if specifi_years == "true":
+        if _valid_year(request.GET.get("year")):
+            params["year"] = int(request.GET["year"])
+    elif specifi_years == "false":
+        if _valid_year(request.GET.get("startYear")):
             params["startYear"] = int(request.GET["startYear"])
-        if "endYear" in request.GET and request.GET["endYear"].isdigit():
+        if _valid_year(request.GET.get("endYear")):
             params["endYear"] = int(request.GET["endYear"])
+    else:
+        if _valid_year(request.GET.get("year")):
+            params["year"] = int(request.GET["year"])
+        else:
+            if _valid_year(request.GET.get("startYear")):
+                params["startYear"] = int(request.GET["startYear"])
+            if _valid_year(request.GET.get("endYear")):
+                params["endYear"] = int(request.GET["endYear"])
 
     # Handle page and pageSize safely
     for key in ("page", "pageSize"):
@@ -175,15 +188,34 @@ def browse(request, type: str, year: Optional[str] = None, subject: Optional[str
     return search_results_helper(request, params)
 
 
+def _valid_year(value) -> bool:
+    if not value:
+        return False
+    value = value.strip()
+    return value.isdigit() and 1000 <= int(value) <= 9999
+
+
 def _has_invalid_params(request) -> bool:
-    if request.GET.get("specifi_years") == "true":
+    specifi_years = request.GET.get("specifi_years")
+    if specifi_years == "true":
+        year_fields = ("year",)
+    elif specifi_years == "false":
+        year_fields = ("startYear", "endYear")
+    elif request.GET.get("year"):
         year_fields = ("year",)
     else:
         year_fields = ("startYear", "endYear")
-    for field in year_fields + ("page", "pageSize"):
+
+    for field in year_fields:
+        value = request.GET.get(field, '').strip()
+        if value and not _valid_year(value):
+            return True
+
+    for field in ("page", "pageSize"):
         value = request.GET.get(field, '').strip()
         if value and not value.isdigit():
             return True
+
     return False
 
 

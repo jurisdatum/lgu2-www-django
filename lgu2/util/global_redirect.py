@@ -1,7 +1,7 @@
 import re
 from typing import Optional
 from urllib.parse import urlencode
-from django.urls import reverse
+from django.urls import reverse, NoReverseMatch
 from ..util.types import SEARCH_TYPES
 from ..api.search_types import SearchParams
 
@@ -102,36 +102,40 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     if not all(t in SEARCH_TYPES for t in tpe_list):
         return None
 
-    # Determine URL pattern safely
-    if extent_segment:
-        base = reverse('browse-extent', kwargs={
-            'type': tpe_url,
-            'extent_segment': extent_segment
-        })
-
-    elif year:
-        if subject_is_letter:
-            base = reverse('browse-year-subject', kwargs={
+    # Reverse can fail if year/subject/extent don't match the route regex
+    # (e.g. year=999). Callers expect None so they can fall back to /search/.
+    try:
+        if extent_segment:
+            base = reverse('browse-extent', kwargs={
                 'type': tpe_url,
-                'year': year,
-                'subject': subject
-            })
-        else:
-            base = reverse('browse-year', kwargs={
-                'type': tpe_url,
-                'year': year
+                'extent_segment': extent_segment
             })
 
-    else:
-        if subject_is_letter:
-            base = reverse('browse-subject', kwargs={
-                'type': tpe_url,
-                'subject': subject
-            })
+        elif year:
+            if subject_is_letter:
+                base = reverse('browse-year-subject', kwargs={
+                    'type': tpe_url,
+                    'year': year,
+                    'subject': subject
+                })
+            else:
+                base = reverse('browse-year', kwargs={
+                    'type': tpe_url,
+                    'year': year
+                })
+
         else:
-            base = reverse('browse', kwargs={
-                'type': tpe_url
-            })
+            if subject_is_letter:
+                base = reverse('browse-subject', kwargs={
+                    'type': tpe_url,
+                    'subject': subject
+                })
+            else:
+                base = reverse('browse', kwargs={
+                    'type': tpe_url
+                })
+    except NoReverseMatch:
+        return None
 
     # Build query params
     query = {}

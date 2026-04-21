@@ -85,6 +85,16 @@ class TestSmartUrlGeneration(TestCase):
         result = replace_param_and_make_smart_link(params, 'year', None)
         self.assertEqual(result, '/ukpga')
 
+    def test_build_browse_url_returns_none_for_out_of_range_year(self):
+        params = {'type': 'ukpga', 'year': 999}
+        result = build_browse_url_if_possible(params)
+        self.assertIsNone(result)
+
+    def test_make_smart_link_falls_back_to_search_when_year_invalid(self):
+        params = {'type': 'ukpga', 'year': 999}
+        result = make_smart_link(params)
+        self.assertTrue(result.startswith('/search/?'))
+
 
 class TestBrowseExtentParsing(TestCase):
     @patch("lgu2.views.search.search_results_helper")
@@ -192,3 +202,39 @@ class TestInvalidNumericSearchParams(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/ukpga/1900-2000")
+
+    def test_year_out_of_range_returns_form(self):
+        response = self.client.get("/search/", {
+            "type": "ukpga",
+            "specifi_years": "true",
+            "year": "999",
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+    def test_year_too_large_returns_form(self):
+        response = self.client.get("/search/", {
+            "type": "ukpga",
+            "specifi_years": "true",
+            "year": "10000",
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+
+class TestYearWithoutSpecifiYears(TestCase):
+    """Result-page forms submit year as a hidden field without the specifi_years radio."""
+
+    def test_year_is_parsed_when_specifi_years_absent(self):
+        request = RequestFactory().get("/search/", {"year": "2024"})
+        params = extract_query_params(request)
+        self.assertEqual(params.get("year"), 2024)
+
+    @patch("lgu2.views.search.basic_search")
+    def test_year_sent_to_api_when_sort_prevents_redirect(self, mock_basic_search):
+        mock_basic_search.return_value = _empty_search_response()
+        self.client.get("/search/", {"type": "ukpga", "year": "2024", "sort": "title"})
+        api_params = mock_basic_search.call_args.args[0]
+        self.assertEqual(api_params.get("year"), 2024)
