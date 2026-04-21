@@ -160,11 +160,35 @@ class TestInvalidNumericSearchParams(TestCase):
             with self.subTest(key=key):
                 self.assertNotIn(key, params)
 
-    @patch("lgu2.views.search.basic_search")
-    def test_search_view_does_not_500_on_invalid_numeric_values(self, mock_basic_search):
-        mock_basic_search.return_value = _empty_search_response(type="ukpga")
+    def test_search_view_returns_form_when_active_year_is_invalid(self):
+        response = self.client.get("/search/", {
+            "type": "ukpga",
+            "specifi_years": "true",
+            "year": "abcd",
+        })
 
-        self.client.raise_request_exception = False
-        response = self.client.get("/search/", {"type": "ukpga", "year": "abcd"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+    def test_search_view_returns_form_when_active_year_range_is_invalid(self):
+        response = self.client.get("/search/", {
+            "type": "ukpga",
+            "specifi_years": "false",
+            "startYear": "abc",
+            "endYear": "2000",
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+    def test_search_view_ignores_invalid_inactive_year_field(self):
+        response = self.client.get("/search/", {
+            "type": "ukpga",
+            "specifi_years": "false",
+            "year": "abcd",
+            "startYear": "1900",
+            "endYear": "2000",
+        })
 
         self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/ukpga/1900-2000")

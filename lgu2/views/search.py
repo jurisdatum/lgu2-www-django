@@ -175,7 +175,21 @@ def browse(request, type: str, year: Optional[str] = None, subject: Optional[str
     return search_results_helper(request, params)
 
 
+def _has_invalid_params(request) -> bool:
+    if request.GET.get("specifi_years") == "true":
+        year_fields = ("year",)
+    else:
+        year_fields = ("startYear", "endYear")
+    for field in year_fields + ("page", "pageSize"):
+        value = request.GET.get(field, '').strip()
+        if value and not value.isdigit():
+            return True
+    return False
+
+
 def search_results(request):
+    if _has_invalid_params(request):
+        return render(request, 'new_theme/advance_search/full_search.html')
     params = extract_query_params(request)
     browse_params = normalize_params_for_browse(params)
     browse_url = build_browse_url_if_possible(browse_params)
