@@ -18,3 +18,12 @@ def camel_to_words(value):
 @register.filter
 def dict_key(d, key):
     return d.get(key, '')
+
+
+@register.filter
+def as_list(value):
+    """Wrap scalars in a single-element list so templates can iterate
+    uniformly. Multi-valued form params (list/tuple) are returned as-is."""
+    if isinstance(value, (list, tuple)):
+        return value
+    return [value]

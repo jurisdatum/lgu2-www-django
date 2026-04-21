@@ -213,6 +213,24 @@ class TestMultiTypeSearchDoesNotCrash(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    @patch("lgu2.views.search.basic_search")
+    def test_list_valued_params_render_as_repeated_hidden_inputs(self, mock_basic_search):
+        # The sort and page-size forms on the results page loop over
+        # query_param and emit <input type="hidden">. When a value is a list
+        # (e.g. type from /primary+secondary, or repeated ?extent=E&extent=W),
+        # a single input with the Python repr would submit garbage — repeat
+        # the input once per element so the server receives the real values.
+        mock_basic_search.return_value = _empty_search_response()
+
+        response = self.client.get("/primary+secondary")
+
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode()
+        self.assertNotIn("value=\"['primary', 'secondary']\"", content)
+        self.assertNotIn("value=\"[&#x27;primary&#x27;, &#x27;secondary&#x27;]\"", content)
+        self.assertIn('value="primary"', content)
+        self.assertIn('value="secondary"', content)
+
 
 class TestInvalidNumericSearchParams(TestCase):
     def test_extract_query_params_ignores_invalid_numeric_values(self):
