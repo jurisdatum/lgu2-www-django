@@ -46,7 +46,10 @@ COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
 _TYPE_ALT = '|'.join(re.escape(t) for t in SEARCH_TYPES)
 TYPE = r'(?P<type>(?:' + _TYPE_ALT + r')(?:\+(?:' + _TYPE_ALT + r'))*)'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
-YEAR = (
+YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
+# Browse accepts year ranges in addition to single years. Keep this separate
+# from YEAR so document/TOC/fragment routes don't match nonsensical ranges.
+BROWSE_YEAR = (
     r'(?P<year>'
     r'[0-9]{4}'                # 2024
     r'|[0-9]{4}-[0-9]{4}'      # 2023-2024
@@ -104,7 +107,7 @@ urlpatterns += i18n_patterns(
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),
-    re_path(fr'^{TYPE}/{YEAR}$', browse, name='browse-year'),
+    re_path(fr'^{TYPE}/{BROWSE_YEAR}$', browse, name='browse-year'),
     re_path(fr'^{TYPE}/{YEAR4}/{DATA}$', browse_data),
     re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
     re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),

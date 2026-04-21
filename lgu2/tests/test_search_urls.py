@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 from django.test import RequestFactory, TestCase
-from django.urls import resolve
+from django.urls import Resolver404, resolve
 
 from lgu2.views.search import (
     browse,
@@ -146,6 +146,26 @@ class TestExtentUrlRouting(TestCase):
     def test_exclusive_human_readable_extent_url_resolves_to_browse_extent(self):
         match = resolve("/ukpga/=england")
         self.assertEqual(match.view_name, "browse-extent")
+
+
+class TestYearRangeDoesNotMatchDocumentRoutes(TestCase):
+    """Ranges are a browse concept; document/TOC/fragment URLs require a single year."""
+
+    def test_closed_year_range_does_not_match_document_url(self):
+        with self.assertRaises(Resolver404):
+            resolve("/ukpga/2023-2024/1")
+
+    def test_open_ended_year_range_does_not_match_document_url(self):
+        with self.assertRaises(Resolver404):
+            resolve("/ukpga/2024-*/1")
+
+    def test_single_year_still_resolves_to_document(self):
+        match = resolve("/ukpga/2024/1")
+        self.assertEqual(match.view_name, "document")
+
+    def test_year_range_still_resolves_to_browse_year(self):
+        match = resolve("/ukpga/2023-2024")
+        self.assertEqual(match.view_name, "browse-year")
 
 
 def _empty_search_response(**query):
