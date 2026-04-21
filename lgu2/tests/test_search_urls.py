@@ -301,3 +301,55 @@ class TestYearWithoutSpecifiYears(TestCase):
         self.client.get("/search/", {"type": "ukpga", "year": "2024", "sort": "title"})
         api_params = mock_basic_search.call_args.args[0]
         self.assertEqual(api_params.get("year"), 2024)
+
+
+class TestRangeYearInQueryString(TestCase):
+    """The browse redirect collapses startYear/endYear into year=YYYY-YYYY on
+    extent URLs, so browse() must be able to parse range shapes from the
+    query string."""
+
+    def test_closed_range_year_is_parsed_into_start_end(self):
+        request = RequestFactory().get("/ukpga/england", {"year": "1900-2000"})
+        params = extract_query_params(request)
+        self.assertEqual(params.get("startYear"), 1900)
+        self.assertEqual(params.get("endYear"), 2000)
+        self.assertNotIn("year", params)
+
+    def test_open_ended_range_year_is_parsed(self):
+        request = RequestFactory().get("/ukpga/england", {"year": "1900-*"})
+        params = extract_query_params(request)
+        self.assertEqual(params.get("startYear"), 1900)
+        self.assertNotIn("endYear", params)
+
+    @patch("lgu2.views.search.basic_search")
+    def test_extent_redirect_preserves_year_range_for_api(self, mock_basic_search):
+        mock_basic_search.return_value = _empty_search_response()
+
+        response = self.client.get("/search/", {
+            "type": "ukpga",
+            "specifi_years": "false",
+            "startYear": "1900",
+            "endYear": "2000",
+            "extent": "E",
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/ukpga/england?year=1900-2000")
+
+        self.client.get(response.url)
+        api_params = mock_basic_search.call_args.args[0]
+        self.assertEqual(api_params.get("startYear"), 1900)
+        self.assertEqual(api_params.get("endYear"), 2000)
+
+    def test_out_of_range_range_endpoints_are_rejected(self):
+        for bad in ("999-2000", "10000-2000", "2000-10000", "10000-*", "*-999"):
+            with self.subTest(year=bad):
+                request = RequestFactory().get("/ukpga/england", {"year": bad})
+                params = extract_query_params(request)
+                self.assertNotIn("startYear", params)
+                self.assertNotIn("endYear", params)
+                self.assertNotIn("year", params)
+
+    def test_search_view_rejects_out_of_range_range_endpoints(self):
+        response = self.client.get("/search/", {"type": "ukpga", "year": "999-2000"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")

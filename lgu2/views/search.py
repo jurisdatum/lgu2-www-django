@@ -44,18 +44,18 @@ class SearchResultContext(TypedDict):
 
 
 def parse_year_param(year: str) -> SearchParams:
-    if year.isdigit():
+    if _valid_year(year):
         return {"year": int(year)}
     if "-" in year:
         start, end = year.split("-", 1)
-        result = {}
-        if start.isdigit() and end.isdigit():
-            result = {"startYear": int(start), "endYear": int(end)}
-        elif start.isdigit() and end == "*":
-            result = {"startYear": int(start)}
-        elif start == "*" and end.isdigit():
-            result = {"endYear": int(end)}
-        return result
+        start_ok = _valid_year(start)
+        end_ok = _valid_year(end)
+        if start_ok and end_ok:
+            return {"startYear": int(start), "endYear": int(end)}
+        if start_ok and end == "*":
+            return {"startYear": int(start)}
+        if start == "*" and end_ok:
+            return {"endYear": int(end)}
     return {}
 
 
@@ -85,8 +85,13 @@ def extract_query_params(request) -> SearchParams:
         if _valid_year(request.GET.get("endYear")):
             params["endYear"] = int(request.GET["endYear"])
     else:
-        if _valid_year(request.GET.get("year")):
-            params["year"] = int(request.GET["year"])
+        year_value = (request.GET.get("year") or "").strip()
+        if "-" in year_value:
+            # Extent redirects collapse startYear/endYear into year=YYYY-YYYY
+            # on the URL; split it back out here.
+            params.update(parse_year_param(year_value))
+        elif _valid_year(year_value):
+            params["year"] = int(year_value)
         else:
             if _valid_year(request.GET.get("startYear")):
                 params["startYear"] = int(request.GET["startYear"])
@@ -160,17 +165,26 @@ def _has_invalid_params(request) -> bool:
     specifi_years = request.GET.get("specifi_years")
     if specifi_years == "true":
         year_fields = ("year",)
+        allow_range = False
     elif specifi_years == "false":
         year_fields = ("startYear", "endYear")
+        allow_range = False
     elif request.GET.get("year"):
         year_fields = ("year",)
+        allow_range = True  # extent redirects collapse range into year=YYYY-YYYY
     else:
         year_fields = ("startYear", "endYear")
+        allow_range = False
 
     for field in year_fields:
         value = request.GET.get(field, '').strip()
-        if value and not _valid_year(value):
-            return True
+        if not value:
+            continue
+        if _valid_year(value):
+            continue
+        if allow_range and parse_year_param(value):
+            continue
+        return True
 
     for field in ("page", "pageSize"):
         value = request.GET.get(field, '').strip()
