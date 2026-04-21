@@ -1,9 +1,10 @@
 
 from datetime import date as Date
-from typing import List, Optional, TypedDict, NotRequired, Literal
+from typing import List, Optional, TypedDict, NotRequired, Literal, Union
 from urllib.parse import urlencode
 
 from . import server
+from .associated import AssociatedDocument, AssociatedDocumentMeta
 from .browse_types import AltNumber
 from .responses.effects import Effect
 
@@ -16,7 +17,7 @@ AssociatedDocumentType = Literal[
     'TranspositionNote', 'UKRPCOpinion'
 ]
 
-class AssociatedDocument(TypedDict):
+class AssociatedDocumentRef(TypedDict):
     type: AssociatedDocumentType
     uri: str
     name: NotRequired[str]
@@ -55,8 +56,8 @@ class CommonMetadata(TypedDict):
     schedules: bool  # deprecated in Java but still present
     formats: List[str]
     pointInTime: NotRequired[Date]
-    alternatives: List[AssociatedDocument]
-    associated: List[AssociatedDocument]
+    alternatives: List[AssociatedDocumentRef]
+    associated: List[AssociatedDocumentRef]
 
     @staticmethod
     def convert_dates(meta: 'CommonMetadata'):
@@ -97,10 +98,13 @@ def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
     return url
 
 
-def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Document:
+def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Union[Document, AssociatedDocument]:
     url = _make_url(type, year, number, version)
     doc = server.get_json(url, language)
-    CommonMetadata.convert_dates(doc['meta'])
+    if type == 'ukia':
+        AssociatedDocumentMeta.convert_dates(doc['meta'])
+    else:
+        CommonMetadata.convert_dates(doc['meta'])
     return doc
 
 

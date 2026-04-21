@@ -3,7 +3,7 @@
 {% block content %}
 <main class="legislation">
     <section>
-        {% include "new_theme/document/breadcrumbs.html" %}
+        {% include "new_theme/common/breadcrumbs.html" %}
         <h1 id="main-content-h" tabindex="-1">
             Table of contents 
             <br class="initialise" /><span>{{ meta.title }}</span>
@@ -55,7 +55,14 @@
                     </li>
                 </ul>
                 {% else %}
-                    <h1>There is no Table of contents for this Act</h1>
+                    <div>
+                        <section class="legislation-text">
+                            {% include "new_theme/document/status_message.html" %}
+                            <a class="pdfLink" href="{{ links.whole }}">
+                                <img src="{{pdf_thumb}}" alt="{{meta.title}}"></img>
+                            </a>
+                        </section>
+                    </div>
                 {% endif %}
             </section>
         </div>

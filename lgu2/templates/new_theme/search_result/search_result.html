@@ -10,7 +10,7 @@
 			<h1 id="main-content-h" tabindex="-1">We found {{meta_data.counts.total}} documents</h1>
 			<p>
 				{% for key, value in meta_data.query.items %}
-					<a href='?{{modified_query_links|dict_key:key}}'><span>{{key}}: {{value}}</span></a>
+					<a href='{{modified_query_links|dict_key:key}}'><span>{{key}}: {{value}}</span></a>
 				{% endfor %}
 			</p>
 		</hgroup>

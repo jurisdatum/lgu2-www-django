@@ -1,140 +1,305 @@
-
-from typing import Optional
-
+from typing import Optional, Tuple
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.urls import reverse
+from urllib.parse import urlencode
 
 from ...api import effects as api
 from ...api.responses.effects import Metadata
+from .summary import build_changes_summary
 from .types import AFFECTING_YEARS, TYPES
 
+SORT_FIELDS = {
+    'affected-title', 'affected-year-number',
+    'affecting-title', 'affecting-year-number',
+}
+
+# -------------------------
+# Helpers
+# -------------------------
 
 def _get_page(request):
-    page = request.GET.get('page', '1')
+    """Get current page number from request GET"""
     try:
-        page = int(page)
+        return int(request.GET.get('page', '1'))
     except ValueError:
-        page = 1
-    return page
+        return 1
 
 
-def _capture_query(type1=None, year1=None, number1=None, type2=None, year2=None, number2=None):
-    affected_type = None if type1 == 'all' else type1
-    affected_year = None if year1 == '*' else year1
-    affected_year = int(affected_year) if affected_year is not None else None
-    affected_number = int(number1) if number1 is not None else None
-    affecting_type = None if type2 == 'all' else type2
-    affecting_year = None if year2 == '*' else year2
-    affecting_year = int(affecting_year) if affecting_year is not None else None
-    affecting_number = int(number2) if number2 is not None else None
+def _parse_year(year: Optional[str]) -> Tuple[Optional[int], Optional[int], Optional[int]]:
+    """
+    Accepts:
+      - '1998'
+      - '1996-1998'
+      - '1996-*'
+      - '*-1998'
+      - '*'
+    Returns:
+      (year, start_year, end_year)
+    """
+
+    if not year or year == '*':
+        return None, None, None
+
+    if '-' in year:
+        start, end = year.split('-', 1)
+
+        start_year = int(start) if start != '*' else None
+        end_year = int(end) if end != '*' else None
+
+        return None, start_year, end_year
+
+    return int(year), None, None
+
+
+def _get_query_titles(request):
+    """Return title params for API call"""
+    return {k: v for k, v in {
+        'targetTitle': request.GET.get('affected-title'),
+        'sourceTitle': request.GET.get('affecting-title')
+    }.items() if v}
+
+
+def _get_sort(request):
+    """Return (sort_key, api_sort, api_order_by) from request, or (None, None, None)."""
+    sort_key = request.GET.get('sort')
+    if not sort_key:
+        return None, None, None
+    if sort_key.startswith('-'):
+        field, order_by = sort_key[1:], 'descending'
+    else:
+        field, order_by = sort_key, 'ascending'
+    if field in SORT_FIELDS:
+        return sort_key, field, order_by
+    return None, None, None
+
+
+def _get_extra_query_params(request, applied=None):
+    """Extra query params for pagination links"""
+    query = {}
+    if applied in ('applied', 'unapplied'):
+        query['applied'] = applied
+    sort_key = request.GET.get('sort')
+    field = sort_key[1:] if sort_key and sort_key.startswith('-') else sort_key
+    if field in SORT_FIELDS:
+        query['sort'] = sort_key
+    for k in ['affected-title', 'affecting-title']:
+        if request.GET.get(k):
+            query[k] = request.GET[k]
+    return query
+
+
+def _localize_path(path, request):
+    """Prepend the active locale prefix to a bare API path."""
+    prefix = '/cy' if request.LANGUAGE_CODE == 'cy' else ''
+    return f'{prefix}/{path}'
+
+
+def _add_effect_links(effects, request):
+    """Add locale-aware link fields to effect targets, sources, and provisions."""
+    for effect in effects:
+        for side in (effect['target'], effect['source']):
+            side['link'] = _localize_path(side['id'], request)
+            for node in side['provisions']['rich']:
+                if node.get('href'):
+                    node['link'] = _localize_path(node['href'], request)
+
+
+def _capture_side(type_, year, number):
+    """Capture one side of query"""
+    t = None if type_ == 'all' else type_
+    y, start, end = _parse_year(year)
+    n = int(number) if number else None
+    return t, y, start, end, n
+
+
+def _capture_query(type1=None, year1=None, number1=None,
+                   type2=None, year2=None, number2=None):
+    a = _capture_side(type1, year1, number1)
+    b = _capture_side(type2, year2, number2)
+    keys = ['type', 'year', 'start_year', 'end_year', 'number']
     return {
-        'affected_type': affected_type,
-        'affected_year': affected_year,
-        'affected_number': affected_number,
-        'affecting_type': affecting_type,
-        'affecting_year': affecting_year,
-        'affecting_number': affecting_number
+        **{f'affected_{k}': v for k, v in zip(keys, a)},
+        **{f'affecting_{k}': v for k, v in zip(keys, b)},
     }
 
 
-def _make_api_parameters(query, page):
-    return {
+def _add_year_params(params, query, prefix, year_key, start_key, end_key):
+    """
+    Add year params to API request, using exact keys expected by API
+    """
+
+    year = query.get(f'{prefix}_year')
+    start = query.get(f'{prefix}_start_year')
+    end = query.get(f'{prefix}_end_year')
+
+    if start and end:
+        params[start_key] = start
+        params[end_key] = end
+    elif start:
+        params[start_key] = start
+    elif end:
+        params[end_key] = end
+    elif year:
+        params[year_key] = year
+
+
+def _make_api_parameters(query, page, title_params=None, applied=None,
+                         sort=None, orderBy=None):
+    params = {
         'targetType': query['affected_type'],
-        'targetYear': query['affected_year'],
         'targetNumber': query['affected_number'],
         'sourceType': query['affecting_type'],
-        'sourceYear': query['affecting_year'],
         'sourceNumber': query['affecting_number'],
-        'page': page
+        'sort': sort,
+        'orderBy': orderBy,
+        'page': page,
     }
 
+    _add_year_params(params, query, 'affected', 'targetYear', 'targetStartYear', 'targetEndYear')
+    _add_year_params(params, query, 'affecting', 'sourceYear', 'sourceStartYear', 'sourceEndYear')
 
-def _make_nav(meta: Metadata, link_prefix: str):
+    if applied in ('applied', 'unapplied'):
+        params['applied'] = applied
 
-    page: int = meta['page']
-    last_page: int = meta['totalPages']
-    first_page_number_to_show = 1 if page < 10 else page - 9
-    last_page_number_to_show = last_page if last_page < page + 9 else page + 9
-    page_numbers = range(first_page_number_to_show, last_page_number_to_show + 1)
+    if title_params:
+        params.update(title_params)
 
-    def make_link(p: int):
-        return link_prefix + '?page=' + str(p)
+    # Remove None values
+    return {k: v for k, v in params.items() if v is not None}
 
-    pages = [{ 'number': num, 'link': make_link(num), 'class': 'currentPage' if num == page else 'pageLink' } for num in page_numbers]
-    first_page = pages[0]
-    last_page = pages[-1]
-    first_page['class'] += ' firstPageLink'
-    last_page['class'] += ' lastPageLink'
-    prev = None
-    next = None
-    if page > first_page_number_to_show:
-        prev = { 'number': page - 1, 'link': make_link(page - 1), 'class': 'pageLink prev' }
-    if page < last_page_number_to_show:
-        next = { 'number': page + 1, 'link': make_link(page + 1), 'class': 'pageLink next' }
+
+def _make_nav(meta: Metadata, link_prefix: str, extra_params=None):
+    page = meta['page']
+
+    last_page = meta.get('totalPages', 1)
+
+    def make_link(p):
+        params = {'page': p}
+        if extra_params:
+            params.update(extra_params)
+        return link_prefix + '?' + urlencode(params)
+
+    pages = [
+        {
+            'number': p,
+            'link': make_link(p),
+            'class': 'currentPage' if p == page else 'pageLink'
+        }
+        for p in range(
+            1 if page < 10 else page - 9,
+            min(last_page, page + 9) + 1
+        )
+    ]
+
     return {
         'all': pages,
-        'first': first_page,
-        'last': last_page,
-        'prev': prev,
-        'next': next
+
+        'first': {'number': 1, 'link': make_link(1)} if page > 1 else None,
+        'prev': {'number': page - 1, 'link': make_link(page - 1)} if page > 1 else None,
+        'next': {'number': page + 1, 'link': make_link(page + 1)} if page < last_page else None,
+        'last': {'number': last_page, 'link': make_link(last_page)} if page < last_page else None,
     }
 
 
-def affected(request, type: str, year: Optional[str] = None, number: Optional[str] = None, format: Optional[str] = None):
-    link_prefix = reverse('changes-affected', kwargs={key: value for key, value in locals().items() if key != 'request' and value is not None})
-    query = _capture_query(type, year, number)
-    return _combined(request, query, link_prefix, format)
+# -------------------------
+# Views
+# -------------------------
+
+def _build_link_prefix(viewname, **kwargs):
+    """Reverse URL and remove None kwargs"""
+    return reverse(viewname, kwargs={k: v for k, v in kwargs.items() if v is not None})
 
 
-def affecting(request, type: str, year: Optional[str] = None, number: Optional[str] = None, format: Optional[str] = None):
-    link_prefix = reverse('changes-affecting', kwargs={key: value for key, value in locals().items() if key != 'request' and value is not None})
+def affected(request, applied=None, type=None, year=None, number=None, format=None):
+    viewname = 'changes-affected-applied' if applied else 'changes-affected'
+    link_prefix = _build_link_prefix(viewname, applied=applied, type=type, year=year, number=number, format=format)
+    query = _capture_query(type1=type, year1=year, number1=number)
+    return _combined(request, query, link_prefix, format, applied)
+
+
+def affecting(request, applied=None, type=None, year=None, number=None, format=None):
+    viewname = 'changes-affecting-applied' if applied else 'changes-affecting'
+    link_prefix = _build_link_prefix(viewname, applied=applied, type=type, year=year, number=number, format=format)
     query = _capture_query(type2=type, year2=year, number2=number)
-    return _combined(request, query, link_prefix, format)
+    return _combined(request, query, link_prefix, format, applied)
 
 
-def both(request, type1=None, year1=None, number1=None, type2=None, year2=None, number2=None, format=None):
-    link_prefix = reverse('changes-both', kwargs={key: value for key, value in locals().items() if key != 'request' and value is not None})
+def both(request, applied=None, type1=None, year1=None, number1=None,
+         type2=None, year2=None, number2=None, format=None):
+    has_side_filters = type1 or year1 or number1 or type2 or year2 or number2
+    if has_side_filters:
+        viewname = 'changes-both-applied' if applied else 'changes-both'
+        link_prefix = _build_link_prefix(
+            viewname, applied=applied,
+            type1=type1, year1=year1, number1=number1,
+            type2=type2, year2=year2, number2=number2,
+            format=format
+        )
+    else:
+        link_prefix = reverse('changes-applied-only', kwargs={'applied': applied})
     query = _capture_query(type1, year1, number1, type2, year2, number2)
-    return _combined(request, query, link_prefix, format)
+    return _combined(request, query, link_prefix, format, applied)
 
 
-def _combined(request, query, link_prefix, format):
-
+def _combined(request, query, link_prefix, format, applied):
     page = _get_page(request)
+    sort_key, api_sort, api_order_by = _get_sort(request)
+    api_params = _make_api_parameters(
+        query, page, _get_query_titles(request), applied,
+        sort=api_sort, orderBy=api_order_by,
+    )
 
-    api_params = _make_api_parameters(query, page)
-
-    if format is not None:
+    if format:
         return _data(api_params, format)
 
     data = api.fetch(**api_params)
+    extra_query_param = _get_extra_query_params(request, applied)
+    nav = _make_nav(data['meta'], link_prefix, extra_query_param)
 
-    meta = data['meta']
-    meta['lastIndex'] = meta['startIndex'] + len(data['effects']) - 1
+    # Build form values dynamically
+    form_values = {
+        **{
+            f'{side}_{attr}': (
+                query.get(f'{side}_{attr}') 
+                or ('all' if attr == 'type' else '')
+            )
+            for side in ['affected', 'affecting']
+            for attr in ['type', 'year', 'start_year', 'end_year', 'number']
+        },
+        'affected_title': request.GET.get('affected-title', ''),
+        'affecting_title': request.GET.get('affecting-title', ''),
+        'applied': applied
+    }
 
-    nav = _make_nav(meta, link_prefix) if data['effects'] else {}
+    summary = build_changes_summary(form_values, TYPES)
+    query_string = urlencode(extra_query_param)
 
+    _add_effect_links(data['effects'], request)
+    feed_url = f"{link_prefix}/data.feed?{query_string}"
     context = {
         'query': query,
         'types': TYPES,
         'affecting_years': AFFECTING_YEARS,
         'meta': data['meta'],
         'pages': nav,
-        'feed_link': link_prefix + '/data.feed',
-        'effects': data['effects']
+        'feed_link': feed_url,
+        'effects': data['effects'],
+        'form_values': form_values,
+        'summary': summary,
+        'sort': sort_key or '',
+        'breadcrumbs': [
+            {'text': 'Home', 'link': reverse('homepage')},
+            {'text': 'Research tools', 'link': reverse('research-tools')},
+            {'text': 'Changes to legislation', 'link': reverse('changes-intro')},
+            {'text': 'Changes to legislation results'},
+        ],
     }
 
-    template = loader.get_template('changes/results.html')
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(loader.get_template('new_theme/research-tools/changes-result.html').render(context, request))
 
 
-def _data(api_params, format: str):
-
+def _data(api_params, format):
     if format == 'feed':
-        atom = api.fetch_atom(**api_params)
-        return HttpResponse(atom, content_type='application/atom+xml')
-
-    if format == 'json':
-        page = api.fetch(**api_params)
-        return JsonResponse(page)
+        return HttpResponse(api.fetch_atom(**api_params), content_type='application/atom+xml')
+    return JsonResponse(api.fetch(**api_params))

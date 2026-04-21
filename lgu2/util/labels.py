@@ -173,6 +173,11 @@ labels = {
         'singular':    'EU Treaty',
         'plural':      'European Union Treaties',
         'long_plural': 'European Union Treaties'
+    },
+    'ukia':{
+        'singular':    'UK impact assessment',
+        'plural':      'UK impact assessments',
+        'long_plural': 'UK impact assessments',
     }
 }
 

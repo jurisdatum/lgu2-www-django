@@ -237,10 +237,51 @@
             })   
         }
 
+	// If on the changes to legislation pages
+        if($('.changes-to-legislation').length != 0) {
+            $('.search-date input#affected-specific-date').on('input', function() {
+                $('.search-date input#affected-specific').prop('checked', true);
+            })
+            $('.search-date input#affected-from-date').on('input', function() {
+                $('.search-date input#affected-range').prop('checked', true);
+            })
+            $('.search-date input#affected-to-date').on('input', function() {
+                $('.search-date input#affected-range').prop('checked', true);
+            })            
+            $('.search-date input#affected-specific-date').click(function() {
+                $('.search-date input#affected-specific').prop('checked', true);
+            })
+            $('.search-date input#affected-from-date').click(function() {
+                $('.search-date input#affected-range').prop('checked', true);
+            })
+            $('.search-date input#affected-to-date').click(function() {
+                $('.search-date input#affected-range').prop('checked', true);
+            })   
+            
+            $('.search-date input#affecting-specific-date').on('input', function() {
+                $('.search-date input#affecting-specific').prop('checked', true);
+            })
+            $('.search-date input#affecting-from-date').on('input', function() {
+                $('.search-date input#affecting-range').prop('checked', true);
+            })
+            $('.search-date input#affecting-to-date').on('input', function() {
+                $('.search-date input#affecting-range').prop('checked', true);
+            })            
+            $('.search-date input#affecting-specific-date').click(function() {
+                $('.search-date input#affecting-specific').prop('checked', true);
+            })
+            $('.search-date input#affecting-from-date').click(function() {
+                $('.search-date input#affecting-range').prop('checked', true);
+            })
+            $('.search-date input#affecting-to-date').click(function() {
+                $('.search-date input#affecting-range').prop('checked', true);
+            })   
+        }
+
 	// If on the advanced search page
         if($('.advanced-searches').length != 0) {
             $('.search-type input#primary').change(function() {
-                if($('.search-type input#primary').is(':checked')) {
+                if($('.search-type input#primary').is(':checked')) {                    
                     $('#primary-types input').prop('checked', false);
                 }
             })
@@ -851,14 +892,16 @@
 	function compileChangesSearch() {
         var affectedTitle = $('#affected-title').val()
         var affectedType = $('#affected-type option:selected').text()
-        var affectedBetween = actualAffectedBetween = $('#affected-between').val()
-        var affectedAnd = actualAffectedAnd = $('#affected-and').val()
+        var affectedSpecific = actualAffectedSpecific = $('#affected-specific-date').val()
+        var affectedBetween = actualAffectedBetween = $('#affected-from-date').val()
+        var affectedAnd = actualAffectedAnd = $('#affected-to-date').val()
         var affectedNumber = $('#affected-number').val()
 
         var affectingTitle = $('#affecting-title').val()
         var affectingType = $('#affecting-type option:selected').text()
-        var affectingBetween = actualAffectingBetween = $('#affecting-between').val()
-        var affectingAnd = actualAffectingAnd = $('#affecting-and').val()
+        var affectingSpecific = actualAffectingSpecific = $('#affecting-specific-date').val()
+        var affectingBetween = actualAffectingBetween = $('#affecting-from-date').val()
+        var affectingAnd = actualAffectingAnd = $('#affecting-to-date').val()
         var affectingNumber = $('#affecting-number').val()
 
         var showChanges = "All changes";
@@ -873,7 +916,16 @@
         }
         
         var thisYear = new Date().getFullYear();
-
+        
+        if(affectedSpecific == '') {
+            var actualAffectedSpecific = thisYear;
+        }
+        else if(affectedSpecific != '' && affectedSpecific < 1268) {
+            actualAffectedSpecific = '1267';
+        }
+        else if(affectedSpecific != '' && affectedSpecific > thisYear) {
+            actualAffectedSpecific = thisYear;
+        }
         if(affectedBetween != '' && affectedBetween < 1268) {
             var actualAffectedBetween = '1267';
         }
@@ -890,6 +942,15 @@
             actualAffectedAnd = actualAffectedBetween;
         }
 
+        if(affectingSpecific == '') {
+            var actualAffectingSpecific = thisYear;
+        }
+        else if(affectingSpecific != '' && affectingSpecific < 2003) {
+            actualAffectingSpecific = '2002';
+        }
+        else if(affectingSpecific != '' && affectingSpecific > thisYear) {
+            actualAffectingSpecific = thisYear;
+        }
         if(affectingBetween != '' && affectingBetween < 2003) {
             var actualAffectingBetween = '2002';
         }
@@ -923,18 +984,23 @@
           
         $('#affectedType span').text(affectedType);
 
-        if(actualAffectedBetween == actualAffectedAnd){
-            $('#affectedYear span').text('in ' + actualAffectedBetween);
+        if($('#affected-specific:checked').length > 0) {
+            $('#affectedYear span').text('in ' + actualAffectedSpecific);
         }
         else {
-            $('#affectedYear span').text('between ' + actualAffectedBetween + ' and ' + actualAffectedAnd);
-        }
+            if(actualAffectedBetween == actualAffectedAnd){
+                $('#affectedYear span').text('in ' + actualAffectedBetween);
+            }
+            else {
+                $('#affectedYear span').text('between ' + actualAffectedBetween + ' and ' + actualAffectedAnd);
+            }
 
-        if(affectedBetween == '' && affectedAnd == '') {
-            $('#affectedYear').attr('hidden','')
-        }
-        else {
-            $('#affectedYear').removeAttr('hidden')
+            if(affectedBetween == '' && affectedAnd == '') {
+                $('#affectedYear').attr('hidden','')
+            }
+            else {
+                $('#affectedYear').removeAttr('hidden')
+            }
         }
 
         $('#affectedNumber span').text(affectedNumber);        
@@ -955,18 +1021,23 @@
     
         $('#affectingType span').text(affectingType);
 
-        if(actualAffectingBetween == actualAffectingAnd){
-            $('#affectingYear span').text('in ' + actualAffectingBetween);
+        if($('#affecting-specific:checked').length > 0) {
+            $('#affectingYear span').text('in ' + actualAffectingSpecific);
         }
         else {
-            $('#affectingYear span').text('between ' + actualAffectingBetween + ' and ' + actualAffectingAnd);
-        }
+            if(actualAffectingBetween == actualAffectingAnd){
+                $('#affectingYear span').text('in ' + actualAffectingBetween);
+            }
+            else {
+                $('#affectingYear span').text('between ' + actualAffectingBetween + ' and ' + actualAffectingAnd);
+            }
 
-        if(affectingBetween == '' && affectingAnd == '') {
-            $('#affectingYear').attr('hidden','')
-        }
-        else {
-            $('#affectingYear').removeAttr('hidden')
+            if(affectingBetween == '' && affectingAnd == '') {
+                $('#affectingYear').attr('hidden','')
+            }
+            else {
+                $('#affectingYear').removeAttr('hidden')
+            }
         }
 
         $('#affectingNumber span').text(affectingNumber);        

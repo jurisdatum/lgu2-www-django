@@ -3,25 +3,23 @@ from typing import Optional
 from django.urls import reverse
 from ..api.document import DocumentMetadata
 from ..util.labels import get_type_label
+from ..util.links import make_contents_link, make_document_link
 from ..util.types import get_category
 
+LEGISLATION_BREADCRUMB_HEADING = 'Where this legislation sits in the Statute Book'
 
-def make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Optional[str]):
+
+def make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Optional[str], has_toc: bool = True):
     doc_type = meta['shortType']
     year = meta['year']
     number = str(meta['number'])
     doc_label = 'Chapter' if get_category(doc_type) == 'primary' else 'Number'
-    doc_label += ' ' + number + ' (Table of Contents)'
-    if version is None:
-        if lang is None:
-            toc_link = reverse('toc', args=[doc_type, year, number])
-        else:
-            toc_link = reverse('toc-lang', args=[doc_type, year, number, lang])
+    doc_label += ' ' + number
+    if has_toc:
+        doc_label += ' (Table of Contents)'
+        last_link = make_contents_link(doc_type, year, number, version, lang)
     else:
-        if lang is None:
-            toc_link = reverse('toc-version', args=[doc_type, year, number, version])
-        else:
-            toc_link = reverse('toc-version-lang', args=[doc_type, year, number, version, lang])
+        last_link = make_document_link(doc_type, year, number, version, lang)
     return [
         {
             'text': get_type_label(doc_type),
@@ -33,6 +31,6 @@ def make_breadcrumbs(meta: DocumentMetadata, version: Optional[str], lang: Optio
         },
         {
             'text': doc_label,
-            'link': toc_link  # I wish this could be None
+            'link': last_link
         }
     ]
