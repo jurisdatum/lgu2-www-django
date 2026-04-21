@@ -95,6 +95,16 @@ class TestSmartUrlGeneration(TestCase):
         result = make_smart_link(params)
         self.assertTrue(result.startswith('/search/?'))
 
+    def test_extent_url_preserves_year_in_query_string(self):
+        params = {'type': 'ukpga', 'extent': ['E'], 'year': 2024}
+        result = build_browse_url_if_possible(params)
+        self.assertEqual(result, '/ukpga/england?year=2024')
+
+    def test_explicit_year_overrides_range(self):
+        params = {'type': 'ukpga', 'startYear': 1900, 'endYear': 2000, 'year': 1950}
+        result = build_browse_url_if_possible(params)
+        self.assertEqual(result, '/ukpga/1950')
+
 
 class TestBrowseExtentParsing(TestCase):
     @patch("lgu2.views.search.search_results_helper")
@@ -115,6 +125,17 @@ class TestBrowseExtentParsing(TestCase):
         _, query_params = mock_search_results_helper.call_args.args
         self.assertEqual(query_params["extent"], ["E"])
         self.assertIs(query_params["exclusiveExtent"], True)
+
+    @patch("lgu2.views.search.search_results_helper")
+    def test_browse_extent_url_preserves_year_and_subject_from_query_string(self, mock_search_results_helper):
+        request = RequestFactory().get("/ukpga/england", {"year": "2024", "subject": "a"})
+
+        browse(request, type="ukpga", extent_segment="england")
+
+        _, query_params = mock_search_results_helper.call_args.args
+        self.assertEqual(query_params["year"], 2024)
+        self.assertEqual(query_params["subject"], "a")
+        self.assertEqual(query_params["extent"], ["E"])
 
 
 class TestExtentUrlRouting(TestCase):

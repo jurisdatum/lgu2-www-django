@@ -42,10 +42,12 @@ def normalize_params_for_browse(params: SearchParams) -> SearchParams:
     """
     browse_params = params.copy()
 
-    # Combine startYear / endYear into a single 'year' param
+    # Combine startYear / endYear into a single 'year' param. If year is
+    # already set (e.g. a by-year facet link was clicked on a range search),
+    # let it win and discard the range.
     start_year = browse_params.pop("startYear", None)
     end_year = browse_params.pop("endYear", None)
-    if start_year or end_year:
+    if "year" not in browse_params and (start_year or end_year):
         if start_year and end_year:
             browse_params["year"] = str(start_year) if start_year == end_year else f"{start_year}-{end_year}"
         elif start_year:
@@ -102,22 +104,27 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     if not all(t in SEARCH_TYPES for t in tpe_list):
         return None
 
-    # Reverse can fail if year/subject/extent don't match the route regex
-    # (e.g. year=999). Callers expect None so they can fall back to /search/.
+    # Track which keys get encoded in the URL path so we don't also put them
+    # in the query string — and conversely, so we don't drop them from the
+    # query string when they're NOT in the path (e.g. year under /type/extent).
+    path_keys = {'type'}
     try:
         if extent_segment:
             base = reverse('browse-extent', kwargs={
                 'type': tpe_url,
                 'extent_segment': extent_segment
             })
+            path_keys.add('extent_segment')
 
         elif year:
+            path_keys.add('year')
             if subject_is_letter:
                 base = reverse('browse-year-subject', kwargs={
                     'type': tpe_url,
                     'year': year,
                     'subject': subject
                 })
+                path_keys.add('subject')
             else:
                 base = reverse('browse-year', kwargs={
                     'type': tpe_url,
@@ -130,6 +137,7 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
                     'type': tpe_url,
                     'subject': subject
                 })
+                path_keys.add('subject')
             else:
                 base = reverse('browse', kwargs={
                     'type': tpe_url
@@ -137,16 +145,7 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     except NoReverseMatch:
         return None
 
-    # Build query params
-    query = {}
-    for k, v in params.items():
-        if k in ('year', 'type', 'extent_segment'):
-            continue
-        # Only skip subject if it was used in the path
-        if k == 'subject' and subject_is_letter:
-            continue
-
-        query[k] = v
+    query = {k: v for k, v in params.items() if k not in path_keys}
 
     if query:
         return f"{base}?{urlencode(query, doseq=True)}"

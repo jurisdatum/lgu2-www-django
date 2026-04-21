@@ -159,31 +159,31 @@ def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
 # -------------------------
 
 def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None, extent_segment: Optional[str] = None):
-    params: SearchParams = {'type': type.split('+') if type else []}
-
-    EXTENT_MAP_REVERSE = {v: k for k, v in EXTENT_MAP.items()}
+    # Start from GET params so query-string filters (e.g. ?year=2024 on an
+    # extent URL) aren't dropped, then let the URL path override.
+    params = extract_query_params(request)
+    params['type'] = type.split('+') if type else []
 
     if extent_segment:
-        # Detect exclusiveExtent from '=' prefix
+        extent_map_reverse = {v: k for k, v in EXTENT_MAP.items()}
         if extent_segment.startswith('='):
             params['exclusiveExtent'] = True
-            extent_segment = extent_segment[1:]  # remove '='
+            extent_segment = extent_segment[1:]
         else:
             params['exclusiveExtent'] = False
-
-        # Convert human-readable extent to internal codes
-        extent_codes = [EXTENT_MAP_REVERSE.get(s) for s in extent_segment.split('+') if EXTENT_MAP_REVERSE.get(s)]
-        params['extent'] = extent_codes
+        params['extent'] = [
+            extent_map_reverse[s]
+            for s in extent_segment.split('+')
+            if s in extent_map_reverse
+        ]
 
     if year:
+        params.pop('year', None)
+        params.pop('startYear', None)
+        params.pop('endYear', None)
         params.update(parse_year_param(year))
     if subject:
         params['subject'] = subject
-
-    # Copy other GET params
-    for key in ['number', 'title', 'text', 'language', 'page', 'pageSize']:
-        if key in request.GET and request.GET[key]:
-            params[key] = request.GET[key]
 
     return search_results_helper(request, params)
 
