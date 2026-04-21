@@ -13,7 +13,7 @@ from ..util.types import to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link_for_list_entry
-from ..util.global_redirect import build_browse_url_if_possible, normalize_params_for_browse, EXTENT_MAP
+from ..util.global_redirect import build_browse_url_if_possible, normalize_params_for_browse, parse_extent_segment
 
 
 class SearchResultContext(TypedDict):
@@ -43,10 +43,6 @@ class SearchResultContext(TypedDict):
     type_made_verb: str
 
 
-# -------------------------
-# Query param helpers
-# -------------------------
-
 def parse_year_param(year: str) -> SearchParams:
     if year.isdigit():
         return {"year": int(year)}
@@ -65,31 +61,12 @@ def parse_year_param(year: str) -> SearchParams:
 
 def extract_query_params(request) -> SearchParams:
     params: SearchParams = {}
-    mapping = {
-        "sort": str,
-        "subject": str,
-        "title": str,
-        "number": str,
-        "text": str,
-        "language": str,
-        "exclusiveExtent": str,
-        "pointInTime": str,
-        "extent": str
-    }
 
-    for key, cast in mapping.items():
+    for key in ("sort", "subject", "title", "number", "text", "language", "pointInTime"):
         value = request.GET.get(key)
         if value and value.strip():
-            if callable(cast):
-                if isinstance(cast(value), tuple):
-                    k, v = cast(value)
-                    params[k] = v
-                else:
-                    params[key] = cast(value)
-            else:
-                params[key] = cast(value)
+            params[key] = value
 
-    # Handle types list
     types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
     if types:
         params["type"] = types[0] if len(types) == 1 else types
@@ -143,20 +120,14 @@ def make_smart_link(params: SearchParams):
 def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
     new_params = params.copy()
     if value is None:
-        # Remove the key entirely instead of setting it to None
         new_params.pop(key, None)
     else:
         new_params[key] = value
 
-    # Always reset pagination
     new_params.pop("page", None)
     new_params.pop("pageSize", None)
     return make_smart_link(new_params)
 
-
-# -------------------------
-# Browse / search
-# -------------------------
 
 def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None, extent_segment: Optional[str] = None):
     # Start from GET params so query-string filters (e.g. ?year=2024 on an
@@ -165,17 +136,7 @@ def browse(request, type: str, year: Optional[str] = None, subject: Optional[str
     params['type'] = type.split('+') if type else []
 
     if extent_segment:
-        extent_map_reverse = {v: k for k, v in EXTENT_MAP.items()}
-        if extent_segment.startswith('='):
-            params['exclusiveExtent'] = True
-            extent_segment = extent_segment[1:]
-        else:
-            params['exclusiveExtent'] = False
-        params['extent'] = [
-            extent_map_reverse[s]
-            for s in extent_segment.split('+')
-            if s in extent_map_reverse
-        ]
+        params['extent'], params['exclusiveExtent'] = parse_extent_segment(extent_segment)
 
     if year:
         params.pop('year', None)
@@ -229,10 +190,6 @@ def search_results(request):
         return redirect(browse_url)
     return search_results_helper(request, params)
 
-
-# -------------------------
-# Search results helper
-# -------------------------
 
 def search_results_helper(request, query_params: SearchParams):
     current_type = query_params.get("type")
@@ -349,10 +306,6 @@ def search_results_helper(request, query_params: SearchParams):
 
     return render(request, "new_theme/search_result/search_result.html", context)
 
-
-# -------------------------
-# Grouping helper
-# -------------------------
 
 def group_by_decade(year_data, doc_type):
     cut_off = get_cutoff(doc_type)

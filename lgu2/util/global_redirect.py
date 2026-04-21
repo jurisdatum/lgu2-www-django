@@ -1,4 +1,3 @@
-import re
 from typing import Optional
 from urllib.parse import urlencode
 from django.urls import reverse, NoReverseMatch
@@ -11,9 +10,7 @@ EXTENT_MAP = {
     "S": "scotland",
     "NI": "ni",
 }
-
-_TYPE_ALT = '|'.join(re.escape(t) for t in SEARCH_TYPES)
-TYPE = r'(?P<type>(?:' + _TYPE_ALT + r')(?:\+(?:' + _TYPE_ALT + r'))*)'
+EXTENT_MAP_REVERSE = {v: k for k, v in EXTENT_MAP.items()}
 
 
 def build_extent_segment(extents: list[str], exclusive: bool = False) -> Optional[str]:
@@ -30,8 +27,19 @@ def build_extent_segment(extents: list[str], exclusive: bool = False) -> Optiona
 
     segment = "+".join(names)
     if exclusive:
-        segment = f"={segment}"  # prepend '=' for exclusive
+        segment = f"={segment}"
     return segment
+
+
+def parse_extent_segment(segment: str) -> tuple[list[str], bool]:
+    """
+    Inverse of build_extent_segment. Returns (extent codes, exclusive flag).
+    """
+    exclusive = segment.startswith('=')
+    if exclusive:
+        segment = segment[1:]
+    extents = [EXTENT_MAP_REVERSE[s] for s in segment.split('+') if s in EXTENT_MAP_REVERSE]
+    return extents, exclusive
 
 
 def normalize_params_for_browse(params: SearchParams) -> SearchParams:
@@ -71,10 +79,6 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     Build the browse URL if params allow it.
     Handles type(s), year, subject, extent_segment, and exclusiveExtent.
     """
-
-    def is_single_letter(subject: str) -> bool:
-        return isinstance(subject, str) and re.fullmatch(r"[a-z]", subject)
-
     params = normalize_params_for_browse(params)
 
     allowed_keys = {
@@ -84,7 +88,6 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     if not set(params).issubset(allowed_keys):
         return None
 
-    # Prepare type(s)
     tpe = params.get('type')
     if isinstance(tpe, str):
         tpe_list = [tpe]
@@ -93,61 +96,37 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     else:
         return None
 
-    tpe_url = '+'.join(tpe_list)
-
-    year = params.get("year")
-    subject = params.get("subject")
-    extent_segment = params.get("extent_segment")
-
-    subject_is_letter = is_single_letter(subject)
-
     if not all(t in SEARCH_TYPES for t in tpe_list):
         return None
 
-    # Track which keys get encoded in the URL path so we don't also put them
-    # in the query string — and conversely, so we don't drop them from the
-    # query string when they're NOT in the path (e.g. year under /type/extent).
-    path_keys = {'type'}
+    tpe_url = '+'.join(tpe_list)
+    year = params.get("year")
+    subject = params.get("subject")
+    extent_segment = params.get("extent_segment")
+    subject_is_letter = isinstance(subject, str) and len(subject) == 1 and 'a' <= subject <= 'z'
+
+    # path_keys: which params get encoded in the URL path. Remaining params go
+    # in the query string (e.g. year under /type/extent stays a query param).
     try:
         if extent_segment:
-            base = reverse('browse-extent', kwargs={
-                'type': tpe_url,
-                'extent_segment': extent_segment
-            })
-            path_keys.add('extent_segment')
-
+            base = reverse('browse-extent', kwargs={'type': tpe_url, 'extent_segment': extent_segment})
+            path_keys = {'type', 'extent_segment'}
+        elif year and subject_is_letter:
+            base = reverse('browse-year-subject', kwargs={'type': tpe_url, 'year': year, 'subject': subject})
+            path_keys = {'type', 'year', 'subject'}
         elif year:
-            path_keys.add('year')
-            if subject_is_letter:
-                base = reverse('browse-year-subject', kwargs={
-                    'type': tpe_url,
-                    'year': year,
-                    'subject': subject
-                })
-                path_keys.add('subject')
-            else:
-                base = reverse('browse-year', kwargs={
-                    'type': tpe_url,
-                    'year': year
-                })
-
+            base = reverse('browse-year', kwargs={'type': tpe_url, 'year': year})
+            path_keys = {'type', 'year'}
+        elif subject_is_letter:
+            base = reverse('browse-subject', kwargs={'type': tpe_url, 'subject': subject})
+            path_keys = {'type', 'subject'}
         else:
-            if subject_is_letter:
-                base = reverse('browse-subject', kwargs={
-                    'type': tpe_url,
-                    'subject': subject
-                })
-                path_keys.add('subject')
-            else:
-                base = reverse('browse', kwargs={
-                    'type': tpe_url
-                })
+            base = reverse('browse', kwargs={'type': tpe_url})
+            path_keys = {'type'}
     except NoReverseMatch:
         return None
 
     query = {k: v for k, v in params.items() if k not in path_keys}
-
     if query:
         return f"{base}?{urlencode(query, doseq=True)}"
-
     return base

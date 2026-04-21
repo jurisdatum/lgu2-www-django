@@ -109,12 +109,8 @@ urlpatterns += i18n_patterns(
     re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
     re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),
 
-    # ✅ extent AFTER (restricted)
-    re_path(
-        fr'^{TYPE}/{EXTENT}$',
-        browse,
-        name='browse-extent'
-    ),
+    # extent last — its segment shape would otherwise shadow /TYPE/SUBJECT
+    re_path(fr'^{TYPE}/{EXTENT}$', browse, name='browse-extent'),
 
     # documents
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}$', document, name='document'),
