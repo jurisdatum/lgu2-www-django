@@ -8,7 +8,6 @@ from ..messages.status import build_status
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import get_pdf_link_and_thumb
-from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
@@ -67,16 +66,6 @@ def make_document_context(data, type, year, number, version, lang):
 
     status = build_status(meta, timeline)
 
-    status = {
-        'message': get_status_message(data['meta']),
-        'label': meta['title'],
-        'effects': {
-            'direct': group_effects(meta['unappliedEffects'])
-        },
-        'direct_effects': meta['unappliedEffects'],
-        'larger_effects': []
-    }
-
     meta['category'] = get_category(meta['shortType'])
 
     if 'pdf' in meta['formats'] and 'xml' not in meta['formats']:
@@ -104,7 +93,7 @@ def make_document_context(data, type, year, number, version, lang):
             'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
             'resources': '/',
-            'whole': None,
+            'whole': meta['id'],
             'body': make_fragment_link(type, year, number, 'body', version, lang),
             'schedules': None if meta['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
         },
