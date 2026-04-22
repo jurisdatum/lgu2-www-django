@@ -67,7 +67,15 @@ def extract_query_params(request) -> SearchParams:
         if value and value.strip():
             params[key] = value.strip()
 
-    types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
+    # Forms submit compound types as a single value with '+' separators
+    # (e.g. "primary+secondary" from the header search). Split so downstream
+    # code always sees atoms.
+    types = [
+        part.strip()
+        for value in request.GET.getlist("type")
+        for part in value.split("+")
+        if part.strip()
+    ]
     if types:
         params["type"] = types[0] if len(types) == 1 else types
 
@@ -138,7 +146,7 @@ def browse(request, type: str, year: Optional[str] = None, subject: Optional[str
     # Start from GET params so query-string filters (e.g. ?year=2024 on an
     # extent URL) aren't dropped, then let the URL path override.
     params = extract_query_params(request)
-    params['type'] = type.split('+') if type else []
+    params['type'] = type.split('+')
 
     if extent_segment:
         params['extent'], params['exclusiveExtent'] = parse_extent_segment(extent_segment)
@@ -274,8 +282,8 @@ def search_results_helper(request, query_params: SearchParams):
     subject_initials = {i["initial"] for i in meta.get("counts", {}).get("bySubjectInitial", [])} or None
     subject_initial_links = {i["initial"]: i["link"] for i in meta.get("counts", {}).get("bySubjectInitial", [])}
     subject_initials_and_links = [
-        {"letter": l, "link": subject_initial_links.get(l), "current": (current_subject and current_subject.upper() == l.upper())}
-        for l in string.ascii_lowercase
+        {"letter": letter, "link": subject_initial_links.get(letter), "current": (current_subject and current_subject.upper() == letter.upper())}
+        for letter in string.ascii_lowercase
     ]
 
     subject_heading_links = [

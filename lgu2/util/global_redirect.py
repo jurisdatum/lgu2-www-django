@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Dict, Optional
 from urllib.parse import urlencode
 from django.urls import reverse, NoReverseMatch
 from ..util.types import SEARCH_TYPES
@@ -42,13 +42,13 @@ def parse_extent_segment(segment: str) -> tuple[list[str], bool]:
     return extents, exclusive
 
 
-def normalize_params_for_browse(params: SearchParams) -> SearchParams:
+def normalize_params_for_browse(params: SearchParams) -> Dict[str, Any]:
     """
-    Prepares search params for browse URLs.
-    Converts startYear/endYear → year string.
-    Converts extent list → extent_segment with exclusiveExtent handling.
+    Prepares search params for browse URLs. The returned dict is not a
+    SearchParams: year may be a range string (e.g. "1900-2000") and an
+    extent_segment key may appear in place of extent/exclusiveExtent.
     """
-    browse_params = params.copy()
+    browse_params: Dict[str, Any] = dict(params)
 
     # Combine startYear / endYear into a single 'year' param. If year is
     # already set (e.g. a by-year facet link was clicked on a range search),

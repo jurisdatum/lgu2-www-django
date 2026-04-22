@@ -204,6 +204,26 @@ class TestModifiedQueryLinksRendering(TestCase):
         self.assertIn("text", response.context["modified_query_links"])
 
 
+class TestCompoundTypeFormSubmission(TestCase):
+    """The header search form's default "All UK Legislation" option submits
+    type=primary+secondary as a single value. Downstream code must see atoms."""
+
+    @patch("lgu2.views.search.basic_search")
+    def test_compound_type_submission_redirects_to_clean_url(self, mock_basic_search):
+        response = self.client.get("/search/", {"type": "primary+secondary"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/primary+secondary")
+
+    @patch("lgu2.views.search.basic_search")
+    def test_compound_type_reaches_api_as_list_when_redirect_bypassed(self, mock_basic_search):
+        # sort is not a browse-URL param, so the browse redirect is bypassed
+        # and search_results_helper calls the API directly with query_params.
+        mock_basic_search.return_value = _empty_search_response()
+        self.client.get("/search/", {"type": "primary+secondary", "sort": "title"})
+        api_params = mock_basic_search.call_args.args[0]
+        self.assertEqual(api_params.get("type"), ["primary", "secondary"])
+
+
 class TestMultiTypeSearchDoesNotCrash(TestCase):
     @patch("lgu2.views.search.basic_search")
     def test_two_type_search_renders_without_error(self, mock_basic_search):

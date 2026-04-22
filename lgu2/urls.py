@@ -23,7 +23,7 @@ from .views.general import (
     whats_new, new_legislation, new_legislation_feeds,
     about_us
 )
-from .views.search import  browse, search_results
+from .views.search import browse, search_results
 from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
 from lgu2.util.types import SEARCH_TYPES
 # urlpatterns = i18n_patterns(
@@ -64,6 +64,8 @@ VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
 VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
+# A leading '=' marks exclusiveExtent (only those territories, not merely
+# including them): e.g. /ukpga/=england or /ukpga/=england+wales.
 EXTENT = r'(?P<extent_segment>=?(?:' + '|'.join(VALID_EXTENTS) + r')(?:\+(?:' + '|'.join(VALID_EXTENTS) + r'))*)'
 
 urlpatterns += i18n_patterns(
@@ -101,7 +103,6 @@ urlpatterns += i18n_patterns(
     
     path('browse', lambda r: redirect('browse-uk')),
     path('browse/uk', list_uk, name='browse-uk'),
-
 
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
