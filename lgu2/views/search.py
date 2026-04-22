@@ -65,7 +65,7 @@ def extract_query_params(request) -> SearchParams:
     for key in ("sort", "subject", "title", "number", "text", "language", "pointInTime"):
         value = request.GET.get(key)
         if value and value.strip():
-            params[key] = value
+            params[key] = value.strip()
 
     types = [t.strip() for t in request.GET.getlist("type") if t.strip()]
     if types:
