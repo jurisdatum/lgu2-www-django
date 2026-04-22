@@ -250,7 +250,7 @@ def search_results_helper(request, query_params: SearchParams):
 
     base_query = request.GET.copy()
     base_query.pop("page", None)
-    base_query_str = urlencode(base_query)
+    base_query_str = base_query.urlencode()
 
     current_year = str(query_params.get("year", ""))
     current_type = query_params.get("type")

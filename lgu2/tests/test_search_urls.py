@@ -224,6 +224,40 @@ class TestCompoundTypeFormSubmission(TestCase):
         self.assertEqual(api_params.get("type"), ["primary", "secondary"])
 
 
+class TestPaginationLinksPreserveMultiValueParams(TestCase):
+    """Regression: urlencode(QueryDict) silently drops all but the last value
+    for repeated keys, so pagination links were missing type params."""
+
+    @patch("lgu2.views.search.basic_search")
+    def test_repeated_type_params_survive_in_pagination_links(self, mock_basic_search):
+        # sort is not in allowed_keys so the browse redirect is bypassed and
+        # search_results_helper renders /search/ with pagination links built
+        # from base_query_str.
+        mock_basic_search.return_value = {
+            "meta": {
+                "counts": {"total": 500, "byType": [], "byYear": [], "bySubjectInitial": []},
+                "page": 1,
+                "totalPages": 20,
+                "query": {},
+                "subjects": [],
+            },
+            "documents": [],
+        }
+
+        response = self.client.get(
+            "/search/",
+            {"type": ["ukpga", "uksi"], "sort": "title"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode()
+        # Both type values must appear together in pagination hrefs.
+        # Before the fix, urlencode(QueryDict) silently dropped "ukpga",
+        # leaving only type=uksi in every page link.
+        # HTML attribute encoding turns & into &amp;.
+        self.assertIn("type=ukpga&amp;type=uksi", content)
+
+
 class TestMultiTypeSearchDoesNotCrash(TestCase):
     @patch("lgu2.views.search.basic_search")
     def test_two_type_search_renders_without_error(self, mock_basic_search):
