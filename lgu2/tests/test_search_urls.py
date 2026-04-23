@@ -8,6 +8,7 @@ from lgu2.views.search import (
     build_browse_url_if_possible,
     extract_query_params,
     make_smart_link,
+    parse_year_param,
     replace_param_and_make_smart_link,
 )
 
@@ -447,6 +448,50 @@ class TestRangeYearInQueryString(TestCase):
         response = self.client.get("/search/", {"type": "ukpga", "year": "999-2000"})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+
+class TestDescendingYearRangeRejected(TestCase):
+    def test_parse_year_param_rejects_descending_range(self):
+        self.assertEqual(parse_year_param("2024-2023"), {})
+
+    def test_parse_year_param_accepts_equal_start_end(self):
+        self.assertEqual(
+            parse_year_param("2024-2024"),
+            {"startYear": 2024, "endYear": 2024},
+        )
+
+    def test_search_view_rejects_descending_start_end_pair(self):
+        response = self.client.get(
+            "/search/",
+            {"type": "ukpga", "specifi_years": "false", "startYear": "2024", "endYear": "2023"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+    def test_search_view_rejects_descending_collapsed_range(self):
+        response = self.client.get("/search/", {"type": "ukpga", "year": "2024-2023"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
+
+
+class TestYearFacetOnRangeBrowse(TestCase):
+    """Sidebar year facet must let users clear an active range via "All years"."""
+
+    @patch("lgu2.views.search.basic_search")
+    def test_range_browse_marks_current_year_truthy(self, mock_basic_search):
+        mock_basic_search.return_value = _search_response(query={"startYear": 1900, "endYear": 2000})
+        response = self.client.get("/ukpga/1900-2000")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context["current_year"])
+
+    @patch("lgu2.views.search.basic_search")
+    def test_range_browse_year_clear_link_drops_all_year_aliases(self, mock_basic_search):
+        mock_basic_search.return_value = _search_response(query={"startYear": 1900, "endYear": 2000})
+        response = self.client.get("/ukpga/1900-2000")
+        links = response.context["modified_query_links"]
+        self.assertEqual(links["year"], "/ukpga")
+        self.assertEqual(links["startYear"], "/ukpga")
+        self.assertEqual(links["endYear"], "/ukpga")
 
 
 class TestUkiaSearchResults(TestCase):

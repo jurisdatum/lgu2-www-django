@@ -53,6 +53,8 @@ def parse_year_param(year: str) -> SearchParams:
         start_ok = _valid_year(start)
         end_ok = _valid_year(end)
         if start_ok and end_ok:
+            if int(start) > int(end):
+                return {}
             return {"startYear": int(start), "endYear": int(end)}
         if start_ok and end == "*":
             return {"startYear": int(start)}
@@ -203,6 +205,11 @@ def _has_invalid_params(request) -> bool:
             continue
         return True
 
+    start = request.GET.get("startYear", "").strip()
+    end = request.GET.get("endYear", "").strip()
+    if _valid_year(start) and _valid_year(end) and int(start) > int(end):
+        return True
+
     for field in ("page", "pageSize"):
         value = request.GET.get(field, '').strip()
         if value and not value.isdigit():
@@ -258,11 +265,30 @@ def search_results_helper(request, query_params: SearchParams):
 
     modified_query_links = {k: replace_param_and_make_smart_link(query_params, k, None) for k in query_params.keys()}
 
+    # A year range lands in query_params as startYear/endYear (or one of them),
+    # not "year". Give the template a single "year" entry that clears every
+    # year alias so the sidebar's "All years" link and any chip-remove action
+    # fully escape the range.
+    if any(k in query_params for k in ("year", "startYear", "endYear")):
+        clear_year = query_params.copy()
+        for field in ("year", "startYear", "endYear", "page", "pageSize"):
+            clear_year.pop(field, None)
+        year_clear_link = make_smart_link(clear_year)
+        for field in ("year", "startYear", "endYear"):
+            modified_query_links[field] = year_clear_link
+
     base_query = request.GET.copy()
     base_query.pop("page", None)
     base_query_str = base_query.urlencode()
 
-    current_year = str(query_params.get("year", ""))
+    if "year" in query_params:
+        current_year = str(query_params["year"])
+    elif "startYear" in query_params or "endYear" in query_params:
+        start = query_params.get("startYear")
+        end = query_params.get("endYear")
+        current_year = f"{start if start is not None else '*'}-{end if end is not None else '*'}"
+    else:
+        current_year = ""
     current_type = query_params.get("type")
     if isinstance(current_type, list):
         single_type = current_type[0] if len(current_type) == 1 else None
