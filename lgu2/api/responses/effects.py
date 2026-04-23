@@ -20,6 +20,7 @@ class Source(TypedDict):
     longType: str
     year: int
     number: int
+    cite: str
     title: str
     provisions: Provisions
 

@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.test import SimpleTestCase
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 from lgu2.util.timeline import make_timeline_data
@@ -123,3 +124,55 @@ class TocTimelineTests(SimpleTestCase):
             original['link'],
             reverse('toc-version', args=['ukpga', 2023, 1, 'enacted'])
         )
+
+
+class TimelineTemplateTests(SimpleTestCase):
+
+    def test_single_version_timeline_renders_disabled_summary(self):
+        meta = {
+            'shortType': 'ukpga',
+            'year': 2023,
+            'number': 1,
+            'versions': ['enacted'],
+            'version': 'enacted',
+            'date': date(2018, 6, 20),
+        }
+
+        timeline = make_timeline_data(meta, 'document')
+        html = render_to_string('new_theme/document/timeline.html', {'timeline': timeline})
+
+        self.assertTrue(timeline['single_version'])
+        self.assertIn('<summary disabled>', html)
+        self.assertIn('<ol>', html)
+
+    def test_template_preserves_point_in_time_marker_for_historical_view(self):
+        meta = {
+            'shortType': 'ukpga',
+            'year': 2023,
+            'number': 1,
+            'versions': ['enacted', '2022-01-01', '2024-01-01'],
+            'version': '2022-01-01',
+            'date': date(2018, 6, 20),
+            'pointInTime': date(2023, 6, 1),
+        }
+
+        timeline = make_timeline_data(meta, 'document')
+        html = render_to_string('new_theme/document/timeline.html', {'timeline': timeline})
+
+        self.assertIn('class="point-in-time"', html)
+        self.assertIn('01 June 2023', html)
+
+    def test_template_uses_original_label_in_original_entry(self):
+        meta = {
+            'shortType': 'ukpga',
+            'year': 2023,
+            'number': 1,
+            'versions': ['made', '2022-01-01'],
+            'version': 'made',
+            'date': date(2018, 6, 20),
+        }
+
+        timeline = make_timeline_data(meta, 'document')
+        html = render_to_string('new_theme/document/timeline.html', {'timeline': timeline})
+
+        self.assertIn('as made on', html)

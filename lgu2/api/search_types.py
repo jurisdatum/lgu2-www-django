@@ -16,3 +16,5 @@ class SearchParams(TypedDict):
     page: NotRequired[int]
     title: NotRequired[str]
     number: NotRequired[str]
+    stage: NotRequired[str]
+    department: NotRequired[str]

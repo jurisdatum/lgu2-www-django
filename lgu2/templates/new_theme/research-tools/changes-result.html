@@ -1,0 +1,114 @@
+{% extends "new_theme/base.html" %}
+{% block content %}
+<main class="changes-to-legislation search-results">
+    <section>
+        {% include "new_theme/common/breadcrumbs.html" %}
+        <hgroup>
+            <h1 id="main-content-h" tabindex="-1">We found {{meta.totalResults}} changes to legislation</h1>
+            <p>{{ summary.detail_intro }}{% for c in summary.detail_clauses %}{{ c.text }}{% endfor %}.</p>
+        </hgroup>
+    </section>
+    <details>
+        <summary id="search-edit-h">Edit your search</summary>
+        <section>
+            {% include "new_theme/research-tools/search-form.html" %}
+        </section>
+    </details>
+    <section class="search-content">
+        <div class="search-header">
+            <ul class="search-actions">
+                <li><a href="{{ feed_link }}">Subscribe with RSS</a></li>
+            </ul>
+            <div class="sort-by">
+                <label for="sort">Sort by:</label>
+                <select id="sort" onchange="var u=new URL(location);u.searchParams.set('sort',this.value);u.searchParams.delete('page');location=u">
+                    <option value="" {% if not sort %}selected{% endif %}>Default</option>
+                    <optgroup label="Changed legislation">
+                        <option value="affected-title" {% if sort == 'affected-title' %}selected{% endif %}>Title (A-Z)</option>
+                        <option value="-affected-title" {% if sort == '-affected-title' %}selected{% endif %}>Title (Z-A)</option>
+                        <option value="affected-year-number" {% if sort == 'affected-year-number' %}selected{% endif %}>Year/number (0-9)</option>
+                        <option value="-affected-year-number" {% if sort == '-affected-year-number' %}selected{% endif %}>Year/number (9-0)</option>
+                    </optgroup>
+                    <optgroup label="Affecting legislation">
+                        <option value="affecting-title" {% if sort == 'affecting-title' %}selected{% endif %}>Title (A-Z)</option>
+                        <option value="-affecting-title" {% if sort == '-affecting-title' %}selected{% endif %}>Title (Z-A)</option>
+                        <option value="affecting-year-number" {% if sort == 'affecting-year-number' %}selected{% endif %}>Year/number (0-9)</option>
+                        <option value="-affecting-year-number" {% if sort == '-affecting-year-number' %}selected{% endif %}>Year/number (9-0)</option>
+                    </optgroup>
+                </select>
+            </div>
+            {% include "new_theme/research-tools/pagination.html" %}
+        </div>
+        <div class="search-results-list">
+            <h2 id="search-results-h" tabindex="-1">Changes to legislation results list</h2>
+            <table id="changes-to-legislation-results">
+                <caption>Changes to legislation results list</caption>
+                <thead>
+                <tr>
+                    <th>Changed legislation title</th>
+                    <th>Year and number</th>
+                    <th>Changed provision</th>
+                    <th>Type of effect</th>
+                    <th>Affecting legislation title</th>
+                    <th>Year and number</th>
+                    <th>Affecting provision</th>
+                    <th><span>Change to website text</span></th>
+                    <th><span>Notes</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for effect in effects %}
+                    <tr>
+                        <td>{{ effect.target.title }}</td>
+                        <td><a href="{{ effect.target.link }}">{{ effect.target.cite }}</a></td>
+                        <td>
+                            {% for node in effect.target.provisions.rich %}
+                                {% if node.type == 'link' %}
+                                    <a href="{{ node.link }}">{{ node.text }}</a>
+                                {% else %}
+                                    {{ node.text }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ effect.type }}</td>
+                        <td>{{ effect.source.title }}</td>
+                        <td><a href="{{ effect.source.link }}">{{ effect.source.cite }}</a></td>
+                        <td>
+                            {% for node in effect.source.provisions.rich %}
+                                {% if node.type == 'link' %}
+                                    <a href="{{ node.link }}">{{ node.text }}</a>
+                                {% else %}
+                                    <span>{{ node.text }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if effect.applied %}
+                                <span class="applied">The website text has been changed</span>
+                            {% elif effect.notes %}
+                                <span>See note</span>
+                            {% else %}
+                                <span>The website text has not yet been changed</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if effect.notes %}
+                            <details>
+                                <summary>Notes</summary>
+                                <div>{{ effect.notes }}</div>
+                            </details>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="search-footer">
+            <div class="results-count">{{meta.totalResults}} results</div>
+            {% include "new_theme/research-tools/pagination.html" %}
+        </div>
+    </section>
+</main>
+{% endblock %}

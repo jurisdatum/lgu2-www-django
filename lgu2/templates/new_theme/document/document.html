@@ -4,7 +4,7 @@
 {% block content %}
 <main class="legislation">
     <section>
-        {% include "new_theme/document/breadcrumbs.html" %}
+        {% include "new_theme/common/breadcrumbs.html" %}
         <h1 id="main-content-h" tabindex="-1">
             {% if meta.fragmentInfo %}
             {{ meta.fragmentInfo.longLabel }}
@@ -14,6 +14,7 @@
         </h1>
     </section>
 
+    {% if links.toc %}
     <nav aria-labelledby="legislationNavigation" class="legislation-navigation">
         <h2 id="legislationNavigation">Table of contents, previous and next provisions</h2>
         {% if meta.prevInfo %}
@@ -28,7 +29,9 @@
         <span><span>{# this is currently necessary for the positioning of the ToC link #}</span></span>
         {% endif %}
     </nav>
+    {% endif %}
 
+    {% if view_date %}
     <section class="pit-search">
         <h2>View this legislation at a specific date</h2>
         <details>
@@ -44,19 +47,29 @@
             </form>
         </details>
     </section>
+    {% endif %}
 
+    {% if timeline %}
     {% include "new_theme/document/timeline.html" %}
+    {% endif %}
 
     <div class="legislation-content">
 
+        {% if status %}
         {% include "new_theme/document/right_side_panel.html" %}
+        {% endif %}
 
         <!-- {% include "new_theme/document/status_panel.html" %} -->
 
         <div>
             <section class="legislation-text parenthesis">
                 {% if pdf_only %}
-				{% include "document/pdf.html" %}
+                    <div>
+                        <section class="legislation-text">
+                            {% include "new_theme/document/status_message.html" %}
+                            <iframe src="{{pdf_link}}" title="{{meta.title}}"></iframe>
+                        </section>
+                    </div>
 				{% else %}
 				<div id="viewLegContents" xml:lang="en" style="padding-left:12pt;padding-bottom:12pt">
 					<template shadowrootmode="open">
@@ -87,6 +100,7 @@
                     </dl>
                 </aside> -->
 
+                {% if links.toc %}
                 <nav aria-label="Table of contents, previous and next provisions (after the legislation text)" class="legislation-navigation">
                     <h2>Table of contents, previous and next provisions</h2>
                     {% if meta.prevInfo %}
@@ -101,6 +115,7 @@
                     <span><span>{# this is currently necessary for the positioning of the ToC link #}</span></span>
                     {% endif %}
                 </nav>
+                {% endif %}
             </section>
         </div>
         {% include "new_theme/document/related_info.html" %}

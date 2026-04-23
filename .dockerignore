@@ -1,0 +1,27 @@
+# Ignore everything by default.
+**
+
+# Allow Docker build configuration.
+!.dockerignore
+!Dockerfile
+!pyproject.toml
+!poetry.lock
+!gunicorn.conf.py
+
+# Allow app code (includes templates, locale, and static sources).
+!lgu2/**
+
+# Allow manage.py for collectstatic in the builder stage.
+!manage.py
+
+# Optional: keep tests out of the build context.
+lgu2/tests/**
+
+# Exclude caches inside allowed paths.
+lgu2/**/__pycache__/
+lgu2/**/*.pyc
+lgu2/**/*.pyo
+lgu2/**/*.pyd
+
+# Exclude macOS metadata files.
+**/.DS_Store
