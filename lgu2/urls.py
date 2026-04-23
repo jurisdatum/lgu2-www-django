@@ -1,3 +1,4 @@
+import re
 
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
@@ -24,6 +25,7 @@ from .views.general import (
 )
 from .views.search import browse, search_results
 from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
+from lgu2.util.types import SEARCH_TYPES
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
@@ -42,16 +44,32 @@ if not settings.DEBUG:
     ]
 
 COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
-TYPE = r'(?P<type>[a-z]{3,5}|primary|secondary|primary\+secondary|eu-origin)'
+_TYPE_ALT = '|'.join(re.escape(t) for t in SEARCH_TYPES)
+TYPE = r'(?P<type>(?:' + _TYPE_ALT + r')(?:\+(?:' + _TYPE_ALT + r'))*)'
 YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
 YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
+# Browse accepts year ranges in addition to single years. Keep this separate
+# from YEAR so document/TOC/fragment routes don't match nonsensical ranges.
+BROWSE_YEAR = (
+    r'(?P<year>'
+    r'[0-9]{4}'                # 2024
+    r'|[0-9]{4}-[0-9]{4}'      # 2023-2024
+    r'|[0-9]{4}-\*'            # 2024-*
+    r'|\*-[0-9]{4}'            # *-2024
+    r')'
+)
 NUMBER = r'(?P<number>[0-9]+)'
 SECTION = r'(?P<section>[A-Za-z0-9/._-]+?)'  # not sure about ? on the end The '-' stays at the end to avoid it being interpreted as a range.
 DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
 VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
 LANG = r'(?P<lang>english|welsh)'
 DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
+VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
+# A leading '=' marks exclusiveExtent (only those territories, not merely
+# including them): e.g. /ukpga/=england or /ukpga/=england+wales.
+EXTENT = r'(?P<extent_segment>=?(?:' + '|'.join(VALID_EXTENTS) + r')(?:\+(?:' + '|'.join(VALID_EXTENTS) + r'))*)'
 YEAR_PATTERN = r'(?:\*|\d{4}|\d{4}-\d{4}|\d{4}-\*|\*-\d{4})'
+
 urlpatterns += i18n_patterns(
     path('', homepage, name='homepage'),
 
@@ -91,10 +109,13 @@ urlpatterns += i18n_patterns(
     # browse
     re_path(fr'^{TYPE}$', browse, name='browse'),
     re_path(fr'^{TYPE}/{DATA}$', browse_data),
-    re_path(fr'^{TYPE}/{YEAR4}$', browse, name='browse-year'),
+    re_path(fr'^{TYPE}/{BROWSE_YEAR}$', browse, name='browse-year'),
     re_path(fr'^{TYPE}/{YEAR4}/{DATA}$', browse_data),
     re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
     re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),
+
+    # extent last — its segment shape would otherwise shadow /TYPE/SUBJECT
+    re_path(fr'^{TYPE}/{EXTENT}$', browse, name='browse-extent'),
 
     # documents
     re_path(fr'^{TYPE}/{YEAR}/{NUMBER}$', document, name='document'),

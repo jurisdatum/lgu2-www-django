@@ -1,4 +1,3 @@
-
 types = [
     ('ukpga', 'UnitedKingdomPublicGeneralAct', 'primary'),
     ('ukla', 'UnitedKingdomLocalAct', 'primary'),
@@ -45,6 +44,14 @@ short_to_long = {item[0]: item[1] for item in types}
 long_to_short = {item[1]: item[0] for item in types}
 
 categories_by_type = {item[0]: item[2] for item in types} | {item[1]: item[2] for item in types}
+
+# Valid /TYPE/... URL segments. Mostly atomic types, plus aggregate tokens
+# ('primary', 'secondary', 'eu-origin') and 'all' — a routable synonym for
+# "no type filter" that search_results_helper strips on entry.
+SEARCH_TYPES = [item[0] for item in types] + [
+    'all', 'primary', 'secondary',
+    'eu-origin', 'eu', 'ukia',
+]
 
 
 def to_short_type(type):

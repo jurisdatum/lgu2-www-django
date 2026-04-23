@@ -27,8 +27,10 @@
 					<!-- Preserve existing query parameters -->
 					{% for key, value in query_param.items %}
 						{% if key != 'sort' %}
-							<input type="hidden" name="{{key}}" value="{{value}}">
-						{% endif %}					
+							{% for v in value|as_list %}
+								<input type="hidden" name="{{key}}" value="{{v}}">
+							{% endfor %}
+						{% endif %}
 					{% endfor %}
 
 					<label for="sort">Sort by:</label>
@@ -117,7 +119,9 @@
 				<label for="resultsPerPage">Results per page:</label>
 				{% for key, value in query_param.items %}
 					{% if key != 'pageSize' %}
-						<input type="hidden" name="{{key}}" value="{{value}}">
+						{% for v in value|as_list %}
+							<input type="hidden" name="{{key}}" value="{{v}}">
+						{% endfor %}
 					{% endif %}
 				{% endfor %}
 				<input type="number" name="pageSize" value="{{default_pagesize}}" id="resultsPerPage">
