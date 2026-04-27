@@ -27,6 +27,15 @@ def get(endpoint: str, accept: str, language: Optional[str] = None) -> requests.
     return requests.get(url, headers=headers)
 
 
+def head(endpoint: str, language: Optional[str] = None) -> requests.Response:
+    url = SERVER + endpoint
+    headers = {}
+    language = fix_language(language)
+    if language is not None:
+        headers['Accept-Language'] = language
+    return requests.head(url, headers=headers)
+
+
 def get_json(endpoint: str, language: Optional[str] = None) -> Any:
     return get(endpoint, 'application/json', language).json()
 
