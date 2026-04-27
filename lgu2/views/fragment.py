@@ -6,7 +6,7 @@ from django.template import loader
 from django.utils import timezone
 
 from ..api import fragment as api
-from ..messages.status import get_status_message_for_fragment
+from ..messages.status import build_status
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
@@ -66,10 +66,8 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
                 explanatory_notes.append(associated_documents)
             else:
                 other_associated_doc.append(associated_documents)
-    
-    
 
-    status_message = get_status_message_for_fragment(data['meta'])
+    status_message = build_status(data['meta'], timeline)
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -90,6 +88,7 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
                 'direct': group_effects(meta['unappliedEffects']['fragment']),
                 'larger': group_effects(meta['unappliedEffects']['ancestor'])
             },
+            'up_to_date': meta['upToDate'],
             'direct_effects': meta['unappliedEffects']['fragment'],
             'larger_effects': meta['unappliedEffects']['ancestor']
         },

@@ -58,8 +58,10 @@ def group_effects(effects):
             grouped['fixedFuture'].append(effect)
     return grouped
 
-
+from datetime import datetime
 def make_status_data(meta: CommonMetadata) -> StatusData:
+    doc_title = meta['title']
+    today = datetime.now().strftime('%d %B %Y')
     if meta['upToDate'] is None:
         effects = None
     elif 'fragment' in meta:
@@ -73,8 +75,9 @@ def make_status_data(meta: CommonMetadata) -> StatusData:
             'ancestor': group_effects([])
         }
     return {
+        'message': f'{ doc_title } is up to date with all changes known to be in force on or before { today }.',
         'up_to_date': meta['upToDate'],
-        'label': 'this Act',
+        'label': meta['title'],
         'point_in_time': meta['pointInTime'] if meta['pointInTime'] else date.today(),
         'changes_link': reverse('changes-affected', args=[ meta['shortType'], meta['year'], meta['number'] ]),
         'effects': effects

@@ -1,45 +1,103 @@
-
 from datetime import datetime
-# import re
-# from typing import Optional
-
-from ..api.document import CommonMetadata
-from ..api.fragment import FragmentMetadata
-
-# STATUS_WARNING_ORIGINAL_VERSION = "This is the original version (as it was originally {version})."
-
-# STATUS_WARNING_PIT_AT = "Point in time view as at {pit}."
+from django.utils import timezone
 
 
-# def get_status_message(meta: CommonMetadata):
+def build_status(meta, timeline):
+    """
+    Central status builder for document pages.
+    Returns full status object used by templates.
+    """
 
-#     status = meta['status']
-#     version = meta['version']
+    message = _build_status_message(meta, timeline)
 
-#     if status == 'final':
-#         return STATUS_WARNING_ORIGINAL_VERSION.format(version=version)
+    status = {
+        "message": message,
+        "label": meta["title"],
+        "up_to_date": meta["upToDate"],
+        "effects": {
+            "direct": _group_effects(meta["unappliedEffects"])
+        },
+        "direct_effects": meta["unappliedEffects"],
+        "larger_effects": [],
+        "has_future_effects": any(
+            e.get("required") and not e.get("outstanding")
+            for e in meta["unappliedEffects"]
+        ),
+    }
 
-#     if re.fullmatch(r'\d{4}-\d{2}-\d{2}', version):
-#         version_date = datetime.strptime(version, '%Y-%m-%d')
-#         pit = version_date.strftime("%d/%m/%Y")
-#         return STATUS_WARNING_PIT_AT.format(pit=pit)
+    return status
 
 
-def get_status_message(meta: CommonMetadata) -> str:
-    doc_title = meta['title']
-    today = datetime.now().strftime('%d %B %Y')
-    if meta['upToDate']:
-        return f'{ doc_title } is up to date with all changes known to be in force on or before { today }.'
+def _group_effects(unapplied_effects):
+    return {
+        "outstanding": [
+            e for e in unapplied_effects if e.get("outstanding")
+        ],
+        "future": [
+            e for e in unapplied_effects if e.get("required") and not e.get("outstanding")
+        ],
+        "unrequired": [
+            e for e in unapplied_effects if not e.get("required")
+        ],
+    }
+
+
+def _build_status_message(meta, timeline):
+    """
+    Builds correct message using timeline logic.
+    """
+
+    doc_title = meta["title"]
+
+    custom_message = _timeline_message(meta, timeline)
+    if custom_message:
+        return custom_message
+
+    today = datetime.now().strftime("%d %B %Y")
+
+    if meta["upToDate"]:
+        return f"{doc_title} is up to date with all changes known to be in force on or before {today}."
     else:
-        return f'There are outstanding changes not yet made by the legislation.gov.uk editorial team to { doc_title }. Any changes that have already been made by the team appear in the content and are referenced with annotations.'
+        return (
+            f"There are outstanding changes not yet made by the legislation.gov.uk "
+            f"editorial team to {doc_title}. Any changes already made appear in "
+            f"the content and are referenced with annotations."
+        )
 
 
-def get_status_message_for_fragment(meta: FragmentMetadata) -> str:
-    doc_title = meta['title']
-    frag_label = meta['fragmentInfo']['label']
-    today = datetime.now().strftime('%d %B %Y')
-    if meta['upToDate']:
-        return f'{ doc_title }, { frag_label } is up to date with all changes known to be in force on or before { today }.'
-    else:
-        return f'There are outstanding changes not yet made by the legislation.gov.uk editorial team to { doc_title }. Any changes that have already been made by the team appear in the content and are referenced with annotations.'
+def _timeline_message(meta, timeline):
+    """
+    Handles version-based messaging.
+    """
 
+    if not timeline:
+        return None
+
+    total_versions = (
+        (1 if timeline["original"] else 0)
+        + len(timeline["historical"])
+        + (1 if timeline["current"] else 0)
+    )
+
+    viewing = timeline["viewing"]
+    current = timeline["current"]
+
+    # Only one version
+    if total_versions == 1 and viewing:
+        if viewing.get("date"):
+            formatted_date = viewing["date"].strftime("%d %b %Y")
+        else:
+            formatted_date = (
+                meta.get("pointInTime") or timezone.localdate()
+            ).strftime("%d %b %Y")
+
+        return f"This Act has not been updated since {formatted_date}."
+
+    # Viewing older version
+    if total_versions > 1 and current and viewing["label"] != current["label"]:
+        viewing_date = viewing.get("date")
+        if viewing_date:
+            formatted_date = viewing_date.strftime("%d %b %Y")
+            return f"This legislation may have been updated since {formatted_date}."
+
+    return None

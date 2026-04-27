@@ -3,10 +3,11 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.utils import timezone
 
+
+from ..messages.status import build_status
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import get_pdf_link_and_thumb
-from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
@@ -54,31 +55,16 @@ def make_document_context(data, type, year, number, version, lang):
     if rdrct is not None:
         return rdrct
 
-    data['meta']['link'] = make_document_link(type, year, number, version, lang)
+    meta['link'] = make_document_link(type, year, number, version, lang)
 
-    timeline = make_timeline_data(data['meta'], "document", lang)
-    extent_label = make_combined_extent_label(data['meta']['extent'])
+    timeline = make_timeline_data(meta, "document", lang)
+    extent_label = make_combined_extent_label(meta['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
 
     explanatory_notes = []
     other_associated_doc = []
 
-    if len(meta['associated']) > 0:
-        for associated_documents in meta['associated']:
-            if associated_documents['type'] == 'Note':
-                explanatory_notes.append(associated_documents)
-            else:
-                other_associated_doc.append(associated_documents)
-
-    status = {
-        'message': get_status_message(data['meta']),
-        'label': meta['title'],
-        'effects': {
-            'direct': group_effects(meta['unappliedEffects'])
-        },
-        'direct_effects': meta['unappliedEffects'],
-        'larger_effects': []
-    }
+    status = build_status(meta, timeline)
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -107,7 +93,7 @@ def make_document_context(data, type, year, number, version, lang):
             'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
             'resources': '/',
-            'whole': None,
+            'whole': meta['id'],
             'body': make_fragment_link(type, year, number, 'body', version, lang),
             'schedules': None if meta['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
         },
