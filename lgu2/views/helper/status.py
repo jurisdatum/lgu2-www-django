@@ -1,5 +1,5 @@
 
-from datetime import date
+from datetime import date, datetime
 from typing import List, Optional, TypedDict
 
 from django.urls import reverse
@@ -58,7 +58,7 @@ def group_effects(effects):
             grouped['fixedFuture'].append(effect)
     return grouped
 
-from datetime import datetime
+
 def make_status_data(meta: CommonMetadata) -> StatusData:
     doc_title = meta['title']
     today = datetime.now().strftime('%d %B %Y')

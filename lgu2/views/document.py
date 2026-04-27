@@ -64,6 +64,13 @@ def make_document_context(data, type, year, number, version, lang):
     explanatory_notes = []
     other_associated_doc = []
 
+    if len(meta['associated']) > 0:
+        for associated_documents in meta['associated']:
+            if associated_documents['type'] == 'Note':
+                explanatory_notes.append(associated_documents)
+            else:
+                other_associated_doc.append(associated_documents)
+
     status = build_status(meta, timeline)
 
     meta['category'] = get_category(meta['shortType'])
