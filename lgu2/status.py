@@ -17,7 +17,7 @@ from django.utils.html import escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from .util.links import make_document_link
+from .util.links import make_document_link, make_fragment_link
 from .util.version import is_first_version
 
 
@@ -58,6 +58,21 @@ class SidePanel:
 class Status:
     messages: Tuple[Message, ...] = ()
     side_panel: Optional[SidePanel] = None
+
+
+def _fragment_target_phrase(meta) -> str:
+    """Return ``"{fragment_label} of {title}"`` for a fragment, else ``""``.
+
+    Used by status copy that wants to address the surface the user is
+    actually looking at — a section, schedule, etc. — rather than the
+    whole document.
+    """
+    fragment_info = meta.get('fragmentInfo') or {}
+    fragment_label = fragment_info.get('label') or ''
+    title = meta.get('title', '')
+    if not fragment_label:
+        return ''
+    return _("{fragment} of {title}").format(fragment=fragment_label, title=title)
 
 
 def _shown_milestone_date(meta) -> Optional[_Date]:
@@ -146,7 +161,84 @@ def for_document(meta) -> Optional[Status]:
     return Status(messages=tuple(messages), side_panel=side_panel)
 
 
-def dated_version_panel(meta, lang: Optional[str] = None) -> SidePanel:
+def for_fragment(meta) -> Optional[Status]:
+    messages: List[Message] = []
+    side_panel: Optional[SidePanel] = None
+
+    if is_first_version(meta.get('version', '')):
+        messages.append(Message(
+            text=_("This is the original version (as it was originally made)."),
+        ))
+
+    title = meta.get('title', '')
+    target = _fragment_target_phrase(meta) or title
+    changes_link = Link(
+        text=_("See all changes made to or by {title}").format(title=title),
+        href=reverse(
+            'changes-affected',
+            args=[meta['shortType'], meta['year'], meta['number']],
+        ),
+    ) if meta.get('shortType') and meta.get('year') and meta.get('number') else None
+
+    if is_most_recent_version(meta):
+        # Per ADR C4: the API splits fragment outstanding effects into
+        # ``fragment`` (direct + descendants) and ``ancestor`` (parents
+        # propagating down). Until grouped designs and CSS arrive we
+        # concatenate them into one flat list rather than drop one group
+        # (as the old new-theme template did) or invent UI ahead of design.
+        unapplied = meta.get('unappliedEffects') or {}
+        outstanding = [
+            e for e in (unapplied.get('fragment') or []) if e.get('outstanding')
+        ] + [
+            e for e in (unapplied.get('ancestor') or []) if e.get('outstanding')
+        ]
+        if outstanding:
+            expand_label = _("See what these changes are")
+            collapse_label = _("Hide detail of these changes")
+            messages.append(Message(
+                heading=format_html(
+                    _('There are outstanding changes not yet made by the '
+                      'legislation.gov.uk editorial team to {target}.'),
+                    target=target,
+                ),
+                text=_(
+                    'Any changes that have already been made by the team appear '
+                    'in the content and are referenced with annotations.'
+                ),
+                severity='warning',
+                disclosure=Disclosure(
+                    items=tuple(_effect_to_li(e) for e in outstanding),
+                    collapsed_initially=True,
+                    expand_label=expand_label,
+                    collapse_label=collapse_label,
+                ),
+            ))
+            side_panel = SidePanel(
+                heading=_("Up to date status"),
+                paragraphs=(
+                    _("{target} is not up to date").format(target=target),
+                    _("This legislation has been amended but we still need to update the website to reflect these changes."),
+                ),
+                button_expand_label=expand_label,
+                button_collapse_label=collapse_label,
+                links=(changes_link,) if changes_link else (),
+                severity='warning',
+            )
+        else:
+            side_panel = SidePanel(
+                heading=_("Up to date status"),
+                paragraphs=(
+                    _("{target} is up to date with all known changes").format(target=target),
+                ),
+                links=(changes_link,) if changes_link else (),
+            )
+
+    if not messages and side_panel is None:
+        return None
+    return Status(messages=tuple(messages), side_panel=side_panel)
+
+
+def dated_version_panel(meta, lang: Optional[str] = None, section: Optional[str] = None) -> SidePanel:
     """Build the side panel shown when viewing a non-most-recent version.
 
     This is structurally a side panel like the status one, but it is not a
@@ -156,21 +248,38 @@ def dated_version_panel(meta, lang: Optional[str] = None) -> SidePanel:
 
     ``lang`` is the route-slug language (``english``/``welsh``), not the
     API's ``en``/``cy`` code — see ``make_document_link``.
+
+    ``section`` is the fragment href (e.g. ``section/5``) when the panel is
+    being built for a fragment view; the "see most recent version" link
+    then targets the most recent version of that fragment rather than the
+    document as a whole.
     """
     title = meta.get('title', '')
-    # The "see most recent version" link goes to the document route, which
-    # accepts regnal years; the "see all changes" link goes to
-    # changes-affected, whose URL pattern is calendar-year-only. So the two
-    # links use different year sources by design.
-    links: List[Link] = [Link(
-        text=_("See the most recent version"),
-        href=make_document_link(
+    target = _fragment_target_phrase(meta) or title
+    # The "see most recent version" link goes to the document/fragment
+    # route, which accepts regnal years; the "see all changes" link goes
+    # to changes-affected, whose URL pattern is calendar-year-only. So
+    # the two links use different year sources by design.
+    if section:
+        most_recent_href = make_fragment_link(
+            meta['shortType'],
+            meta.get('regnalYear') or meta['year'],
+            meta['number'],
+            section,
+            None,
+            lang,
+        )
+    else:
+        most_recent_href = make_document_link(
             meta['shortType'],
             meta.get('regnalYear') or meta['year'],
             meta['number'],
             None,
             lang,
-        ),
+        )
+    links: List[Link] = [Link(
+        text=_("See the most recent version"),
+        href=most_recent_href,
     )]
     if meta.get('shortType') and meta.get('year') and meta.get('number'):
         links.append(Link(
@@ -181,7 +290,7 @@ def dated_version_panel(meta, lang: Optional[str] = None) -> SidePanel:
             ),
         ))
     paragraphs: List[str] = [
-        _("This is not the most recent version of {title}.").format(title=title),
+        _("This is not the most recent version of {target}.").format(target=target),
     ]
     # The "changed since X" date is the date of the milestone the user is
     # actually being shown. meta['version'] holds that milestone — as a

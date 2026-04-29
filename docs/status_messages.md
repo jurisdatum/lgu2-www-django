@@ -55,6 +55,8 @@ implementation catches up.
 
 [~] Document with future-effects but no outstanding effects *(awaiting design — when a document is up-to-date but has required effects with a future commencement date (`required=True`, `outstanding=False`), the legacy frontend rendered a separate "changes and effects yet to be applied" panel on the main pane. The new design samples on http://johngoodall.com/tna/mvp/ have no equivalent panel for this case on the document main pane. Implementing this requires either a design sample to follow or new catalog prose plus structure.)*
 
+[~] Fragment with separately rendered direct vs ancestor effects *(awaiting design — the API returns outstanding effects on a fragment in two groups: those that target the fragment itself (or its descendants) and those that target an ancestor (e.g. a chapter containing the section being viewed). The legacy frontend rendered the two groups under separate sub-panels with their own headings. The new design samples on http://johngoodall.com/tna/mvp/ show only one flat list inside the disclosure on fragment pages, with no sub-headings or grouping, and the new-theme CSS contains no rules for sub-headings or nested lists inside the status disclosure. Until designs and CSS catch up, C4 concatenates direct + ancestor outstanding effects into one flat list so neither group is silently dropped. When grouped designs arrive, the change is local to the fragment factory and the disclosure rendering.)*
+
 [ ] Omitted ([https://www.legislation.gov.uk/uksi/2014/3348/article/4)](https://www.legislation.gov.uk/uksi/2014/3348/article/4\))
   - This version of this provision no longer has effect.
 

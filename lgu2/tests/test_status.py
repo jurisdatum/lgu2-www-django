@@ -12,6 +12,7 @@ from lgu2.status import (
     Status,
     dated_version_panel,
     for_document,
+    for_fragment,
 )
 
 
@@ -260,6 +261,96 @@ class ForDocumentTests(SimpleTestCase):
         self.assertEqual(status.messages[1].severity, 'warning')
 
 
+class ForFragmentTests(SimpleTestCase):
+
+    def _meta(self, version, versions, *, fragment_label='Section 5', unapplied=None):
+        return {
+            'version': version,
+            'versions': versions,
+            'title': 'Test Act 2024',
+            'shortType': 'ukpga',
+            'year': '2024',
+            'number': '1',
+            'fragmentInfo': {'label': fragment_label, 'href': 'section/5'},
+            'unappliedEffects': unapplied if unapplied is not None else {'fragment': [], 'ancestor': []},
+        }
+
+    def test_returns_status_when_viewing_enacted_fragment(self):
+        status = for_fragment(self._meta(version='enacted', versions=['enacted', '2024-06-01']))
+        self.assertIsNotNone(status)
+        self.assertEqual(len(status.messages), 1)
+        self.assertIn('original version', str(status.messages[0].text))
+
+    def test_returns_none_when_viewing_non_latest_historical_version(self):
+        status = for_fragment(self._meta(
+            version='2024-06-01',
+            versions=['enacted', '2024-06-01', '2025-01-01'],
+        ))
+        self.assertIsNone(status)
+
+    def test_red_message_targets_fragment_of_title(self):
+        status = for_fragment(self._meta(
+            version='2024-06-01',
+            versions=['enacted', '2024-06-01'],
+            unapplied={'fragment': [{'outstanding': True}], 'ancestor': []},
+        ))
+        msg = status.messages[0]
+        self.assertEqual(msg.severity, 'warning')
+        self.assertIn('Section 5 of Test Act 2024', str(msg.heading))
+
+    def test_side_panel_targets_fragment_of_title_when_up_to_date(self):
+        status = for_fragment(self._meta(
+            version='2024-06-01',
+            versions=['enacted', '2024-06-01'],
+        ))
+        self.assertEqual(status.messages, ())
+        self.assertIsNotNone(status.side_panel)
+        self.assertIn('Section 5 of Test Act 2024', str(status.side_panel.paragraphs[0]))
+
+    def test_outstanding_concatenates_direct_and_ancestor_in_order(self):
+        # ADR C4: until grouped designs land, the disclosure is one flat
+        # list with direct (fragment) effects first, then ancestor effects.
+        direct = {
+            'outstanding': True, 'type': 'inserted',
+            'target': {'provisions': {'plain': 's. 5(2)', 'rich': []}},
+            'source': {'cite': 'D1'},
+        }
+        ancestor = {
+            'outstanding': True, 'type': 'inserted',
+            'target': {'provisions': {'plain': 'Pt. 2', 'rich': []}},
+            'source': {'cite': 'A1'},
+        }
+        non_outstanding_direct = {'outstanding': False, 'type': 'inserted'}
+        status = for_fragment(self._meta(
+            version='2024-06-01',
+            versions=['enacted', '2024-06-01'],
+            unapplied={'fragment': [direct, non_outstanding_direct], 'ancestor': [ancestor]},
+        ))
+        msg = status.messages[0]
+        self.assertEqual(len(msg.disclosure.items), 2)
+        # direct comes first
+        self.assertIn('s. 5(2)', str(msg.disclosure.items[0]))
+        self.assertIn('Pt. 2', str(msg.disclosure.items[1]))
+
+    def test_handles_empty_unapplied_effects_dict(self):
+        status = for_fragment(self._meta(
+            version='2024-06-01',
+            versions=['enacted', '2024-06-01'],
+            unapplied={'fragment': [], 'ancestor': []},
+        ))
+        # most-recent + no outstanding → up-to-date side panel only
+        self.assertEqual(status.messages, ())
+        self.assertIsNotNone(status.side_panel)
+        self.assertEqual(status.side_panel.severity, '')
+
+    def test_falls_back_to_title_when_fragment_label_missing(self):
+        meta = self._meta(version='2024-06-01', versions=['enacted', '2024-06-01'])
+        meta['fragmentInfo'] = {}
+        status = for_fragment(meta)
+        self.assertIn('Test Act 2024', str(status.side_panel.paragraphs[0]))
+        self.assertNotIn(' of Test Act 2024', str(status.side_panel.paragraphs[0]))
+
+
 class DatedVersionPanelTests(SimpleTestCase):
 
     def _meta(self, **overrides):
@@ -329,6 +420,14 @@ class DatedVersionPanelTests(SimpleTestCase):
         self.assertIn('/ukpga/Geo6/11-12/38', panel.links[0].href)
         # changes-affected uses calendar year (its URL pattern is calendar-only).
         self.assertEqual(panel.links[1].href, '/changes/affected/ukpga/1948/38')
+
+    def test_section_param_targets_fragment_for_most_recent_link(self):
+        # On a fragment view, "see most recent version" should point to the
+        # most recent version of the same fragment, not the document.
+        meta = self._meta(fragmentInfo={'label': 'Section 5', 'href': 'section/5'})
+        panel = dated_version_panel(meta, section='section/5')
+        self.assertEqual(panel.links[0].href, '/ukpga/2024/1/section/5')
+        self.assertIn('Section 5 of Test Act 2024', panel.paragraphs[0])
 
 
 class StatusMainTemplateTests(SimpleTestCase):
