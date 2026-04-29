@@ -1229,13 +1229,15 @@
 	}
 
 	function showStatusPanel() {
-		$('.legislation-content > aside > div.not-up-to-date button').text('Hide detail of these changes')
+		var collapseLabel = $('.status-panel summary').data('collapse-label') || 'Hide detail of these changes'
+		$('.legislation-content > aside > div.not-up-to-date button').text(collapseLabel)
 		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',true)
-		$('.status-panel summary').text('Hide detail of these changes')
+		$('.status-panel summary').text(collapseLabel)
 	}
 
 	function hideStatusPanel() {
-		$('.status-panel summary').text('See what these changes are')
-		$('.legislation-content > aside > div.not-up-to-date button').text('See what these changes are')
+		var expandLabel = $('.status-panel summary').data('expand-label') || 'See what these changes are'
+		$('.status-panel summary').text(expandLabel)
+		$('.legislation-content > aside > div.not-up-to-date button').text(expandLabel)
 		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',false)
 	}

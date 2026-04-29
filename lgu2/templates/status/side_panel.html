@@ -1,2 +1,14 @@
-{% load i18n %}
-<aside class="status-side-panel">{{ status.label }}</aside>
+{% if panel %}
+<div class="{{ panel.variant }}{% if panel.severity == 'warning' %} not-up-to-date{% endif %}">
+    <h3>{{ panel.heading }}</h3>
+    {% for paragraph in panel.paragraphs %}
+    <p>{{ paragraph }}</p>
+    {% endfor %}
+    {% if panel.button_expand_label %}
+    <button aria-expanded="false" aria-controls="statusPanelDetail" data-expand-label="{{ panel.button_expand_label }}" data-collapse-label="{{ panel.button_collapse_label }}">{{ panel.button_expand_label }}</button>
+    {% endif %}
+    {% for link in panel.links %}
+    <a href="{{ link.href }}">{{ link.text }}</a>
+    {% endfor %}
+</div>
+{% endif %}

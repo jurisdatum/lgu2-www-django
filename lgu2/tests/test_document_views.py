@@ -128,7 +128,7 @@ class DocumentViewTests(SimpleTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateNotUsed(response, 'new_theme/document/timeline.html')
-        self.assertTemplateNotUsed(response, 'new_theme/document/right_side_panel.html')
+        self.assertNotContains(response, 'id="legislationStatus"')
         self.assertNotContains(response, 'class="pit-search"')
         self.assertNotContains(response, 'class="legislation-navigation"')
         self.assertNotContains(response, 'Printer Version')

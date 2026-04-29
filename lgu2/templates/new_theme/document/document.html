@@ -55,23 +55,12 @@
 
     <div class="legislation-content">
 
-        {% if status %}
         {% include "new_theme/document/right_side_panel.html" %}
-        {% endif %}
 
         <div>
             <section class="legislation-text parenthesis">
 
-                {% if is_first_and_only_version %}
-                <div class="status-panel">
-                    <div>
-                        <h2>This is the King's Printer Version. It is the exact text that received Royal Assent when it was enacted.</h2>
-                        <p>We do not have a version of this text with commencement and extent information.</p>
-                    </div>
-                </div>
-                {% endif %}
-                
-                {% include "new_theme/document/status_panel.html" %}
+                {% include "status/main.html" %}
 
 
                 {% if pdf_only %}

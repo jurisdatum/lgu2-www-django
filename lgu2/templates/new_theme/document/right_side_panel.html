@@ -1,90 +1,33 @@
+{% if meta.shortType == 'ukia' %}
+{# TODO: UKIA-specific right panel content. Empty for now — UKIA pages
+   will need their own right-panel design but it's not yet specified. #}
+{% else %}
 <aside aria-labelledby="legislationStatus">
 
     <h2 id="legislationStatus">Legislation status</h2>
 
-        {% if status.up_to_date is none %}
-            <div class="dated-version">
-                <h3>Up to Date status</h3>
-                <p>This is not the most recent version of this Act.</p>
-                <p>{{ status.message }}</p>
-                <a href="/{{links.whole}}">See the most recent version</a>
-                <a href="{{ status.changes_link }}">See all changes made to this Act</a>
-            </div>
-
-        {% elif status.up_to_date %}
-
-            <div class="up-to-date">
-                <h3>Up to date status</h3>
-                <p>
-                    {{ status.message }}
-                    {% if status.has_future_effects %}
-                        There are changes that may be brought into force at a future date.
-                    {% endif %}
-                </p>
-
-            {% if status.has_future_effects %}
-            <button aria-expanded="false" aria-controls="statusPanelDetail">
-                See what these changes are
-            </button>
-            {% endif %}
-
-            <a href="{{ status.changes_link }}">See all changes made to this Act</a>
-
-
-            </div>
-
-            <div class="extent">
-                <h3>Extent information</h3>
-                <p>This Act contains legislation in relation to {{ extent_label }}</p>
-
-                <button hidden class="initialise">
-                    Show geographical extent
-                </button>
-
-                <a href="#">How we communicate territorial extent and application</a>
-            </div>
-
-            <div class="in-force">
-                <h3>In force status</h3>
-                <p>This Act is partially in force</p>
-                <a href="#">Commencement and repeal history of this Act</a>
-            </div>
-
+        {% if is_most_recent_version %}
+            {% include "status/side_panel.html" with panel=status.side_panel %}
         {% else %}
-
-            <div class="up-to-date not-up-to-date">
-                <h3>Up to date status</h3>
-                <p>{{ status.label|capfirst }} is not up to date</p>
-                <p>
-                    This legislation has been amended but we still need to update the website
-                    to reflect these changes.
-                </p>
-
-                <button aria-expanded="false" aria-controls="statusPanelDetail">
-                    See what these changes are
-                </button>
-
-                <a href="{{ status.changes_link }}">See all changes made to this Act</a>
-            </div>
-
-            <div class="extent not-up-to-date">
-                <h3>Extent information</h3>
-                <p>This Act contains legislation in relation to {{ extent_label }}</p>
-
-                <button hidden class="initialise">
-                    Show geographical extent
-                </button>
-
-                <a href="#">How we communicate territorial extent and application</a>
-            </div>
-
-            <div class="in-force not-up-to-date">
-                <h3>In force status</h3>
-                <p>This Act is partially in force</p>
-                <a href="#">Commencement and repeal history of this Act</a>
-            </div>
-
+            {% include "status/side_panel.html" with panel=dated_version_panel %}
         {% endif %}
+
+        <div class="extent">
+            <h3>Extent information</h3>
+            <p>This Act contains legislation in relation to {{ extent_label }}</p>
+
+            <button hidden class="initialise">
+                Show geographical extent
+            </button>
+
+            <a href="#">How we communicate territorial extent and application</a>
+        </div>
+
+        <div class="in-force">
+            <h3>In force status</h3>
+            <p>This Act is partially in force</p>
+            <a href="#">Commencement and repeal history of this Act</a>
+        </div>
 
         <div class="confers-power">
 
@@ -114,3 +57,4 @@
         </div>
 
 </aside>
+{% endif %}

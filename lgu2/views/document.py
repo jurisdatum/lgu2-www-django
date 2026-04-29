@@ -4,7 +4,7 @@ from django.template import loader
 from django.utils import timezone
 
 
-from ..messages.status import build_status
+from ..status import dated_version_panel, for_document, is_most_recent_version
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import get_pdf_link_and_thumb
@@ -71,7 +71,9 @@ def make_document_context(data, type, year, number, version, lang):
             else:
                 other_associated_doc.append(associated_documents)
 
-    status = build_status(meta, timeline)
+    status = for_document(meta)
+    most_recent = is_most_recent_version(meta)
+    dated_panel = None if most_recent else dated_version_panel(meta, lang)
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -94,6 +96,8 @@ def make_document_context(data, type, year, number, version, lang):
         'explanatory_notes': explanatory_notes,
         'other_associated_doc': other_associated_doc,
         'status': status,
+        'is_most_recent_version': most_recent,
+        'dated_version_panel': dated_panel,
         'article': data['html'],
         'links': {
             'toc': make_contents_link(type, year, number, version, lang),

@@ -27,38 +27,61 @@ The architecture must therefore optimise for **ease of future revision** more th
 
 Introduce a single bounded context for status messaging, consisting of two co-evolving collaborators:
 
-1. **A `status` Python module** that exposes factory methods. Views call a factory with whatever inputs they have (metadata, timeline, etc.) and receive an opaque "status object" in return.
-2. **Status-owned rendering templates** that know how to render any object the factory produces. This may be one template or a small owned template family split by placement (for example, main pane and side panel). Status templates are the only templates that introspect the object, and they own all rendering — including all i18n.
+1. **A `status` Python module** that exposes factory methods. Views call a factory with whatever inputs they have (metadata, timeline, etc.) and receive an opaque "status object" in return. The module owns status-message selection and translated prose assembly.
+2. **Status-owned rendering templates** that know how to render any object the factory produces. This may be one template or a small owned template family split by placement (for example, main pane and side panel). Status templates are the only templates that introspect the object, and they own generic component rendering.
 
-Views are dumb pass-through: they construct nothing about status, they introspect nothing about it, they pass the status object to status-owned templates wherever the page layout needs status to render. Everything else — choice of message, taxonomy of effects, conditional layout, translation, date formatting — lives inside the status module and its owned templates.
+Views are dumb pass-through: they construct nothing about status, they introspect nothing about it, they pass the status object to status-owned templates wherever the page layout needs status to render. Everything else — choice of message, taxonomy of effects, translated prose, date formatting, and generic component rendering — lives inside the status module and its owned templates.
+
+### The contract runs template-first
+
+The contract between these two collaborators runs **template-first**: the status templates define the presentation primitives they consume — panels, labels, tones, optional disclosures, lists — and the factory's job is to satisfy that contract. The status object is a presentation DTO, not a domain object dressed for rendering.
+
+The controller speaks meaning; CSS speaks pixels. The object carries semantic primitives such as `severity: "warning"` or `tone: "muted"`, never literal style props like `border_color` or `padding_px`. Visual realisation belongs to the stylesheet, not the backend.
+
+New UI variants therefore begin in the template — sketch the generic markup the design calls for, read the component contract off the placeholder references, and add fields to the object only when the template asks for them. The template becomes the source of truth for what UIs are possible, while the factory remains responsible for deciding which translated prose fills those UI primitives.
 
 ### What is "the status surface"?
 
 The status object covers the status surfaces on a legislation page: the main status pane above the text, the status material in the side panel, and closely related notices such as the King's Printer message when they render as part of that same reader-facing status region. Adjacent flags and panels currently treated separately ("first and only version" handling, PDF-only status messaging) fold into status if they render in one of those surfaces; if they render elsewhere they remain outside. When a flag is borderline, default to including it — keeping related concepts together is cheaper than enforcing a tight boundary.
 
+### Scope of this migration
+
+The presentation-model pattern naturally extends beyond status to other component surfaces, including the document right-side panel. This migration applies the pattern only to the status surface. Existing page/layout templates may remain domain-aware while they compose status with adjacent panels such as extent, in-force, confers-power, and blanket-amendments. Migrating those surfaces to their own presentation models is future work.
+
+### Scope of catalog cases covered
+
+`docs/status_messages.md` enumerates roughly 25 messaging cases. This migration covers only **Original** and **Standard red** — the two cases the legacy site currently produces — plus their fragment and ToC variants, and the dated-version side panel that accompanies non-current views of those documents. All other catalog cases remain `[ ]` or `[~]` and are out of scope until separately commissioned.
+
+The architecture is built so that adding a further case later is local: a new branch in the relevant factory, possibly new catalog prose, and reuse of the existing presentation primitives in `templates/status/`. Adding cases should not require revisiting this ADR.
+
 ### Shape of the status object
 
-The exact object shape is **deliberately not specified** by this ADR beyond the following:
+The shape is **derived from the template**, not designed up front. We do not specify it in this ADR beyond the following invariants:
 
 - It is opaque to callers. Views, controllers, and other templates do not introspect it.
 - It is a typed Python object — a `dataclass`, not a plain dict. The dataclass constructor catches misspelled fields at construction, and static type checking helps catch shape mistakes before runtime — failures a plain dict would absorb silently. Using `frozen=True` and/or `slots=True` further prevents post-construction attribute typos. Template-side missing variables are a separate concern, addressed under Testing below.
-- It carries **data**, not pre-formatted strings.
+- It carries **presentation data**, including translated strings assembled by the status module for generic templates to render.
+- It carries **semantic** primitives, not literal style props (see *The contract runs template-first* above).
 - The status templates are its only consumers.
-- It carries the core facts needed by every status surface: display context, document identity/label/type, up-to-date state, relevant dates, effect groups, links/actions, and any notices.
 
-We start with whatever shape the first factory needs and let the shape evolve as more factories are added. We will refactor toward discriminated kinds, sub-objects, or other structures when patterns emerge — not before.
+The shape grows out of the templates being written. Sketch the template the factory will feed first; the fields the object needs to expose are exactly the ones the template references. We refactor toward discriminated kinds, sub-objects, or other structures only when patterns emerge across multiple templates — never as up-front design.
 
-### i18n lives in the template
+### i18n lives in the status module
 
-The status object carries data: kinds, dates, document type labels, document titles, counts, effect lists. The status templates render that data into prose using `{% translate %}` and `{% blocktranslate %}`. Translators work in one owned template area, not in Python source.
+The status object carries presentation components: headings, body text, labels, disclosures, links, lists, and semantic tones. The status module assembles the prose for those components using Django's Python-side i18n APIs (`gettext`, `ngettext`, `pgettext`, etc.) before handing the object to generic templates.
 
-This is the intended direction; we accept that interpolation-heavy strings may make the template messy and reserve the right to revisit if it becomes unworkable in practice. Welsh in particular has consonant mutations (the initial letter of a word changes after certain words and contexts) and a six-form CLDR plural system. Plural counts should still ride through `{% blocktranslate count … %}` and the `.po` file's plural rules — that is exactly what gettext is for, and it handles Welsh's plural categories natively. Where the template hits a wall is on grammar gettext can't reach: the most likely escape hatch is for the factory to pre-compute grammatical labels and forms (a context-appropriate form of a doc-type label, for example) and pass them through, so the translator receives a value rather than being asked to assemble the phrase. The status module may also choose message kinds or small render models that select between translatable template branches. We still avoid returning arbitrary pre-formatted English strings from Python. If we do change course, we change course inside the bounded context — no other code is affected.
+This is a deliberate change from template-side prose assembly. Generic status templates should know how to render a `Message`, `Disclosure`, or similar component; they should not know the legislation-specific sentence patterns that decide what those components say. That keeps template branching focused on component structure and keeps wording, interpolation, pluralisation, and grammar decisions beside the status logic that chooses the message.
 
-### Effect display taxonomy: three-way for now
+Welsh in particular has consonant mutations (the initial letter of a word changes after certain words and contexts) and a six-form CLDR plural system. Python-side gettext still uses the same `.po` files and plural rules as template gettext, so plural counts should use `ngettext` or related APIs rather than hand-built English branches. Where gettext alone cannot express a grammatical form, the status module may pre-compute context-specific labels and choose the appropriate translated message.
 
-The current designs appear to combine prospective effects and fixed-future effects, so the initial status surface will display three groups: `outstanding`, `future`, and `unrequired`.
+### Effect display taxonomy: outstanding only, flat list, for now
 
-This is a presentational decision, not a permanent domain claim. The old four-way grouping (`outstanding`, `prospective`, `fixedFuture`, `unrequired`) may return if the designs or wording need to distinguish effects with no in-force date from effects with a fixed future date. The taxonomy lives inside the status module and its templates, so that change should be local to two places rather than rippling through views.
+The new design samples (http://johngoodall.com/tna/mvp/) render a single flat list of effects inside the not-up-to-date disclosure, with no group headings. We match this: the disclosure shows only `outstanding=True` effects, in API source order, with no `Outstanding` / `Fixed Future` / `Unrequired` sub-sections.
+
+Two consequences worth naming:
+
+1. **Future-effects-only documents are deferred.** When a document is up-to-date but has required, not-yet-in-force effects (`required=True, outstanding=False`), the legacy frontend rendered a separate "changes and effects yet to be applied" panel on the main pane. The new designs have no equivalent. Implementing this case requires either a design sample or new catalog prose plus structure. Tracked in `docs/status_messages.md` as *"Document with future-effects but no outstanding effects"* with a `[~]` (cannot implement yet) marker.
+2. **The taxonomy decision is provisional.** If a future design reintroduces grouped effects (`Outstanding` / `Fixed Future` / `Unrequired` subheadings) or a separate future-effects panel, the change is local to the status module and its disclosure rendering, with no ripple into views.
 
 ## Details
 
@@ -92,8 +115,8 @@ PR 62's status-specific code paths are superseded by this work. Its status bugs 
 
 The architecture separates testable concerns into two clear layers:
 
-- **Factory tests (Python unit).** Factories are pure functions of their inputs (see *Factories are pure functions* above), so they unit-test cleanly. Assertions are on object fields, not on translated prose, which means tests are stable across wording changes and unaffected by Welsh translation work. Coverage of edge cases (no timeline, fragment vs document, prospective effects, etc.) lives here.
-- **Template tests (Django render).** A small number of `Client` or `RequestFactory` tests render the status-owned templates against representative status objects and assert on the resulting markup or text. These catch template typos, missing translations, and rendering regressions. They do not need to enumerate every wording variant — that's the factory tests' job.
+- **Factory tests (Python unit).** Factories are pure functions of their inputs (see *Factories are pure functions* above), so they unit-test cleanly. Assertions are on selected components, labels, links, tones, and representative translated text where useful. Coverage of edge cases (no timeline, fragment vs document, prospective effects, etc.) lives here.
+- **Template tests (Django render).** A small number of `Client` or `RequestFactory` tests render the status-owned templates against representative status objects and assert on the resulting markup or text. These catch template typos and rendering regressions. They do not need to enumerate every wording variant — that's the factory tests' job.
 - **Translation integrity.** Standard `makemessages` / `compilemessages` checks plus `gettext` lint suffice for catching missing or malformed translation strings.
 
 Status template tests should render under a strict template configuration where missing variables surface as a noisy sentinel (e.g. `'!!!INVALID!!!'`) rather than as empty strings. Scope this to the status template tests — applying `string_if_invalid` globally in dev or test settings would affect every other template in the project, some of which intentionally tolerate optional variables, and would inject noise into unrelated tests. The strictness can be contained either by building a dedicated `Template`/`Engine` with strict options inside the status test fixture, or by wrapping the relevant test cases with `@override_settings`. Django's default silent-failure rendering is otherwise the most likely vector for status-rendering bugs reaching production, since Python typing of the status object does not propagate into template attribute lookups.
@@ -102,17 +125,17 @@ Status template tests should render under a strict template configuration where 
 
 - **Views become trivial.** They construct status by calling one function and pass the result to the template. The view layer no longer needs to know what status is.
 - **Status complexity is contained.** The status module and its owned templates are the only places that need to change as messaging evolves.
-- **Revision is cheap.** Editorial changes to wording happen in the template; editorial changes to logic happen in the module. Either can change without affecting the other's interface to the rest of the app.
-- **i18n has one home.** Translators work in the status templates. No Python-side gettext calls compete for their attention.
+- **Revision is cheap.** Editorial changes to wording and logic happen in the status module. Structural changes to status UI happen in status templates. Either can change without affecting the interface to the rest of the app.
+- **i18n has one home.** Status-message translation strings live in the status module. Templates may still translate generic component chrome if needed, but legislation-specific prose belongs beside the factory logic that chooses it.
 - **Tight coupling between module and templates is intentional.** They co-evolve as a unit. Changing the object shape requires changing both — but only those two areas — and that is the whole point.
-- **The templates will absorb conditional logic.** Branching by kind, by document type, by language, by effect category. We accept this; it is where the complexity belongs given the design.
+- **Templates stay generic.** They branch on component structure, not legislation domain state. Branching by kind, document type, language, and effect category belongs in the status module unless it is genuinely a rendering concern.
 - **Adjacent panels (King's Printer, etc.) move inside.** Anything rendering in a status surface is owned by status. This consolidates concepts that have drifted apart.
 - **The status object's shape is unstable by design.** Anything outside the module/templates that reaches into the object will break repeatedly. This is enforced by convention, not by typing.
 
 ## Alternatives Considered
 
-- **Schema-first object with a discriminated `kind` union.** Each factory produces an object tagged with a kind; the template dispatches on kind to a sub-template. Cleaner per-kind but commits to a structure before we know whether kinds are mutually exclusive (they may not be — a status pane could combine outstanding effects with a "viewing historical" notice). Rejected for now; we may converge on this once patterns settle.
-- **Translate strings in Python (gettext) and pass pre-formatted strings to the template.** Simpler for complex interpolation but splits translators' work across Python and templates, and re-introduces the very pattern PR 62 used (`build_status()` returning `message: "..."`) that this ADR is moving away from. Rejected.
+- **Schema-first object with a discriminated `kind` union.** Each factory produces an object tagged with a kind; the template dispatches on kind to a sub-template. This inverts the contract direction adopted above — schema first, template second — and lets the factory's domain model dictate what the UI can express. Rejected: the design is template-first, and committing to a Python-side `kind` union before any template exists would constrain the templates by a shape that has no UI requirement behind it. If kind-tagging emerges as a useful pattern after templates are written, it can be added then, on top of fields the templates already need.
+- **Assemble prose in templates with `{% translate %}` / `{% blocktranslate %}`.** Keeps all template-visible text in templates, but makes generic status components responsible for legislation-specific sentence patterns and complex interpolation. Rejected: the current design keeps templates generic and lets the status module assemble translated prose before rendering.
 - **Keep four-way effect taxonomy.** Preserves the prospective-vs-fixed-date distinction. Deferred rather than rejected: the taxonomy is internal to the module and can be reinstated without ripple.
 - **Several independent status surfaces, several unrelated templates.** Covers a hypothetical world where status appears in multiple places at varying detail. Rejected: the status object should stay single and owned. If placement requires more than one template, those templates should be status-owned and read the same object — or the relevant flag should be computed outside status if it truly renders elsewhere.
 - **One entry point that accepts several distinct objects (e.g. legislation status, printer notices, version notices).** Avoids the "junk drawer" risk of a single status object accumulating unrelated concerns. Rejected: the concerns folded in here (King's Printer, PDF status, viewing-context, effects, up-to-date state) all key off the same document metadata fetched in the same API call, with no divergent lifecycle, invalidation rule, or data source. Surface-cohesion becomes a junk drawer when the surface is incidentally shared; here the surface *is* the domain. Splitting into multiple objects would force views to construct and pass several things, partially undoing the architecture's main value of a one-call, one-object contract.
@@ -120,13 +143,12 @@ Status template tests should render under a strict template configuration where 
 
 ## Open Questions
 
-- **Object shape.** Deferred beyond the core facts listed above. We will let the first two or three factories drive the detailed shape and refactor when a pattern is visible.
 - **Where do peripheral flags live?** Borderline cases (flags that key off status-related metadata but render outside the status surfaces) can live inside the status object or be computed separately in views. Decide case-by-case; the cost of getting it wrong is low.
-- **Template-side i18n complexity.** Heavy interpolation may make `{% blocktranslate %}` blocks unwieldy. We will revisit if the template becomes unreadable; the contract with the rest of the app is unaffected by such a change.
+- **Future-effects-only main-pane panel.** The legacy frontend rendered a separate "changes and effects yet to be applied" panel for documents that are up-to-date but have required-not-yet-in-force effects. The new design samples are silent on this case. We need either a design sample or new catalog prose to wire it, or an explicit decision to drop the panel. Until then, this case shows nothing on the main pane (the side panel still renders the up-to-date variant correctly).
 
 ## Delivery Plan
 
-Six commits on `status-branch-jim`, structured so that every commit leaves document, fragment, and ToC pages rendering and the test suite green.
+Six commits on `status-branch-jim`, structured as reviewable development checkpoints rather than independently shippable releases. The branch should keep the test suite green and avoid crashes throughout, but individual checkpoints may contain explicitly documented temporary inconsistencies while a shared surface is between migrations. Nothing should be treated as ready to ship until the ADR's delivery plan is complete.
 
 ### C1 · Fix PR 62's non-status regressions
 
@@ -149,21 +171,32 @@ No view should use the new architecture yet. This commit establishes the bounded
 
 ### C3 · Migrate the document view
 
-- Add `for_document(meta, timeline)` in `lgu2/status.py`.
-- Extend `templates/status/status.html` to render document status states: up-to-date, not-up-to-date, dated-version, King's Printer, and future-effects.
-- Fold `make_pdf_status_message` and `is_first_and_only_version` into the status module where they render in the status surface.
+Per the template-first contract, the order matters: sketch the templates first, read the contract off them, then build the factory.
+
+Scope is limited to the catalog cases listed under *Scope of catalog cases covered* (Original, Standard red, and the dated-version side panel for non-current document views).
+
+- Sketch the document main-pane and side-panel status templates in `templates/status/` from the agreed designs. Use placeholder context references (`{{ status.X }}`, `{% for panel in status.panels %}…`, etc.) for whatever the templates need; do not commit to field names beyond what the sketch dictates.
+- Read the contract off the sketches: every variable and field the templates reference is, by construction, what the status object must provide. Note the semantic primitives (e.g. `severity`, `tone`) so the object does not slip into literal style props.
+- Define the `StatusObject` dataclass to satisfy that contract. The fields exist because the template asked for them.
+- Add `for_document(meta, timeline)` in `lgu2/status.py` to construct the object from view inputs.
+- PDF-only documents are out of scope per the rescope (catalog entry `[ ] PDF only`); leave the legacy `make_pdf_status_message` path untouched and have `for_document` return `None` for them so the two paths do not double up.
 - Update `views/document.py` to call `for_document(...)` and pass the resulting status object to the template.
-- Update `templates/new_theme/document/document.html` to include the relevant status-owned template(s), e.g. main-pane and side-panel placements.
+- Update `templates/new_theme/document/document.html` to include the relevant status-owned template(s).
 - Be careful with shared templates such as `right_side_panel.html`: either leave old-path behaviour intact for fragment/ToC, include a status-owned side-panel partial for the migrated document path only, or add temporary dispatch that safely supports both old and new status shapes.
+- It is acceptable in this commit for the shared ToC right-side panel include to remain temporarily inconsistent with the document status path. C3 migrates the document status surface only; ToC right-side-panel status rendering is picked up in C5.
 - Add factory unit tests for document status states.
 - Add status template render tests using the strict template fixture.
+- Note: the main-pane "future-effects only" case (`required=True, outstanding=False`) is deferred — see *Effect display taxonomy* and the `[~]` entry in `docs/status_messages.md`.
 
 After this commit, document pages use the new architecture. Fragment and ToC still use the old paths.
 
 ### C4 · Migrate the fragment view
 
-- Add `for_fragment(meta, timeline)` in `lgu2/status.py`.
-- Extend `templates/status/status.html`, or add an owned status sub-template, to handle fragment-shaped status: fragment label, direct effects, ancestor effects, and fragment-specific copy.
+Same template-first sequence as C3. Scope is the fragment variants of Original and Standard red — see *Scope of catalog cases covered*.
+
+- Sketch the fragment-shaped status template (or sub-template) for handling fragment label, direct effects, ancestor effects, and fragment-specific copy. Use placeholder references for whatever the design needs.
+- Read the contract off the sketch and extend `StatusObject` (or introduce sub-objects) with whatever the template references. Stay semantic.
+- Add `for_fragment(meta, timeline)` in `lgu2/status.py` to satisfy the new contract.
 - Update `views/fragment.py` to call `for_fragment(...)`.
 - Remove the local status-dict construction and the incorrect `status_message` plumbing introduced by PR 62.
 - Preserve fragment rendering while any shared templates are still used by ToC.
@@ -174,10 +207,15 @@ After this commit, document and fragment use the new architecture. ToC still use
 
 ### C5 · Migrate the ToC view
 
-- Add `for_toc(meta)` in `lgu2/status.py`.
+Same template-first sequence as C3. Scope is the ToC variants of Original and Standard red — see *Scope of catalog cases covered*.
+
+- Sketch the ToC-shaped status template from the agreed designs, with placeholder references for whatever the ToC surface needs.
+- Read the contract off the sketch and extend `StatusObject` (or introduce sub-objects) accordingly.
+- Add `for_toc(meta)` in `lgu2/status.py` to satisfy that contract.
 - Update `views/toc.py` to call `for_toc(...)`.
 - Remove the `make_status_data(meta)` and `make_pdf_status_message(meta)` calls from `views/toc.py`.
 - Update `templates/new_theme/document/toc.html` to include the new status entry point and remove old status includes such as `right_side_panel.html`, `status_panel.html`, and `status_message.html` where they are status-specific.
+- Resolve the temporary C3 inconsistency in the ToC right-side panel by giving ToC the status-side-panel data it needs or by routing ToC through its own status-owned side-panel entry point.
 - Add factory tests for ToC cases.
 - Add Welsh `.po` entries for any new strings.
 
@@ -195,4 +233,4 @@ This should be a pure cleanup commit with no intended behaviour change.
 
 ### Note on shared templates during migration
 
-`right_side_panel.html`, `status_panel.html`, `status_message.html`, and `up_to_date.html` are currently shared across views. Do not break them midway through the migration: either migrate their consumers before stripping status logic from them, or temporarily support both old and new status shapes until C6.
+`right_side_panel.html`, `status_panel.html`, `status_message.html`, and `up_to_date.html` are currently shared across views. For a shippable state, do not leave those shared templates broken: either migrate their consumers before stripping status logic from them, or temporarily support both old and new status shapes until C6. During the staged branch work, a checkpoint may deliberately narrow a shared template to the migrated surface only, provided the inconsistency is named in the relevant commit plan and resolved by the later checkpoint that migrates the remaining consumer.
