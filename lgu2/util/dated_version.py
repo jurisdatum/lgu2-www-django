@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.utils.formats import date_format
 from django.utils.translation import gettext as _
 
-from .links import Link, make_document_link, make_fragment_link
+from .links import Link, make_document_link
 
 
 @dataclass(frozen=True, slots=True)
@@ -37,16 +37,16 @@ def _shown_milestone_date(meta) -> Optional[_Date]:
         return meta.get('date')
 
 
-def dated_version_panel(meta, lang: Optional[str] = None, section: Optional[str] = None) -> VersionPanel:
+def dated_version_panel(meta, lang: Optional[str] = None, most_recent_href: Optional[str] = None) -> VersionPanel:
     """Build the panel shown when viewing a non-most-recent version.
 
     ``lang`` is the route-slug language (``english``/``welsh``), not the
     API's ``en``/``cy`` code — see ``make_document_link``.
 
-    ``section`` is the fragment href (e.g. ``section/5``) when the panel is
-    being built for a fragment view; the "see most recent version" link
-    then targets the most recent version of that fragment rather than the
-    document as a whole.
+    ``most_recent_href`` overrides the default whole-document URL for the
+    "See the most recent version" link. Pass the pre-built URL for the
+    current surface (e.g. the fragment or contents URL) when the panel is
+    not being built for a whole-document view.
     """
     title = meta.get('title', '')
     fragment_info = meta.get('fragmentInfo') or {}
@@ -56,20 +56,11 @@ def dated_version_panel(meta, lang: Optional[str] = None, section: Optional[str]
         if fragment_label else title
     )
 
-    # The "see most recent version" link goes to the document/fragment
+    # The "see most recent version" link goes to the document/fragment/contents
     # route, which accepts regnal years; the "see all changes" link goes
     # to changes-affected, whose URL pattern is calendar-year-only. So
     # the two links use different year sources by design.
-    if section:
-        most_recent_href = make_fragment_link(
-            meta['shortType'],
-            meta.get('regnalYear') or meta['year'],
-            meta['number'],
-            section,
-            None,
-            lang,
-        )
-    else:
+    if most_recent_href is None:
         most_recent_href = make_document_link(
             meta['shortType'],
             meta.get('regnalYear') or meta['year'],

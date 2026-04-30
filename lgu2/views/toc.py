@@ -14,7 +14,9 @@ from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
-from .helper.status import make_pdf_status_message, make_status_data
+from ..status import for_document
+from ..util.dated_version import dated_version_panel, is_most_recent_version
+from .helper.status import make_pdf_status_message
 from ..util.redirects import should_redirect
 
 
@@ -111,7 +113,13 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
     data['breadcrumb_heading'] = LEGISLATION_BREADCRUMB_HEADING
     data['extent_label'] = make_combined_extent_label(data['meta']['extent'])
 
-    data['status'] = make_status_data(meta)
+    status = for_document(meta)
+    most_recent = is_most_recent_version(meta)
+    _most_recent_href = None if most_recent else make_contents_link(type, year, number, None, lang)
+    dated_panel = None if most_recent else dated_version_panel(meta, lang, most_recent_href=_most_recent_href)
+    data['status'] = status
+    data['is_most_recent_version'] = most_recent
+    data['dated_version_panel'] = dated_panel
     template = loader.get_template('new_theme/document/toc.html')
     return HttpResponse(template.render(data, request))
 

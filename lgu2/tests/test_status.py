@@ -419,11 +419,11 @@ class DatedVersionPanelTests(SimpleTestCase):
         # changes-affected uses calendar year (its URL pattern is calendar-only).
         self.assertEqual(panel.links[1].href, '/changes/affected/ukpga/1948/38')
 
-    def test_section_param_targets_fragment_for_most_recent_link(self):
-        # On a fragment view, "see most recent version" should point to the
-        # most recent version of the same fragment, not the document.
+    def test_most_recent_href_overrides_default_document_link(self):
+        # The caller passes a pre-built URL so the panel can target any surface
+        # (fragment, contents, etc.) rather than the whole-document route.
         meta = self._meta(fragmentInfo={'label': 'Section 5', 'href': 'section/5'})
-        panel = dated_version_panel(meta, section='section/5')
+        panel = dated_version_panel(meta, most_recent_href='/ukpga/2024/1/section/5')
         self.assertEqual(panel.links[0].href, '/ukpga/2024/1/section/5')
         self.assertIn('Section 5 of Test Act 2024', panel.paragraphs[0])
 

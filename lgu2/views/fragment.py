@@ -70,7 +70,11 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
     status = for_fragment(meta)
     most_recent = is_most_recent_version(meta)
     section = (meta.get('fragmentInfo') or {}).get('href')
-    dated_panel = None if most_recent else dated_version_panel(meta, lang, section=section)
+    if not most_recent and section:
+        _most_recent_href = make_fragment_link(meta['shortType'], meta.get('regnalYear') or meta['year'], meta['number'], section, None, lang)
+    else:
+        _most_recent_href = None
+    dated_panel = None if most_recent else dated_version_panel(meta, lang, most_recent_href=_most_recent_href)
 
     meta['category'] = get_category(meta['shortType'])
 
