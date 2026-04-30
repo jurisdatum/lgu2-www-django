@@ -6,7 +6,8 @@ from django.template import loader
 from django.utils import timezone
 
 from ..api import fragment as api
-from ..status import dated_version_panel, for_fragment, is_most_recent_version
+from ..status import for_fragment
+from ..util.dated_version import dated_version_panel, is_most_recent_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category

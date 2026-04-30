@@ -10,10 +10,10 @@ from lgu2.status import (
     Message,
     SidePanel,
     Status,
-    dated_version_panel,
     for_document,
     for_fragment,
 )
+from lgu2.util.dated_version import dated_version_panel
 
 
 # Sentinel for missing context variables under the strict status-template
@@ -368,8 +368,6 @@ class DatedVersionPanelTests(SimpleTestCase):
     def test_links_point_to_most_recent_and_changes(self):
         from datetime import date
         panel = dated_version_panel(self._meta(pointInTime=date(2024, 6, 1)))
-        self.assertEqual(panel.variant, 'dated-version')
-        self.assertEqual(panel.severity, '')
         self.assertEqual(len(panel.links), 2)
         self.assertEqual(panel.links[0].href, '/ukpga/2024/1')
         self.assertIn('most recent version', panel.links[0].text)

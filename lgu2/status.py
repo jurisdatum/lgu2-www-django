@@ -8,16 +8,15 @@ is derived from the templates that consume it.
 """
 
 from dataclasses import dataclass
-from datetime import date as _Date
 from typing import List, Optional, Tuple
 
 from django.urls import reverse
-from django.utils.formats import date_format
 from django.utils.html import escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from .util.links import make_document_link, make_fragment_link
+from .util.dated_version import is_most_recent_version
+from .util.links import Link
 from .util.version import is_first_version
 
 
@@ -35,12 +34,6 @@ class Message:
     text: str = ''
     severity: str = ''  # '' | 'warning'
     disclosure: Optional[Disclosure] = None
-
-
-@dataclass(frozen=True, slots=True)
-class Link:
-    text: str
-    href: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,18 +67,6 @@ def _fragment_target_phrase(meta) -> str:
         return ''
     return _("{fragment} of {title}").format(fragment=fragment_label, title=title)
 
-
-def _shown_milestone_date(meta) -> Optional[_Date]:
-    version = meta.get('version', '')
-    try:
-        return _Date.fromisoformat(version)
-    except (TypeError, ValueError):
-        return meta.get('date')
-
-
-def is_most_recent_version(meta) -> bool:
-    versions = meta.get('versions') or []
-    return bool(versions) and meta['version'] == versions[-1]
 
 
 def for_document(meta) -> Optional[Status]:
@@ -237,79 +218,6 @@ def for_fragment(meta) -> Optional[Status]:
         return None
     return Status(messages=tuple(messages), side_panel=side_panel)
 
-
-def dated_version_panel(meta, lang: Optional[str] = None, section: Optional[str] = None) -> SidePanel:
-    """Build the side panel shown when viewing a non-most-recent version.
-
-    This is structurally a side panel like the status one, but it is not a
-    status message — it answers "where am I in the version history?". The
-    caller decides when to render it (when ``is_most_recent_version`` is
-    False); this function just builds the data.
-
-    ``lang`` is the route-slug language (``english``/``welsh``), not the
-    API's ``en``/``cy`` code — see ``make_document_link``.
-
-    ``section`` is the fragment href (e.g. ``section/5``) when the panel is
-    being built for a fragment view; the "see most recent version" link
-    then targets the most recent version of that fragment rather than the
-    document as a whole.
-    """
-    title = meta.get('title', '')
-    target = _fragment_target_phrase(meta) or title
-    # The "see most recent version" link goes to the document/fragment
-    # route, which accepts regnal years; the "see all changes" link goes
-    # to changes-affected, whose URL pattern is calendar-year-only. So
-    # the two links use different year sources by design.
-    if section:
-        most_recent_href = make_fragment_link(
-            meta['shortType'],
-            meta.get('regnalYear') or meta['year'],
-            meta['number'],
-            section,
-            None,
-            lang,
-        )
-    else:
-        most_recent_href = make_document_link(
-            meta['shortType'],
-            meta.get('regnalYear') or meta['year'],
-            meta['number'],
-            None,
-            lang,
-        )
-    links: List[Link] = [Link(
-        text=_("See the most recent version"),
-        href=most_recent_href,
-    )]
-    if meta.get('shortType') and meta.get('year') and meta.get('number'):
-        links.append(Link(
-            text=_("See all changes made to or by {title}").format(title=title),
-            href=reverse(
-                'changes-affected',
-                args=[meta['shortType'], meta['year'], meta['number']],
-            ),
-        ))
-    paragraphs: List[str] = [
-        _("This is not the most recent version of {target}.").format(target=target),
-    ]
-    # The "changed since X" date is the date of the milestone the user is
-    # actually being shown. meta['version'] holds that milestone — as a
-    # YYYY-MM-DD string for date-keyed views, or a label like 'enacted' /
-    # 'made' for original-version views, in which case meta['date'] holds
-    # the enactment/made date.
-    shown_date = _shown_milestone_date(meta)
-    if shown_date:
-        paragraphs.append(
-            _("This legislation has been changed since {date}.").format(
-                date=date_format(shown_date, 'd F Y'),
-            )
-        )
-    return SidePanel(
-        heading=_("Up to date status"),
-        paragraphs=tuple(paragraphs),
-        links=tuple(links),
-        variant='dated-version',
-    )
 
 
 def _render_rich(nodes):

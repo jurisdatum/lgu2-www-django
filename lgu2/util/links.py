@@ -1,7 +1,14 @@
 
+from dataclasses import dataclass
 from typing import Optional
 
 from django.urls import reverse
+
+
+@dataclass(frozen=True, slots=True)
+class Link:
+    text: str
+    href: str
 
 from lgu2.api.browse_types import DocEntry
 from lgu2.util.types import to_short_type

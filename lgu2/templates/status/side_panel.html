@@ -1,9 +1,11 @@
 {% if panel %}
-{# Two-axis class: variant names the component category (up-to-date,
-   dated-version, etc., siblings of extent/in-force/confers-power in the
-   stylesheet); severity adds .not-up-to-date as a warning state overlay.
-   "up-to-date not-up-to-date" together is intentional — it reads as
-   "the up-to-date status component, currently in a warning state". #}
+{% comment %}
+Two-axis class: variant names the component category (up-to-date,
+dated-version, etc., siblings of extent/in-force/confers-power in the
+stylesheet); severity adds .not-up-to-date as a warning state overlay.
+"up-to-date not-up-to-date" together is intentional — it reads as
+"the up-to-date status component, currently in a warning state".
+{% endcomment %}
 <div class="{{ panel.variant }}{% if panel.severity == 'warning' %} not-up-to-date{% endif %}">
     <h3>{{ panel.heading }}</h3>
     {% for paragraph in panel.paragraphs %}

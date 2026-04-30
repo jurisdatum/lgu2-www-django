@@ -9,7 +9,7 @@
         {% if is_most_recent_version %}
             {% include "status/side_panel.html" with panel=status.side_panel %}
         {% else %}
-            {% include "status/side_panel.html" with panel=dated_version_panel %}
+            {% include "new_theme/document/dated_version_panel.html" with panel=dated_version_panel %}
         {% endif %}
 
         <div class="extent">

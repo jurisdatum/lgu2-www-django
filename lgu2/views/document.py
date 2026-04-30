@@ -4,7 +4,8 @@ from django.template import loader
 from django.utils import timezone
 
 
-from ..status import dated_version_panel, for_document, is_most_recent_version
+from ..status import for_document
+from ..util.dated_version import dated_version_panel, is_most_recent_version
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import get_pdf_link_and_thumb
