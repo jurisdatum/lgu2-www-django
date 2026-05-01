@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 from unittest.mock import patch
 
 from django.http import HttpResponseRedirect
@@ -20,6 +21,39 @@ def _ukia_response(pdf_url: str = 'https://example.test/ukia.pdf') -> dict:
                 'type': 'application/pdf',
             }],
         },
+    }
+
+
+def _document_response(associated: Optional[list] = None) -> dict:
+    return {
+        'meta': {
+            'id': 'ukpga/2024/1',
+            'shortType': 'ukpga',
+            'longType': 'UnitedKingdomPublicGeneralAct',
+            'year': 2024,
+            'number': 1,
+            'version': 'enacted',
+            'status': 'final',
+            'title': 'Test Act 2024',
+            'cite': '2024 c. 1',
+            'lang': 'en',
+            'publisher': "King's Printer of Acts of Parliament",
+            'date': date(2024, 1, 1),
+            'modified': date(2024, 1, 1),
+            'pointInTime': None,
+            'extent': ['E', 'W', 'S', 'NI'],
+            'formats': ['xml', 'pdf'],
+            'altFormats': [],
+            'versions': ['enacted'],
+            'has': {},
+            'schedules': None,
+            'associated': associated if associated is not None else [],
+            'alternatives': [],
+            'altNumbers': [],
+            'unappliedEffects': [],
+            'upToDate': None,
+        },
+        'html': '',
     }
 
 
@@ -94,7 +128,7 @@ class DocumentViewTests(SimpleTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateNotUsed(response, 'new_theme/document/timeline.html')
-        self.assertTemplateNotUsed(response, 'new_theme/document/right_side_panel.html')
+        self.assertNotContains(response, 'id="legislationStatus"')
         self.assertNotContains(response, 'class="pit-search"')
         self.assertNotContains(response, 'class="legislation-navigation"')
         self.assertNotContains(response, 'Printer Version')
@@ -110,6 +144,29 @@ class DocumentViewTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, f'href="{reverse("browse", args=["ukia"])}"')
         self.assertContains(response, f'href="{reverse("browse-year", args=["ukia", 2024])}"')
+
+    @patch("lgu2.views.document.get_document")
+    def test_document_page_renders_related_info_when_associated_present(self, mock_get_document):
+        mock_get_document.return_value = _document_response(associated=[
+            {'type': 'Note', 'title': 'Explanatory Note'},
+            {'type': 'Other', 'title': 'Some Other Document'},
+        ])
+
+        response = self.client.get(reverse('document-version', args=['ukpga', 2024, 1, 'enacted']))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'class="explanatory-notes"')
+        self.assertContains(response, 'class="associated-documents"')
+
+    @patch("lgu2.views.document.get_document")
+    def test_document_page_omits_related_info_sections_when_associated_empty(self, mock_get_document):
+        mock_get_document.return_value = _document_response(associated=[])
+
+        response = self.client.get(reverse('document-version', args=['ukpga', 2024, 1, 'enacted']))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, 'class="explanatory-notes"')
+        self.assertNotContains(response, 'class="associated-documents"')
 
 
 class TocViewTests(SimpleTestCase):

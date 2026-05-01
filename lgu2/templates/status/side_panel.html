@@ -1,0 +1,21 @@
+{% if panel %}
+{% comment %}
+Two-axis class: variant names the component category (up-to-date,
+dated-version, etc., siblings of extent/in-force/confers-power in the
+stylesheet); severity adds .not-up-to-date as a warning state overlay.
+"up-to-date not-up-to-date" together is intentional — it reads as
+"the up-to-date status component, currently in a warning state".
+{% endcomment %}
+<div class="{{ panel.variant }}{% if panel.severity == 'warning' %} not-up-to-date{% endif %}">
+    <h3>{{ panel.heading }}</h3>
+    {% for paragraph in panel.paragraphs %}
+    <p>{{ paragraph }}</p>
+    {% endfor %}
+    {% if panel.button_expand_label %}
+    <button aria-expanded="false" aria-controls="statusPanelDetail" data-expand-label="{{ panel.button_expand_label }}" data-collapse-label="{{ panel.button_collapse_label }}">{{ panel.button_expand_label }}</button>
+    {% endif %}
+    {% for link in panel.links %}
+    <a href="{{ link.href }}">{{ link.text }}</a>
+    {% endfor %}
+</div>
+{% endif %}

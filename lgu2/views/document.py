@@ -3,10 +3,11 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.utils import timezone
 
+from ..status import for_document
+from ..util.dated_version import dated_version_panel, is_most_recent_version
 from ..api.associated import AssociatedDocument
 from ..api.document import get_akn, get_clml, get_document
 from ..api.pdf import get_pdf_link_and_thumb
-from ..messages.status import get_status_message
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
@@ -16,14 +17,6 @@ from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.redirects import should_redirect
 from .helper.status import make_pdf_status_message
-
-
-def group_effects(unappliedEffects):
-    return {
-        'outstanding': [effect for effect in unappliedEffects if effect.get('outstanding')],
-        'future': [effect for effect in unappliedEffects if effect.get('required') and not effect.get('outstanding')],
-        'unrequired': [effect for effect in unappliedEffects if not effect.get('required')]
-    }
 
 
 def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
@@ -54,10 +47,10 @@ def make_document_context(data, type, year, number, version, lang):
     if rdrct is not None:
         return rdrct
 
-    data['meta']['link'] = make_document_link(type, year, number, version, lang)
+    meta['link'] = make_document_link(type, year, number, version, lang)
 
-    timeline = make_timeline_data(data['meta'], "document", lang)
-    extent_label = make_combined_extent_label(data['meta']['extent'])
+    timeline = make_timeline_data(meta, "document", lang)
+    extent_label = make_combined_extent_label(meta['extent'])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
 
     explanatory_notes = []
@@ -70,15 +63,9 @@ def make_document_context(data, type, year, number, version, lang):
             else:
                 other_associated_doc.append(associated_documents)
 
-    status = {
-        'message': get_status_message(data['meta']),
-        'label': meta['title'],
-        'effects': {
-            'direct': group_effects(meta['unappliedEffects'])
-        },
-        'direct_effects': meta['unappliedEffects'],
-        'larger_effects': []
-    }
+    status = for_document(meta)
+    most_recent = is_most_recent_version(meta)
+    dated_panel = None if most_recent else dated_version_panel(meta, lang)
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -101,13 +88,15 @@ def make_document_context(data, type, year, number, version, lang):
         'explanatory_notes': explanatory_notes,
         'other_associated_doc': other_associated_doc,
         'status': status,
+        'is_most_recent_version': most_recent,
+        'dated_version_panel': dated_panel,
         'article': data['html'],
         'links': {
             'toc': make_contents_link(type, year, number, version, lang),
             'content': make_fragment_link(type, year, number, 'introduction', version, lang),
             'notes': '/',
             'resources': '/',
-            'whole': None,
+            'whole': meta['id'],
             'body': make_fragment_link(type, year, number, 'body', version, lang),
             'schedules': None if meta['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
         },

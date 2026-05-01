@@ -6,11 +6,11 @@ from django.template import loader
 from django.utils import timezone
 
 from ..api import fragment as api
-from ..messages.status import get_status_message_for_fragment
+from ..status import for_fragment
+from ..util.dated_version import dated_version_panel, is_most_recent_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from ..util.types import get_category
-from .document import group_effects
 from .redirect import make_data_redirect
 from ..util.timeline import make_timeline_data
 from ..util.extent import make_combined_extent_label
@@ -66,10 +66,15 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
                 explanatory_notes.append(associated_documents)
             else:
                 other_associated_doc.append(associated_documents)
-    
-    
 
-    status_message = get_status_message_for_fragment(data['meta'])
+    status = for_fragment(meta)
+    most_recent = is_most_recent_version(meta)
+    fragment_href = (meta.get('fragmentInfo') or {}).get('href')
+    if not most_recent and fragment_href:
+        most_recent_href = make_fragment_link(meta['shortType'], meta.get('regnalYear') or meta['year'], meta['number'], fragment_href, None, lang)
+    else:
+        most_recent_href = None
+    dated_panel = None if most_recent else dated_version_panel(meta, lang, most_recent_href=most_recent_href)
 
     meta['category'] = get_category(meta['shortType'])
 
@@ -83,16 +88,9 @@ def fragment(request, type: str, year: str, number: str, section: str, version: 
         'breadcrumb_heading': LEGISLATION_BREADCRUMB_HEADING,
         'explanatory_notes': explanatory_notes,
         'other_associated_doc': other_associated_doc,
-        'status': {
-            'message': status_message,
-            'label': meta['fragmentInfo']['label'],
-            'effects': {
-                'direct': group_effects(meta['unappliedEffects']['fragment']),
-                'larger': group_effects(meta['unappliedEffects']['ancestor'])
-            },
-            'direct_effects': meta['unappliedEffects']['fragment'],
-            'larger_effects': meta['unappliedEffects']['ancestor']
-        },
+        'status': status,
+        'is_most_recent_version': most_recent,
+        'dated_version_panel': dated_panel,
         'article': data['html'],
         'links': {
             'toc': make_contents_link(type, year, number, version, lang),
