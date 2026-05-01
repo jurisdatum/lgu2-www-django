@@ -20,14 +20,6 @@ from ..util.redirects import should_redirect
 from .helper.status import make_pdf_status_message
 
 
-def group_effects(unappliedEffects):
-    return {
-        'outstanding': [effect for effect in unappliedEffects if effect.get('outstanding')],
-        'future': [effect for effect in unappliedEffects if effect.get('required') and not effect.get('outstanding')],
-        'unrequired': [effect for effect in unappliedEffects if not effect.get('required')]
-    }
-
-
 def document(request, type: str, year: str, number: str, version: Optional[str] = None, lang: Optional[str] = None):
 
     data = get_document(type, year, number, version, lang)
