@@ -115,8 +115,8 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
 
     status = for_document(meta)
     most_recent = is_most_recent_version(meta)
-    _most_recent_href = None if most_recent else make_contents_link(type, year, number, None, lang)
-    dated_panel = None if most_recent else dated_version_panel(meta, lang, most_recent_href=_most_recent_href)
+    most_recent_href = None if most_recent else make_contents_link(type, year, number, None, lang)
+    dated_panel = None if most_recent else dated_version_panel(meta, lang, most_recent_href=most_recent_href)
     data['status'] = status
     data['is_most_recent_version'] = most_recent
     data['dated_version_panel'] = dated_panel

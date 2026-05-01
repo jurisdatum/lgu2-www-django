@@ -10,11 +10,10 @@ from dataclasses import dataclass
 from datetime import date as _Date
 from typing import List, Optional, Tuple
 
-from django.urls import reverse
 from django.utils.formats import date_format
 from django.utils.translation import gettext as _
 
-from .links import Link, make_document_link
+from .links import Link, make_changes_affected_link, make_document_link
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,6 +26,20 @@ class VersionPanel:
 def is_most_recent_version(meta) -> bool:
     versions = meta.get('versions') or []
     return bool(versions) and meta['version'] == versions[-1]
+
+
+def target_phrase(meta) -> str:
+    """Return ``"{fragment_label} of {title}"`` for a fragment, else just the title.
+
+    The "addressed" surface — what status copy refers to as the thing the user
+    is actually looking at (a section, schedule, etc.), rather than the whole
+    document.
+    """
+    title = meta.get('title', '')
+    fragment_label = (meta.get('fragmentInfo') or {}).get('label') or ''
+    if not fragment_label:
+        return title
+    return _("{fragment} of {title}").format(fragment=fragment_label, title=title)
 
 
 def _shown_milestone_date(meta) -> Optional[_Date]:
@@ -48,13 +61,7 @@ def dated_version_panel(meta, lang: Optional[str] = None, most_recent_href: Opti
     current surface (e.g. the fragment or contents URL) when the panel is
     not being built for a whole-document view.
     """
-    title = meta.get('title', '')
-    fragment_info = meta.get('fragmentInfo') or {}
-    fragment_label = fragment_info.get('label') or ''
-    target = (
-        _("{fragment} of {title}").format(fragment=fragment_label, title=title)
-        if fragment_label else title
-    )
+    target = target_phrase(meta)
 
     # The "see most recent version" link goes to the document/fragment/contents
     # route, which accepts regnal years; the "see all changes" link goes
@@ -73,14 +80,9 @@ def dated_version_panel(meta, lang: Optional[str] = None, most_recent_href: Opti
         text=_("See the most recent version"),
         href=most_recent_href,
     )]
-    if meta.get('shortType') and meta.get('year') and meta.get('number'):
-        links.append(Link(
-            text=_("See all changes made to or by {title}").format(title=title),
-            href=reverse(
-                'changes-affected',
-                args=[meta['shortType'], meta['year'], meta['number']],
-            ),
-        ))
+    changes_link = make_changes_affected_link(meta)
+    if changes_link is not None:
+        links.append(changes_link)
 
     paragraphs: List[str] = [
         _("This is not the most recent version of {target}.").format(target=target),

@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.utils import timezone
 
-
 from ..status import for_document
 from ..util.dated_version import dated_version_panel, is_most_recent_version
 from ..api.associated import AssociatedDocument

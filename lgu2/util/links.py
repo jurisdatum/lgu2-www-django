@@ -3,12 +3,24 @@ from dataclasses import dataclass
 from typing import Optional
 
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 
 @dataclass(frozen=True, slots=True)
 class Link:
     text: str
     href: str
+
+
+def make_changes_affected_link(meta) -> Optional[Link]:
+    """The "see all changes made to or by X" link, or None if meta lacks identifiers."""
+    if not (meta.get('shortType') and meta.get('year') and meta.get('number')):
+        return None
+    return Link(
+        text=_("See all changes made to or by {title}").format(title=meta.get('title', '')),
+        href=reverse('changes-affected', args=[meta['shortType'], meta['year'], meta['number']]),
+    )
+
 
 from lgu2.api.browse_types import DocEntry
 from lgu2.util.types import to_short_type
