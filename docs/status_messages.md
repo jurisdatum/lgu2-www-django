@@ -51,7 +51,7 @@ implementation catches up.
   > catalog text was not intended for a narrow-column side panel.
 
 [x] Standard red
-  - There are outstanding changes not yet made by the [legislation.gov.uk](http://legislation.gov.uk/) editorial team to Act of Sederunt (Rules of the Court of Session 1994\) 1994\. Any changes that have already been made by the team appear in the content and are referenced with annotations
+  - There are outstanding changes not yet made by the legislation.gov.uk editorial team to Act of Sederunt (Rules of the Court of Session 1994) 1994. Any changes that have already been made by the team appear in the content and are referenced with annotations
 
 [~] Document with future-effects but no outstanding effects *(awaiting design — when a document is up-to-date but has required effects with a future commencement date (`required=True`, `outstanding=False`), the legacy frontend rendered a separate "changes and effects yet to be applied" panel on the main pane. The new design samples on http://johngoodall.com/tna/mvp/ have no equivalent panel for this case on the document main pane. Implementing this requires either a design sample to follow or new catalog prose plus structure.)*
 
