@@ -68,6 +68,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 		--modalBg: var(--text);
 		--modalText: var(--contrastText);
+        --modalTimelinePast: rgba(200,200,200,1);
 		--activeModalBg: rgba(235,235,235,1);
 		--activeModalLargeBg: rgba(235,235,235,0.1);
 		--activeModalText: var(--text);
@@ -116,15 +117,20 @@ body:not(:-moz-handler-blocked) fieldset {
 		--timelineVersionIcon: url('images/timeline-version.png') no-repeat 54% 47%;
 		--timelineVersionIconHover: url('images/timeline-version-active.png') no-repeat 54% 47%;
 		--timelineVersionIconActive: url('images/timeline-version-active.png') no-repeat 54% 47%;
+		--timelineVersionIconProspective: url('images/timeline-version-prospective.png');
 		--timelineEnactedVersionIcon: url('images/timeline-enacted-version.png') no-repeat center;
 		--timelineEnactedVersionIconHover: url('images/timeline-enacted-version-active.png') no-repeat center;
 		--timelineEnactedVersionIconActive: url('images/timeline-enacted-version-active.png') no-repeat center;
+		--timelineRepealedVersion: url('images/timeline-repealed-icon.png') no-repeat 52% center;
+		--timelineRepealedVersionActive: url('images/timeline-repealed-icon-active.png') no-repeat 52% center;
 
 		--annotation: rgba(175,75,180,1);
 
-		.search-results > section:first-of-type hgroup p a {
-			&:after {background: url(images/remove-filter-off.png) center no-repeat; background-size: 100%;}
-			&:hover, &:focus, &:active {&:after {background: url(images/remove-filter-on.png) center no-repeat; background-size: 100%}}
+		.search-results {
+            > section:first-of-type hgroup p a {
+                &:after {background: url(images/remove-filter-off.png) center no-repeat; background-size: 100%;}
+                &:hover, &:focus, &:active {&:after {background: url(images/remove-filter-on.png) center no-repeat; background-size: 100%}}
+		    }
 		}
 
 		.icon-cards li a {
@@ -175,17 +181,25 @@ body:not(:-moz-handler-blocked) fieldset {
 			.legislation-content {
 				aside {
 					> div {
-						&.up-to-date {background: url('images/up-to-date.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
-						&.repealed {background: url('images/repealed.png') no-repeat 0.25em 0.575em; background-size: 1.35em}
+        				&.language {background: url('images/language.png') no-repeat 0.25em 0.575em; background-size: 1.45em}
+						&.up-to-date 
+							{background: url('images/up-to-date.png') no-repeat 0.25em 0.575em; background-size: 1.25em;
+							+ .up-to-date {background: url('images/prospective.png') no-repeat 0.125em 0.4em; background-size: 1.5em}
+						}
+						&.repealed {background: url('images/repealed.png') no-repeat 0.25em 0.375em; background-size: 1.35em}
 						&.dated-version {background: url('images/dated-version.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 						&.as-enacted-formats {background: url('images/timeline-version.png') no-repeat 0.35em 0.65em; background-size: 1em}
 						&.as-enacted-formats.pdf {background: url('images/kpv-pdf.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
 						&.extent {background: url('images/extent.png') no-repeat 0.125em 0.625em; background-size: 1.5em}
-						&.in-force {background: url('images/in-force.png') no-repeat 0.125em 0.575em; background-size: 1.5em}
+						&.in-force {
+							background: url('images/in-force.png') no-repeat 0.125em 0.575em; background-size: 1.5em;
+							+ .in-force {background: url('images/prospective.png') no-repeat 0.125em 0.4em; background-size: 1.5em}
+						}
 						&.confers-power {background: url('images/confers-power.png') no-repeat 0.25em 0.625em; background-size: 1.1em}
 						&.blanket-amendments {background: url('images/blanket-amendments.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 						&.explanatory-notes {background: url('images/explanatory-notes.png') no-repeat 0.25em 0.6em; background-size: 1.3em}
 						&.associated-documents {background: url('images/associated-documents.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
+                        &.as-enacted {background: url('images/as-enacted.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 					}
 					details {
 						&.other-formats {
@@ -213,9 +227,9 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				}
 				> div .legislation-ftr aside h3 {
-					&.up-to-date {background: var(--moreSubtleBg) url('images/up-to-date.png') no-repeat 0.85em center; background-size: 1.3em}
-					&.extent {background: var(--moreSubtleBg) url('images/extent.png') no-repeat 0.75em center; background-size: 1.5em}
-					&.in-force {background: var(--moreSubtleBg) url('images/in-force.png') no-repeat 0.75em 0.6em; background-size: 1.4em}
+					&.up-to-date {background-image: url('images/up-to-date.png'); background-repeat: no-repeat; background-position: 0.85em 0.7em; background-size: 1.3em}
+					&.extent {background-image: url('images/extent.png'); background-repeat: no-repeat; background-position: 0.75em center; background-size: 1.5em}
+					&.in-force {background-image: url('images/in-force.png'); background-repeat: no-repeat; background-position: 0.75em 0.6em; background-size: 1.4em}
 				}
 				.toc-detail {
 					button {
@@ -234,6 +248,9 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				}
 			}
+            &:has(li[aria-current="page"].prospective) {
+                .legislation-content aside > div.up-to-date {background-image: url('images/prospective.png')}
+            }
 		}
 	}
 
@@ -335,6 +352,8 @@ body:not(:-moz-handler-blocked) fieldset {
 		--timelineEnactedVersionIcon: url('images/timeline-enacted-version-active.png') no-repeat center;
 		--timelineEnactedVersionIconHover: url('images/timeline-enacted-version-active.png') no-repeat center;
 		--timelineEnactedVersionIconActive: url('images/timeline-enacted-version.png') no-repeat center;
+		--timelineRepealedVersion: url('images/timeline-repealed-icon-dm.png') no-repeat 52% center;
+		--timelineRepealedVersionActive: url('images/timeline-repealed-icon-active-dm.png') no-repeat 52% center;
 
 		--annotation: rgba(195,100,200,1);
 
@@ -391,23 +410,31 @@ body:not(:-moz-handler-blocked) fieldset {
 			.legislation-content {
 				aside {
 					> div {
-						&.up-to-date {background: url('images/up-to-date-dm.png') no-repeat 0 0.6em; background-size: 1.3em}
-						&.repealed {background: url('images/repealed-dm.png') no-repeat 0.25em 0.575em; background-size: 1.35em}
+        				&.language {background: url('images/language-dm.png') no-repeat 0.25em 0.575em; background-size: 1.45em}
+						&.up-to-date 
+							{background: url('images/up-to-date-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em;
+							+ .up-to-date {background: url('images/prospective.png') no-repeat 0.125em 0.4em; background-size: 1.5em}
+						}
+						&.repealed {background: url('images/repealed-dm.png') no-repeat 0.25em 0.375em; background-size: 1.35em}
 						&.dated-version {background: url('images/dated-version-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 						&.as-enacted-formats {background: url('images/timeline-version-active.png') no-repeat 0.35em 0.65em; background-size: 1em}
 						&.as-enacted-formats.pdf {background: url('images/kpv-pdf-dm.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
 						&.extent {background: url('images/extent-dm.png') no-repeat 0 0.625em; background-size: 1.5em}
-						&.in-force {background: url('images/in-force-dm.png') no-repeat 0 0.575em; background-size: 1.5em}
+						&.in-force {
+							background: url('images/in-force-dm.png') no-repeat 0.125em 0.575em; background-size: 1.5em;
+							+ .in-force {background: url('images/prospective.png') no-repeat 0.125em 0.4em; background-size: 1.5em}
+						}
 						&.confers-power {background: url('images/confers-power-dm.png') no-repeat 0.25em 0.625em; background-size: 1.1em}
 						&.blanket-amendments {background: url('images/blanket-amendments-dm.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 						&.explanatory-notes {background: url('images/explanatory-notes-dm.png') no-repeat 0.125em 0.6em; background-size: 1.3em}
 						&.associated-documents {background: url('images/associated-documents-dm.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
+                        &.as-enacted {background: url('images/as-enacted-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 					}
 				}
 				> div .legislation-ftr aside h3 {
-					&.up-to-date {background: var(--moreSubtleBg) url('images/up-to-date-dm.png') no-repeat 0.85em center; background-size: 1.3em}
-					&.extent {background: var(--moreSubtleBg) url('images/extent-dm.png') no-repeat 0.75em center; background-size: 1.5em}
-					&.in-force {background: var(--moreSubtleBg) url('images/in-force-dm.png') no-repeat 0.7em center; background-size: 1.5em}
+					&.up-to-date {background-image: url('images/up-to-date-dm.png'); background-repeat: no-repeat; background-position: 0.85em 0.7em; background-size: 1.3em}
+					&.extent {background-image: url('images/extent-dm.png'); background-repeat: no-repeat; background-position: 0.75em center; background-size: 1.5em}
+					&.in-force {background-image: url('images/in-force-dm.png'); background-repeat: no-repeat; background-position: 0.75em 0.6em; background-size: 1.4em}
 				}
 				.toc-detail {
 					button {
@@ -426,6 +453,9 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				}
 			}
+            &:has(li[aria-current="page"].prospective) {
+                .legislation-content aside > div.up-to-date {background-image: url('images/prospective-dm.png')}
+            }
 		}
 	}
 
@@ -471,6 +501,8 @@ body:not(:-moz-handler-blocked) fieldset {
 		&:active, &:focus, &:hover {.no-focus(); background-color: var(--disabledButtonBg); color: var(--text)}
 	}
 	.no-focus {border-color: transparent; outline-color: transparent; outline-style: solid; outline-width: 0.1rem; text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 transparent; -moz-box-shadow: 0 0 0.375rem 0 transparent; box-shadow: 0 0 0.375rem 0 transparent}
+
+    .tick {position: absolute; content: ""; margin: 0.5rem 0 0 -1.3em; border-top: 0.175rem solid var(--activeText); border-right: 0.175rem solid var(--activeText); transform: rotate(135deg); width: 0.65rem; height: 0.225em}
 
 	.toggle {
 		list-style: none; display: flex; gap: 0.75rem; flex-wrap: wrap;
@@ -538,7 +570,8 @@ body:not(:-moz-handler-blocked) fieldset {
 
 	[hidden] {display: none}
 
-	summary {cursor: pointer; display: block}
+    details[disabled] summary {pointer-events: none; user-select: none}
+    summary {cursor: pointer; display: block}
 	summary::marker, summary::-webkit-details-marker {display: none; content: ""}
 
 	.sr-only {position: absolute; width: 0.0625rem; height: 0.0625rem; padding: 0; margin: -0.0625rem; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0}
@@ -1174,22 +1207,28 @@ body:not(:-moz-handler-blocked) fieldset {
 			}
 			.search-results-list {
 				h3 {
-					padding: 0.65rem 0.25rem 0.25rem 0.25rem; border-top: 0.0625rem solid var(--subtleBorder); margin: 0; font-size: 1.2rem;
-					&:first-of-type {padding: 0 0.25rem 0.25rem 0.25rem; border-top: 0}
+					padding: 0.65rem 0.5rem 0.35rem 0.5rem; border-top: 0.0625rem solid var(--subtleBorder); margin: 0; font-size: 1.2rem;
+					&:first-of-type {padding: 0 0.5rem 0.35rem 0.5rem; border-top: 0}
 				}
 				ul:not(.skip-links) {
 					list-style: none; margin: 0;
 					li {
-						border-top: 0.0625rem solid var(--subtleBorder); padding: 0.65rem 0.25rem; line-height: 1.3rem;
-						a {font-weight: 500}
+						border-top: 0.0625rem solid var(--subtleBorder); margin: 0; padding: 0.65rem 0.25rem 0.8rem 0.25rem; line-height: 1.3rem;
+                        dt {.sr-only}
+                        dd {
+                            margin: 0 0 0.3rem 0; padding: 0 0 0.25rem 0; border-bottom: 0.0625rem solid var(--verySubtleBorder);
+                            &:last-of-type {margin: 0; border: 0}
+                        }
+						a {font-weight: 500; display: block; margin: 0 0.25rem; line-height: 1.45rem}
 						span {
-							display: block; margin: 0.35rem 0 0 0;
-							&:nth-of-type(2) {color: var(--lightText)}
+							display: block; margin: 0.35rem 0.25rem 0 0.25rem;
+							&:nth-of-type(2) {color: var(--lightText); line-height: 1rem; margin: 0.45rem 0.25rem 0 0.25rem}
 						}
+			            &:nth-of-type(even) {background: var(--verySubtleBg)}
 					}
 				}
 				h3 + ul:not(.skip-links), .skip-links + ul:not(.skip-links) {
-					li:first-of-type {padding: 0 0.25rem 0.65rem 0.25rem; border: 0}
+                    li:first-of-type {padding: 0 0.25rem 0.8rem 0.25rem; border: 0; margin: 0}
 				} 
 				ul.skip-links:first-of-type a {margin: -1rem 0 0 0}
 			}
@@ -1562,14 +1601,14 @@ body:not(:-moz-handler-blocked) fieldset {
                     background: var(--bg); .content-box; padding: 1.25rem; position: relative;
                     legend {position: absolute}
                     > label {
-                        margin: 1.25rem 0 0.35rem 0; display: block;
+                        margin: 1.25rem 0 0.35rem 0; display: block; font-weight: 600; font-size: 1.05rem;
                         &:first-of-type {margin: 2.5rem 0 0.35rem 0}
                     }
                     > input[type="text"]:first-of-type, select {width: 100%}
                     > input[type="text"]:last-of-type {width: 4.5rem}
                     [role="group"]:not(.search-date div[role="group"]) {
                         display: flow-root;
-                        h3 {margin: 1.25rem 0 0.35rem 0; font-weight: 400; font-size: 1rem}
+                        h3 {margin: 1.3rem 0 0.35rem 0; font-weight: 400; font-size: 1rem}
                         label {
                             display: inline-block; float: left; clear: both; padding: 0.5em 0.75em; line-height: 1.2rem; border: 0.0625rem solid var(--link); border-right: 0; border-radius: 0.1875rem 0 0 0.1875rem; background: var(--subtleBg);
                             &:last-of-type {margin: 0.75rem 0 0 0}
@@ -1625,6 +1664,14 @@ body:not(:-moz-handler-blocked) fieldset {
                 }
             }
         }
+        section{
+            .search-date {
+                &:has(div[role="group"]) {
+                    h3 {font-weight: 600; font-size: 1.05rem}
+                    div[role="group"] {margin: 0.5rem 0 0 0}
+                }
+            }
+        }
         .search-content {
             .search-header {
                 > a {.ghost-button; display: block; margin: 1rem 0 0 0}
@@ -1633,7 +1680,10 @@ body:not(:-moz-handler-blocked) fieldset {
                     label {margin: 0 0.5rem 0 0}
                     select {flex-grow: 1}*/
                 }
-                .search-actions {background: var(--disabledButtonBg); color: var(--lightText); position: absolute; right: 0; top: -200px}
+                .search-actions > a {
+                    .button; .ghost-button; margin: 1rem 0; display: block; position: relative; z-index: 1;
+                    > span:after {display: block; width: 1rem; height: 1rem; position: absolute; top: calc(50% - 0.5rem); right: 0.75rem}
+                }
             }
             #changes-to-legislation-results {
                 td {
@@ -1675,6 +1725,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 		.legislation-navigation {
 			text-align: center; display: flex; background: var(--verySubtleBg);
+			&:before {.drop-shadow; position: absolute; width: var(--maxWidth)}
 			h2 {.sr-only()}
 			> a, > span {
 				white-space: nowrap; min-width: 3.5rem; padding: 1.25rem 0.75rem; font-weight: 500;
@@ -1709,8 +1760,15 @@ body:not(:-moz-handler-blocked) fieldset {
 					span {
 						font-weight: 500; color: var(--link); white-space: nowrap;
 						&:first-of-type:after {.chevron(); width: 0.4em; height: 0.4em; border-top-width: 0; border-bottom-width: 0.15rem; border-right-width: 0.15rem; margin: 0 0.25em 0.23em 0.5em}
-						&:last-of-type {.sr-only()}
+						&:last-of-type:not(:first-of-type) {.sr-only()}
 					}
+                    &[disabled] {
+                        background-color: unset;
+                        span {
+                            color: unset;
+                            &:after {display: none}
+                        }
+                    }
 				}
 				&[open] summary span:after {border-bottom: 0; border-right: 0; border-top-width: 0.15rem; border-left-width: 0.15rem; margin: 0.23em 0.25em 0 0.5em}
 			}
@@ -1723,7 +1781,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 		.timeline {
 			padding: 0; font-weight: 300; 
-			&:not(.pit-search + .timeline):before {.drop-shadow()}
+			&:not(.pit-search + .timeline, .legislation-navigation + .timeline):before {.drop-shadow()}
 			&:has(details:not([open])) {
 				h2 {.sr-only()}
 				summary {
@@ -1747,18 +1805,18 @@ body:not(:-moz-handler-blocked) fieldset {
 						span {display: block}
 					}
 					&.prospective {
-						.version {
-							&:before {border-top: 0.5em dashed var(--timelineVersion)}
-							&:after {border-top-color: transparent}
-						}
+						.date:before {border-color: var(--alert); background-image: var(--timelineVersionIconProspective)}
 					}
+                    &.repealed {
+						.date:before {background: var(--repealed) var(--timelineRepealedVersionActive); background-size: 40%}
+                    }
 					.close {display: none}
 				}
 				&:has(.versions li[aria-current="page"] .point-in-time) {
 					summary {
 						.point-in-time {
-							display: inline-block; margin: 1.5rem 0 0.5rem 0; padding: 0.25em 0.825em; border-radius: 0.1875rem; line-height: 1.3em; background: var(--timelineVersionActive); color: var(--pointInTimeText);
-							&:before {content: ""; display: block; position: absolute; left: calc(50% - 0.5rem); border: 0.2rem solid transparent; width: 1rem; height: 1rem; box-sizing: border-box; border-radius: 50%; overflow: hidden; margin: -2.5rem auto 0 auto; background: var(--timelineVersionActive)}
+							display: inline-block; margin: 1.9rem 0 0 0; padding: 0.25em 0.825em; border-radius: 0.1875rem; line-height: 1.3em; background: var(--timelineVersionActive); color: var(--pointInTimeText);
+							&:before {content: ""; display: block; position: absolute; left: calc(50% - 0.5rem); border: 0.2rem solid transparent; width: 1rem; height: 1rem; box-sizing: border-box; border-radius: 50%; overflow: hidden; margin: -2.9rem auto 0 auto; background: var(--timelineVersionActive)}
 							span {
 								display: block; font-weight: 500;
 								&:before {content: ""; position: absolute; border-left: 0.15em solid var(--timelineVersionActive); height: 2em; width: 0.15em; margin: -3.5em 0 0 0; left: calc(50% - 0.05em)}
@@ -1771,6 +1829,7 @@ body:not(:-moz-handler-blocked) fieldset {
 								&:before {border-top-color: transparent}
 								&:after {border-top: 0.5em dashed var(--timelineVersionActive)}					
 							}
+                            //.point-in-time:before {background: var(--alert); z-index: 1}
 						}
 					}
 					summary .date {display: none}
@@ -1819,7 +1878,7 @@ body:not(:-moz-handler-blocked) fieldset {
 			> aside {
 				h2 {.sr-unset(); margin: 0 0 0.25rem 0; font-weight: 500}
 				> div {
-					display: flex; flex-direction: column; font-weight: 300; border-top: 0.0625rem solid var(--subtleBorder); padding: 0.2rem 0 0 0;
+					display: flex; flex-direction: column; font-weight: 300; border-top: 0.0625rem solid var(--subtleBorder); padding: 0.2rem 0 0 0; min-height: 2.35rem;
 					h3 {.sr-only()}
 					p {
 						line-height: 1.25em; padding: 0.25em 0 0.15rem 2em;
@@ -1828,16 +1887,33 @@ body:not(:-moz-handler-blocked) fieldset {
 							&.date {white-space: nowrap; font-weight: inherit}
 						}
 					}
-					> a {
+					> a:not(.language > a) {
                         display: inline-block; padding: 0.4em 0 0.5em 2em; line-height: 1.35em;
                     }
 					> button {.button(); margin: 0.35rem 0 0.45rem 2rem; padding: 0.65rem 1rem; width: calc(100% - 2rem); font-weight: 300}
-					&:has(p):not(.repealed) {
+					&:has(p):not(.repealed, .language, .all-about) {
 						> a {
                             padding: 0 0 0.35em 2em;
                             &:has(+ a) {.button(); margin: 0.35rem 0 0.45rem 2rem; padding: 0.65rem 1rem; font-weight: 300}
                         }
 					}
+                    &.language {
+                        p {margin: 0 0 0.5rem 0}
+                        a {
+                            .ghost-button; font-weight: 300;
+                            &.selected {
+                                padding: 0.5em 1.5em 0.5em 2.15em; background: var(--activeBg); color: var(--activeText); border-color: var(--activeBg);
+                                span:before {.tick; margin: 0.5rem 0 0 -1.4em}
+                            }
+                        }
+                    }
+                    &.all-about {
+                        background: var(--searchBg); color: var(--contrastText);
+                        h3 {.sr-unset; padding:  0.65em 1em 0.1rem 1rem; line-height: 1.4rem}
+                        p:first-of-type {padding: 0 1em 0.5em 1em; line-height: 1.4rem}
+                       // > a:not(.language > a) {color: var(--activeBgMarker); background: var(--activeBgSolid)}
+                        a:not(.language > a) {.button; width: calc(100% - 2rem); margin: 0 1rem 1rem 1rem; padding: 0.5em 1.5em}
+                    }
 					&.not-up-to-date {
 						p:first-of-type {background: url('images/not-up-to-date.png') no-repeat 0.1rem 0.15rem; background-size: 0.85rem}
 						button {
@@ -1845,14 +1921,15 @@ body:not(:-moz-handler-blocked) fieldset {
 							&:hover, &:active, &:focus {background: var(--focusWarningBg)}
 						} 
 					}
+					&.extent {
+                        button {.ghost-button; padding: 0.65rem 1rem; font-weight: 300}
+					}
 					&.repealed {
 						> a:first-of-type {padding: 0.4em 0 0 2em}
 					}
 					&.up-to-date ul {.toggle; margin: 0.35rem 1em 0.5em 2em}
                     &.as-enacted-formats {
-                        display: table;
                         p {height: 2.25rem; padding: 0.15rem 0 0.15rem 2rem; display: table-cell; display: table-cell; vertical-align: middle}    
-                        a {font-weight: 500}
                     }
 				}
 				details {
@@ -1895,9 +1972,9 @@ body:not(:-moz-handler-blocked) fieldset {
 			> div {
 				margin: 1em 0 0 0;
 				.legislation-text {
-					padding: 0;
+					padding: 0; width: 100%;
 					ol, ul {
-						counter-reset: list;
+						counter-reset: list; line-height: 1.65em;
 						li, li a {font-family: "Arial", "Helvetica", "sans-serif"}
 						.annotation-start {
 							display: inline-block; vertical-align: text-top; padding: 0 0.05em 0 0.7rem; margin: 0 0.25rem 0 0; font-size: 1rem;
@@ -1909,6 +1986,10 @@ body:not(:-moz-handler-blocked) fieldset {
 						.annotation-end {
 							display: inline-block; vertical-align: text-top; width: 0.6rem;
 							&:after {content: ""; position: absolute; display: inline-block; border: 0.175rem solid var(--annotation); border-left: 0; border-radius: 0 0.175rem 0.175rem 0; height: 1.25rem; width: 0.25rem; margin: -0.15rem 0 0 0.15rem}
+                            &.no-gap {
+                                width: 0.4rem;
+                                &:after {margin: -0.15rem 0 0 -0.25rem}
+                            }
 						}
 						.annotation-start, .annotation-end {
 							span {.sr-only()}
@@ -1916,6 +1997,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						h3, h4, h5, h5 {
 							font-size: 1rem; font-weight: 500; margin: 0; line-height: 1.5em;
 						}
+                        > li > ul[type="none"] {list-style: none}
 					}
 					> ol {
 						margin: 0; 
@@ -1944,15 +2026,63 @@ body:not(:-moz-handler-blocked) fieldset {
 						.wrapper {display: inline-block; line-height: 1.2em}
 					}
                     iframe {width: 100%; height: 90vH}
+							.extent {
+								display: inline-block; margin: -0.0625rem 0 -0.0625rem 0.25rem; font-weight: 300;
+								&.hidden {display: none}
+								> span:first-of-type {.sr-only()}
+								> span  {
+									display: inline-block;
+									&:before {
+										background: var(--subtleBg); border: 0.0625rem solid var(--lessSubtleBorder); display: inline-block; margin: 0 0 0 0.25rem; padding: 0 0.4rem; border-radius: 0.25rem;
+									}
+									&.e:before {content: "E" / ""}
+									&.e-w:before {content: "E&W" / ""}
+									&.ni:before {content: "NI" / ""}
+									&.s:before {content: "S" / ""}
+									&.w:before {content: "W" / ""}
+									&.eni:before {content: "E, NI" / ""}
+									&.es:before {content: "E, S" / ""}
+									&.ew:before {content: "E, W" / ""}
+									&.e-wni:before {content: "E&W, NI" / ""}
+									&.e-ws:before {content: "E&W, S" / ""}
+									&.nis:before {content: "NI, S" / ""}
+									&.sw:before {content: "S, W" / ""}
+									&.enis:before {content: "E, NI, S" / ""}
+									&.eniw:before {content: "E, NI, W" / ""}
+									&.esw:before {content: "E, S, W" / ""}
+									&.nisw:before {content: "NI, S, W" / ""}
+									&.e-wnis:before {content: "E&W, NI, S" / ""}
+									&.enisw:before {content: "E, NI, S, W" / ""}
+									span {.sr-only()}
+								}
+							}
 				}
 				.legislation-ftr {
 					padding: 0;
 					aside {
 						margin: 1.25rem 0 0 0; border: 0.05em solid var(--lessSubtleBorder); border-radius: 0.25rem;
 						h3 {
-							margin: 0; padding: 0.75em 3em; font-size: 1rem; font-weight: 500; line-height: 1.2em;
+							margin: 0; padding: 0.75em 3em; font-size: 1rem; font-weight: 500; line-height: 1.2em; background-color: var(--moreSubtleBg);
 							&:first-of-type {border-radius: 0.25rem 0.25rem 0 0}
+                            &.prospective {
+                                background: var(--alertBg); font-style: italic;
+							/*
+                                + dl {
+                                    dt, dd, dd * {font-style: italic}
+                                }
+							*/
+                            }
 						}
+                        hgroup:has(.prospective) {
+                            background: var(--moreSubtleBg); background: var(--alertBg);
+                            h3 {background-color: unset; padding: 0.75em 3em 0.1em 3em}
+						/*
+                            + dl {
+                                dt, dd, dd * {font-style: italic}
+                            }
+							*/
+                            p {margin: 0; font-style: italic; padding: 0 3em 0.5em 3em; font-weight: 300}
+                        }
 						dl {
 							margin: 0.5em 1em 0.75em 1em; display: grid; grid-template-columns: auto 1fr; column-gap: 0.75em;
 							dt {
@@ -1967,10 +2097,15 @@ body:not(:-moz-handler-blocked) fieldset {
 									li {margin: 0 0 0.25em 0}
 								}
 							}
+                            .not-commenced, .not-commenced a {font-style: italic}
 						}
+                        &:has(.prospective) {
+                            border: 0.175rem dashed var(--alert);
+                        }
 					}
 					nav {
 						background: none; margin: 0;
+                        &:before, &:after {display: none}
 						> a, > span {padding: 1.25rem 0}
 					}
 				}
@@ -1986,7 +2121,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					ul, ol {
 						margin: 0.5em 0 0 1rem;
 						li {
-							margin: 0 0 0.5rem 0; padding: 0 0 0 0.25rem; font-weight: 300;
+							margin: 0 0 0.5rem 0; padding: 0 0 0 0.25rem; font-weight: 300; position: relative;
 							&::marker {color: var(--link)}
                             &[value="0"] {
                                 &::marker {display: none}
@@ -2043,7 +2178,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					details {
 						summary {
 							padding: 0 1rem 0.5rem 0; border-color: transparent; color: var(--link);
-							&:before {position: absolute; margin: -1.4rem 0 0 -2rem; content: ""; width: 1.5rem; height: 1.5rem}
+							&:before {position: absolute; top: -0.25rem; left: -1.75rem; content: ""; width: 1.5rem; height: 1.5rem}
                             span {.sr-only}
 						}
 						ol, ul {
@@ -2054,6 +2189,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 					}
 					&:not(:has(details)) button {display: none}
+                    + .legislation-ftr aside {margin: 0 0 1.25rem 0}
 				}
 				.confers-power, .blanket-amendments {
 					padding: 0 0 1rem 0;
@@ -2122,12 +2258,52 @@ body:not(:-moz-handler-blocked) fieldset {
 					}
 				}
 			}
+            &:has(.legislation-ftr aside .prospective) {
+                > aside > div:not(.as-enacted) p a {font-weight: 600}
+            }
 		}
+        &:not(:has(.legislation-navigation, .pit-search, .timeline)) {
+            .legislation-content {
+                padding: 0 1rem 1rem 1rem;
+                &:not(:has(aside)) div {margin: 0}
+            }
+        }
 		&:not(:has(.pit-search)) .legislation-navigation {
 			position: relative;
 			&:after {.drop-shadow; position: absolute; bottom: 0; width: 100%}
 		}
-	}
+
+        &:has(.previous-point-in-time, .not-commenced) {
+            .legislation-content > aside > div.in-force {
+				border-top: 0.125rem dashed var(--subtleBorder);
+			}
+			.legislation-content > div {
+				.legislation-text {
+                     &:has(> p) {
+                        > ol, > ul {padding: 0.5rem; border: 0.175rem dashed var(--subtleBorder); border-top: 0; border-radius: 0 0 0.35em 0.35em}
+                        > p {
+                            background: var(--moreSubtleBg); border: 0.175rem dashed var(--subtleBorder); border-bottom-color: transparent; border-radius: 0.35em 0.35em 0 0; padding: 0.4em 0.85em; font-weight: 300;
+                            span {display: block; font-weight: 600}
+                        }
+                    }
+                }
+            }
+        }
+        &:has(.prospective[aria-current="page"]) {
+            .legislation-content > aside > div.in-force {border-top: 0.125rem dashed var(--subtleBorder)}
+            .legislation-content > div .legislation-text {
+                > ol, > ul {padding: 0.5rem; background: var(--verySubtleBg); border: 0.175rem dashed var(--alert); border-top: 0; border-radius: 0 0 0.35em 0.35em}
+                > p {
+                    background: var(--alertBg); border: 0.175rem dashed var(--alert); border-bottom-color: transparent; border-radius: 0.35em 0.35em 0 0; padding: 0.4em 0.85em; font-weight: 300;
+                    span {display: block; font-weight: 600}
+                }
+            }
+        }
+		.legislation-content > aside > div.in-force + .in-force, .legislation-content > aside > div.up-to-date + .up-to-date {
+			border-top: 0.125rem dashed var(--alert);
+			p {padding: 0.35em 0 0.6rem 2em}
+		}
+    }
 
 	.compact-search {
 		position: unset;
@@ -2148,7 +2324,45 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
+	.legislation:has(.all-about-this-act) .legislation-content > aside > div.all-about-this-act > a:not(.language > a) {padding: 0.7em 0; border-radius: 0.25rem}
+	.legislation .legislation-content > aside > div.all-about-this-act {border: 0}
+	.all-about-this-act {
+		h2 {.sr-only()}
+		ul {
+			margin: 1.35rem 0 0.5rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); grid-auto-rows: auto; gap: 1.5rem;
+			li {
+				background: var(--cards); display: flex; border-radius: 0.3rem; margin: 0;
+				&:has(a:focus), &:hover {
+					background: var(--cardsOver);
+					a {background-color: var(--cardsHover)}
+				}
+				article {
+					display: flex; flex-grow: 1;
+					a {
+						padding: 1.25rem 2rem; background: var(--bg) no-repeat 1rem 1.5rem; background-size: 4rem; flex: 1; margin: 0.125rem 0.125rem 0.125rem 0.4375rem; line-height: 1.55em; border-radius: 0 0.2rem 0.2rem 0; color: var(--text); display: flex; align-items: center;
+						h3 {font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.35em}
+						&:focus, &:hover {background-color: var(--cardsHover); text-decoration: none}
+					}
+				}
+			}
+		}
+		&.icon-cards {
+			li {
+				a {padding: 1.35rem 1rem 1.35rem 6rem; display: block; align-items: unset}
+			}
+		}
+	}
+
 /* breakpoints */
+	@media only screen and (max-width: calc(@mobileSearchSelect - 1px)) {
+        main.legislation .legislation-content > aside > div.language {
+            a {
+                margin: 0 0 0.75rem 2rem;
+                &:last-of-type {margin: 0 0 0.75rem 2rem}
+            }
+        }
+	}
+
 	@media only screen and (min-width: calc(@mobileLandscape)) and (max-width: calc(@tabletPortrait - 1px)) {
 		main {
 			&.legislation .legislation-content > div {
@@ -2169,7 +2383,8 @@ body:not(:-moz-handler-blocked) fieldset {
 
 	@media only screen and (max-width: calc(@tabletPortrait - 1px)) {
 	/* main menu and timeline act as modal */
-		body:has(.hdr-menu details[open]) *:not(:has(.hdr-menu)):not(.hdr-menu):not(.hdr-menu *) {display: none}
+		body:has(.timeline > details[open]) *:not(:has(.timeline)):not(.timeline):not(.timeline *), 
+		body:has(.search-filters > details[open]) *:not(:has(.search-filters)):not(.search-filters):not(.search-filters *) {display: none}
 		header {
 			background: var(--hdrBg);
 			section > nav {
@@ -2227,6 +2442,12 @@ body:not(:-moz-handler-blocked) fieldset {
 				.hdr-search summary {background-color: var(--searchBg); background-image: url('images/search-active.png')}
 			}
 		}
+        main.changes-to-legislation.search-results .search-content .search-header .search-actions a > span {
+            display: inline-block;
+            &:after {float: right;
+        margin: 0.25rem 0 0 0.5rem; top: unset; position: unset; right: unset}
+        }
+
 	}
 
 	@media print and (orientation: portrait), screen and (min-width: calc(@tabletPortrait)) and (max-width: calc(@desktopSmall - 1px)) {
@@ -2250,13 +2471,24 @@ body:not(:-moz-handler-blocked) fieldset {
 						> div {
 							padding: 0 0.5rem 0 0.75rem; background-color: var(--verySubtleFixedBg); border: 0;
 							&:last-of-type {padding: 0 0.5rem 0.75rem 0.75rem; flex-grow: 1}
-							&.up-to-date {background-position: 1em 0.55em}
-						    &.repealed {background-position: 0.25em 0.575em}
+            				&.language {background-position: 1em 0.55em}
+							&.up-to-date {
+								background-position: 1em 0.55em;
+								+ .up-to-date {background-color: var(--verySubtleFixedBg)}
+							}
+						    &.repealed {background-position: 1em 0.35em}
     						&.dated-version {background-position: 1em 0.55em}
-							&.extent {background-position: 0.85em 0.55em}
-							&.in-force {background-position: 0.85em 0.55em}
+							&.extent {
+                                background-position: 0.85em 0.55em;
+                                button {.ghost-button; padding: 0.65rem 1rem; font-weight: 300}
+                            }
+							&.in-force {
+								background-position: 0.85em 0.55em;
+								+ .in-force {background-color: var(--verySubtleFixedBg)}
+							}
 							&.confers-power {background-position: 1em 0.55em}
 							&.blanket-amendments {background-position: 0.85em 0.55em}
+                            &.as-enacted {background-position: 1em 0.55em}
 							p {
 								padding: 0.15em 0 0.15rem 2em;
 								&:first-of-type {padding: 0.35em 0 0.15rem 2em; border-top: 0.0625rem solid var(--subtleBorder)}
@@ -2272,6 +2504,15 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 					}
 				}
+                &:has(.previous-point-in-time, .not-commenced) {
+					.legislation-content > aside > div.in-force {
+						p:first-of-type {border-top: 0.125rem dashed var(--subtleBorder)}
+						+ .in-force p:first-of-type {border-color: var(--alert); padding: 0.55em 0 0.55rem 2em}
+					}
+                }
+                &:has(.prospective[aria-current="page"]) {
+                    .legislation-content > aside > div.in-force p:first-of-type {border-top: 0.125rem dashed var(--subtleBorder)}
+                }
 			}
 			&.search-results {
 				.search-content {
@@ -2336,7 +2577,7 @@ body:not(:-moz-handler-blocked) fieldset {
 			&.legislation {
 				.timeline {
 					.modal;
-					&:has(details:not([open])) {
+					&:has(> details:not([open])) {
 						summary, summary:active, summary:focus, summary:hover {.no-focus; background: var(--verySubtleBg); padding: 0.5em 0; text-align: center; color: var(--text)}
 						summary {
 							&:active {.button {.button-active}}
@@ -2344,19 +2585,21 @@ body:not(:-moz-handler-blocked) fieldset {
 							.prefix, .date {font-weight: 300}
 						}
 					}
-					&:has(details[open]) {
+					&:has(> details[open]) {
 						details {
 							.versions {
 								ol {
-									margin: 0;
+									margin: 0 0 0 0.65rem; width: -webkit-fill-available;
 									li {
-										margin: 0; position: relative;
-										&:before {display: block; position: absolute; width: 1.125rem; height: 1.125rem; content: ""; background: var(--modalBg); border-radius: 50%; border: 0.2rem solid var(--modalButtonBorder)}
+										margin: 0; position: relative; border-left: 0.2rem solid var(--modalTimelinePast);
+										&:before {display: block; position: absolute; width: 1.125rem; height: 1.125rem; content: ""; background: var(--modalBg); border-radius: 50%; border: 0.2rem solid var(--modalButtonBorder); margin: 0 0 0 -0.85rem}
+									/*
 										&:not(:first-of-type, :last-of-type) {
-											&:after {content: ""; display: block; width: 0.2rem; height: 3rem; background: var(--contrastBorder); position: absolute; top: 1.5rem; left: 0.65rem}
+											&:after {content: ""; display: block; width: 0.2rem; height: 3rem; background: var(--modalTimelinePast); position: absolute; top: 1.5rem; left: 0.65rem}
 										}
+									*/
 										> a, > div {
-											display: inline-block; position: relative; padding: 0 0 1rem 2rem;
+											display: inline-block; position: relative; padding: 0 0 1rem 1.25rem;
 										}
 										&[aria-current="page"] {
 											&:before {background: var(--buttonBg); border: 0.2rem solid var(--modalButtonBorder)}
@@ -2372,9 +2615,42 @@ body:not(:-moz-handler-blocked) fieldset {
 											color: var(--disabledModalText);
 											&:before {border: 0.2rem solid var(--disabledButtonBorder)}
 										}
+                                        &.consolidated {
+                                            &:before {top: 1.5rem}
+                                            a {
+                                                padding: 1.5rem 0 1rem 2rem;
+                                                &:before {content: ""; display: block; height: 2rem; width: 1rem; position: absolute; left: 0.25rem; top: -1.0rem; background-image: url('images/timeline-break.png'); background-repeat: no-repeat; background-size: 1rem}
+                                            }
+                                        }
+                                        &:has(~ [aria-current="page"]) {
+                                            &:not(:first-of-type, :last-of-type):after {background: var(--bg)}
+                                            &:before {background: var(--modalTimelinePast)}
+											&:first-of-type:has(> div):before {background: transparent}
+                                        }
+										&:first-of-type, &:last-of-type {border-color: transparent}
 									}
 								}
 								a {color: var(--modalText)}
+							}
+						}
+					}
+					.versions details {
+						summary {
+							.button; margin: 0 1.25rem 1.25rem 1.25rem; text-align: center;
+							span {
+								&:after {.chevron; border-color: var(--buttonText); transform: rotate(135deg); margin: 0.15rem 0 0.2rem 0.65rem}
+								&:last-of-type {display: none}
+							}
+						}
+						&[open] {
+							summary {
+								margin: 0 1.25rem 0 1.25rem; border-radius: 0.1875rem 0.1875rem 0 0;
+								span:after {transform: rotate(315deg); margin: 0.15rem 0 0 0.65rem}
+							}
+							> div {
+								margin: 0 1.25rem 1.25rem 1.25rem; padding: 1em 1em 0.25em 1em; border: 0.0625rem solid var(--link); border-top: 0; border-radius: 0 0 0.1875rem 0.1875rem;
+								h3 {.sr-only}
+								p {margin: 0 0 0.5em 0; font-weight: 300; line-height: 1.25em}
 							}
 						}
 					}
@@ -2383,11 +2659,15 @@ body:not(:-moz-handler-blocked) fieldset {
 					> aside {
 						border: 0.0625rem solid var(--subtleBorder); border-radius: 0.35rem; padding: 0.5rem 0.75rem 0.25rem 0.75rem; background: var(--verySubtleBg);
 						&:has(.not-up-to-date) {border: 0.13rem dashed var(--warningBorder)}
+						> div.as-enacted-formats {
+							display: table; width: -webkit-fill-available;
+                                p {padding: 0.25rem 0 0.25rem 2rem}
+							}
 					}
 				}
 			}
 			&.search-results {
-				.search-content {
+                .search-content {
 					> details {
 						> summary {
 							.close span {display: none}							
@@ -2545,6 +2825,35 @@ body:not(:-moz-handler-blocked) fieldset {
                 }
             }
         }
+        :root, :root[colour-scheme="light"] {
+            .search-results {
+                > .search-content .search-header .search-actions a {
+                    padding: 0.5rem 2.5rem 0.5rem 1rem;
+                    > span {
+                        &:after {
+                            content: ""; background: url(images/rss.png) center no-repeat; background-size: 100%;
+                        }
+                    }
+                    &:hover, &:focus, &:active {
+                        > span:after {background-image: url(images/rss-active.png)}
+                    }
+                }
+            }
+        }
+    	:root[colour-scheme="dark"] {
+            .search-results {
+                > .search-content .search-header .search-actions a {
+                    > span {
+                        &:after {
+                            background-image: url(images/rss-dm.png);
+                        }
+                    }
+                    &:hover, &:focus, &:active {
+                        > span:after {background-image: url(images/rss-active.png)}
+                    }
+                }
+            }
+        }
 	}
 
 	@media screen and (min-width: @mobileLandscape) and (max-width: calc(@desktopSmall - 1px)) {
@@ -2573,18 +2882,22 @@ body:not(:-moz-handler-blocked) fieldset {
         
     @media (min-width: @mobileLandscape) {
 		:root, :root[colour-scheme="light"] {
-			a.hdr-home {background: url("images/legislation-logo.png") no-repeat 0; background-size: 20.5%}
+			//a.hdr-home {background: url("images/legislation-logo.png") no-repeat 0; background-size: 20.5%}
+			a.hdr-home {background: url("images/legislation-logo.png") no-repeat 0; background-size: 17%}
 			.legislation .legislation-content .status-panel:not(.pinned) button {background-position: 0.45em center}			
 		}
 		:root[colour-scheme="dark"] {
-			a.hdr-home {background: url("images/legislation-logo-dm.png") no-repeat 0; background-size: 20.5%}
+			//a.hdr-home {background: url("images/legislation-logo-dm.png") no-repeat 0; background-size: 20.5%}
+			a.hdr-home {background: url("images/legislation-logo-dm.png") no-repeat 0; background-size: 17%}
 			.legislation .legislation-content .status-panel:not(.pinned) button {background-position: 0.45em center}			
 		}
+        .search-footer .pagination {margin: 0 auto 0.85rem auto}
 		header {
-			a.hdr-home {margin: 0.15em auto; padding: 0.65em 0.25em 0.65em 2.5em; font-size: 1.25rem}
+			//a.hdr-home {margin: 0.15em auto; padding: 0.65em 0.25em 0.65em 2.5em; font-size: 1.25rem}
+			a.hdr-home {margin: 0 auto 0.15em auto; padding: 0.9em 0.25em 0.6em 2.25em; font-size: 1.25rem}
 		}
 		main {
-			.cards {
+			.cards, .all-about-this-act {
 				ul {grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))}
 			}
 			aside:not(.legislation aside, .search-filters) {
@@ -2703,8 +3016,8 @@ body:not(:-moz-handler-blocked) fieldset {
 			}
 		}
         main {
-            &.legislation .legislation-content > aside > div > {
-                button, a:has(+ a) {width: fit-content}
+            &.legislation .legislation-content > aside > div:not(.language) > {
+                 button, a:has(+ a) {width: fit-content}
             }
             &.advanced-searches {
                 .search-language > span, .search-extent [role="group"]:has(input[type="radio"]) > span, .search-date:has(div[role="group"]) div[role="group"] {
@@ -2790,7 +3103,8 @@ body:not(:-moz-handler-blocked) fieldset {
 			a {font-weight: 300}
 			section > nav {
 				margin: 0.4rem 0 0 0; min-height: 4.6rem;
-				a.hdr-home {margin: 0; padding: 0.9em 0.25em 0.65em 2.5em; font-size: 2rem; position: absolute}
+				//a.hdr-home {margin: 0; padding: 0.9em 0.25em 0.65em 2.5em; font-size: 2rem; position: absolute}
+				a.hdr-home {margin: 0; padding: 0.85em 0.25em 0.475em 2.15em; font-size: 2rem; position: absolute}
 				.hdr-tna {
 					float: right; padding: 0.3rem 0 1.05em 0; font-size: 0.7rem; font-weight: 500; text-transform: lowercase;
 					a {padding: 0 15rem 2.05rem 0}
@@ -2928,7 +3242,10 @@ body:not(:-moz-handler-blocked) fieldset {
 
 			&.legislation {
 				.pit-search, .timeline:has(details:not([open])) {padding: 0 1rem}
-				.legislation-navigation {margin: 0 1rem}
+				.legislation-navigation {
+                    margin: 0 1rem;
+                    &:before {width: calc(var(--maxWidth) - 2rem)}
+                }
 				.legislation-content {
 					> div {
 						.confers-power, .blanket-amendments {
@@ -2976,39 +3293,115 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 	}
 
+	@media screen and (min-width: @mobileSearchSelect) and (max-width: calc(@desktopSmall - 1px)) {
+        main.legislation .legislation-content > aside > div.language {
+            display: block;
+            a {
+                width: fit-content; display: inline-block; margin: 0 0 0.75rem 2rem;
+                &:last-of-type {margin: 0 0 0.75rem 0.75rem}
+            }
+        }
+    }
+
+	@media screen and (min-width: @tabletPortrait) and (max-width: calc(@desktopSmall - 1px)) {
+			main.search-results {
+				.search-content {
+                    .search-header {
+                        .search-actions {
+                            display: inline-block; position: absolute; margin: -4.65rem 0 0 0; left: calc(50% - 8rem);
+                            a {width: 12.5rem}
+                        }
+                    }
+                }
+            }
+    }
+        
 	@media print and (orientation: landscape), screen and (min-width: @desktopSmall) {
 		html {--maxWidth: @desktopSmall;}
 		:root, :root[colour-scheme="light"] {
 			.hdr-tna a {background: url("images/tna-logo.png") no-repeat; background-size: 100%}
+			.legislation .versions li {
+				&.consolidated a:before {background-image: url('images/timeline-break-active.png'); background-size: 100%}
+				&[aria-current="page"] ~ .consolidated a:before {background-image: url('images/timeline-break-inactive.png'); background-size: 100%}
+			}
+			.legislation .scrollable .versions li:not(li:last-of-type) {
+				&.consolidated a:before {background-image: url('images/scrollable-timeline-break-active.png'); background-size: 100%}
+				&[aria-current="page"] ~ .consolidated:not(li:last-of-type) a:before {background-image: url('images/scrollable-timeline-break-inactive.png'); background-size: 100%}
+			}
 		}
 		:root[colour-scheme="dark"] {
 			.hdr-tna a {background: url("images/tna-logo-dm.png") no-repeat; background-size: 100%}
+			.legislation .versions li {
+				&.consolidated a:before {background-image: url('images/timeline-break-active-dm.png'); background-size: 100%}
+				&[aria-current="page"] ~ .consolidated a:before {background-image: url('images/timeline-break-inactive-dm.png'); background-size: 100%}
+			}
+			.legislation .scrollable .versions li:not(li:last-of-type) {
+				&.consolidated a:before {background-image: url('images/scrollable-timeline-break-active-dm.png'); background-size: 100%}
+				&[aria-current="page"] ~ .consolidated:not(li:last-of-type) a:before {background-image: url('images/scrollable-timeline-break-inactive-dm.png'); background-size: 100%}
+			}
 		}
 		:root, :root[colour-scheme="light"], :root[colour-scheme="dark"] {
-			.legislation .legislation-content {
-				aside {
-					> div {
-						&.up-to-date {background-position: 0.7em 0.6em; background-size: 1.6em}
-				        &.repealed {background-position: 0.7em 0.6em; background-size: 1.75em}
-						&.dated-version {background-position: 0.7em 0.6em; background-size: 1.6em}
-                        &.as-enacted-formats {
-                            background-position: 0.85em 0.65em; background-size: 1.1em;
-                            p {padding: 0.5em 0.5em 0.35em 3em}
+            .legislation {
+                .legislation-content {
+                    aside {
+                        > div {
+            				&.language {
+                                background-position: 0.7em 0.6em; background-size: 1.6em;
+                                a {
+                                    display: block; width: calc(100% - 2rem); margin: 0 1rem; padding: 0.5em 0.85em;  text-align: left;
+                                    &:last-of-type {margin: 0.75rem 1rem 1rem 1rem}
+                                    &.selected {padding: 0.5em 0.85em 0.5em 2.15em}
+                                }
+                            }
+                            &.up-to-date, &.up-to-date + .up-to-date {background-position: 0.75em 0.65em; background-size: 1.5em}
+                            &.repealed {background-position: 0.7em 0.6em; background-size: 1.75em}
+                            &.dated-version {background-position: 0.7em 0.6em; background-size: 1.6em}
+                            &.as-enacted-formats {
+                                background-position: 0.85em 0.65em; background-size: 1.1em;
+                                p {padding: 0.5em 0.5em 0.35em 3em}
+								&:not(.pdf) {
+									a {font-weight: 500}
+								}
+                            }
+                            &.as-enacted-formats.pdf {
+								background-position: 0.45em 0.6em; background-size: 1.8em;
+								&:has(a) {border-color: var(--link)}
+							}
+                            &.extent {
+                                background-position: 0.5em 0.6em; background-size: 2em;
+                                button {.ghost-button; font-weight: 300; padding: 0.75rem 0}
+                            }
+							&.in-force, &.in-force + .in-force {background-position: 0.65em 0.6em; background-size: 1.6em}
+                            &.confers-power {background-position: 0.85em 0.625em; background-size: 1.35em}
+                            &.blanket-amendments {background-position: 0.45em 0.675em; background-size: 2em}
+                            &.explanatory-notes {background-position: 0.6em 0.5em; background-size: 1.6em; border-color: var(--link)}
+                            &.associated-documents {background-position: 0.65em 0.5em; background-size: 1.5em}
+                            &.as-enacted {background-position: 0.8em 0.65em; background-size: 1.4em;
+								&:has(a) {border-color: var(--link)}
+							}
+                            &:has(p) {
+                                &.explanatory-notes {background-position: 0.65em 0.6em; background-size: 1.6em; border-color: var(--lessSubtleBorder)}
+                                &.associated-documents {background-position: 0.55em 0.6em; background-size: 1.8em}
+                            }
                         }
-                        &.as-enacted-formats.pdf {background-position: 0.45em 0.6em; background-size: 1.8em}
-						&.extent {background-position: 0.5em 0.6em; background-size: 2em}
-						&.in-force {background-position: 0.65em 0.6em; background-size: 1.8em}
-						&.confers-power {background-position: 0.85em 0.625em; background-size: 1.35em}
-						&.blanket-amendments {background-position: 0.45em 0.675em; background-size: 2em}
-						&.explanatory-notes {background-position: 0.6em 0.5em; background-size: 1.6em}
-						&.associated-documents {background-position: 0.65em 0.5em; background-size: 1.5em}
-						&:has(p) {
-							&.explanatory-notes {background-position: 0.65em 0.6em; background-size: 1.6em}
-							&.associated-documents {background-position: 0.55em 0.6em; background-size: 1.8em}
-						}
+                    }
+                }
+                &:has(.previous-point-in-time, .not-commenced) {
+                    .legislation-content > aside > div.in-force {
+						border: 0.125rem dashed var(--lessSubtleBorder);
 					}
+                }
+                &:has(.prospective[aria-current="page"]) {
+                    .legislation-content > aside:first-of-type > div {border: 0.125rem dashed var(--alert)}
+                }
+                &:has(li[aria-current="page"].prospective) {
+                    .legislation-content aside > div.up-to-date {background-image: url('images/prospective.png')}
+                }
+				.legislation-content aside > div.up-to-date + .up-to-date,.legislation-content aside > div.in-force + .in-force {
+					border: 0.175rem dashed var(--alert);
+					p {padding: 0.5em 0.5em 0.5em 3em}
 				}
-			}
+            }
 		}
 		
 		header {
@@ -3133,7 +3526,7 @@ body:not(:-moz-handler-blocked) fieldset {
 				.legislation-navigation {max-width: calc(var(--maxWidth) - 2rem); margin: 0 auto}
 				.timeline {
 					overflow: unset; padding: 0 1rem;
-					summary {
+					> details > summary {
 						> span:before {
 							content: ""; display: block; background: var(--buttonBg); float: left; margin: 0 0 0 -2.5rem; width: 2.5rem; height: 12.5rem;
 						}
@@ -3142,7 +3535,7 @@ body:not(:-moz-handler-blocked) fieldset {
 							&:after {.chevron(); width: 0.5rem; height: 0.5rem; position: absolute}
 						}
 					}
-					&:has(details:not([open])) summary {
+					&:has(> details:not([open])) > details > summary {
 						background: none; padding: 0; margin: 0 0 0 calc(100% - 16rem); width: 16rem;
 						&:hover, &:focus {> span:before {.button-focus()}}
 						> span {
@@ -3164,9 +3557,9 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 						.close {display: none}
 					}
-					&:has(details[open]) {
+					&:has(> details[open]) {
 						h2 {.sr-only()}
-						summary {
+						> details > summary {
 							background: var(--buttonBg); position: absolute; width: 2.5rem; height: 12.5rem;
 							&:hover, &:focus {.button-focus()}
 							> span {
@@ -3278,7 +3671,7 @@ body:not(:-moz-handler-blocked) fieldset {
 												}
 												.point-in-time {
 													left: 0.75rem; right: unset;
-													&:before {left: calc(50% - 0.5rem); margin: -2.9rem auto 0 auto; background: var(--timelineVersionActive)}
+													&:before {left: calc(50% - 0.5rem); margin: -2.9rem auto 0 auto}
 												}
 											}
 											+ li .version:before {margin: 4rem 50% -4rem 0}
@@ -3328,6 +3721,56 @@ body:not(:-moz-handler-blocked) fieldset {
 											}
 										}
 									}
+                                    &.prospective {
+                                        > a .date:before {border-color: var(--alert)}
+                                        &[aria-current="page"] {
+                                            > a .date:before {background-image: var(--timelineVersionIconProspective)}
+                                        }
+                                    }
+                                    &.repealed {
+                                            > a .date:before {border-color: var(--repealed); background: var(--bg) var(--timelineRepealedVersion); background-size: 40%}
+                                            &:hover > a {
+                                                .date:before {background: var(--link) var(--timelineRepealedVersionActive); background-size: 40%}
+                                            }
+                                            &[aria-current="page"] > a {
+                                                .date:before {border-color: var(--repealed); background: var(--repealed) var(--timelineRepealedVersionActive); background-size: 40%}
+                                            }
+
+                                    }
+                                    &.consolidated {
+                                        a:before {content: ""; display: block; width: 1.65rem; height: 2.35rem; border: 0; border-radius: 0; cursor: auto; background-color: unset; background-position: 0 0; background-repeat: no-repeat; position: absolute; left: -0.8rem; top: calc(50% - (2.125rem / 2)); z-index: 1}
+                                    }
+									details {
+										&:not([open]) {
+											summary {
+												position: absolute; .button; padding: 0; top: calc(50% - 1rem); right: 1rem; width: 2rem; height: 2rem; border-radius: 50%;
+												span {
+													.sr-only;
+													&:last-of-type {display: none}
+												}
+												&:before {content: "?" / ""; font-size: 1.1rem; line-height: 2rem}
+											}
+										}
+										&[open] {
+											background: var(--bg); 
+											summary {
+												position: absolute; top: 1rem; right: 0.5rem; .button; padding: 0 2rem 0 0; text-align: right; height: 2.15rem; width: -webkit-fill-available; background: var(--link) url('images/close.png') no-repeat calc(100% - 0.5rem) center; background-size: 1rem; border-radius: 0.1875rem 0.1875rem 0 0;
+												span {
+													line-height: 2rem;
+													&:first-of-type {display: none}
+												}
+											}
+										}
+										> div {
+											background: var(--bg); position: absolute; overflow: auto;overscroll-behavior: none; border: 0.0625rem solid var(--link); border-top: 0; top: 3.15rem; right: 0.5rem; max-height: 8.5rem; padding: 0;border-radius: 0 0 0.1875rem 0.1875rem;
+											h3 {font-size: 1rem; margin: 0; padding: 0.5em 0.65em 0.25em 0.65em}
+											p {margin: 0 0 0.5em 0; padding: 0 0.65em;font-weight: 300; line-height: 1.25rem}
+										}
+									}
+									&:first-of-type, &:last-of-type {
+										details:not([open]) summary {right: 1.5rem}
+										details[open] summary, div {left: 0.5rem}
+									}
 								}
 								&:has(li:last-of-type .point-in-time) {
 									width: calc(100% - 22rem);
@@ -3362,13 +3805,17 @@ body:not(:-moz-handler-blocked) fieldset {
 										height: 16rem;
 										&:last-of-type:before {.drop-shadow(); margin: 0 0 0 -0.4rem; position: absolute; width: 0.4rem; height: 16rem; z-index: unset; background: var(--altBg); background: linear-gradient(90deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%)}
 										&[aria-current="page"]:has(.point-in-time) .point-in-time {top: calc(50% + 0.45rem)}
+                                        &.consolidated {
+                                            a:before {left: -0.75rem; top: calc(50% - (2.125rem / 2) - 1.65rem)}
+                                        }
 									}
 								}
 								.scrollbar {.scrollbar-controls}
 							}
 						}
 						&:has(.scrollable) {
-							summary {height: 16rem}
+							> details summary {height: 16rem}
+							.versions details:not([open]) summary {top: calc(50% - 2.75rem)}
 						}
 						&:has(ol li:last-of-type .point-in-time) {
 							.scrollable {
@@ -3388,20 +3835,24 @@ body:not(:-moz-handler-blocked) fieldset {
 						h2 {.sr-only()}
 						&:first-of-type {margin: 1rem 0 0 0}
 						> div {
-							width: 16rem; border: 0.0625rem solid var(--lessSubtleBorder); border-radius: 0.25rem; display: block; margin: 0 0 0.5rem 0; padding: 0;
-							&:last-of-type {margin: 0 0 1rem 0}
+							width: 16rem; border: 0.0625rem solid var(--lessSubtleBorder); border-radius: 0.25rem; display: block; margin: 0 0 1rem 0; padding: 0;
+                            &:last-of-type {margin: 0 0 1rem 0}
 							p {
 								&:first-of-type {
 									flex-grow: 1; padding: 0.5em 0.5em 0.5em 3em; display: table-cell; height: 2.85rem; vertical-align: middle;
 									+ p {
-                                        margin: 0 0.75em 0.5em 0.75em; padding: 0.65em 0.25rem 0 0.25rem; border-top: 0.0625em solid var(--lessSubtleBorder);
+                                        margin: 0 0.75em 0.5em 0.75em; padding: 0.6em 0.25rem 0.15rem 0.25rem; border-top: 0.0625em solid var(--lessSubtleBorder);
+										&:not(:has(~ a + a)) {padding: 0.5em 0.25rem 0 0.25rem}
                                             + p {margin: 0 0.75em 0.5em 0.75em; padding: 0.15em 0.25rem 0 0.25rem}
                                     }
 								}
 							}
-							> a {display: block; padding: 0.7em 0 0.5em 2.75em; border-radius: 0 0 0.25rem 0.25rem}
-							button {.button(); font-weight: 300; width: calc(100% - 2rem); margin: 0.1rem 1rem 1rem 1rem; padding: 0.75rem 0}
-							&:has(p):not(.repealed) {
+							> a:not(.language > a, .all-about > a, .repealed > a) {display: block; padding: 0.7em 0 0.5em 2.75em; border-radius: 0 0 0.25rem 0.25rem}
+                            &:not(.language) {
+                                button {width: calc(100% - 2rem)}
+                            }
+							button {.button(); font-weight: 300; margin: 0.1rem 1rem 1rem 1rem; padding: 0.75rem 0}
+							&:has(p):not(.repealed, .language, .all-about) {
 								margin: 0 0 1rem 0;
 								> a {
                                     padding: 0.5em 0.85em 0.5em 0.85em; background: var(--moreSubtleBg); border-top: 0.05em solid var(--subtleBorder);
@@ -3421,21 +3872,36 @@ body:not(:-moz-handler-blocked) fieldset {
 							}
 							&.up-to-date ul {.toggle; margin: 0 1em 0.75em 1em}
 						}
-						details {
+
+                        
+                        
+                        details {
                             margin: 0;
                             summary {padding: 0.8em 0 0.8em 1em; text-align: unset}
                             & + details {margin: 1rem 0 0 0}
                         }
 						+ aside {margin: 0}
 					}
-					> div {order: -1; grid-row: span 2; width: 100%; margin: 1em 0 0 0; padding: 0 1em 0 0}
+					> div {
+                        order: -1; grid-row: span 2; width: 100%; margin: 1em 0 0 0; padding: 0 1em 0 0;
+                        &:has(.legislation-text) {
+                            display: flex; flex-direction: column;
+                            .legislation-ftr {
+                                flex-grow: 1; width: 100%; display: flex; flex-direction: column;
+                                nav {flex-grow: 1; align-items: flex-end}
+                            }
+                        }
+                    }
 				}
 
 				&:has(.timeline details[open]) {
 					.legislation-content aside:before {padding: 0}
 				}
+                &:not(:has(.legislation-navigation, .pit-search, .timeline)) {
+                    .legislation-content > aside:first-of-type, .legislation-content > div {margin: 0}
+                }
 			}
-			&:has(.timeline details:not([open])) {
+			&:has(.timeline > details:not([open])) {
 				.legislation-content > aside:first-of-type {
 					margin: 0;
 					&:before {content: ""; display: block; padding: 12.5rem 0 0 1rem; background: var(--verySubtleBg); margin: 0 0 1rem 0}
@@ -3566,6 +4032,10 @@ body:not(:-moz-handler-blocked) fieldset {
                     }
                 }
                 .search-content {
+                    .search-header .search-actions {
+                        position: absolute; margin: -4.125rem 0 0 0; left: 12rem;
+                        a span span {.sr-only}
+                    }
                     .search-results-list {
                         #changes-to-legislation-results {
                             border-collapse: collapse; width: -webkit-fill-available;
@@ -3617,6 +4087,7 @@ body:not(:-moz-handler-blocked) fieldset {
                         }
                     }
                 }
+                &:has(> details[open]) .search-content .search-header .search-actions {margin: -1rem 0 0 0; left: 0}
                 section fieldset .search-date:has(div[role="group"]) > div[role="group"]:nth-of-type(2) {
                     > span {
                         span input {width: 4.5rem}
@@ -3832,6 +4303,7 @@ body:not(:-moz-handler-blocked) fieldset {
     @media print and (orientation: portrait) {
         .legislation .legislation-content > aside > div {min-height: 2rem}
         main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div {
+            &.language {background-position: 1.15em 0.45em; background-size: 1.1em}
             &.up-to-date {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
             &.dated-version {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
             &.as-enacted-formats {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
@@ -3841,6 +4313,7 @@ body:not(:-moz-handler-blocked) fieldset {
             &.confers-power {background-position: 1.15rem 0.45rem; background-size: 0.8rem}
         }
         :root .legislation .legislation-content aside > div, :root[colour-scheme="light"] .legislation .legislation-content aside > div {
+            &.language {background-position: 0.5rem 0.45rem; background-size: 1.1em}
             &.up-to-date {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
             &.dated-version {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
             &.as-enacted-formats {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
