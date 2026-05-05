@@ -5,13 +5,13 @@
     <section>
         {% include "new_theme/common/breadcrumbs.html" %}
         <h1 id="main-content-h" tabindex="-1">
-            Table of contents 
+            Table of Contents 
             <br class="initialise" /><span>{{ meta.title }}</span>
         </h1>
     </section>
 
     <nav aria-labelledby="legislationNavigation" class="legislation-navigation">
-        <h2 id="legislationNavigation">Table of contents, previous and next provisions</h2>
+        <h2 id="legislationNavigation">Table of Contents, previous and next provisions</h2>
         <span></span>
         <span></span>
         <a href="{{ meta.next }}"><span><span>Next: </span>Introduction</span></a>
@@ -20,7 +20,7 @@
     <section class="pit-search">
         <h2>View this legislation at a specific date</h2>
         <details>
-            <summary>You are viewing the table of contents on <span>{{ current_date|date:"d M Y" }}</span><span> Enter a date</span></summary>
+            <summary>You are viewing the Table of Contents on <span>{{ current_date|date:"d M Y" }}</span><span> Enter a date</span></summary>
             <form role="search">
                 <h3>Change the date</h3>
                 <label for="pitDate">Date:</label>
@@ -39,8 +39,8 @@
             {% include "new_theme/document/status_panel.html" %}
             <section class="toc-detail">
                 {% if contents %}
-                <button hidden class="initialise expanded" id="toc"><span>Collapse table of contents</span></button>
-                <h2>Table of contents for this Act</h2>
+                <button hidden class="initialise expanded" id="toc"><span>Collapse Table of Contents</span></button>
+                <h2>Table of Contents for this Act</h2>
                 <ul>
                     <li><h3><a href="{{ links.whole }}">The whole Act</a></h3>
                         <ul>
