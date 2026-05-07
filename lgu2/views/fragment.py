@@ -18,7 +18,50 @@ from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.redirects import should_redirect
 
 
+# Derived from the legacy Orbeon pipeline (legislation.xpl:206), which 404s URLs
+# whose section path ends in {kind}/{parent}-{tail}. We detect the same shape by
+# inspecting the last two path segments rather than the Orbeon substring regex,
+# so that nested paths like schedule/1/paragraph/3-1 produce the correct parent
+# URL and anchor.
+_SUBPROVISION_KINDS = ('section', 'article', 'paragraph', 'rule', 'regulation')
+
+
+def _split_subprovision(section: str):
+    segments = section.split('/')
+    if len(segments) < 2 or segments[-2] not in _SUBPROVISION_KINDS:
+        return None
+    parent_num, sep, tail = segments[-1].partition('-')
+    if not sep or not parent_num or not tail:
+        return None
+    parent_segments = segments[:-1] + [parent_num]
+    parent_section = '/'.join(parent_segments)
+    anchor = '-'.join(parent_segments + [tail])
+    return parent_section, anchor
+
+
+def _subprovision_redirect(request, type: str, year: str, number: str, section: str,
+                           version: Optional[str], lang: Optional[str]):
+    split = _split_subprovision(section)
+    if split is None:
+        return None
+    parent_section, anchor = split
+
+    status = api.head(type, year, number, section, version, lang)
+    if status == 404:
+        template = loader.get_template('404.html')
+        return HttpResponseNotFound(template.render({}, request))
+    if status != 200:
+        return None
+
+    path = make_fragment_link(type, year, number, parent_section, version, lang)
+    return HttpResponseRedirect(f'{path}#{anchor}')
+
+
 def fragment(request, type: str, year: str, number: str, section: str, version: Optional[str] = None, lang: Optional[str] = None):
+
+    redirect = _subprovision_redirect(request, type, year, number, section, version, lang)
+    if redirect is not None:
+        return redirect
 
     data = api.get(type, year, number, section, version, lang)
     # API should add None values to fragment requests

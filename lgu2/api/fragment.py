@@ -92,3 +92,8 @@ def get_akn(type: str, year, number, section: str, version: Optional[str] = None
     url = _make_url(type, year, number, section, version)
     response = server.get_akn(url, language)
     return package_xml(response)
+
+
+def head(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> int:  # HTTP status code
+    url = _make_url(type, year, number, section, version)
+    return server.head(url, language).status_code
