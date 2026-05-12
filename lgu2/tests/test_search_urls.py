@@ -216,14 +216,15 @@ class TestModifiedQueryLinksRendering(TestCase):
 
     @patch("lgu2.views.search.basic_search")
     def test_text_filter_chip_has_working_removal_link(self, mock_basic_search):
-        # The API reports the keyword filter as q; the template iterates over
-        # meta.query, so the "text" removal link must be reachable under q too.
+        # The API reports the keyword filter as q, but chips are built from
+        # internal query_params (which use the SearchParams key 'text').
         mock_basic_search.return_value = _empty_search_response(q="fire")
 
         response = self.client.get("/ukpga", {"text": "fire"})
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["meta_data"]["query"], {"text": "fire"})
+        chip_keys = [c["key"] for c in response.context["active_filters"]]
+        self.assertIn("text", chip_keys)
         self.assertIn("text", response.context["modified_query_links"])
 
 
