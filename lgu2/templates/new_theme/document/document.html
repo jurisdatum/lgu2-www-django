@@ -55,14 +55,14 @@
 
     <div class="legislation-content">
 
-        {% if status %}
         {% include "new_theme/document/right_side_panel.html" %}
-        {% endif %}
-
-        <!-- {% include "new_theme/document/status_panel.html" %} -->
 
         <div>
             <section class="legislation-text parenthesis">
+
+                {% include "status/main.html" %}
+
+
                 {% if pdf_only %}
                     <div>
                         <section class="legislation-text">

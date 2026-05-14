@@ -1,0 +1,22 @@
+{% if status %}
+{% for msg in status.messages %}
+<div class="status-panel{% if msg.severity == 'warning' %} not-up-to-date{% endif %}">
+    <div>
+        {% if msg.heading %}<h2>{{ msg.heading }}</h2>{% endif %}
+        {% if msg.text %}<p>{{ msg.text }}</p>{% endif %}
+    </div>
+    {% if msg.disclosure %}
+    <details id="statusPanelDetail"{% if not msg.disclosure.collapsed_initially %} open{% endif %}>
+        <summary data-expand-label="{{ msg.disclosure.expand_label }}" data-collapse-label="{{ msg.disclosure.collapse_label }}">{% if msg.disclosure.collapsed_initially %}{{ msg.disclosure.expand_label }}{% else %}{{ msg.disclosure.collapse_label }}{% endif %}</summary>
+        <div>
+            <ul>
+            {% for item in msg.disclosure.items %}
+                <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </details>
+    {% endif %}
+</div>
+{% endfor %}
+{% endif %}

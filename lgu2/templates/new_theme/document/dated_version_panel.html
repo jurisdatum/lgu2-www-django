@@ -1,0 +1,11 @@
+{% if panel %}
+<div class="dated-version">
+    <h3>{{ panel.heading }}</h3>
+    {% for paragraph in panel.paragraphs %}
+    <p>{{ paragraph }}</p>
+    {% endfor %}
+    {% for link in panel.links %}
+    <a href="{{ link.href }}">{{ link.text }}</a>
+    {% endfor %}
+</div>
+{% endif %}
