@@ -53,6 +53,13 @@ SEARCH_TYPES = [item[0] for item in types] + [
     'eu-origin', 'eu', 'ukia',
 ]
 
+EU_ORIGINATING_TYPES = frozenset(item[0] for item in types if item[2] == 'euretained')
+EU_TYPE_TOKENS = EU_ORIGINATING_TYPES | {'eu-origin', 'eu'}
+
+
+def is_eu_originating_type(type_: str) -> bool:
+    return type_ in EU_TYPE_TOKENS
+
 
 def to_short_type(type):
     if type in short_to_long:

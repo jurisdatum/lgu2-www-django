@@ -7,13 +7,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from ..api.search import basic_search
-from ..api.search_types import SearchParams
 from ..util.cutoff import get_cutoff
-from ..util.types import get_category, to_short_type
+from ..util.search_params import SearchParams, from_api_response, to_api_request
+from ..util.types import get_category, is_eu_originating_type, to_short_type
 from ..util.version import get_first_version
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link_for_list_entry, make_document_link
 from ..util.global_redirect import build_browse_url_if_possible, normalize_params_for_browse, parse_extent_segment
+from ..util.url_params import to_ui_params
 
 
 class SearchResultContext(TypedDict):
@@ -25,8 +26,6 @@ class SearchResultContext(TypedDict):
     total_pages: int
     current_subject: Optional[str]
     subject_heading: Optional[str]
-    total_count_by_type: int
-    total_count_by_year: int
     modified_query_links: Dict[str, str]
     query_params: str
     query_param: SearchParams
@@ -43,6 +42,29 @@ class SearchResultContext(TypedDict):
     default_pagesize: int
     type_label_plural: str
     type_made_verb: str
+    type_filter_groups: List[Dict[str, Any]]
+    active_filters: List[Dict[str, Any]]
+    query_param_ui: Dict[str, Any]
+
+
+def enforce_uk_amended_invariant(params: SearchParams) -> SearchParams:
+    """Drop ukAmended unless params['type'] contains an EU-originating type.
+
+    Mutates and returns the dict. Compound type sets are EU-positive when
+    any member is EU-originating; aggregate tokens 'eu-origin' / 'eu' count.
+    """
+    if 'ukAmended' not in params:
+        return params
+    type_value = params.get('type')
+    if isinstance(type_value, list):
+        type_values = type_value
+    elif isinstance(type_value, str):
+        type_values = [type_value]
+    else:
+        type_values = []
+    if not any(is_eu_originating_type(t) for t in type_values):
+        params.pop('ukAmended', None)
+    return params
 
 
 def parse_year_param(year: str) -> SearchParams:
@@ -134,23 +156,187 @@ def extract_query_params(request) -> SearchParams:
     if 'department' in request.GET and request.GET['department']:
         params['department'] = request.GET['department']
 
+    # ukamended (UI URL spelling, all lowercase) → ukAmended (internal/API).
+    # Only literal "true"/"false" (case-insensitive) are accepted; other
+    # values are dropped. EU-type invariant is applied later, after path
+    # params are merged.
+    uk_amended = request.GET.get('ukamended')
+    if uk_amended is not None:
+        normalized = uk_amended.strip().lower()
+        if normalized == 'true':
+            params['ukAmended'] = True
+        elif normalized == 'false':
+            params['ukAmended'] = False
+
     return params
 
 def make_smart_link(params: SearchParams):
+    """Build a UI URL from already-normalised SearchParams.
+
+    Callers must ensure params already satisfy the EU-type invariant — for
+    any link that changes or clears `type`, route through
+    `replace_param_and_make_smart_link` which re-applies the invariant.
+    """
     browse_url = build_browse_url_if_possible(params)
-    return browse_url or f"{reverse('search')}?{urlencode(params, doseq=True)}"
+    if browse_url:
+        return browse_url
+    ui_params = to_ui_params(params)
+    qs = urlencode(ui_params, doseq=True)
+    base = reverse('search')
+    return f"{base}?{qs}" if qs else base
 
 
-def replace_param_and_make_smart_link(params: SearchParams, key: str, value):
+def _change_params_and_make_smart_link(params: SearchParams, changes: Dict[str, Any]) -> str:
+    """Copy `params`, apply `changes` (None→pop, else set), drop pagination,
+    and build a smart link. The EU-type invariant is re-applied only when
+    `type` is among the changed keys — other mutations can't affect it.
+    """
     new_params = params.copy()
-    if value is None:
-        new_params.pop(key, None)
-    else:
-        new_params[key] = value
-
+    for key, value in changes.items():
+        if value is None:
+            new_params.pop(key, None)
+        else:
+            new_params[key] = value
     new_params.pop("page", None)
     new_params.pop("pageSize", None)
+    if "type" in changes:
+        enforce_uk_amended_invariant(new_params)
     return make_smart_link(new_params)
+
+
+def replace_param_and_make_smart_link(params: SearchParams, key: str, value) -> str:
+    return _change_params_and_make_smart_link(params, {key: value})
+
+
+_UK_AMENDED_CHIP_LABELS = {
+    True: "Amended by UK legislation",
+    False: "Not amended by UK legislation",
+}
+
+_UK_AMENDED_SUFFIXES = {
+    True: "that are amended by the UK",
+    False: "that are not amended by the UK",
+}
+
+# Internal SearchParams keys that aren't user-facing filter chips.
+_NON_CHIP_KEYS = frozenset({"page", "pageSize", "sort", "exclusiveExtent"})
+
+
+def _make_type_facet_link(query_params: SearchParams, short_type: str, uk_amended) -> str:
+    return _change_params_and_make_smart_link(
+        query_params, {"type": short_type, "ukAmended": uk_amended}
+    )
+
+
+def _build_type_filter_groups(by_type_rows, query_params: SearchParams, single_type):
+    """Group flat byType API rows by base short_type, producing a view-model
+    list with parent + sub_entries (each carrying a `current` flag).
+
+    Sub-entries are sorted Amended → Not amended.
+    """
+    active_uk_amended = query_params.get("ukAmended")
+    has_uk_amended_filter = "ukAmended" in query_params
+
+    groups_by_type: Dict[str, Dict[str, Any]] = {}
+    ordered: List[Dict[str, Any]] = []
+
+    for row in by_type_rows:
+        short_type = to_short_type(row["type"])
+        uk_amended = row.get("ukAmended")
+        link = _make_type_facet_link(query_params, short_type, uk_amended)
+        is_type_active = (single_type == short_type)
+
+        group = groups_by_type.get(short_type)
+        if group is None:
+            group = {
+                "base_type": short_type,
+                "label": get_type_label(short_type),
+                "parent": None,
+                "sub_entries": [],
+            }
+            groups_by_type[short_type] = group
+            ordered.append(group)
+
+        if uk_amended is None:
+            group["parent"] = {
+                "count": row["count"],
+                "link": link,
+                "current": is_type_active and not has_uk_amended_filter,
+            }
+        else:
+            group["sub_entries"].append({
+                "ukAmended": uk_amended,
+                "label": f"{group['label']} {_UK_AMENDED_SUFFIXES[uk_amended]}",
+                "count": row["count"],
+                "link": link,
+                "current": is_type_active and active_uk_amended is uk_amended,
+            })
+
+    for group in ordered:
+        group["sub_entries"].sort(key=lambda e: not e["ukAmended"])
+
+    # When a ukAmended filter is active, the API can't return reliable counts
+    # for the parent total or the opposite sub-entry — collapse the group to
+    # the single matching sub-entry, promoted into the parent slot.
+    if has_uk_amended_filter:
+        collapsed: List[Dict[str, Any]] = []
+        for group in ordered:
+            match = next(
+                (e for e in group["sub_entries"] if e["ukAmended"] is active_uk_amended),
+                None,
+            )
+            if match is None:
+                continue
+            group["label"] = match["label"]
+            group["parent"] = {
+                "count": match["count"],
+                "link": match["link"],
+                "current": match["current"],
+            }
+            group["sub_entries"] = []
+            collapsed.append(group)
+        return collapsed
+
+    # Drop groups whose parent row was missing from the API: Django doesn't
+    # synthesise counts (per the ADR), so omit rather than render an empty link.
+    return [g for g in ordered if g["parent"] is not None]
+
+
+_YEAR_RANGE_KEYS = frozenset({"year", "startYear", "endYear"})
+
+
+def _build_active_filters(
+    query_params: SearchParams,
+    year_clear_link: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """Active-filter chips, built from normalized query_params.
+
+    Each chip carries a friendly label, an optional value, and a removal
+    link. For year/startYear/endYear, `year_clear_link` (if provided) is
+    used so removing one half of a range escapes the whole filter; without
+    it, clearing only one key would leave a half-range in the URL.
+    """
+    chips: List[Dict[str, Any]] = []
+    for key, value in query_params.items():
+        if key in _NON_CHIP_KEYS:
+            continue
+        if key == "ukAmended":
+            label = _UK_AMENDED_CHIP_LABELS[value]
+            display_value: Any = None
+        else:
+            label = key
+            display_value = value
+        if key in _YEAR_RANGE_KEYS and year_clear_link is not None:
+            remove_link = year_clear_link
+        else:
+            remove_link = replace_param_and_make_smart_link(query_params, key, None)
+        chips.append({
+            "key": key,
+            "label": label,
+            "value": display_value,
+            "remove_link": remove_link,
+        })
+    return chips
 
 
 def browse(request, type: str, year: Optional[str] = None, subject: Optional[str] = None, extent_segment: Optional[str] = None):
@@ -222,6 +408,10 @@ def search_results(request):
     if _has_invalid_params(request):
         return render(request, 'new_theme/advance_search/full_search.html')
     params = extract_query_params(request)
+    # Apply the EU-type invariant before the redirect check so a
+    # /search?type=ukpga&ukamended=true URL canonicalises to /ukpga, never
+    # /ukpga?ukamended=true. The helper applies it again redundantly.
+    enforce_uk_amended_invariant(params)
     browse_params = normalize_params_for_browse(params)
     browse_url = build_browse_url_if_possible(browse_params)
     if browse_url:
@@ -241,21 +431,14 @@ def search_results_helper(request, query_params: SearchParams):
     elif current_type == "all":
         query_params.pop("type", None)
 
-    # Rename text→q only for API call, never mutate query_params
-    api_params = query_params.copy()
-    if "text" in api_params:
-        api_params["q"] = api_params.pop("text")
+    # Single normalisation boundary for the EU-type invariant: applied here
+    # after path params have been merged into the dict, before API calls,
+    # link generation, active-filter construction, or template context.
+    enforce_uk_amended_invariant(query_params)
 
-    api_data = basic_search(api_params)
+    api_data = from_api_response(basic_search(to_api_request(query_params)))
     meta = api_data["meta"]
-    # Template renders active-filter chips from meta.query; keep keys aligned
-    # with query_params (and modified_query_links) so removal links resolve.
-    if "q" in meta.get("query", {}):
-        meta["query"]["text"] = meta["query"].pop("q")
     documents_data = api_data["documents"]
-
-    total_count_by_type = sum(item["count"] for item in meta.get("counts", {}).get("byType", []))
-    total_count_by_year = sum(item["count"] for item in meta.get("counts", {}).get("byYear", []))
 
     current_page = meta.get("page", 1)
     total_pages = meta.get("totalPages", 1)
@@ -266,15 +449,16 @@ def search_results_helper(request, query_params: SearchParams):
     modified_query_links = {k: replace_param_and_make_smart_link(query_params, k, None) for k in query_params.keys()}
 
     # A year range lands in query_params as startYear/endYear (or one of them),
-    # not "year". Give the template a single "year" entry that clears every
-    # year alias so the sidebar's "All years" link and any chip-remove action
-    # fully escape the range.
-    if any(k in query_params for k in ("year", "startYear", "endYear")):
+    # not "year". Compute a single link that clears every year alias so the
+    # sidebar's "All years" link and any year chip's remove action fully
+    # escape the range — otherwise removing one half would leave the other.
+    year_clear_link: Optional[str] = None
+    if any(k in query_params for k in _YEAR_RANGE_KEYS):
         clear_year = query_params.copy()
         for field in ("year", "startYear", "endYear", "page", "pageSize"):
             clear_year.pop(field, None)
         year_clear_link = make_smart_link(clear_year)
-        for field in ("year", "startYear", "endYear"):
+        for field in _YEAR_RANGE_KEYS:
             modified_query_links[field] = year_clear_link
 
     base_query = request.GET.copy()
@@ -302,15 +486,17 @@ def search_results_helper(request, query_params: SearchParams):
 
     default_pagesize = query_params.get("pageSize", 20)
 
+    by_type_rows = meta.get("counts", {}).get("byType", [])
+    type_filter_groups = _build_type_filter_groups(by_type_rows, query_params, single_type)
+    active_filters = _build_active_filters(query_params, year_clear_link)
+
     grouped_by_decade = False
-    if len(meta.get("counts", {}).get("byType", [])) == 1:
+    if len(type_filter_groups) == 1:
         grouped_by_decade = group_by_decade(meta["counts"]["byYear"], single_type)
         for year_list in grouped_by_decade.values():
             for item in year_list:
                 item["link"] = replace_param_and_make_smart_link(query_params, "year", item["year"])
 
-    for byType in meta.get("counts", {}).get("byType", []):
-        byType["link"] = replace_param_and_make_smart_link(query_params, "type", to_short_type(byType["type"]))
     for byYear in meta.get("counts", {}).get("byYear", []):
         byYear["link"] = replace_param_and_make_smart_link(query_params, "year", byYear["year"])
     for byInitial in meta.get("counts", {}).get("bySubjectInitial", []):
@@ -355,8 +541,6 @@ def search_results_helper(request, query_params: SearchParams):
         "total_pages": total_pages,
         "current_subject": current_subject,
         "subject_heading": subject_heading,
-        "total_count_by_type": total_count_by_type,
-        "total_count_by_year": total_count_by_year,
         "modified_query_links": modified_query_links,
         "query_params": f"?{base_query_str}" if base_query_str else "",
         "query_param": query_params,
@@ -372,7 +556,10 @@ def search_results_helper(request, query_params: SearchParams):
         "all_lowercase_letters": string.ascii_lowercase,
         "default_pagesize": default_pagesize,
         "type_label_plural": get_type_label(single_type) if single_type else "documents",
-        "type_made_verb": get_first_version(single_type) if single_type else "documents"
+        "type_made_verb": get_first_version(single_type) if single_type else "documents",
+        "type_filter_groups": type_filter_groups,
+        "active_filters": active_filters,
+        "query_param_ui": to_ui_params(query_params),
     }
 
     return render(request, "new_theme/search_result/search_result.html", context)

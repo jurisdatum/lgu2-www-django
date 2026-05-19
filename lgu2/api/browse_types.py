@@ -43,6 +43,7 @@ class Counts(TypedDict):
 class ByType(TypedDict):
     type: str
     count: int
+    ukAmended: NotRequired[Optional[bool]]
 
 
 class ByYear(TypedDict):

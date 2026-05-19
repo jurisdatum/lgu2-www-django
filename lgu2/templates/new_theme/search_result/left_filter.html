@@ -11,7 +11,7 @@
             <span class="close">Close<span> filters</span></span>
         </summary>
         <div>
-            {% if meta_data.counts.byType %}
+            {% if type_filter_groups %}
             <section class="filter-type">
                 <h3>By type</h3>
                 <ul>
@@ -22,19 +22,36 @@
                         </a>
                     </li>
 
-                    
-                    <!-- Show all types if no type is selected -->
-                    {% for all_types in meta_data.counts.byType %}
-                        {% with all_types.type|camel_to_words as converted_type %}
-                            <li>
-                                <a href="{{ all_types.link }}">
-                                    {{ converted_type.label_type }}
-                                    <span>({{ all_types.count }}<span> results</span>)</span>
+                    {% for group in type_filter_groups %}
+                        <li {% if group.parent.current %}aria-current="page"{% endif %}>
+                            {% if group.parent.current %}
+                                <span>
+                                    {{ group.label }}
+                                    <span>({{ group.parent.count }}<span> results</span>)</span>
+                                </span>
+                            {% else %}
+                                <a href="{{ group.parent.link }}">
+                                    {{ group.label }}
+                                    <span>({{ group.parent.count }}<span> results</span>)</span>
                                 </a>
+                            {% endif %}
+                        </li>
+                        {% for sub in group.sub_entries %}
+                            <li {% if sub.current %}aria-current="page"{% endif %}>
+                                {% if sub.current %}
+                                    <span>
+                                        {{ sub.label }}
+                                        <span>({{ sub.count }}<span> results</span>)</span>
+                                    </span>
+                                {% else %}
+                                    <a href="{{ sub.link }}">
+                                        {{ sub.label }}
+                                        <span>({{ sub.count }}<span> results</span>)</span>
+                                    </a>
+                                {% endif %}
                             </li>
-                        {% endwith %}
+                        {% endfor %}
                     {% endfor %}
-                
                 </ul>
             </section>
             {% endif %}

@@ -2,7 +2,8 @@ from typing import Any, Dict, Optional
 from urllib.parse import urlencode
 from django.urls import reverse, NoReverseMatch
 from ..util.types import SEARCH_TYPES
-from ..api.search_types import SearchParams
+from ..util.url_params import to_ui_params
+from ..util.search_params import SearchParams
 
 EXTENT_MAP = {
     "E": "england",
@@ -80,10 +81,14 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
     Handles type(s), year, subject, extent_segment, and exclusiveExtent.
     """
     params = normalize_params_for_browse(params)
+    # Apply UI translations (ukAmended → ukamended, bool → "true"/"false")
+    # before the allowlist check so the allowlist key matches the URL form.
+    params = to_ui_params(params)
 
     allowed_keys = {
         'type', 'year', 'subject', 'extent_segment',
-        'page', 'pageSize', 'title', 'language', 'text', 'number'
+        'page', 'pageSize', 'title', 'language', 'text', 'number',
+        'ukamended',
     }
     if not set(params).issubset(allowed_keys):
         return None
