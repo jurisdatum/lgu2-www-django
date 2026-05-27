@@ -14,9 +14,8 @@ class TimelineEntry(TypedDict):
 
 
 class TimelineData(TypedDict):
-    original: Optional[TimelineEntry]
-    current: Optional[TimelineEntry]
-    historical: List[TimelineEntry]
+    entries: List[TimelineEntry]
+    current: TimelineEntry
     viewing: TimelineEntry
     pointInTime: Optional[date]
     single_version: bool
@@ -27,28 +26,18 @@ _ISO_DATE_RE = re.compile(r'\d{4}-\d{2}-\d{2}')
 
 def make_timeline_data(
     meta: Union[DocumentMetadata, FragmentMetadata, CommonMetadata],
-    target: str,  # 'document', 'fragment', or 'toc'
+    target: str,  # 'document' or 'fragment'
     lang: Optional[str] = None,
-) -> TimelineData:
-    """
-    Generic function to build timeline data for documents, fragments, or TOCs.
-
-    Refactoring justification:
-    - Removes near-identical code repeated across three functions.
-    - Makes adding new targets (e.g. 'appendix') trivial.
-    - Centralizes URL logic for maintainability.
-    """
+) -> Optional[TimelineData]:
 
     def make_link(version: Optional[str]) -> str:
         year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
 
         args = [meta['shortType'], year, meta['number']]
 
-        # Fragment timelines include the fragment href before optional version/lang args
         if target == 'fragment':
             args.append(meta['fragmentInfo']['href'])
 
-        # Build route name dynamically
         suffix = ""
         if version:
             suffix += "-version"
@@ -56,7 +45,6 @@ def make_timeline_data(
             suffix += "-lang"
         route_name = f"{target}{suffix}"
 
-        # Append version if needed
         if version:
             args.append(version)
         if lang:
@@ -67,48 +55,56 @@ def make_timeline_data(
     return _make_timeline_data(meta, make_link)
 
 
-def _make_timeline_data(meta: CommonMetadata, make_link: Callable) -> TimelineData:
+def _make_timeline_data(meta: CommonMetadata, make_link: Callable) -> Optional[TimelineData]:
     versions = meta['versions'].copy()
     point_in_time = meta.get("pointInTime")
 
-    original = None
+    held_aside = None
     if versions and not _ISO_DATE_RE.fullmatch(versions[0]) and versions[0] != 'prospective':
-        version = versions.pop(0)
-        original = {
-            'label': version,
+        label = versions.pop(0)
+        held_aside = {
+            'label': label,
             'date': meta.get('date'),
-            'link': make_link(version),
         }
 
-    current = None
-    if versions:
-        version = versions.pop(-1)
+    if not versions:
         current = {
-            'label': version,
-            'date': None if version == 'prospective' else date.fromisoformat(version),
+            'label': held_aside['label'],
+            'date': held_aside['date'],
             'link': make_link(None),
         }
+        return {
+            'entries': [],
+            'current': current,
+            'viewing': current,
+            'pointInTime': point_in_time,
+            'single_version': True,
+        }
 
-    historical = [
+    if held_aside and held_aside['label'] == meta['version']:
+        return None
+
+    current_label = versions.pop(-1)
+    current = {
+        'label': current_label,
+        'date': None if current_label == 'prospective' else date.fromisoformat(current_label),
+        'link': make_link(None),
+    }
+
+    entries = [
         {'label': v, 'date': date.fromisoformat(v), 'link': make_link(v)}
         for v in versions
     ]
 
-    viewing = None
-    if original and original['label'] == meta['version']:
-        viewing = original
-    elif current and current['label'] == meta['version']:
+    if current['label'] == meta['version']:
         viewing = current
     else:
-        viewing = next(v for v in historical if v['label'] == meta['version'])
-
-    version_count = (1 if original else 0) + len(historical) + (1 if current else 0)
+        viewing = next(v for v in entries if v['label'] == meta['version'])
 
     return {
-        'original': original,
-        'historical': historical,
+        'entries': entries,
         'current': current,
         'viewing': viewing,
         'pointInTime': point_in_time,
-        'single_version': version_count == 1,
+        'single_version': len(entries) == 0,
     }

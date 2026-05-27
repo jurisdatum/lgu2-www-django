@@ -431,13 +431,13 @@ body:not(:-moz-handler-blocked) fieldset {
   background: url('images/dated-version.png') no-repeat 0.25em 0.575em;
   background-size: 1.25em;
 }
-:root .legislation .legislation-content aside > div.as-enacted-formats,
-:root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats {
-  background: url('images/timeline-version.png') no-repeat 0.35em 0.65em;
-  background-size: 1em;
+:root .legislation .legislation-content aside > div.as-enacted,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted {
+  background: url('images/as-enacted.png') no-repeat 0.25em 0.575em;
+  background-size: 1.25em;
 }
-:root .legislation .legislation-content aside > div.as-enacted-formats.pdf,
-:root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats.pdf {
+:root .legislation .legislation-content aside > div.as-enacted.pdf,
+:root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted.pdf {
   background: url('images/kpv-pdf.png') no-repeat 0.05em 0.575em;
   background-size: 1.5em;
 }
@@ -475,11 +475,6 @@ body:not(:-moz-handler-blocked) fieldset {
 :root[colour-scheme="light"] .legislation .legislation-content aside > div.associated-documents {
   background: url('images/associated-documents.png') no-repeat 0.15em 0.5em;
   background-size: 1.45em;
-}
-:root .legislation .legislation-content aside > div.as-enacted,
-:root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted {
-  background: url('images/as-enacted.png') no-repeat 0.25em 0.575em;
-  background-size: 1.25em;
 }
 :root .legislation .legislation-content aside details.other-formats h3:before,
 :root[colour-scheme="light"] .legislation .legislation-content aside details.other-formats h3:before {
@@ -802,11 +797,11 @@ body:not(:-moz-handler-blocked) fieldset {
   background: url('images/dated-version-dm.png') no-repeat 0.25em 0.575em;
   background-size: 1.25em;
 }
-:root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats {
-  background: url('images/timeline-version-active.png') no-repeat 0.35em 0.65em;
-  background-size: 1em;
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted {
+  background: url('images/as-enacted-dm.png') no-repeat 0.25em 0.575em;
+  background-size: 1.25em;
 }
-:root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats.pdf {
+:root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted.pdf {
   background: url('images/kpv-pdf-dm.png') no-repeat 0.05em 0.575em;
   background-size: 1.5em;
 }
@@ -837,10 +832,6 @@ body:not(:-moz-handler-blocked) fieldset {
 :root[colour-scheme="dark"] .legislation .legislation-content aside > div.associated-documents {
   background: url('images/associated-documents-dm.png') no-repeat 0.15em 0.5em;
   background-size: 1.45em;
-}
-:root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted {
-  background: url('images/as-enacted-dm.png') no-repeat 0.25em 0.575em;
-  background-size: 1.25em;
 }
 :root[colour-scheme="dark"] .legislation .legislation-content > div .legislation-ftr aside h3.up-to-date {
   background-image: url('images/up-to-date-dm.png');
@@ -1759,7 +1750,7 @@ summary::-webkit-details-marker {
   border: 0;
 }
 .scrollbar-controls button {
-  width: 2.85rem;
+  width: 2.65rem;
   position: relative;
   margin: 0 0.9375rem 0 0.1rem;
   padding: 0;
@@ -1808,7 +1799,7 @@ summary::-webkit-details-marker {
 }
 .scrollbar-controls .drag-strip {
   position: relative;
-  width: 100%;
+  flex-grow: 1;
   height: 2.5rem;
   padding: 0 0 0.0625rem 0;
 }
@@ -3109,7 +3100,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   border: 0;
 }
 .search-results .dataset .scrollbar button {
-  width: 2.85rem;
+  width: 2.65rem;
   position: relative;
   margin: 0 0.9375rem 0 0.1rem;
   padding: 0;
@@ -3158,7 +3149,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 .search-results .dataset .scrollbar .drag-strip {
   position: relative;
-  width: 100%;
+  flex-grow: 1;
   height: 2.5rem;
   padding: 0 0 0.0625rem 0;
 }
@@ -5888,34 +5879,37 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .timeline:has(details:not([open])):has(.versions li[aria-current="page"] .point-in-time):has(.versions li[aria-current="page"] .previous-point-in-time) summary .version:after {
   border-top: 0.5em dashed var(--timelineVersionActive);
 }
+.legislation .timeline:has(details:not([open])):has(.versions li[aria-current="page"] .point-in-time):has(.versions li[aria-current="page"] .previous-point-in-time) summary .version:before {
+  border-top-color: transparent;
+}
+.legislation .timeline:has(details:not([open])):has(.versions li[aria-current="page"] .point-in-time):has(.versions li[aria-current="page"] .previous-point-in-time) summary .version:after {
+  border-top: 0.5em dashed var(--timelineVersionActive);
+}
+.legislation .timeline:has(details:not([open])):has(.versions li[aria-current="page"] .point-in-time):has(.versions li:last-of-type[aria-current="page"] .previous-point-in-time) summary .version:before {
+  border-top-color: var(--timelineVersionActive);
+}
+.legislation .timeline:has(details:not([open])):has(.versions li[aria-current="page"] .point-in-time):has(.versions li:last-of-type[aria-current="page"] .previous-point-in-time) summary .version:after {
+  border-top: 0.5em dashed var(--timelineVersionActive);
+}
 .legislation .timeline:has(details:not([open])):has(.versions li[aria-current="page"] .point-in-time) summary .date {
   display: none;
 }
-.legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]) summary .version:before,
+.legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]) summary .version:before {
+  border-top-color: transparent;
+}
 .legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]) summary .version:after {
-  border-top-color: transparent;
-}
-.legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]) summary .date:before {
-  background: var(--timelineVersionActive) var(--timelineEnactedVersionIconActive);
-  background-size: 55%;
-}
-.legislation .timeline:has(details:not([open])):has(.versions li:nth-of-type(2)[aria-current="page"]) summary .version:before,
-.legislation .timeline:has(details:not([open])):has(.versions li:nth-of-type(2)[aria-current="page"]) summary .version:after {
-  border-top-color: transparent;
-}
-.legislation .timeline:has(details:not([open])):has(.versions li:nth-of-type(2)[aria-current="page"]):has(.versions li:nth-of-type(3)) summary .version:before {
-  border-top-color: transparent;
-}
-.legislation .timeline:has(details:not([open])):has(.versions li:nth-of-type(2)[aria-current="page"]):has(.versions li:nth-of-type(3)) summary .version:after {
   border-top-color: var(--timelineVersion);
 }
-.legislation .timeline:has(details:not([open])):has(.versions li:nth-of-type(2)[aria-current="page"]):has(.versions li[aria-current="page"] .point-in-time:not(.previous-point-in-time)) summary .version:before {
+.legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]):has(.versions li:last-of-type[aria-current="page"]) summary .version:after {
+  border-top-color: transparent;
+}
+.legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]):has(.versions .previous-point-in-time) summary .version:before {
+  border-top-color: var(--transparent);
+}
+.legislation .timeline:has(details:not([open])):has(.versions li:first-of-type[aria-current="page"]):has(.versions .previous-point-in-time) summary .version:after {
   border-top-color: var(--timelineVersionActive);
 }
-.legislation .timeline:has(details:not([open])):has(.versions li:last-of-type[aria-current="page"]:nth-of-type(n+3)) summary .version:before {
-  border-top-color: var(--timelineVersionActive);
-}
-.legislation .timeline:has(details:not([open])):has(.versions li:last-of-type[aria-current="page"]:nth-of-type(n+3)) summary .version:after {
+.legislation .timeline:has(details:not([open])):has(.versions li:last-of-type[aria-current="page"]) summary .version:after {
   border-top-color: transparent;
 }
 .legislation .timeline .versions .scrollbar {
@@ -6316,7 +6310,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   width: 0.65rem;
   height: 0.225em;
 }
-.legislation .legislation-content > aside > div.as-enacted-formats p {
+.legislation .legislation-content > aside > div.as-enacted p {
   height: 2.25rem;
   padding: 0.15rem 0 0.15rem 2rem;
   display: table-cell;
@@ -6600,6 +6594,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .legislation-content > div .legislation-text > ol > li li {
   margin: 0.25em 0 0 0;
 }
+.legislation .legislation-content > div .legislation-text > ol > li:has(h3) > .prefix {
+  font-weight: 500;
+  line-height: 1.5rem;
+}
 .legislation .legislation-content > div .legislation-text .prefix {
   position: absolute;
   margin: 0 0 0 -8em;
@@ -6609,6 +6607,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .legislation-content > div .legislation-text .prefix .wrapper {
   display: inline-block;
   line-height: 1.2em;
+}
+.legislation .legislation-content > div .legislation-text .prefix .marker .annotation {
+  line-height: 1.5em;
 }
 .legislation .legislation-content > div .legislation-text iframe {
   width: 100%;
@@ -7274,13 +7275,26 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 .legislation .legislation-content > div .status-panel details[open] > div {
   max-height: 25vh;
   overflow-y: scroll;
-  padding: 0 1rem;
+  padding: 0;
   scroll-timeline: --scroll;
 }
+.legislation .legislation-content > div .status-panel details[open] > div h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem 0;
+  padding: 0.65rem 1rem;
+  background: var(--altBg);
+}
+.legislation .legislation-content > div .status-panel details[open] > div h4 {
+  font-size: 1rem;
+  padding: 0.25rem 1rem 0.15rem 1rem;
+}
 .legislation .legislation-content > div .status-panel details[open] > div ul {
-  padding: 0.75rem 0;
+  padding: 0.35rem 1rem 0.75rem 1rem;
   margin: 0;
   list-style: none;
+}
+.legislation .legislation-content > div .status-panel details[open] > div ul:first-child {
+  padding: 0.75rem 0;
 }
 .legislation .legislation-content > div .status-panel details[open] > div ul * {
   font-family: "Roboto";
@@ -7345,8 +7359,12 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   bottom: 0;
   width: 100%;
 }
-.legislation:has(.previous-point-in-time, .not-commenced) .legislation-content > aside > div.in-force {
-  border-top: 0.125rem dashed var(--subtleBorder);
+.legislation:has(.previous-point-in-time, .not-commenced) {
+  /*
+            .legislation-content > aside > div.in-force {
+				border-top: 0.125rem dashed var(--subtleBorder);
+			}
+		*/
 }
 .legislation:has(.previous-point-in-time, .not-commenced) .legislation-content > div .legislation-text:has(> p) > ol,
 .legislation:has(.previous-point-in-time, .not-commenced) .legislation-content > div .legislation-text:has(> p) > ul {
@@ -7847,6 +7865,16 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 @media print and (orientation: portrait), screen and (min-width: calc(768px)) and (max-width: calc(1024px - 1px)) {
   /* timeline and metadata on same row */
+  main.legislation:has(.timeline details:not([open])) {
+    /*
+				&:has(.previous-point-in-time, .not-commenced) {
+					.legislation-content > aside > div.in-force {
+						p:first-of-type {border-top: 0.125rem dashed var(--subtleBorder)}
+						+ .in-force p:first-of-type {border-color: var(--alert); padding: 0.55em 0 0.55rem 2em}
+					}
+                }
+			*/
+  }
   main.legislation:has(.timeline details:not([open])) .timeline {
     margin: 0 1rem;
     position: absolute;
@@ -7975,25 +8003,13 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.not-up-to-date p:first-of-type {
     background-position: 0.05rem 0.3rem;
   }
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats,
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats.pdf {
-    background-position: 1.25em 0.55em;
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted.pdf {
+    background-position: 0.75em 0.55em;
     flex-grow: unset;
   }
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats p,
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats.pdf p {
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted.pdf p {
     min-height: 2.25rem;
     padding: 0.5rem 0 0.15rem 2rem;
-  }
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats.pdf {
-    background-position: 0.75em 0.55em;
-  }
-  main.legislation:has(.timeline details:not([open])):has(.previous-point-in-time, .not-commenced) .legislation-content > aside > div.in-force p:first-of-type {
-    border-top: 0.125rem dashed var(--subtleBorder);
-  }
-  main.legislation:has(.timeline details:not([open])):has(.previous-point-in-time, .not-commenced) .legislation-content > aside > div.in-force + .in-force p:first-of-type {
-    border-color: var(--alert);
-    padding: 0.55em 0 0.55rem 2em;
   }
   main.legislation:has(.timeline details:not([open])):has(.prospective[aria-current="page"]) .legislation-content > aside > div.in-force p:first-of-type {
     border-top: 0.125rem dashed var(--subtleBorder);
@@ -8360,24 +8376,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) details .versions ol li:has(> div):before {
     border: 0.2rem solid var(--disabledButtonBorder);
   }
-  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated:before {
-    top: 1.5rem;
-  }
-  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated a {
-    padding: 1.5rem 0 1rem 2rem;
-  }
-  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated a:before {
-    content: "";
-    display: block;
-    height: 2rem;
-    width: 1rem;
-    position: absolute;
-    left: 0.25rem;
-    top: -1rem;
-    background-image: url('images/timeline-break.png');
-    background-repeat: no-repeat;
-    background-size: 1rem;
-  }
   main.legislation .timeline:has(> details[open]) details .versions ol li:has(~ [aria-current="page"]):not(:first-of-type, :last-of-type):after {
     background: var(--bg);
   }
@@ -8387,9 +8385,51 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) details .versions ol li:has(~ [aria-current="page"]):first-of-type:has(> div):before {
     background: transparent;
   }
-  main.legislation .timeline:has(> details[open]) details .versions ol li:first-of-type,
   main.legislation .timeline:has(> details[open]) details .versions ol li:last-of-type {
+    padding: 0;
     border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li:last-of-type a {
+    padding: 0 0 0 1.25rem;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated:before {
+    z-index: 1;
+    top: 1.75rem;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated a {
+    padding: 1.5rem 0 1rem 1.25rem;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated a:before {
+    content: "";
+    top: -0.25rem;
+    left: -0.2rem;
+    height: 2rem;
+    position: absolute;
+    background: var(--modalTimelinePast);
+    width: 0.2rem;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated a:after {
+    content: "";
+    display: block;
+    height: 2rem;
+    width: 1rem;
+    position: absolute;
+    left: -0.6rem;
+    top: -0.75rem;
+    background-image: url(images/timeline-break.png);
+    background-repeat: no-repeat;
+    background-size: 1rem;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated .explanation {
+    margin: -0.75rem 0 0.75rem 1.25rem;
+    font-style: italic;
+    font-weight: 300;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated:last-of-type a {
+    padding: 1.5rem 0 0 1.25rem;
+  }
+  main.legislation .timeline:has(> details[open]) details .versions ol li.consolidated:last-of-type .explanation {
+    margin: 0.25rem 0 0.75rem 1.25rem;
   }
   main.legislation .timeline:has(> details[open]) details .versions a {
     color: var(--modalText);
@@ -8493,11 +8533,11 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .legislation-content > aside:has(.not-up-to-date) {
     border: 0.13rem dashed var(--warningBorder);
   }
-  main.legislation .legislation-content > aside > div.as-enacted-formats {
+  main.legislation .legislation-content > aside > div.as-enacted {
     display: table;
     width: -webkit-fill-available;
   }
-  main.legislation .legislation-content > aside > div.as-enacted-formats p {
+  main.legislation .legislation-content > aside > div.as-enacted p {
     padding: 0.25rem 0 0.25rem 2rem;
   }
   main.search-results .search-content > details > summary .close span {
@@ -9553,6 +9593,17 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-image: url('images/scrollable-timeline-break-inactive-dm.png');
     background-size: 100%;
   }
+  :root .legislation,
+  :root[colour-scheme="light"] .legislation,
+  :root[colour-scheme="dark"] .legislation {
+    /*
+                &:has(.previous-point-in-time, .not-commenced) {
+                    .legislation-content > aside > div.in-force {
+						border: 0.125rem dashed var(--lessSubtleBorder);
+					}
+                }
+			*/
+  }
   :root .legislation .legislation-content aside > div.language,
   :root[colour-scheme="light"] .legislation .legislation-content aside > div.language,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div.language {
@@ -9599,32 +9650,27 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 0.7em 0.6em;
     background-size: 1.6em;
   }
-  :root .legislation .legislation-content aside > div.as-enacted-formats,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats,
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats {
-    background-position: 0.85em 0.65em;
-    background-size: 1.1em;
+  :root .legislation .legislation-content aside > div.as-enacted,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted,
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted {
+    background-position: 0.8em 0.65em;
+    background-size: 1.4em;
   }
-  :root .legislation .legislation-content aside > div.as-enacted-formats p,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats p,
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats p {
-    padding: 0.5em 0.5em 0.35em 3em;
+  :root .legislation .legislation-content aside > div.as-enacted:has(a),
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted:has(a),
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted:has(a) {
+    border-color: var(--link);
   }
-  :root .legislation .legislation-content aside > div.as-enacted-formats:not(.pdf) a,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats:not(.pdf) a,
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats:not(.pdf) a {
-    font-weight: 500;
-  }
-  :root .legislation .legislation-content aside > div.as-enacted-formats.pdf,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats.pdf,
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats.pdf {
+  :root .legislation .legislation-content aside > div.as-enacted.pdf,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted.pdf,
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted.pdf {
     background-position: 0.45em 0.6em;
     background-size: 1.8em;
   }
-  :root .legislation .legislation-content aside > div.as-enacted-formats.pdf:has(a),
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats.pdf:has(a),
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted-formats.pdf:has(a) {
-    border-color: var(--link);
+  :root .legislation .legislation-content aside > div.as-enacted.pdf p,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted.pdf p,
+  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted.pdf p {
+    padding: 0.5em 0.5em 0.35em 3em;
   }
   :root .legislation .legislation-content aside > div.extent,
   :root[colour-scheme="light"] .legislation .legislation-content aside > div.extent,
@@ -9717,17 +9763,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 0.65em 0.5em;
     background-size: 1.5em;
   }
-  :root .legislation .legislation-content aside > div.as-enacted,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted,
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted {
-    background-position: 0.8em 0.65em;
-    background-size: 1.4em;
-  }
-  :root .legislation .legislation-content aside > div.as-enacted:has(a),
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted:has(a),
-  :root[colour-scheme="dark"] .legislation .legislation-content aside > div.as-enacted:has(a) {
-    border-color: var(--link);
-  }
   :root .legislation .legislation-content aside > div:has(p).explanatory-notes,
   :root[colour-scheme="light"] .legislation .legislation-content aside > div:has(p).explanatory-notes,
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div:has(p).explanatory-notes {
@@ -9740,11 +9775,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   :root[colour-scheme="dark"] .legislation .legislation-content aside > div:has(p).associated-documents {
     background-position: 0.55em 0.6em;
     background-size: 1.8em;
-  }
-  :root .legislation:has(.previous-point-in-time, .not-commenced) .legislation-content > aside > div.in-force,
-  :root[colour-scheme="light"] .legislation:has(.previous-point-in-time, .not-commenced) .legislation-content > aside > div.in-force,
-  :root[colour-scheme="dark"] .legislation:has(.previous-point-in-time, .not-commenced) .legislation-content > aside > div.in-force {
-    border: 0.125rem dashed var(--lessSubtleBorder);
   }
   :root .legislation:has(.prospective[aria-current="page"]) .legislation-content > aside:first-of-type > div,
   :root[colour-scheme="light"] .legislation:has(.prospective[aria-current="page"]) .legislation-content > aside:first-of-type > div,
@@ -10255,6 +10285,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     position: absolute;
     width: 2.5rem;
     height: 12.5rem;
+    z-index: 30;
   }
   main.legislation .timeline:has(> details[open]) > details > summary:hover,
   main.legislation .timeline:has(> details[open]) > details > summary:focus {
@@ -10296,8 +10327,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     flex-flow: row;
     overflow-x: auto;
     overflow-y: hidden;
-    margin: 0 16rem 0 2.5rem;
-    width: calc(100% - 18.5rem);
+    margin: 0 16rem;
+    width: calc(100% - 32rem);
     height: 12.5rem;
     background: var(--verySubtleBg);
   }
@@ -10308,10 +10339,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) .versions ol:before {
     content: "";
     background: var(--timelineVersion);
-    width: calc(var(--maxWidth) - 40.75rem);
+    width: calc(var(--maxWidth) - 20rem);
     height: 0.5rem;
     position: absolute;
-    margin: 6.05rem 0 0 20.25rem;
+    margin: 6.05rem 0 0 -6rem;
   }
   main.legislation .timeline:has(> details[open]) .versions ol:has(li:nth-of-type(2) .previous-point-in-time):before {
     width: calc(var(--maxWidth) - 44rem);
@@ -10323,8 +10354,14 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type[aria-current="page"]):before {
     background: var(--timelineVersionActive);
   }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type:nth-of-type(2)):before {
-    display: none;
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type[aria-current="page"]):has(li:first-of-type > div):before {
+    background: var(--lessSubtleBorder);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type[aria-current="page"]):has(li:first-of-type > div) li:first-of-type .version:after {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type[aria-current="page"]):has(li:first-of-type > div) li.consolidated a:before {
+    left: -0.5rem;
   }
   main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type:nth-of-type(2)) li > a .version:before {
     border-color: transparent;
@@ -10419,11 +10456,14 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type {
     background: var(--verySubtleBg);
-    margin: 0 0.5rem 0 0;
+    margin: 0 0 0 -16rem;
+    z-index: 20;
+    position: absolute;
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > a,
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > div {
-    width: 13.5rem;
+    padding: 2.05rem 0 0 2.4rem;
+    width: 16rem;
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > a .version:before,
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > div .version:before,
@@ -10433,21 +10473,15 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > a .date:before,
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > div .date:before {
-    background: var(--bg) var(--timelineEnactedVersionIcon);
-    background-size: 55%;
+    background: var(--bg) var(--timelineVersionIcon);
+    background-size: 40%;
     width: 3.15rem;
     height: 3.15rem;
     border-radius: 50%;
     margin: -1.8rem auto 0.8rem auto;
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type > div .date:before {
-    border: 0.2rem solid var(--subtleBorder);
-  }
-  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type[aria-current="page"] > a .version:before {
-    border-color: transparent;
-  }
-  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type[aria-current="page"] > a .version:after {
-    border-color: transparent;
+    border: 0.2rem solid var(--lessSubtleBorder);
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:nth-of-type(2) > a .version:before,
   main.legislation .timeline:has(> details[open]) .versions ol li:nth-of-type(2) > div .version:before {
@@ -10456,7 +10490,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) .versions ol li:last-of-type {
     position: absolute;
     width: 16rem;
-    margin: 0 0 0 calc(var(--maxWidth) - 20.5rem);
+    margin: 0 0 0 calc(var(--maxWidth) - 34rem);
     background: var(--verySubtleBg);
   }
   main.legislation .timeline:has(> details[open]) .versions ol li:last-of-type > a {
@@ -10546,6 +10580,10 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"]:has(.point-in-time) + li .version:before {
     margin: 4rem 50% -4rem -3.75rem;
   }
+  main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"]:has(.point-in-time):first-of-type > a {
+    padding: 2.05rem 5.5rem 0 2.9rem;
+    width: 21rem;
+  }
   main.legislation .timeline:has(> details[open]) .versions ol li:not([aria-current="page"]):hover > a,
   main.legislation .timeline:has(> details[open]) .versions ol li:not([aria-current="page"]):focus > a {
     color: var(--link);
@@ -10563,13 +10601,16 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
     box-shadow: 0 0 0.375rem 0 var(--focusShadow);
     outline: 0;
-    background: var(--buttonBg) var(--timelineVersionIconHover);
+    background: var(--focusButtonBg) var(--timelineVersionIconHover);
     background-size: 40%;
   }
-  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type:not([aria-current="page"]):hover > a .date:before,
-  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type:not([aria-current="page"]):focus > a .date:before {
-    background: var(--buttonBg) var(--timelineEnactedVersionIconHover);
-    background-size: 55%;
+  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type:not([aria-current="page"]) > a .version:after,
+  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type:not([aria-current="page"]) > div .version:after {
+    border-color: var(--timelineVersionActive);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol li:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > div .version:before {
+    border-color: var(--timelineVersionActive);
   }
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"]:not(:has(.point-in-time)) > a,
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"]:not(:has(.point-in-time)) > div {
@@ -10593,10 +10634,6 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background: var(--timelineVersionActive) var(--timelineVersionIconActive);
     background-size: 40%;
   }
-  main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"]:first-of-type > a .date:before {
-    background: var(--timelineVersionActive) var(--timelineEnactedVersionIconActive);
-    background-size: 55%;
-  }
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"] ~ li:not(:last-of-type ) > a .version:before,
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"] ~ li:not(:last-of-type ) > div .version:before,
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"] ~ li:not(:last-of-type ) > a .version:after,
@@ -10606,6 +10643,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"] ~ li:nth-of-type(2) > a .version:before,
   main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"] ~ li:nth-of-type(2) > div .version:before {
     border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol li[aria-current="page"] ~ li:nth-of-type(2) > a .version:before {
+    border-color: var(--timelineVersion);
   }
   main.legislation .timeline:has(> details[open]) .versions ol li.prospective > a .date:before {
     border-color: var(--alert);
@@ -10627,6 +10667,14 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background: var(--repealed) var(--timelineRepealedVersionActive);
     background-size: 40%;
   }
+  main.legislation .timeline:has(> details[open]) .versions ol li.consolidated > a,
+  main.legislation .timeline:has(> details[open]) .versions ol li.consolidated > div {
+    padding: 2.05rem 0 0 2.5rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol li.consolidated > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol li.consolidated > div .version:before {
+    margin: 4rem 50% -4rem -2.5rem;
+  }
   main.legislation .timeline:has(> details[open]) .versions ol li.consolidated a:before {
     content: "";
     display: block;
@@ -10639,9 +10687,20 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 0 0;
     background-repeat: no-repeat;
     position: absolute;
-    left: -0.8rem;
+    left: 1rem;
     top: calc(50% - (2.125rem / 2));
     z-index: 1;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol li.consolidated .explanation {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
   main.legislation .timeline:has(> details[open]) .versions ol li details:not([open]) summary {
     position: absolute;
@@ -10798,41 +10857,148 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   main.legislation .timeline:has(> details[open]) .versions ol li:last-of-type div {
     left: 0.5rem;
   }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) {
-    width: calc(100% - 22rem);
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time) {
+    margin: 0 16rem 0 22rem;
+    width: calc(100% - 38rem);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time):before {
+    width: calc(var(--maxWidth) - 25rem);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time) li:first-of-type {
+    margin: 0 0 0 -22rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time) li:first-of-type > a {
+    padding: 2.05rem 6.5rem 0 2.9rem;
+    width: 22rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time) li:first-of-type > a .version:after {
+    margin: 2.2rem -2rem 0 50%;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time) li:first-of-type > a .point-in-time {
+    right: 1rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type .point-in-time) li:last-of-type {
+    margin: 0 0 0 calc(var(--maxWidth) - 40rem);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time):before {
+    width: calc(var(--maxWidth) - 33.25rem);
   }
   main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type {
-    width: 19.5rem;
-    margin: 0 0 0 calc(var(--maxWidth) - 24rem);
-  }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type > a {
-    padding: 2.05rem 9rem 0 0;
-    width: 21.5rem;
-  }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type > a .version:before {
-    margin: 4rem 50% -4rem 0;
-  }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type > a .point-in-time {
-    right: 1.35rem;
-  }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:has(.previous-point-in-time) > a {
-    padding: 2.05rem 0 0 7.5rem;
+    margin: 0 0 0 calc(var(--maxWidth) - 23.3rem);
     width: 18rem;
+    background: unset;
   }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:has(.previous-point-in-time) > a .version:before {
-    border-top: 0.5em dashed var(--timelineVersionActive);
-    margin: 4rem 50% -4rem -2rem;
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:first-of-type {
+    margin: 0 0 0 calc(var(--maxWidth) - 26.25rem);
   }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:has(.previous-point-in-time) > a .version:after {
-    border-top-color: transparent;
-    margin: 2.2rem 0 0 50%;
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:first-of-type > a .point-in-time {
+    right: 3.1rem;
   }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:has(.previous-point-in-time) > a .point-in-time {
-    left: 0.75rem;
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(li:first-of-type .previous-point-in-time):before {
+    width: calc(var(--maxWidth) - 25rem);
+    margin: 6.05rem 0 0 16rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(li:first-of-type .previous-point-in-time) li:first-of-type > a {
+    padding: 2.05rem 0 0 10rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(li:first-of-type .previous-point-in-time) li:first-of-type > a .version:before {
+    border-style: solid;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(li:first-of-type .previous-point-in-time) li:first-of-type > a .version:after {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(li:first-of-type .previous-point-in-time) li:first-of-type > a .previous-point-in-time {
     right: unset;
+    left: 4.5rem;
   }
-  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .point-in-time) li:last-of-type:has(.previous-point-in-time) + li .version:before {
-    margin: 4rem 50% -4rem 0;
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .previous-point-in-time):before {
+    width: calc(var(--maxWidth) - 25rem);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .previous-point-in-time) li:last-of-type {
+    margin: 0 0 0 calc(var(--maxWidth) - 20.875rem);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:last-of-type .previous-point-in-time) li:last-of-type > a .version:after {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time):before {
+    width: calc(var(--maxWidth) - 18rem);
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time) li:last-of-type {
+    margin: 0 0 0 calc(var(--maxWidth) - 20rem);
+    width: 16rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time) li:last-of-type:before {
+    display: none;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time) li:last-of-type > a {
+    padding: 2.05rem 0 0 2.5rem;
+    width: 16rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time) li:last-of-type > a .version:before {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time) li:last-of-type > a .version:after {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type .previous-point-in-time) li:last-of-type > a .previous-point-in-time {
+    right: unset;
+    left: 4.5rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)) {
+    width: 100%;
+    margin: 0;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):before {
+    margin: 6.05rem 0 0 8rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)) li:first-of-type {
+    position: relative;
+    margin: 0;
+    background: unset;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)) li:last-of-type:not(:has(.point-in-time)) {
+    margin: 0 0 0 calc(var(--maxWidth) - 18rem);
+    background: unset;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(.prospective) li:first-of-type .version:after {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type) {
+    width: 100%;
+    margin: 0;
+    position: relative;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type):before {
+    margin: 6.05rem 0 0 8rem;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type) li {
+    position: unset;
+    margin: 0 0 0 calc(var(--maxWidth) - 18rem);
+    background: unset;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:has(li:first-of-type:last-of-type) li:before {
+    content: "";
+    background: var(--timelineVersionActive);
+    width: 1.65rem;
+    height: 1.65rem;
+    position: absolute;
+    margin: 5.4rem 7.25rem;
+    border-radius: 50%;
+    left: 0;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:not(:last-of-type) > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:not(:last-of-type) ~ li > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:not(:last-of-type) ~ :nth-of-type(2):not(:last-of-type) > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:last-of-type > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:not(:last-of-type) > a .version:after,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:not(:last-of-type) ~ li > a .version:after,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:not(:last-of-type) ~ :nth-of-type(2):not(:last-of-type) > a .version:after,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:last-of-type > a .version:after {
+    border-color: transparent;
+  }
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > a .version:before,
+  main.legislation .timeline:has(> details[open]) .versions ol:not(:has(li[aria-current="page"])) li:last-of-type > a .version:before {
+    border-color: var(--timelineVersion);
   }
   main.legislation .timeline:has(> details[open]) .scrollable summary > span:before {
     height: 16rem;
@@ -10898,7 +11064,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     border: 0;
   }
   main.legislation .timeline:has(> details[open]) .scrollable .versions .scrollbar button {
-    width: 2.85rem;
+    width: 2.65rem;
     position: relative;
     margin: 0 0.9375rem 0 0.1rem;
     padding: 0;
@@ -10947,7 +11113,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.legislation .timeline:has(> details[open]) .scrollable .versions .scrollbar .drag-strip {
     position: relative;
-    width: 100%;
+    flex-grow: 1;
     height: 2.5rem;
     padding: 0 0 0.0625rem 0;
   }
@@ -11030,6 +11196,26 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
   }
   main.legislation .timeline:has(> details[open]):has(.scrollable) .versions details:not([open]) summary {
     top: calc(50% - 2.75rem);
+  }
+  main.legislation .timeline:has(> details[open]):has(.scrollable) .versions ol li:first-of-type:before {
+    float: right;
+    content: "";
+    overflow: hidden;
+    display: block;
+    margin: 0 -0.5em 0 0;
+    position: unset;
+    width: 0.4rem;
+    height: 16rem;
+    z-index: unset;
+    background: linear-gradient(270deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%);
+  }
+  main.legislation .timeline:has(> details[open]):has(.scrollable) .scrollable .versions .scrollbar {
+    margin: -4rem 0 0 16rem;
+    width: calc(100% - 32rem);
+  }
+  main.legislation .timeline:has(> details[open]):has(ol li:first-of-type .point-in-time) .scrollable .versions .scrollbar {
+    margin: -4rem 0 0 22rem;
+    width: calc(100% - 38rem);
   }
   main.legislation .timeline:has(> details[open]):has(ol li:last-of-type .point-in-time) .scrollable .versions .scrollbar {
     width: calc(100% - 22rem);
@@ -11272,6 +11458,9 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     transform: rotate(135deg);
     width: 0.65rem;
     height: 0.225em;
+  }
+  main.legislation .legislation-content > aside > div.contributed p {
+    padding: 0.5em 1em;
   }
   main.legislation .legislation-content > aside details {
     margin: 0;
@@ -12168,11 +12357,7 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 1.15rem 0.45rem;
     background-size: 1.1rem;
   }
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats {
-    background-position: 1.15rem 0.45rem;
-    background-size: 1.1rem;
-  }
-  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted-formats.pdf {
+  main.legislation:has(.timeline details:not([open])) .legislation-content > aside:first-of-type > div.as-enacted.pdf {
     background-position: 1.15rem 0.45rem;
     background-size: 1.1rem;
   }
@@ -12204,13 +12389,8 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
     background-position: 0.5rem 0.45rem;
     background-size: 1.1rem;
   }
-  :root .legislation .legislation-content aside > div.as-enacted-formats,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats {
-    background-position: 0.5rem 0.45rem;
-    background-size: 1.1rem;
-  }
-  :root .legislation .legislation-content aside > div.as-enacted-formats.pdf,
-  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted-formats.pdf {
+  :root .legislation .legislation-content aside > div.as-enacted.pdf,
+  :root[colour-scheme="light"] .legislation .legislation-content aside > div.as-enacted.pdf {
     background-position: 0.5rem 0.45rem;
     background-size: 1.1rem;
   }
@@ -12264,4 +12444,145 @@ main aside:not(.legislation aside, .search-filters) ul li article a h3 {
 }
 body:has(.advanced-searches) header .hdr-search {
   display: none;
+}
+.main-menu ul li button {
+  font-weight: 500;
+  color: var(--text);
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background-color: var(--buttonBg);
+  color: var(--buttonText);
+  border: 0.0625rem solid transparent;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  background-color: transparent;
+  color: var(--buttonBg);
+  border: 0.0625rem solid var(--buttonBg);
+  padding: 0.1rem 0.5em;
+}
+.main-menu ul li button:focus,
+.main-menu ul li button:hover {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+}
+.main-menu ul li button:active {
+  background-color: var(--focusButtonBg);
+  color: var(--buttonText);
+  border-color: var(--focusOutline);
+  outline-color: var(--focusOutline);
+  outline-style: solid;
+  outline-width: 0.1rem;
+  text-decoration: none;
+  -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  box-shadow: 0 0 0.375rem 0 var(--focusShadow);
+  background-color: var(--modalBg);
+  color: var(--modalText);
+}
+.main-menu ul li button:first-of-type {
+  margin: 0 0.5rem 0 0;
+}
+.main-menu ul li button.selected {
+  background: var(--activeBg);
+  color: var(--activeText);
+  border-color: var(--activeBg);
+}
+:root[timeline-mode="one-original"] {
+  /*
+		@media print and (orientation: portrait), screen and (max-width: calc(1023px - 1px)) {
+			main.legislation .timeline:has(> details[open]) details .versions ol {
+				li {
+					&:first-of-type {border-color: var(--modalTimelinePast)}
+					&:last-of-type {
+						padding: 0;
+						a {padding: 0 0 0 1.25rem}
+					}
+					&.consolidated {
+						&:before {z-index: 1; top: 1.75rem}
+						a {
+							padding: 1.5rem 0 1rem 1.25rem;
+							&:before {content: ""; top: -0.25rem; left: -0.2rem; background: var(--modalTimelinePast); width: 0.2rem}
+							&:after {content: ""; display: block; height: 2rem; width: 1rem; position: absolute; left: -0.6rem; top: -0.75rem; background-image: url(images/timeline-break.png); background-repeat: no-repeat; background-size: 1rem}
+						}
+						.explanation {margin: -0.75rem 0 0.75rem 1.25rem; font-style: italic; font-weight: 300}
+						&:last-of-type {
+							a {padding: 1.5rem 0 0 1.25rem}
+							.explanation {margin: 0.25rem 0 0.75rem 1.25rem}
+						}
+					}
+				}
+			}
+		}
+		
+		@media print and (orientation: landscape), screen and (min-width: 1024px) {
+			main.legislation .timeline {
+				&:has(> details[open]) {
+					> details summary {z-index: 30}
+					.versions ol {
+						margin: 0 16rem; width: calc(100% - 32rem);
+						&:before {width: calc(var(--maxWidth) - 20rem); margin: 6.05rem 0 0 -6rem}
+						&:has(li:last-of-type:nth-of-type(2)) {
+							&:before {display: block}
+						}
+						li {
+							&[aria-current="page"] ~ li:nth-of-type(2) > a .version:before {border-color: var(--timelineVersion)}
+							&:first-of-type {
+								margin: 0 0 0 -16rem; z-index: 20; position: absolute;
+								> a, > div {
+									padding: 2.05rem 0 0 2.4rem; width: 16rem;
+									.date:before {background: var(--bg) var(--timelineVersionIcon); background-size: 40%}
+								}
+								&[aria-current="page"] .date:before {border: 0.2rem solid var(--timelineVersionActive); background: var(--timelineVersionActive) var(--timelineVersionIconActive); background-size: 40%;}
+							}
+							&:not([aria-current="page"]):hover > a .date:before {
+								color: var(--buttonText); border-color: var(--focusOutline); text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow); outline: 0; background: var(--focusButtonBg) var(--timelineVersionIconHover); background-size: 40%;
+							}
+							&:first-of-type:not([aria-current="page"]) > a .version:after, 
+							&:first-of-type:not([aria-current="page"]) > div .version:after,
+							&:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > a .version:before,
+							&:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > div .version:before
+							{
+								border-color: var(--timelineVersionActive)
+							}
+							&:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 34rem)}
+							&.consolidated {
+								> a, > div {
+									padding: 2.05rem 0 0 2.5rem;
+									.version:before {margin: 4rem 50% -4rem -2.5rem}
+								}					
+								a:before {left: 1rem}
+								.explanation {.sr-only}
+							}
+						}
+						&:not(:has(li:nth-child(4))):has(li:nth-child(3)) {
+							margin: 0 16rem 0 0; width: calc(100% - 16rem);
+							&:before {margin: 6.05rem 0 0 8rem}
+							li:first-of-type {position: relative; margin: 0; background: unset}
+							li:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 18rem)}
+							&:has(.prospective) li:first-of-type .version:after {border-color: transparent}
+						}
+						&:has(li:nth-of-type(2):last-of-type) {
+        					width: calc(100% - 16rem);
+							li:last-of-type {position: relative; background: unset}
+							&:has(li:first-of-type.current) {
+								li:first-of-type a:before {content: ""; display: block; width: 1.65rem; height: 1.65rem; margin: 3.45rem auto 1.75rem auto; border-radius: 50%; background: var(--timelineVersionActive)}
+							}
+						}
+					}
+				}
+				&:has(.scrollable):has(> details[open]) {
+					.versions ol li:first-of-type:before {float: right; content: ""; overflow: hidden; display: block; margin:  0 -0.5em 0 0; position: unset; width: 0.4rem; height: 16rem; z-index: unset; background: linear-gradient(270deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%)}
+					.scrollable .versions .scrollbar {margin: -4rem 0 0 16rem; width: calc(100% - 32rem)}
+				}
+			}
+		}
+	*/
 }

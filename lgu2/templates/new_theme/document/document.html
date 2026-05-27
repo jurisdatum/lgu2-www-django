@@ -37,7 +37,7 @@
         <details>
             <summary>
                 You are viewing {% if meta.fragmentInfo %}{{ meta.fragmentInfo.label }}{% else %}this legislation{% endif %} on <span>{{ view_date|date:'d M Y' }}</span>
-                <span> Enter a date or choose from the versions on the timeline</span>
+                <span> Enter a date{% if timeline %} or choose from the versions on the timeline{% endif %}</span>
             </summary>
             <form role="search">
                 <h3>Change the date</h3>

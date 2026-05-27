@@ -5,20 +5,31 @@
             <span class="open">
                 <span class="version">
                     <span class="prefix">You are viewing </span>
-                    {% if timeline.original and timeline.original.label == timeline.viewing.label %}
-                    <span class="title">the original version</span>
-                    {% elif timeline.current and timeline.current.label == timeline.viewing.label %}
-                        {% if timeline.current.label == 'prospective'%}
+                    {% if timeline.viewing.label == timeline.current.label %}
+                        {% if timeline.current.label == 'prospective' %}
                             <span class="title">a prospective version</span>
+                        {% elif timeline.current.label == 'enacted' or timeline.current.label == 'made' or timeline.current.label == 'created' or timeline.current.label == 'adopted' %}
+                            <span class="title">the original version</span>
                         {% else %}
                             <span class="title">the current version</span>
                         {% endif %}
                     {% else %}
-                    <span class="title">a historical version</span>
+                        <span class="title">a historical version</span>
                     {% endif %}
                 </span>
                 {% if timeline.viewing.label == 'prospective' %}
                     <span class="date">not yet in force</span>
+                {% elif timeline.viewing.label == 'enacted' or timeline.viewing.label == 'made' or timeline.viewing.label == 'created' or timeline.viewing.label == 'adopted' %}
+                    {% if timeline.viewing.date %}
+                        <span class="date">as {{ timeline.viewing.label }} on <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
+                    {% else %}
+                        <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
+                    {% endif %}
+                    {% if timeline.pointInTime %}
+                        <span class="point-in-time{% if timeline.viewing.date and timeline.pointInTime < timeline.viewing.date %} previous-point-in-time{% endif %}">
+                            as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                        </span>
+                    {% endif %}
                 {% else %}
                     {% if timeline.viewing.date %}
                         <span class="date">from <span>{{ timeline.viewing.date|date:'d F Y' }}</span></span>
@@ -38,48 +49,14 @@
         <div class="versions">
             <nav aria-label="Timeline of versions">
                 <ol>
-                    {% if timeline.original %}
-                        {% if timeline.original.label == timeline.viewing.label %}
-                        <li aria-current="page">
-                            <a href="javascript:void(0);">
-                                <span class="prefix">You are viewing </span>
-                                <span class="version"><span class="title">the original version</span></span>
-                                {% if timeline.original.date %}
-                                    <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
-                                {% else %}
-                                    <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
-                                {% endif %}
-                                {% if timeline.pointInTime %}
-                                    {% if not timeline.original.date or timeline.pointInTime != timeline.original.date %}
-                                    <span class="point-in-time{% if timeline.original.date and timeline.pointInTime < timeline.original.date %} previous-point-in-time{% endif %}">
-                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
-                                    </span>
-                                    {% endif %}
-                                {% endif %}
-                            </a>
-                        </li>
-                        {% else %}
-                        <li>
-                            <a href="{{ timeline.original.link }}">
-                                <span class="version"><span class="title">The original version</span></span>
-                                {% if timeline.original.date %}
-                                    <span class="date">as {{ timeline.original.label }} on <span>{{ timeline.original.date|date:'d F Y' }}</span></span>
-                                {% else %}
-                                    <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
-                                {% endif %}
-                            </a>
-                        </li>
-                        {% endif %}
-                    {% endif %}
-
-                    {% for v in timeline.historical %}
+                    {% for v in timeline.entries %}
                         {% if v.label == timeline.viewing.label %}
                         <li aria-current="page">
                             <a href="javascript:void(0);">
                                 <span class="prefix">You are viewing </span>
                                 <span class="version"><span class="title">a historical version</span></span>
                                 <span class="date">from <span>{{ v.date|date:'d F Y' }}</span></span>
-                                {% if timeline.pointInTime and timeline.pointInTime != v.date  %}
+                                {% if timeline.pointInTime and timeline.pointInTime != v.date %}
                                     <span class="point-in-time{% if timeline.pointInTime < v.date %} previous-point-in-time{% endif %}">
                                         as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
                                     </span>
@@ -88,7 +65,7 @@
                         </li>
                         {% else %}
                         <li>
-                            <a href="{{ v.link}}">
+                            <a href="{{ v.link }}">
                                 <span class="version"><span class="title">A historical version</span></span>
                                 <span class="date">from <span>{{ v.date|date:'d F Y' }}</span></span>
                             </a>
@@ -96,7 +73,7 @@
                         {% endif %}
                     {% endfor %}
 
-                    {% if timeline.current and timeline.current.label == 'prospective' %}{# prospective #}
+                    {% if timeline.current.label == 'prospective' %}
                         {% if timeline.current.label == timeline.viewing.label %}
                         <li aria-current="page">
                             <a href="javascript:void(0);">
@@ -117,13 +94,32 @@
                             </a>
                         </li>
                         {% endif %}
-                    {% elif timeline.current %}{# not prospective #}
+                    {% elif timeline.current.label == 'enacted' or timeline.current.label == 'made' or timeline.current.label == 'created' or timeline.current.label == 'adopted' %}
+                        <li aria-current="page">
+                            <a href="javascript:void(0);">
+                                <span class="prefix">You are viewing </span>
+                                <span class="version"><span class="title">the original version</span></span>
+                                {% if timeline.current.date %}
+                                    <span class="date">as {{ timeline.current.label }} on <span>{{ timeline.current.date|date:'d F Y' }}</span></span>
+                                {% else %}
+                                    <span class="date" aria-hidden="true">{# this is necessary for the icon to appear #}</span>
+                                {% endif %}
+                                {% if timeline.pointInTime %}
+                                    {% if not timeline.current.date or timeline.pointInTime != timeline.current.date %}
+                                    <span class="point-in-time{% if timeline.current.date and timeline.pointInTime < timeline.current.date %} previous-point-in-time{% endif %}">
+                                        as it was on <span>{{ timeline.pointInTime|date:'d F Y' }}</span>
+                                    </span>
+                                    {% endif %}
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% else %}
                         {% if timeline.current.label == timeline.viewing.label %}
                         <li aria-current="page">
                             <a href="javascript:void(0);">
                                 <span class="version">
                                     <span class="prefix">You are viewing </span>
-                                    <span class="title">the current version</span>                                    
+                                    <span class="title">the current version</span>
                                 </span>
                                 <span class="date">from <span>{{ timeline.current.date|date:'d F Y' }}</span></span>
                                 {% if timeline.pointInTime and timeline.pointInTime != timeline.current.date %}
@@ -146,7 +142,7 @@
                     {% endif %}
                 </ol>
             </nav>
-                <div hidden class="scrollbar initialise">
+            <div hidden class="scrollbar initialise">
                 <h3>Scrollbar to access all versions on the timeline. Keyboard-only users already have access to all versions.</h3>
                 <button class="left" disabled><span>Scroll left</span></button>
                 <div class="drag-strip"><div class="drag" draggable="true"><span>Drag horizontally to scroll timeline</span></div></div>

@@ -7,6 +7,20 @@
 	var animateInterval = 0
 
 	$(document).ready(function() {
+	// dev environment only - to compare 'one-original' and 'two-originals' timelines
+		$('.main-menu button').on('click', function() {
+			var theButtonId = $(this).attr('id')
+			toggleTimelineMode(theButtonId)
+		})
+		if(localStorage.getItem('timeline-mode')) {
+			var mode = localStorage.getItem('timeline-mode')
+		}
+		else {
+			mode = 'two-originals'
+		}
+		toggleTimelineMode(mode)
+	// End dev environment only
+
     // For demo purposes only - show/hide design approaches
         var urlParams = new URLSearchParams(window.location.search);
         if(urlParams.has('approach')) {
@@ -33,7 +47,7 @@
         else if($('.current-design').length != 0) {
             $('.proposed-design').remove();
         }
-    // Eend demo
+    // End demo
 
 	// To undo hiding of browse dataset unavailable to user agents that do not have JS enabled
 		$('.scrollbar.initialise').removeAttr('hidden')
@@ -53,6 +67,13 @@
 	// If a Table of Contents
 		if($('.legislation .toc-detail').length != 0) {
 			$('.toc-detail li .extent').each(function() {
+				$(this).addClass('hidden')
+			})
+		}
+
+	// If legislation extent
+		if($('.legislation').length != 0) {
+			$('.legislation-text .extent').each(function() {
 				$(this).addClass('hidden')
 			})
 		}
@@ -281,17 +302,26 @@
 	// If on the advanced search page
         if($('.advanced-searches').length != 0) {
             $('.search-type input#primary').change(function() {
-                if($('.search-type input#primary').is(':checked')) {                    
+                if($('.search-type input#primary').is(':checked')) {
+                    $('#primary-types input').prop('checked', true);
+                }
+                else {
                     $('#primary-types input').prop('checked', false);
                 }
             })
             $('.search-type input#secondary').change(function() {
                 if($('.search-type input#secondary').is(':checked')) {
+                    $('#secondary-types input').prop('checked', true);
+                }
+                else {
                     $('#secondary-types input').prop('checked', false);
                 }
             })
             $('.search-type input#eu').change(function() {
                 if($('.search-type input#eu').is(':checked')) {
+                    $('#eu-types input').prop('checked', true);
+                }
+                else {
                     $('#eu-types input').prop('checked', false);
                 }
             })
@@ -346,7 +376,7 @@
 			});
 
 		// Scroll to the selected year
-			setTimeout(function() { 
+			//setTimeout(function() { 
 				loadVersion('all','noanim')
 				var theYear = getUrlVars()["year"];
 				if(theYear !== 'undefined' && theYear !== '' && theYear !== false) {
@@ -369,7 +399,7 @@
 						}
 					})
 				}
-			},20)
+			//},20)
 
 		// Selecting a year from the dataset
 			$('.dataset > div:first-of-type dt a').on('click', function() {
@@ -434,22 +464,26 @@
 			}
 
 		// If timeline is open on page load, set scrollbar
-			if($('.timeline details').is('[open]'))
+			if($('.timeline > details').is('[open]'))
 			{
-				setTimeout(function(){
+			//	setTimeout(function(){
 					openTimeline()
-				},1)
+				//},1)
 			}
 
 		// Timeline controls
-			$('.timeline summary').on('click', function() {
+			$('.timeline > details > summary').on('click', function() {
 				if ($(window).width() > 1023) {
 					openTimeline()
-					if($('.timeline details').is('[open]'))
+					if($('.timeline > details').is('[open]'))
 					{
-						setTimeout(function(){
-							$('.timeline details').removeClass('scrollable')
-						},1)
+						//setTimeout(function(){
+							$('.timeline > details').removeClass('scrollable')
+						//},1)
+						localStorage.setItem('timeline', 'closed')
+					}
+					else {
+						localStorage.removeItem('timeline')
 					}
 				}
 			})
@@ -461,13 +495,11 @@
 				loadVersion(this)
 			})
 
-		// Open timeline if historical version is selected 
-			if($(window).width() > 1023 && (!$('li:last-of-type').is('[aria-current]')))
+		// Open timeline 
+			if($(window).width() > 1023 && !(localStorage.getItem('timeline')) /* && (!$('li:last-of-type:not(:has(.point-in-time))').is('[aria-current]') || $('li:last-of-type').is('.prospective'))*/)
 			{
-				setTimeout(function() { 
-					$('.timeline details').prop('open',true)
-					openTimeline()
-				},150)
+				openTimeline()
+				$('.timeline > details:not(:has(summary[disabled])').prop('open',true)
 			}
 		}
 		
@@ -478,9 +510,15 @@
 			$('.timeline ol').scroll(function() {
 				var scrollbarwidth = $('.scrollbar').width()
 				var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-				var liOriginalWidth = $('.timeline ol').children('li:first-of-type').width()
-				var liOriginalMargin = Number($('.timeline ol').children('li:first-of-type').css("margin-right").replace("px", ""))
+				var liOriginalWidth = 0
+				var liOriginalMargin = 0
 				var noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
+			// dev environment only - to compare 'one-original' and 'two-originals' timelines
+				if(localStorage.getItem('timeline-mode') == 'two-originals') {
+					liOriginalWidth = $('.timeline ol').children('li:first-of-type').width()
+					liOriginalMargin = Number($('.timeline ol').children('li:first-of-type').css("margin-right").replace("px", ""))
+				}
+			// End dev environment only
 				var addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
 				var olwidth = liOriginalWidth + liOriginalMargin + ($('.timeline ol').children('li').length - 2) * liwidth - scrollbarwidth + (addForPiT * noOfPiTs)
 				var scrollx = $('.timeline ol').scrollLeft()
@@ -605,9 +643,15 @@
 				if($('.timeline').length != 0) 
 				{
 					liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-					liOriginalWidth = $('.timeline ol').children('li:first-of-type').width()
-					liOriginalMargin = Number($('.timeline ol').children('li:first-of-type').css("margin-right").replace("px", ""))
+					liOriginalWidth = 0
+					liOriginalMargin = 0
 					noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
+				// dev environment only - to compare 'one-original' and 'two-originals' timelines
+					if(localStorage.getItem('timeline-mode') == 'two-originals') {
+						liOriginalWidth = $('.timeline ol').children('li:first-of-type').width()
+						liOriginalMargin = Number($('.timeline ol').children('li:first-of-type').css("margin-right").replace("px", ""))
+					}
+				// End dev environment only
 					addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
 					olwidth = liOriginalWidth + liOriginalMargin + ($('.timeline ol').children('li').length - 2) * liwidth - scrollbarwidth + (addForPiT * noOfPiTs)
 				}
@@ -636,14 +680,21 @@
 			})
 	}
 
-	// If a Table of Contents
-		if($('.legislation .toc-detail').length != 0) {
+	// Extent buttons
+		if($('.toc-detail').length != 0) {
 			$('#toc').on('click', function() {
 				expandToc($(this))
 			})
 			$('.legislation-content aside .extent button').on('click', function() {
 				tocExtent($(this))
 			})
+		}
+		else if($('.legislation-text').length != 0) {
+            if($('.extent').length != 0) {
+                $('.legislation-content aside .extent button').on('click', function() {
+                    legExtent($(this))
+                })
+            }
 		}
 		
 	// If there is legislation text
@@ -717,8 +768,10 @@
 			if(localStorage.getItem('statusPanel')) {
 				var pinStatus = localStorage.getItem('statusPanel')
 				if(pinStatus == 'pinned') {
-					$('.status-panel').addClass('pinned')
-					$('.status-panel button span').text('Unpin this panel')
+					$('.status-panel.not-up-to-date').addClass('pinned')
+					$('.status-panel.not-up-to-date button span').text('Unpin this panel')
+					$('.status-panel.up-to-date').addClass('pinned')
+					$('.status-panel.up-to-date button span').text('Unpin this panel')
 				}
 			}
 			$('.status-panel summary').on('click', function() {
@@ -730,7 +783,7 @@
 				}
 			})
 			
-			$('.legislation-content > aside > div.not-up-to-date button').on('click', function() {
+			$('.legislation-content > aside > div.up-to-date button').on('click', function() {
 				if($('.status-panel details').is('[open]')) {
 					$('.status-panel details').removeAttr('open')
 					hideStatusPanel()
@@ -750,9 +803,9 @@
 				{
 					$('.hdr-menu details').removeAttr('open')
 				}
-				if($(window).width() < 1023 && $('.timeline details').is('[open]'))
+				if($(window).width() < 1023 && $('.timeline > details').is('[open]'))
 				{
-					$('.timeline details').removeAttr('open')
+					$('.timeline > details').removeAttr('open')
 				}
 				else if($(window).width() < 1023 && $('.hdr-search details').is('[open]'))
 				{
@@ -839,6 +892,22 @@
 				if($(window).scrollTop() < $('main article h2:first-of-type:not(nav h2)').offset().top) {
 					setDynamicLeftHandNav()
 				}
+			}
+
+		// Open/close timeline 
+			if($(window).width() > 1023 && !(localStorage.getItem('timeline')))
+			{
+				//setTimeout(function() { 
+					$('.timeline > details:not(:has(summary[disabled])').prop('open',true)
+					openTimeline()
+				//},150)
+			}
+			else
+			{
+				//setTimeout(function() { 
+					$('.timeline > details:not(:has(summary[disabled])').removeAttr('open')
+					openTimeline()
+				//},150)
 			}
 		})
 	})
@@ -1089,7 +1158,7 @@
 				var olScrollwidth = $('.timeline ol').get(0).scrollWidth
 				if(olScrollwidth > olWidth)
 				{
-					$('.timeline details').addClass('scrollable')
+					$('.timeline > details').addClass('scrollable')
 				}
 			}
 			$('.versions li').each(function() {
@@ -1098,7 +1167,7 @@
 					loadVersion($(this).children('a'),'noanim')
 				}
 			})
-		},1)
+		},25)
 	}
 
 	function loadVersion(version,anim) {
@@ -1126,16 +1195,21 @@
 			scrollbarwidth = $('.scrollbar').width()
 			index = $(version).index()
 			var liwidth = $('.timeline ol').children('li:not(:first-of-type, :last-of-type, :has(.point-in-time)):first').width()
-			var noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
+			var noOfPiTs = ($('.timeline ol').children('li:not(:last-of-type):has(.point-in-time)').length) + 1
+		// dev environment only - to compare 'one-original' and 'two-originals' timelines
+			if(localStorage.getItem('timeline-mode') == 'two-originals') {
+				noOfPiTs = ($('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').length)
+			}
+		// End dev environment only
 			var addForPiT = $('.timeline ol').children('li:not(:first-of-type, :last-of-type):has(.point-in-time)').outerWidth() - liwidth
 			
-			setTimeout(function(){
+			//setTimeout(function(){
 				$('.timeline ol').animate({scrollLeft: ((index * liwidth) + (addForPiT * noOfPiTs) + (liwidth / 2) - (scrollbarwidth * 0.5))}, animateInterval)
-			},1)
+			//},20)
 			
 			if($(window).width() < 1023)
 			{
-				$('.timeline details').removeAttr('open')
+				$('.timeline > details').removeAttr('open')
 			}
 		}
 		else if($('.dataset').length != 0) 
@@ -1214,6 +1288,23 @@
 		}
 	}
 
+	function legExtent(element) {
+		if($('.extent button.expanded').length != 0) {
+			$(element).removeClass('expanded')
+			$(element).text('Show geographical extent')
+			$('.extent').each(function() {
+				$(this).addClass('hidden')
+			})
+		}
+		else {
+			$(element).addClass('expanded')
+			$(element).text('Hide geographical extent')
+			$('.extent').each(function() {
+				$(this).removeClass('hidden')
+			})
+		}
+	}
+
 	function pinStatusPanel() {
 		if($('.status-panel.pinned').length != 0) {
 			$('.status-panel').removeClass('pinned')
@@ -1222,22 +1313,91 @@
 			localStorage.removeItem('statusPanel')
 		}
 		else {
-			$('.status-panel').addClass('pinned')
-			$('.status-panel button span').text('Unpin this panel')
+			$('.status-panel.not-up-to-date').addClass('pinned')
+			$('.status-panel.not-up-to-date button span').text('Unpin this panel')
+			$('.status-panel.up-to-date').addClass('pinned')
+			$('.status-panel.up-to-date button span').text('Unpin this panel')
 			localStorage.setItem('statusPanel', 'pinned')
 		}
 	}
 
 	function showStatusPanel() {
-		var collapseLabel = $('.status-panel summary').data('collapse-label') || 'Hide detail of these changes'
-		$('.legislation-content > aside > div.not-up-to-date button').text(collapseLabel)
-		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',true)
-		$('.status-panel summary').text(collapseLabel)
+		$('.legislation-content > aside > div.up-to-date button').text('Hide detail of these changes')
+		$('.legislation-content > aside > div.up-to-date button').attr('aria-expanded',true)
+		$('.status-panel summary').text('Hide the detail of these changes')
 	}
 
 	function hideStatusPanel() {
-		var expandLabel = $('.status-panel summary').data('expand-label') || 'See what these changes are'
-		$('.status-panel summary').text(expandLabel)
-		$('.legislation-content > aside > div.not-up-to-date button').text(expandLabel)
-		$('.legislation-content > aside > div.not-up-to-date button').attr('aria-expanded',false)
+		$('.status-panel summary').text('See the outstanding changes')
+		$('.legislation-content > aside > div.up-to-date button').text('See outstanding changes')
+		$('.legislation-content > aside > div.up-to-date button').attr('aria-expanded',false)
 	}
+
+// dev environment only - to compare 'one-original' and 'two-originals' timelines
+	function toggleTimelineMode(mode) {
+		/*$('.main-menu button').removeClass('selected')
+		if(mode == 'two-originals' || mode == '') {
+			localStorage.removeItem('timeline-mode')
+			$('#two-originals').addClass('selected')
+			document.documentElement.setAttribute('timeline-mode', 'two-originals')
+		}
+		else {
+			localStorage.setItem('timeline-mode', mode)
+			$('#one-original').addClass('selected')
+			document.documentElement.setAttribute('timeline-mode', 'one-original')
+		}
+
+		if($('.timeline').length != 0) {
+				var firstDate = $('.timeline ol li:first-of-type .date span').contents().first().text();
+				var secondDate = $('.timeline ol li:nth-of-type(2) .date span').contents().first().text();
+			if(localStorage.getItem('timeline-mode') == 'one-original') {
+				$('.timeline ol li:first-of-type .version .title').text('The original version');
+				if(firstDate == secondDate) {
+					$('.timeline ol li:nth-of-type(2):not(:last-of-type)').css('display','none')
+					$('.timeline ol:has(li:nth-of-type(2):last-of-type) li:first-of-type').addClass('current')
+					$('.timeline ol:has(li:nth-of-type(2):last-of-type) li:first-of-type a').children().css('display','none')
+					if($('.timeline ol li:first-of-type.current').is('[aria-current]')) {
+						$('.timeline ol li:first-of-type.current').addClass('revertToSelected')
+						$('.timeline ol li:first-of-type.current').removeAttr('aria-current','page')
+						$('.timeline ol li:last-of-type').attr('aria-current','page')
+						$('.timeline ol li:last-of-type').find('.version').prepend($('<span class="prefix">You are viewing </span>'))
+					}
+					if($('.timeline ol li:nth-of-type(2):not(:last-of-type)').is('[aria-current]')) {
+						$('.timeline ol li:nth-of-type(2)').addClass('revertToSelected')
+						$('.timeline ol li:first-of-type').attr('aria-current','page')
+						$('.timeline ol li:nth-of-type(2)').removeAttr('aria-current','page')
+						$('.timeline ol li:first-of-type').find('.version').prepend($('<span class="prefix">You are viewing </span>'))
+					}
+				}
+				else {
+					$('.timeline ol li:nth-of-type(2):not(:last-of-type) .version .title').text('A historical version');
+				}
+			}
+			/*else {
+				$('.timeline ol li:first-of-type .version .title').text('The original text');
+				$('.timeline ol li:nth-of-type(2)').css('display','')
+				if(firstDate == secondDate) {
+					$('.timeline ol:has(li:nth-of-type(2):last-of-type) li:first-of-type').removeClass('current')
+					$('.timeline ol:has(li:nth-of-type(2):last-of-type) li:first-of-type a').children().css('display','')
+					if($('.timeline ol li:first-of-type.revertToSelected').length != 0) {
+						$('.timeline ol li:first-of-type.revertToSelected').removeClass('revertToSelected')
+						$('.timeline ol li:first-of-type').attr('aria-current','page')
+						$('.timeline ol li:last-of-type').removeAttr('aria-current','page')
+						$('.timeline ol li:first-of-type').find('.version').prepend($('<span class="prefix">You are viewing </span>'))
+						$('.timeline ol li:last-of-type a .prefix').remove()
+					}
+					if($('.timeline ol li:nth-of-type(2).revertToSelected').length != 0) {
+						$('.timeline ol li:nth-of-type(2)').removeClass('revertToSelected')
+						$('.timeline ol li:nth-of-type(2)').attr('aria-current','page')
+						$('.timeline ol li:first-of-type').removeAttr('aria-current','page')
+						$('.timeline ol li:nth-of-type(2)').find('.version').prepend($('<span class="prefix">You are viewing </span>'))
+						$('.timeline ol li:first-of-type a .prefix').remove()
+					}
+				}
+				else {
+					$('.timeline ol li:nth-of-type(2):not(:last-of-type) .version .title').text('Our 1st annotated version');
+				}
+			}
+		}*/
+	}
+// End dev environment only
