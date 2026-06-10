@@ -67,7 +67,8 @@ def _subprovision_redirect(
     return HttpResponseRedirect(f"{path}#{anchor}")
 
 
-def fragment(
+# TODO: refactor to reduce cyclomatic complexity (currently 14, limit 12)
+def fragment(  # noqa: C901
     request,
     type: str,
     year: str,

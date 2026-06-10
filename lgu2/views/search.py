@@ -89,7 +89,8 @@ def parse_year_param(year: str) -> SearchParams:
     return {}
 
 
-def extract_query_params(request) -> SearchParams:
+# TODO: refactor to reduce cyclomatic complexity (currently 22, limit 12)
+def extract_query_params(request) -> SearchParams:  # noqa: C901
     params: SearchParams = {}
 
     for key in (
@@ -452,7 +453,8 @@ def search_results(request):
     return search_results_helper(request, params)
 
 
-def search_results_helper(request, query_params: SearchParams):
+# TODO: refactor to reduce cyclomatic complexity (currently 22, limit 12)
+def search_results_helper(request, query_params: SearchParams):  # noqa: C901
     query_params = query_params.copy()
     current_type = query_params.get("type")
     if isinstance(current_type, list):

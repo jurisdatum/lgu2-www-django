@@ -80,7 +80,9 @@ def browse(request, type, year=None):
             else reverse("browse-year", args=[short_type, year])
         )
 
-    link_prefix = "/cy" if request.LANGUAGE_CODE == "cy" else ""
+    # TODO: document links here are not /cy-prefixed for Welsh users, unlike
+    # changes/results.py. Confirm whether browse-by-type should prepend "/cy"
+    # when request.LANGUAGE_CODE == "cy" (was a dropped link_prefix variable).
     for doc in data["documents"]:
         doc["link"] = make_contents_link_for_list_entry(doc)
         doc["label"] = get_type_label(doc["longType"])

@@ -4,6 +4,9 @@ from typing import Optional
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
+from lgu2.api.browse_types import DocEntry
+from lgu2.util.types import to_short_type
+
 
 @dataclass(frozen=True, slots=True)
 class Link:
@@ -24,9 +27,6 @@ def make_changes_affected_link(meta) -> Optional[Link]:
         ),
     )
 
-
-from lgu2.api.browse_types import DocEntry
-from lgu2.util.types import to_short_type
 
 first_versions = {"enacted", "made", "created", "adopted"}
 
