@@ -18,6 +18,7 @@ whitenoise = "^6.7.0" # Optional: serve app static assets in-container (enabled 
 [tool.poetry.group.dev.dependencies]
 black = "^26.5.1"
 flake8 = "^7.3.0"
+pre-commit = "^4.6.0"
 
 [build-system]
 requires = ["poetry-core"]
