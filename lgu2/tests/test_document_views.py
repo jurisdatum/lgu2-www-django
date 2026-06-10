@@ -180,6 +180,7 @@ class TocViewTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Printer Version')
         self.assertContains(response, 'received Royal Assent when it was enacted')
+        self.assertNotContains(response, 'class="timeline"')
 
     @patch("lgu2.views.toc.api.get_toc")
     def test_toc_pdf_only_revised_omits_kings_printer_message(self, mock_get_toc):

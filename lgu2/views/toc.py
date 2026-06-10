@@ -13,7 +13,6 @@ from ..util.extent import make_combined_extent_label
 from ..util.labels import get_type_label
 from ..util.links import make_contents_link, make_document_link, make_fragment_link
 from .redirect import make_data_redirect
-from ..util.timeline import make_timeline_data
 from ..status import for_document
 from ..util.dated_version import dated_version_panel, is_most_recent_version
 from .helper.status import make_pdf_status_message
@@ -92,8 +91,6 @@ def toc(request, type: str, year: str, number: str, version: Optional[str] = Non
         data['pdf_thumb'] = None
 
     data['status_message'] = make_pdf_status_message(meta)
-
-    data['timeline'] = make_timeline_data(meta, "toc", lang)
 
     # associated documents
     explanatory_notes = []

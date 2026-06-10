@@ -188,8 +188,8 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 						&.repealed {background: url('images/repealed.png') no-repeat 0.25em 0.375em; background-size: 1.35em}
 						&.dated-version {background: url('images/dated-version.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
-						&.as-enacted-formats {background: url('images/timeline-version.png') no-repeat 0.35em 0.65em; background-size: 1em}
-						&.as-enacted-formats.pdf {background: url('images/kpv-pdf.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
+                        &.as-enacted {background: url('images/as-enacted.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
+						&.as-enacted.pdf {background: url('images/kpv-pdf.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
 						&.extent {background: url('images/extent.png') no-repeat 0.125em 0.625em; background-size: 1.5em}
 						&.in-force {
 							background: url('images/in-force.png') no-repeat 0.125em 0.575em; background-size: 1.5em;
@@ -199,7 +199,6 @@ body:not(:-moz-handler-blocked) fieldset {
 						&.blanket-amendments {background: url('images/blanket-amendments.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 						&.explanatory-notes {background: url('images/explanatory-notes.png') no-repeat 0.25em 0.6em; background-size: 1.3em}
 						&.associated-documents {background: url('images/associated-documents.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
-                        &.as-enacted {background: url('images/as-enacted.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 					}
 					details {
 						&.other-formats {
@@ -417,8 +416,8 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 						&.repealed {background: url('images/repealed-dm.png') no-repeat 0.25em 0.375em; background-size: 1.35em}
 						&.dated-version {background: url('images/dated-version-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
-						&.as-enacted-formats {background: url('images/timeline-version-active.png') no-repeat 0.35em 0.65em; background-size: 1em}
-						&.as-enacted-formats.pdf {background: url('images/kpv-pdf-dm.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
+                        &.as-enacted {background: url('images/as-enacted-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
+						&.as-enacted.pdf {background: url('images/kpv-pdf-dm.png') no-repeat 0.05em 0.575em; background-size: 1.5em}
 						&.extent {background: url('images/extent-dm.png') no-repeat 0 0.625em; background-size: 1.5em}
 						&.in-force {
 							background: url('images/in-force-dm.png') no-repeat 0.125em 0.575em; background-size: 1.5em;
@@ -428,7 +427,6 @@ body:not(:-moz-handler-blocked) fieldset {
 						&.blanket-amendments {background: url('images/blanket-amendments-dm.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
 						&.explanatory-notes {background: url('images/explanatory-notes-dm.png') no-repeat 0.125em 0.6em; background-size: 1.3em}
 						&.associated-documents {background: url('images/associated-documents-dm.png') no-repeat 0.15em 0.5em; background-size: 1.45em}
-                        &.as-enacted {background: url('images/as-enacted-dm.png') no-repeat 0.25em 0.575em; background-size: 1.25em}
 					}
 				}
 				> div .legislation-ftr aside h3 {
@@ -634,7 +632,7 @@ body:not(:-moz-handler-blocked) fieldset {
 		&:before {content: ''; position: absolute; width: calc(100% - 1.875rem); height: 0.25rem; background: var(--timelineVersionActive); display: block; margin: 1.15rem 0.9375rem} 
 		h3 {.sr-only()}
 		button {
-			width: 2.85rem; position: relative; margin: 0 0.9375rem 0 0.1rem; padding: 0; height: 2.5rem;
+			width: 2.65rem; position: relative; margin: 0 0.9375rem 0 0.1rem; padding: 0; height: 2.5rem;
 			&:after {.chevron(); margin: 0.15rem 0; width: 0.35rem; height: 0.35rem; border-color: var(--buttonText)}
 			&:first-of-type {
 				margin: 0 0.1rem 0 0.9375rem;
@@ -644,7 +642,7 @@ body:not(:-moz-handler-blocked) fieldset {
 			span {.sr-only()}
 		}
 		.drag-strip {
-			position: relative; width: 100%; height: 2.5rem; padding: 0 0 0.0625rem 0;
+			position: relative; flex-grow: 1; height: 2.5rem; padding: 0 0 0.0625rem 0;
 			.drag {
 				margin: 0 0 -0.0625rem 0; width: 5rem; height: 2.5rem; background: var(--buttonBg); border-radius: 0.15em; position: absolute !important;
 				&:before {.chevron(); position: absolute; left: 1rem; margin: 1rem 0; width: 0.35rem; height: 0.35rem; border: 0; border-bottom: 0.0625rem solid var(--buttonText); border-left: 0.0625rem solid var(--buttonText)}
@@ -1832,37 +1830,47 @@ body:not(:-moz-handler-blocked) fieldset {
                             //.point-in-time:before {background: var(--alert); z-index: 1}
 						}
 					}
+					&:has(.versions li[aria-current="page"] .previous-point-in-time) {
+						summary {
+							.version {
+								&:before {border-top-color: transparent}
+								&:after {border-top: 0.5em dashed var(--timelineVersionActive)}					
+							}
+                            //.point-in-time:before {background: var(--alert); z-index: 1}
+						}
+					}
+					&:has(.versions li:last-of-type[aria-current="page"] .previous-point-in-time) {
+						summary {
+							.version {
+								&:before {border-top-color: var(--timelineVersionActive)}
+								&:after {border-top: 0.5em dashed var(--timelineVersionActive)}					
+							}
+                            //.point-in-time:before {background: var(--alert); z-index: 1}
+						}
+					}
 					summary .date {display: none}
 				}
 									
 				&:has(.versions li:first-of-type[aria-current="page"]) {
-					summary {
-						 .version {
-							&:before, &:after {border-top-color: transparent}
-						}
-						.date:before {background: var(--timelineVersionActive) var(--timelineEnactedVersionIconActive); background-size: 55%}
-					}
-				}
-				&:has(.versions li:nth-of-type(2)[aria-current="page"]) {
 					summary .version {
-						&:before, &:after {border-top-color: transparent}
+						&:before {border-top-color: transparent}
+						&:after {border-top-color: var(--timelineVersion)}
 					}
-					&:has(.versions li:nth-of-type(3)) {
+					&:has(.versions li:last-of-type[aria-current="page"]) {
 						 summary .version {
-							&:before {border-top-color: transparent}
-							&:after {border-top-color: var(--timelineVersion)}
+							&:after {border-top-color: transparent}
 						}
 					}
-					&:has(.versions li[aria-current="page"] .point-in-time:not(.previous-point-in-time)) {
+					&:has(.versions .previous-point-in-time) {
 						 summary .version {
-							&:before {border-top-color: var(--timelineVersionActive)}
+						&:before {border-top-color: var(--transparent)}
+						&:after {border-top-color: var(--timelineVersionActive)}
 						}
 					}
 				}
 
-				&:has(.versions li:last-of-type[aria-current="page"]:nth-of-type(n+3)) {
+				&:has(.versions li:last-of-type[aria-current="page"]) {
 					summary .version {
-						&:before {border-top-color: var(--timelineVersionActive)}
 						&:after {border-top-color: transparent}
 					}
 				}
@@ -1928,7 +1936,7 @@ body:not(:-moz-handler-blocked) fieldset {
 						> a:first-of-type {padding: 0.4em 0 0 2em}
 					}
 					&.up-to-date ul {.toggle; margin: 0.35rem 1em 0.5em 2em}
-                    &.as-enacted-formats {
+                    &.as-enacted {
                         p {height: 2.25rem; padding: 0.15rem 0 0.15rem 2rem; display: table-cell; display: table-cell; vertical-align: middle}    
                     }
 				}
@@ -2019,11 +2027,13 @@ body:not(:-moz-handler-blocked) fieldset {
 								}
 							}
 							li {margin: 0.25em 0 0 0}
+							&:has(h3) > .prefix {font-weight: 500; line-height: 1.5rem}
 						}
 					}
 					.prefix {
 						position: absolute; margin: 0 0 0 -8em; width: 7.5em; text-align: right;
 						.wrapper {display: inline-block; line-height: 1.2em}
+						.marker .annotation {line-height: 1.5em}
 					}
                     iframe {width: 100%; height: 90vH}
 							.extent {
@@ -2235,9 +2245,12 @@ body:not(:-moz-handler-blocked) fieldset {
 							summary:after {border-top-width: 0.15rem; border-right: 0; border-bottom: 0; border-left-width: 0.15rem; margin: 0.185em 0.35em 0 0.5em}
 							&::details-content {}
 							> div {
-								max-height: 25vh; overflow-y: scroll; padding: 0 1rem; scroll-timeline: --scroll;
+								max-height: 25vh; overflow-y: scroll; padding: 0; scroll-timeline: --scroll;
+								h3 {font-size: 1.05rem; margin: 0 0 0.25rem 0; padding: 0.65rem 1rem; background: var(--altBg)}
+								h4 {font-size: 1rem; padding: 0.25rem 1rem 0.15rem 1rem}
 								ul {
-									padding: 0.75rem 0; margin: 0; list-style: none;
+									padding: 0.35rem 1rem 0.75rem 1rem; margin: 0; list-style: none;
+									&:first-child {padding: 0.75rem 0}
 									* {font-family: "Roboto"}
 									li {
 										margin: 0 0 0.25rem 0; font-weight: 300;
@@ -2274,9 +2287,11 @@ body:not(:-moz-handler-blocked) fieldset {
 		}
 
         &:has(.previous-point-in-time, .not-commenced) {
+		/*
             .legislation-content > aside > div.in-force {
 				border-top: 0.125rem dashed var(--subtleBorder);
 			}
+		*/
 			.legislation-content > div {
 				.legislation-text {
                      &:has(> p) {
@@ -2494,22 +2509,21 @@ body:not(:-moz-handler-blocked) fieldset {
 								&:first-of-type {padding: 0.35em 0 0.15rem 2em; border-top: 0.0625rem solid var(--subtleBorder)}
 							}
 							&.not-up-to-date p:first-of-type {background-position: 0.05rem 0.3rem}
-                            &.as-enacted-formats, &.as-enacted-formats.pdf {
-                                background-position: 1.25em 0.55em; flex-grow: unset;
+                            &.as-enacted.pdf {
+                                background-position: 0.75em 0.55em; flex-grow: unset;
                                 p {min-height: 2.25rem; padding: 0.5rem 0 0.15rem 2rem}
-                            }
-                            &.as-enacted-formats.pdf {
-                                background-position: 0.75em 0.55em;
                             }
 						}
 					}
 				}
-                &:has(.previous-point-in-time, .not-commenced) {
+			/*
+				&:has(.previous-point-in-time, .not-commenced) {
 					.legislation-content > aside > div.in-force {
 						p:first-of-type {border-top: 0.125rem dashed var(--subtleBorder)}
 						+ .in-force p:first-of-type {border-color: var(--alert); padding: 0.55em 0 0.55rem 2em}
 					}
                 }
+			*/
                 &:has(.prospective[aria-current="page"]) {
                     .legislation-content > aside > div.in-force p:first-of-type {border-top: 0.125rem dashed var(--subtleBorder)}
                 }
@@ -2615,19 +2629,29 @@ body:not(:-moz-handler-blocked) fieldset {
 											color: var(--disabledModalText);
 											&:before {border: 0.2rem solid var(--disabledButtonBorder)}
 										}
-                                        &.consolidated {
-                                            &:before {top: 1.5rem}
-                                            a {
-                                                padding: 1.5rem 0 1rem 2rem;
-                                                &:before {content: ""; display: block; height: 2rem; width: 1rem; position: absolute; left: 0.25rem; top: -1.0rem; background-image: url('images/timeline-break.png'); background-repeat: no-repeat; background-size: 1rem}
-                                            }
-                                        }
                                         &:has(~ [aria-current="page"]) {
                                             &:not(:first-of-type, :last-of-type):after {background: var(--bg)}
                                             &:before {background: var(--modalTimelinePast)}
 											&:first-of-type:has(> div):before {background: transparent}
                                         }
-										&:first-of-type, &:last-of-type {border-color: transparent}
+										&:last-of-type {
+											padding: 0; border-color: transparent;
+											a {padding: 0 0 0 1.25rem}
+										}
+										
+										&.consolidated {
+											&:before {z-index: 1; top: 1.75rem}
+											a {
+												padding: 1.5rem 0 1rem 1.25rem;
+												&:before {content: ""; top: -0.25rem; left: -0.2rem; height: 2rem; position: absolute; background: var(--modalTimelinePast); width: 0.2rem}
+												&:after {content: ""; display: block; height: 2rem; width: 1rem; position: absolute; left: -0.6rem; top: -0.75rem; background-image: url(images/timeline-break.png); background-repeat: no-repeat; background-size: 1rem}
+											}
+											.explanation {margin: -0.75rem 0 0.75rem 1.25rem; font-style: italic; font-weight: 300}
+											&:last-of-type {
+												a {padding: 1.5rem 0 0 1.25rem}
+												.explanation {margin: 0.25rem 0 0.75rem 1.25rem}
+											}
+										}				
 									}
 								}
 								a {color: var(--modalText)}
@@ -2659,7 +2683,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					> aside {
 						border: 0.0625rem solid var(--subtleBorder); border-radius: 0.35rem; padding: 0.5rem 0.75rem 0.25rem 0.75rem; background: var(--verySubtleBg);
 						&:has(.not-up-to-date) {border: 0.13rem dashed var(--warningBorder)}
-						> div.as-enacted-formats {
+						> div.as-enacted {
 							display: table; width: -webkit-fill-available;
                                 p {padding: 0.25rem 0 0.25rem 2rem}
 							}
@@ -3356,16 +3380,12 @@ body:not(:-moz-handler-blocked) fieldset {
                             &.up-to-date, &.up-to-date + .up-to-date {background-position: 0.75em 0.65em; background-size: 1.5em}
                             &.repealed {background-position: 0.7em 0.6em; background-size: 1.75em}
                             &.dated-version {background-position: 0.7em 0.6em; background-size: 1.6em}
-                            &.as-enacted-formats {
-                                background-position: 0.85em 0.65em; background-size: 1.1em;
-                                p {padding: 0.5em 0.5em 0.35em 3em}
-								&:not(.pdf) {
-									a {font-weight: 500}
-								}
-                            }
-                            &.as-enacted-formats.pdf {
-								background-position: 0.45em 0.6em; background-size: 1.8em;
+                            &.as-enacted {background-position: 0.8em 0.65em; background-size: 1.4em;
 								&:has(a) {border-color: var(--link)}
+							}
+                            &.as-enacted.pdf {
+								background-position: 0.45em 0.6em; background-size: 1.8em;
+                                p {padding: 0.5em 0.5em 0.35em 3em}
 							}
                             &.extent {
                                 background-position: 0.5em 0.6em; background-size: 2em;
@@ -3376,9 +3396,6 @@ body:not(:-moz-handler-blocked) fieldset {
                             &.blanket-amendments {background-position: 0.45em 0.675em; background-size: 2em}
                             &.explanatory-notes {background-position: 0.6em 0.5em; background-size: 1.6em; border-color: var(--link)}
                             &.associated-documents {background-position: 0.65em 0.5em; background-size: 1.5em}
-                            &.as-enacted {background-position: 0.8em 0.65em; background-size: 1.4em;
-								&:has(a) {border-color: var(--link)}
-							}
                             &:has(p) {
                                 &.explanatory-notes {background-position: 0.65em 0.6em; background-size: 1.6em; border-color: var(--lessSubtleBorder)}
                                 &.associated-documents {background-position: 0.55em 0.6em; background-size: 1.8em}
@@ -3386,11 +3403,13 @@ body:not(:-moz-handler-blocked) fieldset {
                         }
                     }
                 }
+			/*
                 &:has(.previous-point-in-time, .not-commenced) {
                     .legislation-content > aside > div.in-force {
 						border: 0.125rem dashed var(--lessSubtleBorder);
 					}
                 }
+			*/
                 &:has(.prospective[aria-current="page"]) {
                     .legislation-content > aside:first-of-type > div {border: 0.125rem dashed var(--alert)}
                 }
@@ -3560,7 +3579,7 @@ body:not(:-moz-handler-blocked) fieldset {
 					&:has(> details[open]) {
 						h2 {.sr-only()}
 						> details > summary {
-							background: var(--buttonBg); position: absolute; width: 2.5rem; height: 12.5rem;
+							background: var(--buttonBg); position: absolute; width: 2.5rem; height: 12.5rem; z-index: 30;
 							&:hover, &:focus {.button-focus()}
 							> span {
 								&:before {display: none}
@@ -3571,14 +3590,23 @@ body:not(:-moz-handler-blocked) fieldset {
 						}
 						.versions {
 							ol {
-								flex-flow: row; overflow-x: auto; overflow-y: hidden; margin: 0 16rem 0 2.5rem; width: calc(100% - 18.5rem); height: 12.5rem; background: var(--verySubtleBg);
+								flex-flow: row; overflow-x: auto; overflow-y: hidden; margin: 0 16rem; width: calc(100% - 32rem); height: 12.5rem; background: var(--verySubtleBg);
 								&::-webkit-scrollbar {margin: 0; display: none}
-								&:before {content: ""; background: var(--timelineVersion); width: calc(var(--maxWidth) - 40.75rem); height: 0.5rem; position: absolute; margin: 6.05rem 0 0 20.25rem}
+								&:before {content: ""; background: var(--timelineVersion); width: calc(var(--maxWidth) - 20rem); height: 0.5rem; position: absolute; margin: 6.05rem 0 0 -6rem}
 								&:has(li:nth-of-type(2) .previous-point-in-time):before {width: calc(var(--maxWidth) - 44rem); margin: 6.05rem 0 0 26rem}
 								&:has(li:last-of-type .point-in-time):before {width: calc(var(--maxWidth) - 44.25rem)}
-								&:has(li:last-of-type[aria-current="page"]):before {background: var(--timelineVersionActive)}
+								&:has(li:last-of-type[aria-current="page"])
+								{
+									&:before {background: var(--timelineVersionActive)}
+									&:has(li:first-of-type > div) {
+										&:before {background: var(--lessSubtleBorder)}
+										li:first-of-type {											
+											.version:after {border-color: transparent}
+										}
+										li.consolidated a:before {left: -0.5rem}
+									}
+								}
 								&:has(li:last-of-type:nth-of-type(2)) {
-									&:before {display: none}
 									li > a .version:before {border-color: transparent}
 								}
 								
@@ -3611,21 +3639,15 @@ body:not(:-moz-handler-blocked) fieldset {
 										}
 									}
 									&:first-of-type {
-										background: var(--verySubtleBg); margin: 0 0.5rem 0 0;
+										background: var(--verySubtleBg); margin: 0 0 0 -16rem; z-index: 20; position: absolute;
 										> a, > div {
-											width: 13.5rem;
+											padding: 2.05rem 0 0 2.4rem; width: 16rem;
 											.version {
 												&:before, &:after {border-color: transparent}
 											}
-											.date:before {background: var(--bg) var(--timelineEnactedVersionIcon); background-size: 55%; width: 3.15rem; height: 3.15rem; border-radius: 50%; margin: -1.8rem auto 0.8rem auto; }
+											.date:before {background: var(--bg) var(--timelineVersionIcon); background-size: 40%; width: 3.15rem; height: 3.15rem; border-radius: 50%; margin: -1.8rem auto 0.8rem auto}
 										}
-										> div .date:before {border: 0.2rem solid var(--subtleBorder)}
-										&[aria-current="page"] {
-											> a .version {
-												&:before {border-color: transparent}
-												&:after {border-color: transparent}
-											}
-										}
+										> div .date:before {border: 0.2rem solid var(--lessSubtleBorder)}
 									}
 									&:nth-of-type(2) {
 										> a, > div {
@@ -3633,7 +3655,7 @@ body:not(:-moz-handler-blocked) fieldset {
 										}
 									}
 									&:last-of-type {
-										position: absolute; width: 16rem; margin: 0 0 0 calc(var(--maxWidth) - 20.5rem); background: var(--verySubtleBg);
+										position: absolute; width: 16rem; margin: 0 0 0 calc(var(--maxWidth) - 34rem); background: var(--verySubtleBg);
 										> a {
 											padding: 2.05rem 0 0 2.5rem; width: 16rem;
 											.version {
@@ -3677,19 +3699,26 @@ body:not(:-moz-handler-blocked) fieldset {
 											+ li .version:before {margin: 4rem 50% -4rem 0}
 										}
 										+ li .version:before {margin: 4rem 50% -4rem -3.75rem}
+										&:first-of-type > a {padding: 2.05rem 5.5rem 0 2.9rem; width: 21rem}
 									}
-
+									
 									&:not([aria-current="page"]) {
 										&:hover, &:focus {
 											> a {
 												color: var(--link);
-												.date:before {.button-focus(); outline: 0; background: var(--buttonBg) var(--timelineVersionIconHover); background-size: 40%}
+												.date:before {.button-focus(); outline: 0; background: var(--focusButtonBg) var(--timelineVersionIconHover); background-size: 40%}
 											}
 										}
 									}
+
 									&:first-of-type:not([aria-current="page"]) {
-										&:hover, &:focus {
-											> a .date:before {background: var(--buttonBg) var(--timelineEnactedVersionIconHover); background-size: 55%}
+										> a, > div {
+											.version:after {border-color: var(--timelineVersionActive)}
+										}
+									}
+									&:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) {
+										> a, > div {
+											.version:before {border-color: var(--timelineVersionActive)}
 										}
 									}
 
@@ -3707,7 +3736,6 @@ body:not(:-moz-handler-blocked) fieldset {
 												&:before {border: 0.2rem solid var(--timelineVersionActive); background: var(--timelineVersionActive) var(--timelineVersionIconActive); background-size: 40%}
 											}
 										}
-										&:first-of-type > a .date:before {background: var(--timelineVersionActive) var(--timelineEnactedVersionIconActive); background-size: 55%}
 										~ li:not(:last-of-type ) {
 											> a, > div {
 												.version {
@@ -3721,6 +3749,7 @@ body:not(:-moz-handler-blocked) fieldset {
 											}
 										}
 									}
+									&[aria-current="page"] ~ li:nth-of-type(2) > a .version:before {border-color: var(--timelineVersion)}
                                     &.prospective {
                                         > a .date:before {border-color: var(--alert)}
                                         &[aria-current="page"] {
@@ -3737,9 +3766,15 @@ body:not(:-moz-handler-blocked) fieldset {
                                             }
 
                                     }
-                                    &.consolidated {
-                                        a:before {content: ""; display: block; width: 1.65rem; height: 2.35rem; border: 0; border-radius: 0; cursor: auto; background-color: unset; background-position: 0 0; background-repeat: no-repeat; position: absolute; left: -0.8rem; top: calc(50% - (2.125rem / 2)); z-index: 1}
+									&.consolidated {
+										> a, > div {
+											padding: 2.05rem 0 0 2.5rem;
+											.version:before {margin: 4rem 50% -4rem -2.5rem}
+										}
+                                        a:before {content: ""; display: block; width: 1.65rem; height: 2.35rem; border: 0; border-radius: 0; cursor: auto; background-color: unset; background-position: 0 0; background-repeat: no-repeat; position: absolute; left: 1rem; top: calc(50% - (2.125rem / 2)); z-index: 1}
+										.explanation {.sr-only}
                                     }
+									
 									details {
 										&:not([open]) {
 											summary {
@@ -3772,26 +3807,97 @@ body:not(:-moz-handler-blocked) fieldset {
 										details[open] summary, div {left: 0.5rem}
 									}
 								}
-								&:has(li:last-of-type .point-in-time) {
-									width: calc(100% - 22rem);
-									li:last-of-type {
-										width: 19.5rem; margin: 0 0 0 calc(var(--maxWidth) - 24rem);
+								&:has(li:first-of-type .point-in-time) {
+									margin: 0 16rem 0 22rem; width: calc(100% - 38rem);
+									&:before {width: calc(var(--maxWidth) - 25rem)}
+									li:first-of-type {
+										margin: 0 0 0 -22rem;
 										> a {
-											padding: 2.05rem 9rem 0 0; width: 21.5rem;
-											.version:before {margin: 4rem 50% -4rem 0}
-											.point-in-time {right: 1.35rem}
+											padding: 2.05rem 6.5rem 0 2.9rem; width: 22rem;
+											.version:after {margin: 2.2rem -2rem 0 50%}
+											.point-in-time {right: 1rem}
 										}
-										&:has(.previous-point-in-time) {
+									}
+									li:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 40rem)}
+								}
+								&:has(li:last-of-type .point-in-time) {
+									&:before {width: calc(var(--maxWidth) - 33.25rem)}
+									li:last-of-type {
+										margin: 0 0 0 calc(var(--maxWidth) - 23.3rem); width: 18rem; background: unset;
+										&:first-of-type {
+											margin: 0 0 0 calc(var(--maxWidth) - 26.25rem);
 											> a {
-												padding: 2.05rem 0 0 7.5rem; width: 18rem;
-												.version {
-													&:before {border-top: 0.5em dashed var(--timelineVersionActive); margin: 4rem 50% -4rem -2rem}
-													&:after {border-top-color: transparent; margin: 2.2rem 0 0 50%}
-												}
-												.point-in-time {left: 0.75rem; right: unset}
+												.point-in-time {right: 3.1rem}
 											}
-											+ li .version:before {margin: 4rem 50% -4rem 0}
 										}
+									}
+								}
+								&:not(:has(li:nth-child(3))):has(li:nth-child(2)):has(li:first-of-type .previous-point-in-time)
+								{
+									&:before {width: calc(var(--maxWidth) - 25rem); margin: 6.05rem 0 0 16rem}
+									li:first-of-type {
+										> a {
+											padding: 2.05rem 0 0 10rem;
+											.version:before {border-style: solid}
+											.version:after {border-color: transparent}
+											.previous-point-in-time {right: unset; left: 4.5rem}
+										}
+									}
+									
+								}
+								&:has(li:last-of-type .previous-point-in-time) {
+									&:before {width: calc(var(--maxWidth) - 25rem)}
+									li:last-of-type {
+										margin: 0 0 0 calc(var(--maxWidth) - 20.875rem);
+										> a {
+											.version:after {border-color: transparent}
+										}
+									}
+									
+								}
+								&:has(li:first-of-type:last-of-type .previous-point-in-time) {
+									&:before {width: calc(var(--maxWidth) - 18rem)}
+									li:last-of-type {
+										&:before {display: none}
+										margin: 0 0 0 calc(var(--maxWidth) - 20rem);
+											width: 16rem;
+										> a {
+											padding: 2.05rem 0 0 2.5rem;
+											width: 16rem;
+											.version:before {border-color: transparent}
+											.version:after {border-color: transparent}
+											.previous-point-in-time {right: unset; left: 4.5rem}
+										}
+									}
+									
+								}
+								&:not(:has(li:nth-child(3))):has(li:nth-child(2)) {
+									width: 100%; margin: 0;
+									&:before {margin: 6.05rem 0 0 8rem}
+									li:first-of-type {position: relative; margin: 0; background: unset}
+									li:last-of-type:not(:has(.point-in-time)) {margin: 0 0 0 calc(var(--maxWidth) - 18rem); background: unset}
+									&:has(.prospective) li:first-of-type .version:after {border-color: transparent}
+								}
+								&:has(li:first-of-type:last-of-type) {
+									width: 100%; margin: 0; position: relative;
+									&:before {margin: 6.05rem 0 0 8rem}
+									li {
+										position: unset; margin: 0 0 0 calc(var(--maxWidth) - 18rem); background: unset;
+										&:before {content: ""; background: var(--timelineVersionActive); width: 1.65rem; height: 1.65rem; position: absolute; margin: 5.4rem 7.25rem; border-radius: 50%; left: 0}
+									}
+								}
+								&:not(:has(li[aria-current="page"])) {
+									li:not(:last-of-type),
+									li:not(:last-of-type) ~ li,
+									li:not(:last-of-type) ~ :nth-of-type(2):not(:last-of-type),
+									li:last-of-type {
+										> a .version {
+											&:before, &:after {border-color: transparent}
+										}
+									}
+									li:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2),
+									li:last-of-type {
+										> a .version:before {border-color: var(--timelineVersion)}
 									}
 								}
 							}
@@ -3812,10 +3918,21 @@ body:not(:-moz-handler-blocked) fieldset {
 								}
 								.scrollbar {.scrollbar-controls}
 							}
-						}
+						}						
 						&:has(.scrollable) {
 							> details summary {height: 16rem}
 							.versions details:not([open]) summary {top: calc(50% - 2.75rem)}
+							.versions ol li:first-of-type:before {float: right; content: ""; overflow: hidden; display: block; margin:  0 -0.5em 0 0; position: unset; width: 0.4rem; height: 16rem; z-index: unset; background: linear-gradient(270deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%)}
+							.scrollable .versions .scrollbar {margin: -4rem 0 0 16rem; width: calc(100% - 32rem)}
+						}
+						&:has(ol li:first-of-type .point-in-time) {
+							.scrollable {
+								.versions {
+									.scrollbar {
+										margin: -4rem 0 0 22rem; width: calc(100% - 38rem);
+									}
+								}
+							}
 						}
 						&:has(ol li:last-of-type .point-in-time) {
 							.scrollable {
@@ -3871,10 +3988,8 @@ body:not(:-moz-handler-blocked) fieldset {
 								p:first-of-type {background-position: 0.5rem 0.45rem; background-size: 1rem}
 							}
 							&.up-to-date ul {.toggle; margin: 0 1em 0.75em 1em}
+							&.contributed p {padding: 0.5em 1em}
 						}
-
-                        
-                        
                         details {
                             margin: 0;
                             summary {padding: 0.8em 0 0.8em 1em; text-align: unset}
@@ -4306,8 +4421,7 @@ body:not(:-moz-handler-blocked) fieldset {
             &.language {background-position: 1.15em 0.45em; background-size: 1.1em}
             &.up-to-date {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
             &.dated-version {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
-            &.as-enacted-formats {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
-            &.as-enacted-formats.pdf {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
+            &.as-enacted.pdf {background-position: 1.15rem 0.45rem; background-size: 1.1rem}
             &.extent, &.in-force {background-position: 1rem 0.45rem; background-size: 1.25rem}
             &.blanket-amendments {background-position: 0.9rem 0.45rem; background-size: 1.25rem}
             &.confers-power {background-position: 1.15rem 0.45rem; background-size: 0.8rem}
@@ -4316,8 +4430,7 @@ body:not(:-moz-handler-blocked) fieldset {
             &.language {background-position: 0.5rem 0.45rem; background-size: 1.1em}
             &.up-to-date {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
             &.dated-version {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
-            &.as-enacted-formats {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
-            &.as-enacted-formats.pdf {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
+            &.as-enacted.pdf {background-position: 0.5rem 0.45rem; background-size: 1.1rem}
             &.extent, &.in-force {background-position: 0.4rem 0.45rem; background-size: 1.25rem}
             &.blanket-amendments {background-position: 0.25rem 0.45rem; background-size: 1.25rem}
             &.confers-power {background-position: 0.5rem 0.45rem; background-size: 0.8rem}
@@ -4343,3 +4456,101 @@ body:not(:-moz-handler-blocked) fieldset {
     }
 
 body:has(.advanced-searches) header .hdr-search {display: none}
+
+// dev environment only - to compare 'one-original' and 'two-originals' timelines
+	.main-menu ul li button {
+		.ghost-button; padding: 0.1rem 0.5em;
+		&:first-of-type {margin: 0 0.5rem 0 0}
+		&.selected {background: var(--activeBg); color: var(--activeText); border-color: var(--activeBg)}
+	}
+
+	:root[timeline-mode="one-original"] {/*
+		@media print and (orientation: portrait), screen and (max-width: calc(1023px - 1px)) {
+			main.legislation .timeline:has(> details[open]) details .versions ol {
+				li {
+					&:first-of-type {border-color: var(--modalTimelinePast)}
+					&:last-of-type {
+						padding: 0;
+						a {padding: 0 0 0 1.25rem}
+					}
+					&.consolidated {
+						&:before {z-index: 1; top: 1.75rem}
+						a {
+							padding: 1.5rem 0 1rem 1.25rem;
+							&:before {content: ""; top: -0.25rem; left: -0.2rem; background: var(--modalTimelinePast); width: 0.2rem}
+							&:after {content: ""; display: block; height: 2rem; width: 1rem; position: absolute; left: -0.6rem; top: -0.75rem; background-image: url(images/timeline-break.png); background-repeat: no-repeat; background-size: 1rem}
+						}
+						.explanation {margin: -0.75rem 0 0.75rem 1.25rem; font-style: italic; font-weight: 300}
+						&:last-of-type {
+							a {padding: 1.5rem 0 0 1.25rem}
+							.explanation {margin: 0.25rem 0 0.75rem 1.25rem}
+						}
+					}
+				}
+			}
+		}
+		
+		@media print and (orientation: landscape), screen and (min-width: 1024px) {
+			main.legislation .timeline {
+				&:has(> details[open]) {
+					> details summary {z-index: 30}
+					.versions ol {
+						margin: 0 16rem; width: calc(100% - 32rem);
+						&:before {width: calc(var(--maxWidth) - 20rem); margin: 6.05rem 0 0 -6rem}
+						&:has(li:last-of-type:nth-of-type(2)) {
+							&:before {display: block}
+						}
+						li {
+							&[aria-current="page"] ~ li:nth-of-type(2) > a .version:before {border-color: var(--timelineVersion)}
+							&:first-of-type {
+								margin: 0 0 0 -16rem; z-index: 20; position: absolute;
+								> a, > div {
+									padding: 2.05rem 0 0 2.4rem; width: 16rem;
+									.date:before {background: var(--bg) var(--timelineVersionIcon); background-size: 40%}
+								}
+								&[aria-current="page"] .date:before {border: 0.2rem solid var(--timelineVersionActive); background: var(--timelineVersionActive) var(--timelineVersionIconActive); background-size: 40%;}
+							}
+							&:not([aria-current="page"]):hover > a .date:before {
+								color: var(--buttonText); border-color: var(--focusOutline); text-decoration: none; -webkit-box-shadow: 0 0 0.375rem 0 var(--focusShadow); -moz-box-shadow: 0 0 0.375rem 0 var(--focusShadow); box-shadow: 0 0 0.375rem 0 var(--focusShadow); outline: 0; background: var(--focusButtonBg) var(--timelineVersionIconHover); background-size: 40%;
+							}
+							&:first-of-type:not([aria-current="page"]) > a .version:after, 
+							&:first-of-type:not([aria-current="page"]) > div .version:after,
+							&:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > a .version:before,
+							&:first-of-type:not([aria-current="page"]) ~ :nth-of-type(2) > div .version:before
+							{
+								border-color: var(--timelineVersionActive)
+							}
+							&:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 34rem)}
+							&.consolidated {
+								> a, > div {
+									padding: 2.05rem 0 0 2.5rem;
+									.version:before {margin: 4rem 50% -4rem -2.5rem}
+								}					
+								a:before {left: 1rem}
+								.explanation {.sr-only}
+							}
+						}
+						&:not(:has(li:nth-child(4))):has(li:nth-child(3)) {
+							margin: 0 16rem 0 0; width: calc(100% - 16rem);
+							&:before {margin: 6.05rem 0 0 8rem}
+							li:first-of-type {position: relative; margin: 0; background: unset}
+							li:last-of-type {margin: 0 0 0 calc(var(--maxWidth) - 18rem)}
+							&:has(.prospective) li:first-of-type .version:after {border-color: transparent}
+						}
+						&:has(li:nth-of-type(2):last-of-type) {
+        					width: calc(100% - 16rem);
+							li:last-of-type {position: relative; background: unset}
+							&:has(li:first-of-type.current) {
+								li:first-of-type a:before {content: ""; display: block; width: 1.65rem; height: 1.65rem; margin: 3.45rem auto 1.75rem auto; border-radius: 50%; background: var(--timelineVersionActive)}
+							}
+						}
+					}
+				}
+				&:has(.scrollable):has(> details[open]) {
+					.versions ol li:first-of-type:before {float: right; content: ""; overflow: hidden; display: block; margin:  0 -0.5em 0 0; position: unset; width: 0.4rem; height: 16rem; z-index: unset; background: linear-gradient(270deg, var(--dropShadowStart) 0%, var(--dropShadowEnd) 100%)}
+					.scrollable .versions .scrollbar {margin: -4rem 0 0 16rem; width: calc(100% - 32rem)}
+				}
+			}
+		}
+	*/}
+// End dev environment only
