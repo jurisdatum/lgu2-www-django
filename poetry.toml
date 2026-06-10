@@ -1,0 +1,4 @@
+# Create the project virtualenv at ./.venv (matches CI and the .venv-based
+# commands in README.md / AGENTS.md), rather than in Poetry's global cache.
+[virtualenvs]
+in-project = true
