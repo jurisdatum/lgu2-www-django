@@ -21,7 +21,7 @@ class TimelineData(TypedDict):
     single_version: bool
 
 
-_ISO_DATE_RE = re.compile(r'\d{4}-\d{2}-\d{2}')
+_ISO_DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 
 def make_timeline_data(
@@ -31,12 +31,14 @@ def make_timeline_data(
 ) -> Optional[TimelineData]:
 
     def make_link(version: Optional[str]) -> str:
-        year: Union[int, str] = meta['regnalYear'] if 'regnalYear' in meta else meta['year']
+        year: Union[int, str] = (
+            meta["regnalYear"] if "regnalYear" in meta else meta["year"]
+        )
 
-        args = [meta['shortType'], year, meta['number']]
+        args = [meta["shortType"], year, meta["number"]]
 
-        if target == 'fragment':
-            args.append(meta['fragmentInfo']['href'])
+        if target == "fragment":
+            args.append(meta["fragmentInfo"]["href"])
 
         suffix = ""
         if version:
@@ -55,56 +57,66 @@ def make_timeline_data(
     return _make_timeline_data(meta, make_link)
 
 
-def _make_timeline_data(meta: CommonMetadata, make_link: Callable) -> Optional[TimelineData]:
-    versions = meta['versions'].copy()
+def _make_timeline_data(
+    meta: CommonMetadata, make_link: Callable
+) -> Optional[TimelineData]:
+    versions = meta["versions"].copy()
     point_in_time = meta.get("pointInTime")
 
     held_aside = None
-    if versions and not _ISO_DATE_RE.fullmatch(versions[0]) and versions[0] != 'prospective':
+    if (
+        versions
+        and not _ISO_DATE_RE.fullmatch(versions[0])
+        and versions[0] != "prospective"
+    ):
         label = versions.pop(0)
         held_aside = {
-            'label': label,
-            'date': meta.get('date'),
+            "label": label,
+            "date": meta.get("date"),
         }
 
     if not versions:
         current = {
-            'label': held_aside['label'],
-            'date': held_aside['date'],
-            'link': make_link(None),
+            "label": held_aside["label"],
+            "date": held_aside["date"],
+            "link": make_link(None),
         }
         return {
-            'entries': [],
-            'current': current,
-            'viewing': current,
-            'pointInTime': point_in_time,
-            'single_version': True,
+            "entries": [],
+            "current": current,
+            "viewing": current,
+            "pointInTime": point_in_time,
+            "single_version": True,
         }
 
-    if held_aside and held_aside['label'] == meta['version']:
+    if held_aside and held_aside["label"] == meta["version"]:
         return None
 
     current_label = versions.pop(-1)
     current = {
-        'label': current_label,
-        'date': None if current_label == 'prospective' else date.fromisoformat(current_label),
-        'link': make_link(None),
+        "label": current_label,
+        "date": (
+            None
+            if current_label == "prospective"
+            else date.fromisoformat(current_label)
+        ),
+        "link": make_link(None),
     }
 
     entries = [
-        {'label': v, 'date': date.fromisoformat(v), 'link': make_link(v)}
+        {"label": v, "date": date.fromisoformat(v), "link": make_link(v)}
         for v in versions
     ]
 
-    if current['label'] == meta['version']:
+    if current["label"] == meta["version"]:
         viewing = current
     else:
-        viewing = next(v for v in entries if v['label'] == meta['version'])
+        viewing = next(v for v in entries if v["label"] == meta["version"])
 
     return {
-        'entries': entries,
-        'current': current,
-        'viewing': viewing,
-        'pointInTime': point_in_time,
-        'single_version': len(entries) == 0,
+        "entries": entries,
+        "current": current,
+        "viewing": viewing,
+        "pointInTime": point_in_time,
+        "single_version": len(entries) == 0,
     }

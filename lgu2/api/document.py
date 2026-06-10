@@ -1,4 +1,3 @@
-
 from datetime import date as Date
 from typing import List, Optional, TypedDict, NotRequired, Literal, Union
 from urllib.parse import urlencode
@@ -8,14 +7,25 @@ from .associated import AssociatedDocument, AssociatedDocumentMeta
 from .browse_types import AltNumber
 from .responses.effects import Effect
 
-Extent = Literal['E', 'W', 'S', 'NI', 'EU']
+Extent = Literal["E", "W", "S", "NI", "EU"]
 
 AssociatedDocumentType = Literal[
-    'Note', 'PolicyEqualityStatement', 'Alternative', 'CorrectionSlip',
-    'CodeOfPractice', 'CodeOfConduct', 'TableOfOrigins', 'TableOfDestinations',
-    'OrderInCouncil', 'ImpactAssessment', 'Other', 'ExplanatoryDocument',
-    'TranspositionNote', 'UKRPCOpinion'
+    "Note",
+    "PolicyEqualityStatement",
+    "Alternative",
+    "CorrectionSlip",
+    "CodeOfPractice",
+    "CodeOfConduct",
+    "TableOfOrigins",
+    "TableOfDestinations",
+    "OrderInCouncil",
+    "ImpactAssessment",
+    "Other",
+    "ExplanatoryDocument",
+    "TranspositionNote",
+    "UKRPCOpinion",
 ]
+
 
 class AssociatedDocumentRef(TypedDict):
     type: AssociatedDocumentType
@@ -44,7 +54,7 @@ class CommonMetadata(TypedDict):
     date: Optional[Date]
     cite: str
     version: str
-    status: Literal['final', 'revised']
+    status: Literal["final", "revised"]
     title: str
     extent: List[Extent]
     subjects: NotRequired[List[str]]
@@ -60,12 +70,12 @@ class CommonMetadata(TypedDict):
     associated: List[AssociatedDocumentRef]
 
     @staticmethod
-    def convert_dates(meta: 'CommonMetadata'):
-        if meta.get('date'):  # can be null
-            meta['date'] = Date.fromisoformat(meta['date'])
-        meta['modified'] = Date.fromisoformat(meta['modified'])
-        if meta.get('pointInTime'):  # can be null
-            meta['pointInTime'] = Date.fromisoformat(meta['pointInTime'])
+    def convert_dates(meta: "CommonMetadata"):
+        if meta.get("date"):  # can be null
+            meta["date"] = Date.fromisoformat(meta["date"])
+        meta["modified"] = Date.fromisoformat(meta["modified"])
+        if meta.get("pointInTime"):  # can be null
+            meta["pointInTime"] = Date.fromisoformat(meta["pointInTime"])
 
 
 class DocumentMetadata(CommonMetadata):
@@ -91,43 +101,65 @@ class XmlPackage(TypedDict):
 
 
 def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
-    url = '/document/' + type + '/' + str(year) + '/' + str(number)
+    url = "/document/" + type + "/" + str(year) + "/" + str(number)
     if version is not None:
-        params = {'version': version}
-        url += '?' + urlencode(params)
+        params = {"version": version}
+        url += "?" + urlencode(params)
     return url
 
 
-def get_document(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Union[Document, AssociatedDocument]:
+def get_document(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> Union[Document, AssociatedDocument]:
     url = _make_url(type, year, number, version)
     doc = server.get_json(url, language)
-    if type == 'ukia':
-        AssociatedDocumentMeta.convert_dates(doc['meta'])
+    if type == "ukia":
+        AssociatedDocumentMeta.convert_dates(doc["meta"])
     else:
-        CommonMetadata.convert_dates(doc['meta'])
+        CommonMetadata.convert_dates(doc["meta"])
     return doc
 
 
 def package_xml(response) -> XmlPackage:
     try:
         redirect = {
-            'type': response.headers['X-Document-Type'],
-            'year': response.headers['X-Document-Year'],
-            'number': response.headers['X-Document-Number'],
-            'version': None if response.headers['X-Document-Version'] == 'current' else response.headers['X-Document-Version']
+            "type": response.headers["X-Document-Type"],
+            "year": response.headers["X-Document-Year"],
+            "number": response.headers["X-Document-Number"],
+            "version": (
+                None
+                if response.headers["X-Document-Version"] == "current"
+                else response.headers["X-Document-Version"]
+            ),
         }
     except KeyError:
         redirect = None
-    return {'xml': response.text, 'redirect': redirect}
+    return {"xml": response.text, "redirect": redirect}
 
 
-def get_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+def get_clml(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> XmlPackage:
     url = _make_url(type, year, number, version)
     response = server.get_clml(url, language)
     return package_xml(response)
 
 
-def get_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+def get_akn(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> XmlPackage:
     url = _make_url(type, year, number, version)
     response = server.get_akn(url, language)
     return package_xml(response)

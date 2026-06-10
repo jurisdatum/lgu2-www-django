@@ -1,4 +1,3 @@
-
 from typing import Any, Optional
 import requests
 
@@ -6,8 +5,8 @@ from django.conf import settings
 
 SERVER = settings.API_BASE_URL
 
-CLML_MIME_TYPE = 'application/xml'
-AKN_MIME_TYPE = 'application/akn+xml'
+CLML_MIME_TYPE = "application/xml"
+AKN_MIME_TYPE = "application/akn+xml"
 
 
 def fix_language(language: Optional[str]) -> Optional[str]:
@@ -18,12 +17,14 @@ def fix_language(language: Optional[str]) -> Optional[str]:
     return "en"
 
 
-def get(endpoint: str, accept: str, language: Optional[str] = None) -> requests.Response:
+def get(
+    endpoint: str, accept: str, language: Optional[str] = None
+) -> requests.Response:
     url = SERVER + endpoint
-    headers = {'Accept': accept}
+    headers = {"Accept": accept}
     language = fix_language(language)
     if language is not None:
-        headers = {'Accept': accept, 'Accept-Language': language}
+        headers = {"Accept": accept, "Accept-Language": language}
     return requests.get(url, headers=headers)
 
 
@@ -32,16 +33,16 @@ def head(endpoint: str, language: Optional[str] = None) -> requests.Response:
     headers = {}
     language = fix_language(language)
     if language is not None:
-        headers['Accept-Language'] = language
+        headers["Accept-Language"] = language
     return requests.head(url, headers=headers)
 
 
 def get_json(endpoint: str, language: Optional[str] = None) -> Any:
-    return get(endpoint, 'application/json', language).json()
+    return get(endpoint, "application/json", language).json()
 
 
 def get_raw_json(endpoint: str, language: Optional[str] = None) -> str:
-    return get(endpoint, 'application/json', language).text
+    return get(endpoint, "application/json", language).text
 
 
 def get_clml(endpoint: str, language: Optional[str] = None) -> requests.Response:

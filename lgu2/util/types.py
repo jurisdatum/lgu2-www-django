@@ -1,60 +1,63 @@
 types = [
-    ('ukpga', 'UnitedKingdomPublicGeneralAct', 'primary'),
-    ('ukla', 'UnitedKingdomLocalAct', 'primary'),
-    ('ukppa', 'UnitedKingdomPrivateOrPersonalAct', 'primary'),
-    ('asp', 'ScottishAct', 'primary'),
-    ('nia', 'NorthernIrelandAct', 'primary'),
-    ('aosp', 'ScottishOldAct', 'primary'),
-    ('aep', 'EnglandAct', 'primary'),
-    ('aip', 'IrelandAct', 'primary'),
-    ('apgb', 'GreatBritainAct', 'primary'),
-    ('gbla', 'GreatBritainLocalAct', 'primary'),
-    ('gbppa', '???', 'primary'),  # ToDo
-    ('anaw', 'WelshNationalAssemblyAct', 'primary'),
-    ('asc', 'WelshParliamentAct', 'primary'),
-    ('mwa', 'WelshAssemblyMeasure', 'primary'),
-    ('ukcm', 'UnitedKingdomChurchMeasure', 'primary'),
-    ('mnia', 'NorthernIrelandAssemblyMeasure', 'primary'),
-    ('apni', 'NorthernIrelandParliamentAct', 'primary'),
-    ('uksi', 'UnitedKingdomStatutoryInstrument', 'secondary'),
-    ('ukmd', 'UnitedKingdomMinisterialDirection', 'secondary'),
-    ('ukmo', 'UnitedKingdomMinisterialOrder', 'secondary'),
-    ('uksro', 'UnitedKingdomStatutoryRuleOrOrder', 'secondary'),
-    ('wsi', 'WelshStatutoryInstrument', 'secondary'),
-    ('ssi', 'ScottishStatutoryInstrument', 'secondary'),
-    ('nisi', 'NorthernIrelandOrderInCouncil', 'secondary'),
-    ('nisr', 'NorthernIrelandStatutoryRule', 'secondary'),
-    ('ukci', 'UnitedKingdomChurchInstrument', 'secondary'),
-    ('nisro', 'NorthernIrelandStatutoryRuleOrOrder', 'secondary'),
-
-    ('ukdsi', 'UnitedKingdomDraftStatutoryInstrument', 'secondary'),
-    ('sdsi', 'ScottishDraftStatutoryInstrument', 'secondary'),
-    ('nidsr', 'NorthernIrelandDraftStatutoryRule', 'secondary'),
-
-    ('eur', 'EuropeanUnionRegulation', 'euretained'),
-    ('eudn', 'EuropeanUnionDecision', 'euretained'),
-    ('eudr', 'EuropeanUnionDirective', 'euretained'),
-    ('eut', 'EuropeanUnionTreaty', 'euretained'),
-
-    ('ukia', 'UnitedKingdomImpactAssessment', 'associated')
+    ("ukpga", "UnitedKingdomPublicGeneralAct", "primary"),
+    ("ukla", "UnitedKingdomLocalAct", "primary"),
+    ("ukppa", "UnitedKingdomPrivateOrPersonalAct", "primary"),
+    ("asp", "ScottishAct", "primary"),
+    ("nia", "NorthernIrelandAct", "primary"),
+    ("aosp", "ScottishOldAct", "primary"),
+    ("aep", "EnglandAct", "primary"),
+    ("aip", "IrelandAct", "primary"),
+    ("apgb", "GreatBritainAct", "primary"),
+    ("gbla", "GreatBritainLocalAct", "primary"),
+    ("gbppa", "???", "primary"),  # ToDo
+    ("anaw", "WelshNationalAssemblyAct", "primary"),
+    ("asc", "WelshParliamentAct", "primary"),
+    ("mwa", "WelshAssemblyMeasure", "primary"),
+    ("ukcm", "UnitedKingdomChurchMeasure", "primary"),
+    ("mnia", "NorthernIrelandAssemblyMeasure", "primary"),
+    ("apni", "NorthernIrelandParliamentAct", "primary"),
+    ("uksi", "UnitedKingdomStatutoryInstrument", "secondary"),
+    ("ukmd", "UnitedKingdomMinisterialDirection", "secondary"),
+    ("ukmo", "UnitedKingdomMinisterialOrder", "secondary"),
+    ("uksro", "UnitedKingdomStatutoryRuleOrOrder", "secondary"),
+    ("wsi", "WelshStatutoryInstrument", "secondary"),
+    ("ssi", "ScottishStatutoryInstrument", "secondary"),
+    ("nisi", "NorthernIrelandOrderInCouncil", "secondary"),
+    ("nisr", "NorthernIrelandStatutoryRule", "secondary"),
+    ("ukci", "UnitedKingdomChurchInstrument", "secondary"),
+    ("nisro", "NorthernIrelandStatutoryRuleOrOrder", "secondary"),
+    ("ukdsi", "UnitedKingdomDraftStatutoryInstrument", "secondary"),
+    ("sdsi", "ScottishDraftStatutoryInstrument", "secondary"),
+    ("nidsr", "NorthernIrelandDraftStatutoryRule", "secondary"),
+    ("eur", "EuropeanUnionRegulation", "euretained"),
+    ("eudn", "EuropeanUnionDecision", "euretained"),
+    ("eudr", "EuropeanUnionDirective", "euretained"),
+    ("eut", "EuropeanUnionTreaty", "euretained"),
+    ("ukia", "UnitedKingdomImpactAssessment", "associated"),
 ]
 
 short_to_long = {item[0]: item[1] for item in types}
 
 long_to_short = {item[1]: item[0] for item in types}
 
-categories_by_type = {item[0]: item[2] for item in types} | {item[1]: item[2] for item in types}
+categories_by_type = {item[0]: item[2] for item in types} | {
+    item[1]: item[2] for item in types
+}
 
 # Valid /TYPE/... URL segments. Mostly atomic types, plus aggregate tokens
 # ('primary', 'secondary', 'eu-origin') and 'all' — a routable synonym for
 # "no type filter" that search_results_helper strips on entry.
 SEARCH_TYPES = [item[0] for item in types] + [
-    'all', 'primary', 'secondary',
-    'eu-origin', 'eu', 'ukia',
+    "all",
+    "primary",
+    "secondary",
+    "eu-origin",
+    "eu",
+    "ukia",
 ]
 
-EU_ORIGINATING_TYPES = frozenset(item[0] for item in types if item[2] == 'euretained')
-EU_TYPE_TOKENS = EU_ORIGINATING_TYPES | {'eu-origin', 'eu'}
+EU_ORIGINATING_TYPES = frozenset(item[0] for item in types if item[2] == "euretained")
+EU_TYPE_TOKENS = EU_ORIGINATING_TYPES | {"eu-origin", "eu"}
 
 
 def is_eu_originating_type(type_: str) -> bool:

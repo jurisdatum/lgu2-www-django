@@ -17,116 +17,116 @@ def _search_response(documents=None, counts=None, query=None):
     documents = documents or []
     counts = counts or {}
     return {
-        'meta': {
-            'page': 1,
-            'totalPages': 1,
-            'query': query or {},
-            'subjects': [],
-            'counts': {
-                'total': len(documents),
-                'byType': counts.get('byType', []),
-                'byYear': counts.get('byYear', []),
-                'bySubjectInitial': counts.get('bySubjectInitial', []),
-                'byStage': counts.get('byStage', []),
-                'byDepartment': counts.get('byDepartment', []),
+        "meta": {
+            "page": 1,
+            "totalPages": 1,
+            "query": query or {},
+            "subjects": [],
+            "counts": {
+                "total": len(documents),
+                "byType": counts.get("byType", []),
+                "byYear": counts.get("byYear", []),
+                "bySubjectInitial": counts.get("bySubjectInitial", []),
+                "byStage": counts.get("byStage", []),
+                "byDepartment": counts.get("byDepartment", []),
             },
         },
-        'documents': documents,
+        "documents": documents,
     }
 
 
 class TestSmartUrlGeneration(TestCase):
     def test_build_browse_url_simple_type(self):
-        params = {'type': 'ukpga'}
+        params = {"type": "ukpga"}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga')
+        self.assertEqual(result, "/ukpga")
 
     def test_build_browse_url_type_and_year(self):
-        params = {'type': 'ukpga', 'year': 2024}
+        params = {"type": "ukpga", "year": 2024}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/2024')
+        self.assertEqual(result, "/ukpga/2024")
 
     def test_build_browse_url_with_pagination(self):
-        params = {'type': 'ukpga', 'year': 2024, 'page': 2}
+        params = {"type": "ukpga", "year": 2024, "page": 2}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/2024?page=2')
+        self.assertEqual(result, "/ukpga/2024?page=2")
 
     def test_build_browse_url_with_title_filter_keeps_title_in_query_string(self):
-        params = {'type': 'ukpga', 'title': 'housing'}
+        params = {"type": "ukpga", "title": "housing"}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga?title=housing')
+        self.assertEqual(result, "/ukpga?title=housing")
 
     def test_build_browse_url_invalid_type_returns_none(self):
-        params = {'type': 'invalid'}
+        params = {"type": "invalid"}
         result = build_browse_url_if_possible(params)
         self.assertIsNone(result)
 
     def test_make_smart_link_uses_browse_url(self):
-        params = {'type': 'ukpga', 'year': 2024}
+        params = {"type": "ukpga", "year": 2024}
         result = make_smart_link(params)
-        self.assertEqual(result, '/ukpga/2024')
+        self.assertEqual(result, "/ukpga/2024")
 
     def test_make_smart_link_with_title_filter_uses_browse_url(self):
-        params = {'type': 'ukpga', 'title': 'housing'}
+        params = {"type": "ukpga", "title": "housing"}
         result = make_smart_link(params)
-        self.assertEqual(result, '/ukpga?title=housing')
+        self.assertEqual(result, "/ukpga?title=housing")
 
     def test_make_smart_link_falls_back_to_search_for_disallowed_params(self):
-        params = {'type': 'ukpga', 'pointInTime': '2024-01-01'}
+        params = {"type": "ukpga", "pointInTime": "2024-01-01"}
         result = make_smart_link(params)
-        self.assertTrue(result.startswith('/search/?'))
-        self.assertIn('type=ukpga', result)
-        self.assertIn('pointInTime=2024-01-01', result)
+        self.assertTrue(result.startswith("/search/?"))
+        self.assertIn("type=ukpga", result)
+        self.assertIn("pointInTime=2024-01-01", result)
 
     def test_type_and_subject_initial(self):
-        params = {'type': 'uksi', 'subject': 'a'}
+        params = {"type": "uksi", "subject": "a"}
         result = make_smart_link(params)
-        self.assertEqual(result, '/uksi/a')
+        self.assertEqual(result, "/uksi/a")
 
     def test_full_subject_heading_stays_in_query_string(self):
-        params = {'type': 'ukpga', 'subject': 'animals'}
+        params = {"type": "ukpga", "subject": "animals"}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga?subject=animals')
+        self.assertEqual(result, "/ukpga?subject=animals")
 
     def test_year_and_full_subject_heading_stay_on_year_route(self):
-        params = {'type': 'ukpga', 'year': 2024, 'subject': 'animals'}
+        params = {"type": "ukpga", "year": 2024, "subject": "animals"}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/2024?subject=animals')
+        self.assertEqual(result, "/ukpga/2024?subject=animals")
 
     def test_build_browse_url_with_extent_name(self):
-        params = {'type': 'ukpga', 'extent': ['E']}
+        params = {"type": "ukpga", "extent": ["E"]}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/england')
+        self.assertEqual(result, "/ukpga/england")
 
     def test_build_browse_url_with_exclusive_extent_name(self):
-        params = {'type': 'ukpga', 'extent': ['E'], 'exclusiveExtent': True}
+        params = {"type": "ukpga", "extent": ["E"], "exclusiveExtent": True}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/=england')
+        self.assertEqual(result, "/ukpga/=england")
 
     def test_replace_param_removes_value_and_resets_pagination(self):
-        params = {'type': 'ukpga', 'year': 2024, 'page': 3, 'pageSize': 50}
-        result = replace_param_and_make_smart_link(params, 'year', None)
-        self.assertEqual(result, '/ukpga')
+        params = {"type": "ukpga", "year": 2024, "page": 3, "pageSize": 50}
+        result = replace_param_and_make_smart_link(params, "year", None)
+        self.assertEqual(result, "/ukpga")
 
     def test_build_browse_url_returns_none_for_out_of_range_year(self):
-        params = {'type': 'ukpga', 'year': 999}
+        params = {"type": "ukpga", "year": 999}
         result = build_browse_url_if_possible(params)
         self.assertIsNone(result)
 
     def test_make_smart_link_falls_back_to_search_when_year_invalid(self):
-        params = {'type': 'ukpga', 'year': 999}
+        params = {"type": "ukpga", "year": 999}
         result = make_smart_link(params)
-        self.assertTrue(result.startswith('/search/?'))
+        self.assertTrue(result.startswith("/search/?"))
 
     def test_extent_url_preserves_year_in_query_string(self):
-        params = {'type': 'ukpga', 'extent': ['E'], 'year': 2024}
+        params = {"type": "ukpga", "extent": ["E"], "year": 2024}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/england?year=2024')
+        self.assertEqual(result, "/ukpga/england?year=2024")
 
     def test_explicit_year_overrides_range(self):
-        params = {'type': 'ukpga', 'startYear': 1900, 'endYear': 2000, 'year': 1950}
+        params = {"type": "ukpga", "startYear": 1900, "endYear": 2000, "year": 1950}
         result = build_browse_url_if_possible(params)
-        self.assertEqual(result, '/ukpga/1950')
+        self.assertEqual(result, "/ukpga/1950")
 
 
 class TestBrowseExtentParsing(TestCase):
@@ -140,7 +140,9 @@ class TestBrowseExtentParsing(TestCase):
         self.assertEqual(query_params["extent"], ["E"])
 
     @patch("lgu2.views.search.search_results_helper")
-    def test_browse_exclusive_extent_url_preserves_extent_code(self, mock_search_results_helper):
+    def test_browse_exclusive_extent_url_preserves_extent_code(
+        self, mock_search_results_helper
+    ):
         request = RequestFactory().get("/ukpga/=england")
 
         browse(request, type="ukpga", extent_segment="=england")
@@ -150,8 +152,12 @@ class TestBrowseExtentParsing(TestCase):
         self.assertIs(query_params["exclusiveExtent"], True)
 
     @patch("lgu2.views.search.search_results_helper")
-    def test_browse_extent_url_preserves_year_and_subject_from_query_string(self, mock_search_results_helper):
-        request = RequestFactory().get("/ukpga/england", {"year": "2024", "subject": "a"})
+    def test_browse_extent_url_preserves_year_and_subject_from_query_string(
+        self, mock_search_results_helper
+    ):
+        request = RequestFactory().get(
+            "/ukpga/england", {"year": "2024", "subject": "a"}
+        )
 
         browse(request, type="ukpga", extent_segment="england")
 
@@ -206,7 +212,9 @@ def _empty_search_response(**query):
 
 class TestModifiedQueryLinksRendering(TestCase):
     @patch("lgu2.views.search.basic_search")
-    def test_active_query_links_do_not_prepend_question_mark_to_full_urls(self, mock_basic_search):
+    def test_active_query_links_do_not_prepend_question_mark_to_full_urls(
+        self, mock_basic_search
+    ):
         mock_basic_search.return_value = _empty_search_response(title="housing")
 
         response = self.client.get("/ukpga", {"title": "housing"})
@@ -239,7 +247,9 @@ class TestCompoundTypeFormSubmission(TestCase):
         self.assertEqual(response.url, "/primary+secondary")
 
     @patch("lgu2.views.search.basic_search")
-    def test_compound_type_reaches_api_as_list_when_redirect_bypassed(self, mock_basic_search):
+    def test_compound_type_reaches_api_as_list_when_redirect_bypassed(
+        self, mock_basic_search
+    ):
         # sort is not a browse-URL param, so the browse redirect is bypassed
         # and search_results_helper calls the API directly with query_params.
         mock_basic_search.return_value = _empty_search_response()
@@ -259,7 +269,12 @@ class TestPaginationLinksPreserveMultiValueParams(TestCase):
         # from base_query_str.
         mock_basic_search.return_value = {
             "meta": {
-                "counts": {"total": 500, "byType": [], "byYear": [], "bySubjectInitial": []},
+                "counts": {
+                    "total": 500,
+                    "byType": [],
+                    "byYear": [],
+                    "bySubjectInitial": [],
+                },
                 "page": 1,
                 "totalPages": 20,
                 "query": {},
@@ -292,7 +307,9 @@ class TestMultiTypeSearchDoesNotCrash(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @patch("lgu2.views.search.basic_search")
-    def test_list_valued_params_render_as_repeated_hidden_inputs(self, mock_basic_search):
+    def test_list_valued_params_render_as_repeated_hidden_inputs(
+        self, mock_basic_search
+    ):
         # The sort and page-size forms on the results page loop over
         # query_param and emit <input type="hidden">. When a value is a list
         # (e.g. type from /primary+secondary, or repeated ?extent=E&extent=W),
@@ -305,7 +322,9 @@ class TestMultiTypeSearchDoesNotCrash(TestCase):
         self.assertEqual(response.status_code, 200)
         content = response.content.decode()
         self.assertNotIn("value=\"['primary', 'secondary']\"", content)
-        self.assertNotIn("value=\"[&#x27;primary&#x27;, &#x27;secondary&#x27;]\"", content)
+        self.assertNotIn(
+            'value="[&#x27;primary&#x27;, &#x27;secondary&#x27;]"', content
+        )
         self.assertIn('value="primary"', content)
         self.assertIn('value="secondary"', content)
 
@@ -330,54 +349,69 @@ class TestInvalidNumericSearchParams(TestCase):
                 self.assertNotIn(key, params)
 
     def test_search_view_returns_form_when_active_year_is_invalid(self):
-        response = self.client.get("/search/", {
-            "type": "ukpga",
-            "specifi_years": "true",
-            "year": "abcd",
-        })
+        response = self.client.get(
+            "/search/",
+            {
+                "type": "ukpga",
+                "specifi_years": "true",
+                "year": "abcd",
+            },
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
 
     def test_search_view_returns_form_when_active_year_range_is_invalid(self):
-        response = self.client.get("/search/", {
-            "type": "ukpga",
-            "specifi_years": "false",
-            "startYear": "abc",
-            "endYear": "2000",
-        })
+        response = self.client.get(
+            "/search/",
+            {
+                "type": "ukpga",
+                "specifi_years": "false",
+                "startYear": "abc",
+                "endYear": "2000",
+            },
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
 
     def test_search_view_ignores_invalid_inactive_year_field(self):
-        response = self.client.get("/search/", {
-            "type": "ukpga",
-            "specifi_years": "false",
-            "year": "abcd",
-            "startYear": "1900",
-            "endYear": "2000",
-        })
+        response = self.client.get(
+            "/search/",
+            {
+                "type": "ukpga",
+                "specifi_years": "false",
+                "year": "abcd",
+                "startYear": "1900",
+                "endYear": "2000",
+            },
+        )
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/ukpga/1900-2000")
 
     def test_year_out_of_range_returns_form(self):
-        response = self.client.get("/search/", {
-            "type": "ukpga",
-            "specifi_years": "true",
-            "year": "999",
-        })
+        response = self.client.get(
+            "/search/",
+            {
+                "type": "ukpga",
+                "specifi_years": "true",
+                "year": "999",
+            },
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
 
     def test_year_too_large_returns_form(self):
-        response = self.client.get("/search/", {
-            "type": "ukpga",
-            "specifi_years": "true",
-            "year": "10000",
-        })
+        response = self.client.get(
+            "/search/",
+            {
+                "type": "ukpga",
+                "specifi_years": "true",
+                "year": "10000",
+            },
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
@@ -421,13 +455,16 @@ class TestRangeYearInQueryString(TestCase):
     def test_extent_redirect_preserves_year_range_for_api(self, mock_basic_search):
         mock_basic_search.return_value = _empty_search_response()
 
-        response = self.client.get("/search/", {
-            "type": "ukpga",
-            "specifi_years": "false",
-            "startYear": "1900",
-            "endYear": "2000",
-            "extent": "E",
-        })
+        response = self.client.get(
+            "/search/",
+            {
+                "type": "ukpga",
+                "specifi_years": "false",
+                "startYear": "1900",
+                "endYear": "2000",
+                "extent": "E",
+            },
+        )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/ukpga/england?year=1900-2000")
 
@@ -464,7 +501,12 @@ class TestDescendingYearRangeRejected(TestCase):
     def test_search_view_rejects_descending_start_end_pair(self):
         response = self.client.get(
             "/search/",
-            {"type": "ukpga", "specifi_years": "false", "startYear": "2024", "endYear": "2023"},
+            {
+                "type": "ukpga",
+                "specifi_years": "false",
+                "startYear": "2024",
+                "endYear": "2023",
+            },
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "new_theme/advance_search/full_search.html")
@@ -480,14 +522,20 @@ class TestYearFacetOnRangeBrowse(TestCase):
 
     @patch("lgu2.views.search.basic_search")
     def test_range_browse_marks_current_year_truthy(self, mock_basic_search):
-        mock_basic_search.return_value = _search_response(query={"startYear": 1900, "endYear": 2000})
+        mock_basic_search.return_value = _search_response(
+            query={"startYear": 1900, "endYear": 2000}
+        )
         response = self.client.get("/ukpga/1900-2000")
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["current_year"])
 
     @patch("lgu2.views.search.basic_search")
-    def test_range_browse_year_clear_link_drops_all_year_aliases(self, mock_basic_search):
-        mock_basic_search.return_value = _search_response(query={"startYear": 1900, "endYear": 2000})
+    def test_range_browse_year_clear_link_drops_all_year_aliases(
+        self, mock_basic_search
+    ):
+        mock_basic_search.return_value = _search_response(
+            query={"startYear": 1900, "endYear": 2000}
+        )
         response = self.client.get("/ukpga/1900-2000")
         links = response.context["modified_query_links"]
         self.assertEqual(links["year"], "/ukpga")
@@ -497,66 +545,82 @@ class TestYearFacetOnRangeBrowse(TestCase):
 
 class TestUkiaSearchResults(TestCase):
     def test_ukia_search_redirects_to_clean_results_url(self):
-        response = self.client.get(reverse('search'), {'type': 'ukia'})
-        self.assertRedirects(response, reverse('browse', args=['ukia']), fetch_redirect_response=False)
+        response = self.client.get(reverse("search"), {"type": "ukia"})
+        self.assertRedirects(
+            response, reverse("browse", args=["ukia"]), fetch_redirect_response=False
+        )
 
-    @patch('lgu2.views.search.basic_search')
+    @patch("lgu2.views.search.basic_search")
     def test_ukia_clean_results_page_uses_document_links(self, mock_basic_search):
         mock_basic_search.return_value = _search_response(
-            documents=[{
-                'id': 'ukia/2024/1',
-                'year': 2024,
-                'number': 1,
-                'title': 'Example impact assessment',
-                'cite': 'UKIA 2024/1',
-                'longType': 'UnitedKingdomImpactAssessment',
-                'version': 'enacted',
-            }],
+            documents=[
+                {
+                    "id": "ukia/2024/1",
+                    "year": 2024,
+                    "number": 1,
+                    "title": "Example impact assessment",
+                    "cite": "UKIA 2024/1",
+                    "longType": "UnitedKingdomImpactAssessment",
+                    "version": "enacted",
+                }
+            ],
             counts={
-                'byType': [{
-                    'type': 'UnitedKingdomImpactAssessment',
-                    'count': 1,
-                }],
+                "byType": [
+                    {
+                        "type": "UnitedKingdomImpactAssessment",
+                        "count": 1,
+                    }
+                ],
             },
-            query={'type': 'ukia'},
+            query={"type": "ukia"},
         )
 
-        response = self.client.get(reverse('browse', args=['ukia']))
+        response = self.client.get(reverse("browse", args=["ukia"]))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, f'href="{reverse("document", args=["ukia", 2024, 1])}"')
-        self.assertNotContains(response, reverse('toc', args=['ukia', 2024, 1]))
+        self.assertContains(
+            response, f'href="{reverse("document", args=["ukia", 2024, 1])}"'
+        )
+        self.assertNotContains(response, reverse("toc", args=["ukia", 2024, 1]))
 
-    @patch('lgu2.views.search.basic_search')
+    @patch("lgu2.views.search.basic_search")
     def test_ukia_year_results_page_uses_document_links(self, mock_basic_search):
         mock_basic_search.return_value = _search_response(
-            documents=[{
-                'id': 'ukia/2024/1',
-                'year': 2024,
-                'number': 1,
-                'title': 'Example impact assessment',
-                'cite': 'UKIA 2024/1',
-                'longType': 'UnitedKingdomImpactAssessment',
-                'version': 'enacted',
-            }],
+            documents=[
+                {
+                    "id": "ukia/2024/1",
+                    "year": 2024,
+                    "number": 1,
+                    "title": "Example impact assessment",
+                    "cite": "UKIA 2024/1",
+                    "longType": "UnitedKingdomImpactAssessment",
+                    "version": "enacted",
+                }
+            ],
             counts={
-                'byType': [{
-                    'type': 'UnitedKingdomImpactAssessment',
-                    'count': 1,
-                }],
-                'byYear': [{
-                    'year': 2024,
-                    'count': 1,
-                }],
+                "byType": [
+                    {
+                        "type": "UnitedKingdomImpactAssessment",
+                        "count": 1,
+                    }
+                ],
+                "byYear": [
+                    {
+                        "year": 2024,
+                        "count": 1,
+                    }
+                ],
             },
-            query={'type': 'ukia', 'year': 2024},
+            query={"type": "ukia", "year": 2024},
         )
 
-        response = self.client.get(reverse('browse-year', args=['ukia', 2024]))
+        response = self.client.get(reverse("browse-year", args=["ukia", 2024]))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, f'href="{reverse("document", args=["ukia", 2024, 1])}"')
-        self.assertNotContains(response, reverse('toc', args=['ukia', 2024, 1]))
+        self.assertContains(
+            response, f'href="{reverse("document", args=["ukia", 2024, 1])}"'
+        )
+        self.assertNotContains(response, reverse("toc", args=["ukia", 2024, 1]))
 
 
 class ExtractQueryParamsTests(TestCase):
@@ -566,16 +630,16 @@ class ExtractQueryParamsTests(TestCase):
     def test_type_all_is_dropped(self):
         # The form sends type=all to mean "no type filter"; the API expects
         # the parameter to be omitted entirely in that case.
-        request = self.factory.get('/search/?type=all')
+        request = self.factory.get("/search/?type=all")
         params = extract_query_params(request)
-        self.assertNotIn('type', params)
+        self.assertNotIn("type", params)
 
     def test_type_all_alongside_specific_type_keeps_specific_only(self):
-        request = self.factory.get('/search/?type=all&type=ukpga')
+        request = self.factory.get("/search/?type=all&type=ukpga")
         params = extract_query_params(request)
-        self.assertEqual(params.get('type'), 'ukpga')
+        self.assertEqual(params.get("type"), "ukpga")
 
     def test_specific_type_passes_through(self):
-        request = self.factory.get('/search/?type=ukpga')
+        request = self.factory.get("/search/?type=ukpga")
         params = extract_query_params(request)
-        self.assertEqual(params.get('type'), 'ukpga')
+        self.assertEqual(params.get("type"), "ukpga")

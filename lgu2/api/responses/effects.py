@@ -1,4 +1,3 @@
-
 from typing import List, NotRequired, Optional, TypedDict
 
 
@@ -7,7 +6,9 @@ class RichTextNode(TypedDict):
     text: str
     id: NotRequired[str]  # fragment id, absent if type is text
     href: NotRequired[str]  # absent if type is text
-    missing: NotRequired[bool]  # absent if type is text, can also be absent if link is not missing
+    missing: NotRequired[
+        bool
+    ]  # absent if type is text, can also be absent if link is not missing
 
 
 class Provisions(TypedDict):

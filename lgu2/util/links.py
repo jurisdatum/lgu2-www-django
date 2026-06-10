@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass
 from typing import Optional
 
@@ -14,39 +13,51 @@ class Link:
 
 def make_changes_affected_link(meta) -> Optional[Link]:
     """The "see all changes made to or by X" link, or None if meta lacks identifiers."""
-    if not (meta.get('shortType') and meta.get('year') and meta.get('number')):
+    if not (meta.get("shortType") and meta.get("year") and meta.get("number")):
         return None
     return Link(
-        text=_("See all changes made to or by {title}").format(title=meta.get('title', '')),
-        href=reverse('changes-affected', args=[meta['shortType'], meta['year'], meta['number']]),
+        text=_("See all changes made to or by {title}").format(
+            title=meta.get("title", "")
+        ),
+        href=reverse(
+            "changes-affected", args=[meta["shortType"], meta["year"], meta["number"]]
+        ),
     )
 
 
 from lgu2.api.browse_types import DocEntry
 from lgu2.util.types import to_short_type
 
-
-first_versions = { 'enacted', 'made', 'created', 'adopted' }
+first_versions = {"enacted", "made", "created", "adopted"}
 
 
 def make_contents_link_for_list_entry(doc: DocEntry):
     # Use isbn as fallback identifier if number is None
     # Some documents (e.g., older legislation) use ISBN instead of a number
-    number = doc['number'] if doc['number'] is not None else doc.get('isbn')
+    number = doc["number"] if doc["number"] is not None else doc.get("isbn")
 
     if number is None:
         # This shouldn't happen in valid data, but handle it gracefully
         raise ValueError(f"Document {doc['id']} has neither 'number' nor 'isbn' field")
 
-    if doc['id'].endswith('.pdf'):  # correction slips
-        return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], number ])
-    elif doc['version'] in first_versions:
-        return reverse('toc-version', args=[ to_short_type(doc['longType']), doc['year'], number, doc['version'] ])
+    if doc["id"].endswith(".pdf"):  # correction slips
+        return reverse(
+            "toc", args=[to_short_type(doc["longType"]), doc["year"], number]
+        )
+    elif doc["version"] in first_versions:
+        return reverse(
+            "toc-version",
+            args=[to_short_type(doc["longType"]), doc["year"], number, doc["version"]],
+        )
     else:
-        return reverse('toc', args=[ to_short_type(doc['longType']), doc['year'], number ])
+        return reverse(
+            "toc", args=[to_short_type(doc["longType"]), doc["year"], number]
+        )
 
 
-def make_contents_link(type: str, year: str, number: str, version: Optional[str], lang: Optional[str]):
+def make_contents_link(
+    type: str, year: str, number: str, version: Optional[str], lang: Optional[str]
+):
     """Return the canonical table-of-contents URL.
 
     ``lang`` must be one of the language slugs accepted by the views (``english``/``welsh``).
@@ -55,17 +66,24 @@ def make_contents_link(type: str, year: str, number: str, version: Optional[str]
     """
     if lang:
         if version:
-            return reverse('toc-version-lang', args=[ type, year, number, version, lang ])
+            return reverse("toc-version-lang", args=[type, year, number, version, lang])
         else:
-            return reverse('toc-lang', args=[ type, year, number, lang ])
+            return reverse("toc-lang", args=[type, year, number, lang])
     else:
         if version:
-            return reverse('toc-version', args=[ type, year, number, version ])
+            return reverse("toc-version", args=[type, year, number, version])
         else:
-            return reverse('toc', args=[ type, year, number ])
+            return reverse("toc", args=[type, year, number])
 
 
-def make_fragment_link(type: str, year: str, number: str, fragment: str, version: Optional[str], lang: Optional[str]):
+def make_fragment_link(
+    type: str,
+    year: str,
+    number: str,
+    fragment: str,
+    version: Optional[str],
+    lang: Optional[str],
+):
     """Return the fragment URL for a document or schedule entry.
 
     ``lang`` must be the language slug from the fragment view arguments (``english``/``welsh``),
@@ -73,17 +91,24 @@ def make_fragment_link(type: str, year: str, number: str, fragment: str, version
     """
     if lang:
         if version:
-            return reverse('fragment-version-lang', args=[ type, year, number, fragment, version, lang ])
+            return reverse(
+                "fragment-version-lang",
+                args=[type, year, number, fragment, version, lang],
+            )
         else:
-            return reverse('fragment-lang', args=[ type, year, number, fragment, lang ])
+            return reverse("fragment-lang", args=[type, year, number, fragment, lang])
     else:
         if version:
-            return reverse('fragment-version', args=[ type, year, number, fragment, version ])
+            return reverse(
+                "fragment-version", args=[type, year, number, fragment, version]
+            )
         else:
-            return reverse('fragment', args=[ type, year, number, fragment ])
+            return reverse("fragment", args=[type, year, number, fragment])
 
 
-def make_document_link(type: str, year: str, number: str, version: Optional[str], lang: Optional[str]):
+def make_document_link(
+    type: str, year: str, number: str, version: Optional[str], lang: Optional[str]
+):
     """Return the base document URL.
 
     ``lang`` must match the document view's URL parameters (``english``/``welsh``). Avoid passing
@@ -91,11 +116,13 @@ def make_document_link(type: str, year: str, number: str, version: Optional[str]
     """
     if lang:
         if version:
-            return reverse('document-version-lang', args=[ type, year, number, version, lang ])
+            return reverse(
+                "document-version-lang", args=[type, year, number, version, lang]
+            )
         else:
-            return reverse('document-lang', args=[ type, year, number, lang ])
+            return reverse("document-lang", args=[type, year, number, lang])
     else:
         if version:
-            return reverse('document-version', args=[ type, year, number, version ])
+            return reverse("document-version", args=[type, year, number, version])
         else:
-            return reverse('document', args=[ type, year, number ])
+            return reverse("document", args=[type, year, number])

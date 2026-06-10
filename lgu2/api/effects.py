@@ -1,4 +1,3 @@
-
 from typing import Optional
 from urllib.parse import urlencode
 
@@ -9,7 +8,7 @@ from . import server
 
 def _make_url(**kwargs) -> str:
     params = {k: v for k, v in kwargs.items() if v is not None}
-    return '/effects?' + urlencode(params)
+    return "/effects?" + urlencode(params)
 
 
 def fetch(
@@ -28,7 +27,7 @@ def fetch(
     applied: Optional[str] = None,
     sort: Optional[str] = None,
     orderBy: Optional[str] = None,
-    page: int = 1
+    page: int = 1,
 ) -> Page:
     url = _make_url(**locals())
     return server.get_json(url)
@@ -50,7 +49,7 @@ def fetch_atom(
     applied: Optional[str] = None,
     sort: Optional[str] = None,
     orderBy: Optional[str] = None,
-    page: int = 1
+    page: int = 1,
 ) -> str:
     url = _make_url(**locals())
-    return server.get(url, 'application/atom+xml').text
+    return server.get(url, "application/atom+xml").text

@@ -123,7 +123,9 @@ class MakeFragmentLinkTests(SimpleTestCase):
         fragment = "section/1"
         self.assertEqual(
             make_fragment_link("ukpga", 2023, 1, fragment, "2024-01-01", None),
-            reverse("fragment-version", args=["ukpga", 2023, 1, fragment, "2024-01-01"]),
+            reverse(
+                "fragment-version", args=["ukpga", 2023, 1, fragment, "2024-01-01"]
+            ),
         )
 
     def test_fragment_with_language(self):

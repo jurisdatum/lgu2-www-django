@@ -33,7 +33,7 @@ def _to_wire(params: ApiSearchRequest) -> Dict[str, Any]:
 
 def _coerce(value: Any) -> Any:
     if isinstance(value, bool):
-        return 'true' if value else 'false'
+        return "true" if value else "false"
     if isinstance(value, list):
         return [_coerce(v) for v in value]
     return value

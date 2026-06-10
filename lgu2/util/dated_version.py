@@ -24,8 +24,8 @@ class VersionPanel:
 
 
 def is_most_recent_version(meta) -> bool:
-    versions = meta.get('versions') or []
-    return bool(versions) and meta['version'] == versions[-1]
+    versions = meta.get("versions") or []
+    return bool(versions) and meta["version"] == versions[-1]
 
 
 def target_phrase(meta) -> str:
@@ -35,22 +35,24 @@ def target_phrase(meta) -> str:
     is actually looking at (a section, schedule, etc.), rather than the whole
     document.
     """
-    title = meta.get('title', '')
-    fragment_label = (meta.get('fragmentInfo') or {}).get('label') or ''
+    title = meta.get("title", "")
+    fragment_label = (meta.get("fragmentInfo") or {}).get("label") or ""
     if not fragment_label:
         return title
     return _("{fragment} of {title}").format(fragment=fragment_label, title=title)
 
 
 def _shown_milestone_date(meta) -> Optional[_Date]:
-    version = meta.get('version', '')
+    version = meta.get("version", "")
     try:
         return _Date.fromisoformat(version)
     except (TypeError, ValueError):
-        return meta.get('date')
+        return meta.get("date")
 
 
-def dated_version_panel(meta, lang: Optional[str] = None, most_recent_href: Optional[str] = None) -> VersionPanel:
+def dated_version_panel(
+    meta, lang: Optional[str] = None, most_recent_href: Optional[str] = None
+) -> VersionPanel:
     """Build the panel shown when viewing a non-most-recent version.
 
     ``lang`` is the route-slug language (``english``/``welsh``), not the
@@ -69,17 +71,19 @@ def dated_version_panel(meta, lang: Optional[str] = None, most_recent_href: Opti
     # the two links use different year sources by design.
     if most_recent_href is None:
         most_recent_href = make_document_link(
-            meta['shortType'],
-            meta.get('regnalYear') or meta['year'],
-            meta['number'],
+            meta["shortType"],
+            meta.get("regnalYear") or meta["year"],
+            meta["number"],
             None,
             lang,
         )
 
-    links: List[Link] = [Link(
-        text=_("See the most recent version"),
-        href=most_recent_href,
-    )]
+    links: List[Link] = [
+        Link(
+            text=_("See the most recent version"),
+            href=most_recent_href,
+        )
+    ]
     changes_link = make_changes_affected_link(meta)
     if changes_link is not None:
         links.append(changes_link)
@@ -91,7 +95,7 @@ def dated_version_panel(meta, lang: Optional[str] = None, most_recent_href: Opti
     if shown_date:
         paragraphs.append(
             _("This legislation has been changed since {date}.").format(
-                date=date_format(shown_date, 'd F Y'),
+                date=date_format(shown_date, "d F Y"),
             )
         )
 

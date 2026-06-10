@@ -1,4 +1,3 @@
-
 from typing import List, TypedDict
 
 from . import server
@@ -18,7 +17,7 @@ class ExtendedMetadata(DocumentMetadata):
 
 
 def get_metadata(type: str, year, number):
-    url = '/metadata/' + type + '/' + str(year) + '/' + str(number)
+    url = "/metadata/" + type + "/" + str(year) + "/" + str(number)
     meta = server.get_json(url)
     CommonMetadata.convert_dates(meta)
     return meta

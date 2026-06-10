@@ -5,6 +5,7 @@ for the API client.
 view-friendly names (e.g. `text` for the keyword field), which the
 translator below maps onto the API's contract before forwarding.
 """
+
 from typing import List, NotRequired, TypedDict, Union
 
 from ..api.browse_types import DocumentList
