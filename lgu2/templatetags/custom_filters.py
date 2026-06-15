@@ -1,12 +1,13 @@
 import re
+from collections import namedtuple
 from django import template
 from ..util.types import to_short_type, get_category
 from ..util.labels import get_type_label
+
 register = template.Library()
 
-from collections import namedtuple
-
 CamelWordsResult = namedtuple("CamelWordsResult", ["short_type", "label_type"])
+
 
 @register.filter
 def camel_to_words(value):
@@ -17,7 +18,7 @@ def camel_to_words(value):
 
 @register.filter
 def dict_key(d, key):
-    return d.get(key, '')
+    return d.get(key, "")
 
 
 @register.filter

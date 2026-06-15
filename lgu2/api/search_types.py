@@ -7,6 +7,7 @@ class ApiSearchRequest(TypedDict):
     Mirrors the API contract exactly; field names match the wire format
     (e.g. `q` for the keyword field, not the view-side alias `text`).
     """
+
     year: NotRequired[int]
     startYear: NotRequired[int]
     endYear: NotRequired[int]

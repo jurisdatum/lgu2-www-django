@@ -2,12 +2,11 @@ from typing import Any, Dict
 
 from .search_params import SearchParams
 
-
 # Internal-key → UI-URL-key renames. The UI URL spells `ukamended` all
 # lowercase, unlike the API. Other camelCase params (startYear, pageSize)
 # keep their casing in UI URLs.
 _UI_KEY_RENAMES = {
-    'ukAmended': 'ukamended',
+    "ukAmended": "ukamended",
 }
 
 
@@ -26,7 +25,7 @@ def to_ui_params(params: SearchParams) -> Dict[str, Any]:
 
 def _coerce(value: Any) -> Any:
     if isinstance(value, bool):
-        return 'true' if value else 'false'
+        return "true" if value else "false"
     if isinstance(value, list):
         return [_coerce(v) for v in value]
     return value

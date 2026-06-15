@@ -1,4 +1,3 @@
-
 from datetime import date as Date
 from typing import List, TypedDict, Optional, NotRequired
 
@@ -35,8 +34,8 @@ class AssociatedDocumentMeta(TypedDict):
     altFormats: List[AltFormat]
 
     @staticmethod
-    def convert_dates(meta: 'AssociatedDocumentMeta'):
-        meta['modified'] = Date.fromisoformat(meta['modified'])
+    def convert_dates(meta: "AssociatedDocumentMeta"):
+        meta["modified"] = Date.fromisoformat(meta["modified"])
 
 
 class ImpactAssessmentMeta(AssociatedDocumentMeta):

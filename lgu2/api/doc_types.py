@@ -1,4 +1,3 @@
-
 from typing import List, TypedDict
 
 from . import server
@@ -6,8 +5,8 @@ from . import server
 
 class Response(TypedDict):
     country: str
-    primarily: List['Type']
-    possibly: List['Type']
+    primarily: List["Type"]
+    possibly: List["Type"]
 
 
 class Type(TypedDict):
@@ -17,9 +16,10 @@ class Type(TypedDict):
 
 
 def get_uk_types() -> Response:
-    url = '/types/uk'
+    url = "/types/uk"
     return server.get_json(url)
 
+
 def get_types(country: str) -> Response:
-    url = '/types/' + country
+    url = "/types/" + country
     return server.get_json(url)

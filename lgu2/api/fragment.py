@@ -1,4 +1,3 @@
-
 from datetime import date as Date
 from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
@@ -13,22 +12,22 @@ class FragmentMetadata(CommonMetadata):
     fragment: str  # deprecated
     prev: Optional[str]  # deprecated
     next: Optional[str]  # deprecated
-    fragmentInfo: 'Level'
-    prevInfo: Optional['LabelledLink']
-    nextInfo: Optional['LabelledLink']
-    ancestors: List['Level']
-    descendants: List['Level']
+    fragmentInfo: "Level"
+    prevInfo: Optional["LabelledLink"]
+    nextInfo: Optional["LabelledLink"]
+    ancestors: List["Level"]
+    descendants: List["Level"]
     pointInTime: Optional[str]
-    unappliedEffects: 'FragmentEffects'
+    unappliedEffects: "FragmentEffects"
     upToDate: Optional[bool]
 
     @staticmethod
-    def convert_dates(meta: 'FragmentMetadata'):
+    def convert_dates(meta: "FragmentMetadata"):
         CommonMetadata.convert_dates(meta)
-        Level.convert_dates(meta['fragmentInfo'])
-        for level in meta['ancestors']:
+        Level.convert_dates(meta["fragmentInfo"])
+        for level in meta["ancestors"]:
             Level.convert_dates(level)
-        for level in meta['descendants']:
+        for level in meta["descendants"]:
             Level.convert_dates(level)
 
 
@@ -44,11 +43,11 @@ class Level(TypedDict):
     end: NotRequired[Date]
 
     @staticmethod
-    def convert_dates(level: 'Level'):
-        if 'start' in level:
-            level['start'] = Date.fromisoformat(level['start'])
-        if 'end' in level:
-            level['end'] = Date.fromisoformat(level['end'])
+    def convert_dates(level: "Level"):
+        if "start" in level:
+            level["start"] = Date.fromisoformat(level["start"])
+        if "end" in level:
+            level["end"] = Date.fromisoformat(level["end"])
 
 
 class LabelledLink(TypedDict):
@@ -66,34 +65,64 @@ class Fragment(TypedDict):
     html: str
 
 
-def _make_url(type: str, year, number, section: str, version: Optional[str] = None) -> str:
-    url = '/fragment/' + type + '/' + str(year) + '/' + str(number)
-    url += '/' + section.replace('/', '-')
+def _make_url(
+    type: str, year, number, section: str, version: Optional[str] = None
+) -> str:
+    url = "/fragment/" + type + "/" + str(year) + "/" + str(number)
+    url += "/" + section.replace("/", "-")
     if version is not None:
-        params = {'version': version}
-        url += '?' + urlencode(params)
+        params = {"version": version}
+        url += "?" + urlencode(params)
     return url
 
 
-def get(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> Fragment:
+def get(
+    type: str,
+    year,
+    number,
+    section: str,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> Fragment:
     url = _make_url(type, year, number, section, version)
     frag = server.get_json(url, language)
-    FragmentMetadata.convert_dates(frag['meta'])
+    FragmentMetadata.convert_dates(frag["meta"])
     return frag
 
 
-def get_clml(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+def get_clml(
+    type: str,
+    year,
+    number,
+    section: str,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> XmlPackage:
     url = _make_url(type, year, number, section, version)
     response = server.get_clml(url, language)
     return package_xml(response)
 
 
-def get_akn(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+def get_akn(
+    type: str,
+    year,
+    number,
+    section: str,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> XmlPackage:
     url = _make_url(type, year, number, section, version)
     response = server.get_akn(url, language)
     return package_xml(response)
 
 
-def head(type: str, year, number, section: str, version: Optional[str] = None, language: Optional[str] = None) -> int:  # HTTP status code
+def head(
+    type: str,
+    year,
+    number,
+    section: str,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> int:  # HTTP status code
     url = _make_url(type, year, number, section, version)
     return server.head(url, language).status_code

@@ -1,9 +1,9 @@
-
 from typing import List, NotRequired, Optional, TypedDict
 from urllib.parse import urlencode
 
 from . import server
 from .document import CommonMetadata, DocumentMetadata, XmlPackage, package_xml, Extent
+
 
 class Item(TypedDict):
     name: str
@@ -11,7 +11,7 @@ class Item(TypedDict):
     title: str
     ref: str
     extent: NotRequired[List[Extent]]
-    children: NotRequired[List['Item']]
+    children: NotRequired[List["Item"]]
 
 
 class Contents(TypedDict):
@@ -33,35 +33,59 @@ class TableOfContents(TypedDict):
 
 
 def _make_url(type: str, year, number, version: Optional[str] = None) -> str:
-    url = '/contents/' + type + '/' + str(year) + '/' + str(number)
+    url = "/contents/" + type + "/" + str(year) + "/" + str(number)
     if version is not None:
-        params = {'version': version}
-        url += '?' + urlencode(params)
+        params = {"version": version}
+        url += "?" + urlencode(params)
     return url
 
 
-def get_toc(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> Optional[TableOfContents]:
+def get_toc(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> Optional[TableOfContents]:
     url = _make_url(type, year, number, version)
     toc = server.get_json(url, language)
     # Check if response is a "404" document-not-found type
-    if toc.get('status') == 404 and toc.get('error') == "Document Not Found":
+    if toc.get("status") == 404 and toc.get("error") == "Document Not Found":
         return None
-    CommonMetadata.convert_dates(toc['meta'])
+    CommonMetadata.convert_dates(toc["meta"])
     return toc
 
 
-def get_toc_json(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> str:
+def get_toc_json(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> str:
     url = _make_url(type, year, number, version)
     return server.get_raw_json(url, language)
 
 
-def get_toc_clml(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+def get_toc_clml(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> XmlPackage:
     url = _make_url(type, year, number, version)
     response = server.get_clml(url, language)
     return package_xml(response)
 
 
-def get_toc_akn(type: str, year, number, version: Optional[str] = None, language: Optional[str] = None) -> XmlPackage:
+def get_toc_akn(
+    type: str,
+    year,
+    number,
+    version: Optional[str] = None,
+    language: Optional[str] = None,
+) -> XmlPackage:
     url = _make_url(type, year, number, version)
     response = server.get_akn(url, language)
     return package_xml(response)

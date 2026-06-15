@@ -1,7 +1,11 @@
-
 from typing import Optional, Union
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.template import loader
 from django.utils import timezone
 
@@ -17,30 +21,36 @@ from ..util.extent import make_combined_extent_label
 from ..util.breadcrumbs import make_breadcrumbs, LEGISLATION_BREADCRUMB_HEADING
 from ..util.redirects import should_redirect
 
-
 # Derived from the legacy Orbeon pipeline (legislation.xpl:206), which 404s URLs
 # whose section path ends in {kind}/{parent}-{tail}. We detect the same shape by
 # inspecting the last two path segments rather than the Orbeon substring regex,
 # so that nested paths like schedule/1/paragraph/3-1 produce the correct parent
 # URL and anchor.
-_SUBPROVISION_KINDS = ('section', 'article', 'paragraph', 'rule', 'regulation')
+_SUBPROVISION_KINDS = ("section", "article", "paragraph", "rule", "regulation")
 
 
 def _split_subprovision(section: str):
-    segments = section.split('/')
+    segments = section.split("/")
     if len(segments) < 2 or segments[-2] not in _SUBPROVISION_KINDS:
         return None
-    parent_num, sep, tail = segments[-1].partition('-')
+    parent_num, sep, tail = segments[-1].partition("-")
     if not sep or not parent_num or not tail:
         return None
     parent_segments = segments[:-1] + [parent_num]
-    parent_section = '/'.join(parent_segments)
-    anchor = '-'.join(parent_segments + [tail])
+    parent_section = "/".join(parent_segments)
+    anchor = "-".join(parent_segments + [tail])
     return parent_section, anchor
 
 
-def _subprovision_redirect(request, type: str, year: str, number: str, section: str,
-                           version: Optional[str], lang: Optional[str]):
+def _subprovision_redirect(
+    request,
+    type: str,
+    year: str,
+    number: str,
+    section: str,
+    version: Optional[str],
+    lang: Optional[str],
+):
     split = _split_subprovision(section)
     if split is None:
         return None
@@ -48,125 +58,172 @@ def _subprovision_redirect(request, type: str, year: str, number: str, section: 
 
     status = api.head(type, year, number, section, version, lang)
     if status == 404:
-        template = loader.get_template('404.html')
+        template = loader.get_template("404.html")
         return HttpResponseNotFound(template.render({}, request))
     if status != 200:
         return None
 
     path = make_fragment_link(type, year, number, parent_section, version, lang)
-    return HttpResponseRedirect(f'{path}#{anchor}')
+    return HttpResponseRedirect(f"{path}#{anchor}")
 
 
-def fragment(request, type: str, year: str, number: str, section: str, version: Optional[str] = None, lang: Optional[str] = None):
+# TODO: refactor to reduce cyclomatic complexity (currently 14, limit 12)
+def fragment(  # noqa: C901
+    request,
+    type: str,
+    year: str,
+    number: str,
+    section: str,
+    version: Optional[str] = None,
+    lang: Optional[str] = None,
+):
 
-    redirect = _subprovision_redirect(request, type, year, number, section, version, lang)
+    redirect = _subprovision_redirect(
+        request, type, year, number, section, version, lang
+    )
     if redirect is not None:
         return redirect
 
     data = api.get(type, year, number, section, version, lang)
     # API should add None values to fragment requests
     # but they're current missing for intro and last section
-    if 'prev' not in data['meta']:
-        data['meta']['prev'] = None
-    if 'next' not in data['meta']:
-        data['meta']['next'] = None
+    if "prev" not in data["meta"]:
+        data["meta"]["prev"] = None
+    if "next" not in data["meta"]:
+        data["meta"]["next"] = None
 
-    if 'error' in data:
-        template = loader.get_template('404.html')
+    if "error" in data:
+        template = loader.get_template("404.html")
         return HttpResponseNotFound(template.render({}, request))
 
-    meta = data['meta']
+    meta = data["meta"]
 
-    rdrct = should_redirect('fragment', type, version, lang, meta)
+    rdrct = should_redirect("fragment", type, version, lang, meta)
     if rdrct is not None:
         return rdrct
 
-    data['meta']['link'] = make_document_link(type, year, number, version, lang)
-    if data['meta']['prevInfo']:
-        data['meta']['prev'] = make_fragment_link(type, year, number, data['meta']['prevInfo']['href'], version, lang)
-    if data['meta']['nextInfo']:
-        data['meta']['next'] = make_fragment_link(type, year, number, data['meta']['nextInfo']['href'], version, lang)
+    data["meta"]["link"] = make_document_link(type, year, number, version, lang)
+    if data["meta"]["prevInfo"]:
+        data["meta"]["prev"] = make_fragment_link(
+            type, year, number, data["meta"]["prevInfo"]["href"], version, lang
+        )
+    if data["meta"]["nextInfo"]:
+        data["meta"]["next"] = make_fragment_link(
+            type, year, number, data["meta"]["nextInfo"]["href"], version, lang
+        )
 
-    frag_info = data['meta']['fragmentInfo']
+    frag_info = data["meta"]["fragmentInfo"]
 
-    if frag_info['label'] == frag_info['title']:
-        frag_info['longLabel'] = frag_info['title']
-    elif frag_info['title']:  # label is never None
-        frag_info['longLabel'] = frag_info['label'] + ': ' + frag_info['title']
+    if frag_info["label"] == frag_info["title"]:
+        frag_info["longLabel"] = frag_info["title"]
+    elif frag_info["title"]:  # label is never None
+        frag_info["longLabel"] = frag_info["label"] + ": " + frag_info["title"]
     else:
-        frag_info['longLabel'] = frag_info['label']
+        frag_info["longLabel"] = frag_info["label"]
 
-    timeline = make_timeline_data(data['meta'], "fragment", lang)
-    extent_label = make_combined_extent_label(data['meta']['extent'])
+    timeline = make_timeline_data(data["meta"], "fragment", lang)
+    extent_label = make_combined_extent_label(data["meta"]["extent"])
     breadcrumbs = make_breadcrumbs(meta, version, lang)
     # associated documents
     explanatory_notes = []
     other_associated_doc = []
 
-    if len(meta['associated']) > 0:
-        for associated_documents in meta['associated']:
-            if associated_documents['type'] == 'Note':
+    if len(meta["associated"]) > 0:
+        for associated_documents in meta["associated"]:
+            if associated_documents["type"] == "Note":
                 explanatory_notes.append(associated_documents)
             else:
                 other_associated_doc.append(associated_documents)
 
     status = for_fragment(meta)
     most_recent = is_most_recent_version(meta)
-    fragment_href = (meta.get('fragmentInfo') or {}).get('href')
+    fragment_href = (meta.get("fragmentInfo") or {}).get("href")
     if not most_recent and fragment_href:
-        most_recent_href = make_fragment_link(meta['shortType'], meta.get('regnalYear') or meta['year'], meta['number'], fragment_href, None, lang)
+        most_recent_href = make_fragment_link(
+            meta["shortType"],
+            meta.get("regnalYear") or meta["year"],
+            meta["number"],
+            fragment_href,
+            None,
+            lang,
+        )
     else:
         most_recent_href = None
-    dated_panel = None if most_recent else dated_version_panel(meta, lang, most_recent_href=most_recent_href)
+    dated_panel = (
+        None
+        if most_recent
+        else dated_version_panel(meta, lang, most_recent_href=most_recent_href)
+    )
 
-    meta['category'] = get_category(meta['shortType'])
+    meta["category"] = get_category(meta["shortType"])
 
     context = {
-        'meta': data['meta'],
-        'view_date': meta.get('pointInTime') or timezone.localdate(),
-        'type_label_plural': get_type_label(data['meta']['longType']),
-        'timeline': timeline,
-        'extent_label': extent_label,
-        'breadcrumbs': breadcrumbs,
-        'breadcrumb_heading': LEGISLATION_BREADCRUMB_HEADING,
-        'explanatory_notes': explanatory_notes,
-        'other_associated_doc': other_associated_doc,
-        'status': status,
-        'is_most_recent_version': most_recent,
-        'dated_version_panel': dated_panel,
-        'article': data['html'],
-        'links': {
-            'toc': make_contents_link(type, year, number, version, lang),
-            'content': make_fragment_link(type, year, number, 'introduction', version, lang),
-            'notes': '/',
-            'resources': '/',
-            'whole': make_document_link(type, year, number, version, lang),
-            'body': None if 'fragment' in data['meta'] and data['meta']['fragment'] == 'body' else make_fragment_link(type, year, number, 'body', version, lang),
-            'schedules': None if data['meta']['schedules'] is None else make_fragment_link(type, year, number, 'schedules', version, lang)
-        }
+        "meta": data["meta"],
+        "view_date": meta.get("pointInTime") or timezone.localdate(),
+        "type_label_plural": get_type_label(data["meta"]["longType"]),
+        "timeline": timeline,
+        "extent_label": extent_label,
+        "breadcrumbs": breadcrumbs,
+        "breadcrumb_heading": LEGISLATION_BREADCRUMB_HEADING,
+        "explanatory_notes": explanatory_notes,
+        "other_associated_doc": other_associated_doc,
+        "status": status,
+        "is_most_recent_version": most_recent,
+        "dated_version_panel": dated_panel,
+        "article": data["html"],
+        "links": {
+            "toc": make_contents_link(type, year, number, version, lang),
+            "content": make_fragment_link(
+                type, year, number, "introduction", version, lang
+            ),
+            "notes": "/",
+            "resources": "/",
+            "whole": make_document_link(type, year, number, version, lang),
+            "body": (
+                None
+                if "fragment" in data["meta"] and data["meta"]["fragment"] == "body"
+                else make_fragment_link(type, year, number, "body", version, lang)
+            ),
+            "schedules": (
+                None
+                if data["meta"]["schedules"] is None
+                else make_fragment_link(type, year, number, "schedules", version, lang)
+            ),
+        },
     }
     # template = loader.get_template('document/document.html')
-    template = loader.get_template('new_theme/document/document.html')
+    template = loader.get_template("new_theme/document/document.html")
     return HttpResponse(template.render(context, request))
 
 
 def _xml_or_redirect(package, section: str, lang: Optional[str], format: str):
-    if package['redirect'] is None:
-        return HttpResponse(package['xml'], content_type='application/xml')
+    if package["redirect"] is None:
+        return HttpResponse(package["xml"], content_type="application/xml")
     else:
-        return make_data_redirect('fragment', package['redirect'], lang, format, section=section)
+        return make_data_redirect(
+            "fragment", package["redirect"], lang, format, section=section
+        )
 
 
-def data(request, type, year, number, section, format, version=None, lang: Optional[str] = None):
-    if format == 'xml':
+def data(
+    request,
+    type,
+    year,
+    number,
+    section,
+    format,
+    version=None,
+    lang: Optional[str] = None,
+):
+    if format == "xml":
         package = api.get_clml(type, year, number, section, version, lang)
         return _xml_or_redirect(package, section, lang, format)
-    if format == 'akn':
+    if format == "akn":
         package = api.get_akn(type, year, number, section, version, lang)
         return _xml_or_redirect(package, section, lang, format)
-    if format == 'html':
+    if format == "html":
         pass  # ToDo
-    if format == 'json':
+    if format == "json":
         data = api.get(type, year, number, section, version, lang)
         return JsonResponse(data)
     return HttpResponse(status=406)

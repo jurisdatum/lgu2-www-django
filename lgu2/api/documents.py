@@ -1,4 +1,3 @@
-
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -12,25 +11,25 @@ def _to_utc(ts: str) -> datetime:
 
 
 def _convert_dates(doc):
-    doc['updated'] = _to_utc(doc['updated'])
-    doc['published'] = _to_utc(doc['published'])
+    doc["updated"] = _to_utc(doc["updated"])
+    doc["published"] = _to_utc(doc["published"])
 
 
 def get_new() -> DocumentList:
-    url = '/documents/new/all'
+    url = "/documents/new/all"
     response = server.get_json(url)
-    response['meta']['updated'] = _to_utc(response['meta']['updated'])
-    for doc in response['documents']:
+    response["meta"]["updated"] = _to_utc(response["meta"]["updated"])
+    for doc in response["documents"]:
         _convert_dates(doc)
     return response
 
 
 def get_published_on(date: str, region: Optional[str] = None) -> DocumentList:
-    url = f'/search?published={date}'
+    url = f"/search?published={date}"
     if region:
-        url += '&type=' + region
+        url += "&type=" + region
     response = server.get_json(url)
-    response['meta']['updated'] = _to_utc(response['meta']['updated'])
-    for doc in response['documents']:
+    response["meta"]["updated"] = _to_utc(response["meta"]["updated"])
+    for doc in response["documents"]:
         _convert_dates(doc)
     return response

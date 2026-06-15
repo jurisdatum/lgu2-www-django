@@ -1,5 +1,5 @@
-
 from django.http import HttpResponse
+
 
 def robots_txt(_request):
     content = "User-agent: *\nDisallow: /\n"

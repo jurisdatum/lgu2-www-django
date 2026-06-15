@@ -4,8 +4,8 @@ import time
 
 from django.utils import timezone
 
-
 logger = logging.getLogger("central_request_logger")
+
 
 class CentralRequestLoggingMiddleware:
 

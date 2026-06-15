@@ -14,24 +14,45 @@ from .views.document import document, data as document_data
 from .views import toc
 from .views import fragment
 from .views.changes.intro import intro as changes_intro
-from .views.changes.results import affected as changes_affected, affecting as changes_affecting, both as changes_both
+from .views.changes.results import (
+    affected as changes_affected,
+    affecting as changes_affecting,
+    both as changes_both,
+)
 from .views.general import (
-    homepage, explore_collection,
-    different_legislature, different_legislature_by_country,
-    legislature_eu, legislature_eu_exit_uk_law, research_tools,
-    help_guide, how_legislation_work, revised_legislation, secondary_legislation,
-    whats_new, new_legislation, new_legislation_feeds,
-    about_us, health_dependencies
+    homepage,
+    explore_collection,
+    different_legislature,
+    different_legislature_by_country,
+    legislature_eu,
+    legislature_eu_exit_uk_law,
+    research_tools,
+    help_guide,
+    how_legislation_work,
+    revised_legislation,
+    secondary_legislation,
+    whats_new,
+    new_legislation,
+    new_legislation_feeds,
+    about_us,
+    health_dependencies,
 )
 from .views.search import browse, search_results
-from .views.advance_search import advance_search, extent_search, point_in_time_search, draft_search, impact_search
+from .views.advance_search import (
+    advance_search,
+    extent_search,
+    point_in_time_search,
+    draft_search,
+    impact_search,
+)
 from lgu2.util.types import SEARCH_TYPES
+
 # urlpatterns = i18n_patterns(
 #     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
 # )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("robots.txt", robots_txt),
     path("health", lambda request: JsonResponse({"status": "ok"})),
     path("health/dependencies", health_dependencies),
@@ -40,217 +61,273 @@ urlpatterns = [
 # needed because some JavaScript files add links to "/static/..."
 if not settings.DEBUG:
     urlpatterns += [
-        re_path(r'^static/(.*)$', lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
+        re_path(r"^static/(.*)$", lambda r, p: redirect(f"{settings.STATIC_URL}{p}"))
     ]
 
-COUNTRY = r'(?P<country>uk|wales|scotland|ni)'
-_TYPE_ALT = '|'.join(re.escape(t) for t in SEARCH_TYPES)
-TYPE = r'(?P<type>(?:' + _TYPE_ALT + r')(?:\+(?:' + _TYPE_ALT + r'))*)'
-YEAR4 = r'(?P<year>[0-9]{4})'  # a four-digit calendar year
-YEAR = r'(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)'  # calendar or regnal
+COUNTRY = r"(?P<country>uk|wales|scotland|ni)"
+_TYPE_ALT = "|".join(re.escape(t) for t in SEARCH_TYPES)
+TYPE = r"(?P<type>(?:" + _TYPE_ALT + r")(?:\+(?:" + _TYPE_ALT + r"))*)"
+YEAR4 = r"(?P<year>[0-9]{4})"  # a four-digit calendar year
+YEAR = r"(?P<year>[0-9]{4}|[A-Z][A-Za-z0-9]+/[0-9-]+)"  # calendar or regnal
 # Browse accepts year ranges in addition to single years. Keep this separate
 # from YEAR so document/TOC/fragment routes don't match nonsensical ranges.
 BROWSE_YEAR = (
-    r'(?P<year>'
-    r'[0-9]{4}'                # 2024
-    r'|[0-9]{4}-[0-9]{4}'      # 2023-2024
-    r'|[0-9]{4}-\*'            # 2024-*
-    r'|\*-[0-9]{4}'            # *-2024
-    r')'
+    r"(?P<year>"
+    r"[0-9]{4}"  # 2024
+    r"|[0-9]{4}-[0-9]{4}"  # 2023-2024
+    r"|[0-9]{4}-\*"  # 2024-*
+    r"|\*-[0-9]{4}"  # *-2024
+    r")"
 )
-NUMBER = r'(?P<number>[0-9]+)'
-SECTION = r'(?P<section>[A-Za-z0-9/._-]+?)'  # not sure about ? on the end The '-' stays at the end to avoid it being interpreted as a range.
-DATE = r'(?P<date>\d{4}-\d{2}-\d{2})'
-VERSION = r'(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})'
-LANG = r'(?P<lang>english|welsh)'
-DATA = r'data\.(?P<format>xml|akn|html|json|feed)'
-VALID_EXTENTS = ['england', 'wales', 'scotland', 'ni']
+NUMBER = r"(?P<number>[0-9]+)"
+SECTION = r"(?P<section>[A-Za-z0-9/._-]+?)"  # not sure about ? on the end The '-' stays at the end to avoid it being interpreted as a range.
+DATE = r"(?P<date>\d{4}-\d{2}-\d{2})"
+VERSION = r"(?P<version>enacted|made|created|adopted|prospective|\d{4}-\d{2}-\d{2})"
+LANG = r"(?P<lang>english|welsh)"
+DATA = r"data\.(?P<format>xml|akn|html|json|feed)"
+VALID_EXTENTS = ["england", "wales", "scotland", "ni"]
 # A leading '=' marks exclusiveExtent (only those territories, not merely
 # including them): e.g. /ukpga/=england or /ukpga/=england+wales.
-EXTENT = r'(?P<extent_segment>=?(?:' + '|'.join(VALID_EXTENTS) + r')(?:\+(?:' + '|'.join(VALID_EXTENTS) + r'))*)'
-YEAR_PATTERN = r'(?:\*|\d{4}|\d{4}-\d{4}|\d{4}-\*|\*-\d{4})'
+EXTENT = (
+    r"(?P<extent_segment>=?(?:"
+    + "|".join(VALID_EXTENTS)
+    + r")(?:\+(?:"
+    + "|".join(VALID_EXTENTS)
+    + r"))*)"
+)
+YEAR_PATTERN = r"(?:\*|\d{4}|\d{4}-\d{4}|\d{4}-\*|\*-\d{4})"
 
 urlpatterns += i18n_patterns(
-    path('', homepage, name='homepage'),
-
+    path("", homepage, name="homepage"),
     # TODO: Remove trailing slash from search and explore URLs
-    path('search/', search_results, name='search'),
-
-    path('advance-search', advance_search, name='advance-search'),
-    path('search/extent', extent_search, name='extent-search'),
-    path('search/point-in-time', point_in_time_search, name='point-in-time-search'),
-    path('search/draft-legislation', draft_search, name='draft-legislation-search'),
-    path('search/impacts', impact_search, name='impacts-search'),
-    
-    path('explore/', explore_collection, name='explore'),
-    path('explore/legislatures', different_legislature, name='different-legislatures'),
-    re_path(fr'^explore/legislatures/{COUNTRY}', different_legislature_by_country, name='different-legislatures-country'),
-    path('explore-eu-exit-and-uk-law', legislature_eu_exit_uk_law, name='explore-eu-exit-and-uk-law'),
-    path('explore/legislatures/eu', legislature_eu, name='legislatures-eu'),
-
-    path('research-tools/', research_tools, name='research-tools'),
-    path('about-us/', about_us, name='about-us'),
-    
-    path('whats-new/', whats_new, name='whats-new'),
-    path('new', new_legislation, name='new-legislation'),
-    re_path(fr'^new/{COUNTRY}$', new_legislation),
-    re_path(fr'^new/{DATE}$', new_legislation),
-    re_path(fr'^new/{COUNTRY}/{DATE}$', new_legislation),
-    path('new-legislation-feeds/', new_legislation_feeds, name='new-legislation-feeds'),
-    
-    path('help/', help_guide, name='help'),
-    path('help-how-legislation-works/', how_legislation_work, name='how-legislation-works'),
-    path('help-revised-legislation/', revised_legislation, name='revised-legislation'),
-    path('help-secondary-legislation', secondary_legislation, name='secondary-legislation'),
-    
-    path('browse', lambda r: redirect('browse-uk')),
-    path('browse/uk', list_uk, name='browse-uk'),
-
+    path("search/", search_results, name="search"),
+    path("advance-search", advance_search, name="advance-search"),
+    path("search/extent", extent_search, name="extent-search"),
+    path("search/point-in-time", point_in_time_search, name="point-in-time-search"),
+    path("search/draft-legislation", draft_search, name="draft-legislation-search"),
+    path("search/impacts", impact_search, name="impacts-search"),
+    path("explore/", explore_collection, name="explore"),
+    path("explore/legislatures", different_legislature, name="different-legislatures"),
+    re_path(
+        rf"^explore/legislatures/{COUNTRY}",
+        different_legislature_by_country,
+        name="different-legislatures-country",
+    ),
+    path(
+        "explore-eu-exit-and-uk-law",
+        legislature_eu_exit_uk_law,
+        name="explore-eu-exit-and-uk-law",
+    ),
+    path("explore/legislatures/eu", legislature_eu, name="legislatures-eu"),
+    path("research-tools/", research_tools, name="research-tools"),
+    path("about-us/", about_us, name="about-us"),
+    path("whats-new/", whats_new, name="whats-new"),
+    path("new", new_legislation, name="new-legislation"),
+    re_path(rf"^new/{COUNTRY}$", new_legislation),
+    re_path(rf"^new/{DATE}$", new_legislation),
+    re_path(rf"^new/{COUNTRY}/{DATE}$", new_legislation),
+    path("new-legislation-feeds/", new_legislation_feeds, name="new-legislation-feeds"),
+    path("help/", help_guide, name="help"),
+    path(
+        "help-how-legislation-works/",
+        how_legislation_work,
+        name="how-legislation-works",
+    ),
+    path("help-revised-legislation/", revised_legislation, name="revised-legislation"),
+    path(
+        "help-secondary-legislation",
+        secondary_legislation,
+        name="secondary-legislation",
+    ),
+    path("browse", lambda r: redirect("browse-uk")),
+    path("browse/uk", list_uk, name="browse-uk"),
     # browse
-    re_path(fr'^{TYPE}$', browse, name='browse'),
-    re_path(fr'^{TYPE}/{DATA}$', browse_data),
-    re_path(fr'^{TYPE}/{BROWSE_YEAR}$', browse, name='browse-year'),
-    re_path(fr'^{TYPE}/{YEAR4}/{DATA}$', browse_data),
-    re_path(fr'^{TYPE}/(?P<subject>[a-z])$', browse, name='browse-subject'),
-    re_path(fr'^{TYPE}/{YEAR4}/(?P<subject>[a-z])$', browse, name='browse-year-subject'),
-
+    re_path(rf"^{TYPE}$", browse, name="browse"),
+    re_path(rf"^{TYPE}/{DATA}$", browse_data),
+    re_path(rf"^{TYPE}/{BROWSE_YEAR}$", browse, name="browse-year"),
+    re_path(rf"^{TYPE}/{YEAR4}/{DATA}$", browse_data),
+    re_path(rf"^{TYPE}/(?P<subject>[a-z])$", browse, name="browse-subject"),
+    re_path(
+        rf"^{TYPE}/{YEAR4}/(?P<subject>[a-z])$", browse, name="browse-year-subject"
+    ),
     # extent last — its segment shape would otherwise shadow /TYPE/SUBJECT
-    re_path(fr'^{TYPE}/{EXTENT}$', browse, name='browse-extent'),
-
+    re_path(rf"^{TYPE}/{EXTENT}$", browse, name="browse-extent"),
     # documents
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}$', document, name='document'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{DATA}$', document_data, name='document-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{LANG}$', document, name='document-lang'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{LANG}/{DATA}$', document_data, name='document-lang-data'),
-
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}$", document, name="document"),
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/{DATA}$", document_data, name="document-data"),
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/{LANG}$", document, name="document-lang"),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{LANG}/{DATA}$",
+        document_data,
+        name="document-lang-data",
+    ),
     # document versions
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}$', document, name='document-version'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{DATA}$', document_data, name='document-version-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}$', document, name='document-version-lang'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}/{DATA}$', document_data, name='document-version-lang-data'),
-
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/{VERSION}$", document, name="document-version"),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{DATA}$",
+        document_data,
+        name="document-version-data",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}$",
+        document,
+        name="document-version-lang",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{VERSION}/{LANG}/{DATA}$",
+        document_data,
+        name="document-version-lang-data",
+    ),
     # tables of contents
     # FixMe this needs /? on the end and I don't know why
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/?$', toc.toc, name='toc'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{DATA}$', toc.data, name='toc-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{LANG}$', toc.toc, name='toc-lang'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{LANG}/{DATA}$', toc.data, name='toc-lang-data'),
-
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}$', toc.toc, name='toc-version'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{DATA}$', toc.data, name='toc-version-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{LANG}$', toc.toc, name='toc-version-lang'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{LANG}/{DATA}$', toc.data, name='toc-version-lang-data'),
-
-
-    # document fragments (sections)
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}$', fragment.fragment, name='fragment-version-lang'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}/{DATA}$', fragment.data, name='fragment-version-lang-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}$', fragment.fragment, name='fragment-lang'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}/{DATA}$', fragment.data, name='fragment-lang-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}$', fragment.fragment, name='fragment-version'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{DATA}$', fragment.data, name='fragment-version-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{DATA}$', fragment.data, name='fragment-data'),
-    re_path(fr'^{TYPE}/{YEAR}/{NUMBER}/{SECTION}$', fragment.fragment, name='fragment'),
-
-
-    # changes Intro
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/contents/?$", toc.toc, name="toc"),
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{DATA}$", toc.data, name="toc-data"),
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{LANG}$", toc.toc, name="toc-lang"),
     re_path(
-        r'^changes$',
-        changes_intro,
-        name='changes-intro'
+        rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{LANG}/{DATA}$",
+        toc.data,
+        name="toc-lang-data",
     ),
-
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}$", toc.toc, name="toc-version"
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{DATA}$",
+        toc.data,
+        name="toc-version-data",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{LANG}$",
+        toc.toc,
+        name="toc-version-lang",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/contents/{VERSION}/{LANG}/{DATA}$",
+        toc.data,
+        name="toc-version-lang-data",
+    ),
+    # document fragments (sections)
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}$",
+        fragment.fragment,
+        name="fragment-version-lang",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{LANG}/{DATA}$",
+        fragment.data,
+        name="fragment-version-lang-data",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}$",
+        fragment.fragment,
+        name="fragment-lang",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{LANG}/{DATA}$",
+        fragment.data,
+        name="fragment-lang-data",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}$",
+        fragment.fragment,
+        name="fragment-version",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{VERSION}/{DATA}$",
+        fragment.data,
+        name="fragment-version-data",
+    ),
+    re_path(
+        rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}/{DATA}$",
+        fragment.data,
+        name="fragment-data",
+    ),
+    re_path(rf"^{TYPE}/{YEAR}/{NUMBER}/{SECTION}$", fragment.fragment, name="fragment"),
+    # changes Intro
+    re_path(r"^changes$", changes_intro, name="changes-intro"),
     # =========================
     # APPLIED / UNAPPLIED ONLY
     # =========================
     re_path(
-        r'^changes/(?P<applied>applied|unapplied)'
-        r'(?:/data\.(?P<format>json|feed))?$',
+        r"^changes/(?P<applied>applied|unapplied)"
+        r"(?:/data\.(?P<format>json|feed))?$",
         changes_both,
-        name='changes-applied-only'
+        name="changes-applied-only",
     ),
-
     # =========================
     # AFFECTED (ALL)
     # =========================
     re_path(
-        rf'^changes/affected(?:/(?P<type>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number>[0-9]+))?'
-        rf'(?:/data\.(?P<format>json|feed))?$',
+        rf"^changes/affected(?:/(?P<type>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number>[0-9]+))?"
+        rf"(?:/data\.(?P<format>json|feed))?$",
         changes_affected,
-        name='changes-affected'
+        name="changes-affected",
     ),
-
     # =========================
     # AFFECTING (ALL)
     # =========================
     re_path(
-        rf'^changes/affecting(?:/(?P<type>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number>[0-9]+))?'
-        rf'(?:/data\.(?P<format>json|feed))?$',
+        rf"^changes/affecting(?:/(?P<type>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number>[0-9]+))?"
+        rf"(?:/data\.(?P<format>json|feed))?$",
         changes_affecting,
-        name='changes-affecting'
+        name="changes-affecting",
     ),
-
     # =========================
     # BOTH (ALL)
     # =========================
     re_path(
-        rf'^changes/affected(?:/(?P<type1>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year1>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number1>[0-9]+))?'
-        rf'/affecting(?:/(?P<type2>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year2>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number2>[0-9]+))?'
-        rf'(?:/data\.(?P<format>json|feed))?$',
+        rf"^changes/affected(?:/(?P<type1>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year1>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number1>[0-9]+))?"
+        rf"/affecting(?:/(?P<type2>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year2>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number2>[0-9]+))?"
+        rf"(?:/data\.(?P<format>json|feed))?$",
         changes_both,
-        name='changes-both'
+        name="changes-both",
     ),
-
     # ==========================================================
     # APPLIED / UNAPPLIED — AFFECTED
     # ==========================================================
     re_path(
-        rf'^changes/(?P<applied>applied|unapplied)/affected'
-        rf'(?:/(?P<type>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number>[0-9]+))?'
-        rf'(?:/data\.(?P<format>json|feed))?$',
+        rf"^changes/(?P<applied>applied|unapplied)/affected"
+        rf"(?:/(?P<type>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number>[0-9]+))?"
+        rf"(?:/data\.(?P<format>json|feed))?$",
         changes_affected,
-        name='changes-affected-applied'
+        name="changes-affected-applied",
     ),
-
     # ==========================================================
     # APPLIED / UNAPPLIED — AFFECTING
     # ==========================================================
     re_path(
-        rf'^changes/(?P<applied>applied|unapplied)/affecting'
-        rf'(?:/(?P<type>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number>[0-9]+))?'
-        rf'(?:/data\.(?P<format>json|feed))?$',
+        rf"^changes/(?P<applied>applied|unapplied)/affecting"
+        rf"(?:/(?P<type>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number>[0-9]+))?"
+        rf"(?:/data\.(?P<format>json|feed))?$",
         changes_affecting,
-        name='changes-affecting-applied'
+        name="changes-affecting-applied",
     ),
-
     # ==========================================================
     # APPLIED / UNAPPLIED — BOTH
     # ==========================================================
     re_path(
-        rf'^changes/(?P<applied>applied|unapplied)/affected'
-        rf'(?:/(?P<type1>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year1>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number1>[0-9]+))?'
-        rf'/affecting(?:/(?P<type2>[a-z]{{3,5}}))'
-        rf'(?:/(?P<year2>{YEAR_PATTERN}))?'
-        rf'(?:/(?P<number2>[0-9]+))?'
-        rf'(?:/data\.(?P<format>json|feed))?$',
+        rf"^changes/(?P<applied>applied|unapplied)/affected"
+        rf"(?:/(?P<type1>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year1>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number1>[0-9]+))?"
+        rf"/affecting(?:/(?P<type2>[a-z]{{3,5}}))"
+        rf"(?:/(?P<year2>{YEAR_PATTERN}))?"
+        rf"(?:/(?P<number2>[0-9]+))?"
+        rf"(?:/data\.(?P<format>json|feed))?$",
         changes_both,
-        name='changes-both-applied'
+        name="changes-both-applied",
     ),
-
-
-    prefix_default_language=False
+    prefix_default_language=False,
 )

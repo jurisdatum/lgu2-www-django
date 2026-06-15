@@ -1,0 +1,22 @@
+name: Lint
+
+# Enforce (read-only) half of formatting. Repair happens locally and is
+# optional — pre-commit hook, editor format-on-save, or `black .` by hand.
+# This check never rewrites the tree; it fails if black or flake8 would.
+# It runs the same .pre-commit-config.yaml everyone uses, so local and CI
+# agree by construction. Independent of deploy.yml.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pre-commit/action@v3.0.1

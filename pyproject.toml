@@ -16,8 +16,9 @@ gunicorn = "^22.0.0" # WSGI server used in containerized deployment
 whitenoise = "^6.7.0" # Optional: serve app static assets in-container (enabled via USE_WHITENOISE)
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.10.0"
-flake8 = "^7.1.1"
+black = "^26.5.1"
+flake8 = "^7.3.0"
+pre-commit = "^4.6.0"
 
 [build-system]
 requires = ["poetry-core"]
