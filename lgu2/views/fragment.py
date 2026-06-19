@@ -85,16 +85,17 @@ def fragment(  # noqa: C901
         return redirect
 
     data = api.get(type, year, number, section, version, lang)
+
+    if "error" in data:
+        template = loader.get_template("404.html")
+        return HttpResponseNotFound(template.render({}, request))
+
     # API should add None values to fragment requests
     # but they're current missing for intro and last section
     if "prev" not in data["meta"]:
         data["meta"]["prev"] = None
     if "next" not in data["meta"]:
         data["meta"]["next"] = None
-
-    if "error" in data:
-        template = loader.get_template("404.html")
-        return HttpResponseNotFound(template.render({}, request))
 
     meta = data["meta"]
 

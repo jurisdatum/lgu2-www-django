@@ -49,8 +49,7 @@ def get_toc(
 ) -> Optional[TableOfContents]:
     url = _make_url(type, year, number, version)
     toc = server.get_json(url, language)
-    # Check if response is a "404" document-not-found type
-    if toc.get("status") == 404 and toc.get("error") == "Document Not Found":
+    if "error" in toc:
         return None
     CommonMetadata.convert_dates(toc["meta"])
     return toc

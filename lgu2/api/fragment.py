@@ -86,6 +86,8 @@ def get(
 ) -> Fragment:
     url = _make_url(type, year, number, section, version)
     frag = server.get_json(url, language)
+    if "error" in frag:
+        return frag
     FragmentMetadata.convert_dates(frag["meta"])
     return frag
 
