@@ -294,7 +294,7 @@ class TestPaginationLinksPreserveMultiValueParams(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        content = response.content.decode()
+        content = response.text
         # Both type values must appear together in pagination hrefs.
         # Before the fix, urlencode(QueryDict) silently dropped "ukpga",
         # leaving only type=uksi in every page link.
@@ -325,7 +325,7 @@ class TestMultiTypeSearchDoesNotCrash(TestCase):
         response = self.client.get("/primary+secondary")
 
         self.assertEqual(response.status_code, 200)
-        content = response.content.decode()
+        content = response.text
         self.assertNotIn("value=\"['primary', 'secondary']\"", content)
         self.assertNotIn(
             'value="[&#x27;primary&#x27;, &#x27;secondary&#x27;]"', content

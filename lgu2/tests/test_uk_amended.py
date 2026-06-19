@@ -492,7 +492,7 @@ class TestHiddenFormInputsUseUiKey(TestCase):
         )
         response = self.client.get("/eur", {"ukamended": "true"})
         self.assertEqual(response.status_code, 200)
-        content = response.content.decode()
+        content = response.text
         self.assertIn('name="ukamended"', content)
         self.assertNotIn('name="ukAmended"', content)
         # Boolean values must be lowercased too — Python repr "True" is wrong.
