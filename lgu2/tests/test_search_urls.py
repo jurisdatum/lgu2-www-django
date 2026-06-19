@@ -78,6 +78,11 @@ class TestSmartUrlGeneration(TestCase):
         self.assertIn("type=ukpga", result)
         self.assertIn("pointInTime=2024-01-01", result)
 
+    def test_make_smart_link_with_empty_params_has_no_dangling_question_mark(self):
+        # Regression guard for reverse(query=...) refactor: passing an empty
+        # dict as `query` would leave a bare "?" on the URL.
+        self.assertEqual(make_smart_link({}), "/search/")
+
     def test_type_and_subject_initial(self):
         params = {"type": "uksi", "subject": "a"}
         result = make_smart_link(params)

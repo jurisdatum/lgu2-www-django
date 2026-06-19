@@ -1,5 +1,4 @@
 from typing import Any, Dict, Optional
-from urllib.parse import urlencode
 from django.urls import reverse, NoReverseMatch
 from ..util.types import SEARCH_TYPES
 from ..util.url_params import to_ui_params
@@ -128,34 +127,29 @@ def build_browse_url_if_possible(params: SearchParams) -> Optional[str]:
 
     # path_keys: which params get encoded in the URL path. Remaining params go
     # in the query string (e.g. year under /type/extent stays a query param).
-    try:
-        if extent_segment:
-            base = reverse(
-                "browse-extent",
-                kwargs={"type": tpe_url, "extent_segment": extent_segment},
-            )
-            path_keys = {"type", "extent_segment"}
-        elif year and subject_is_letter:
-            base = reverse(
-                "browse-year-subject",
-                kwargs={"type": tpe_url, "year": year, "subject": subject},
-            )
-            path_keys = {"type", "year", "subject"}
-        elif year:
-            base = reverse("browse-year", kwargs={"type": tpe_url, "year": year})
-            path_keys = {"type", "year"}
-        elif subject_is_letter:
-            base = reverse(
-                "browse-subject", kwargs={"type": tpe_url, "subject": subject}
-            )
-            path_keys = {"type", "subject"}
-        else:
-            base = reverse("browse", kwargs={"type": tpe_url})
-            path_keys = {"type"}
-    except NoReverseMatch:
-        return None
+    if extent_segment:
+        viewname = "browse-extent"
+        kwargs = {"type": tpe_url, "extent_segment": extent_segment}
+        path_keys = {"type", "extent_segment"}
+    elif year and subject_is_letter:
+        viewname = "browse-year-subject"
+        kwargs = {"type": tpe_url, "year": year, "subject": subject}
+        path_keys = {"type", "year", "subject"}
+    elif year:
+        viewname = "browse-year"
+        kwargs = {"type": tpe_url, "year": year}
+        path_keys = {"type", "year"}
+    elif subject_is_letter:
+        viewname = "browse-subject"
+        kwargs = {"type": tpe_url, "subject": subject}
+        path_keys = {"type", "subject"}
+    else:
+        viewname = "browse"
+        kwargs = {"type": tpe_url}
+        path_keys = {"type"}
 
     query = {k: v for k, v in params.items() if k not in path_keys}
-    if query:
-        return f"{base}?{urlencode(query, doseq=True)}"
-    return base
+    try:
+        return reverse(viewname, kwargs=kwargs, query=query or None)
+    except NoReverseMatch:
+        return None

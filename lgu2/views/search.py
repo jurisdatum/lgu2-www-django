@@ -1,5 +1,4 @@
 import string
-from urllib.parse import urlencode
 from collections import defaultdict
 from typing import TypedDict, Optional, List, Dict, Any, Union
 
@@ -195,9 +194,7 @@ def make_smart_link(params: SearchParams):
     if browse_url:
         return browse_url
     ui_params = to_ui_params(params)
-    qs = urlencode(ui_params, doseq=True)
-    base = reverse("search")
-    return f"{base}?{qs}" if qs else base
+    return reverse("search", query=ui_params or None)
 
 
 def _change_params_and_make_smart_link(
