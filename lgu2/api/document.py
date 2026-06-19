@@ -117,6 +117,8 @@ def get_document(
 ) -> Union[Document, AssociatedDocument]:
     url = _make_url(type, year, number, version)
     doc = server.get_json(url, language)
+    if "error" in doc:
+        return doc
     if type == "ukia":
         AssociatedDocumentMeta.convert_dates(doc["meta"])
     else:

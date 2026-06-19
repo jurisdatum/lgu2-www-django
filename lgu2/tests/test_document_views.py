@@ -222,3 +222,40 @@ class TocViewTests(SimpleTestCase):
         self.assertNotContains(response, "Printer Version")
         self.assertNotContains(response, "received Royal Assent when it was enacted")
         self.assertNotContains(response, "Legislation text for the whole Act")
+
+
+# Regression: a not-found upstream response used to surface as a 500
+# (KeyError 'meta' in the API helper or the view). It must now render as 404.
+
+
+class DocumentNotFoundTests(SimpleTestCase):
+
+    @patch("lgu2.views.document.get_document")
+    def test_document_returns_404_for_error_body(self, mock_get_document):
+        mock_get_document.return_value = {"error": "Document Not Found"}
+        response = self.client.get(reverse("document", args=["ukpga", 9999, 1]))
+        self.assertEqual(response.status_code, 404)
+
+
+class FragmentNotFoundTests(SimpleTestCase):
+
+    @patch("lgu2.views.fragment.api.head")
+    @patch("lgu2.views.fragment.api.get")
+    def test_fragment_returns_404_for_error_body(self, mock_api_get, mock_api_head):
+        # head() is called for subprovision-redirect logic before api.get().
+        # 404 means "no redirect target", so the view proceeds to api.get().
+        mock_api_head.return_value = 404
+        mock_api_get.return_value = {"error": "Document Not Found"}
+        response = self.client.get(
+            reverse("fragment", args=["ukpga", 2000, 8, "section-99999"])
+        )
+        self.assertEqual(response.status_code, 404)
+
+
+class TocNotFoundTests(SimpleTestCase):
+
+    @patch("lgu2.views.toc.api.get_toc")
+    def test_toc_returns_404_when_api_returns_none(self, mock_get_toc):
+        mock_get_toc.return_value = None
+        response = self.client.get(reverse("toc", args=["ukpga", 9999, 1]))
+        self.assertEqual(response.status_code, 404)
