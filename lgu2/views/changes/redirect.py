@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from urllib.parse import urlencode
 
 # -------------------------
 # Helpers
@@ -71,13 +70,9 @@ def _title_query_args(request):
 
 def redirect_with_query(viewname, path_kwargs=None, query_kwargs=None):
     """Reverse URL and attach query params"""
-    path_kwargs = path_kwargs or {}
-    query_kwargs = query_kwargs or {}
-
-    url = reverse(viewname, kwargs=path_kwargs)
-    if query_kwargs:
-        url += "?" + urlencode(query_kwargs)
-    return HttpResponseRedirect(url)
+    return HttpResponseRedirect(
+        reverse(viewname, kwargs=path_kwargs or {}, query=query_kwargs or None)
+    )
 
 
 def _is_default_form_submission(request):
