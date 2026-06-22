@@ -3,6 +3,7 @@ from unittest.mock import patch
 from django.test import SimpleTestCase
 from django.urls import resolve, reverse
 
+from lgu2.api.server import UpstreamError, UpstreamNotFound, UpstreamTimeout
 from lgu2.views import fragment
 
 
@@ -166,7 +167,10 @@ class SubprovisionRedirectTests(SimpleTestCase):
 
     @patch("lgu2.views.fragment.api.head")
     @patch("lgu2.views.fragment.api.get")
-    def test_head_404_returns_404(self, mock_get, mock_head):
+    def test_head_404_short_circuits_to_middleware_404(self, mock_get, mock_head):
+        # HEAD 404 means the section doesn't exist upstream — raise
+        # UpstreamNotFound so the middleware renders the 404 page without a
+        # wasted follow-up GET.
         mock_head.return_value = 404
 
         response = self.client.get(
@@ -178,9 +182,44 @@ class SubprovisionRedirectTests(SimpleTestCase):
 
     @patch("lgu2.views.fragment.api.head")
     @patch("lgu2.views.fragment.api.get")
+    def test_head_timeout_falls_through_to_get(self, mock_get, mock_head):
+        # The HEAD probe is best-effort. A transport failure on the probe
+        # should not abort the main GET — the user-facing request might still
+        # succeed against the upstream cache.
+        mock_head.side_effect = UpstreamTimeout("/whatever")
+        mock_get.side_effect = UpstreamNotFound(404, "/whatever")
+
+        response = self.client.get(
+            reverse("fragment", args=["ukpga", 2024, 1, "section/1-2"])
+        )
+
+        # End state here is 404 (from the GET stub), but the load-bearing
+        # assertion is that api.get was called at all — the probe's failure
+        # did not short-circuit to 504.
+        self.assertEqual(response.status_code, 404)
+        mock_head.assert_called_once()
+        mock_get.assert_called_once()
+
+    @patch("lgu2.views.fragment.api.head")
+    @patch("lgu2.views.fragment.api.get")
+    def test_head_connection_error_falls_through_to_get(self, mock_get, mock_head):
+        mock_head.side_effect = UpstreamError(502, "/whatever")
+        mock_get.side_effect = UpstreamNotFound(404, "/whatever")
+
+        response = self.client.get(
+            reverse("fragment", args=["ukpga", 2024, 1, "section/1-2"])
+        )
+
+        self.assertEqual(response.status_code, 404)
+        mock_get.assert_called_once()
+
+    @patch("lgu2.views.fragment.api.head")
+    @patch("lgu2.views.fragment.api.get")
     def test_non_subprovision_shape_falls_through(self, mock_get, mock_head):
-        # section/1 has no hyphen → normal fragment request
-        mock_get.return_value = {"error": "ignored", "meta": {}}
+        # section/1 has no hyphen → normal fragment request. We don't care
+        # what the body looks like here, just that api.get() was reached
+        # without api.head() being consulted.
+        mock_get.side_effect = UpstreamNotFound(404, "/whatever")
 
         self.client.get(reverse("fragment", args=["ukpga", 2024, 1, "section/1"]))
 
@@ -192,7 +231,7 @@ class SubprovisionRedirectTests(SimpleTestCase):
     def test_crossheading_with_hyphenated_title_is_excluded(self, mock_get, mock_head):
         # section/1/crossheading/something-or-other: 'crossheading' is not in
         # _SUBPROVISION_KINDS, so _split_subprovision returns None immediately.
-        mock_get.return_value = {"error": "ignored", "meta": {}}
+        mock_get.side_effect = UpstreamNotFound(404, "/whatever")
 
         self.client.get(
             reverse(
@@ -207,18 +246,16 @@ class SubprovisionRedirectTests(SimpleTestCase):
     @patch("lgu2.views.fragment.api.head")
     @patch("lgu2.views.fragment.api.get")
     def test_head_non_200_non_404_falls_through(self, mock_get, mock_head):
-        # A 500 (or any other status) should not short-circuit; the main view
-        # will make its own call to the API and handle the error itself.
+        # A non-200 HEAD should not short-circuit the redirect logic — the view
+        # falls through and api.get() handles the real response (or raises).
         mock_head.return_value = 500
-        mock_get.return_value = {"error": "ignored", "meta": {}}
+        mock_get.side_effect = UpstreamNotFound(404, "/whatever")
 
         response = self.client.get(
             reverse("fragment", args=["ukpga", 2024, 1, "section/1-2"])
         )
 
-        self.assertEqual(
-            response.status_code, 404
-        )  # view falls through to normal handling; 404 here is from the stub API response, not the redirect logic
+        self.assertEqual(response.status_code, 404)
         mock_head.assert_called_once()
         mock_get.assert_called_once()
 

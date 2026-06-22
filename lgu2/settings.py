@@ -51,6 +51,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "lgu2.middleware.robots_middleware.RobotsTagMiddleware",  # move below security
+    "lgu2.middleware.upstream_errors.UpstreamErrorMiddleware",
 ]
 
 STORAGES = {
@@ -177,6 +178,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # API
 API_BASE_URL = env("API_BASE_URL", default="http://localhost:8080")
+
+# Tuple of (connect, read) seconds passed to requests. Tune via API_CONNECT_TIMEOUT
+# and API_READ_TIMEOUT in the environment.
+API_TIMEOUT = (
+    env.float("API_CONNECT_TIMEOUT", default=5.0),
+    env.float("API_READ_TIMEOUT", default=30.0),
+)
 
 # Honour proxy headers (e.g. CloudFront) without forcing TLS on the origin
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

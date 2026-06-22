@@ -1,5 +1,5 @@
 from typing import Optional
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
 
@@ -29,10 +29,6 @@ def document(
 ):
 
     data = get_document(type, year, number, version, lang)
-
-    if "error" in data:
-        template = loader.get_template("404.html")
-        return HttpResponseNotFound(template.render({}, request))
 
     if type == "ukia":
         context = make_ukia_data(data, version, lang)
