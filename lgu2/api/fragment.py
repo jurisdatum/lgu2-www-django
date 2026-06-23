@@ -9,9 +9,6 @@ from .document import CommonMetadata, XmlPackage, package_xml
 
 
 class FragmentMetadata(CommonMetadata):
-    fragment: str  # deprecated
-    prev: Optional[str]  # deprecated
-    next: Optional[str]  # deprecated
     fragmentInfo: "Level"
     prevInfo: Optional["LabelledLink"]
     nextInfo: Optional["LabelledLink"]
@@ -34,7 +31,7 @@ class FragmentMetadata(CommonMetadata):
 class Level(TypedDict):
     element: str
     id: str  # the internal id, e.g., section-1
-    href: str  # the full id with slashes, e.g., ukpga/2024/1/section/1
+    href: str  # the relative fragment id, e.g., crossheading/final-provisions
     number: str
     title: str
     label: str

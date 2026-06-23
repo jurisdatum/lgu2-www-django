@@ -91,13 +91,6 @@ def fragment(  # noqa: C901
 
     data = api.get(type, year, number, section, version, lang)
 
-    # API should add None values to fragment requests
-    # but they're current missing for intro and last section
-    if "prev" not in data["meta"]:
-        data["meta"]["prev"] = None
-    if "next" not in data["meta"]:
-        data["meta"]["next"] = None
-
     meta = data["meta"]
 
     rdrct = should_redirect("fragment", type, version, lang, meta)
@@ -105,14 +98,22 @@ def fragment(  # noqa: C901
         return rdrct
 
     data["meta"]["link"] = make_document_link(type, year, number, version, lang)
-    if data["meta"]["prevInfo"]:
-        data["meta"]["prev"] = make_fragment_link(
+    # ``prev``/``next`` are computed-URL context keys read by the template,
+    # derived from prevInfo/nextInfo (None when there is no neighbour).
+    data["meta"]["prev"] = (
+        make_fragment_link(
             type, year, number, data["meta"]["prevInfo"]["href"], version, lang
         )
-    if data["meta"]["nextInfo"]:
-        data["meta"]["next"] = make_fragment_link(
+        if data["meta"]["prevInfo"]
+        else None
+    )
+    data["meta"]["next"] = (
+        make_fragment_link(
             type, year, number, data["meta"]["nextInfo"]["href"], version, lang
         )
+        if data["meta"]["nextInfo"]
+        else None
+    )
 
     frag_info = data["meta"]["fragmentInfo"]
 
@@ -183,7 +184,7 @@ def fragment(  # noqa: C901
             "whole": make_document_link(type, year, number, version, lang),
             "body": (
                 None
-                if "fragment" in data["meta"] and data["meta"]["fragment"] == "body"
+                if data["meta"]["fragmentInfo"]["href"] == "body"
                 else make_fragment_link(type, year, number, "body", version, lang)
             ),
             "schedules": (

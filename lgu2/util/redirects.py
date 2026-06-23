@@ -17,8 +17,8 @@ def should_redirect(
 
     # extra kwargs (for fragment redirects)
     extra_kwargs = {}
-    if target == "fragment" and "fragment" in meta:
-        extra_kwargs["section"] = meta["fragment"]
+    if target == "fragment" and "fragmentInfo" in meta:
+        extra_kwargs["section"] = meta["fragmentInfo"]["href"]
 
     if version is None and meta["status"] == "final":
         return redirect_version(
