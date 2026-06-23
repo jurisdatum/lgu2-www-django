@@ -1,19 +1,43 @@
-"""Custom error handlers, wired as handler404/handler500 in lgu2/urls.py.
+"""Error-response rendering, shared by the URLconf handlers (handler404 /
+handler500, wired in lgu2/urls.py) and by UpstreamErrorMiddleware.
 
-These cover errors Django itself raises — an unmatched URL (resolver 404) or an
-unhandled exception in a view (500) — as opposed to upstream API failures, which
-UpstreamErrorMiddleware translates separately. Both paths render the same
-new_theme templates so every error surfaces in one consistent style.
+render_error is the single source of truth for *how* an error becomes a
+response. It is format-aware: a route that captured a `format` kwarg
+(/data.{json,xml,akn,feed}) gets a machine-readable body, so API and feed
+consumers never receive an HTML error page; everything else gets the branded
+new_theme page. The HTML render is wrapped so a broken error template can't
+cascade into a second failure at the moment the friendly page is needed.
 
-The render is wrapped so a broken error template can't cascade into a second
-failure at the moment the friendly page is needed (the same guard the upstream
-middleware applies)."""
+The handlers (Django-raised 404/500) and the middleware (upstream API failures)
+each decide the status/template/message, then delegate the rendering here so the
+two paths stay consistent."""
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
+# Non-JSON data formats -> (content-type, empty body). JSON is handled
+# separately because it gets an error envelope rather than an empty body.
+_FORMAT_CONTENT_TYPES = {
+    "xml": "application/xml",
+    "akn": "application/akn+xml",
+    "feed": "application/atom+xml",
+}
 
-def _safe_render(request, template, status):
+
+def render_error(request, status, template, message):
+    """Build an error response in the format the matched route expects."""
+    fmt = None
+    if request.resolver_match is not None:
+        fmt = request.resolver_match.kwargs.get("format")
+
+    if fmt == "json":
+        return JsonResponse({"error": message, "status": status}, status=status)
+    if fmt in _FORMAT_CONTENT_TYPES:
+        return HttpResponse(b"", content_type=_FORMAT_CONTENT_TYPES[fmt], status=status)
+
+    # html, no kwarg, or any other route -> branded page. Wrap render so a broken
+    # error template (renamed {% url %}, broken include, context-processor crash)
+    # does not cascade into a Django 500 at exactly the moment it is needed.
     try:
         return render(request, template, status=status)
     except Exception:
@@ -25,9 +49,9 @@ def _safe_render(request, template, status):
 
 
 def page_not_found(request, exception):
-    return _safe_render(request, "new_theme/404.html", 404)
+    return render_error(request, 404, "new_theme/404.html", "Not Found")
 
 
 def server_error(request):
-    # Reuses the generic "service unavailable" page; no upstream-specific wording.
-    return _safe_render(request, "new_theme/502.html", 500)
+    # Reuses the generic "service unavailable" page; no 500-specific template.
+    return render_error(request, 500, "new_theme/502.html", "Internal Server Error")

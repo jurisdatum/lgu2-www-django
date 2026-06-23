@@ -94,7 +94,7 @@ class UpstreamErrorSafeRenderTests(SimpleTestCase):
     missing static, etc.), the middleware must NOT cascade into a Django 500
     — it falls back to a static text response with the correct status."""
 
-    @patch("lgu2.middleware.upstream_errors.render")
+    @patch("lgu2.views.errors.render")
     @patch("lgu2.views.document.get_document")
     def test_broken_template_falls_back_to_static_response(
         self, mock_get_document, mock_render
