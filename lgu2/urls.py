@@ -331,3 +331,9 @@ urlpatterns += i18n_patterns(
     ),
     prefix_default_language=False,
 )
+
+# Render unmatched-URL 404s and unhandled-exception 500s through the branded
+# new_theme pages (see lgu2/views/errors.py). Upstream API failures are handled
+# separately by UpstreamErrorMiddleware.
+handler404 = "lgu2.views.errors.page_not_found"
+handler500 = "lgu2.views.errors.server_error"
