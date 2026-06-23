@@ -1,7 +1,6 @@
-from typing import Optional, Union
+from typing import Optional
 
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
 from django.template import loader
 
 from ..api import contents as api
@@ -60,9 +59,7 @@ def toc(
     lang: Optional[str] = None,
 ):
 
-    data: Optional[api.TableOfContents] = api.get_toc(type, year, number, version, lang)
-    if data is None:
-        return render(request, "new_theme/404.html", status=404)
+    data: api.TableOfContents = api.get_toc(type, year, number, version, lang)
     meta = data["meta"]
 
     rdrct = should_redirect("toc", type, version, lang, meta)

@@ -52,4 +52,4 @@ def fetch_atom(
     page: int = 1,
 ) -> str:
     url = _make_url(**locals())
-    return server.get(url, "application/atom+xml").text
+    return server.get_atom(url)

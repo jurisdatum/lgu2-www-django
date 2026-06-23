@@ -46,11 +46,9 @@ def get_toc(
     number,
     version: Optional[str] = None,
     language: Optional[str] = None,
-) -> Optional[TableOfContents]:
+) -> TableOfContents:
     url = _make_url(type, year, number, version)
     toc = server.get_json(url, language)
-    if "error" in toc:
-        return None
     CommonMetadata.convert_dates(toc["meta"])
     return toc
 

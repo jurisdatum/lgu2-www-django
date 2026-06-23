@@ -303,7 +303,9 @@ class ChangesResultsFeedTests(SimpleTestCase):
 
     @patch("lgu2.api.effects.server.get")
     def test_feed_accepts_year_range_and_applied_filters(self, mock_get):
-        mock_get.return_value = Mock(text="<feed/>")
+        # status_code is required because get_atom routes via get_checked, which
+        # gates on a strict 2xx. status=200 → returns the body.
+        mock_get.return_value = Mock(status_code=200, text="<feed/>")
 
         year_range_url = reverse(
             "changes-affected",

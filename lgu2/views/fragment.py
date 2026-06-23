@@ -1,15 +1,11 @@
 from typing import Optional, Union
 
-from django.http import (
-    HttpResponse,
-    HttpResponseNotFound,
-    HttpResponseRedirect,
-    JsonResponse,
-)
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.utils import timezone
 
 from ..api import fragment as api
+from ..api.server import UpstreamError, UpstreamNotFound
 from ..status import for_fragment
 from ..util.dated_version import dated_version_panel, is_most_recent_version
 from ..util.labels import get_type_label
@@ -51,15 +47,24 @@ def _subprovision_redirect(
     version: Optional[str],
     lang: Optional[str],
 ):
+    # If section is a subprovision path (e.g. .../section/1-2), and the section
+    # itself exists upstream, redirect to the parent fragment with an anchor.
+    # HEAD here is a best-effort probe: if it 404s, short-circuit so the
+    # middleware renders 404 without a wasted follow-up GET; if HEAD itself
+    # fails to reach the upstream (timeout, connection refused), fall through
+    # so the real api.get() can still try — a transient probe failure
+    # shouldn't abort a request the main GET might satisfy from cache.
     split = _split_subprovision(section)
     if split is None:
         return None
     parent_section, anchor = split
 
-    status = api.head(type, year, number, section, version, lang)
+    try:
+        status = api.head(type, year, number, section, version, lang)
+    except UpstreamError:
+        return None
     if status == 404:
-        template = loader.get_template("404.html")
-        return HttpResponseNotFound(template.render({}, request))
+        raise UpstreamNotFound(404, f"/{type}/{year}/{number}/{section}")
     if status != 200:
         return None
 
@@ -85,10 +90,6 @@ def fragment(  # noqa: C901
         return redirect
 
     data = api.get(type, year, number, section, version, lang)
-
-    if "error" in data:
-        template = loader.get_template("404.html")
-        return HttpResponseNotFound(template.render({}, request))
 
     # API should add None values to fragment requests
     # but they're current missing for intro and last section
