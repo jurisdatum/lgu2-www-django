@@ -7,7 +7,6 @@ from django.shortcuts import redirect
 from django.urls import path, re_path
 from django.http import JsonResponse
 from .views.robots import robots_txt
-from .views.doc_types import list_uk
 
 from .views.browse import data as browse_data
 from .views.document import document, data as document_data
@@ -46,10 +45,6 @@ from .views.advance_search import (
     impact_search,
 )
 from lgu2.util.types import SEARCH_TYPES
-
-# urlpatterns = i18n_patterns(
-#     path('', lambda r: redirect('browse-uk'), name='home'), prefix_default_language=False
-# )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -139,8 +134,14 @@ urlpatterns += i18n_patterns(
         secondary_legislation,
         name="secondary-legislation",
     ),
-    path("browse", lambda r: redirect("browse-uk")),
-    path("browse/uk", list_uk, name="browse-uk"),
+    # Legacy browse URLs now live under Explore in the new theme.
+    path("browse", lambda r: redirect("explore", permanent=True)),
+    path(
+        "browse/uk",
+        lambda r: redirect(
+            "different-legislatures-country", country="uk", permanent=True
+        ),
+    ),
     # browse
     re_path(rf"^{TYPE}$", browse, name="browse"),
     re_path(rf"^{TYPE}/{DATA}$", browse_data),
@@ -331,3 +332,9 @@ urlpatterns += i18n_patterns(
     ),
     prefix_default_language=False,
 )
+
+# Render unmatched-URL 404s and unhandled-exception 500s through the branded
+# new_theme pages (see lgu2/views/errors.py). Upstream API failures are handled
+# separately by UpstreamErrorMiddleware.
+handler404 = "lgu2.views.errors.page_not_found"
+handler500 = "lgu2.views.errors.server_error"

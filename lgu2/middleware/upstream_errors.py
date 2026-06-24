@@ -2,23 +2,14 @@
 responses. The api helpers raise rather than returning sentinels; views stay
 clean of try/except boilerplate.
 
-Format-aware: routes ending in /data.{json,xml,akn,feed} (the `format` kwarg
-captured by lgu2/urls.py) get a response in the matching content-type instead
-of an HTML error page, so API and feed consumers don't receive HTML where they
-expect machine-readable bodies."""
-
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+Rendering — including the format-aware branch for /data.{json,xml,akn,feed}
+routes and the safe-render fallback — is delegated to lgu2.views.errors so the
+middleware and the URLconf error handlers (handler404/handler500) stay
+consistent. This module only classifies the upstream exception into a
+status/template/message."""
 
 from ..api.server import UpstreamError, UpstreamNotFound, UpstreamTimeout
-
-# Format kwarg → (content-type, empty body). JSON is handled separately because
-# it gets an error envelope rather than an empty body.
-_FORMAT_CONTENT_TYPES = {
-    "xml": "application/xml",
-    "akn": "application/akn+xml",
-    "feed": "application/atom+xml",
-}
+from ..views.errors import render_error
 
 
 def _status_and_template(exception):
@@ -27,20 +18,6 @@ def _status_and_template(exception):
     if isinstance(exception, UpstreamTimeout):
         return 504, "new_theme/502.html", "Upstream Timeout"
     return 502, "new_theme/502.html", "Bad Gateway"
-
-
-def _safe_render(request, template, status):
-    # Wrap render so a broken error template (renamed {% url %}, broken include,
-    # context-processor crash) does not cascade into a Django 500 at exactly the
-    # moment the friendly page is needed.
-    try:
-        return render(request, template, status=status)
-    except Exception:
-        return HttpResponse(
-            b"Service temporarily unavailable.",
-            content_type="text/plain",
-            status=status,
-        )
 
 
 class UpstreamErrorMiddleware:
@@ -55,17 +32,4 @@ class UpstreamErrorMiddleware:
             return None
 
         status, template, message = _status_and_template(exception)
-
-        fmt = None
-        if request.resolver_match is not None:
-            fmt = request.resolver_match.kwargs.get("format")
-
-        if fmt == "json":
-            return JsonResponse({"error": message, "status": status}, status=status)
-        if fmt in _FORMAT_CONTENT_TYPES:
-            return HttpResponse(
-                b"", content_type=_FORMAT_CONTENT_TYPES[fmt], status=status
-            )
-
-        # html, no kwarg, or any other route → branded page.
-        return _safe_render(request, template, status)
+        return render_error(request, status, template, message)
