@@ -44,13 +44,16 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",  # must stay first
     "lgu2.middleware.central_logging.CentralRequestLoggingMiddleware",  # to get accurate timing best place to be here
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # LocaleMiddleware must sit after SessionMiddleware (it reads session data)
+    # and before CommonMiddleware (which needs the active language to resolve
+    # and redirect i18n_patterns URLs, e.g. APPEND_SLASH on a /cy/… path).
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
-    "lgu2.middleware.robots_middleware.RobotsTagMiddleware",  # move below security
+    "lgu2.middleware.robots_middleware.RobotsTagMiddleware",
     "lgu2.middleware.upstream_errors.UpstreamErrorMiddleware",
 ]
 
@@ -150,7 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en"
 
-LANGUAGES = LANGUAGES = (("en", _("English")), ("cy", _("Welsh")))
+LANGUAGES = (("en", _("English")), ("cy", _("Welsh")))
 
 TIME_ZONE = "UTC"
 
